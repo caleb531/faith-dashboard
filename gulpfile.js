@@ -38,7 +38,7 @@ gulp.task('webpack:app', () => {
 });
 gulp.task('webpack:watch', () => {
   return gulp.src('src/scripts/index.jsx')
-    .pipe(webpack(Object.assign({}, webpackConfig, {watch: true})))
+    .pipe(webpack(Object.assign({}, webpackConfig, { watch: true })))
     .pipe(gulp.dest('dist/'));
 });
 gulp.task('webpack', gulp.parallel(
