@@ -30,23 +30,6 @@ module.exports = {
   },
 
   /**
-   * File-specific overrides
-   */
-
-  overrides: {
-
-    files: ['service-worker.js'],
-    env: {
-      'serviceworker': true
-    },
-    globals: {
-      'workbox': true
-    }
-
-  },
-
-
-  /**
    * Enabled ESLint rules
    */
 
