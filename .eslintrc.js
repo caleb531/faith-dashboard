@@ -25,9 +25,16 @@ module.exports = {
   parserOptions: {
 
     // Enable ES6 modules
-    'sourceType': 'module'
-
+    'sourceType': 'module',
+    // Enable JSX syntax
+    'ecmaFeatures': {
+      'jsx': true
+    }
   },
+
+  extends: [
+    'plugin:react/recommended'
+  ],
 
   /**
    * Enabled ESLint rules
