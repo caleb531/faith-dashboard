@@ -33,11 +33,11 @@ gulp.task('sass:watch', () => {
 
 gulp.task('webpack:app', () => {
   return webpack(webpackConfig)
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest('dist/scripts'));
 });
 gulp.task('webpack:watch', () => {
   return webpack(Object.assign({}, webpackConfig, { watch: true }))
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest('dist/scripts'));
 });
 gulp.task('webpack', gulp.parallel(
   'webpack:app'
