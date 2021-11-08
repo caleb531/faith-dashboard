@@ -1,5 +1,6 @@
 import React from 'react';
 import AppHeader from './AppHeader';
+import WidgetBoard from './WidgetBoard';
 
 class App extends React.Component {
 
@@ -7,6 +8,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <AppHeader />
+        <WidgetBoard />
       </div>
     );
   }
