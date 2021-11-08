@@ -1,24 +1,18 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/scripts/index.jsx',
+  entry: './src/scripts/index.tsx',
   mode: 'development',
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            '@babel/preset-env',
-            ['@babel/preset-react', { 'runtime': 'automatic' }]
-          ]
-        }
+        loader: 'babel-loader'
       }
     ]
   },
-  resolve: { extensions: ['*', '.js', '.jsx'] },
+  resolve: { extensions: ['*', '.js', '.jsx', '.ts', '.tsx'] },
   output: {
     path: path.resolve(__dirname, 'dist/'),
     publicPath: '/dist/',
