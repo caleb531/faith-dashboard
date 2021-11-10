@@ -3,7 +3,7 @@ import { AppContext } from './AppContext';
 
 function ThemeSwitcher(props) {
 
-  const { app, dispatchApp } = useContext(AppContext);
+  const { dispatchApp } = useContext(AppContext);
 
   return (
     <select className="theme-switcher" onChange={(event) => dispatchApp({type: 'change-theme', payload: event.target.value})}>
