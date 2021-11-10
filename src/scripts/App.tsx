@@ -2,16 +2,14 @@ import React from 'react';
 import AppHeader from './AppHeader';
 import WidgetBoard from './WidgetBoard';
 
-class App extends React.Component {
+function App() {
 
-  render() {
-    return (
-      <div className="app">
-        <AppHeader />
-        <WidgetBoard />
-      </div>
-    );
-  }
+  return (
+    <div className="app">
+      <AppHeader />
+      <WidgetBoard />
+    </div>
+  );
 
 }
 

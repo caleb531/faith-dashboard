@@ -1,14 +1,12 @@
 import React from 'react';
 
-class AppHeader extends React.Component {
+function AppHeader() {
 
-  render() {
-    return (
-      <div className="app-header">
-        <h1 className="app-header-title">Faith Dashboard</h1>
-      </div>
-    )
-  }
+  return (
+    <div className="app-header">
+      <h1 className="app-header-title">Faith Dashboard</h1>
+    </div>
+  );
 
 }
 

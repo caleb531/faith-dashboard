@@ -1,15 +1,13 @@
 import React from 'react';
 import Widget from './Widget';
 
-class WidgetBoard extends React.Component {
+function WidgetBoard() {
 
-  render() {
-    return (
-      <div className="widget-board">
-        <Widget />
-      </div>
-    )
-  }
+  return (
+    <div className="widget-board">
+      <Widget />
+    </div>
+  );
 
 }
 

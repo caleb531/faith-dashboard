@@ -1,12 +1,10 @@
 import React from 'react';
 
-class Widget extends React.Component {
+function Widget() {
 
-  render() {
-    return (
-      <div className="widget"></div>
-    )
-  }
+  return (
+    <div className="widget"></div>
+  );
 
 }
 
