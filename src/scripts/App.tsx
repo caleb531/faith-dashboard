@@ -1,4 +1,5 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useReducer } from 'react';
+import { AppContext } from './AppContext';
 import AppHeader from './AppHeader';
 import WidgetBoard from './WidgetBoard';
 import { AppState } from './App.d';
@@ -24,10 +25,12 @@ function App() {
   console.log('app from app', app);
 
   return (
-    <div className={`app theme-${app.theme}`}>
-      <AppHeader app={app} dispatchApp={dispatchApp} />
-      <WidgetBoard app={app} dispatchApp={dispatchApp} />
-    </div>
+    <AppContext.Provider value={{ app, dispatchApp }}>
+      <div className={`app theme-${app.theme}`}>
+        <AppHeader />
+        <WidgetBoard />
+      </div>
+    </AppContext.Provider>
   );
 
 }

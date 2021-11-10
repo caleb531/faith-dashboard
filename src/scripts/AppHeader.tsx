@@ -6,7 +6,7 @@ function AppHeader(props) {
   return (
     <div className="app-header">
       <h1 className="app-header-title">Faith Dashboard</h1>
-      <ThemeSwitcher {...props} />
+      <ThemeSwitcher />
     </div>
   );
 

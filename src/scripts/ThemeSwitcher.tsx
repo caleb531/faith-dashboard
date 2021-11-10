@@ -1,9 +1,12 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from './AppContext';
 
 function ThemeSwitcher(props) {
 
+  const { app, dispatchApp } = useContext(AppContext);
+
   return (
-    <select className="theme-switcher" onChange={(event) => props.dispatchApp({type: 'change-theme', payload: event.target.value})}>
+    <select className="theme-switcher" onChange={(event) => dispatchApp({type: 'change-theme', payload: event.target.value})}>
       <option value="green">Green</option>
       <option value="blue">Blue</option>
     </select>
