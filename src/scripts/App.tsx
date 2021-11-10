@@ -21,7 +21,7 @@ function App() {
     theme: 'green',
     widgets: []
   });
-  console.log('theme from app', app.theme);
+  console.log('app from app', app);
 
   return (
     <div className={`app theme-${app.theme}`}>
