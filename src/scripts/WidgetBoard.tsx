@@ -1,7 +1,7 @@
 import React from 'react';
 import Widget from './Widget';
 
-function WidgetBoard() {
+function WidgetBoard(props) {
 
   return (
     <div className="widget-board">

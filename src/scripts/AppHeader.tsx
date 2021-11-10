@@ -1,10 +1,12 @@
 import React from 'react';
+import ThemeSwitcher from './ThemeSwitcher';
 
-function AppHeader() {
+function AppHeader(props) {
 
   return (
     <div className="app-header">
       <h1 className="app-header-title">Faith Dashboard</h1>
+      <ThemeSwitcher app={props.app} dispatchApp={props.dispatchApp} />
     </div>
   );
 

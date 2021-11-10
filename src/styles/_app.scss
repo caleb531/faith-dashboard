@@ -4,4 +4,10 @@
   text-align: center;
   padding: 20px;
   padding-top: 10px;
+  &.theme-green {
+    background-color: #154;
+  }
+  &.theme-blue {
+    background-color: #14a;
+  }
 }
