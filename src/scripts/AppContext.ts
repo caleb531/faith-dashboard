@@ -1,11 +1,4 @@
 import { createContext } from 'react';
-import { AppState } from './App.d';
-
-export interface AppContextValue {
-
-  app: AppState,
-  dispatchApp: Function
-
-}
+import { AppContextValue } from './App.d';
 
 export const AppContext = createContext(<AppContextValue>{});
