@@ -8,11 +8,6 @@
     "web-vitals": "^2.1.2",
     "webpack-stream": "^7.0.0"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
