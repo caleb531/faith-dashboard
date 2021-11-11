@@ -1,5 +1,22 @@
 import React, { useContext } from 'react';
 import { AppContext } from './AppContext';
+import { AppTheme } from './App.d';
+import { ThemeListItem } from './ThemeSwitcher.d';
+
+const themeList: Array<ThemeListItem> = [
+  {
+    label: 'Green',
+    value: AppTheme.green
+  },
+  {
+    label: 'Teal',
+    value: AppTheme.teal
+  },
+  {
+    label: 'Blue',
+    value: AppTheme.blue
+  }
+];
 
 function ThemeSwitcher(props) {
 
@@ -7,8 +24,11 @@ function ThemeSwitcher(props) {
 
   return (
     <select className="theme-switcher" value={app.theme} onChange={(event) => dispatchApp({type: 'change-theme', payload: event.target.value})}>
-      <option value="green">Green</option>
-      <option value="blue">Blue</option>
+      {themeList.map((themeListItem) => {
+        return (<option value={themeListItem.value} key={themeListItem.value}>
+          {themeListItem.label}
+        </option>);
+      })}
     </select>
   );
 

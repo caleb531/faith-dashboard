@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import { AppContext } from './AppContext';
 import AppHeader from './AppHeader';
 import WidgetBoard from './WidgetBoard';
-import { AppState } from './App.d';
+import { AppState, AppTheme } from './App.d';
 
 function App() {
 
@@ -19,7 +19,7 @@ function App() {
   }
 
   const [app, dispatchApp] = useReducer(reducer, {
-    theme: 'green',
+    theme: AppTheme.green,
     widgets: []
   });
   console.log('app from app', app);

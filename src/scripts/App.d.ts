@@ -1,5 +1,11 @@
+export enum AppTheme {
+  green = 'green',
+  teal = 'teal',
+  blue = 'blue'
+}
+
 export interface AppState {
-  theme: string,
+  theme: AppTheme,
   widgets: Array<any>
 }
 
