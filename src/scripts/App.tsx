@@ -1,8 +1,9 @@
 import React, { useReducer } from 'react';
 import { AppContext } from './AppContext';
+import { AppState, AppTheme } from './App.d';
 import AppHeader from './AppHeader';
 import WidgetBoard from './WidgetBoard';
-import { AppState, AppTheme } from './App.d';
+import { WidgetType } from './Widget.d';
 
 function App() {
 
@@ -23,8 +24,10 @@ function App() {
     widgets: [
       {
         id: 1,
+        type: WidgetType.BibleVerse,
         width: 300,
-        height: 200
+        height: 200,
+        data: {}
       }
     ]
   });

@@ -13,3 +13,6 @@ coverage/
 
 # Private environment variables for deployment
 .env
+
+# Private ESV API configuration
+esv-api.json
