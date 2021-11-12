@@ -5,11 +5,11 @@ export enum AppTheme {
 }
 
 export interface AppState {
-  theme: AppTheme,
-  widgets: Array<any>
+  theme: AppTheme;
+  widgets: Array<any>;
 }
 
 export interface AppContextValue {
-  app: AppState,
-  dispatchApp: Function
+  app: AppState;
+  dispatchApp: Function;
 }
