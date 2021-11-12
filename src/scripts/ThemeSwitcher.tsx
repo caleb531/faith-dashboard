@@ -18,7 +18,7 @@ const themeList: Array<ThemeListItem> = [
   }
 ];
 
-function ThemeSwitcher(props) {
+function ThemeSwitcher() {
 
   const { app, dispatchApp } = useContext(AppContext);
 

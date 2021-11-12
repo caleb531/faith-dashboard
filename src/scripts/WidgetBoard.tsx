@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { AppContext } from './AppContext';
 import Widget from './Widget';
 
-function WidgetBoard(props) {
+function WidgetBoard() {
 
   const { app } = useContext(AppContext);
 

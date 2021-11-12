@@ -10,7 +10,14 @@
       "jsx": true
     }
   },
-  "extends": ["plugin:react/recommended", "plugin:react-hooks/recommended"],
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
   "rules": {
     "no-cond-assign": ["error", "always"],
     "no-debugger": ["error"],
@@ -74,16 +81,8 @@
     "strict": ["error", "safe"],
     "no-delete-var": ["error"],
     "no-restricted-globals": ["error", "event", "name"],
-    "no-shadow": ["error", {
-      "builtinGlobals": true,
-      "allow": ["name"]
-    }],
     "no-undef-init": ["error"],
     "no-undef": ["error"],
-    "no-unused-vars": ["error"],
-    "no-use-before-define": ["error", {
-      "functions": false
-    }],
     "block-spacing": ["error", "never"],
     "brace-style": ["error", "1tbs", {
       "allowSingleLine": false
@@ -111,7 +110,6 @@
     "no-multi-assign": ["error"],
     "no-plusplus": ["error"],
     "no-whitespace-before-property": ["error"],
-    "object-curly-spacing": ["error", "always"],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "space-before-blocks": ["error", "always"],

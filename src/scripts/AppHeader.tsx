@@ -1,7 +1,7 @@
 import React from 'react';
 import ThemeSwitcher from './ThemeSwitcher';
 
-function AppHeader(props) {
+function AppHeader() {
 
   return (
     <div className="app-header">
