@@ -7,7 +7,7 @@ const connect = require('gulp-connect');
 
 gulp.task('assets:core', () => {
   return gulp.src([
-      'public/*'
+      'public/**/*'
     ])
     .pipe(gulp.dest('dist'));
 });

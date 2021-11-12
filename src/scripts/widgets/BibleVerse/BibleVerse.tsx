@@ -1,18 +1,24 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../AppContext';
 import { WidgetState } from '../Widget.d';
+import esvApiData from './esv-api.json';
 
 function BibleVerse({ widget }: { widget: WidgetState }) {
 
   const { app, dispatchApp } = useContext(AppContext);
 
-  const ESV_API_BASE_URL = './widgets/BibleVerse/api.php';
+  const ESV_API_BASE_URL = 'https://api.esv.org/v3/passage/html/?q=';
 
   function submitVerseSearch(event) {
     event.preventDefault();
     const input = event.target.elements.search;
-    fetch(ESV_API_BASE_URL).then((verseResponse) => {
-      const verseData = verseResponse.json();
+    const apiPromise = fetch(ESV_API_BASE_URL, {
+      mode: 'cors',
+      headers: {
+        'Authorization': `Token ${esvApiData.apiKey}`
+      }
+    });
+    apiPromise.then((verseData) => {
       console.log('verseData', verseData);
     });
   }

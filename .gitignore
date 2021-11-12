@@ -15,4 +15,4 @@ coverage/
 .env
 
 # Private ESV API configuration
-esv-api.json
+api.json
