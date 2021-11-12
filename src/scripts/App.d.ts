@@ -1,4 +1,4 @@
-import WidgetState from './Widget.d';
+import { WidgetState } from './Widget.d';
 
 export enum AppTheme {
   green = 'green',

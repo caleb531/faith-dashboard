@@ -1,5 +1,5 @@
 import React from 'react';
-import WidgetState from './Widget.d';
+import { WidgetState } from './Widget.d';
 
 function Widget({ widget }: { widget: WidgetState }) {
 
