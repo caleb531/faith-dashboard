@@ -20,7 +20,13 @@ function App() {
 
   const [app, dispatchApp] = useReducer(reducer, {
     theme: AppTheme.green,
-    widgets: []
+    widgets: [
+      {
+        id: 1,
+        width: 300,
+        height: 200
+      }
+    ]
   });
   console.log('app from app', app);
 

@@ -9,7 +9,7 @@ function WidgetBoard(props) {
   return (
     <div className="widget-board">
       {app.widgets.map((widget) => {
-        return (<Widget widget={widget} />);
+        return (<Widget widget={widget} key={widget.id} />);
       })}
     </div>
   );
