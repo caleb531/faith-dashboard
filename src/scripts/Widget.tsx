@@ -5,8 +5,7 @@ import WidgetTypes from './WidgetTypes';
 function Widget({ widget }: { widget: WidgetState }) {
 
   const widgetStyles = {
-    width: widget.width,
-    height: widget.height
+    width: widget.width
   };
 
   const WidgetContents = WidgetTypes[widget.type];
