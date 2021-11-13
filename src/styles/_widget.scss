@@ -3,8 +3,15 @@
   min-width: 100px;
   min-height: 100px;
   border-radius: 10px;
+  padding: 20px;
   background-color: rgba(#000, 0.5);
   box-shadow: 0 3px 5px rgba(#000, 0.5);
   overflow: hidden;
   resize: both;
+  h2, h3 {
+    margin-top: 0;
+  }
+  a {
+    color: #fff;
+  }
 }

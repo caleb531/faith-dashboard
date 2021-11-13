@@ -12,6 +12,10 @@ main,
   flex-direction: column;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
