@@ -27,7 +27,9 @@ function App() {
         type: WidgetType.BibleVerse,
         width: 300,
         height: 200,
-        data: {}
+        data: {
+          verseQuery: '2 Cor 5.17'
+        }
       }
     ]
   });

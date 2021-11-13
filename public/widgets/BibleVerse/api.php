@@ -25,6 +25,8 @@
       "Authorization: Token {$api_info->api_token}"
   ));
   curl_exec($ch);
+  $info = curl_getinfo($ch);
+  http_response_code($info['http_code']);
   curl_close($ch);
 
 ?>
