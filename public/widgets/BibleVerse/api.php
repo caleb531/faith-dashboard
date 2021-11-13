@@ -17,9 +17,7 @@
   curl_setopt($ch, CURLOPT_HTTPHEADER, array(
       "Authorization: Token {$api_info->api_token}"
   ));
-  $api_response = curl_exec($ch);
+  curl_exec($ch);
   curl_close($ch);
-
-  echo $api_response;
 
 ?>
