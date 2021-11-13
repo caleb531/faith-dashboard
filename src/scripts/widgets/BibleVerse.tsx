@@ -15,6 +15,9 @@ function BibleVerse({ widget }: { widget: WidgetState }) {
   const API_URL = './widgets/BibleVerse/api.php';
 
   function fetchVerseContent(query) {
+    if (!query) {
+      return;
+    }
     fetch(`${API_URL}?q=${encodeURIComponent(query)}`)
       .then((verseResponse) => verseResponse.json())
       .then((verseData) => {
