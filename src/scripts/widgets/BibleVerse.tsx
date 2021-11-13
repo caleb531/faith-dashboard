@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
 import { AppContext } from '../AppContext';
@@ -32,14 +31,12 @@ function BibleVerse({ widget }: { widget: WidgetState }) {
     fetchVerseContent(input.value);
   }
 
-  // Fetch verse content on first render
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
+  // Fetch verse content on initial render
     fetchVerseContent(verseQuery);
   }, []);
-
-  useEffect(() => {
-    dispatchApp({type: 'save-app'});
-  });
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return (
     <section className="bible-verse">
