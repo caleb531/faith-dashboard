@@ -37,6 +37,10 @@ function BibleVerse({ widget }: { widget: WidgetState }) {
     fetchVerseContent(verseQuery);
   }, []);
 
+  useEffect(() => {
+    dispatchApp({type: 'save-app'});
+  });
+
   return (
     <section className="bible-verse">
       {verseQuery && !verseContent ? (
@@ -49,7 +53,7 @@ function BibleVerse({ widget }: { widget: WidgetState }) {
             <>
               <h3 className="bible-verse-heading">Bible Verse</h3>
               <form className="bible-verse-picker" onSubmit={(event) => submitVerseSearch((event))}>
-              <input type="text" className="bible-verse-picker-search" name="search" defaultValue={verseQuery} onChange={(event) => setVerseQuery(event.target.value)} />
+              <input type="text" className="bible-verse-picker-search" name="search" defaultValue={verseQuery} />
               <button className="bible-verse-picker-submit">Submit</button>
               </form>
             </>

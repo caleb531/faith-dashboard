@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { AppContext } from './AppContext';
 import { AppState, AppTheme } from './App.d';
 import AppHeader from './AppHeader';
@@ -14,26 +14,41 @@ function App() {
           ...app,
           theme: action.payload
         };
+      case 'save-app':
+        return app;
       default:
         return app;
     }
   }
 
-  const [app, dispatchApp] = useReducer(reducer, {
-    theme: AppTheme.green,
-    widgets: [
-      {
-        id: 1,
-        type: WidgetType.BibleVerse,
-        width: 300,
-        height: 200,
-        data: {
-          verseQuery: '2 Cor 5.17'
-        }
-      }
-    ]
-  });
+  function restoreApp() {
+    const appState = JSON.parse(localStorage.getItem('faith-dashboard-app'));
+    if (appState) {
+      return appState;
+    } else {
+      return {
+        theme: AppTheme.green,
+        widgets: [
+          {
+            id: 1,
+            type: WidgetType.BibleVerse,
+            width: 300,
+            height: 200,
+            data: {
+              verseQuery: ''
+            }
+          }
+        ]
+      };
+    }
+  }
+
+  const [app, dispatchApp] = useReducer(reducer, restoreApp());
   console.log('app from app', app);
+
+  useEffect(() => {
+    localStorage.setItem('faith-dashboard-app', JSON.stringify(app));
+  }, [app]);
 
   return (
     <AppContext.Provider value={{ app, dispatchApp }}>
