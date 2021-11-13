@@ -67,7 +67,7 @@ gulp.task('connect', () => {
 gulp.task('serve', gulp.series(
   'build',
   gulp.parallel(
-    'watch',
-    'connect'
+    'connect',
+    'watch'
   )
 ));
