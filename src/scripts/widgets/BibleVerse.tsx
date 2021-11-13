@@ -52,8 +52,15 @@ function BibleVerse({ widget }: { widget: WidgetState }) {
         ) : (
             <>
               <h3 className="bible-verse-heading">Bible Verse</h3>
-              <form className="bible-verse-picker" onSubmit={(event) => submitVerseSearch((event))}>
-              <input type="text" className="bible-verse-picker-search" name="search" defaultValue={verseQuery} ref={searchInputRef} />
+              <form
+                className="bible-verse-picker"
+                onSubmit={(event) => submitVerseSearch((event))}>
+              <input
+                type="text"
+                className="bible-verse-picker-search"
+                name="search"
+                defaultValue={verseQuery}
+                ref={searchInputRef} />
               <button className="bible-verse-picker-submit">Submit</button>
               </form>
             </>
