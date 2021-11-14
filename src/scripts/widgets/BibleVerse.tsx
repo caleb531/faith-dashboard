@@ -24,7 +24,7 @@ function BibleVerse({ widgetData }: { widget: WidgetState, widgetData: WidgetDat
     }
   }
 
-  const [ state, dispatch ] = useReducer(reducer, widgetData);
+  const [state, dispatch] = useReducer(reducer, widgetData);
 
   const searchInputRef: {current: HTMLInputElement} = useRef(null);
 
