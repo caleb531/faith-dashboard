@@ -8,13 +8,13 @@ function BibleVerse({ widgetData }: { widget: WidgetState, widgetData: WidgetDat
   const { app, dispatchApp } = useContext(AppContext);
 
   function reducer(state, action) {
-    switch (action) {
+    switch (action.type) {
       case 'setVerseContent':
         return {
           ...state,
-            isFetchingVerse: action.payload && action.payload.length,
-            verseContent: action.payload
-          };
+          isFetchingVerse: false,
+          verseContent: action.payload
+        };
       case 'setVerseQuery':
         return {...state, verseQuery: action.payload};
       case 'showLoading':
@@ -36,15 +36,15 @@ function BibleVerse({ widgetData }: { widget: WidgetState, widgetData: WidgetDat
     if (!query) {
       return;
     }
-    dispatch({event: 'showLoading'});
+    dispatch({type: 'showLoading'});
     fetch(`${API_URL}?q=${encodeURIComponent(query)}`)
       .then((verseResponse) => verseResponse.json())
       .then((verseData) => {
         console.log('verseData', verseData);
         if (verseData.passages) {
-          dispatch({action: 'setVerseContent', payload: verseData.passages});
+          dispatch({type: 'setVerseContent', payload: verseData.passages});
         } else {
-          dispatch({action: 'setVerseContent', payload: null});
+          dispatch({type: 'setVerseContent', payload: null});
         }
       });
   }
@@ -53,7 +53,7 @@ function BibleVerse({ widgetData }: { widget: WidgetState, widgetData: WidgetDat
     event.preventDefault();
     const input = searchInputRef.current;
     if (input) {
-      dispatch({action: 'setVerseQuery', payload: input.value});
+      dispatch({type: 'setVerseQuery', payload: input.value});
       fetchVerseContent(input.value);
     }
   }
@@ -64,8 +64,6 @@ function BibleVerse({ widgetData }: { widget: WidgetState, widgetData: WidgetDat
     fetchVerseContent(state.verseQuery);
   }, []);
   /* eslint-enable react-hooks/exhaustive-deps */
-
-  console.log('render plzzz');
 
   return (
     <section className="bible-verse">
