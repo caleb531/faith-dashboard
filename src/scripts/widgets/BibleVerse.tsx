@@ -1,15 +1,32 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useContext, useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
 import { AppContext } from '../AppContext';
-import { WidgetState } from '../Widget.d';
+import { WidgetState, WidgetDataState } from '../Widget.d';
 
-function BibleVerse({ widget }: { widget: WidgetState }) {
+function BibleVerse({ widgetData }: { widget: WidgetState, widgetData: WidgetDataState }) {
 
   const { app, dispatchApp } = useContext(AppContext);
-  const [ verseContent, setVerseContent ] = useState(null);
-  const [ verseQuery, setVerseQuery ] = useState(widget.data.verseQuery);
-  const [ isFetchingVerse, setIsFetchingVerse ] = useState(false);
-  const searchInputRef: {current: HTMLInputElement} = useRef();
+
+  function reducer(state, action) {
+    switch (action) {
+      case 'setVerseContent':
+        return {
+          ...state,
+            isFetchingVerse: action.payload && action.payload.length,
+            verseContent: action.payload
+          };
+      case 'setVerseQuery':
+        return {...state, verseQuery: action.payload};
+      case 'showLoading':
+        return {...state, isFetchingVerse: true};
+      default:
+        return state;
+    }
+  }
+
+  const [ state, dispatch ] = useReducer(reducer, widgetData);
+
+  const searchInputRef: {current: HTMLInputElement} = useRef(null);
 
   // Call the ESV API through a proxy endpoint because the ESV API does not
   // support CORS
@@ -19,16 +36,15 @@ function BibleVerse({ widget }: { widget: WidgetState }) {
     if (!query) {
       return;
     }
-    setIsFetchingVerse(true);
+    dispatch({event: 'showLoading'});
     fetch(`${API_URL}?q=${encodeURIComponent(query)}`)
       .then((verseResponse) => verseResponse.json())
       .then((verseData) => {
         console.log('verseData', verseData);
-        setIsFetchingVerse(false);
         if (verseData.passages) {
-          setVerseContent(verseData.passages);
+          dispatch({action: 'setVerseContent', payload: verseData.passages});
         } else {
-          setVerseContent(null);
+          dispatch({action: 'setVerseContent', payload: null});
         }
       });
   }
@@ -37,7 +53,7 @@ function BibleVerse({ widget }: { widget: WidgetState }) {
     event.preventDefault();
     const input = searchInputRef.current;
     if (input) {
-      setVerseQuery(input.value);
+      dispatch({action: 'setVerseQuery', payload: input.value});
       fetchVerseContent(input.value);
     }
   }
@@ -45,17 +61,19 @@ function BibleVerse({ widget }: { widget: WidgetState }) {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
   // Fetch verse content on initial render
-    fetchVerseContent(verseQuery);
+    fetchVerseContent(state.verseQuery);
   }, []);
   /* eslint-enable react-hooks/exhaustive-deps */
 
+  console.log('render plzzz');
+
   return (
     <section className="bible-verse">
-      {verseQuery && isFetchingVerse ? (
+      {state.verseQuery && state.isFetchingVerse ? (
         <div className="widget-loading">Loading...</div>
-      ) : verseQuery && verseContent && verseContent.length ? (
+      ) : state.verseQuery && state.verseContent && state.verseContent.length ? (
           <div className="bible-verse-content">
-            {HtmlReactParser(verseContent.join(''))}
+            {HtmlReactParser(state.verseContent.join(''))}
           </div>
         ) : (
             <>
@@ -67,10 +85,10 @@ function BibleVerse({ widget }: { widget: WidgetState }) {
                 type="text"
                 className="bible-verse-picker-search"
                 name="search"
-                defaultValue={verseQuery}
+                defaultValue={state.verseQuery}
                 ref={searchInputRef} />
               <button className="bible-verse-picker-submit">Submit</button>
-              {verseQuery && !(verseContent && verseContent.length) ? (
+              {state.verseQuery && !(state.verseContent && state.verseContent.length) ? (
                 <p className="bible-verse-no-results">No Results Found</p>
               ) : null}
               </form>

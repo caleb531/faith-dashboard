@@ -2,7 +2,7 @@ export enum WidgetType {
   BibleVerse = 'BibleVerse'
 }
 
-export interface WidgetData {
+export interface WidgetDataState {
   [key: string]: any
 }
 
