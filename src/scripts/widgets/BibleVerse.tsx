@@ -7,7 +7,7 @@ function BibleVerse({ widgetData }: { widget: WidgetState, widgetData: WidgetDat
 
   const { app, dispatchApp } = useContext(AppContext);
 
-  function reducer(state, action) {
+  function reducer(state, action): WidgetDataState {
     switch (action.type) {
       case 'setVerseContent':
         return {
