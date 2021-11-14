@@ -12,7 +12,7 @@ function Widget({ widget }: { widget: WidgetState }) {
 
   return (
     <article className="widget" style={widgetStyles}>
-      <WidgetContents widget={widget} widgetData={widget.data} />
+      <WidgetContents widget={widget} />
     </article>
   );
 

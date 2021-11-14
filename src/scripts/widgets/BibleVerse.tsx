@@ -1,30 +1,33 @@
 import React, { useContext, useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
-import { AppContext } from '../AppContext';
-import { WidgetState, WidgetDataState } from '../Widget.d';
+import { WidgetBoardContext } from '../WidgetBoardContext';
+import { WidgetState } from '../Widget.d';
 
-function BibleVerse({ widgetData }: { widget: WidgetState, widgetData: WidgetDataState }) {
+function BibleVerse({ widget }: { widget: WidgetState }) {
 
-  const { app, dispatchApp } = useContext(AppContext);
+  const { dispatchWidgets } = useContext(WidgetBoardContext);
 
-  function reducer(state, action): WidgetDataState {
+  function reducer(state, action): WidgetState {
     switch (action.type) {
       case 'setVerseContent':
         return {
           ...state,
-          isFetchingVerse: false,
-          verseContent: action.payload
+          data: {
+            ...state.data,
+            isFetchingVerse: false,
+            verseContent: action.payload
+          }
         };
       case 'setVerseQuery':
-        return {...state, verseQuery: action.payload};
+        return {...state, data: {...state.data, verseQuery: action.payload}};
       case 'showLoading':
-        return {...state, isFetchingVerse: true};
+        return {...state, data: {...state.data, isFetchingVerse: true}};
       default:
         return state;
     }
   }
 
-  const [state, dispatch] = useReducer(reducer, widgetData);
+  const [state, dispatch] = useReducer(reducer, widget);
 
   const searchInputRef: {current: HTMLInputElement} = useRef(null);
 
@@ -58,20 +61,27 @@ function BibleVerse({ widgetData }: { widget: WidgetState, widgetData: WidgetDat
     }
   }
 
+  console.log('render bibleverse');
+
+  // Update widget list when changes are made
+  useEffect(() => {
+    dispatchWidgets({type: 'updateWidget', payload: state });
+  }, [state, dispatchWidgets]);
+
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
   // Fetch verse content on initial render
-    fetchVerseContent(state.verseQuery);
+    fetchVerseContent(state.data.verseQuery);
   }, []);
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return (
     <section className="bible-verse">
-      {state.verseQuery && state.isFetchingVerse ? (
+      {state.data.verseQuery && state.data.isFetchingVerse ? (
         <div className="widget-loading">Loading...</div>
-      ) : state.verseQuery && state.verseContent && state.verseContent.length ? (
+      ) : state.data.verseQuery && state.data.verseContent && state.data.verseContent.length ? (
           <div className="bible-verse-content">
-            {HtmlReactParser(state.verseContent.join(''))}
+            {HtmlReactParser(state.data.verseContent.join(''))}
           </div>
         ) : (
             <>
@@ -83,10 +93,10 @@ function BibleVerse({ widgetData }: { widget: WidgetState, widgetData: WidgetDat
                 type="text"
                 className="bible-verse-picker-search"
                 name="search"
-                defaultValue={state.verseQuery}
+                defaultValue={state.data.verseQuery}
                 ref={searchInputRef} />
               <button className="bible-verse-picker-submit">Submit</button>
-              {state.verseQuery && !(state.verseContent && state.verseContent.length) ? (
+              {state.data.verseQuery && !(state.data.verseContent && state.data.verseContent.length) ? (
                 <p className="bible-verse-no-results">No Results Found</p>
               ) : null}
               </form>

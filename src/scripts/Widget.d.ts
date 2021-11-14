@@ -11,5 +11,5 @@ export interface WidgetState {
   type: WidgetType;
   width: number;
   height: number;
-  data?: WidgetData;
+  data?: WidgetDataState;
 }
