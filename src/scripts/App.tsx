@@ -27,7 +27,7 @@ function App() {
       return appState;
     } else {
       return {
-        theme: AppTheme.green,
+        theme: AppTheme.teal,
         widgets: [
           {
             id: 1,
