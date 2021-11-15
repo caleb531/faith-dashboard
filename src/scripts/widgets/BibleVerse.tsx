@@ -73,34 +73,35 @@ function BibleVerse({ widget }: { widget: WidgetState }) {
   }, []);
   /* eslint-enable react-hooks/exhaustive-deps */
 
+  console.log('bible isSettingsOpen', state.isSettingsOpen);
+
   return (
     <section className="bible-verse">
-      {state.data.verseQuery && state.data.isFetchingVerse ? (
+      {state.isSettingsOpen ? (
+        <>
+          <h3 className="bible-verse-heading">Bible Verse</h3>
+          <form
+            className="bible-verse-picker"
+            onSubmit={(event) => submitVerseSearch((event))}>
+          <input
+            type="text"
+            className="bible-verse-picker-search"
+            name="search"
+            defaultValue={state.data.verseQuery}
+            ref={searchInputRef} />
+          <button className="bible-verse-picker-submit">Submit</button>
+          {state.data.verseQuery && !(state.data.verseContent && state.data.verseContent.length) ? (
+            <p className="bible-verse-no-results">No Results Found</p>
+          ) : null}
+          </form>
+        </>
+      ) : state.data.verseQuery && state.data.isFetchingVerse ? (
         <div className="widget-loading">Loading...</div>
       ) : state.data.verseQuery && state.data.verseContent && state.data.verseContent.length ? (
-          <div className="bible-verse-content">
-            {HtmlReactParser(state.data.verseContent.join(''))}
-          </div>
-        ) : (
-            <>
-              <h3 className="bible-verse-heading">Bible Verse</h3>
-              <form
-                className="bible-verse-picker"
-                onSubmit={(event) => submitVerseSearch((event))}>
-              <input
-                type="text"
-                className="bible-verse-picker-search"
-                name="search"
-                defaultValue={state.data.verseQuery}
-                ref={searchInputRef} />
-              <button className="bible-verse-picker-submit">Submit</button>
-              {state.data.verseQuery && !(state.data.verseContent && state.data.verseContent.length) ? (
-                <p className="bible-verse-no-results">No Results Found</p>
-              ) : null}
-              </form>
-            </>
-          )
-        }
+        <div className="bible-verse-content">
+          {HtmlReactParser(state.data.verseContent.join(''))}
+        </div>
+      ) : null}
     </section>
   );
 
