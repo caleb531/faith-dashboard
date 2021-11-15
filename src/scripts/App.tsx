@@ -9,13 +9,13 @@ function App() {
 
   function reducer(app, action): AppState {
     switch (action.type) {
-      case 'change-theme':
+      case 'changeTheme':
         return {
           ...app,
           theme: action.payload
         };
-      case 'save-app':
-        return app;
+      case 'updateApp':
+        return {...app, ...action.payload};
       default:
         return app;
     }
@@ -44,7 +44,6 @@ function App() {
   }
 
   const [app, dispatchApp] = useReducer(reducer, restoreApp());
-  console.log('app from app', app);
 
   useEffect(() => {
     localStorage.setItem('faith-dashboard-app', JSON.stringify(app));

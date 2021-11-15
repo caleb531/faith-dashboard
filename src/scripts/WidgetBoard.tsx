@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useReducer, useEffect } from 'react';
 import { AppContext } from './AppContext';
 import { WidgetBoardContext } from './WidgetBoardContext';
 import Widget from './Widget';
@@ -12,7 +12,6 @@ function WidgetBoard() {
       case 'addWidget':
         return [...state, action.payload];
       case 'updateWidget':
-        console.log('updateWidget', action.payload);
         return [
           ...state.filter((widget) => widget.id !== action.payload.id),
           action.payload
@@ -23,6 +22,10 @@ function WidgetBoard() {
   }
 
   const [widgets, dispatchWidgets] = useReducer(reducer, app.widgets);
+
+  useEffect(() => {
+    dispatchApp({type: 'updateApp', payload: { widgets }});
+  }, [widgets, dispatchApp]);
 
   return (
     <WidgetBoardContext.Provider value={{dispatchWidgets}}>

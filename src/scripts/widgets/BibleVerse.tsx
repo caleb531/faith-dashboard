@@ -61,8 +61,6 @@ function BibleVerse({ widget }: { widget: WidgetState }) {
     }
   }
 
-  console.log('render bibleverse');
-
   // Update widget list when changes are made
   useEffect(() => {
     dispatchWidgets({type: 'updateWidget', payload: state });

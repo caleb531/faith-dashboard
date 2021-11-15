@@ -23,7 +23,7 @@ function ThemeSwitcher() {
   const { app, dispatchApp } = useContext(AppContext);
 
   return (
-    <select className="theme-switcher" value={app.theme} onChange={(event) => dispatchApp({type: 'change-theme', payload: event.target.value})}>
+    <select className="theme-switcher" value={app.theme} onChange={(event) => dispatchApp({type: 'changeTheme', payload: event.target.value})}>
       {themeList.map((themeListItem) => {
         return (<option value={themeListItem.value} key={themeListItem.value}>
           {themeListItem.label}
