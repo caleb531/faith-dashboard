@@ -21,8 +21,6 @@ function Widget({ widget }: { widget: WidgetState }) {
 
   const WidgetContents = WidgetTypes[widget.type];
 
-  console.log('widget isSettingsOpen', !state.isSettingsOpen);
-
   return (
     <article className="widget" style={widgetStyles}>
       <img src="icons/settings.svg" alt="Toggle Settings" className={`widget-settings-toggle ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} onClick={(event) => dispatch({type: 'toggleSettings'})} />

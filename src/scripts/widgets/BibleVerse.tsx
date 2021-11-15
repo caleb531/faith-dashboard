@@ -70,8 +70,6 @@ function BibleVerse({ widget, widgetData }: { widget: WidgetState, widgetData: W
   }, []);
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  console.log('bible isSettingsOpen', widget.isSettingsOpen);
-
   return (
     <section className="bible-verse">
       {widget.isSettingsOpen || !state.verseQuery ? (
