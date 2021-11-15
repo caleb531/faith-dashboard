@@ -1,33 +1,30 @@
 import React, { useContext, useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
 import { AppContext } from '../AppContext';
-import { WidgetState } from '../Widget.d';
+import { WidgetState, WidgetDataState } from '../Widget.d';
 
-function BibleVerse({ widget }: { widget: WidgetState }) {
+function BibleVerse({ widget, widgetData }: { widget: WidgetState, widgetData: WidgetDataState }) {
 
   const { app, dispatchApp } = useContext(AppContext);
 
-  function reducer(state, action): WidgetState {
+  function reducer(state, action): WidgetDataState {
     switch (action.type) {
       case 'setVerseContent':
         return {
           ...state,
-          data: {
-            ...state.data,
-            isFetchingVerse: false,
-            verseContent: action.payload
-          }
+          isFetchingVerse: false,
+          verseContent: action.payload
         };
       case 'setVerseQuery':
-        return {...state, data: {...state.data, verseQuery: action.payload}};
+        return {...state, verseQuery: action.payload};
       case 'showLoading':
-        return {...state, data: {...state.data, isFetchingVerse: true}};
+        return {...state, isFetchingVerse: true};
       default:
         return state;
     }
   }
 
-  const [state, dispatch] = useReducer(reducer, widget);
+  const [state, dispatch] = useReducer(reducer, widgetData);
 
   const searchInputRef: {current: HTMLInputElement} = useRef(null);
 
@@ -63,21 +60,21 @@ function BibleVerse({ widget }: { widget: WidgetState }) {
 
   // Update widget list when changes are made
   useEffect(() => {
-    dispatchApp({type: 'updateWidget', payload: state });
-  }, [state, dispatchApp]);
+    dispatchApp({type: 'updateWidget', payload: { ...widget, data: state }});
+  }, [widget, state, dispatchApp]);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
   // Fetch verse content on initial render
-    fetchVerseContent(state.data.verseQuery);
+    fetchVerseContent(state.verseQuery);
   }, []);
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  console.log('bible isSettingsOpen', state.isSettingsOpen);
+  console.log('bible isSettingsOpen', widget.isSettingsOpen);
 
   return (
     <section className="bible-verse">
-      {state.isSettingsOpen ? (
+      {widget.isSettingsOpen || !state.verseQuery ? (
         <>
           <h3 className="bible-verse-heading">Bible Verse</h3>
           <form
@@ -87,19 +84,19 @@ function BibleVerse({ widget }: { widget: WidgetState }) {
             type="text"
             className="bible-verse-picker-search"
             name="search"
-            defaultValue={state.data.verseQuery}
+            defaultValue={state.verseQuery}
             ref={searchInputRef} />
           <button className="bible-verse-picker-submit">Submit</button>
-          {state.data.verseQuery && !(state.data.verseContent && state.data.verseContent.length) ? (
+          {state.verseQuery && !(state.verseContent && state.verseContent.length) ? (
             <p className="bible-verse-no-results">No Results Found</p>
           ) : null}
           </form>
         </>
-      ) : state.data.verseQuery && state.data.isFetchingVerse ? (
+      ) : state.verseQuery && state.isFetchingVerse ? (
         <div className="widget-loading">Loading...</div>
-      ) : state.data.verseQuery && state.data.verseContent && state.data.verseContent.length ? (
+      ) : state.verseQuery && state.verseContent && state.verseContent.length ? (
         <div className="bible-verse-content">
-          {HtmlReactParser(state.data.verseContent.join(''))}
+          {HtmlReactParser(state.verseContent.join(''))}
         </div>
       ) : null}
     </section>
