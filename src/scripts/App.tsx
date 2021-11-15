@@ -14,8 +14,16 @@ function App() {
           ...app,
           theme: action.payload
         };
-      case 'updateApp':
-        return {...app, ...action.payload};
+      case 'addWidget':
+        return {...app, widgets: [...app.widgets, action.payload]};
+      case 'updateWidget':
+        return {
+          ...app,
+          widgets: [
+            ...app.widgets.filter((widget) => widget.id !== action.payload.id),
+            action.payload
+          ]
+        };
       default:
         return app;
     }

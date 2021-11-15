@@ -1,11 +1,11 @@
 import React, { useContext, useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
-import { WidgetBoardContext } from '../WidgetBoardContext';
+import { AppContext } from '../AppContext';
 import { WidgetState } from '../Widget.d';
 
 function BibleVerse({ widget }: { widget: WidgetState }) {
 
-  const { dispatchWidgets } = useContext(WidgetBoardContext);
+  const { app, dispatchApp } = useContext(AppContext);
 
   function reducer(state, action): WidgetState {
     switch (action.type) {
@@ -63,8 +63,8 @@ function BibleVerse({ widget }: { widget: WidgetState }) {
 
   // Update widget list when changes are made
   useEffect(() => {
-    dispatchWidgets({type: 'updateWidget', payload: state });
-  }, [state, dispatchWidgets]);
+    dispatchApp({type: 'updateWidget', payload: state });
+  }, [state, dispatchApp]);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
