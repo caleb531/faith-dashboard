@@ -30,6 +30,11 @@
     opacity: 0.5;
     visibility: visible;
   }
+  .widget-settings-open &,
+  .widget-settings-open:hover & {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 .widget-loading {

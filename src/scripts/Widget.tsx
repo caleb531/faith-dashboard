@@ -22,8 +22,8 @@ function Widget({ widget }: { widget: WidgetState }) {
   const WidgetContents = WidgetTypes[widget.type];
 
   return (
-    <article className="widget" style={widgetStyles}>
-      <img src="icons/settings.svg" alt="Toggle Settings" className={`widget-settings-toggle ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} onClick={(event) => dispatch({type: 'toggleSettings'})} />
+    <article className={`widget ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} style={widgetStyles}>
+      <img src="icons/settings.svg" alt="Toggle Settings" className="widget-settings-toggle" onClick={(event) => dispatch({type: 'toggleSettings'})} />
       <WidgetContents widget={state} widgetData={state.data} />
     </article>
   );
