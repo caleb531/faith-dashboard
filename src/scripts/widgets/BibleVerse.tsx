@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime';
 import React, { useContext, useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
 import { WidgetState, WidgetDataState, WidgetContentsParameters } from '../Widget.d';
@@ -29,22 +30,20 @@ function BibleVerse({ widget, widgetData, dispatchWidget, dispatchApp }: WidgetC
   // support CORS
   const API_URL = './widgets/BibleVerse/api.php';
 
-  function fetchVerseContent(query) {
+  async function fetchVerseContent(query) {
     if (!query) {
       return;
     }
     dispatchWidget({type: 'closeSettings'});
     dispatch({type: 'showLoading'});
-    fetch(`${API_URL}?q=${encodeURIComponent(query)}`)
-      .then((verseResponse) => verseResponse.json())
-      .then((verseData) => {
-        console.log('verseData', verseData);
-        if (verseData.passages) {
-          dispatch({type: 'setVerseContent', payload: verseData.passages});
-        } else {
-          dispatch({type: 'setVerseContent', payload: null});
-        }
-      });
+    const verseResponse = await fetch(`${API_URL}?q=${encodeURIComponent(query)}`);
+    const verseData = await verseResponse.json();
+    console.log('verseData', verseData);
+    if (verseData.passages) {
+      dispatch({type: 'setVerseContent', payload: verseData.passages});
+    } else {
+      dispatch({type: 'setVerseContent', payload: null});
+    }
   }
 
   function submitVerseSearch(event) {

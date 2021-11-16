@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/scripts/index.tsx',
+  entry: ['regenerator-runtime/runtime.js', './src/scripts/index.tsx'],
   mode: 'development',
   module: {
     rules: [
