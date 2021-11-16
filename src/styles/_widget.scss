@@ -41,6 +41,13 @@
   }
 }
 
+.widget-drag-handle {
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
+}
+
 .widget-settings-open .widget-settings-toggle,
 .widget-settings-open:hover .widget-settings-toggle {
   opacity: 1;
