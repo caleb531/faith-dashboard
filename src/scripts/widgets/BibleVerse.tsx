@@ -3,7 +3,7 @@ import HtmlReactParser from 'html-react-parser';
 import { AppContext } from '../AppContext';
 import { WidgetState, WidgetDataState } from '../Widget.d';
 
-function BibleVerse({ widget, widgetData }: { widget: WidgetState, widgetData: WidgetDataState }) {
+function BibleVerse({ widget, widgetData, dispatchWidget }: { widget: WidgetState, widgetData: WidgetDataState, dispatchWidget: Function }) {
 
   const { app, dispatchApp } = useContext(AppContext);
 
@@ -36,6 +36,7 @@ function BibleVerse({ widget, widgetData }: { widget: WidgetState, widgetData: W
     if (!query) {
       return;
     }
+    dispatchWidget({type: 'closeSettings'});
     dispatch({type: 'showLoading'});
     fetch(`${API_URL}?q=${encodeURIComponent(query)}`)
       .then((verseResponse) => verseResponse.json())
