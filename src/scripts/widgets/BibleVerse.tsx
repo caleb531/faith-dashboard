@@ -63,7 +63,9 @@ function BibleVerse({ widget, widgetData, dispatchWidget, dispatchApp }: WidgetC
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
   // Fetch verse content on initial render
-    fetchVerseContent(state.verseQuery);
+    if (!state.verseContent) {
+      fetchVerseContent(state.verseQuery);
+    }
   }, []);
   /* eslint-enable react-hooks/exhaustive-deps */
 
