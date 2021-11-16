@@ -78,16 +78,16 @@ function BibleVerse({ widget, widgetData, dispatchWidget, dispatchApp }: WidgetC
           <form
             className="bible-verse-picker"
             onSubmit={(event) => submitVerseSearch((event))}>
-          <input
-            type="text"
-            className="bible-verse-picker-search"
-            name="search"
-            defaultValue={verseQuery}
-            ref={searchInputRef} />
-          <button className="bible-verse-picker-submit">Submit</button>
-          {verseQuery && !(verseContent && verseContent.length) ? (
-            <p className="bible-verse-no-results">No Results Found</p>
-          ) : null}
+            <input
+              type="text"
+              className="bible-verse-picker-search"
+              name="search"
+              defaultValue={verseQuery}
+              ref={searchInputRef} />
+            <button className="bible-verse-picker-submit">Submit</button>
+            {verseQuery && !(verseContent && verseContent.length) ? (
+              <p className="bible-verse-no-results">No Results Found</p>
+            ) : null}
           </form>
         </>
       ) : verseQuery && isFetchingVerse ? (
