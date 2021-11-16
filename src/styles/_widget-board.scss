@@ -1,8 +1,10 @@
 .widget-board {
   flex-grow: 1;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
+  align-content: flex-start;
   padding: 10px 0;
   border-radius: 20px;
   background-color: rgba(#000, 0.1);
