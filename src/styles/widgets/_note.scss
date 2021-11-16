@@ -15,4 +15,7 @@
   font-family: inherit;
   resize: none;
   color: #fff;
+  @include placeholder {
+    color: rgba(#fff, 0.5);
+  }
 }

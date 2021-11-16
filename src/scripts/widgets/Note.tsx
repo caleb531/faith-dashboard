@@ -34,6 +34,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
       <textarea
         className="note-text-box"
         onInput={changeText}
+        placeholder="Type your note here..."
         defaultValue={state.text}></textarea>
     </section>
   );
