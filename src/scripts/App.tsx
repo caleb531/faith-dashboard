@@ -2,6 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import { AppContext } from './AppContext';
 import { AppState, AppTheme } from './App.d';
 import AppHeader from './AppHeader';
+import AppFooter from './AppFooter';
 import WidgetBoard from './WidgetBoard';
 import { WidgetType } from './Widget.d';
 
@@ -81,6 +82,7 @@ function App() {
       <div className={`app theme-${app.theme}`}>
         <AppHeader />
         <WidgetBoard />
+        <AppFooter />
       </div>
     </AppContext.Provider>
   );

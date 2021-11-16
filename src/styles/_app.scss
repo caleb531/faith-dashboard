@@ -2,8 +2,7 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  padding: 20px;
-  padding-top: 0;
+  padding: 0 20px;
   &.theme-green {
     background-color: #154;
   }
@@ -13,4 +12,9 @@
   &.theme-blue {
     background-color: #14a;
   }
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
 }
