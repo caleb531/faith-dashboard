@@ -23,6 +23,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget, dispatchApp }: WidgetC
   }
 
   const [state, dispatch] = useReducer(reducer, widgetData);
+  const { verseQuery, verseContent, isFetchingVerse } = state;
 
   const searchInputRef: {current: HTMLInputElement} = useRef(null);
 
@@ -63,15 +64,15 @@ function BibleVerse({ widget, widgetData, dispatchWidget, dispatchApp }: WidgetC
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
   // Fetch verse content on initial render
-    if (!state.verseContent) {
-      fetchVerseContent(state.verseQuery);
+    if (!verseContent) {
+      fetchVerseContent(verseQuery);
     }
   }, []);
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return (
     <section className="bible-verse">
-      {widget.isSettingsOpen || !state.verseQuery ? (
+      {widget.isSettingsOpen || !verseQuery ? (
         <>
           <h3 className="bible-verse-heading">Bible Verse</h3>
           <form
@@ -81,19 +82,19 @@ function BibleVerse({ widget, widgetData, dispatchWidget, dispatchApp }: WidgetC
             type="text"
             className="bible-verse-picker-search"
             name="search"
-            defaultValue={state.verseQuery}
+            defaultValue={verseQuery}
             ref={searchInputRef} />
           <button className="bible-verse-picker-submit">Submit</button>
-          {state.verseQuery && !(state.verseContent && state.verseContent.length) ? (
+          {verseQuery && !(verseContent && verseContent.length) ? (
             <p className="bible-verse-no-results">No Results Found</p>
           ) : null}
           </form>
         </>
-      ) : state.verseQuery && state.isFetchingVerse ? (
+      ) : verseQuery && isFetchingVerse ? (
         <div className="widget-loading">Loading...</div>
-      ) : state.verseQuery && state.verseContent && state.verseContent.length ? (
+      ) : verseQuery && verseContent && verseContent.length ? (
         <div className="bible-verse-content">
-          {HtmlReactParser(state.verseContent.join(''))}
+          {HtmlReactParser(verseContent.join(''))}
         </div>
       ) : null}
     </section>
