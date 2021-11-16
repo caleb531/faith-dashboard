@@ -72,7 +72,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget, dispatchApp }: WidgetC
 
   return (
     <section className="bible-verse">
-      {widget.isSettingsOpen || !verseQuery ? (
+      {(widget.isSettingsOpen || !verseQuery || (verseContent && verseContent.length === 0)) && !isFetchingVerse ? (
         <>
           <h3 className="bible-verse-heading">Bible Verse</h3>
           <form
