@@ -1,13 +1,13 @@
 .app-header {
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 10px 20px;
 }
 
 .app-header-title {
   flex-grow: 1;
-  margin-top: 0;
+  margin: 0;
   text-align: left;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: rgba(#000, 0.6);
 }
