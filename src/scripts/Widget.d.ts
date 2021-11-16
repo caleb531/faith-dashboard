@@ -1,5 +1,6 @@
 export enum WidgetType {
-  BibleVerse = 'BibleVerse'
+  BibleVerse = 'BibleVerse',
+  Note = 'Note'
 }
 
 export interface WidgetDataState {
@@ -7,7 +8,7 @@ export interface WidgetDataState {
 }
 
 export interface WidgetState {
-  id: number;
+  id: string;
   type: WidgetType;
   width: number;
   height: number;
@@ -19,5 +20,4 @@ export interface WidgetContentsParameters {
   widget: WidgetState;
   widgetData: WidgetDataState;
   dispatchWidget: Function;
-  dispatchApp: Function;
 }

@@ -3,6 +3,7 @@
   position: relative;
   min-width: 100px;
   min-height: 100px;
+  margin: 10px;
   border-radius: 10px;
   padding: 20px;
   background-color: rgba(#000, 0.25);
@@ -22,6 +23,7 @@
   position: absolute;
   top: 5px;
   right: 5px;
+  z-index: 100;
   color: #fff;
   transition-property: opacity, visibility;
   transition-duration: 250ms;

@@ -2,8 +2,9 @@ import 'regenerator-runtime/runtime';
 import React, { useContext, useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
 import { WidgetState, WidgetDataState, WidgetContentsParameters } from '../Widget.d';
+import { useWidgetUpdater } from '../hooks';
 
-function BibleVerse({ widget, widgetData, dispatchWidget, dispatchApp }: WidgetContentsParameters) {
+function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
 
   function reducer(state, action): WidgetDataState {
     switch (action.type) {
@@ -56,10 +57,8 @@ function BibleVerse({ widget, widgetData, dispatchWidget, dispatchApp }: WidgetC
     }
   }
 
-  // Update widget list when changes are made
-  useEffect(() => {
-    dispatchApp({type: 'updateWidget', payload: { ...widget, data: state }});
-  }, [widget, state, dispatchApp]);
+  // Save updates to widget as changes are made
+  useWidgetUpdater(widget, state);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {

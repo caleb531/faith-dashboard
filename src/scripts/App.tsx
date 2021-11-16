@@ -45,13 +45,25 @@ function App() {
         theme: AppTheme.teal,
         widgets: [
           {
-            id: 1,
+            id: '2c342850-2237-4dab-8b08-b10cae7c7a4e',
             type: WidgetType.BibleVerse,
             width: 300,
             height: 200,
-            data: {
-              verseQuery: ''
-            }
+            data: {}
+          },
+          {
+            id: '50546223-76c8-4643-a402-87c4cf213849',
+            type: WidgetType.Note,
+            width: 300,
+            height: 200,
+            data: {}
+          },
+          {
+            id: '4deca405-3e4e-4baa-94c8-82ebf5bcbcde',
+            type: WidgetType.BibleVerse,
+            width: 300,
+            height: 200,
+            data: {}
           }
         ]
       };

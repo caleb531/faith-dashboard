@@ -1,5 +1,9 @@
 .widget-board {
   flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 10px 0;
   border-radius: 20px;
   background-color: rgba(#000, 0.1);
 }

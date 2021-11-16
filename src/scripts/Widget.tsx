@@ -1,11 +1,8 @@
-import React, { useContext, useReducer } from 'react';
-import { AppContext } from './AppContext';
+import React, { useReducer } from 'react';
 import { WidgetState } from './Widget.d';
 import WidgetTypes from './WidgetTypes';
 
 function Widget({ widget }: { widget: WidgetState }) {
-
-  const { app, dispatchApp } = useContext(AppContext);
 
   function reducer(state, action) {
     switch (action.type) {
@@ -31,7 +28,7 @@ function Widget({ widget }: { widget: WidgetState }) {
   return (
     <article className={`widget ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} style={widgetStyles}>
       <img src="icons/settings.svg" alt="Toggle Settings" className="widget-settings-toggle" onClick={(event) => dispatch({type: 'toggleSettings'})} />
-      <WidgetContents widget={state} widgetData={state.data} dispatchWidget={dispatch} dispatchApp={dispatchApp} />
+      <WidgetContents widget={state} widgetData={state.data} dispatchWidget={dispatch} />
     </article>
   );
 
