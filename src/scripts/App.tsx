@@ -7,25 +7,25 @@ import { WidgetType } from './Widget.d';
 
 function App() {
 
-  function reducer(state, action): AppState {
+  function reducer(app, action): AppState {
     switch (action.type) {
       case 'changeTheme':
         return {
-          ...state,
+          ...app,
           theme: action.payload
         };
       case 'addWidget':
-        return {...state, widgets: [...state.widgets, action.payload]};
+        return {...app, widgets: [...app.widgets, action.payload]};
       case 'updateWidget':
         return {
-          ...state,
+          ...app,
           widgets: [
-            ...state.widgets.filter((widget) => widget.id !== action.payload.id),
+            ...app.widgets.filter((widget) => widget.id !== action.payload.id),
             action.payload
           ]
         };
       default:
-        return state;
+        return app;
     }
   }
 
