@@ -1,11 +1,8 @@
 import React, { useContext, useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
-import { AppContext } from '../AppContext';
-import { WidgetState, WidgetDataState } from '../Widget.d';
+import { WidgetState, WidgetDataState, WidgetContentsParameters } from '../Widget.d';
 
-function BibleVerse({ widget, widgetData, dispatchWidget }: { widget: WidgetState, widgetData: WidgetDataState, dispatchWidget: Function }) {
-
-  const { app, dispatchApp } = useContext(AppContext);
+function BibleVerse({ widget, widgetData, dispatchWidget, dispatchApp }: WidgetContentsParameters) {
 
   function reducer(state, action): WidgetDataState {
     switch (action.type) {

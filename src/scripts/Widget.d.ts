@@ -14,3 +14,10 @@ export interface WidgetState {
   isSettingsOpen: boolean;
   data?: WidgetDataState;
 }
+
+export type WidgetContentsParameters = {
+  widget: WidgetState,
+  widgetData: WidgetDataState,
+  dispatchWidget: Function,
+  dispatchApp: Function
+};
