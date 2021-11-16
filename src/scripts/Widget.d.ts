@@ -15,9 +15,9 @@ export interface WidgetState {
   data?: WidgetDataState;
 }
 
-export type WidgetContentsParameters = {
-  widget: WidgetState,
-  widgetData: WidgetDataState,
-  dispatchWidget: Function,
-  dispatchApp: Function
-};
+export interface WidgetContentsParameters {
+  widget: WidgetState;
+  widgetData: WidgetDataState;
+  dispatchWidget: Function;
+  dispatchApp: Function;
+}
