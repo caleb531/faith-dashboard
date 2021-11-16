@@ -7,8 +7,10 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
 
   function reducer(state, action): WidgetDataState {
     switch (action.type) {
-      case 'changeText':
+      case 'updateText':
         return {...state, text: action.payload};
+      case 'updateFontSize':
+        return {...state, fontSize: action.payload};
       default:
         return state;
     }
@@ -16,10 +18,19 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
 
   const [state, dispatch] = useReducer(reducer, widgetData);
   const saveDelay = 300;
+  const defaultFontSize = 14;
+  const textStyles = {
+    fontSize: state.fontSize || defaultFontSize
+  };
 
   const queueChangeWhenTypingStops = debounce(function (text) {
-    dispatch({type: 'changeText', payload: text});
+    dispatch({type: 'updateText', payload: text});
   }, saveDelay);
+
+  // Register a change of the user's preferred font size for this note
+  function changeFontSize(event) {
+    dispatch({type: 'updateFontSize', payload: Number(event.target.value)});
+  }
 
   // Register a change of the user-entered text for this note
   function changeText(event) {
@@ -31,11 +42,28 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
 
   return (
     <section className="note">
-      <textarea
-        className="note-text-box"
-        onInput={changeText}
-        placeholder="Type your note here..."
-        defaultValue={state.text}></textarea>
+      {widget.isSettingsOpen ? (
+        <>
+          <h3 className="note-heading">Note</h3>
+          <form className="note-formatting">
+            <input
+              type="range"
+              className="note-formatting-font-size"
+              onInput={(event) => changeFontSize(event)}
+              min="12"
+              max="50"
+              value={state.fontSize || defaultFontSize} />
+            <div className="note-formatting-preview" style={textStyles}>Example Text</div>
+          </form>
+        </>
+      ) : (
+        <textarea
+          className="note-text-box"
+          onInput={changeText}
+          placeholder="Type your note here..."
+          defaultValue={state.text}
+          style={textStyles}></textarea>
+      )}
     </section>
   );
 

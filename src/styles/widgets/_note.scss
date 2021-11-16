@@ -1,12 +1,7 @@
-.note {
+.note-text-box {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.note-text-box {
   width: 100%;
   height: 100%;
   border-width: 0;
@@ -18,4 +13,9 @@
   @include placeholder {
     color: rgba(#fff, 0.5);
   }
+}
+
+.note-formatting-preview {
+  margin-top: 10px;
+  color: rgba(#fff, 0.5);
 }
