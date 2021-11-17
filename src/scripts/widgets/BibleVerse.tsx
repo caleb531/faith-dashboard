@@ -23,7 +23,12 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
     }
   }
 
-  const [state, dispatch] = useReducer(reducer, widgetData);
+  // Strip out transient data from state of widget data restored from local
+  function resetState(state) {
+    return {...state, verseContent: null, isFetchingVerse: false};
+  }
+
+  const [state, dispatch] = useReducer(reducer, resetState(widgetData));
   const { verseQuery, verseContent, isFetchingVerse } = state;
 
   const searchInputRef: {current: HTMLInputElement} = useRef(null);
