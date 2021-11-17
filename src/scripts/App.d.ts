@@ -8,7 +8,7 @@ export enum AppTheme {
 
 export interface AppState {
   theme: AppTheme;
-  widgets: Array<WidgetState>;
+  widgets: WidgetState[];
 }
 
 export interface AppContextValue {

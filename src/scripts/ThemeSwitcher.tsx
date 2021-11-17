@@ -3,7 +3,7 @@ import { AppContext } from './AppContext';
 import { AppTheme } from './App.d';
 import { ThemeListItem } from './ThemeSwitcher.d';
 
-const themeList: Array<ThemeListItem> = [
+const themeList: ThemeListItem[] = [
   {
     label: 'Green',
     value: AppTheme.green
