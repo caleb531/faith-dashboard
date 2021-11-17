@@ -16,7 +16,12 @@
     'q' => $_GET['q'],
     'include-footnotes' => 'false',
     'include-footnote-body' => 'false',
-    'include-verse-numbers' => 'false'
+    'include-chapter-numbers' => 'false',
+    'include-verse-numbers' => 'false',
+    'include-first-verse-numbers' => 'false',
+    'include-headings' => 'false',
+    'include-subheadings' => 'false',
+    'include-audio-link' => 'false'
   );
 
   $ch = curl_init();
