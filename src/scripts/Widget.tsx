@@ -26,7 +26,7 @@ function Widget({ widget }: { widget: WidgetState }) {
   const WidgetContents = WidgetTypes[widget.type];
 
   return (
-    <article className={`widget ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} style={widgetStyles}>
+    <article className={`widget widget-type-${widget.type} ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} style={widgetStyles}>
       <div className="widget-header">
         <img src="icons/drag-handle.svg" alt="Drag Widget" className="widget-drag-handle widget-header-control" />
         <img src="icons/settings.svg" alt="Toggle Settings" className="widget-settings-toggle widget-header-control" onClick={(event) => dispatch({type: 'toggleSettings'})} />
