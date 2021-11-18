@@ -5,6 +5,10 @@
   *:last-of-type {
     margin-bottom: 0;
   }
+  p:last-of-type,
+  p:last-of-type * {
+    font-size: 0.75rem;
+  }
 }
 .bible-verse-no-results {
   margin-bottom: 0;
