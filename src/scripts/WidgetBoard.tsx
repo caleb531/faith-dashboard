@@ -5,24 +5,9 @@ import { AppContext } from './AppContext';
 import Widget from './Widget';
 
 function groupWidgetsByColumn(widgets, columnCount) {
-  const widgetsByColumn = {};
-  let currentColumn = 1;
-  times(columnCount, (columnIndex) => {
-    widgetsByColumn[columnIndex + 1] = [];
+  return times(columnCount, (columnIndex) => {
+    return widgets.filter((widget) => widget.column === (columnIndex + 1));
   });
-  widgets.forEach((widget) => {
-    let column;
-    if (!widget.column) {
-      widget.column = currentColumn;
-      currentColumn = (currentColumn + 1) % (columnCount + 1);
-    } else {
-      column = Math.min(widget.column, columnCount);
-    }
-    if (widgetsByColumn[column]) {
-      widgetsByColumn[column].push(widget);
-    }
-  });
-  return widgetsByColumn;
 }
 
 function WidgetBoard() {
@@ -58,13 +43,13 @@ function WidgetBoard() {
       <div className="widget-board">
         {times(columnCount, (columnIndex) => {
           return (
-            <Droppable droppableId={`column-${columnIndex}`} key={columnIndex}>
+            <Droppable droppableId={`column-${columnIndex + 1}`} key={columnIndex}>
               {(provided) => (
                 <div
                   className="widget-board-column"
                   {...provided.droppableProps}
                   ref={provided.innerRef}>
-                  {widgetsByColumn[columnIndex + 1].map((widget, widgetIndex) => {
+                  {widgetsByColumn[columnIndex].map((widget, widgetIndex) => {
                     return (
                       <Draggable draggableId={widget.id} key={widget.id} index={widgetIndex}>
                         {(provided) => {
