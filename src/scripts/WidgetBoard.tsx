@@ -1,6 +1,6 @@
 import React, { useContext, useReducer, useEffect } from 'react';
 import { times } from 'lodash';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { AppContext } from './AppContext';
 import Widget from './Widget';
 
@@ -43,16 +43,22 @@ function WidgetBoard() {
         {times(columnCount, (columnIndex) => {
           return (
             <Droppable droppableId={`column-${columnIndex}`} key={columnIndex}>
-              {provided => (
+              {(provided) => (
                 <div
                   className="widget-board-column"
                   {...provided.droppableProps}
                   ref={provided.innerRef}>
                   {widgetsByColumn[columnIndex + 1].map((widget, widgetIndex) => {
-                    return <Widget
-                      widget={widget}
-                      key={widget.id}
-                      index={widgetIndex} />;
+                    return (
+                      <Draggable draggableId={widget.id} key={widget.id} index={widgetIndex}>
+                        {(provided) => {
+                          return <Widget
+                            widget={widget}
+                            index={widgetIndex}
+                            provided={provided} />;
+                        }}
+                      </Draggable>
+                    );
                   })}
                   {provided.placeholder}
                 </div>

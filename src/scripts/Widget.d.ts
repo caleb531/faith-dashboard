@@ -4,14 +4,12 @@ export enum WidgetType {
 }
 
 export interface WidgetDataState {
-  [key: string]: any
+  [key: string]: string | number | Array | object
 }
 
 export interface WidgetState {
   id: string;
   type: WidgetType;
-  width: number;
-  height: number;
   isSettingsOpen: boolean;
   column: number;
   data?: WidgetDataState;
