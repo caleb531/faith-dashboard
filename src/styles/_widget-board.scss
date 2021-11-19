@@ -3,9 +3,16 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: flex-start;
-  align-content: flex-start;
-  padding: 10px 0;
+  align-items: stretch;
+  align-content: stretch;
+}
+.widget-board-column {
+  flex-grow: 1;
+  flex-basis: 0;
+  min-width: 200px;
+  margin: 0 10px;
+  margin-bottom: 20px;
   border-radius: 20px;
+  padding: 10px 0;
   background-color: rgba(#000, 0.1);
 }

@@ -13,6 +13,7 @@ export interface WidgetState {
   width: number;
   height: number;
   isSettingsOpen: boolean;
+  column: number;
   data?: WidgetDataState;
 }
 

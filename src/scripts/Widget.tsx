@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import { WidgetState } from './Widget.d';
 import WidgetTypes from './WidgetTypes';
 
-function Widget({ widget }: { widget: WidgetState }) {
+function Widget({ widget, index }: { widget: WidgetState, index: number }) {
 
   function reducer(state, action) {
     switch (action.type) {
