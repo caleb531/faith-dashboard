@@ -6,11 +6,18 @@ import Widget from './Widget';
 
 function groupWidgetsByColumn(widgets, columnCount) {
   const widgetsByColumn = {};
+  let currentColumn = 1;
   times(columnCount, (columnIndex) => {
     widgetsByColumn[columnIndex + 1] = [];
   });
   widgets.forEach((widget) => {
-    const column = Math.min(widget.column || 1, columnCount);
+    let column;
+    if (!widget.column) {
+      widget.column = currentColumn;
+      currentColumn = (currentColumn + 1) % (columnCount + 1);
+    } else {
+      column = Math.min(widget.column, columnCount);
+    }
     if (widgetsByColumn[column]) {
       widgetsByColumn[column].push(widget);
     }

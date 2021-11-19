@@ -65,6 +65,13 @@ function App() {
             width: 300,
             height: 200,
             data: {}
+          },
+          {
+            id: '0f0923aa-6ba1-4958-9168-41a5085a57c2',
+            type: WidgetType.Note,
+            width: 300,
+            height: 200,
+            data: {}
           }
         ]
       };
