@@ -9,7 +9,11 @@ export function useWidgetUpdater(widget, widgetData) {
   useEffect(() => {
     dispatchApp({
       type: 'updateWidget',
-      payload: { ...widget, data: widgetData }
+      payload: {
+        ...widget,
+        column: widget.column || 1,
+        data: widgetData
+      }
     });
   }, [widget, widgetData, dispatchApp]);
 
