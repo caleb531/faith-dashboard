@@ -4,20 +4,10 @@ import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautif
 import { AppContext } from './AppContext';
 import Widget from './Widget';
 
-function groupWidgetsByColumn(widgets, columnCount) {
-  return times(columnCount, (columnIndex) => {
-    return widgets.filter((widget) => widget.column === (columnIndex + 1));
-  });
-}
-
 function WidgetBoard() {
 
   const { app, dispatchApp } = useContext(AppContext);
   const columnCount = 3;
-
-  const widgetsByColumn = groupWidgetsByColumn(app.widgets, columnCount);
-
-  console.log('widgetsByColumn', widgetsByColumn);
 
   function onDragEnd({ source, destination }: DropResult) {
     console.log('source', source);
@@ -33,8 +23,19 @@ function WidgetBoard() {
       return null;
     }
 
-    const sourceColumn = source.droppableId.split('-')[1];
-    const destinationColumn = destination.droppableId.split('-')[1];
+    const sourceColumn = Number(source.droppableId.match(/\d$/)[0]);
+    const destinationColumn = Number(destination.droppableId.match(/\d$/)[0]);
+
+    console.log('sourceColumn', sourceColumn);
+    console.log('destinationColumn', destinationColumn);
+
+    dispatchApp({
+      type: 'moveWidget',
+      payload: {
+        destinationIndex: destination.index,
+        destinationColumn
+      }
+    });
 
   }
 
@@ -49,18 +50,21 @@ function WidgetBoard() {
                   className="widget-board-column"
                   {...provided.droppableProps}
                   ref={provided.innerRef}>
-                  {widgetsByColumn[columnIndex].map((widget, widgetIndex) => {
-                    return (
-                      <Draggable draggableId={widget.id} key={widget.id} index={widgetIndex}>
-                        {(provided) => {
-                          return <Widget
-                            widget={widget}
-                            index={widgetIndex}
-                            provided={provided} />;
-                        }}
-                      </Draggable>
-                    );
-                  })}
+                  {app.widgets
+                    .filter((widget) => widget.column === (columnIndex + 1))
+                    .map((widget, widgetIndex) => {
+                      return (
+                        <Draggable draggableId={widget.id} key={widget.id} index={widgetIndex}>
+                          {(provided) => {
+                            return <Widget
+                              widget={widget}
+                              index={widgetIndex}
+                              provided={provided} />;
+                          }}
+                        </Draggable>
+                      );
+                    })
+                  }
                   {provided.placeholder}
                 </div>
               )}
