@@ -32,6 +32,15 @@ function App() {
             ...state.widgets.filter((_widget, w) => w > widgetIndex)
           ]
         };
+      case 'moveWidget':
+        return {
+          ...state,
+          widgets: [
+            ...state.widgets.filter((widget, w) => w < action.payload.destinationIndex && widget.id !== action.payload.widget.id),
+            {...action.payload.widget, column: action.payload.destinationColumn},
+            ...state.widgets.filter((widget, w) => w > action.payload.destinationIndex && widget.id !== action.payload.widget.id)
+          ]
+        };
       default:
         return state;
     }
