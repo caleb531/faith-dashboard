@@ -62,7 +62,6 @@ function WidgetBoard() {
                           {(provided) => {
                             return <Widget
                               widget={widget}
-                              index={w}
                               provided={provided} />;
                           }}
                         </Draggable>
