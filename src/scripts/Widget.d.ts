@@ -4,7 +4,7 @@ export enum WidgetType {
 }
 
 export interface WidgetDataState {
-  [key: string]: string | number | Array | object
+  [key: string]: any
 }
 
 export interface WidgetState {
