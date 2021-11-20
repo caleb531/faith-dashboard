@@ -27,14 +27,15 @@ function App() {
           })
         };
       case 'moveWidget':
-        return {
-          ...state,
-          widgets: [
-            ...state.widgets.filter((widget, w) => w < action.payload.destinationIndex && widget.id !== action.payload.widget.id),
-            {...action.payload.widget, column: action.payload.destinationColumn},
-            ...state.widgets.filter((widget, w) => w > action.payload.destinationIndex && widget.id !== action.payload.widget.id)
-          ]
-        };
+        const { widgetToMove, sourceIndex, destinationIndex, destinationColumn } = action.payload;
+        const newDestinationIndex = (destinationIndex > sourceIndex)
+          ? (destinationIndex - 1)
+          : destinationIndex;
+        const newWidgets = state.widgets.filter(
+          (widget) => widget.id !== widgetToMove.id);
+          newWidgets.splice(newDestinationIndex, 0, { ...widgetToMove, column: destinationColumn });
+        console.log('newWidgets', newWidgets);
+        return {...state, widgets: newWidgets};
       default:
         return state;
     }

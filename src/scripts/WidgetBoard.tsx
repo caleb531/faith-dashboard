@@ -22,11 +22,6 @@ function WidgetBoard() {
       return null;
     }
 
-    // Make sure we're actually moving the item
-    if (destination.index === source.index) {
-      return null;
-    }
-
     // Don't do anything if the item is moved to the same place
     if (source.droppableId === destination.droppableId && destination.index === source.index) {
       return null;
@@ -34,12 +29,13 @@ function WidgetBoard() {
 
     const sourceColumn = Number(source.droppableId.match(/\d$/)[0]);
     const destinationColumn = Number(destination.droppableId.match(/\d$/)[0]);
-    const widget = app.widgets[source.index];
+    const widgetToMove = app.widgets[source.index];
 
     dispatchApp({
       type: 'moveWidget',
       payload: {
-        widget,
+        widgetToMove,
+        sourceIndex: source.index,
         destinationIndex: destination.index,
         destinationColumn
       }
