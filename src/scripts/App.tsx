@@ -18,19 +18,13 @@ function App() {
       case 'addWidget':
         return {...state, widgets: [...state.widgets, action.payload]};
       case 'updateWidget':
-        // Updates an existing widget in-place, so the order of widgets is
-        // completely preserved; this is done by findind the index of the
-        // existing widget, and then rebuilding the array around that to be
-        // part of the next immutable state
-        const widgetIndex = state.widgets.findIndex(
-          (widget) => widget.id === action.payload.id);
         return {
           ...state,
-          widgets: [
-            ...state.widgets.filter((_widget, w) => w < widgetIndex),
-            action.payload,
-            ...state.widgets.filter((_widget, w) => w > widgetIndex)
-          ]
+          widgets: state.widgets.map((widget) => {
+            return (widget.id === action.payload.id)
+              ? {...action.payload}
+              : widget;
+          })
         };
       case 'moveWidget':
         return {
