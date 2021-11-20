@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { fromPairs, times } from 'lodash';
-import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import { AppContext } from './AppContext';
-import Widget from './Widget';
+import WidgetBoardColumn from './WidgetBoardColumn';
 
 function WidgetBoard() {
 
@@ -46,32 +46,13 @@ function WidgetBoard() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="widget-board">
-        {times(columnCount, (c) => {
+        {times(columnCount, (columnIndex) => {
           return (
-            <Droppable droppableId={`column-${c + 1}`} key={c}>
-              {(provided) => (
-                <div
-                  className="widget-board-column"
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}>
-                  {app.widgets
-                    .filter((widget) => widget.column === (c + 1))
-                    .map((widget, w) => {
-                      return (
-                        <Draggable draggableId={widget.id} key={widget.id} index={widgetIdsToIndices[widget.id]}>
-                          {(provided) => {
-                            return <Widget
-                              widget={widget}
-                              provided={provided} />;
-                          }}
-                        </Draggable>
-                      );
-                    })
-                  }
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
+            <WidgetBoardColumn
+              widgets={app.widgets}
+              widgetIdsToIndices={widgetIdsToIndices}
+              columnIndex={columnIndex}
+              key={columnIndex} />
           );
         })}
       </div>
