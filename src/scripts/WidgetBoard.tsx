@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { fromPairs, times } from 'lodash';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import { AppContext } from './AppContext';
