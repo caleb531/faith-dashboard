@@ -3,7 +3,7 @@ import { DraggableProvided } from 'react-beautiful-dnd';
 import { WidgetState } from './Widget.d';
 import WidgetTypes from './WidgetTypes';
 
-function Widget({ widget, provided }: { widget: WidgetState, provided: DraggableProvided, [key: string]: any }) {
+function Widget({ widget, provided }: { widget: WidgetState, provided: DraggableProvided }) {
 
   function reducer(state, action) {
     switch (action.type) {
