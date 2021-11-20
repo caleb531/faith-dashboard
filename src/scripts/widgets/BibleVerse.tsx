@@ -1,10 +1,10 @@
 import 'regenerator-runtime/runtime';
 import React, { useContext, useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
-import { WidgetState, WidgetDataState, WidgetContentsParameters } from '../Widget.d';
+import { WidgetState, WidgetDataState } from '../Widget.d';
 import { useWidgetUpdater } from '../hooks';
 
-function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
+function BibleVerse({ widget, widgetData, dispatchWidget }: { widget: WidgetState, widgetData: WidgetDataState, dispatchWidget: Function }) {
 
   function reducer(state, action): WidgetDataState {
     switch (action.type) {
