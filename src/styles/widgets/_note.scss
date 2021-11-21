@@ -1,3 +1,7 @@
+.widget-type-Note {
+  resize: vertical;
+}
+
 .note-text-box {
   position: absolute;
   top: 0;
@@ -8,7 +12,6 @@
   background: none;
   padding: 20px 30px;
   font-family: inherit;
-  resize: none;
   color: #fff;
   @include placeholder {
     color: rgba(#fff, 0.5);
