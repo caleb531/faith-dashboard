@@ -1,0 +1,35 @@
+.modal-scroll-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  // This ensures that the modal fits to its contents
+  align-items: flex-start;
+  padding: 10px;
+  z-index: 100;
+  overflow-y: scroll;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-color: $dark-50;
+}
+
+.modal {
+  width: 100%;
+  max-width: 640px;
+  z-index: 1000;
+  padding: 20px;
+  background-color: $light-100;
+  font-family: $font-family-sans-serif;
+  color: $dark-75;
+  box-shadow: 0 1px 3px $dark-25;
+}
