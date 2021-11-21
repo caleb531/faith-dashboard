@@ -13,17 +13,35 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
         return {...state, isSettingsOpen: true};
       case 'closeSettings':
         return {...state, isSettingsOpen: false};
+      case 'resizeWidget':
+        return {...state, height: action.payload};
       default:
         return state;
     }
   }
 
   const [state, dispatch] = useReducer(reducer, widget);
-
   const WidgetContents = WidgetTypes[widget.type];
 
+  function handleResize(event) {
+    const newHeight = parseFloat(event.currentTarget.style.height);
+    // Only trigger the resizeWidget action when the height actually changes
+    // (this is to prevent the action from firing whenever mouseUp is called,
+    // which could be all the time)
+    if (newHeight && newHeight !== state.height) {
+      dispatch({type: 'resizeWidget', payload: newHeight});
+    }
+  }
+
+  // Enforce any user-defined height of the widget (at least when the height is
+  // adjustable for that specific widget type)
+  const widgetStyles = {
+    height: state.height,
+    ...provided.draggableProps.style
+  };
+
   return (
-    <article className={`widget widget-type-${widget.type} ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps}>
+    <article className={`widget widget-type-${widget.type} ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} style={widgetStyles} onMouseUp={handleResize}>
       <div className="widget-header">
         <img src="icons/drag-handle.svg" alt="Drag Widget" className="widget-drag-handle widget-header-control" {...provided.dragHandleProps} />
         <img src="icons/settings.svg" alt="Toggle Settings" className="widget-settings-toggle widget-header-control" onClick={(event) => dispatch({type: 'toggleSettings'})} />
