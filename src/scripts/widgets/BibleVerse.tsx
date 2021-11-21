@@ -90,6 +90,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: { widget: WidgetStat
               className="bible-verse-picker-search"
               name="search"
               defaultValue={verseQuery}
+              placeholder="e.g. gen1.1, psa.23.1-5"
               ref={searchInputRef} />
             <button className="bible-verse-picker-submit">Submit</button>
             {verseQuery && !(verseContent && verseContent.length) ? (
