@@ -4,7 +4,7 @@ function Appfooter() {
 
   return (
     <footer className="app-footer">
-      <a href="https://calebevans.me/" className="footer-author-link">by Caleb Evans</a>
+      <span className="footer-dedication">Dedicated to Christ our Lord</span>
       &nbsp;&middot;&nbsp;
       <a href="copyright.html">Copyright</a>
     </footer>
