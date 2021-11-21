@@ -10,6 +10,9 @@
       "jsx": true
     }
   },
+  "globals": {
+    "JSX": true
+  },
   "plugins": [
     "@typescript-eslint"
   ],
