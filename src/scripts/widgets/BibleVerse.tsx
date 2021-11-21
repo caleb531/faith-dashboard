@@ -29,7 +29,11 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: { widget: WidgetStat
   }
 
   const [state, dispatch] = useReducer(reducer, resetState(widgetData));
-  const { verseQuery, verseContent, isFetchingVerse } = state;
+  const { verseQuery, verseContent, isFetchingVerse } = state as {
+    verseQuery: string,
+    verseContent: Array<string>,
+    isFetchingVerse: boolean
+  };
 
   const searchInputRef: {current: HTMLInputElement} = useRef(null);
 

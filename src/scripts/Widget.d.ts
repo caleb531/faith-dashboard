@@ -3,8 +3,10 @@ export enum WidgetType {
   Note = 'Note'
 }
 
+type WidgetDataMember = string | number | boolean | Array<WidgetDataMember> | object;
+
 export interface WidgetDataState {
-  [key: string]: any
+  [key: string]: WidgetDataMember
 }
 
 export interface WidgetState {
