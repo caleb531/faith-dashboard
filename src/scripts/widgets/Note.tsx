@@ -18,6 +18,8 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
 
   const [state, dispatch] = useReducer(reducer, widgetData);
   const { fontSize, text } = state as { fontSize: number, text: string };
+  // The amount of time (in milliseconds) after the user's last keystroke
+  // before assuming that the user has stopped typing
   const saveDelay = 300;
   const defaultFontSize = 14;
   const textStyles = {

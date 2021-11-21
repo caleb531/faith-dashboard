@@ -50,12 +50,18 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
     const verseResponse = await fetch(`${API_URL}?q=${encodeURIComponent(query)}`);
     const verseData = await verseResponse.json();
     if (verseData.passages) {
+      // The passages array is non-empty when the API found at least one result,
+      // and empty when there are no results
       dispatch({ type: 'setVerseContent', payload: verseData.passages });
     } else {
+      // If the API responds with an error, no passages array is returned
       dispatch({ type: 'setVerseContent', payload: null });
     }
   }
 
+  // In order to avoid excessive renders, the <input> for the user's verse
+  // query is uncontrolled, and instead, the user must explicitly submit the
+  // form in order for the verse query to be set on the state
   function submitVerseSearch(event) {
     event.preventDefault();
     const input = searchInputRef.current;
@@ -68,6 +74,14 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
   // Save updates to widget as changes are made
   useWidgetUpdater(widget, state);
 
+  // Per above, because we only want to fetch verse content when the form is
+  // submitted (and not always when the query changes), we only need the below
+  // useEffect hook to run on the first render, hence why the dependencies
+  // array is empty, which is the correct convention according to the React
+  // docs (source:
+  // https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect);
+  // however, the ESLint rule does not recognize this convention, and so we
+  // temporarily disable the rule to suppress the warning
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
   // Fetch verse content on initial render
