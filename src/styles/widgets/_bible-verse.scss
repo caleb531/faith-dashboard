@@ -3,8 +3,9 @@
 }
 
 .bible-verse-content {
+  font-size: $font-size-s;
   * {
-    font-size: 0.93rem;
+    font-size: inherit;
   }
   *:last-of-type {
     margin-bottom: 0;
@@ -15,10 +16,7 @@
     position: absolute;
     bottom: 10px;
     right: 10px;
-    font-size: 0.75rem;
-    * {
-      font-size: inherit;
-    }
+    font-size: $font-size-xxs;
   }
 }
 .bible-verse-no-results {
