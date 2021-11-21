@@ -3,7 +3,7 @@ import { DraggableProvided } from 'react-beautiful-dnd';
 import { WidgetState } from './Widget.d';
 import WidgetTypes from './WidgetTypes';
 
-export function reducer(state, action) {
+export function reducer(state, action): WidgetState {
   switch (action.type) {
     case 'toggleSettings':
       return { ...state, isSettingsOpen: !state.isSettingsOpen };
