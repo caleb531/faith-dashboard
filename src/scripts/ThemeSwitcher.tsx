@@ -23,13 +23,16 @@ function ThemeSwitcher() {
   const { app, dispatchApp } = useContext(AppContext);
 
   return (
-    <select className="theme-switcher" value={app.theme} onChange={(event) => dispatchApp({ type: 'changeTheme', payload: event.target.value })}>
-      {themeList.map((themeListItem) => {
-        return (<option value={themeListItem.value} key={themeListItem.value}>
-          {themeListItem.label}
-        </option>);
-      })}
-    </select>
+    <div className="theme-switcher">
+      <label className="theme-switcher-label" htmlFor="theme-switcher-dropdown">Theme:</label>&nbsp;
+      <select className="theme-switcher-dropdown" id="theme-switcher-dropdown" value={app.theme} onChange={(event) => dispatchApp({ type: 'changeTheme', payload: event.target.value })}>
+        {themeList.map((themeListItem) => {
+          return (<option value={themeListItem.value} key={themeListItem.value}>
+            {themeListItem.label}
+          </option>);
+        })}
+      </select>
+    </div>
   );
 
 }
