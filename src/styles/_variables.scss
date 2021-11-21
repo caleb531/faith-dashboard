@@ -1,7 +1,11 @@
 @use 'sass:math';
 
+$font-family-serif: 'Merriweather', 'Georgia', serif;
+$font-family-sans-serif: 'Merriweather Sans', 'Open Sans', sans-serif;
+
 // Create standard font sizes to be used across the application
 $font-size-base: 15px;
+$font-size-xxxs: #{math.div($font-size-base - 4, $font-size-base)}rem;
 $font-size-xxs: #{math.div($font-size-base - 3, $font-size-base)}rem;
 $font-size-xs: #{math.div($font-size-base - 2, $font-size-base)}rem;
 $font-size-s: #{math.div($font-size-base - 1, $font-size-base)}rem;
@@ -9,3 +13,4 @@ $font-size-m: 1rem;
 $font-size-l: #{math.div($font-size-base + 1, $font-size-base)}rem;
 $font-size-xl: #{math.div($font-size-base + 2, $font-size-base)}rem;
 $font-size-xxl: #{math.div($font-size-base + 3, $font-size-base)}rem;
+$font-size-xxxl: #{math.div($font-size-base + 4, $font-size-base)}rem;
