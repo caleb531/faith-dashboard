@@ -14,8 +14,6 @@ function WidgetBoard() {
   }));
 
   function onDragEnd({ source, destination }: DropResult) {
-    console.log('source', source);
-    console.log('destination', destination);
 
     // Make sure we have a valid destination
     if (!destination) {

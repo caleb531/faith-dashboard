@@ -35,7 +35,6 @@ function App() {
         const newWidgets = state.widgets.filter(
           (widget) => widget.id !== widgetToMove.id);
           newWidgets.splice(newDestinationIndex, 0, { ...widgetToMove, column: destinationColumn });
-        console.log('newWidgets', newWidgets);
         return {...state, widgets: newWidgets};
       default:
         return state;

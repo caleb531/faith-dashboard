@@ -45,7 +45,6 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: { widget: WidgetStat
     dispatch({type: 'showLoading'});
     const verseResponse = await fetch(`${API_URL}?q=${encodeURIComponent(query)}`);
     const verseData = await verseResponse.json();
-    console.log('verseData', verseData);
     if (verseData.passages) {
       dispatch({type: 'setVerseContent', payload: verseData.passages});
     } else {
