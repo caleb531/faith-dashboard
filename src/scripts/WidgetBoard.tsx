@@ -4,35 +4,44 @@ import { fromPairs, times } from 'lodash';
 import { AppContext } from './AppContext';
 import WidgetBoardColumn from './WidgetBoardColumn';
 
+// Convert the ID of a dropzone to a base-1 column index (e.g. "column-3" => 3)
+function getColumnFromDroppableId(droppableId) {
+  return Number(droppableId.match(/\d$/)[0]);
+}
+
 function WidgetBoard() {
 
   const { app, dispatchApp } = useContext(AppContext);
   const columnCount = 3;
 
+  // Because we widgets are stored in a one-dimensional array, yet we are
+  // iterating over the widgets column-wise, we need to precompute the absolute
+  // indices of every widget (this will allow us to perform a O(1) lookup when
+  // rendering, rather than an O(n) indexOf for each widget)
   const widgetIdsToIndices = fromPairs(app.widgets.map((widget, w) => {
     return [widget.id, w];
   }));
 
   function onDragEnd({ source, destination }: DropResult) {
 
-    // Make sure we have a valid destination
+    // Do nothing if the destination is invalid (this happens if the user drags
+    // a widget outside of one of the columns)
     if (!destination) {
       return null;
     }
 
-    // Don't do anything if the item is moved to the same place
+    // Do nothing if the item is dragged to the same place
     if (source.droppableId === destination.droppableId && destination.index === source.index) {
       return null;
     }
 
-    const sourceColumn = Number(source.droppableId.match(/\d$/)[0]);
-    const destinationColumn = Number(destination.droppableId.match(/\d$/)[0]);
-    const widgetToMove = app.widgets[source.index];
+    const sourceColumn = getColumnFromDroppableId(source.droppableId);
+    const destinationColumn = getColumnFromDroppableId(destination.droppableId);
 
     dispatchApp({
       type: 'moveWidget',
       payload: {
-        widgetToMove,
+        widgetToMove: app.widgets[source.index],
         sourceIndex: source.index,
         sourceColumn,
         destinationIndex: destination.index,
