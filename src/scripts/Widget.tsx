@@ -3,22 +3,22 @@ import { DraggableProvided } from 'react-beautiful-dnd';
 import { WidgetState } from './Widget.d';
 import WidgetTypes from './WidgetTypes';
 
-function Widget({ widget, provided }: { widget: WidgetState, provided: DraggableProvided }) {
-
-  function reducer(state, action) {
-    switch (action.type) {
-      case 'toggleSettings':
-        return {...state, isSettingsOpen: !state.isSettingsOpen};
-      case 'openSettings':
-        return {...state, isSettingsOpen: true};
-      case 'closeSettings':
-        return {...state, isSettingsOpen: false};
-      case 'resizeWidget':
-        return {...state, height: action.payload};
-      default:
-        return state;
-    }
+export function reducer(state, action) {
+  switch (action.type) {
+    case 'toggleSettings':
+      return {...state, isSettingsOpen: !state.isSettingsOpen};
+    case 'openSettings':
+      return {...state, isSettingsOpen: true};
+    case 'closeSettings':
+      return {...state, isSettingsOpen: false};
+    case 'resizeWidget':
+      return {...state, height: action.payload};
+    default:
+      return state;
   }
+}
+
+function Widget({ widget, provided }: { widget: WidgetState, provided: DraggableProvided }) {
 
   const [state, dispatch] = useReducer(reducer, widget);
   const WidgetContents = WidgetTypes[widget.type];

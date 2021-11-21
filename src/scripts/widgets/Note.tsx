@@ -3,18 +3,18 @@ import { debounce } from 'lodash';
 import { WidgetState, WidgetDataState, WidgetContentsParameters } from '../Widget.d';
 import { useWidgetUpdater } from '../hooks';
 
-function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
-
-  function reducer(state, action): WidgetDataState {
-    switch (action.type) {
-      case 'updateText':
-        return {...state, text: action.payload};
-      case 'updateFontSize':
-        return {...state, fontSize: action.payload};
-      default:
-        return state;
-    }
+export function reducer(state, action): WidgetDataState {
+  switch (action.type) {
+    case 'updateText':
+      return {...state, text: action.payload};
+    case 'updateFontSize':
+      return {...state, fontSize: action.payload};
+    default:
+      return state;
   }
+}
+
+function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
 
   const [state, dispatch] = useReducer(reducer, widgetData);
   const { fontSize, text } = state as { fontSize: number, text: string };

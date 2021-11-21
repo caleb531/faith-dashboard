@@ -4,24 +4,24 @@ import HtmlReactParser from 'html-react-parser';
 import { WidgetState, WidgetDataState, WidgetContentsParameters } from '../Widget.d';
 import { useWidgetUpdater } from '../hooks';
 
-function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
-
-  function reducer(state, action): WidgetDataState {
-    switch (action.type) {
-      case 'setVerseContent':
-        return {
-          ...state,
-          isFetchingVerse: false,
-          verseContent: action.payload
-        };
-      case 'setVerseQuery':
-        return {...state, verseQuery: action.payload};
-      case 'showLoading':
-        return {...state, isFetchingVerse: true};
-      default:
-        return state;
-    }
+export function reducer(state, action): WidgetDataState {
+  switch (action.type) {
+    case 'setVerseContent':
+      return {
+        ...state,
+        isFetchingVerse: false,
+        verseContent: action.payload
+      };
+    case 'setVerseQuery':
+      return {...state, verseQuery: action.payload};
+    case 'showLoading':
+      return {...state, isFetchingVerse: true};
+    default:
+      return state;
   }
+}
+
+function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
 
   // Strip out transient data from state of widget data restored from local
   function resetState(state) {
