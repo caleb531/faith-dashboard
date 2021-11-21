@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { AppContext } from './AppContext';
 import { WidgetState, WidgetDataState } from './Widget.d';
 
-type LocalStorageData = string | number | boolean | Array<LocalStorageData> | object;
+type LocalStorageData = string | number | boolean | LocalStorageData[] | object;
 
 export function useLocalStorage(key: string, defaultValue: LocalStorageData): [Function, Function] {
 

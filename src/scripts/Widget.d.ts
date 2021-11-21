@@ -3,7 +3,7 @@ export enum WidgetType {
   Note = 'Note'
 }
 
-type WidgetDataMember = string | number | boolean | Array<WidgetDataMember> | object;
+type WidgetDataMember = string | number | boolean | WidgetDataMember[] | object;
 
 export interface WidgetDataState {
   [key: string]: WidgetDataMember
