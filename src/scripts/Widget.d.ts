@@ -16,3 +16,9 @@ export interface WidgetState {
   column: number;
   data?: WidgetDataState;
 }
+
+export interface WidgetContentsParameters {
+  widget: WidgetState;
+  widgetData: WidgetDataState;
+  dispatchWidget: Function;
+}
