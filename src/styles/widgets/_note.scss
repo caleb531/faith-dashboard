@@ -17,17 +17,17 @@
   background: none;
   padding: 20px 30px;
   font-family: inherit;
-  color: #fff;
+  color: $light-100;
   @include placeholder {
-    color: rgba(#fff, 0.5);
+    color: $light-50;
   }
   &:focus {
     outline-width: 0;
-    box-shadow: inset 0 0 0 1px #fff;
+    box-shadow: inset 0 0 0 1px $light-100;
   }
 }
 
 .note-formatting-preview {
   margin-top: 10px;
-  color: rgba(#fff, 0.5);
+  color: $light-50;
 }

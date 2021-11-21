@@ -4,13 +4,13 @@
   text-align: center;
   padding: 0 20px;
   &.theme-green {
-    background-color: #174;
+    background-color: $green;
   }
   &.theme-teal {
-    background-color: #177;
+    background-color: $teal;
   }
   &.theme-blue {
-    background-color: #36c;
+    background-color: $blue;
   }
 }
 

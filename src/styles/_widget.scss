@@ -7,16 +7,16 @@
   margin: 10px 0;
   border-radius: 10px;
   padding: 20px;
-  background-color: rgba(#000, 0.2);
+  background-color: $dark-20;
   backdrop-filter: blur(10px);
-  box-shadow: 0 3px 5px rgba(#000, 0.1);
+  box-shadow: 0 3px 5px $dark-10;
   overflow: hidden;
-  color: #fff;
+  color: $light-100;
   h2, h3 {
     margin-top: 0;
   }
   a {
-    color: #fff;
+    color: $light-100;
   }
   // Ensure that widget settings are never clipped by a manually-set height
   &.widget-settings-open {
