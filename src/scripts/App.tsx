@@ -5,6 +5,7 @@ import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
 import WidgetBoard from './WidgetBoard';
 import { WidgetType } from './Widget.d';
+import { useLocalStorage } from './hooks';
 
 function App() {
 
@@ -41,48 +42,40 @@ function App() {
     }
   }
 
-  function restoreApp() {
-    const appState = JSON.parse(localStorage.getItem('faith-dashboard-app'));
-    if (appState) {
-      return appState;
-    } else {
-      return {
-        theme: AppTheme.teal,
-        widgets: [
-          {
-            id: '2c342850-2237-4dab-8b08-b10cae7c7a4e',
-            type: WidgetType.BibleVerse,
-            column: 1,
-            data: {}
-          },
-          {
-            id: '50546223-76c8-4643-a402-87c4cf213849',
-            type: WidgetType.Note,
-            column: 1,
-            data: {}
-          },
-          {
-            id: '4deca405-3e4e-4baa-94c8-82ebf5bcbcde',
-            type: WidgetType.BibleVerse,
-            column: 2,
-            data: {}
-          },
-          {
-            id: '0f0923aa-6ba1-4958-9168-41a5085a57c2',
-            type: WidgetType.Note,
-            column: 3,
-            data: {}
-          }
-        ]
-      };
-    }
-  }
-
+  const [restoreApp, saveApp] = useLocalStorage('faith-dashboard-app', {
+    theme: AppTheme.teal,
+    widgets: [
+      {
+        id: '2c342850-2237-4dab-8b08-b10cae7c7a4e',
+        type: WidgetType.BibleVerse,
+        column: 1,
+        data: {}
+      },
+      {
+        id: '50546223-76c8-4643-a402-87c4cf213849',
+        type: WidgetType.Note,
+        column: 1,
+        data: {}
+      },
+      {
+        id: '4deca405-3e4e-4baa-94c8-82ebf5bcbcde',
+        type: WidgetType.BibleVerse,
+        column: 2,
+        data: {}
+      },
+      {
+        id: '0f0923aa-6ba1-4958-9168-41a5085a57c2',
+        type: WidgetType.Note,
+        column: 3,
+        data: {}
+      }
+    ]
+  });
   const [app, dispatchApp] = useReducer(reducer, restoreApp());
 
   useEffect(() => {
-    localStorage.setItem('faith-dashboard-app', JSON.stringify(app));
-  }, [app]);
+    saveApp(app);
+  }, [app, saveApp]);
 
   return (
     <AppContext.Provider value={{ app, dispatchApp }}>
