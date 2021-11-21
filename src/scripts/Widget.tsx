@@ -6,13 +6,13 @@ import WidgetTypes from './WidgetTypes';
 export function reducer(state, action) {
   switch (action.type) {
     case 'toggleSettings':
-      return {...state, isSettingsOpen: !state.isSettingsOpen};
+      return { ...state, isSettingsOpen: !state.isSettingsOpen };
     case 'openSettings':
-      return {...state, isSettingsOpen: true};
+      return { ...state, isSettingsOpen: true };
     case 'closeSettings':
-      return {...state, isSettingsOpen: false};
+      return { ...state, isSettingsOpen: false };
     case 'resizeWidget':
-      return {...state, height: action.payload};
+      return { ...state, height: action.payload };
     default:
       return state;
   }
@@ -29,7 +29,7 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
     // (this is to prevent the action from firing whenever mouseUp is called,
     // which could be all the time)
     if (newHeight && newHeight !== state.height) {
-      dispatch({type: 'resizeWidget', payload: newHeight});
+      dispatch({ type: 'resizeWidget', payload: newHeight });
     }
   }
 
@@ -44,7 +44,7 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
     <article className={`widget widget-type-${widget.type} ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} style={widgetStyles} onMouseUp={handleResize}>
       <div className="widget-header">
         <img src="icons/drag-handle.svg" alt="Drag Widget" className="widget-drag-handle widget-header-control" {...provided.dragHandleProps} />
-        <img src="icons/settings.svg" alt="Toggle Settings" className="widget-settings-toggle widget-header-control" onClick={(event) => dispatch({type: 'toggleSettings'})} />
+        <img src="icons/settings.svg" alt="Toggle Settings" className="widget-settings-toggle widget-header-control" onClick={(event) => dispatch({ type: 'toggleSettings' })} />
       </div>
       <WidgetContents widget={state} widgetData={state.data} dispatchWidget={dispatch} />
     </article>

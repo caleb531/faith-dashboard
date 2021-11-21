@@ -13,9 +13,9 @@ export function reducer(state, action): WidgetDataState {
         verseContent: action.payload
       };
     case 'setVerseQuery':
-      return {...state, verseQuery: action.payload};
+      return { ...state, verseQuery: action.payload };
     case 'showLoading':
-      return {...state, isFetchingVerse: true};
+      return { ...state, isFetchingVerse: true };
     default:
       return state;
   }
@@ -25,7 +25,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
 
   // Strip out transient data from state of widget data restored from local
   function resetState(state) {
-    return {...state, verseContent: null, isFetchingVerse: false};
+    return { ...state, verseContent: null, isFetchingVerse: false };
   }
 
   const [state, dispatch] = useReducer(reducer, resetState(widgetData));
@@ -45,14 +45,14 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
     if (!query) {
       return;
     }
-    dispatchWidget({type: 'closeSettings'});
-    dispatch({type: 'showLoading'});
+    dispatchWidget({ type: 'closeSettings' });
+    dispatch({ type: 'showLoading' });
     const verseResponse = await fetch(`${API_URL}?q=${encodeURIComponent(query)}`);
     const verseData = await verseResponse.json();
     if (verseData.passages) {
-      dispatch({type: 'setVerseContent', payload: verseData.passages});
+      dispatch({ type: 'setVerseContent', payload: verseData.passages });
     } else {
-      dispatch({type: 'setVerseContent', payload: null});
+      dispatch({ type: 'setVerseContent', payload: null });
     }
   }
 
@@ -60,7 +60,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
     event.preventDefault();
     const input = searchInputRef.current;
     if (input) {
-      dispatch({type: 'setVerseQuery', payload: input.value});
+      dispatch({ type: 'setVerseQuery', payload: input.value });
       fetchVerseContent(input.value);
     }
   }

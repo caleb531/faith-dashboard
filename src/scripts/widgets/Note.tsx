@@ -6,9 +6,9 @@ import { useWidgetUpdater } from '../hooks';
 export function reducer(state, action): WidgetDataState {
   switch (action.type) {
     case 'updateText':
-      return {...state, text: action.payload};
+      return { ...state, text: action.payload };
     case 'updateFontSize':
-      return {...state, fontSize: action.payload};
+      return { ...state, fontSize: action.payload };
     default:
       return state;
   }
@@ -25,12 +25,12 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
   };
 
   const queueChangeWhenTypingStops = debounce(function (text) {
-    dispatch({type: 'updateText', payload: text});
+    dispatch({ type: 'updateText', payload: text });
   }, saveDelay);
 
   // Register a change of the user's preferred font size for this note
   function changeFontSize(event) {
-    dispatch({type: 'updateFontSize', payload: Number(event.target.value)});
+    dispatch({ type: 'updateFontSize', payload: Number(event.target.value) });
   }
 
   // Register a change of the user-entered text for this note

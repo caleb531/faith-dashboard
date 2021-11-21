@@ -11,18 +11,15 @@ import defaultApp from '../json/app.json';
 export function reducer(state, action): AppState {
   switch (action.type) {
     case 'changeTheme':
-      return {
-        ...state,
-        theme: action.payload
-      };
+      return { ...state, theme: action.payload };
     case 'addWidget':
-      return {...state, widgets: [...state.widgets, action.payload]};
+      return { ...state, widgets: [...state.widgets, action.payload] };
     case 'updateWidget':
       return {
         ...state,
         widgets: state.widgets.map((widget) => {
           return (widget.id === action.payload.id)
-            ? {...action.payload}
+            ? { ...action.payload }
             : widget;
         })
       };
@@ -34,7 +31,7 @@ export function reducer(state, action): AppState {
       const newWidgets = state.widgets.filter(
         (widget) => widget.id !== widgetToMove.id);
         newWidgets.splice(newDestinationIndex, 0, { ...widgetToMove, column: destinationColumn });
-      return {...state, widgets: newWidgets};
+      return { ...state, widgets: newWidgets };
     default:
       return state;
   }
