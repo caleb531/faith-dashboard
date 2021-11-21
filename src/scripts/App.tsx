@@ -28,8 +28,8 @@ function App() {
           })
         };
       case 'moveWidget':
-        const { widgetToMove, sourceIndex, destinationIndex, destinationColumn } = action.payload;
-        const newDestinationIndex = (destinationIndex > sourceIndex)
+        const { widgetToMove, sourceIndex, sourceColumn, destinationIndex, destinationColumn } = action.payload;
+        const newDestinationIndex = (destinationColumn !== sourceColumn && destinationIndex > sourceIndex)
           ? (destinationIndex - 1)
           : destinationIndex;
         const newWidgets = state.widgets.filter(

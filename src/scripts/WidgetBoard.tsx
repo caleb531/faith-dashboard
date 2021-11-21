@@ -34,6 +34,7 @@ function WidgetBoard() {
       payload: {
         widgetToMove,
         sourceIndex: source.index,
+        sourceColumn,
         destinationIndex: destination.index,
         destinationColumn
       }
