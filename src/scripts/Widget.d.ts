@@ -14,6 +14,7 @@ export interface WidgetState {
   type: WidgetType;
   isSettingsOpen: boolean;
   column: number;
+  height?: number;
   data?: WidgetDataState;
 }
 
