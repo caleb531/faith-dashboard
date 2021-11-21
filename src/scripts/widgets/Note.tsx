@@ -17,10 +17,11 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
   }
 
   const [state, dispatch] = useReducer(reducer, widgetData);
+  const { fontSize, text } = state as { fontSize: number, text: string };
   const saveDelay = 300;
   const defaultFontSize = 14;
   const textStyles = {
-    fontSize: state.fontSize || defaultFontSize
+    fontSize: fontSize || defaultFontSize
   };
 
   const queueChangeWhenTypingStops = debounce(function (text) {
@@ -52,7 +53,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
               onInput={(event) => changeFontSize(event)}
               min="12"
               max="50"
-              value={state.fontSize || defaultFontSize} />
+              value={fontSize || defaultFontSize} />
             <div className="note-formatting-preview" style={textStyles}>Example Text</div>
           </form>
         </>
@@ -61,7 +62,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
           className="note-text-box"
           onInput={changeText}
           placeholder="Type your note here..."
-          defaultValue={state.text}
+          defaultValue={text}
           style={textStyles}></textarea>
       )}
     </section>
