@@ -1,9 +1,10 @@
 import { useContext, useEffect } from 'react';
 import { AppContext } from './AppContext';
+import { WidgetState, WidgetDataState } from './Widget.d';
 
-export function useLocalStorage(key, defaultValue): [Function, Function] {
+type LocalStorageData = string | number | boolean | Array<LocalStorageData> | object;
 
-  type LocalStorageData = any;
+export function useLocalStorage(key: string, defaultValue: LocalStorageData): [Function, Function] {
 
   function getLocalStorage(): LocalStorageData {
     const value = JSON.parse(localStorage.getItem(key));
@@ -22,7 +23,7 @@ export function useLocalStorage(key, defaultValue): [Function, Function] {
 
 }
 
-export function useWidgetUpdater(widget, widgetData) {
+export function useWidgetUpdater(widget: WidgetState, widgetData: WidgetDataState): void {
 
   const { dispatchApp } = useContext(AppContext);
 
