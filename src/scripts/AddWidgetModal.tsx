@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Modal from './Modal';
 
-function AddWidget({ onCloseWidgetPicker }: { onCloseWidgetPicker: Function }) {
+function AddWidgetModal({ onCloseWidgetPicker }: { onCloseWidgetPicker: Function }) {
 
   return (
     <Modal onCloseModal={onCloseWidgetPicker}>
@@ -13,4 +13,4 @@ function AddWidget({ onCloseWidgetPicker }: { onCloseWidgetPicker: Function }) {
 
 }
 
-export default AddWidget;
+export default AddWidgetModal;

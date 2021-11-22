@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from './AppContext';
 import AddWidgetButton from './AddWidgetButton';
-import AddWidgetPicker from './AddWidgetPicker';
+import AddWidgetModal from './AddWidgetModal';
 
 function AddWidget() {
 
@@ -12,7 +12,7 @@ function AddWidget() {
     <div className="add-widget-area">
       <AddWidgetButton onPressButton={() => setWidgetPickerIsOpen(true)} />
       {widgetPickerIsOpen ? (
-        <AddWidgetPicker
+        <AddWidgetModal
           onCloseWidgetPicker={() => setWidgetPickerIsOpen(false)} />
       ) : null}
     </div>
