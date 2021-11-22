@@ -3,8 +3,12 @@
   align-items: center;
 }
 .theme-switcher-label {
+  display: none;
   font-size: $font-size-xxs;
   vertical-align: middle;
+  @media (min-width: $min-width-tablet) {
+    display: inline;
+  }
 }
 .theme-switcher-dropdown {
   vertical-align: middle;
