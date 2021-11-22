@@ -5,7 +5,7 @@ function Modal({ children, onCloseModal }: { children: JSX.Element | JSX.Element
   return (
     <div className="modal-scroll-container">
       <div className="modal-overlay" onClick={(event) => onCloseModal()}></div>
-      <div className="modal-contents modal">
+      <div className="modal">
         {children}
       </div>
     </div>
