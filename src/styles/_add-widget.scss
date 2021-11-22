@@ -18,9 +18,11 @@
   flex-grow: 1;
 }
 
-.add-widget-entry .add-widget-button {
-  background-color: $dark-50;
-  &:hover:active {
-    background-color: $dark-75;
+@each $theme-name, $theme-color in $theme-colors {
+  .theme-#{$theme-name} .add-widget-entry .add-widget-button {
+    background-color: $theme-color;
+    &:hover:active {
+      background-color: darken($theme-color, 10%);
+    }
   }
 }
