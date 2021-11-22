@@ -1,0 +1,22 @@
+.add-widget-button {
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: $font-size-xxxs;
+}
+.add-widget-button-icon,
+.add-widget-button-label {
+  vertical-align: middle;
+}
+.add-widget-button-icon {
+  pointer-events: none;
+  width: 20px;
+  @media (min-width: $min-width-tablet) {
+    margin-right: 2px;
+  }
+}
+.add-widget-button-label {
+  display: none;
+  @media (min-width: $min-width-tablet) {
+    display: inline;
+  }
+}

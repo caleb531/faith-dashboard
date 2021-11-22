@@ -25,11 +25,11 @@ function AddWidgetEntry({ widgetType, onAddWidget }: { widgetType: WidgetType, o
 
   return (
     <div className="add-widget-entry">
-      <header>
-        <h2>{widgetType.name}</h2>
+      <header className="add-widget-entry-header">
+        <h2 className="add-widget-entry-heading">{widgetType.name}</h2>
         <AddWidgetButton onPressButton={() => addWidget()} />
       </header>
-      <p>{widgetType.description}</p>
+      <p className="add-widget-entry-description">{widgetType.description}</p>
     </div>
   );
 

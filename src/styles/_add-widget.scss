@@ -1,27 +1,6 @@
 .add-widget-header {
   margin: 0 15px;
 }
-.add-widget-button {
-  padding: 3px 12px;
-  border-radius: 20px;
-  font-size: $font-size-xxxs;
-}
-.add-widget-button-icon,
-.add-widget-button-label {
-  vertical-align: middle;
-}
-.add-widget-button-icon {
-  width: 20px;
-  @media (min-width: $min-width-tablet) {
-    margin-right: 2px;
-  }
-}
-.add-widget-button-label {
-  display: none;
-  @media (min-width: $min-width-tablet) {
-    display: inline;
-  }
-}
 
 .add-widget-type-list,
 .add-widget-type-list-item {
@@ -29,4 +8,19 @@
   padding: 0;
   list-style-type: none;
   text-align: left;
+}
+
+.add-widget-entry-header {
+  display: flex;
+  align-items: center;
+}
+.add-widget-entry-heading {
+  flex-grow: 1;
+}
+
+.add-widget-entry .add-widget-button {
+  background-color: $dark-50;
+  &:hover:active {
+    background-color: $dark-75;
+  }
 }
