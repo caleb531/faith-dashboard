@@ -3,13 +3,13 @@ import { AppContext } from './AppContext';
 import AddWidgetButton from './AddWidgetButton';
 import AddWidgetModal from './AddWidgetModal';
 
-function AddWidget() {
+function AddWidgetHeader() {
 
   const { app, dispatchApp } = useContext(AppContext);
   const [widgetPickerIsOpen, setWidgetPickerIsOpen] = useState(false);
 
   return (
-    <div className="add-widget-area">
+    <div className="add-widget-header">
       <AddWidgetButton onPressButton={() => setWidgetPickerIsOpen(true)} />
       {widgetPickerIsOpen ? (
         <AddWidgetModal
@@ -20,4 +20,4 @@ function AddWidget() {
 
 }
 
-export default AddWidget;
+export default AddWidgetHeader;

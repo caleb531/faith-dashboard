@@ -1,5 +1,5 @@
 import React from 'react';
-import AddWidget from './AddWidget';
+import AddWidgetHeader from './AddWidgetHeader';
 import ThemeSwitcher from './ThemeSwitcher';
 
 function AppHeader() {
@@ -7,7 +7,7 @@ function AppHeader() {
   return (
     <header className="app-header">
       <h1 className="app-header-title">Faith Dashboard</h1>
-      <AddWidget />
+      <AddWidgetHeader />
       <ThemeSwitcher />
     </header>
   );
