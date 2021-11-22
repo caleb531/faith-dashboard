@@ -37,6 +37,7 @@ input[type='search'] {
   background-clip: padding-box;
 }
 button {
+  user-select: none;
   border: solid 1px transparent;
   padding-left: 15px;
   padding-right: 15px;
