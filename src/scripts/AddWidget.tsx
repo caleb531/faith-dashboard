@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from './AppContext';
+import AddWidgetButton from './AddWidgetButton';
 import AddWidgetPicker from './AddWidgetPicker';
 
 function AddWidget() {
@@ -7,15 +8,12 @@ function AddWidget() {
   const { app, dispatchApp } = useContext(AppContext);
   const [widgetPickerIsOpen, setWidgetPickerIsOpen] = useState(false);
 
-  function displayWidgetPicker() {
-    setWidgetPickerIsOpen(true);
-  }
-
   return (
     <div className="add-widget-area">
-      <button className="add-widget-button" onClick={displayWidgetPicker}>Add Widget</button>
+      <AddWidgetButton onPressButton={() => setWidgetPickerIsOpen(true)} />
       {widgetPickerIsOpen ? (
-        <AddWidgetPicker setWidgetPickerIsOpen={setWidgetPickerIsOpen} />
+        <AddWidgetPicker
+          onCloseWidgetPicker={() => setWidgetPickerIsOpen(false)} />
       ) : null}
     </div>
   );
