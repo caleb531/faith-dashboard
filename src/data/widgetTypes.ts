@@ -9,6 +9,6 @@ export default [
   {
     type: WidgetTypeId.Note,
     name: 'Note',
-    description: 'Write down anything you\'d like—a quote, a phrase, a song, or even a word from the Lord—there are no limits.'
+    description: 'Write down anything you\'d like—a quote, a phrase, a song, or even a word from the Lord. There are no limitations!'
   }
 ];
