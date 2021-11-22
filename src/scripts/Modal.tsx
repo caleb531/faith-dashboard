@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Modal({ children, onCloseModal }: { children: JSX.Element[], onCloseModal: Function }) {
+function Modal({ children, onCloseModal }: { children: JSX.Element | JSX.Element[], onCloseModal: Function }) {
 
   return (
     <div className="modal-scroll-container">
