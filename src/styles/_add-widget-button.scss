@@ -9,7 +9,9 @@
 }
 .add-widget-button-icon {
   pointer-events: none;
-  width: 20px;
+  $icon-size: 20px;
+  width: $icon-size;
+  height: $icon-size;
   @media (min-width: $min-width-tablet) {
     margin-right: 2px;
   }
