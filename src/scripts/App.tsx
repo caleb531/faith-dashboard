@@ -1,22 +1,18 @@
 import React, { useReducer, useEffect } from 'react';
 import { AppContext } from './AppContext';
-import { AppState, AppTheme } from './App.d';
+import { AppState } from '../types/App.d';
 import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
 import WidgetBoard from './WidgetBoard';
-import { WidgetType } from './Widget.d';
 import { useLocalStorage } from './hooks';
-import defaultApp from '../json/app.json';
+import defaultApp from '../data/appStateDefault';
 
 export function reducer(state, action): AppState {
   switch (action.type) {
     case 'changeTheme':
       return { ...state, theme: action.payload };
     case 'addWidget':
-      // TODO: update this logic to push the new widget to the *front* of the
-      // array, not the back, so that the new widget is clearly visible in the
-      // UI
-      return { ...state, widgets: [...state.widgets, action.payload] };
+      return { ...state, widgets: [action.payload, ...state.widgets] };
     case 'updateWidget':
       return {
         ...state,

@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
-import { WidgetState } from './Widget.d';
-import WidgetTypes from './WidgetTypes';
+import { WidgetState } from '../types/Widget.d';
+import widgetTypeMap from './widgetTypeMap';
 
 export function reducer(state, action): WidgetState {
   switch (action.type) {
@@ -21,7 +21,7 @@ export function reducer(state, action): WidgetState {
 function Widget({ widget, provided }: { widget: WidgetState, provided: DraggableProvided }) {
 
   const [state, dispatch] = useReducer(reducer, widget);
-  const WidgetContents = WidgetTypes[widget.type];
+  const WidgetContents = widgetTypeMap[widget.type];
 
   function handleResize(event) {
     const newHeight = parseFloat(event.currentTarget.style.height);

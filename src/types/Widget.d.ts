@@ -1,6 +1,12 @@
-export enum WidgetType {
+export enum WidgetTypeId {
   BibleVerse = 'BibleVerse',
   Note = 'Note'
+}
+
+interface WidgetType {
+  type: WidgetTypeId;
+  name: string;
+  description: string;
 }
 
 type WidgetDataMember = string | number | boolean | WidgetDataMember[] | object;
@@ -11,7 +17,7 @@ export interface WidgetDataState {
 
 export interface WidgetState {
   id: string;
-  type: WidgetType;
+  type: WidgetTypeId;
   isSettingsOpen: boolean;
   column: number;
   height?: number;

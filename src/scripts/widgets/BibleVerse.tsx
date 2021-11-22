@@ -1,7 +1,7 @@
 import 'regenerator-runtime/runtime';
 import React, { useContext, useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
-import { WidgetState, WidgetDataState, WidgetContentsParameters } from '../Widget.d';
+import { WidgetState, WidgetDataState, WidgetContentsParameters } from '.../types/Widget.d';
 import { useWidgetUpdater } from '../hooks';
 
 export function reducer(state, action): WidgetDataState {
