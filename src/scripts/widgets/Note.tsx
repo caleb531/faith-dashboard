@@ -1,6 +1,6 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import { debounce } from 'lodash';
-import { WidgetState, WidgetDataState, WidgetContentsParameters } from '.../types/Widget.d';
+import { WidgetDataState, WidgetContentsParameters } from '../../types/Widget.d';
 import { useWidgetUpdater } from '../hooks';
 
 export function reducer(state, action): WidgetDataState {
@@ -14,7 +14,7 @@ export function reducer(state, action): WidgetDataState {
   }
 }
 
-function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
+function BibleVerse({ widget, widgetData }: WidgetContentsParameters) {
 
   const [state, dispatch] = useReducer(reducer, widgetData);
   const { fontSize, text } = state as { fontSize: number, text: string };
