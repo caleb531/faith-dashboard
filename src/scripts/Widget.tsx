@@ -43,8 +43,8 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
   return (
     <article className={`widget widget-type-${widget.type} ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} style={widgetStyles} onMouseUp={handleResize}>
       <div className="widget-header">
-        <img src="icons/drag-handle.svg" alt="Drag Widget" className="widget-drag-handle widget-header-control" {...provided.dragHandleProps} />
-        <img src="icons/settings.svg" alt="Toggle Settings" className="widget-settings-toggle widget-header-control" onClick={(event) => dispatch({ type: 'toggleSettings' })} />
+        <img src="icons/drag-handle-light.svg" alt="Drag Widget" className="widget-drag-handle widget-header-control" {...provided.dragHandleProps} />
+        <img src="icons/settings-light.svg" alt="Toggle Settings" className="widget-settings-toggle widget-header-control" onClick={(event) => dispatch({ type: 'toggleSettings' })} />
       </div>
       <WidgetContents widget={state} widgetData={state.data} dispatchWidget={dispatch} />
     </article>

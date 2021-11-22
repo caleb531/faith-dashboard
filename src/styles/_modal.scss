@@ -24,6 +24,7 @@
 }
 
 .modal {
+  position: relative;
   width: 100%;
   max-width: 640px;
   z-index: 1000;
@@ -32,4 +33,22 @@
   font-family: $font-family-serif;
   color: $dark-75;
   box-shadow: 0 1px 3px $dark-25;
+}
+
+.modal-close-control {
+  position: absolute;
+  top: 0;
+  right: 0;
+  $close-button-size: 44px;
+  width: $close-button-size;
+  height: $close-button-size;
+  padding: 10px;
+  background: none;
+  &:hover:active {
+    background-color: $dark-20;
+  }
+}
+.modal-close-control-icon {
+  pointer-events: none;
+  width: 100%;
 }

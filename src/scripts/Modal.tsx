@@ -6,7 +6,12 @@ function Modal({ children, onCloseModal }: { children: JSX.Element | JSX.Element
     <div className="modal-scroll-container">
       <div className="modal-overlay" onClick={(event) => onCloseModal()}></div>
       <div className="modal">
-        {children}
+        <button className="modal-close-control" onClick={() => onCloseModal()}>
+          <img className="modal-close-control-icon" src="icons/close-dark.svg" alt="Close Modal" />
+        </button>
+        <div className="modal-contents">
+          {children}
+        </div>
       </div>
     </div>
   );
