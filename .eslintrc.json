@@ -112,6 +112,7 @@
     "no-multi-assign": ["error"],
     "no-plusplus": ["error"],
     "no-whitespace-before-property": ["error"],
+    "object-curly-spacing": ["error", "always"],
     "quotes": ["error", "single", {
       "allowTemplateLiterals": true
     }],
