@@ -16,6 +16,7 @@
 }
 .add-widget-entry-heading {
   flex-grow: 1;
+  line-height: 1;
 }
 
 @each $theme-name, $theme-color in $theme-colors {
