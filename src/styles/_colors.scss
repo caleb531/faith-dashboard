@@ -1,9 +1,11 @@
 @use 'sass:math';
 
 // Themes
-$green: #174;
-$teal: #177;
-$blue: #36c;
+$theme-colors: (
+  'green': #174,
+  'teal': #177,
+  'blue': #36c
+);
 
 // Dark
 $dark-100: #000;

@@ -3,14 +3,10 @@
   flex-direction: column;
   text-align: center;
   padding: 0 20px;
-  &.theme-green {
-    background-color: $green;
-  }
-  &.theme-teal {
-    background-color: $teal;
-  }
-  &.theme-blue {
-    background-color: $blue;
+  @each $theme-name, $theme-color in $theme-colors {
+    &.theme-#{$theme-name} {
+      background-color: $theme-color;
+    }
   }
 }
 
