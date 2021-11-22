@@ -8,6 +8,9 @@
   flex-grow: 1;
   margin: 0;
   text-align: left;
-  font-size: $font-size-m;
+  font-size: $font-size-xxs;
   color: $dark-50;
+  @media (min-width: $min-width-tablet) {
+    font-size: $font-size-m;
+  }
 }
