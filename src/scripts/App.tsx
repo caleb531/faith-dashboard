@@ -43,11 +43,13 @@ export function reducer(state, action): AppState {
       // Insert the widget at its new position; also update the column field on
       // the widget itself
       newWidgets.splice(newDestinationIndex, 0, { ...widgetToMove, column: destinationColumn });
-      // There are edge cases when dragging-and-dropping and adding new widgets
-      // where the widgets in a particular column are not contiguous; this
-      // scenario violates a stipulation from react-beautiful-dnd that all
-      // indices of elements in the same column be contiguous; to fix this, we
-      // simply sort the array at the end of every drag
+      // There are edge cases (when dragging-and-dropping and adding new
+      // widgets) where the widgets in a particular column are no longer
+      // contiguous in the widgets array; this scenario violates a stipulation
+      // from react-beautiful-dnd that the indices of all elements in the same
+      // column be contiguous; to fix this, we simply sort the array at the end
+      // of every drag (sidenote: Lodash's sortBy is a stable sort, so this
+      // will not alter the user order of widgets within the same column)
       return { ...state, widgets: sortBy(newWidgets, 'column') };
     default:
       return state;
