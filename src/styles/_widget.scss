@@ -46,6 +46,10 @@
     opacity: 0.5;
     visibility: visible;
   }
+  &:active {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
 }
 
 .widget-drag-handle {
