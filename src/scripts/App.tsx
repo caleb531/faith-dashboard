@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect } from 'react';
+import { sortBy } from 'lodash';
 import { AppContext } from './AppContext';
 import { AppState } from '../types/App.d';
 import AppHeader from './AppHeader';
@@ -42,7 +43,12 @@ export function reducer(state, action): AppState {
       // Insert the widget at its new position; also update the column field on
       // the widget itself
       newWidgets.splice(newDestinationIndex, 0, { ...widgetToMove, column: destinationColumn });
-      return { ...state, widgets: newWidgets };
+      // There are edge cases when dragging-and-dropping and adding new widgets
+      // where the widgets in a particular column are not contiguous; this
+      // scenario violates a stipulation from react-beautiful-dnd that all
+      // indices of elements in the same column be contiguous; to fix this, we
+      // simply sort the array at the end of every drag
+      return { ...state, widgets: sortBy(newWidgets, 'column') };
     default:
       return state;
   }
