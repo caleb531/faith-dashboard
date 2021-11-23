@@ -12,8 +12,9 @@
   box-shadow: 0 3px 5px $dark-10;
   overflow: hidden;
   color: $light-100;
-  h2, h3 {
+  h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
+    font-weight: 400;
   }
   a {
     color: $light-100;
