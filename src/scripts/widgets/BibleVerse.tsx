@@ -24,11 +24,11 @@ export function reducer(state, action): WidgetDataState {
 function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
 
   // Strip out transient data from state of widget data restored from local
-  function resetState(state) {
+  function removeTransientData(state) {
     return { ...state, verseContent: null, isFetchingVerse: false };
   }
 
-  const [state, dispatch] = useReducer(reducer, resetState(widgetData));
+  const [state, dispatch] = useReducer(reducer, removeTransientData(widgetData));
   const { verseQuery, verseContent, isFetchingVerse } = state as {
     verseQuery: string,
     verseContent: string[],
