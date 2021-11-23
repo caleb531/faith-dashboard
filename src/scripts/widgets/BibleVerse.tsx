@@ -72,24 +72,19 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
   }
 
   // Save updates to widget as changes are made
-  useWidgetUpdater(widget, state);
+  useWidgetUpdater(widget, state, {
+    // We do not want to (locally) persist the entire verse contents, so we
+    // sanitize the widget data by passing it through the same function we used
+    // to initialize it
+    sanitizeWidgetData: removeTransientData
+  });
 
-  // Per above, because we only want to fetch verse content when the form is
-  // submitted (and not always when the query changes), we only need the below
-  // useEffect hook to run on the first render, hence why the dependencies
-  // array is empty, which is the correct convention according to the React
-  // docs (source:
-  // https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect);
-  // however, the ESLint rule does not recognize this convention, and so we
-  // temporarily disable the rule to suppress the warning
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
   // Fetch verse content on initial render
     if (!verseContent) {
       fetchVerseContent(verseQuery);
     }
   }, []);
-  /* eslint-enable react-hooks/exhaustive-deps */
 
   return (
     <section className="bible-verse">

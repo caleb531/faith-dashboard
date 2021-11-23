@@ -133,6 +133,7 @@
     "no-var": ["error"],
     "prefer-const": ["error"],
     "constructor-super": ["error"],
-    "no-this-before-super": ["error"]
+    "no-this-before-super": ["error"],
+    "react-hooks/exhaustive-deps": ["off"]
   }
 }
