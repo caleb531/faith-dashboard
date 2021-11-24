@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: ['regenerator-runtime/runtime.js', './src/scripts/index.tsx'],
-  mode: 'development',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   module: {
     rules: [
       {
