@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 import { WidgetDataState, WidgetContentsParameters } from '../../types/Widget.d';
 import { useWidgetUpdater } from '../hooks';
 

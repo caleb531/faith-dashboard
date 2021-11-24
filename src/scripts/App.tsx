@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from 'react';
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 import { AppContext } from './AppContext';
 import { AppState } from '../types/App.d';
 import AppHeader from './AppHeader';
