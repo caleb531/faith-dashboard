@@ -90,7 +90,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
     <section className="bible-verse">
       {(widget.isSettingsOpen || !verseQuery || (verseContent && verseContent.length === 0)) && !isFetchingVerse ? (
         <>
-          <h3 className="bible-verse-heading">Bible Verse</h3>
+          <h2 className="bible-verse-heading">Bible Verse</h2>
           <form
             className="bible-verse-picker"
             onSubmit={(event) => submitVerseSearch((event))}>

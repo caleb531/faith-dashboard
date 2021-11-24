@@ -47,7 +47,7 @@ function BibleVerse({ widget, widgetData }: WidgetContentsParameters) {
     <section className="note">
       {widget.isSettingsOpen ? (
         <>
-          <h3 className="note-heading">Note</h3>
+          <h2 className="note-heading">Note</h2>
           <form className="note-formatting">
             <input
               type="range"

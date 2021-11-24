@@ -3,7 +3,7 @@ import React from 'react';
 function AddWidget({ onPressButton }: { onPressButton: Function }) {
 
   return (
-    <button className="add-widget-button" onClick={() => onPressButton()}>
+    <button className="add-widget-button" aria-label="Add Widget" onClick={() => onPressButton()}>
       <img
         className="add-widget-button-icon"
         src="icons/add-light.svg"

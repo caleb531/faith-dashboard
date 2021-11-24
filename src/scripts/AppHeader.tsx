@@ -5,7 +5,7 @@ import ThemeSwitcher from './ThemeSwitcher';
 function AppHeader() {
 
   return (
-    <header className="app-header">
+    <header className="app-header" role="banner">
       <h1 className="app-header-title">Faith Dashboard</h1>
       <AddWidgetHeader />
       <ThemeSwitcher />
