@@ -1,7 +1,8 @@
 {
   "sourceMap": true,
   "compilerOptions": {
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "esModuleInterop": true
   },
   "include": [
     "src/scripts/**/*",
