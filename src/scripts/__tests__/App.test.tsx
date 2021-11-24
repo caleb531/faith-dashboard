@@ -20,7 +20,7 @@ describe('App Component', function () {
 
   it('should add widget as only widget', function () {
     const app = { theme: 'teal', widgets: [] };
-    const newWidget = { id: 'a1b2c3d4', column: 1 };
+    const newWidget = { id: 'c7b6170c', column: 1 };
     expect(reducer(
       app,
       { type: 'addWidget', payload: newWidget }
@@ -28,9 +28,9 @@ describe('App Component', function () {
   });
 
   it('should add widget to front of array', function () {
-    const widgets = [{ id: 'd4c3b2a1', column: 2 }];
+    const widgets = [{ id: 'ff131e14', column: 2 }];
     const app = { theme: 'teal', widgets: widgets };
-    const newWidget = { id: 'a1b2c3d4', column: 1 };
+    const newWidget = { id: 'b78ced6e', column: 1 };
     expect(reducer(
       app,
       { type: 'addWidget', payload: newWidget }
@@ -39,9 +39,9 @@ describe('App Component', function () {
 
   it('should remove widget to front of array', function () {
     const widgets = [
-      { id: 'd4c3b2a1', column: 2 },
-      { id: 'a1b2c3d4', column: 1 },
-      { id: 'f1d2c3b4', column: 3 }
+      { id: '302e0f5f', column: 2 },
+      { id: '4ea64c56', column: 1 },
+      { id: '6d659201', column: 3 }
     ];
     const app = { theme: 'teal', widgets };
     expect(reducer(
