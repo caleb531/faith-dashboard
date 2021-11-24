@@ -26,7 +26,10 @@ function AddWidgetEntry({ widgetType, onAddWidget }: { widgetType: WidgetType, o
   return (
     <div className="add-widget-entry">
       <header className="add-widget-entry-header">
-        <h2 className="add-widget-entry-heading">{widgetType.name}</h2>
+        <h2 className="add-widget-entry-heading">
+          {widgetType.name}
+          <img src={`icons/${widgetType.icon}.svg`} alt="" className="add-widget-entry-icon" />
+        </h2>
         <AddWidgetButton onPressButton={() => addWidget()} />
       </header>
       <p className="add-widget-entry-description">{widgetType.description}</p>

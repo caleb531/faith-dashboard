@@ -10,6 +10,7 @@ export interface WidgetType {
   type: WidgetTypeId;
   name: string;
   description: string;
+  icon: string;
 }
 
 // Every widget can store arbitrary instance-specific data into a `data`

@@ -16,9 +16,13 @@
   padding-top: 15px;
 }
 .add-widget-entry-heading {
+  display: flex;
+  align-items: center;
   flex-grow: 1;
   margin: 0;
-  line-height: 1;
+}
+.add-widget-entry-icon {
+  margin: 0 10px;
 }
 
 @each $theme-name, $theme-color in $theme-colors {
