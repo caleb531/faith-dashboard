@@ -10,7 +10,7 @@
   text-align: left;
   font-size: $font-size-xxs;
   color: $dark-50;
-  @media (min-width: $min-width-tablet) {
+  @include layout(tablet) {
     font-size: $font-size-m;
   }
 }

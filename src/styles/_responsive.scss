@@ -4,3 +4,16 @@
 // mobile-first
 $min-width-tablet: 480px;
 $min-width-desktop: 768px;
+
+// A mixin to allow for easier application of the above breakpoints
+@mixin layout($layout) {
+	@if ($layout == tablet) {
+		@media (min-width: $min-width-tablet) {
+			@content;
+		}
+	} @else if ($layout == desktop) {
+		@media (min-width: $min-width-desktop) {
+			@content;
+		}
+	}
+}

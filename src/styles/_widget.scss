@@ -62,7 +62,7 @@
   &:active {
     opacity: 1 !important;
   }
-  @media (min-width: $min-width-tablet) {
+  @include layout(tablet) {
     margin-bottom: 5px;
   }
 }

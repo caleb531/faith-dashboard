@@ -11,13 +11,13 @@
   $icon-size: 20px;
   width: $icon-size;
   height: $icon-size;
-  @media (min-width: $min-width-tablet) {
+  @include layout(tablet) {
     margin-right: 2px;
   }
 }
 .add-widget-button-label {
   display: none;
-  @media (min-width: $min-width-tablet) {
+  @include layout(tablet) {
     display: inline;
   }
 }
