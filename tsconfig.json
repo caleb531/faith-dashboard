@@ -1,0 +1,11 @@
+{
+  "sourceMap": true,
+  "compilerOptions": {
+    "jsx": "preserve"
+  },
+  "include": [
+    "src/scripts/**/*",
+    "./jest-setup.ts"
+  ],
+  "exclude": ["node_modules"]
+}
