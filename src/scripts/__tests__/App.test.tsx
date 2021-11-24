@@ -38,14 +38,16 @@ describe('App Component', function () {
   });
 
   it('should remove widget to front of array', function () {
-    const widgetA = { id: 'd4c3b2a1', column: 2 };
-    const widgetB = { id: 'a1b2c3d4', column: 1 };
-    const widgetC = { id: 'f1d2c3b4', column: 3 };
-    const app = { theme: 'teal', widgets: [widgetA, widgetB, widgetC] };
+    const widgets = [
+      { id: 'd4c3b2a1', column: 2 },
+      { id: 'a1b2c3d4', column: 1 },
+      { id: 'f1d2c3b4', column: 3 }
+    ];
+    const app = { theme: 'teal', widgets };
     expect(reducer(
       app,
-      { type: 'removeWidget', payload: widgetB }
-    )).toEqual({ theme: 'teal', widgets: [widgetA, widgetC] });
+      { type: 'removeWidget', payload: { id: widgets[1].id } }
+    )).toEqual({ theme: 'teal', widgets: [widgets[0], widgets[2]] });
   });
 
 });
