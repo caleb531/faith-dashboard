@@ -7,7 +7,11 @@ function Modal({ children, onCloseModal }: { children: JSX.Element | JSX.Element
       <div className="modal-overlay" onClick={(event) => onCloseModal()}></div>
       <div className="modal">
         <button className="modal-close-control" onClick={() => onCloseModal()}>
-          <img className="modal-close-control-icon" src="icons/close-dark.svg" alt="Close Modal" />
+          <img
+            className="modal-close-control-icon"
+            src="icons/close-dark.svg"
+            alt="Close Modal"
+            draggable="false" />
         </button>
         <div className="modal-contents">
           {children}
