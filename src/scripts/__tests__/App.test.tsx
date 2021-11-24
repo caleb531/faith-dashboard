@@ -37,7 +37,7 @@ describe('App Component', function () {
     )).toEqual({ theme: 'teal', widgets: [newWidget].concat(widgets) });
   });
 
-  it('should remove widget to front of array', function () {
+  it('should remove widget', function () {
     const widgets = [
       { id: '302e0f5f', column: 2 },
       { id: '4ea64c56', column: 1 },
