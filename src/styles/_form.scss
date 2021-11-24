@@ -28,13 +28,17 @@ button {
 }
 
 input[type='text'],
-input[type='search'] {
+input[type='search'],
+textarea {
   max-width: 100%;
   padding-left: 10px;
   padding-right: 10px;
   border: solid 1px $dark-25;
   background-color: $light-100;
   background-clip: padding-box;
+  @include placeholder {
+    color: $light-50;
+  }
 }
 button {
   user-select: none;

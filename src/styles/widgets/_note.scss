@@ -18,9 +18,6 @@
   padding: 20px 30px;
   font-family: inherit;
   color: $light-100;
-  @include placeholder {
-    color: $light-50;
-  }
   &:focus {
     outline-width: 0;
     box-shadow: inset 0 0 0 1px $light-100;
