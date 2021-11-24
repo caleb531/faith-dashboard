@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
 const sass = require('gulp-sass')(require('sass'));
+const autoprefixer = require('gulp-autoprefixer');
 const webpack = require('webpack-stream');
 const webpackConfig = require('./webpack.config.js');
 const connect = require('gulp-connect');
@@ -24,6 +25,7 @@ gulp.task('sass', () => {
     .pipe(sass({
       outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded'
     }).on('error', sass.logError))
+    .pipe(autoprefixer())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist/styles'));
 });

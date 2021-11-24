@@ -65,6 +65,7 @@
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
     "gulp-connect": "^5.7.0",
     "gulp-noop": "^1.0.1",
     "gulp-sass": "^5.0.0",
