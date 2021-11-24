@@ -26,18 +26,27 @@
   }
 }
 
-.widget-header {
+.widget-controls {
   position: absolute;
-  top: 5px;
-  left: 0;
-  width: 100%;
+  $control-spacing-x: 4px;
+  $control-spacing-y: $control-spacing-x;
+  top: $control-spacing-y;
   z-index: 100;
   display: flex;
-  justify-content: space-between;
-  padding: 0 5px;
+  flex-direction: column;
+  &-left {
+    left: $control-spacing-x;
+  }
+  &-right {
+    right: $control-spacing-x;
+  }
 }
 
-.widget-header-control {
+.widget-control {
+  $control-size: 20px;
+  width: $control-size;
+  height: $control-size;
+  margin-bottom: 4px;
   opacity: 0;
   visibility: hidden;
   transition-property: opacity, visibility;
@@ -54,6 +63,9 @@
 }
 
 .widget-drag-handle {
+  $control-size: 24px;
+  width: $control-size;
+  height: $control-size;
   cursor: grab;
   &:active {
     cursor: grabbing;

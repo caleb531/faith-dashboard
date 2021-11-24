@@ -14,6 +14,11 @@ export function reducer(state, action): AppState {
       return { ...state, theme: action.payload };
     case 'addWidget':
       return { ...state, widgets: [action.payload, ...state.widgets] };
+    case 'removeWidget':
+      return {
+        ...state,
+        widgets: state.widgets.filter((widget) => widget.id !== action.payload.id)
+      };
     case 'updateWidget':
       return {
         ...state,
