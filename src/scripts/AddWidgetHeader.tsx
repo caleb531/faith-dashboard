@@ -5,7 +5,6 @@ import AddWidgetPicker from './AddWidgetPicker';
 
 function AddWidgetHeader() {
 
-  const { app, dispatchApp } = useContext(AppContext);
   const [widgetPickerIsOpen, setWidgetPickerIsOpen] = useState(false);
 
   return (
