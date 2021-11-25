@@ -83,7 +83,7 @@ export interface WidgetContentsParameters {
   // that the author can implement a settings view for their widget type, etc.;
   // however, this field is read-only, as any attempts to write to it will be
   // overwritten by the base Widget component higher up in the component tree
-  readonly widget: WidgetState;
+  widget: WidgetState;
   // The free-use data store for the implemented widget; the author can
   // freely write to this object, although per React convention, it is
   // recommended to do so with a reducer
