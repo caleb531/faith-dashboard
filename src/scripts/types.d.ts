@@ -1,5 +1,5 @@
 // A type that represents any JSON-serializable value or structure
-export type JSONSerializable = string | number | boolean | Array<JSONSerializable> | object | { [key: string]: JSONSerializable };
+export type JSONSerializable = string | number | boolean | Array<JSONSerializable> | object;
 
 // An available color theme that can be set by the user to personalize their
 // app dashboard
