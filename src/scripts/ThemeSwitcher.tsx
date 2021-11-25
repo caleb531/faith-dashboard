@@ -5,6 +5,10 @@ import { ThemeListItem } from './ThemeSwitcher.d';
 
 const themeList: ThemeListItem[] = [
   {
+    label: 'Brown',
+    value: AppTheme.brown
+  },
+  {
     label: 'Green',
     value: AppTheme.green
   },

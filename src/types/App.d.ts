@@ -3,6 +3,7 @@ import { WidgetState } from './Widget.d';
 // An available color theme that can be set by the user to personalize their
 // app dashboard
 export enum AppTheme {
+  brown = 'brown',
   green = 'green',
   teal = 'teal',
   blue = 'blue'

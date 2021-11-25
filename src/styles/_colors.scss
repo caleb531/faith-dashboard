@@ -1,6 +1,7 @@
 @use 'sass:math';
 
 // Base color palette
+$brown: #874;
 $green: #474;
 $teal: #177;
 $blue: #36a;
@@ -8,6 +9,7 @@ $red: #c33;
 
 // Themes
 $theme-colors: (
+  'brown': $brown,
   'green': $green,
   'teal': $teal,
   'blue': $blue
