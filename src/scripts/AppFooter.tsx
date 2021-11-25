@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Appfooter() {
+function AppFooter() {
 
   return (
     <footer className="app-footer">
@@ -12,4 +12,4 @@ function Appfooter() {
 
 }
 
-export default Appfooter;
+export default AppFooter;
