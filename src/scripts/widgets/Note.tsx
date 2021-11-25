@@ -1,9 +1,9 @@
 import React, { useReducer } from 'react';
 import { debounce } from 'lodash-es';
-import { WidgetDataState, WidgetContentsParameters } from '../../scripts/types.d';
+import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
 import { useWidgetUpdater } from '../hooks';
 
-export function reducer(state, action): WidgetDataState {
+export function reducer(state: WidgetDataState, action: StateAction): WidgetDataState {
   switch (action.type) {
     case 'updateText':
       return { ...state, text: action.payload };
@@ -31,13 +31,13 @@ function BibleVerse({ widget, widgetData }: WidgetContentsParameters) {
   }, saveDelay);
 
   // Register a change of the user's preferred font size for this note
-  function changeFontSize(event) {
-    dispatch({ type: 'updateFontSize', payload: Number(event.target.value) });
+  function changeFontSize(event: React.FormEvent): void {
+    dispatch({ type: 'updateFontSize', payload: Number((event.target as HTMLInputElement).value) });
   }
 
   // Register a change of the user-entered text for this note
-  function changeText(event) {
-    queueChangeWhenTypingStops(event.target.value);
+  function changeText(event: React.FormEvent): void {
+    queueChangeWhenTypingStops((event.target as HTMLTextAreaElement).value);
   }
 
     // Save updates to widget as changes are made

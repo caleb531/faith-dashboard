@@ -1,10 +1,10 @@
 import React, { useReducer, useContext } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import { AppContext } from './AppContext';
-import { WidgetState, ReducerAction } from '../scripts/types.d';
+import { WidgetState, StateAction } from './types.d';
 import widgetTypeMap from './widgetTypeMap';
 
-export function reducer(state: WidgetState, action: ReducerAction): WidgetState {
+export function reducer(state: WidgetState, action: StateAction): WidgetState {
   switch (action.type) {
     case 'toggleSettings':
       return { ...state, isSettingsOpen: !state.isSettingsOpen };
@@ -13,7 +13,7 @@ export function reducer(state: WidgetState, action: ReducerAction): WidgetState 
     case 'closeSettings':
       return { ...state, isSettingsOpen: false };
     case 'resizeWidget':
-      return { ...state, height: action.payload };
+      return { ...state, height: action.payload as number };
     default:
       return state;
   }
@@ -34,8 +34,8 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
     }
   }
 
-  function handleResize({ currentTarget }: { currentTarget: HTMLElement }) {
-    const newHeight = parseFloat(currentTarget.style.height);
+  function handleResize(event: React.MouseEvent) {
+    const newHeight = parseFloat((event.currentTarget as HTMLElement).style.height);
     // Only trigger the resizeWidget action when the height actually changes
     // (this is to prevent the action from firing whenever mouseUp is called,
     // which could be all the time)

@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { AppContext } from './AppContext';
-import { WidgetState, WidgetDataState } from '../scripts/types.d';
+import { WidgetState, WidgetDataState } from './types.d';
 
 type LocalStorageData = string | number | boolean | LocalStorageData[] | object;
 

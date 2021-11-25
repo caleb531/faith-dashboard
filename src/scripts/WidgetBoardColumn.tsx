@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { WidgetState } from '../scripts/types.d';
+import { WidgetState } from './types.d';
 import Widget from './Widget';
 
 function WidgetBoardColumn({ widgets, widgetIdsToIndices, columnIndex }: { widgets: WidgetState[], widgetIdsToIndices: {[key: string]: number}, columnIndex: number }) {

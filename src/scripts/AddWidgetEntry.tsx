@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { AppContext } from './AppContext';
-import { WidgetType } from '../scripts/types.d';
+import { WidgetType, WidgetState } from './types.d';
 import AddWidgetButton from './AddWidgetButton';
 
 function AddWidgetEntry({ widgetType, onAddWidget }: { widgetType: WidgetType, onAddWidget: Function }) {
@@ -17,7 +17,7 @@ function AddWidgetEntry({ widgetType, onAddWidget }: { widgetType: WidgetType, o
         type: widgetType.type,
         column: 1,
         data: {}
-      }
+      } as WidgetState
     });
     // Call user-defined callback passed to component
     onAddWidget();

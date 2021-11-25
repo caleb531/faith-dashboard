@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { AppTheme } from '../types';
-import { WidgetState } from '../../scripts/types.d';
+import { WidgetState } from '../types.d';
 import '@testing-library/jest-dom';
 import App, { reducer } from '../App';
 

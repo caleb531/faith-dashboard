@@ -1,38 +1,41 @@
 import React, { useReducer, useEffect } from 'react';
 import { sortBy } from 'lodash-es';
 import { AppContext } from './AppContext';
-import { AppState, ReducerAction } from './types';
+import { AppState, StateAction, AppTheme, WidgetState, WidgetMoveParameters } from './types';
 import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
 import WidgetBoard from './WidgetBoard';
 import { useLocalStorage } from './hooks';
 import defaultApp from '../data/appStateDefault';
 
-export function reducer(state: AppState, action: ReducerAction): AppState {
+export function reducer(state: AppState, action: StateAction): AppState {
   switch (action.type) {
     case 'changeTheme':
-      return { ...state, theme: action.payload };
+      return { ...state, theme: action.payload as AppTheme };
     case 'addWidget':
-      return { ...state, widgets: [action.payload, ...state.widgets] };
+      const newWidget = action.payload as WidgetState;
+      return { ...state, widgets: [newWidget, ...state.widgets] };
     case 'removeWidget':
+      const widgetToRemove = action.payload as WidgetState;
       return {
         ...state,
-        widgets: state.widgets.filter((widget) => widget.id !== action.payload.id)
+        widgets: state.widgets.filter((widget) => widget.id !== widgetToRemove.id)
       };
     case 'updateWidget':
+      const widgetToUpdate = action.payload as WidgetState;
       return {
         ...state,
         widgets: state.widgets.map((widget) => {
           // Only touch the reference of the widget we wish to update
-          if (widget.id === action.payload.id) {
-            return { ...action.payload };
+          if (widget.id === widgetToUpdate.id) {
+            return { ...widgetToUpdate };
           } else {
             return widget;
           }
         })
       };
     case 'moveWidget':
-      const { widgetToMove, sourceIndex, sourceColumn, destinationIndex, destinationColumn } = action.payload;
+      const { widgetToMove, sourceIndex, sourceColumn, destinationIndex, destinationColumn } = action.payload as WidgetMoveParameters;
       // The destination index from react-beautiful-dnd assumes that the
       // widget-to-move is still at the source index; however, because the
       // widget is about to be removed from its original position (via the

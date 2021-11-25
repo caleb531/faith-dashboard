@@ -1,10 +1,10 @@
 import 'regenerator-runtime/runtime';
 import React, { useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
-import { WidgetDataState, WidgetContentsParameters } from '../../scripts/types.d';
+import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
 import { useWidgetUpdater } from '../hooks';
 
-export function reducer(state, action): WidgetDataState {
+export function reducer(state: WidgetDataState, action: StateAction): WidgetDataState {
   switch (action.type) {
     case 'setVerseContent':
       return {
@@ -24,7 +24,7 @@ export function reducer(state, action): WidgetDataState {
 function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
 
   // Strip out transient data from state of types.data restored from local
-  function removeTransientData(state) {
+  function removeTransientData(state: WidgetDataState): WidgetDataState {
     return { ...state, verseContent: null, isFetchingVerse: false };
   }
 
@@ -41,7 +41,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
   // support CORS
   const API_URL = './widgets/BibleVerse/api.php';
 
-  async function fetchVerseContent(query) {
+  async function fetchVerseContent(query: string): Promise<Array<string>> {
     if (!query) {
       return;
     }
@@ -57,12 +57,13 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
       // If the API responds with an error, no passages array is returned
       dispatch({ type: 'setVerseContent', payload: null });
     }
+    return verseData;
   }
 
   // In order to avoid excessive renders, the <input> for the user's verse
   // query is uncontrolled, and instead, the user must explicitly submit the
   // form in order for the verse query to be set on the state
-  function submitVerseSearch(event) {
+  function submitVerseSearch(event: React.FormEvent): void {
     event.preventDefault();
     const input = searchInputRef.current;
     if (input) {

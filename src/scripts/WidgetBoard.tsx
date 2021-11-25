@@ -5,7 +5,7 @@ import { AppContext } from './AppContext';
 import WidgetBoardColumn from './WidgetBoardColumn';
 
 // Convert the ID of a dropzone to a base-1 column index (e.g. "column-3" => 3)
-function getColumnFromDroppableId(droppableId: string) {
+function getColumnFromDroppableId(droppableId: string): number {
   return Number(droppableId.match(/\d$/)[0]);
 }
 
