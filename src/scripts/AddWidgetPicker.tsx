@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from './Modal';
 import AddWidgetEntry from './AddWidgetEntry';
 import widgetTypes from '../data/widgetTypes';
-import { WidgetType } from '../types/Widget';
+import { WidgetType } from '../scripts/types';
 
 function AddWidgetPicker({ onCloseWidgetPicker }: { onCloseWidgetPicker: Function }) {
 

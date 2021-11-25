@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { AppContext } from './AppContext';
-import { WidgetState, WidgetDataState } from '../types/Widget.d';
+import { WidgetState, WidgetDataState } from '../scripts/types.d';
 
 type LocalStorageData = string | number | boolean | LocalStorageData[] | object;
 
@@ -34,7 +34,7 @@ export function useWidgetUpdater(widget: WidgetState, widgetData: WidgetDataStat
       payload: {
         ...widget,
         column: widget.column || 1,
-        // Optionally strip out undesired values from the widget data before it
+        // Optionally strip out undesired values from the types.data before it
         // is persisted
         data: sanitizeWidgetData ? sanitizeWidgetData(widgetData) : widgetData
       }

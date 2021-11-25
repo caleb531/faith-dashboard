@@ -1,10 +1,10 @@
 import React, { useReducer, useContext } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import { AppContext } from './AppContext';
-import { WidgetState } from '../types/Widget.d';
+import { WidgetState, ReducerAction } from '../scripts/types.d';
 import widgetTypeMap from './widgetTypeMap';
 
-export function reducer(state, action): WidgetState {
+export function reducer(state: WidgetState, action: ReducerAction): WidgetState {
   switch (action.type) {
     case 'toggleSettings':
       return { ...state, isSettingsOpen: !state.isSettingsOpen };
@@ -34,8 +34,8 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
     }
   }
 
-  function handleResize(event) {
-    const newHeight = parseFloat(event.currentTarget.style.height);
+  function handleResize({ currentTarget }: { currentTarget: HTMLElement }) {
+    const newHeight = parseFloat(currentTarget.style.height);
     // Only trigger the resizeWidget action when the height actually changes
     // (this is to prevent the action from firing whenever mouseUp is called,
     // which could be all the time)
@@ -52,14 +52,14 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
   };
 
   return (
-    <article className={`widget widget-type-${widget.type} ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} style={widgetStyles} onMouseUp={handleResize}>
+    <article className={`widget widget-type-${widget.type} ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} style={widgetStyles} onMouseUp={(event) => handleResize(event)}>
       <div className="widget-controls widget-controls-left">
-        <div className="widget-drag-handle widget-control" {...provided.dragHandleProps}>
+        <div className="types.drag-handle widget-control" {...provided.dragHandleProps}>
           <img
             src="icons/drag-handle-light.svg"
             alt="Drag Widget"
             draggable="false"
-            className="widget-drag-handle-icon widget-control-icon" />
+            className="types.drag-handle-icon widget-control-icon" />
         </div>
       </div>
       <div className="widget-controls widget-controls-right">

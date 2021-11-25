@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { AppContext } from './AppContext';
-import { AppTheme } from '../types/App.d';
-import { ThemeListItem } from '../types/ThemeSwitcher.d';
+import { AppTheme } from './types';
+import { ThemeListItem } from '../scripts/types.d';
 
 const themeList: ThemeListItem[] = [
   {

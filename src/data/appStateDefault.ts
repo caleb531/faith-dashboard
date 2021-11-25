@@ -1,5 +1,4 @@
-import { AppTheme } from '../types/App.d';
-import { WidgetTypeId } from '../types/Widget.d';
+import { AppTheme, WidgetTypeId } from '../scripts/types';
 
 export default {
   theme: AppTheme.teal,

@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import { debounce } from 'lodash-es';
-import { WidgetDataState, WidgetContentsParameters } from '../../types/Widget.d';
+import { WidgetDataState, WidgetContentsParameters } from '../../scripts/types.d';
 import { useWidgetUpdater } from '../hooks';
 
 export function reducer(state, action): WidgetDataState {

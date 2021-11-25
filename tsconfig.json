@@ -2,6 +2,7 @@
   "sourceMap": true,
   "compilerOptions": {
     "jsx": "preserve",
+    "noImplicitAny": true,
     "esModuleInterop": true
   },
   "include": [

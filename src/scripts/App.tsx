@@ -1,14 +1,14 @@
 import React, { useReducer, useEffect } from 'react';
 import { sortBy } from 'lodash-es';
 import { AppContext } from './AppContext';
-import { AppState } from '../types/App.d';
+import { AppState, ReducerAction } from './types';
 import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
 import WidgetBoard from './WidgetBoard';
 import { useLocalStorage } from './hooks';
 import defaultApp from '../data/appStateDefault';
 
-export function reducer(state, action): AppState {
+export function reducer(state: AppState, action: ReducerAction): AppState {
   switch (action.type) {
     case 'changeTheme':
       return { ...state, theme: action.payload };

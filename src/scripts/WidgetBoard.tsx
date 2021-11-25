@@ -5,7 +5,7 @@ import { AppContext } from './AppContext';
 import WidgetBoardColumn from './WidgetBoardColumn';
 
 // Convert the ID of a dropzone to a base-1 column index (e.g. "column-3" => 3)
-function getColumnFromDroppableId(droppableId) {
+function getColumnFromDroppableId(droppableId: string) {
   return Number(droppableId.match(/\d$/)[0]);
 }
 
@@ -22,7 +22,7 @@ function WidgetBoard() {
     return [widget.id, w];
   }));
 
-  function onDragEnd({ source, destination }: DropResult) {
+  function onDragEnd({ source, destination }: DropResult): void {
 
     // Do nothing if the destination is invalid (this happens if the user drags
     // a widget outside of one of the columns)
