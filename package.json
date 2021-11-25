@@ -53,7 +53,7 @@
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.3",
-    "@types/lodash": "^4.14.177",
+    "@types/lodash-es": "^4.17.5",
     "@types/react": "^17.0.34",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "^17.0.11",
