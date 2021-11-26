@@ -3,6 +3,7 @@ import React, { useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
 import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
 import { useWidgetUpdater } from '../hooks';
+import LoadingIndicator from '../LoadingIndicator';
 
 export function reducer(state: WidgetDataState, action: StateAction): WidgetDataState {
   switch (action.type) {
@@ -110,7 +111,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
           </form>
         </>
       ) : verseQuery && isFetchingVerse ? (
-        <div className="widget-loading">Loading...</div>
+        <LoadingIndicator />
       ) : verseQuery && verseContent && verseContent.length ? (
         <div className="bible-verse-content">
           {HtmlReactParser(verseContent.join(''))}
