@@ -1,9 +1,10 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { render } from '@testing-library/react';
-import { AppTheme } from '../types';
-import { WidgetState } from '../types.d';
+import { AppTheme, WidgetState } from '../types.d';
 import '@testing-library/jest-dom';
 import App, { reducer } from '../App';
+import { createWidget } from './__utils__/test-utils';
 
 describe('App Component', function () {
 
@@ -22,7 +23,7 @@ describe('App Component', function () {
 
   it('should add widget as only widget', function () {
     const app = { theme: AppTheme.teal, widgets: [] as WidgetState[] };
-    const newWidget = { id: 'c7b6170c', column: 1 };
+    const newWidget = createWidget({ column: 1 });
     expect(reducer(
       app,
       { type: 'addWidget', payload: newWidget }
@@ -30,9 +31,9 @@ describe('App Component', function () {
   });
 
   it('should add widget to front of array', function () {
-    const widgets = [{ id: 'ff131e14', column: 2 }] as WidgetState[];
+    const widgets = [createWidget({ column: 2 })] as WidgetState[];
     const app = { theme: AppTheme.teal, widgets: widgets };
-    const newWidget = { id: 'b78ced6e', column: 1 };
+    const newWidget = createWidget({ column: 1 });
     expect(reducer(
       app,
       { type: 'addWidget', payload: newWidget }
@@ -41,9 +42,9 @@ describe('App Component', function () {
 
   it('should remove widget', function () {
     const widgets = [
-      { id: '302e0f5f', column: 2 },
-      { id: '4ea64c56', column: 1 },
-      { id: '6d659201', column: 3 }
+      createWidget({ column: 2 }),
+      createWidget({ column: 1 }),
+      createWidget({ column: 3 })
     ] as WidgetState[];
     const app = { theme: AppTheme.teal, widgets };
     expect(reducer(
@@ -54,10 +55,10 @@ describe('App Component', function () {
 
   it('should move widget from column 1 to column 2', function () {
     const widgets = [
-      { id: 'd727c02c', column: 1 },
-      { id: 'd2e61962', column: 1 },
-      { id: 'b15c6d16', column: 2 },
-      { id: '2d0cd20c', column: 3 }
+      createWidget({ column: 1 }),
+      createWidget({ column: 1 }),
+      createWidget({ column: 2 }),
+      createWidget({ column: 3 })
     ] as WidgetState[];
     const app = { theme: AppTheme.teal, widgets };
     expect(reducer(
