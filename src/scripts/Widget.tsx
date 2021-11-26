@@ -54,12 +54,12 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
   return (
     <article className={`widget widget-type-${widget.type} ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} style={widgetStyles} onMouseUp={(event) => handleResize(event)}>
       <div className="widget-controls widget-controls-left">
-        <div className="types.drag-handle widget-control" {...provided.dragHandleProps}>
+        <div className="widget-drag-handle widget-control" {...provided.dragHandleProps}>
           <img
             src="icons/drag-handle-light.svg"
             alt="Drag Widget"
             draggable="false"
-            className="types.drag-handle-icon widget-control-icon" />
+            className="widget-drag-handle-icon widget-control-icon" />
         </div>
       </div>
       <div className="widget-controls widget-controls-right">

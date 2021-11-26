@@ -34,8 +34,8 @@ export function useWidgetUpdater(widget: WidgetState, widgetData: WidgetDataStat
       payload: {
         ...widget,
         column: widget.column || 1,
-        // Optionally strip out undesired values from the types.data before it
-        // is persisted
+        // Optionally strip out undesired values from the widget data before
+        // the data is persisted
         data: sanitizeWidgetData ? sanitizeWidgetData(widgetData) : widgetData
       }
     });

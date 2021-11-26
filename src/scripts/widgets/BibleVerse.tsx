@@ -23,7 +23,7 @@ export function reducer(state: WidgetDataState, action: StateAction): WidgetData
 
 function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
 
-  // Strip out transient data from state of types.data restored from local
+  // Strip out transient data from state of widget data restored from local
   function removeTransientData(state: WidgetDataState): WidgetDataState {
     return { ...state, verseContent: null, isFetchingVerse: false };
   }
@@ -75,7 +75,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
   // Save updates to widget as changes are made
   useWidgetUpdater(widget, state, {
     // We do not want to (locally) persist the entire verse contents, so we
-    // sanitize the types.data by passing it through the same function we used
+    // sanitize the widget data by passing it through the same function we used
     // to initialize it
     sanitizeWidgetData: removeTransientData
   });
