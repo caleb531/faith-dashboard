@@ -1,6 +1,24 @@
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .loading-indicator {
   flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.loading-indicator-icon {
+  $icon-max-size: 100px;
+  $icon-size: 50%;
+  max-width: $icon-max-size;
+  max-height: $icon-max-size;
+  width: $icon-size;
+  height: $icon-size;
+  fill: none;
+  stroke: $light-50;
+  stroke-width: 3;
+  animation: spin 1000ms linear infinite forwards;
 }
