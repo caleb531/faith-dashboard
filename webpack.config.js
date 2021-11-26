@@ -1,4 +1,5 @@
 const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   entry: ['regenerator-runtime/runtime.js', './src/scripts/index.tsx'],
@@ -17,5 +18,8 @@ module.exports = {
     path: path.resolve(__dirname, 'dist/'),
     publicPath: '/dist/scripts',
     filename: 'bundle.js'
-  }
+  },
+  plugins: [
+    // new BundleAnalyzerPlugin()
+  ]
 };
