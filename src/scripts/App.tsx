@@ -1,12 +1,14 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, Suspense } from 'react';
 import { sortBy } from 'lodash-es';
 import { AppContext } from './AppContext';
 import { AppState, StateAction, AppTheme, WidgetState, WidgetMoveParameters } from './types';
 import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
-import WidgetBoard from './WidgetBoard';
 import { useLocalStorage } from './hooks';
 import defaultApp from '../data/appStateDefault';
+
+// Lazy-load the widget board since react-beautiful-dnd is a large dependency
+const WidgetBoard = React.lazy(() => import('./WidgetBoard'));
 
 export function reducer(state: AppState, action: StateAction): AppState {
   switch (action.type) {
@@ -74,12 +76,15 @@ function App() {
     saveApp(app);
   }, [app, saveApp]);
 
+
   return (
     <AppContext.Provider value={{ app, dispatchApp }}>
       <div className={`app theme-${app.theme}`}>
-        <AppHeader />
-        <WidgetBoard />
-        <AppFooter />
+        <Suspense fallback={<div>Loading...</div>}>
+          <AppHeader />
+          <WidgetBoard />
+          <AppFooter />
+        </Suspense>
       </div>
     </AppContext.Provider>
   );
