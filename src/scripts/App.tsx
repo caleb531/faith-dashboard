@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, Suspense } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { sortBy } from 'lodash-es';
 import { AppContext } from './AppContext';
 import { AppState, StateAction, AppTheme, WidgetState, WidgetMoveParameters } from './types';
@@ -80,11 +80,11 @@ function App() {
   return (
     <AppContext.Provider value={{ app, dispatchApp }}>
       <div className={`app theme-${app.theme}`}>
-        <Suspense fallback={<div>Loading...</div>}>
+        <React.Suspense fallback={<div>Loading...</div>}>
           <AppHeader />
           <WidgetBoard />
           <AppFooter />
-        </Suspense>
+        </React.Suspense>
       </div>
     </AppContext.Provider>
   );
