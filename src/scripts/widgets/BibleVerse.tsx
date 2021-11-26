@@ -74,7 +74,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
     if (!verseContent) {
       fetchVerseContent(verseQuery);
     }
-  }, [verseQuery]);
+  }, [verseQuery, verseContent]);
 
   return (
     <section className="bible-verse">
