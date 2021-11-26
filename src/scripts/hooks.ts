@@ -23,7 +23,7 @@ export function useLocalStorage(key: string, defaultValue: LocalStorageData): [F
 
 }
 
-export function useWidgetUpdater(widget: WidgetState, widgetData: WidgetDataState, { sanitizeWidgetData }: { sanitizeWidgetData?: Function } = {}): void {
+export function useWidgetUpdater(widget: WidgetState, widgetData: WidgetDataState): void {
 
   const { dispatchApp } = useContext(AppContext);
 
@@ -36,7 +36,7 @@ export function useWidgetUpdater(widget: WidgetState, widgetData: WidgetDataStat
         column: widget.column || 1,
         // Optionally strip out undesired values from the widget data before
         // the data is persisted
-        data: sanitizeWidgetData ? sanitizeWidgetData(widgetData) : widgetData
+        data: widgetData
       }
     });
   }, [widget, widgetData]);

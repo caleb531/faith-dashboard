@@ -14,7 +14,7 @@ export function reducer(state: WidgetDataState, action: StateAction): WidgetData
         verseContent: action.payload
       };
     case 'setVerseQuery':
-      return { ...state, verseQuery: action.payload };
+      return { ...state, verseQuery: action.payload, verseContent: null };
     case 'showLoading':
       return { ...state, isFetchingVerse: true };
     default:
@@ -24,15 +24,10 @@ export function reducer(state: WidgetDataState, action: StateAction): WidgetData
 
 function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
 
-  // Strip out transient data from state of widget data restored from local
-  function removeTransientData(state: WidgetDataState): WidgetDataState {
-    return { ...state, verseContent: null, isFetchingVerse: false };
-  }
-
-  const [state, dispatch] = useReducer(reducer, removeTransientData(widgetData));
+  const [state, dispatch] = useReducer(reducer, widgetData);
   const { verseQuery, verseContent, isFetchingVerse } = state as {
     verseQuery: string,
-    verseContent: string[],
+    verseContent: string,
     isFetchingVerse: boolean
   };
 
@@ -53,7 +48,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
     if (verseData.passages) {
       // The passages array is non-empty when the API found at least one result,
       // and empty when there are no results
-      dispatch({ type: 'setVerseContent', payload: verseData.passages });
+      dispatch({ type: 'setVerseContent', payload: verseData.passages.join('') });
     } else {
       // If the API responds with an error, no passages array is returned
       dispatch({ type: 'setVerseContent', payload: null });
@@ -69,28 +64,21 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
     const input = searchInputRef.current;
     if (input) {
       dispatch({ type: 'setVerseQuery', payload: input.value });
-      fetchVerseContent(input.value);
     }
   }
 
   // Save updates to widget as changes are made
-  useWidgetUpdater(widget, state, {
-    // We do not want to (locally) persist the entire verse contents, so we
-    // sanitize the widget data by passing it through the same function we used
-    // to initialize it
-    sanitizeWidgetData: removeTransientData
-  });
+  useWidgetUpdater(widget, state);
 
   useEffect(() => {
-  // Fetch verse content on initial render
     if (!verseContent) {
       fetchVerseContent(verseQuery);
     }
-  }, []);
+  }, [verseQuery]);
 
   return (
     <section className="bible-verse">
-      {(widget.isSettingsOpen || !verseQuery || (verseContent && verseContent.length === 0)) && !isFetchingVerse ? (
+      {(widget.isSettingsOpen || !verseQuery || !verseContent) && !isFetchingVerse ? (
         <>
           <h2 className="bible-verse-heading">Bible Verse</h2>
           <form
@@ -105,7 +93,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
               required
               ref={searchInputRef} />
             <button className="bible-verse-picker-submit">Submit</button>
-            {verseQuery && !(verseContent && verseContent.length) ? (
+            {verseQuery && verseContent === '' ? (
               <p className="bible-verse-no-results">No Results Found</p>
             ) : null}
           </form>
@@ -114,7 +102,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
         <LoadingIndicator />
       ) : verseQuery && verseContent && verseContent.length ? (
         <div className="bible-verse-content">
-          {HtmlReactParser(verseContent.join(''))}
+          {HtmlReactParser(verseContent)}
         </div>
       ) : null}
     </section>
