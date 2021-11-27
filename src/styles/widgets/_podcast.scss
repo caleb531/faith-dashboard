@@ -1,5 +1,17 @@
 .widget-type-Podcast {
-  height: auto !important;
+  resize: vertical;
+  padding-bottom: 0;
+}
+
+.podcast,
+.podcast-view,
+.podcast-episodes {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  // This prevents the flex children from overflowing their container; see
+  // <https://stackoverflow.com/a/66689926/560642>
+  min-height: 0;
 }
 
 .podcast .loading-indicator {
@@ -7,4 +19,21 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.podcast-episodes,
+.podcast-episode {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.podcast-episodes {
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+h3.podcast-episode-title {
+  font-size: $font-size-xxs;
 }

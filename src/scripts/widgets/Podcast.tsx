@@ -38,12 +38,12 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
   async function fetchPodcastDetails(podcastUrl: string): Promise<object> {
     dispatchWidget({ type: 'closeSettings' });
     dispatch({ type: 'showLoading' });
-    const verseResponse = await fetch(`${API_URL}?podcast_url=${encodeURIComponent(podcastUrl)}`);
-    const podcastDetails = await verseResponse.json() as object;
+    const podcastResponse = await fetch(`${API_URL}?podcast_url=${encodeURIComponent(podcastUrl)}`);
+    const podcastDetails = await podcastResponse.json();
     if (podcastDetails) {
       dispatch({
         type: 'setPodcastDetails',
-        payload: podcastDetails
+        payload: podcastDetails.channel
       });
     } else {
       dispatch({ type: 'setPodcastDetails', payload: null });
@@ -89,7 +89,18 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
       ) : podcastUrl && isFetchingPodcast ? (
         <LoadingIndicator />
       ) : podcastUrl && podcastDetails ? (
-        <h2 className="podcast-title">{podcastDetails.channel.title}</h2>
+        <div className="podcast-view">
+          <h2 className="podcast-title">{podcastDetails.title}</h2>
+          <ol className="podcast-episodes">
+            {podcastDetails.item.map((episode: any) => {
+              return (
+                <div className="podcast-episode" key={episode.guid}>
+                  <h3 className="podcast-episode-title">{episode.title}</h3>
+                </div>
+              );
+            })}
+          </ol>
+        </div>
       ) : null}
     </section>
   );
