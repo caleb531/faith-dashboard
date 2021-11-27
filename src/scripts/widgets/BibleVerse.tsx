@@ -105,7 +105,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
         </form>
       ) : verseQuery && isFetchingVerse ? (
         <LoadingIndicator />
-      ) : verseQuery && verseContent && verseContent.length ? (
+      ) : verseQuery && verseContent ? (
         <div className="bible-verse-content">
           {HtmlReactParser(verseContent)}
         </div>
