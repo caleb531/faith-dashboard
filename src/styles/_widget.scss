@@ -55,6 +55,8 @@
   // Use pointer-events:none instead of visibility:hidden so that screen
   // readers can still detect these controls for accessibility
   pointer-events: none;
+  // Disable text selection of these controls
+  user-select: none;
   $control-size: 20px;
   width: $control-size;
   height: $control-size;
