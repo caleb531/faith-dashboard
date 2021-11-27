@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime';
 import React, { useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
 import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
