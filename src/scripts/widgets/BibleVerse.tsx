@@ -27,7 +27,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
   // If the user refreshes the page while a verse is loading, it will still be
   // persisted to localStorage by the time we load the page again, so we must
   // reset the flag to prevent the widget from loading infinitely
-  const [state, dispatch] = useReducer(reducer, { widgetData, isFetchingVerse: false });
+  const [state, dispatch] = useReducer(reducer, { ...widgetData, isFetchingVerse: false });
   const { verseQuery, verseContent, isFetchingVerse } = state as {
     verseQuery: string,
     verseContent: string,
