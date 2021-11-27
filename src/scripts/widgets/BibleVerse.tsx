@@ -48,7 +48,10 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
     if (verseData.passages) {
       // The passages array is non-empty when the API found at least one result,
       // and empty when there are no results
-      dispatch({ type: 'setVerseContent', payload: verseData.passages.join('') });
+      dispatch({
+        type: 'setVerseContent',
+        payload: (verseData.passages as string[]).join('')
+      });
     } else {
       // If the API responds with an error, no passages array is returned
       dispatch({ type: 'setVerseContent', payload: null });
