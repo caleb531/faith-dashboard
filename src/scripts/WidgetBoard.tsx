@@ -14,10 +14,12 @@ function WidgetBoard() {
   const { app, dispatchApp } = useContext(AppContext);
   const columnCount = 3;
 
-  // Because we widgets are stored in a one-dimensional array, yet we are
-  // iterating over the widgets column-wise, we need to precompute the absolute
-  // indices of every widget (this will allow us to perform a O(1) lookup when
-  // rendering, rather than an O(n) indexOf for each widget)
+  // Because the widgets are stored in a one-dimensional array, yet we are
+  // iterating over the widgets column-wise, we need to pre-compute the
+  // absolute indices of every widget; these absolute indices will be used
+  // later to handle drag-and-drop (pre-computing these values will allow us to
+  // perform an O(1) lookup when rendering each widget, rather than an O(n)
+  // indexOf at the time each widget is rendered)
   const widgetIdsToIndices = fromPairs(app.widgets.map((widget, w) => {
     return [widget.id, w];
   }));
