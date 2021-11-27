@@ -39,7 +39,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
   // support CORS
   const API_URL = './widgets/BibleVerse/api.php';
 
-  async function fetchVerseContent(query: string): Promise<{ passages: Array<string> }> {
+  async function fetchVerseContent(query: string): Promise<object> {
     dispatchWidget({ type: 'closeSettings' });
     dispatch({ type: 'showLoading' });
     const verseResponse = await fetch(`${API_URL}?q=${encodeURIComponent(query)}`);
