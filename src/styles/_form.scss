@@ -31,14 +31,14 @@ input[type='text'],
 input[type='search'],
 textarea {
   max-width: 100%;
-  width: 150px;
+  width: 160px;
   padding-left: 10px;
   padding-right: 10px;
   border: solid 1px $dark-25;
   background-color: $light-100;
   background-clip: padding-box;
   @include placeholder {
-    color: $light-50;
+    color: $dark-50;
   }
 }
 button {
