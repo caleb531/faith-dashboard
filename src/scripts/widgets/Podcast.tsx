@@ -82,6 +82,7 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
           className="podcast-url"
           name="search"
           defaultValue={podcastUrl}
+          placeholder="An Apple Podcast URL"
           required
           ref={podcastUrlInputRef} />
           <button className="podcast-url-submit">Submit</button>
