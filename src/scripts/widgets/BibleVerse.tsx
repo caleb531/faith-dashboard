@@ -86,25 +86,23 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
   return (
     <section className="bible-verse">
       {(widget.isSettingsOpen || !verseQuery || !verseContent) && !isFetchingVerse ? (
-        <>
+        <form
+          className="bible-verse-settings"
+          onSubmit={(event) => submitVerseSearch((event))}>
           <h2 className="bible-verse-heading">Bible Verse</h2>
-          <form
-            className="bible-verse-picker"
-            onSubmit={(event) => submitVerseSearch((event))}>
-            <input
-              type="text"
-              className="bible-verse-picker-search"
-              name="search"
-              defaultValue={verseQuery}
-              placeholder="e.g. gen1.1, psa.23.1-5"
-              required
-              ref={searchInputRef} />
-            <button className="bible-verse-picker-submit">Submit</button>
-            {verseQuery && verseContent === '' ? (
-              <p className="bible-verse-no-results">No Results Found</p>
-            ) : null}
-          </form>
-        </>
+          <input
+            type="text"
+            className="bible-verse-search"
+            name="search"
+            defaultValue={verseQuery}
+            placeholder="e.g. gen1.1, psa.23.1-5"
+            required
+            ref={searchInputRef} />
+          <button className="bible-verse-search-submit">Submit</button>
+          {verseQuery && verseContent === '' ? (
+            <p className="bible-verse-no-results">No Results Found</p>
+          ) : null}
+        </form>
       ) : verseQuery && isFetchingVerse ? (
         <LoadingIndicator />
       ) : verseQuery && verseContent && verseContent.length ? (
