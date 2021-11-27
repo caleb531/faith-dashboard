@@ -14,7 +14,7 @@ export function reducer(state: WidgetDataState, action: StateAction): WidgetData
   }
 }
 
-function BibleVerse({ widget, widgetData }: WidgetContentsParameters) {
+function Note({ widget, widgetData }: WidgetContentsParameters) {
 
   const [state, dispatch] = useReducer(reducer, widgetData);
   const { fontSize, text } = state as { fontSize: number, text: string };
@@ -72,4 +72,4 @@ function BibleVerse({ widget, widgetData }: WidgetContentsParameters) {
 
 }
 
-export default BibleVerse;
+export default Note;
