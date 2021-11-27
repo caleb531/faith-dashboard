@@ -24,7 +24,10 @@ export function reducer(state: WidgetDataState, action: StateAction): WidgetData
 
 function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
 
-  const [state, dispatch] = useReducer(reducer, widgetData);
+  // If the user refreshes the page while a verse is loading, it will still be
+  // persisted to localStorage by the time we load the page again, so we must
+  // reset the flag to prevent the widget from loading infinitely
+  const [state, dispatch] = useReducer(reducer, { widgetData, isFetchingVerse: false });
   const { verseQuery, verseContent, isFetchingVerse } = state as {
     verseQuery: string,
     verseContent: string,
@@ -38,9 +41,6 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
   const API_URL = './widgets/BibleVerse/api.php';
 
   async function fetchVerseContent(query: string): Promise<Array<string>> {
-    if (!query) {
-      return;
-    }
     dispatchWidget({ type: 'closeSettings' });
     dispatch({ type: 'showLoading' });
     const verseResponse = await fetch(`${API_URL}?q=${encodeURIComponent(query)}`);
@@ -71,10 +71,15 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
   useWidgetUpdater(widget, state);
 
   useEffect(() => {
-    if (!verseContent) {
+    // Fetch under the following conditions:
+    // 1. The verse query must be set
+    // 2. There is no cached verse content to pull from
+    // 3. Any previous fetch did not turn up empty
+    // 4. No verse content is currently being fetched
+    if (verseQuery && !verseContent && verseContent !== '' && !isFetchingVerse) {
       fetchVerseContent(verseQuery);
     }
-  }, [verseQuery, verseContent]);
+  }, [verseQuery, verseContent, isFetchingVerse]);
 
   return (
     <section className="bible-verse">
