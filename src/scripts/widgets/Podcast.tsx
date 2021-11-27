@@ -25,7 +25,7 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
   const [state, dispatch] = useReducer(reducer, { ...widgetData, isFetchingPodcast: false });
   const { podcastUrl, podcastDetails, isFetchingPodcast } = state as {
     podcastUrl: string,
-    podcastDetails: object,
+    podcastDetails: any,
     isFetchingPodcast: boolean
   };
 
@@ -88,6 +88,8 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
         </form>
       ) : podcastUrl && isFetchingPodcast ? (
         <LoadingIndicator />
+      ) : podcastUrl && podcastDetails ? (
+        <h2 className="podcast-title">{podcastDetails.channel.title}</h2>
       ) : null}
     </section>
   );
