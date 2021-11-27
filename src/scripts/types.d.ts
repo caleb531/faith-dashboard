@@ -41,7 +41,8 @@ interface ThemeListItem {
 // The string identifier of an implemented widget type
 export enum WidgetTypeId {
   BibleVerse = 'BibleVerse',
-  Note = 'Note'
+  Note = 'Note',
+  Podcast = 'Podcast'
 }
 
 // The metadata for a widget type, much of which is displayed in the "Add
