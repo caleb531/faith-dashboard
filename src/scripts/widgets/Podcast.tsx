@@ -96,9 +96,9 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
           <ol className="podcast-episode-entries">
             {podcastDetails.item.map((episode: PodcastEpisode) => {
               return (
-                <div className="podcast-episode-entry" key={episode.guid}>
+                <li className="podcast-episode-entry" key={episode.guid}>
                   <h3 className="podcast-episode-entry-title">{episode.title}</h3>
-                </div>
+                </li>
               );
             })}
           </ol>
