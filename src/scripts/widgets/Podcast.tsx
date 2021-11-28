@@ -93,11 +93,11 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
       ) : podcastUrl && podcastDetails ? (
         <div className="podcast-view">
           <h2 className="podcast-title">{podcastDetails.title}</h2>
-          <ol className="podcast-episodes">
+          <ol className="podcast-episode-entries">
             {podcastDetails.item.map((episode: PodcastEpisode) => {
               return (
-                <div className="podcast-episode" key={episode.guid}>
-                  <h3 className="podcast-episode-title">{episode.title}</h3>
+                <div className="podcast-episode-entry" key={episode.guid}>
+                  <h3 className="podcast-episode-entry-title">{episode.title}</h3>
                 </div>
               );
             })}
