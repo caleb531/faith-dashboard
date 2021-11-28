@@ -1,14 +1,15 @@
 $theme-switcher-border-radius: 20px;
+$theme-switcher-padding-y: 5px;
 
 .theme-switcher {
   display: flex;
-  align-items: center;
+  align-items: stretch;
 }
 .theme-switcher-label {
   display: flex;
   align-items: center;
-  padding: 5px 0;
-  padding-left: 8px;
+  padding: $theme-switcher-padding-y 0;
+  padding-left: 10px;
   padding-right: 5px;
   background-color: $dark-30;
   $theme-switcher-border-radius: 20px;
@@ -17,20 +18,39 @@ $theme-switcher-border-radius: 20px;
   line-height: 1;
 }
 .theme-switcher-icon {
-  $icon-size: 16px;
+  $icon-size: 18px;
   width: $icon-size;
   height: $icon-size;
 }
 .theme-switcher-dropdown {
+  -webkit-appearance: none;
+  -moz-appearance: none;
   border-width: 0;
-  border-top-right-radius: $theme-switcher-border-radius;
-  border-bottom-right-radius: $theme-switcher-border-radius;
-  padding: 5px 0;
-  padding-right: 5px;
+  padding: $theme-switcher-padding-y 0;
   background-color: $dark-30;
   line-height: 1;
   font-family: $font-family-sans-serif;
   font-size: $font-size-xxxs;
   color: $light-100;
   vertical-align: middle;
+}
+.theme-switcher-arrow {
+  border-top-right-radius: $theme-switcher-border-radius;
+  border-bottom-right-radius: $theme-switcher-border-radius;
+}
+
+.theme-switcher-expander {
+  padding: $theme-switcher-padding-y 5px;
+  background-color: $dark-30;
+  $theme-switcher-border-radius: 20px;
+  border-top-right-radius: $theme-switcher-border-radius;
+  border-bottom-right-radius: $theme-switcher-border-radius;
+  line-height: 1;
+}
+.theme-switcher-expander-icon {
+  position: relative;
+  top: 1px;
+  $icon-size: 18px;
+  width: $icon-size;
+  height: $icon-size;
 }

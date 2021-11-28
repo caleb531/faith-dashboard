@@ -40,6 +40,12 @@ function ThemeSwitcher() {
           </option>);
         })}
       </select>
+      <label className="theme-switcher-expander" htmlFor="theme-switcher-dropdown">
+        <img
+          className="theme-switcher-expander-icon"
+          src="icons/chevron-down-light.svg"
+          alt="" />
+      </label>
     </div>
   );
 
