@@ -41,6 +41,7 @@
   padding: 7px 10px;
   cursor: pointer;
   background-color: $dark-10;
+  transition: background-color 150ms ease-in-out;
   $entry-border-radius: 5px;
   &:first-child {
     border-top-left-radius: $entry-border-radius;
