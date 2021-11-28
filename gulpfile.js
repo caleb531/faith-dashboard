@@ -55,8 +55,8 @@ gulp.task('build', gulp.parallel(
 ));
 gulp.task('watch', gulp.parallel(
   'assets:watch',
-  'sass:watch',
-  'webpack:watch'
+  'webpack:watch',
+  'sass:watch'
 ));
 gulp.task('build:watch', gulp.series(
   'build',
