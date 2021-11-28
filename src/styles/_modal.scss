@@ -29,6 +29,7 @@
   width: 100%;
   max-width: 640px;
   z-index: 1000;
+  border-radius: 10px;
   padding: 30px;
   background-color: $light-100;
   font-family: $font-family-serif;
@@ -43,6 +44,7 @@
   $close-button-size: 44px;
   width: $close-button-size;
   height: $close-button-size;
+  border-bottom-left-radius: 10px;
   padding: 10px;
   background: none;
   &:hover {
