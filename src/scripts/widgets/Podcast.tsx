@@ -1,4 +1,5 @@
 import React, { useReducer, useRef, useEffect } from 'react';
+import moment from 'moment';
 import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
 import { PodcastDetails, PodcastEpisode } from './Podcast.d';
 import { useWidgetUpdater } from '../hooks';
@@ -98,6 +99,7 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
               return (
                 <li className="podcast-episode-entry" key={episode.guid}>
                   <h3 className="podcast-episode-entry-title">{episode.title}</h3>
+                  <span className="podcast-episode-entry-date">{moment(episode.pubDate).fromNow()}</span>
                 </li>
               );
             })}

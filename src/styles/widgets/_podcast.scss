@@ -41,9 +41,6 @@
   padding: 7px 10px;
   cursor: pointer;
   background-color: $dark-10;
-  &:nth-child(odd) {
-    background-color: $dark-20;
-  }
   $entry-border-radius: 5px;
   &:first-child {
     border-top-left-radius: $entry-border-radius;
@@ -56,9 +53,6 @@
   }
   &:hover {
     background-color: $dark-30;
-    h3 {
-      font-weight: 400;
-    }
   }
 }
 
@@ -66,4 +60,10 @@ h3.podcast-episode-entry-title {
   margin: 0;
   font-size: $font-size-xxxs;
   font-weight: 300;
+}
+
+.podcast-episode-entry-date {
+  font-weight: 300;
+  font-size: $font-size-xxxs;
+  color: $light-50;
 }
