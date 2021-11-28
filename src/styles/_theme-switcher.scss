@@ -1,56 +1,32 @@
-$theme-switcher-border-radius: 20px;
-$theme-switcher-padding-y: 5px;
-
 .theme-switcher {
   display: flex;
   align-items: stretch;
 }
+// Hide the label from the UI but still be readable by screen readers
 .theme-switcher-label {
-  display: flex;
-  align-items: center;
-  padding: $theme-switcher-padding-y 0;
-  padding-left: 10px;
-  padding-right: 5px;
-  background-color: $dark-30;
-  $theme-switcher-border-radius: 20px;
-  border-top-left-radius: $theme-switcher-border-radius;
-  border-bottom-left-radius: $theme-switcher-border-radius;
-  line-height: 1;
-}
-.theme-switcher-icon {
-  $icon-size: 18px;
-  width: $icon-size;
-  height: $icon-size;
+  position: absolute;
+  top: -1000px;
+  left: -10000px;
 }
 .theme-switcher-dropdown {
   -webkit-appearance: none;
   -moz-appearance: none;
   border-width: 0;
-  padding: $theme-switcher-padding-y 0;
+  border-radius: 20px;
+  padding: 8px 0;
+  padding-left: 35px;
+  padding-right: 25px;
   background-color: $dark-30;
   line-height: 1;
   font-family: $font-family-sans-serif;
   font-size: $font-size-xxxs;
   color: $light-100;
   vertical-align: middle;
-}
-.theme-switcher-arrow {
-  border-top-right-radius: $theme-switcher-border-radius;
-  border-bottom-right-radius: $theme-switcher-border-radius;
-}
-
-.theme-switcher-expander {
-  padding: $theme-switcher-padding-y 5px;
-  background-color: $dark-30;
-  $theme-switcher-border-radius: 20px;
-  border-top-right-radius: $theme-switcher-border-radius;
-  border-bottom-right-radius: $theme-switcher-border-radius;
-  line-height: 1;
-}
-.theme-switcher-expander-icon {
-  position: relative;
-  top: 1px;
+  background-image:
+    url('../icons/paintbrush-light.svg'),
+    url('../icons/chevron-down-light.svg');
+  background-repeat: no-repeat;
   $icon-size: 18px;
-  width: $icon-size;
-  height: $icon-size;
+  background-size: $icon-size;
+  background-position: left 10px center, right 5px center;
 }

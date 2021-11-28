@@ -7,8 +7,10 @@ function AppHeader() {
   return (
     <header className="app-header" role="banner">
       <h1 className="app-header-title">Faith Dashboard</h1>
-      <AddWidgetHeader />
-      <ThemeSwitcher />
+      <div className="app-header-controls">
+        <AddWidgetHeader />
+        <ThemeSwitcher />
+      </div>
     </header>
   );
 

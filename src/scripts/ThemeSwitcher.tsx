@@ -28,10 +28,7 @@ function ThemeSwitcher() {
   return (
     <div className="theme-switcher">
       <label className="theme-switcher-label" htmlFor="theme-switcher-dropdown">
-        <img
-          className="theme-switcher-icon"
-          src="icons/paintbrush-light.svg"
-          alt="Theme" />
+        Theme:
       </label>
       <select className="theme-switcher-dropdown" id="theme-switcher-dropdown" value={app.theme} onChange={(event) => dispatchApp({ type: 'changeTheme', payload: event.target.value })}>
         {themeList.map((themeListItem) => {
@@ -40,12 +37,6 @@ function ThemeSwitcher() {
           </option>);
         })}
       </select>
-      <label className="theme-switcher-expander" htmlFor="theme-switcher-dropdown">
-        <img
-          className="theme-switcher-expander-icon"
-          src="icons/chevron-down-light.svg"
-          alt="" />
-      </label>
     </div>
   );
 
