@@ -1,5 +1,6 @@
 import React, { useReducer, useRef, useEffect } from 'react';
 import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
+import { PodcastDetails, PodcastEpisode } from './Podcast.d';
 import { useWidgetUpdater } from '../hooks';
 import LoadingIndicator from '../LoadingIndicator';
 
@@ -25,7 +26,7 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
   const [state, dispatch] = useReducer(reducer, { ...widgetData, isFetchingPodcast: false });
   const { podcastUrl, podcastDetails, isFetchingPodcast } = state as {
     podcastUrl: string,
-    podcastDetails: any,
+    podcastDetails: PodcastDetails,
     isFetchingPodcast: boolean
   };
 
@@ -93,7 +94,7 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
         <div className="podcast-view">
           <h2 className="podcast-title">{podcastDetails.title}</h2>
           <ol className="podcast-episodes">
-            {podcastDetails.item.map((episode: any) => {
+            {podcastDetails.item.map((episode: PodcastEpisode) => {
               return (
                 <div className="podcast-episode" key={episode.guid}>
                   <h3 className="podcast-episode-title">{episode.title}</h3>
