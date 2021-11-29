@@ -14,6 +14,17 @@
   "globals": {
     "JSX": true
   },
+  "overrides": [
+    {
+      "files": ["service-worker.js"],
+      "env": {
+        "serviceworker": true
+      },
+      "globals": {
+        "workbox": true
+      }
+    }
+  ],
   "plugins": [
     "@typescript-eslint",
     "jest"

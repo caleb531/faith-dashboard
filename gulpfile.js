@@ -4,6 +4,7 @@ const sass = require('gulp-sass')(require('sass'));
 const autoprefixer = require('gulp-autoprefixer');
 const webpack = require('webpack-stream');
 const webpackConfig = require('./webpack.config.js');
+const workboxBuild = require('workbox-build');
 const connect = require('gulp-connect');
 
 gulp.task('assets:core', () => {
@@ -48,10 +49,36 @@ gulp.task('webpack', gulp.parallel(
   'webpack:app'
 ));
 
-gulp.task('build', gulp.parallel(
-  'assets',
-  'sass',
-  'webpack'
+gulp.task('sw', () => {
+  return workboxBuild.injectManifest({
+    globDirectory: 'dist',
+    globPatterns: [
+      '**\/*.{js,css,png}',
+      'icons/*.svg'
+    ],
+    // Precaching index.html using templatedURLs fixes a "Response served by
+    // service worker has redirections" error on iOS 12; see
+    // <https://github.com/v8/v8.dev/issues/4> and
+    // <https://github.com/v8/v8.dev/pull/7>
+    templatedURLs: {
+      // '.' must be used instead of '/' because the app is not served from the
+      // root of the domain (but rather, from a subdirectory)
+      '.': ['index.html']
+    },
+    swSrc: 'src/scripts/service-worker.js',
+    swDest: 'dist/service-worker.js'
+  }).then(({ warnings }) => {
+    warnings.forEach(console.warn);
+  });
+});
+
+gulp.task('build', gulp.series(
+  gulp.parallel(
+    'assets',
+    'sass',
+    'webpack'
+  ),
+  'sw'
 ));
 gulp.task('watch', gulp.parallel(
   'assets:watch',
