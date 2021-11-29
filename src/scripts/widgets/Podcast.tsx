@@ -82,7 +82,7 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
           onSubmit={(event) => submitPodcastUrl((event))}>
           <h2 className="podcast-settings-heading">Podcast</h2>
           <input
-          type="text"
+          type="url"
           className="podcast-url"
           name="search"
           defaultValue={podcastUrl}
