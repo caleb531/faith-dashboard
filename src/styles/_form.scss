@@ -38,7 +38,7 @@ textarea {
   background-color: $light-100;
   background-clip: padding-box;
   @include placeholder {
-    color: $dark-50;
+    color: $light-50;
   }
 }
 button {
