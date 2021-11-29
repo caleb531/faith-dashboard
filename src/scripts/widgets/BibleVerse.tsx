@@ -1,6 +1,7 @@
 import React, { useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
 import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
+import { BibleVerseData } from './BibleVerse.d';
 import { useWidgetUpdater } from '../hooks';
 import LoadingIndicator from '../LoadingIndicator';
 
@@ -43,13 +44,13 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
     dispatchWidget({ type: 'closeSettings' });
     dispatch({ type: 'showLoading' });
     const verseResponse = await fetch(`${API_URL}?q=${encodeURIComponent(query)}`);
-    const verseData = await verseResponse.json();
+    const verseData = await verseResponse.json() as BibleVerseData;
     if (verseData.passages) {
       // The passages array is non-empty when the API found at least one result,
       // and empty when there are no results
       dispatch({
         type: 'setVerseContent',
-        payload: (verseData.passages as string[]).join('')
+        payload: verseData.passages.join('')
       });
     } else {
       // If the API responds with an error, no passages array is returned
