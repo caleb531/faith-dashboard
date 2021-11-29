@@ -32,6 +32,7 @@
 
 .podcast-episode-entries {
   flex-grow: 1;
+  border-radius: 5px;
   font-family: $font-family-sans-serif;
   overflow-y: scroll;
 }
@@ -41,16 +42,6 @@
   cursor: pointer;
   background-color: $dark-10;
   transition: background-color 150ms ease-in-out;
-  $entry-border-radius: 5px;
-  &:first-child {
-    border-top-left-radius: $entry-border-radius;
-    border-top-right-radius: $entry-border-radius;
-  }
-  &:last-child {
-    border-bottom-left-radius: $entry-border-radius;
-    border-bottom-right-radius: $entry-border-radius;
-    margin-bottom: 5px;
-  }
   &:hover {
     background-color: $dark-30;
   }
