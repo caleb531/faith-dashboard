@@ -11,12 +11,20 @@ export function reducer(state: WidgetDataState, action: StateAction): WidgetData
       return {
         ...state,
         podcastDetails: action.payload,
-        isFetchingPodcast: false
+        isFetchingPodcast: false,
+        fetchError: null
       };
     case 'setPodcastUrl':
-      return { ...state, podcastUrl: action.payload, podcastDetails: null };
+      return {
+        ...state,
+        podcastUrl: action.payload,
+        podcastDetails: null,
+        fetchError: null
+      };
     case 'showLoading':
-      return { ...state, isFetchingPodcast: true };
+      return { ...state, isFetchingPodcast: true, fetchError: null };
+    case 'setFetchError':
+      return { ...state, fetchError: action.payload, isFetchingPodcast: false };
     default:
       return state;
   }
@@ -24,11 +32,16 @@ export function reducer(state: WidgetDataState, action: StateAction): WidgetData
 
 function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
 
-  const [state, dispatch] = useReducer(reducer, { ...widgetData, isFetchingPodcast: false });
-  const { podcastUrl, podcastDetails, isFetchingPodcast } = state as {
+  const [state, dispatch] = useReducer(reducer, {
+    ...widgetData,
+    isFetchingPodcast: false,
+    podcastDetails: widgetData.podcastDetails || undefined
+  });
+  const { podcastUrl, podcastDetails, isFetchingPodcast, fetchError } = state as {
     podcastUrl: string,
     podcastDetails: PodcastDetails,
-    isFetchingPodcast: boolean
+    isFetchingPodcast: boolean,
+    fetchError: string
   };
 
   const podcastUrlInputRef: {current: HTMLInputElement} = useRef(null);
@@ -40,17 +53,24 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
   async function fetchPodcastDetails(podcastUrl: string): Promise<object> {
     dispatchWidget({ type: 'closeSettings' });
     dispatch({ type: 'showLoading' });
-    const podcastResponse = await fetch(`${API_URL}?podcast_url=${encodeURIComponent(podcastUrl)}`);
-    const podcastDetails = await podcastResponse.json();
-    if (podcastDetails) {
-      dispatch({
-        type: 'setPodcastDetails',
-        payload: podcastDetails.channel
-      });
-    } else {
-      dispatch({ type: 'setPodcastDetails', payload: null });
+    try {
+      const podcastResponse = await fetch(`${API_URL}?podcast_url=${encodeURIComponent(podcastUrl)}`);
+      const podcastDetailsWrapper = await podcastResponse.json();
+      const podcastDetails = podcastDetailsWrapper.channel as PodcastDetails;
+      if (podcastDetails && podcastDetails.item && podcastDetails.item.length) {
+        dispatch({
+          type: 'setPodcastDetails',
+          payload: podcastDetails
+        });
+      } else {
+        dispatch({ type: 'setFetchError', payload: 'No Results' });
+      }
+      return podcastDetails;
+    } catch (error) {
+      console.log('fetch error', error);
+      dispatch({ type: 'setFetchError', payload: 'Error Fetching Podcast' });
+      return null;
     }
-    return podcastDetails;
   }
 
   function submitPodcastUrl(event: React.FormEvent): void {
@@ -62,10 +82,10 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
   }
 
   useEffect(() => {
-    if (podcastUrl && !podcastDetails && !isFetchingPodcast) {
+    if (podcastUrl && !podcastDetails && !isFetchingPodcast && !fetchError) {
       fetchPodcastDetails(podcastUrl);
     }
-  }, [podcastUrl, podcastDetails, isFetchingPodcast]);
+  }, [podcastUrl, podcastDetails, isFetchingPodcast, fetchError]);
 
   useEffect(() => {
     console.log('podcastDetails', podcastDetails);
@@ -76,7 +96,7 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
 
   return (
     <section className="podcast">
-      {((widget.isSettingsOpen || !podcastUrl || !podcastDetails) && !isFetchingPodcast) ? (
+      {((widget.isSettingsOpen || !podcastUrl || !podcastDetails || fetchError) && !isFetchingPodcast) ? (
         <form
           className="podcast-settings"
           onSubmit={(event) => submitPodcastUrl((event))}>
@@ -90,6 +110,9 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
           required
           ref={podcastUrlInputRef} />
           <button className="podcast-url-submit">Submit</button>
+          {fetchError ? (
+            <p className="podcast-error">{fetchError}</p>
+            ) : null}
         </form>
       ) : podcastUrl && isFetchingPodcast ? (
         <LoadingIndicator />
