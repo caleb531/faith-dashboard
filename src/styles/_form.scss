@@ -19,6 +19,11 @@ label {
 
 input[type='text'],
 input[type='search'],
+input[type='number'],
+input[type='password'],
+input[type='email'],
+input[type='tel'],
+input[type='url'],
 button {
   padding-top: 5px;
   padding-bottom: 5px;
@@ -29,6 +34,11 @@ button {
 
 input[type='text'],
 input[type='search'],
+input[type='number'],
+input[type='password'],
+input[type='email'],
+input[type='tel'],
+input[type='url'],
 textarea {
   max-width: 100%;
   width: 160px;
