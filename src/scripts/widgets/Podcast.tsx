@@ -67,10 +67,12 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
     }
   }, [podcastUrl, podcastDetails, isFetchingPodcast]);
 
+  useEffect(() => {
+    console.log('podcastDetails', podcastDetails);
+  }, [podcastDetails]);
+
     // Save updates to widget as changes are made
   useWidgetUpdater(widget, state);
-
-  console.log('podcastDetails', podcastDetails);
 
   return (
     <section className="podcast">
