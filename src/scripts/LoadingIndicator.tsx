@@ -1,6 +1,6 @@
 import React from 'react';
 
-function AppLoadingIndicator() {
+function LoadingIndicator() {
 
   return (
     <div className="loading-indicator">
@@ -12,4 +12,4 @@ function AppLoadingIndicator() {
 
 }
 
-export default AppLoadingIndicator;
+export default LoadingIndicator;
