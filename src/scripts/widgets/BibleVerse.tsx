@@ -11,12 +11,20 @@ export function reducer(state: WidgetDataState, action: StateAction): WidgetData
       return {
         ...state,
         isFetchingVerse: false,
-        verseContent: action.payload
+        verseContent: action.payload,
+        fetchError: null
       };
     case 'setVerseQuery':
-      return { ...state, verseQuery: action.payload, verseContent: null };
+      return {
+        ...state,
+        verseQuery: action.payload,
+        verseContent: null,
+        fetchError: null
+      };
     case 'showLoading':
-      return { ...state, isFetchingVerse: true };
+      return { ...state, isFetchingVerse: true, fetchError: null };
+    case 'setFetchError':
+      return { ...state, fetchError: action.payload, isFetchingVerse: false };
     default:
       return state;
   }
@@ -28,10 +36,11 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
   // persisted to localStorage by the time we load the page again, so we must
   // reset the flag to prevent the widget from loading infinitely
   const [state, dispatch] = useReducer(reducer, { ...widgetData, isFetchingVerse: false });
-  const { verseQuery, verseContent, isFetchingVerse } = state as {
+  const { verseQuery, verseContent, isFetchingVerse, fetchError } = state as {
     verseQuery: string,
     verseContent: string,
-    isFetchingVerse: boolean
+    isFetchingVerse: boolean,
+    fetchError: string
   };
 
   const searchInputRef: {current: HTMLInputElement} = useRef(null);
@@ -43,20 +52,25 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
   async function fetchVerseContent(query: string): Promise<object> {
     dispatchWidget({ type: 'closeSettings' });
     dispatch({ type: 'showLoading' });
-    const verseResponse = await fetch(`${API_URL}?q=${encodeURIComponent(query)}`);
-    const verseData = await verseResponse.json() as BibleVerseData;
-    if (verseData.passages) {
-      // The passages array is non-empty when the API found at least one result,
-      // and empty when there are no results
-      dispatch({
-        type: 'setVerseContent',
-        payload: verseData.passages.join('')
-      });
-    } else {
-      // If the API responds with an error, no passages array is returned
-      dispatch({ type: 'setVerseContent', payload: null });
+    try {
+      const verseResponse = await fetch(`${API_URL}?q=${encodeURIComponent(query)}`);
+      const verseData = await verseResponse.json() as BibleVerseData;
+      if (verseData.passages && verseData.passages.length) {
+        // The passages array is non-empty when the API found at least one
+        // result, and empty when there are no results
+        dispatch({
+          type: 'setVerseContent',
+          payload: verseData.passages.join('')
+        });
+      } else {
+        // If the API responds with no results, no passages array is returned
+        dispatch({ type: 'setFetchError', payload: 'No Results Found' });
+      }
+      return verseData;
+    } catch (error) {
+      dispatch({ type: 'setFetchError', payload: 'Error Fetching Verse' });
+      return null;
     }
-    return verseData;
   }
 
   // In order to avoid excessive renders, the <input> for the user's verse
@@ -79,14 +93,15 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
     // 2. There is no cached verse content to pull from
     // 3. Any previous fetch did not turn up empty
     // 4. No verse content is currently being fetched
-    if (verseQuery && !verseContent && verseContent !== '' && !isFetchingVerse) {
+    // 5. No errors occurred when last fetching
+    if (verseQuery && !verseContent && !isFetchingVerse && !fetchError) {
       fetchVerseContent(verseQuery);
     }
-  }, [verseQuery, verseContent, isFetchingVerse]);
+  }, [verseQuery, verseContent, isFetchingVerse, fetchError]);
 
   return (
     <section className="bible-verse">
-      {(widget.isSettingsOpen || !verseQuery || !verseContent) && !isFetchingVerse ? (
+      {(widget.isSettingsOpen || !verseQuery || !verseContent || fetchError) && !isFetchingVerse ? (
         <form
           className="bible-verse-settings"
           onSubmit={(event) => submitVerseSearch((event))}>
@@ -100,8 +115,8 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
             required
             ref={searchInputRef} />
           <button className="bible-verse-search-submit">Submit</button>
-          {verseQuery && verseContent === '' ? (
-            <p className="bible-verse-no-results">No Results Found</p>
+          {fetchError ? (
+            <p className="bible-verse-error">{fetchError}</p>
           ) : null}
         </form>
       ) : verseQuery && isFetchingVerse ? (
