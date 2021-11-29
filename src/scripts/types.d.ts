@@ -52,6 +52,10 @@ export interface WidgetType {
   name: string;
   description: string;
   icon: string;
+  // If true, indicates that this widget must be configured before use, and
+  // signals the Settings panel to open automatically when creating a new
+  // instance of this widget type
+  requiresConfiguration: boolean;
 }
 
 // Every widget can store arbitrary instance-specific data into a `data`

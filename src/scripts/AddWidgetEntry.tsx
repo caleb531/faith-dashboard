@@ -16,7 +16,8 @@ function AddWidgetEntry({ widgetType, onAddWidget }: { widgetType: WidgetType, o
         id: uuidv4(),
         type: widgetType.type,
         column: 1,
-        data: {}
+        data: {},
+        isSettingsOpen: widgetType.requiresConfiguration || false
       } as WidgetState
     });
     // Call user-defined callback passed to component
