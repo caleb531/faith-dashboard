@@ -28,14 +28,16 @@ function ThemeSwitcher() {
   return (
     <div className="theme-switcher">
       <label className="theme-switcher-label" htmlFor="theme-switcher-dropdown">
-        Theme:
+        Color Theme:
       </label>
       <select className="theme-switcher-dropdown" id="theme-switcher-dropdown" value={app.theme} onChange={(event) => dispatchApp({ type: 'changeTheme', payload: event.target.value })}>
-        {themeList.map((themeListItem) => {
-          return (<option value={themeListItem.value} key={themeListItem.value}>
-            {themeListItem.label}
-          </option>);
-        })}
+        <optgroup label="Color Theme">
+          {themeList.map((themeListItem) => {
+            return (<option value={themeListItem.value} key={themeListItem.value}>
+              {themeListItem.label}
+            </option>);
+          })}
+        </optgroup>
       </select>
     </div>
   );
