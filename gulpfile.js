@@ -1,11 +1,16 @@
 const gulp = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
+const del = require('del');
 const sass = require('gulp-sass')(require('sass'));
 const autoprefixer = require('gulp-autoprefixer');
 const webpack = require('webpack-stream');
 const webpackConfig = require('./webpack.config.js');
 const workboxBuild = require('workbox-build');
 const connect = require('gulp-connect');
+
+gulp.task('clean', () => {
+  return del('dist/**');
+});
 
 gulp.task('assets:core', () => {
   return gulp.src([
@@ -73,6 +78,7 @@ gulp.task('sw', () => {
 });
 
 gulp.task('build', gulp.series(
+  'clean',
   gulp.parallel(
     'assets',
     'sass',
