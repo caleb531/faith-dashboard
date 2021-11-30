@@ -12,17 +12,14 @@ gulp.task('clean', () => {
   return del('dist/**');
 });
 
-gulp.task('assets:core', () => {
+gulp.task('assets', () => {
   return gulp.src([
       'public/**/*'
     ])
     .pipe(gulp.dest('dist'));
 });
-gulp.task('assets', gulp.parallel(
-  'assets:core'
-));
 gulp.task('assets:watch', () => {
-  return gulp.watch('public/**/*', gulp.series('assets:core'));
+  return gulp.watch('public/**/*', gulp.series('assets'));
 });
 
 gulp.task('sass', () => {
@@ -42,7 +39,7 @@ gulp.task('sass:watch', () => {
   ], gulp.series('sass'));
 });
 
-gulp.task('webpack:app', () => {
+gulp.task('webpack', () => {
   return webpack(webpackConfig)
     .pipe(gulp.dest('dist/scripts'));
 });
@@ -51,9 +48,6 @@ gulp.task('webpack:watch', (cb) => {
     .pipe(webpack(Object.assign({}, webpackConfig, { watch: true })))
     .pipe(gulp.dest('dist/scripts'));
 });
-gulp.task('webpack', gulp.parallel(
-  'webpack:app'
-));
 
 gulp.task('sw', () => {
   return workboxBuild.injectManifest({
