@@ -18,6 +18,10 @@ const themeList: ThemeListItem[] = [
   {
     label: 'Blue',
     value: AppTheme.blue
+  },
+  {
+    label: 'Rose',
+    value: AppTheme.rose
   }
 ];
 

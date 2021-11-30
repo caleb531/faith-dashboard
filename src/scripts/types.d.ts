@@ -7,7 +7,8 @@ export enum AppTheme {
   brown = 'brown',
   green = 'green',
   teal = 'teal',
-  blue = 'blue'
+  blue = 'blue',
+  rose = 'rose'
 }
 
 // The state of the application; an instance of
