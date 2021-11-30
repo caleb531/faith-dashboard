@@ -45,6 +45,8 @@ textarea {
   padding-left: 10px;
   padding-right: 10px;
   border: solid 1px $dark-25;
+  // Some browsers will set a default border-radius on inputs; override this
+  border-radius: 0;
   background-color: $light-100;
   background-clip: padding-box;
   @include placeholder {
