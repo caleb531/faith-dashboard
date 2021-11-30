@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useCallback } from 'react';
 import { debounce } from 'lodash-es';
 import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
 import { useWidgetUpdater } from '../hooks';
@@ -26,9 +26,12 @@ function Note({ widget, widgetData }: WidgetContentsParameters) {
     fontSize: fontSize || defaultFontSize
   };
 
-  const queueChangeWhenTypingStops = debounce(function (text) {
+  // Cache the debounced function so that its internal debounce timer
+  // transcends across render passes (otherwise, the debounce timer would
+  // effectively be reset on every render)
+  const queueChangeWhenTypingStops = useCallback(debounce(function (text) {
     dispatch({ type: 'updateText', payload: text });
-  }, saveDelay);
+  }, saveDelay), []);
 
   // Register a change of the user's preferred font size for this note
   function changeFontSize(event: React.FormEvent): void {
