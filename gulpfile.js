@@ -23,7 +23,7 @@ gulp.task('assets:watch', () => {
 });
 
 gulp.task('sass', () => {
-  return gulp.src('src/styles/index.scss')
+  return gulp.src('src/styles/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass({
       outputStyle: process.env.NODE_ENV === 'production' ? 'compressed' : 'expanded'

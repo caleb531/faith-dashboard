@@ -1,26 +1,23 @@
-@import 'colors';
-@import 'fonts';
-@import 'responsive';
+@import 'base/colors';
+@import 'base/fonts';
+@import 'base/responsive';
+@import 'base/containers';
+@import 'base/form';
 
-@import 'containers';
-@import 'loading-indicator';
-@import 'form';
-@import 'modal';
-@import 'app';
+@import 'generic/loading-indicator';
+@import 'generic/modal';
 
-@import 'update-notification';
-@import 'app-header';
-@import 'add-widget';
-@import 'add-widget-button';
-@import 'theme-switcher';
+@import 'app/app';
+@import 'app/app-header';
+@import 'app/theme-switcher';
+@import 'app/update-notification';
+@import 'app/app-footer';
 
-@import 'app-footer';
+@import 'add-widget/add-widget';
+@import 'add-widget/add-widget-button';
 
-@import 'widget-board';
-@import 'widget';
-
+@import 'widgets/widget-board';
+@import 'widgets/widget';
 @import 'widgets/bible-verse';
 @import 'widgets/note';
 @import 'widgets/podcast';
-
-@import 'copyright';
