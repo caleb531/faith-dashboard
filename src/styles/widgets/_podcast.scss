@@ -32,6 +32,7 @@
 
 .podcast-episode-entries {
   flex-grow: 1;
+  max-height: 200px;
   border-radius: 5px;
   font-family: $font-family-sans-serif;
   overflow-y: scroll;
