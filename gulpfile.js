@@ -46,8 +46,9 @@ gulp.task('webpack:app', () => {
   return webpack(webpackConfig)
     .pipe(gulp.dest('dist/scripts'));
 });
-gulp.task('webpack:watch', () => {
-  return webpack(Object.assign({}, webpackConfig, { watch: true }))
+gulp.task('webpack:watch', (cb) => {
+  return gulp.src('src/scripts/index.tsx')
+    .pipe(webpack(Object.assign({}, webpackConfig, { watch: true })))
     .pipe(gulp.dest('dist/scripts'));
 });
 gulp.task('webpack', gulp.parallel(
@@ -76,6 +77,15 @@ gulp.task('sw', () => {
     warnings.forEach(console.warn);
   });
 });
+gulp.task('sw:watch', () => {
+  return gulp.watch([
+    'dist/**/*',
+    'src/scripts/service-worker.js',
+    // Prevent an infinite loop by excluding the service worker from the above
+    // watch on files in dist/
+    '!dist/service-worker.js'
+  ], gulp.series('sw'));
+});
 
 gulp.task('build', gulp.series(
   'clean',
@@ -89,7 +99,8 @@ gulp.task('build', gulp.series(
 gulp.task('watch', gulp.parallel(
   'assets:watch',
   'webpack:watch',
-  'sass:watch'
+  'sass:watch',
+  'sw:watch'
 ));
 gulp.task('build:watch', gulp.series(
   'build',
