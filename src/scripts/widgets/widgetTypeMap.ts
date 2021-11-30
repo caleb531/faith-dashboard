@@ -1,6 +1,6 @@
-import BibleVerse from './BibleVerse';
-import Note from './Note';
-import Podcast from './Podcast';
+import BibleVerse from './Widget.BibleVerse';
+import Note from './Widget.Note';
+import Podcast from './Widget.Podcast';
 
 // Map widget type IDs to their corresponding components
 export default {

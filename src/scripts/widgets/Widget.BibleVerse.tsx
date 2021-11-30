@@ -1,7 +1,7 @@
 import React, { useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
-import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
-import { BibleVerseData } from './BibleVerse.d';
+import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types';
+import { BibleVerseData } from './Widget.BibleVerse.d';
 import { useWidgetUpdater } from '../hooks';
 import LoadingIndicator from '../generic/LoadingIndicator';
 
