@@ -1,0 +1,27 @@
+.update-notification {
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  padding: 15px 15px;
+  background-color: $dark-75;
+  transform: translateY(-100%);
+  transition: transform 400ms ease-in-out;
+  text-align: center;
+  font-family: $font-family-sans-serif;
+  color: $light-100;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  &.update-available {
+    opacity: 1;
+    transform: translateY(0);
+    box-shadow: 0 1px 10px $dark-30;
+  }
+}
+
+.update-notification-message {
+  font-size: $font-size-m;
+  font-weight: 400;
+}

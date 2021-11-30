@@ -3,6 +3,7 @@ import { sortBy } from 'lodash-es';
 import { AppContext } from './AppContext';
 import { AppState, StateAction, AppTheme, WidgetState, WidgetMoveParameters } from './types';
 import LoadingIndicator from './LoadingIndicator';
+import UpdateNotification from './UpdateNotification';
 import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
 import { useLocalStorage } from './hooks';
@@ -81,6 +82,7 @@ function App() {
   return (
     <AppContext.Provider value={{ app, dispatchApp }}>
       <div className={`app theme-${app.theme}`}>
+          <UpdateNotification />
           <AppHeader />
           <React.Suspense fallback={<LoadingIndicator />}>
             <WidgetBoard />

@@ -15,8 +15,8 @@ function UpdateNotification() {
   }, []);
 
   return (
-    <div className="update-notification">
-
+    <div className={`update-notification ${isUpdateAvailable ? 'update-available' : ''}`}>
+      <span className="update-notification-message">Update available! Click here to update.</span>
     </div>
   );
 
