@@ -22,7 +22,7 @@ gulp.task('assets', gulp.parallel(
   'assets:core'
 ));
 gulp.task('assets:watch', () => {
-  return gulp.watch('public/**/*', gulp.series('assets:core'));
+  return gulp.watch('public/**/*', gulp.series('assets:core', 'sw'));
 });
 
 gulp.task('sass', () => {
@@ -39,7 +39,7 @@ gulp.task('sass:watch', () => {
   return gulp.watch([
     'src/styles/*.scss',
     'src/styles/*/*.scss'
-  ], gulp.series('sass'));
+  ], gulp.series('sass', 'sw'));
 });
 
 gulp.task('webpack:app', () => {
@@ -47,8 +47,7 @@ gulp.task('webpack:app', () => {
     .pipe(gulp.dest('dist/scripts'));
 });
 gulp.task('webpack:watch', () => {
-  return webpack(Object.assign({}, webpackConfig, { watch: true }))
-    .pipe(gulp.dest('dist/scripts'));
+  return gulp.watch('src/scripts/**/*', gulp.series('webpack:app', 'sw'));
 });
 gulp.task('webpack', gulp.parallel(
   'webpack:app'
