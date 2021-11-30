@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from 'react';
 import { sortBy } from 'lodash-es';
 import { AppContext } from './AppContext';
-import { AppState, StateAction, AppTheme, WidgetState, WidgetMoveParameters } from '../types';
+import { AppState, StateAction, AppTheme, WidgetState, WidgetMoveParameters } from '../types.d';
 import LoadingIndicator from '../generic/LoadingIndicator';
 import UpdateNotification from './UpdateNotification';
 import AppHeader from './AppHeader';

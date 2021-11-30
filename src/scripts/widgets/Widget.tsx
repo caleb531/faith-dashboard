@@ -1,7 +1,7 @@
 import React, { useReducer, useContext } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import { AppContext } from '../app/AppContext';
-import { WidgetState, StateAction } from '../types';
+import { WidgetState, StateAction } from '../types.d';
 import widgetTypeMap from './widgetTypeMap';
 
 export function reducer(state: WidgetState, action: StateAction): WidgetState {

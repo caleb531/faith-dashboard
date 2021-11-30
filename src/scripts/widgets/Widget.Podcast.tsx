@@ -1,6 +1,6 @@
 import React, { useReducer, useRef, useEffect } from 'react';
 import moment from 'moment';
-import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types';
+import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
 import { PodcastDetails, PodcastEpisode } from './Widget.Podcast.d';
 import { useWidgetUpdater } from '../hooks';
 import LoadingIndicator from '../generic/LoadingIndicator';
