@@ -22,6 +22,16 @@
   transform: translate(-50%, -50%);
 }
 
+.podcast-title {
+  margin-bottom: 5px;
+}
+
+.podcast-episode-count {
+  font-size: $font-size-xxs;
+  color: $light-50;
+  margin-bottom: 15px;
+}
+
 .podcast-episode-entries,
 .podcast-episode-entry {
   list-style-type: none;

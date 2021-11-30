@@ -119,6 +119,7 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
       ) : podcastUrl && podcastDetails ? (
         <div className="podcast-view">
           <h2 className="podcast-title">{podcastDetails.title}</h2>
+          <span className="podcast-episode-count">{podcastDetails.item.length === 1 ? `${podcastDetails.item.length} episode` : `${podcastDetails.item.length} episodes`}</span>
           <ol className="podcast-episode-entries">
             {podcastDetails.item.map((episode: PodcastEpisode) => {
               return (
