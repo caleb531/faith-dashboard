@@ -1,5 +1,5 @@
 import React from 'react';
-import AddWidgetHeader from './AddWidgetHeader';
+import AddWidgetHeader from '../add-widget/AddWidgetHeader';
 import ThemeSwitcher from './ThemeSwitcher';
 
 function AppHeader() {

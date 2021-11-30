@@ -1,4 +1,4 @@
-import { WidgetTypeId } from '../scripts/types.d';
+import { WidgetTypeId } from '../types.d';
 
 export default [
   {

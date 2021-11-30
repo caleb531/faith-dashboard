@@ -3,7 +3,7 @@ import moment from 'moment';
 import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
 import { PodcastDetails, PodcastEpisode } from './Podcast.d';
 import { useWidgetUpdater } from '../hooks';
-import LoadingIndicator from '../LoadingIndicator';
+import LoadingIndicator from '../generic/LoadingIndicator';
 
 export function reducer(state: WidgetDataState, action: StateAction): WidgetDataState {
   switch (action.type) {

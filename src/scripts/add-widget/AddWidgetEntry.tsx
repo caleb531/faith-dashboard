@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { AppContext } from './AppContext';
-import { WidgetType, WidgetState } from './types.d';
+import { AppContext } from '../app/AppContext';
+import { WidgetType, WidgetState } from '../types.d';
 import AddWidgetButton from './AddWidgetButton';
 
 function AddWidgetEntry({ widgetType, onAddWidget }: { widgetType: WidgetType, onAddWidget: Function }) {

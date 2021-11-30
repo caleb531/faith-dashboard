@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { render } from '@testing-library/react';
 import { AppTheme, WidgetState } from '../types.d';
 import '@testing-library/jest-dom';
-import App, { reducer } from '../App';
+import App, { reducer } from '../app/App';
 import { createWidget } from './__utils__/test-utils';
 
 describe('App Component', function () {

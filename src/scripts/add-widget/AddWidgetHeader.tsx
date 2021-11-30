@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { AppContext } from './AppContext';
+import { AppContext } from '../app/AppContext';
 import AddWidgetButton from './AddWidgetButton';
 import AddWidgetPicker from './AddWidgetPicker';
 

@@ -1,16 +1,16 @@
 import React, { useReducer, useEffect } from 'react';
 import { sortBy } from 'lodash-es';
 import { AppContext } from './AppContext';
-import { AppState, StateAction, AppTheme, WidgetState, WidgetMoveParameters } from './types';
-import LoadingIndicator from './LoadingIndicator';
+import { AppState, StateAction, AppTheme, WidgetState, WidgetMoveParameters } from '../types';
+import LoadingIndicator from '../generic/LoadingIndicator';
 import UpdateNotification from './UpdateNotification';
 import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
-import { useLocalStorage } from './hooks';
-import defaultApp from '../data/appStateDefault';
+import { useLocalStorage } from '../hooks';
+import defaultApp from './appStateDefault';
 
 // Lazy-load the widget board since react-beautiful-dnd is a large dependency
-const WidgetBoard = React.lazy(() => import('./WidgetBoard'));
+const WidgetBoard = React.lazy(() => import('../widgets/WidgetBoard'));
 
 export function reducer(state: AppState, action: StateAction): AppState {
   switch (action.type) {
