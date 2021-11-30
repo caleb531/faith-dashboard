@@ -1,10 +1,15 @@
-.copyright-body {
+body {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 20px;
+  font-weight: 300;
 }
 
-.copyright-main {
+main {
   text-align: left;
   line-height: 1.5;
+}
+
+h1 {
+  font-weight: 400;
 }
