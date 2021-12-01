@@ -71,7 +71,7 @@ export function reducer(state: AppState, action: StateAction): AppState {
 function App() {
 
   const [restoreApp, saveApp] = useLocalStorage('faith-dashboard-app', defaultApp);
-  const [app, dispatchToApp] = useReducer(reducer, restoreApp());
+  const [app, dispatchToApp] = useReducer(reducer, null, () => restoreApp());
 
   // Serialize the app to localStorage whenever the app's state changes
   useEffect(() => {
