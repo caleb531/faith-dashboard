@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Workbox, messageSW } from 'workbox-window';
 import { StateAction } from '../types.d';
 
 function UpdateNotification() {
 
   const [availableUpdate, setAvailableUpdate] = useState(null);
-  const wb = useRef(new Workbox('service-worker.js'));
+  const [wb, setWb] = useState(() => new Workbox('service-worker.js'));
 
   // Update mechanism code borrowed from
   // <https://developers.google.com/web/tools/workbox/guides/advanced-recipes#offer_a_page_reload_for_users>
@@ -20,9 +20,9 @@ function UpdateNotification() {
     }
     // Add an event listener to detect when the registered
     // service worker has installed but is waiting to activate.
-    wb.current.addEventListener('waiting', showSkipWaitingPrompt);
-    // wb.current.addEventListener('externalwaiting', showSkipWaitingPrompt);
-    wb.current.register();
+    wb.addEventListener('waiting', showSkipWaitingPrompt);
+    // wb.addEventListener('externalwaiting', showSkipWaitingPrompt);
+    wb.register();
   }
 
   // Update the service worker and reload the page
@@ -30,7 +30,7 @@ function UpdateNotification() {
     // Assuming the user accepted the update, set up a listener
     // that will reload the page as soon as the previously waiting
     // service worker has taken control.
-    wb.current.addEventListener('controlling', () => {
+    wb.addEventListener('controlling', () => {
       window.location.reload();
     });
     // Send a message to the waiting service worker instructing
