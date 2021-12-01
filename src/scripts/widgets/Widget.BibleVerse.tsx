@@ -2,7 +2,7 @@ import React, { useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
 import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
 import { BibleVerseData } from './Widget.BibleVerse.d';
-import { useWidgetUpdater } from '../hooks';
+import { useWidgetContentFetcher, useWidgetUpdater } from '../hooks';
 import LoadingIndicator from '../generic/LoadingIndicator';
 
 export function reducer(state: WidgetDataState, action: StateAction): WidgetDataState {
@@ -45,34 +45,6 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
 
   const searchInputRef: {current: HTMLInputElement} = useRef(null);
 
-  // Call the ESV API through a proxy endpoint because the ESV API does not
-  // support CORS
-  const API_URL = './widgets/BibleVerse/api.php';
-
-  async function fetchVerseContent(query: string): Promise<object> {
-    dispatchWidget({ type: 'closeSettings' });
-    dispatch({ type: 'showLoading' });
-    try {
-      const verseResponse = await fetch(`${API_URL}?q=${encodeURIComponent(query)}`);
-      const verseData = await verseResponse.json() as BibleVerseData;
-      if (verseData.passages && verseData.passages.length) {
-        // The passages array is non-empty when the API found at least one
-        // result, and empty when there are no results
-        dispatch({
-          type: 'setVerseContent',
-          payload: verseData.passages.join('')
-        });
-      } else {
-        // If the API responds with no results, no passages array is returned
-        dispatch({ type: 'setFetchError', payload: 'No Results Found' });
-      }
-      return verseData;
-    } catch (error) {
-      dispatch({ type: 'setFetchError', payload: 'Error Fetching Verse' });
-      return null;
-    }
-  }
-
   // In order to avoid excessive renders, the <input> for the user's verse
   // query is uncontrolled, and instead, the user must explicitly submit the
   // form in order for the verse query to be set on the state
@@ -87,15 +59,32 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
   // Save updates to widget as changes are made
   useWidgetUpdater(widget, state);
 
-  useEffect(() => {
-    // Fetch under the following conditions:
-    // 1. The verse query must be set
-    // 2. There is no cached verse content to pull from
-    // 3. Any previous fetch did not turn up empty
-    // 4. No verse content is currently being fetched
-    // 5. No errors occurred when last fetching
-    if (verseQuery && !verseContent && !isFetchingVerse && !fetchError) {
-      fetchVerseContent(verseQuery);
+  useWidgetContentFetcher({
+    shouldFetch: () => {
+      console.log(verseQuery, !verseContent, !isFetchingVerse, !fetchError);
+      return verseQuery && !verseContent && !isFetchingVerse && !fetchError;
+    },
+    requestData: verseQuery,
+    closeSettings: () => dispatchWidget({ type: 'closeSettings' }),
+    showLoading: () => dispatch({ type: 'showLoading' }),
+    getApiUrl: (query: typeof verseQuery) => {
+      return `widgets/BibleVerse/api.php?q=${encodeURIComponent(query)}`;
+    },
+    parseResponse: (data: BibleVerseData) => data.passages.join(''),
+    hasResults: (data: typeof verseContent) => {
+      return data !== '';
+    },
+    onSuccess: (data: typeof verseContent) => {
+      dispatch({
+        type: 'setVerseContent',
+        payload: data
+      });
+    },
+    onNoResults: (data: typeof verseContent) => {
+      dispatch({ type: 'setFetchError', payload: 'No Results Found' });
+    },
+    onError: (error: Error) => {
+      dispatch({ type: 'setFetchError', payload: 'Error Fetching Verse' });
     }
   }, [verseQuery, verseContent, isFetchingVerse, fetchError]);
 

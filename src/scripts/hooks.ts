@@ -23,6 +23,52 @@ export function useLocalStorage(key: string, defaultValue: LocalStorageData): [F
 
 }
 
+let i = 0;
+
+export function useWidgetContentFetcher({ shouldFetch, requestData, getApiUrl, closeSettings, showLoading, parseResponse, hasResults, onSuccess, onNoResults, onError }: {
+  shouldFetch: Function,
+  requestData: any,
+  getApiUrl: Function,
+  closeSettings: Function,
+  showLoading: Function,
+  parseResponse: Function,
+  hasResults: Function,
+  onSuccess: Function,
+  onNoResults: Function,
+  onError: Function,
+}, dependencies: any[]) {
+
+  async function fetchWidgetData(): Promise<object> {
+    if (i >= 2) {
+      return;
+    }
+    closeSettings();
+    showLoading();
+    try {
+      i += 1;
+      const verseResponse = await fetch(getApiUrl(requestData)) as { json: Function };
+      const data = parseResponse(await verseResponse.json());
+      if (hasResults(data)) {
+        onSuccess(data);
+      } else {
+        onNoResults(data);
+      }
+      return data;
+    } catch (error) {
+      console.log('error', error);
+      onError(error);
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    if (shouldFetch()) {
+      fetchWidgetData();
+    }
+  }, dependencies);
+
+}
+
 export function useWidgetUpdater(widget: WidgetState, widgetData: WidgetDataState): void {
 
   const { dispatchApp } = useContext(AppContext);
