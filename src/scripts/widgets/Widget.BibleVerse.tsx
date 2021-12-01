@@ -8,23 +8,9 @@ import LoadingIndicator from '../generic/LoadingIndicator';
 export function reducer(state: WidgetDataState, action: StateAction): WidgetDataState {
   switch (action.type) {
     case 'setVerseContent':
-      return {
-        ...state,
-        isFetchingVerse: false,
-        verseContent: action.payload,
-        fetchError: null
-      };
+      return { ...state, verseContent: action.payload };
     case 'setVerseQuery':
-      return {
-        ...state,
-        verseQuery: action.payload,
-        verseContent: null,
-        fetchError: null
-      };
-    case 'showLoading':
-      return { ...state, isFetchingVerse: true, fetchError: null };
-    case 'setFetchError':
-      return { ...state, fetchError: action.payload, isFetchingVerse: false };
+      return { ...state, verseQuery: action.payload, verseContent: null };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
@@ -36,11 +22,9 @@ function BibleVerse({ widget, widgetData, dispatchToWidget }: WidgetContentsPara
   // persisted to localStorage by the time we load the page again, so we must
   // reset the flag to prevent the widget from loading infinitely
   const [state, dispatch] = useReducer(reducer, { ...widgetData, isFetchingVerse: false });
-  const { verseQuery, verseContent, isFetchingVerse, fetchError } = state as {
+  const { verseQuery, verseContent } = state as {
     verseQuery: string,
-    verseContent: string,
-    isFetchingVerse: boolean,
-    fetchError: string
+    verseContent: string
   };
 
   const searchInputRef: {current: HTMLInputElement} = useRef(null);
@@ -59,37 +43,30 @@ function BibleVerse({ widget, widgetData, dispatchToWidget }: WidgetContentsPara
   // Save updates to widget as changes are made
   useWidgetUpdater(widget, state);
 
-  useWidgetDataFetcher({
+  const { isFetching, fetchError } = useWidgetDataFetcher({
     shouldFetch: () => {
-      return verseQuery && !verseContent && !isFetchingVerse && !fetchError;
+      return verseQuery && !verseContent;
     },
     requestData: verseQuery,
     closeSettings: () => dispatchToWidget({ type: 'closeSettings' }),
-    showLoading: () => dispatch({ type: 'showLoading' }),
     getApiUrl: (query: typeof verseQuery) => {
       return `widgets/BibleVerse/api.php?q=${encodeURIComponent(query)}`;
     },
-    parseResponse: (data: BibleVerseData) => data.passages.join(''),
-    hasResults: (data: typeof verseContent) => {
-      return data !== '';
-    },
+    parseResponse: (response: BibleVerseData) => response.passages.join(''),
+    hasResults: (data: typeof verseContent) => (data !== ''),
     onSuccess: (data: typeof verseContent) => {
       dispatch({
         type: 'setVerseContent',
         payload: data
       });
     },
-    onNoResults: (data: typeof verseContent) => {
-      dispatch({ type: 'setFetchError', payload: 'No Results Found' });
-    },
-    onError: (error: Error) => {
-      dispatch({ type: 'setFetchError', payload: 'Error Fetching Verse' });
-    }
-  }, [verseQuery, verseContent, isFetchingVerse, fetchError]);
+    getNoResultsMessage: (data: typeof verseContent) => 'No Verses Found',
+    getErrorMessage: (error: Error) => 'Error Fetching Verse'
+  }, [verseQuery, verseContent]);
 
   return (
     <section className="bible-verse">
-      {(widget.isSettingsOpen || !verseQuery || !verseContent || fetchError) && !isFetchingVerse ? (
+      {(widget.isSettingsOpen || !verseQuery || !verseContent || fetchError) && !isFetching ? (
         <form
           className="bible-verse-settings"
           onSubmit={(event) => submitVerseSearch((event))}>
@@ -107,7 +84,7 @@ function BibleVerse({ widget, widgetData, dispatchToWidget }: WidgetContentsPara
             <p className="bible-verse-error">{fetchError}</p>
           ) : null}
         </form>
-      ) : verseQuery && isFetchingVerse ? (
+      ) : verseQuery && isFetching ? (
         <LoadingIndicator />
       ) : verseQuery && verseContent ? (
         <div className="bible-verse-content">

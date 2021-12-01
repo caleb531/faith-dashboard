@@ -21,10 +21,6 @@ export function reducer(state: WidgetDataState, action: StateAction): WidgetData
         podcastDetails: null,
         fetchError: null
       };
-    case 'showLoading':
-      return { ...state, isFetchingPodcast: true, fetchError: null };
-    case 'setFetchError':
-      return { ...state, fetchError: action.payload, isFetchingPodcast: false };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
@@ -37,11 +33,9 @@ function Podcast({ widget, widgetData, dispatchToWidget }: WidgetContentsParamet
     isFetchingPodcast: false,
     podcastDetails: widgetData.podcastDetails || undefined
   });
-  const { podcastUrl, podcastDetails, isFetchingPodcast, fetchError } = state as {
+  const { podcastUrl, podcastDetails } = state as {
     podcastUrl: string,
-    podcastDetails: PodcastDetails,
-    isFetchingPodcast: boolean,
-    fetchError: string
+    podcastDetails: PodcastDetails
   };
 
   const podcastUrlInputRef: {current: HTMLInputElement} = useRef(null);
@@ -61,13 +55,12 @@ function Podcast({ widget, widgetData, dispatchToWidget }: WidgetContentsParamet
     // Save updates to widget as changes are made
   useWidgetUpdater(widget, state);
 
-  useWidgetDataFetcher({
+  const { isFetching, fetchError } = useWidgetDataFetcher({
     shouldFetch: () => {
-      return podcastUrl && !podcastDetails && !isFetchingPodcast && !fetchError;
+      return podcastUrl && !podcastDetails;
     },
     requestData: podcastUrl,
     closeSettings: () => dispatchToWidget({ type: 'closeSettings' }),
-    showLoading: () => dispatch({ type: 'showLoading' }),
     getApiUrl: (query: typeof podcastUrl) => {
       return `widgets/Podcast/api.php?podcast_url=${encodeURIComponent(query)}`;
     },
@@ -79,17 +72,13 @@ function Podcast({ widget, widgetData, dispatchToWidget }: WidgetContentsParamet
         payload: data
       });
     },
-    onNoResults: (data: typeof podcastDetails) => {
-      dispatch({ type: 'setFetchError', payload: 'No Results Found' });
-    },
-    onError: (error: Error) => {
-      dispatch({ type: 'setFetchError', payload: 'Error Fetching Podcast' });
-    }
-  }, [podcastUrl, podcastDetails, isFetchingPodcast, fetchError]);
+    getNoResultsMessage: (data: typeof podcastDetails) => 'No Podcasts Found',
+    getErrorMessage: (error: Error) => 'Error Fetching Podcast'
+  }, [podcastUrl, podcastDetails]);
 
   return (
     <section className="podcast">
-      {((widget.isSettingsOpen || !podcastUrl || !podcastDetails || fetchError) && !isFetchingPodcast) ? (
+      {((widget.isSettingsOpen || !podcastUrl || !podcastDetails || fetchError) && !isFetching) ? (
         <form
           className="podcast-settings"
           onSubmit={(event) => submitPodcastUrl((event))}>
@@ -107,7 +96,7 @@ function Podcast({ widget, widgetData, dispatchToWidget }: WidgetContentsParamet
             <p className="podcast-error">{fetchError}</p>
             ) : null}
         </form>
-      ) : podcastUrl && isFetchingPodcast ? (
+      ) : podcastUrl && isFetching ? (
         <LoadingIndicator />
       ) : podcastUrl && podcastDetails ? (
         <div className="podcast-view">

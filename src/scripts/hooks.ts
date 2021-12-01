@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { AppContext } from './app/AppContext';
 import { WidgetState, WidgetDataState } from './types.d';
 
@@ -23,43 +23,51 @@ export function useLocalStorage(key: string, defaultValue: LocalStorageData): [F
 
 }
 
-export function useWidgetDataFetcher({ shouldFetch, requestData, getApiUrl, closeSettings, showLoading, parseResponse, hasResults, onSuccess, onNoResults, onError }: {
+export function useWidgetDataFetcher({ shouldFetch, requestData, getApiUrl, closeSettings, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
   shouldFetch: Function,
   requestData: any,
   getApiUrl: Function,
   closeSettings: Function,
-  showLoading: Function,
   parseResponse: Function,
   hasResults: Function,
   onSuccess: Function,
-  onNoResults: Function,
-  onError: Function,
-}, dependencies: any[]) {
+  getNoResultsMessage: Function,
+  getErrorMessage: Function,
+}, dependencies: any[]): { isFetching: boolean, fetchError: string } {
+
+  const [isFetching, setIsFetching] = useState(false);
+  const [fetchError, setFetchError] = useState(null);
 
   async function fetchWidgetData(): Promise<object> {
-    closeSettings();
-    showLoading();
+    setIsFetching(true);
     try {
       const verseResponse = await fetch(getApiUrl(requestData)) as { json: Function };
       const data = parseResponse(await verseResponse.json());
       if (hasResults(data)) {
+        closeSettings();
         onSuccess(data);
+        setIsFetching(false);
+        setFetchError(null);
       } else {
-        onNoResults(data);
+        setIsFetching(false);
+        setFetchError(getNoResultsMessage(data));
       }
       return data;
     } catch (error) {
       console.log('error', error);
-      onError(error);
+      setIsFetching(false);
+      setFetchError(getErrorMessage(error));
       return null;
     }
   }
 
   useEffect(() => {
-    if (shouldFetch()) {
+    if (shouldFetch() && !isFetching && !fetchError) {
       fetchWidgetData();
     }
-  }, dependencies);
+  }, [...dependencies, isFetching]);
+
+  return { isFetching, fetchError };
 
 }
 
