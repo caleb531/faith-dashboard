@@ -23,7 +23,7 @@ export function useLocalStorage(key: string, defaultValue: LocalStorageData): [F
 
 }
 
-export function useWidgetContentFetcher({ shouldFetch, requestData, getApiUrl, closeSettings, showLoading, parseResponse, hasResults, onSuccess, onNoResults, onError }: {
+export function useWidgetDataFetcher({ shouldFetch, requestData, getApiUrl, closeSettings, showLoading, parseResponse, hasResults, onSuccess, onNoResults, onError }: {
   shouldFetch: Function,
   requestData: any,
   getApiUrl: Function,

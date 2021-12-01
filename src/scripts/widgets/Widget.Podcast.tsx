@@ -2,7 +2,7 @@ import React, { useReducer, useRef, useEffect } from 'react';
 import moment from 'moment';
 import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
 import { PodcastDetails, PodcastEpisode } from './Widget.Podcast.d';
-import { useWidgetUpdater, useWidgetContentFetcher } from '../hooks';
+import { useWidgetUpdater, useWidgetDataFetcher } from '../hooks';
 import LoadingIndicator from '../generic/LoadingIndicator';
 
 export function reducer(state: WidgetDataState, action: StateAction): WidgetDataState {
@@ -61,7 +61,7 @@ function Podcast({ widget, widgetData, dispatchToWidget }: WidgetContentsParamet
     // Save updates to widget as changes are made
   useWidgetUpdater(widget, state);
 
-  useWidgetContentFetcher({
+  useWidgetDataFetcher({
     shouldFetch: () => {
       return podcastUrl && !podcastDetails && !isFetchingPodcast && !fetchError;
     },

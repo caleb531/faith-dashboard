@@ -2,7 +2,7 @@ import React, { useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
 import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
 import { BibleVerseData } from './Widget.BibleVerse.d';
-import { useWidgetContentFetcher, useWidgetUpdater } from '../hooks';
+import { useWidgetDataFetcher, useWidgetUpdater } from '../hooks';
 import LoadingIndicator from '../generic/LoadingIndicator';
 
 export function reducer(state: WidgetDataState, action: StateAction): WidgetDataState {
@@ -59,7 +59,7 @@ function BibleVerse({ widget, widgetData, dispatchToWidget }: WidgetContentsPara
   // Save updates to widget as changes are made
   useWidgetUpdater(widget, state);
 
-  useWidgetContentFetcher({
+  useWidgetDataFetcher({
     shouldFetch: () => {
       return verseQuery && !verseContent && !isFetchingVerse && !fetchError;
     },
