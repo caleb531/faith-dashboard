@@ -10,7 +10,7 @@ export function reducer(state: WidgetDataState, action: StateAction): WidgetData
     case 'updateFontSize':
       return { ...state, fontSize: action.payload };
     default:
-      return state;
+      throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
 }
 

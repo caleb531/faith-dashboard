@@ -15,7 +15,7 @@ export function reducer(state: WidgetState, action: StateAction): WidgetState {
     case 'resizeWidget':
       return { ...state, height: action.payload as number };
     default:
-      return state;
+      throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
 }
 

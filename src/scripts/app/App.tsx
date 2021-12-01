@@ -64,7 +64,7 @@ export function reducer(state: AppState, action: StateAction): AppState {
       // will not alter the user order of widgets within the same column)
       return { ...state, widgets: sortBy(newWidgets, 'column') };
     default:
-      return state;
+      throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
 }
 

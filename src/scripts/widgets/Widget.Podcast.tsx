@@ -26,7 +26,7 @@ export function reducer(state: WidgetDataState, action: StateAction): WidgetData
     case 'setFetchError':
       return { ...state, fetchError: action.payload, isFetchingPodcast: false };
     default:
-      return state;
+      throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
 }
 
