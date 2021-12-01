@@ -61,7 +61,6 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
 
   useWidgetContentFetcher({
     shouldFetch: () => {
-      console.log(verseQuery, !verseContent, !isFetchingVerse, !fetchError);
       return verseQuery && !verseContent && !isFetchingVerse && !fetchError;
     },
     requestData: verseQuery,
