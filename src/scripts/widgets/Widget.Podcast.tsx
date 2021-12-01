@@ -2,7 +2,7 @@ import React, { useReducer, useRef, useEffect } from 'react';
 import moment from 'moment';
 import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
 import { PodcastDetails, PodcastEpisode } from './Widget.Podcast.d';
-import { useWidgetUpdater } from '../hooks';
+import { useWidgetUpdater, useWidgetContentFetcher } from '../hooks';
 import LoadingIndicator from '../generic/LoadingIndicator';
 
 export function reducer(state: WidgetDataState, action: StateAction): WidgetDataState {
@@ -46,33 +46,6 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
 
   const podcastUrlInputRef: {current: HTMLInputElement} = useRef(null);
 
-  // Fetch the podcast details through a proxy endpoint to eliminate any CORS
-  // issues
-  const API_URL = './widgets/Podcast/api.php';
-
-  async function fetchPodcastDetails(podcastUrl: string): Promise<object> {
-    dispatchWidget({ type: 'closeSettings' });
-    dispatch({ type: 'showLoading' });
-    try {
-      const podcastResponse = await fetch(`${API_URL}?podcast_url=${encodeURIComponent(podcastUrl)}`);
-      const podcastDetailsWrapper = await podcastResponse.json();
-      const podcastDetails = podcastDetailsWrapper.channel as PodcastDetails;
-      if (podcastDetails && podcastDetails.item && podcastDetails.item.length) {
-        dispatch({
-          type: 'setPodcastDetails',
-          payload: podcastDetails
-        });
-      } else {
-        dispatch({ type: 'setFetchError', payload: 'No Results' });
-      }
-      return podcastDetails;
-    } catch (error) {
-      console.log('fetch error', error);
-      dispatch({ type: 'setFetchError', payload: 'Error Fetching Podcast' });
-      return null;
-    }
-  }
-
   function submitPodcastUrl(event: React.FormEvent): void {
     event.preventDefault();
     const input = podcastUrlInputRef.current;
@@ -82,17 +55,37 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
   }
 
   useEffect(() => {
-    if (podcastUrl && !podcastDetails && !isFetchingPodcast && !fetchError) {
-      fetchPodcastDetails(podcastUrl);
-    }
-  }, [podcastUrl, podcastDetails, isFetchingPodcast, fetchError]);
-
-  useEffect(() => {
     console.log('podcastDetails', podcastDetails);
   }, [podcastDetails]);
 
     // Save updates to widget as changes are made
   useWidgetUpdater(widget, state);
+
+  useWidgetContentFetcher({
+    shouldFetch: () => {
+      return podcastUrl && !podcastDetails && !isFetchingPodcast && !fetchError;
+    },
+    requestData: podcastUrl,
+    closeSettings: () => dispatchWidget({ type: 'closeSettings' }),
+    showLoading: () => dispatch({ type: 'showLoading' }),
+    getApiUrl: (query: typeof podcastUrl) => {
+      return `widgets/Podcast/api.php?podcast_url=${encodeURIComponent(query)}`;
+    },
+    parseResponse: (data: {channel: PodcastDetails}) => data.channel,
+    hasResults: (data: typeof podcastDetails) => data.item && data.item.length,
+    onSuccess: (data: typeof podcastDetails) => {
+      dispatch({
+        type: 'setPodcastDetails',
+        payload: data
+      });
+    },
+    onNoResults: (data: typeof podcastDetails) => {
+      dispatch({ type: 'setFetchError', payload: 'No Results Found' });
+    },
+    onError: (error: Error) => {
+      dispatch({ type: 'setFetchError', payload: 'Error Fetching Podcast' });
+    }
+  }, [podcastUrl, podcastDetails, isFetchingPodcast, fetchError]);
 
   return (
     <section className="podcast">
