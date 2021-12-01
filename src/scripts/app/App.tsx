@@ -71,7 +71,7 @@ export function reducer(state: AppState, action: StateAction): AppState {
 function App() {
 
   const [restoreApp, saveApp] = useLocalStorage('faith-dashboard-app', defaultApp);
-  const [app, dispatchApp] = useReducer(reducer, restoreApp());
+  const [app, dispatchToApp] = useReducer(reducer, restoreApp());
 
   // Serialize the app to localStorage whenever the app's state changes
   useEffect(() => {
@@ -80,7 +80,7 @@ function App() {
 
 
   return (
-    <AppContext.Provider value={{ app, dispatchApp }}>
+    <AppContext.Provider value={{ app, dispatchToApp }}>
       <div className={`app theme-${app.theme}`}>
           <UpdateNotification />
           <AppHeader />

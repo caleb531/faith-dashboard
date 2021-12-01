@@ -30,7 +30,7 @@ export function reducer(state: WidgetDataState, action: StateAction): WidgetData
   }
 }
 
-function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
+function Podcast({ widget, widgetData, dispatchToWidget }: WidgetContentsParameters) {
 
   const [state, dispatch] = useReducer(reducer, {
     ...widgetData,
@@ -66,7 +66,7 @@ function Podcast({ widget, widgetData, dispatchWidget }: WidgetContentsParameter
       return podcastUrl && !podcastDetails && !isFetchingPodcast && !fetchError;
     },
     requestData: podcastUrl,
-    closeSettings: () => dispatchWidget({ type: 'closeSettings' }),
+    closeSettings: () => dispatchToWidget({ type: 'closeSettings' }),
     showLoading: () => dispatch({ type: 'showLoading' }),
     getApiUrl: (query: typeof podcastUrl) => {
       return `widgets/Podcast/api.php?podcast_url=${encodeURIComponent(query)}`;

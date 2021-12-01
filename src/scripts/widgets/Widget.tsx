@@ -24,13 +24,13 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
   const [state, dispatch] = useReducer(reducer, widget);
   const WidgetContents = widgetTypeMap[widget.type];
 
-  const { dispatchApp } = useContext(AppContext);
+  const { dispatchToApp } = useContext(AppContext);
 
   // Signal to the global application that we want to remove the widget
   function removeWidget() {
     const confirmation = confirm('Are you sure you want to permanently delete this widget?');
     if (confirmation) {
-      dispatchApp({ type: 'removeWidget', payload: state });
+      dispatchToApp({ type: 'removeWidget', payload: state });
     }
   }
 
@@ -78,7 +78,7 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
             className="widget-settings-toggle-icon widget-control-icon" />
         </button>
       </div>
-      <WidgetContents widget={state} widgetData={state.data} dispatchWidget={dispatch} />
+      <WidgetContents widget={state} widgetData={state.data} dispatchToWidget={dispatch} />
     </article>
   );
 

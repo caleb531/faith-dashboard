@@ -11,7 +11,7 @@ function getColumnFromDroppableId(droppableId: string): number {
 
 function WidgetBoard() {
 
-  const { app, dispatchApp } = useContext(AppContext);
+  const { app, dispatchToApp } = useContext(AppContext);
   const columnCount = 3;
 
   // Because the widgets are stored in a one-dimensional array, yet we are
@@ -40,7 +40,7 @@ function WidgetBoard() {
     const sourceColumn = getColumnFromDroppableId(source.droppableId);
     const destinationColumn = getColumnFromDroppableId(destination.droppableId);
 
-    dispatchApp({
+    dispatchToApp({
       type: 'moveWidget',
       payload: {
         widgetToMove: app.widgets[source.index],

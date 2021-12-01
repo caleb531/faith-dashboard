@@ -30,7 +30,7 @@ export interface StateAction {
 // component
 export interface AppContextValue {
   readonly app: AppState;
-  dispatchApp: Function;
+  dispatchToApp: Function;
 }
 
 // A dropdown entry for an available app color theme
@@ -96,7 +96,7 @@ export interface WidgetContentsParameters {
   widgetData: WidgetDataState;
   // A widget implementation can dispatch to the higher-up Widget component to
   // close settings and such
-  dispatchWidget: Function;
+  dispatchToWidget: Function;
 }
 
 // Parameters that define where a widget should be moved to/from on the

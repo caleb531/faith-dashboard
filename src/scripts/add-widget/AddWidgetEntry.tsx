@@ -6,11 +6,11 @@ import AddWidgetButton from './AddWidgetButton';
 
 function AddWidgetEntry({ widgetType, onAddWidget }: { widgetType: WidgetType, onAddWidget: Function }) {
 
-  const { dispatchApp } = useContext(AppContext);
+  const { dispatchToApp } = useContext(AppContext);
 
   function addWidget() {
     // TODO: add the widget by dispatching to the App
-    dispatchApp({
+    dispatchToApp({
       type: 'addWidget',
       payload: {
         id: uuidv4(),

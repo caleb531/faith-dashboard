@@ -30,7 +30,7 @@ export function reducer(state: WidgetDataState, action: StateAction): WidgetData
   }
 }
 
-function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParameters) {
+function BibleVerse({ widget, widgetData, dispatchToWidget }: WidgetContentsParameters) {
 
   // If the user refreshes the page while a verse is loading, it will still be
   // persisted to localStorage by the time we load the page again, so we must
@@ -64,7 +64,7 @@ function BibleVerse({ widget, widgetData, dispatchWidget }: WidgetContentsParame
       return verseQuery && !verseContent && !isFetchingVerse && !fetchError;
     },
     requestData: verseQuery,
-    closeSettings: () => dispatchWidget({ type: 'closeSettings' }),
+    closeSettings: () => dispatchToWidget({ type: 'closeSettings' }),
     showLoading: () => dispatch({ type: 'showLoading' }),
     getApiUrl: (query: typeof verseQuery) => {
       return `widgets/BibleVerse/api.php?q=${encodeURIComponent(query)}`;

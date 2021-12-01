@@ -65,11 +65,11 @@ export function useWidgetContentFetcher({ shouldFetch, requestData, getApiUrl, c
 
 export function useWidgetUpdater(widget: WidgetState, widgetData: WidgetDataState): void {
 
-  const { dispatchApp } = useContext(AppContext);
+  const { dispatchToApp } = useContext(AppContext);
 
   // Update widget list when changes are made
   useEffect(() => {
-    dispatchApp({
+    dispatchToApp({
       type: 'updateWidget',
       payload: {
         ...widget,
