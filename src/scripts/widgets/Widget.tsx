@@ -3,6 +3,7 @@ import { DraggableProvided } from 'react-beautiful-dnd';
 import { AppContext } from '../app/AppContext';
 import { WidgetState, StateAction } from '../types.d';
 import widgetTypeMap from './widgetTypeMap';
+import LoadingIndicator from '../generic/LoadingIndicator';
 
 export function reducer(state: WidgetState, action: StateAction): WidgetState {
   switch (action.type) {
@@ -14,6 +15,12 @@ export function reducer(state: WidgetState, action: StateAction): WidgetState {
       return { ...state, isSettingsOpen: false };
     case 'resizeWidget':
       return { ...state, height: action.payload as number };
+    case 'showLoading':
+      return { ...state, isLoading: true };
+    case 'showContent':
+      return { ...state, isLoading: false, isSettingsOpen: false, fetchError: null };
+    case 'setFetchError':
+      return { ...state, isLoading: false, fetchError: action.payload as string };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
@@ -21,8 +28,8 @@ export function reducer(state: WidgetState, action: StateAction): WidgetState {
 
 function Widget({ widget, provided }: { widget: WidgetState, provided: DraggableProvided }) {
 
-  const [state, dispatch] = useReducer(reducer, widget);
-  const WidgetContents = widgetTypeMap[widget.type];
+  const [state, dispatch] = useReducer(reducer, { ...widget, isLoading: false, fetchError: null });
+  const WidgetContents = widgetTypeMap[state.type];
 
   const { dispatchToApp } = useContext(AppContext);
 
@@ -52,7 +59,7 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
   };
 
   return (
-    <article className={`widget widget-type-${widget.type} ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} style={widgetStyles} onMouseUp={(event) => handleResize(event)}>
+    <article className={`widget widget-type-${state.type} ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} style={widgetStyles} onMouseUp={(event) => handleResize(event)}>
       <div className="widget-controls widget-controls-left">
         <div className="widget-drag-handle widget-control" {...provided.dragHandleProps}>
           <img
@@ -78,7 +85,11 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
             className="widget-settings-toggle-icon widget-control-icon" />
         </button>
       </div>
-      <WidgetContents widget={state} widgetData={state.data} dispatchToWidget={dispatch} />
+      {state.isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        <WidgetContents widget={state} widgetData={state.data} dispatchToWidget={dispatch} />
+      )}
     </article>
   );
 

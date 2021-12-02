@@ -23,51 +23,47 @@ export function useLocalStorage(key: string, defaultValue: LocalStorageData): [F
 
 }
 
-export function useWidgetDataFetcher({ shouldFetch, requestData, getApiUrl, closeSettings, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
+export function useWidgetDataFetcher({ widget, dispatchToWidget, shouldFetch, requestData, getApiUrl, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
+  widget: WidgetState,
+  dispatchToWidget: Function,
   shouldFetch: Function,
   requestData: any,
   getApiUrl: Function,
-  closeSettings: Function,
   parseResponse: Function,
   hasResults: Function,
   onSuccess: Function,
   getNoResultsMessage: Function,
   getErrorMessage: Function,
-}, dependencies: any[]): { isFetching: boolean, fetchError: string } {
+}, dependencies: any[]): { fetchError: string } {
 
-  const [isFetching, setIsFetching] = useState(false);
-  const [fetchError, setFetchError] = useState(null);
+  const { isLoading, fetchError } = widget;
 
   async function fetchWidgetData(): Promise<object> {
-    setIsFetching(true);
+    dispatchToWidget({ type: 'showLoading' });
     try {
       const verseResponse = await fetch(getApiUrl(requestData)) as { json: Function };
       const data = parseResponse(await verseResponse.json());
       if (hasResults(data)) {
-        closeSettings();
         onSuccess(data);
-        setIsFetching(false);
-        setFetchError(null);
+        dispatchToWidget({ type: 'showContent' });
       } else {
-        setIsFetching(false);
-        setFetchError(getNoResultsMessage(data));
+        dispatchToWidget({ type: 'setFetchError', payload: getNoResultsMessage(data) });
       }
       return data;
     } catch (error) {
       console.log('error', error);
-      setIsFetching(false);
-      setFetchError(getErrorMessage(error));
+      dispatchToWidget({ type: 'setFetchError', payload: getErrorMessage(error) });
       return null;
     }
   }
 
   useEffect(() => {
-    if (shouldFetch() && !isFetching && !fetchError) {
+    if (shouldFetch() && !isLoading && !fetchError) {
       fetchWidgetData();
     }
-  }, [...dependencies, isFetching]);
+  }, [...dependencies, isLoading]);
 
-  return { isFetching, fetchError };
+  return { fetchError };
 
 }
 

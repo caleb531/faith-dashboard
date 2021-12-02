@@ -8,19 +8,9 @@ import LoadingIndicator from '../generic/LoadingIndicator';
 export function reducer(state: WidgetDataState, action: StateAction): WidgetDataState {
   switch (action.type) {
     case 'setPodcastDetails':
-      return {
-        ...state,
-        podcastDetails: action.payload,
-        isFetchingPodcast: false,
-        fetchError: null
-      };
+      return { ...state, podcastDetails: action.payload };
     case 'setPodcastUrl':
-      return {
-        ...state,
-        podcastUrl: action.payload,
-        podcastDetails: null,
-        fetchError: null
-      };
+      return { ...state, podcastUrl: action.payload, podcastDetails: null };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
@@ -28,11 +18,7 @@ export function reducer(state: WidgetDataState, action: StateAction): WidgetData
 
 function Podcast({ widget, widgetData, dispatchToWidget }: WidgetContentsParameters) {
 
-  const [state, dispatch] = useReducer(reducer, {
-    ...widgetData,
-    isFetchingPodcast: false,
-    podcastDetails: widgetData.podcastDetails || undefined
-  });
+  const [state, dispatch] = useReducer(reducer, widgetData);
   const { podcastUrl, podcastDetails } = state as {
     podcastUrl: string,
     podcastDetails: PodcastDetails
@@ -55,12 +41,13 @@ function Podcast({ widget, widgetData, dispatchToWidget }: WidgetContentsParamet
     // Save updates to widget as changes are made
   useWidgetUpdater(widget, state);
 
-  const { isFetching, fetchError } = useWidgetDataFetcher({
+  const { fetchError } = useWidgetDataFetcher({
+    widget,
+    dispatchToWidget,
     shouldFetch: () => {
       return podcastUrl && !podcastDetails;
     },
     requestData: podcastUrl,
-    closeSettings: () => dispatchToWidget({ type: 'closeSettings' }),
     getApiUrl: (query: typeof podcastUrl) => {
       return `widgets/Podcast/api.php?podcast_url=${encodeURIComponent(query)}`;
     },
@@ -78,7 +65,7 @@ function Podcast({ widget, widgetData, dispatchToWidget }: WidgetContentsParamet
 
   return (
     <section className="podcast">
-      {((widget.isSettingsOpen || !podcastUrl || !podcastDetails || fetchError) && !isFetching) ? (
+      {widget.isSettingsOpen || !podcastUrl || !podcastDetails || fetchError ? (
         <form
           className="podcast-settings"
           onSubmit={(event) => submitPodcastUrl((event))}>
@@ -96,7 +83,7 @@ function Podcast({ widget, widgetData, dispatchToWidget }: WidgetContentsParamet
             <p className="podcast-error">{fetchError}</p>
             ) : null}
         </form>
-      ) : podcastUrl && isFetching ? (
+      ) : podcastUrl ? (
         <LoadingIndicator />
       ) : podcastUrl && podcastDetails ? (
         <div className="podcast-view">

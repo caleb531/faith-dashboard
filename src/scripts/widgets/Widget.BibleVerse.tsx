@@ -3,7 +3,6 @@ import HtmlReactParser from 'html-react-parser';
 import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
 import { BibleVerseData } from './Widget.BibleVerse.d';
 import { useWidgetDataFetcher, useWidgetUpdater } from '../hooks';
-import LoadingIndicator from '../generic/LoadingIndicator';
 
 export function reducer(state: WidgetDataState, action: StateAction): WidgetDataState {
   switch (action.type) {
@@ -21,7 +20,7 @@ function BibleVerse({ widget, widgetData, dispatchToWidget }: WidgetContentsPara
   // If the user refreshes the page while a verse is loading, it will still be
   // persisted to localStorage by the time we load the page again, so we must
   // reset the flag to prevent the widget from loading infinitely
-  const [state, dispatch] = useReducer(reducer, { ...widgetData, isFetchingVerse: false });
+  const [state, dispatch] = useReducer(reducer, widgetData);
   const { verseQuery, verseContent } = state as {
     verseQuery: string,
     verseContent: string
@@ -43,12 +42,13 @@ function BibleVerse({ widget, widgetData, dispatchToWidget }: WidgetContentsPara
   // Save updates to widget as changes are made
   useWidgetUpdater(widget, state);
 
-  const { isFetching, fetchError } = useWidgetDataFetcher({
+  const { fetchError } = useWidgetDataFetcher({
+    widget,
+    dispatchToWidget,
     shouldFetch: () => {
       return verseQuery && !verseContent;
     },
     requestData: verseQuery,
-    closeSettings: () => dispatchToWidget({ type: 'closeSettings' }),
     getApiUrl: (query: typeof verseQuery) => {
       return `widgets/BibleVerse/api.php?q=${encodeURIComponent(query)}`;
     },
@@ -66,7 +66,7 @@ function BibleVerse({ widget, widgetData, dispatchToWidget }: WidgetContentsPara
 
   return (
     <section className="bible-verse">
-      {(widget.isSettingsOpen || !verseQuery || !verseContent || fetchError) && !isFetching ? (
+      {widget.isSettingsOpen || !verseQuery || !verseContent || fetchError ? (
         <form
           className="bible-verse-settings"
           onSubmit={(event) => submitVerseSearch((event))}>
@@ -84,8 +84,6 @@ function BibleVerse({ widget, widgetData, dispatchToWidget }: WidgetContentsPara
             <p className="bible-verse-error">{fetchError}</p>
           ) : null}
         </form>
-      ) : verseQuery && isFetching ? (
-        <LoadingIndicator />
       ) : verseQuery && verseContent ? (
         <div className="bible-verse-content">
           {HtmlReactParser(verseContent)}

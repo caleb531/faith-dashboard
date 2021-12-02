@@ -2,13 +2,6 @@
   height: auto !important;
 }
 
-.bible-verse .loading-indicator {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 .bible-verse-content {
   font-size: $font-size-s;
   * {

@@ -80,6 +80,10 @@ export interface WidgetState {
   // The `data` object is a required field so that new widget types can safely
   // use it without worry
   data: WidgetDataState;
+  // Whether the widget is currently in a loading state
+  isLoading?: boolean;
+  // Any error the widget experienced while fetching data
+  fetchError?: string;
 }
 
 // The function parameters to a WidgetContents component, useful when creating
