@@ -23,6 +23,8 @@ export function useLocalStorage(key: string, defaultValue: LocalStorageData): [F
 
 }
 
+let i = 0;
+
 export function useWidgetDataFetcher({ widget, dispatchToWidget, shouldFetch, requestData, getApiUrl, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
   widget: WidgetState,
   dispatchToWidget: Function,
@@ -39,8 +41,12 @@ export function useWidgetDataFetcher({ widget, dispatchToWidget, shouldFetch, re
   const { isLoading, fetchError } = widget;
 
   async function fetchWidgetData(): Promise<object> {
+    if (i >= 2) {
+      return;
+    }
     dispatchToWidget({ type: 'showLoading' });
     try {
+      i += 1;
       const verseResponse = await fetch(getApiUrl(requestData)) as { json: Function };
       const data = parseResponse(await verseResponse.json());
       if (hasResults(data)) {
