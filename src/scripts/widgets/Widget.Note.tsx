@@ -1,23 +1,26 @@
 import React, { useReducer, useCallback } from 'react';
 import { debounce } from 'lodash-es';
-import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
-import { useWidgetUpdater } from '../hooks';
+import { StateAction, WidgetContentsParameters } from '../types.d';
+import { NoteWidgetState } from './Widget.Note.d';
+import WidgetShell, { useWidgetShell } from './WidgetShell';
 
-export function reducer(state: WidgetDataState, action: StateAction): WidgetDataState {
+export function reducer(state: NoteWidgetState, action: StateAction): NoteWidgetState {
   switch (action.type) {
     case 'updateText':
-      return { ...state, text: action.payload };
+      const text = action.payload as string;
+      return { ...state, text };
     case 'updateFontSize':
-      return { ...state, fontSize: action.payload };
+      const fontSize = action.payload as number;
+      return { ...state, fontSize };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
 }
 
-function Note({ widget, widgetData }: WidgetContentsParameters) {
+function NoteWidget({ widget, provided }: WidgetContentsParameters) {
 
-  const [state, dispatch] = useReducer(reducer, widgetData);
-  const { fontSize, text } = state as { fontSize: number, text: string };
+  const [state, dispatch] = useWidgetShell(reducer, widget);
+  const { fontSize, text } = state as NoteWidgetState;
   // The amount of time (in milliseconds) after the user's last keystroke
   // before assuming that the user has stopped typing
   const saveDelay = 300;
@@ -42,9 +45,6 @@ function Note({ widget, widgetData }: WidgetContentsParameters) {
   function changeText(event: React.FormEvent): void {
     queueChangeWhenTypingStops((event.target as HTMLTextAreaElement).value);
   }
-
-    // Save updates to widget as changes are made
-  useWidgetUpdater(widget, state);
 
   return (
     <section className="note">
@@ -75,4 +75,4 @@ function Note({ widget, widgetData }: WidgetContentsParameters) {
 
 }
 
-export default Note;
+export default NoteWidget;

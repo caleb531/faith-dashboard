@@ -1,30 +1,30 @@
 import React, { useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
-import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
-import { BibleVerseData } from './Widget.BibleVerse.d';
-import { useWidgetDataFetcher, useWidgetUpdater } from '../hooks';
+import { StateAction, WidgetState, WidgetContentsParameters } from '../types.d';
+import { BibleVerseData, BibleVerseWidgetState } from './Widget.BibleVerse.d';
+import WidgetShell, { useWidgetShell } from './WidgetShell';
+import { useWidgetDataFetcher } from '../hooks';
 
-export function reducer(state: WidgetDataState, action: StateAction): WidgetDataState {
+export function reducer(state: BibleVerseWidgetState, action: StateAction): BibleVerseWidgetState {
   switch (action.type) {
     case 'setVerseContent':
-      return { ...state, verseContent: action.payload };
+      const verseContent = action.payload as string;
+      return { ...state, verseContent };
     case 'setVerseQuery':
-      return { ...state, verseQuery: action.payload, verseContent: null };
+      const verseQuery = action.payload as string;
+      return { ...state, verseQuery, verseContent: null };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
 }
 
-function BibleVerse({ widget, widgetData, dispatchToWidget }: WidgetContentsParameters) {
+function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
 
   // If the user refreshes the page while a verse is loading, it will still be
   // persisted to localStorage by the time we load the page again, so we must
   // reset the flag to prevent the widget from loading infinitely
-  const [state, dispatch] = useReducer(reducer, widgetData);
-  const { verseQuery, verseContent } = state as {
-    verseQuery: string,
-    verseContent: string
-  };
+  const [state, dispatch] = useWidgetShell(reducer, widget);
+  const { verseQuery, verseContent } = state as BibleVerseWidgetState;
 
   const searchInputRef: {current: HTMLInputElement} = useRef(null);
 
@@ -39,30 +39,28 @@ function BibleVerse({ widget, widgetData, dispatchToWidget }: WidgetContentsPara
     }
   }
 
-  // Save updates to widget as changes are made
-  useWidgetUpdater(widget, state);
+  const fetchError: any = null;
 
-  const { fetchError } = useWidgetDataFetcher({
-    widget,
-    dispatchToWidget,
-    shouldFetch: () => {
-      return verseQuery && !verseContent;
-    },
-    requestData: verseQuery,
-    getApiUrl: (query: typeof verseQuery) => {
-      return `widgets/BibleVerse/api.php?q=${encodeURIComponent(query)}`;
-    },
-    parseResponse: (response: BibleVerseData) => response.passages.join(''),
-    hasResults: (data: typeof verseContent) => (data !== ''),
-    onSuccess: (data: typeof verseContent) => {
-      dispatch({
-        type: 'setVerseContent',
-        payload: data
-      });
-    },
-    getNoResultsMessage: (data: typeof verseContent) => 'No Verses Found',
-    getErrorMessage: (error: Error) => 'Error Fetching Verse'
-  }, [verseQuery, verseContent]);
+  // const { fetchError } = useWidgetDataFetcher({
+  //   dispatch,
+  //   shouldFetch: () => {
+  //     return verseQuery && !verseContent;
+  //   },
+  //   requestData: verseQuery,
+  //   getApiUrl: (query: typeof verseQuery) => {
+  //     return `widgets/BibleVerse/api.php?q=${encodeURIComponent(query)}`;
+  //   },
+  //   parseResponse: (response: BibleVerseData) => response.passages.join(''),
+  //   hasResults: (data: typeof verseContent) => (data !== ''),
+  //   onSuccess: (data: typeof verseContent) => {
+  //     dispatch({
+  //       type: 'setVerseContent',
+  //       payload: data
+  //     });
+  //   },
+  //   getNoResultsMessage: (data: typeof verseContent) => 'No Verses Found',
+  //   getErrorMessage: (error: Error) => 'Error Fetching Verse'
+  // }, [verseQuery, verseContent]);
 
   return (
     <section className="bible-verse">
@@ -94,4 +92,4 @@ function BibleVerse({ widget, widgetData, dispatchToWidget }: WidgetContentsPara
 
 }
 
-export default BibleVerse;
+export default BibleVerseWidget;

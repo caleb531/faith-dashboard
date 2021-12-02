@@ -1,28 +1,27 @@
 import React, { useReducer, useRef, useEffect } from 'react';
 import moment from 'moment';
-import { WidgetDataState, StateAction, WidgetContentsParameters } from '../types.d';
-import { PodcastDetails, PodcastEpisode } from './Widget.Podcast.d';
-import { useWidgetUpdater, useWidgetDataFetcher } from '../hooks';
-import LoadingIndicator from '../generic/LoadingIndicator';
+import { StateAction, WidgetContentsParameters } from '../types.d';
+import { PodcastWidgetState, PodcastDetails, PodcastEpisode } from './Widget.Podcast.d';
+import WidgetShell, { useWidgetShell } from './WidgetShell';
+import { useWidgetDataFetcher } from '../hooks';
 
-export function reducer(state: WidgetDataState, action: StateAction): WidgetDataState {
+export function reducer(state: PodcastWidgetState, action: StateAction): PodcastWidgetState {
   switch (action.type) {
     case 'setPodcastDetails':
-      return { ...state, podcastDetails: action.payload };
+      const podcastDetails = action.payload as PodcastDetails;
+      return { ...state, podcastDetails };
     case 'setPodcastUrl':
-      return { ...state, podcastUrl: action.payload, podcastDetails: null };
+      const podcastUrl = action.payload as string;
+      return { ...state, podcastUrl, podcastDetails: null };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
 }
 
-function Podcast({ widget, widgetData, dispatchToWidget }: WidgetContentsParameters) {
+function Podcast({ widget, provided }: WidgetContentsParameters) {
 
-  const [state, dispatch] = useReducer(reducer, widgetData);
-  const { podcastUrl, podcastDetails } = state as {
-    podcastUrl: string,
-    podcastDetails: PodcastDetails
-  };
+  const [state, dispatch] = useWidgetShell(reducer, widget);
+  const { podcastUrl, podcastDetails } = state as PodcastWidgetState;
 
   const podcastUrlInputRef: {current: HTMLInputElement} = useRef(null);
 
@@ -34,34 +33,29 @@ function Podcast({ widget, widgetData, dispatchToWidget }: WidgetContentsParamet
     }
   }
 
-  useEffect(() => {
-    console.log('podcastDetails', podcastDetails);
-  }, [podcastDetails]);
+  const fetchError: any = null;
 
-    // Save updates to widget as changes are made
-  useWidgetUpdater(widget, state);
-
-  const { fetchError } = useWidgetDataFetcher({
-    widget,
-    dispatchToWidget,
-    shouldFetch: () => {
-      return podcastUrl && !podcastDetails;
-    },
-    requestData: podcastUrl,
-    getApiUrl: (query: typeof podcastUrl) => {
-      return `widgets/Podcast/api.php?podcast_url=${encodeURIComponent(query)}`;
-    },
-    parseResponse: (data: {channel: PodcastDetails}) => data.channel,
-    hasResults: (data: typeof podcastDetails) => data.item && data.item.length,
-    onSuccess: (data: typeof podcastDetails) => {
-      dispatch({
-        type: 'setPodcastDetails',
-        payload: data
-      });
-    },
-    getNoResultsMessage: (data: typeof podcastDetails) => 'No Podcasts Found',
-    getErrorMessage: (error: Error) => 'Error Fetching Podcast'
-  }, [podcastUrl, podcastDetails]);
+  // const { fetchError } = useWidgetDataFetcher({
+  //   widget,
+  //   dispatchToWidget,
+  //   shouldFetch: () => {
+  //     return podcastUrl && !podcastDetails;
+  //   },
+  //   requestData: podcastUrl,
+  //   getApiUrl: (query: typeof podcastUrl) => {
+  //     return `widgets/Podcast/api.php?podcast_url=${encodeURIComponent(query)}`;
+  //   },
+  //   parseResponse: (data: {channel: PodcastDetails}) => data.channel,
+  //   hasResults: (data: typeof podcastDetails) => data.item && data.item.length,
+  //   onSuccess: (data: typeof podcastDetails) => {
+  //     dispatch({
+  //       type: 'setPodcastDetails',
+  //       payload: data
+  //     });
+  //   },
+  //   getNoResultsMessage: (data: typeof podcastDetails) => 'No Podcasts Found',
+  //   getErrorMessage: (error: Error) => 'Error Fetching Podcast'
+  // }, [podcastUrl, podcastDetails]);
 
   return (
     <section className="podcast">
@@ -83,8 +77,6 @@ function Podcast({ widget, widgetData, dispatchToWidget }: WidgetContentsParamet
             <p className="podcast-error">{fetchError}</p>
             ) : null}
         </form>
-      ) : podcastUrl ? (
-        <LoadingIndicator />
       ) : podcastUrl && podcastDetails ? (
         <div className="podcast-view">
           <h2 className="podcast-title">{podcastDetails.title}</h2>

@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { AppContext } from './app/AppContext';
-import { WidgetState, WidgetDataState } from './types.d';
+import { WidgetState } from './types.d';
 
 type LocalStorageData = string | number | boolean | LocalStorageData[] | object;
 
@@ -25,9 +25,9 @@ export function useLocalStorage(key: string, defaultValue: LocalStorageData): [F
 
 let i = 0;
 
-export function useWidgetDataFetcher({ widget, dispatchToWidget, shouldFetch, requestData, getApiUrl, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
+export function useWidgetDataFetcher({ widget, dispatch, shouldFetch, requestData, getApiUrl, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
   widget: WidgetState,
-  dispatchToWidget: Function,
+  dispatch: Function,
   shouldFetch: Function,
   requestData: any,
   getApiUrl: Function,
@@ -44,21 +44,21 @@ export function useWidgetDataFetcher({ widget, dispatchToWidget, shouldFetch, re
     if (i >= 2) {
       return;
     }
-    dispatchToWidget({ type: 'showLoading' });
+    dispatch({ type: 'showLoading' });
     try {
       i += 1;
       const verseResponse = await fetch(getApiUrl(requestData)) as { json: Function };
       const data = parseResponse(await verseResponse.json());
       if (hasResults(data)) {
         onSuccess(data);
-        dispatchToWidget({ type: 'showContent' });
+        dispatch({ type: 'showContent' });
       } else {
-        dispatchToWidget({ type: 'setFetchError', payload: getNoResultsMessage(data) });
+        dispatch({ type: 'setFetchError', payload: getNoResultsMessage(data) });
       }
       return data;
     } catch (error) {
       console.log('error', error);
-      dispatchToWidget({ type: 'setFetchError', payload: getErrorMessage(error) });
+      dispatch({ type: 'setFetchError', payload: getErrorMessage(error) });
       return null;
     }
   }
@@ -73,7 +73,7 @@ export function useWidgetDataFetcher({ widget, dispatchToWidget, shouldFetch, re
 
 }
 
-export function useWidgetUpdater(widget: WidgetState, widgetData: WidgetDataState): void {
+export function useWidgetUpdater(widget: WidgetState): void {
 
   const { dispatchToApp } = useContext(AppContext);
 
@@ -83,12 +83,9 @@ export function useWidgetUpdater(widget: WidgetState, widgetData: WidgetDataStat
       type: 'updateWidget',
       payload: {
         ...widget,
-        column: widget.column || 1,
-        // Optionally strip out undesired values from the widget data before
-        // the data is persisted
-        data: widgetData
+        column: widget.column || 1
       }
     });
-  }, [widget, widgetData]);
+  }, [widget]);
 
 }

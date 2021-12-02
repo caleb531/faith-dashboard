@@ -1,35 +1,50 @@
 import React, { useReducer, useContext } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import { AppContext } from '../app/AppContext';
-import { WidgetState, StateAction } from '../types.d';
+import { WidgetState, StateAction } from '../types';
 import widgetTypeMap from './widgetTypeMap';
 import LoadingIndicator from '../generic/LoadingIndicator';
+import { useWidgetUpdater } from '../hooks';
 
-export function reducer(state: WidgetState, action: StateAction): WidgetState {
-  switch (action.type) {
-    case 'toggleSettings':
-      return { ...state, isSettingsOpen: !state.isSettingsOpen };
-    case 'openSettings':
-      return { ...state, isSettingsOpen: true };
-    case 'closeSettings':
-      return { ...state, isSettingsOpen: false };
-    case 'resizeWidget':
-      return { ...state, height: action.payload as number };
-    case 'showLoading':
-      return { ...state, isLoading: true };
-    case 'showContent':
-      return { ...state, isLoading: false, isSettingsOpen: false, fetchError: null };
-    case 'setFetchError':
-      return { ...state, isLoading: false, fetchError: action.payload as string };
-    default:
-      throw new ReferenceError(`action ${action.type} does not exist on reducer`);
+export function useWidgetShell(subReducer: Function, widget: WidgetState): [WidgetState, Function] {
+
+  function reducer(state: WidgetState, action: StateAction): WidgetState {
+    switch (action.type) {
+      case 'toggleSettings':
+        return { ...state, isSettingsOpen: !state.isSettingsOpen };
+      case 'openSettings':
+        return { ...state, isSettingsOpen: true };
+      case 'closeSettings':
+        return { ...state, isSettingsOpen: false };
+      case 'resizeWidget':
+        return { ...state, height: action.payload as number };
+      case 'showLoading':
+        return { ...state, isLoading: true };
+      case 'showContent':
+        return { ...state, isLoading: false, isSettingsOpen: false, fetchError: null };
+      case 'setFetchError':
+        return { ...state, isLoading: false, fetchError: action.payload as string };
+      default:
+        if (subReducer) {
+          return subReducer(state, action);
+        } else {
+          throw new ReferenceError(`action ${action.type} does not exist on reducer`);
+        }
+    }
   }
+
+  const [state, dispatch] = useReducer(reducer, widget);
+
+  // Save updates to widget as changes are made
+  useWidgetUpdater(state);
+
+  return [state, dispatch];
+
 }
 
-function Widget({ widget, provided }: { widget: WidgetState, provided: DraggableProvided }) {
+function WidgetShell({ widget, dispatch, provided, children }: { widget: WidgetState, dispatch: Function, provided: DraggableProvided, children: JSX.Element | JSX.Element[] }) {
 
-  const [state, dispatch] = useReducer(reducer, { ...widget, isLoading: false, fetchError: null });
-  const WidgetContents = widgetTypeMap[state.type];
+  const WidgetContents = widgetTypeMap[widget.type];
 
   const { dispatchToApp } = useContext(AppContext);
 
@@ -37,7 +52,7 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
   function removeWidget() {
     const confirmation = confirm('Are you sure you want to permanently delete this widget?');
     if (confirmation) {
-      dispatchToApp({ type: 'removeWidget', payload: state });
+      dispatchToApp({ type: 'removeWidget', payload: widget });
     }
   }
 
@@ -46,7 +61,7 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
     // Only trigger the resizeWidget action when the height actually changes
     // (this is to prevent the action from firing whenever mouseUp is called,
     // which could be all the time)
-    if (newHeight && newHeight !== state.height) {
+    if (newHeight && newHeight !== widget.height) {
       dispatch({ type: 'resizeWidget', payload: newHeight });
     }
   }
@@ -54,12 +69,12 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
   // Enforce any user-defined height of the widget (at least when the height is
   // adjustable for that specific widget type)
   const widgetStyles = {
-    height: state.height,
+    height: widget.height,
     ...provided.draggableProps.style
   };
 
   return (
-    <article className={`widget widget-type-${state.type} ${state.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} style={widgetStyles} onMouseUp={(event) => handleResize(event)}>
+    <article className={`widget widget-type-${widget.type} ${widget.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} style={widgetStyles} onMouseUp={(event) => handleResize(event)}>
       <div className="widget-controls widget-controls-left">
         <div className="widget-drag-handle widget-control" {...provided.dragHandleProps}>
           <img
@@ -85,14 +100,12 @@ function Widget({ widget, provided }: { widget: WidgetState, provided: Draggable
             className="widget-settings-toggle-icon widget-control-icon" />
         </button>
       </div>
-      {state.isLoading ? (
+      {widget.isLoading ? (
         <LoadingIndicator />
-      ) : (
-        <WidgetContents widget={state} widgetData={state.data} dispatchToWidget={dispatch} />
-      )}
+      ) : children}
     </article>
   );
 
 }
 
-export default Widget;
+export default WidgetShell;

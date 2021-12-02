@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { WidgetState } from '../types.d';
-import Widget from './Widget';
+import Widget from './WidgetShell';
+import widgetTypeMap from './widgetTypeMap';
 
 function WidgetBoardColumn({ widgets, widgetIdsToIndices, columnIndex }: { widgets: WidgetState[], widgetIdsToIndices: {[key: string]: number}, columnIndex: number }) {
 
@@ -18,6 +19,7 @@ function WidgetBoardColumn({ widgets, widgetIdsToIndices, columnIndex }: { widge
               return (
                 <Draggable draggableId={widget.id} key={widget.id} index={widgetIdsToIndices[widget.id]}>
                   {(provided) => {
+                    const Widget = widgetTypeMap[widget.type];
                     return <Widget
                       widget={widget}
                       provided={provided} />;

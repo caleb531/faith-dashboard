@@ -1,3 +1,10 @@
+import { WidgetState } from '../types.d';
+
+export interface PodcastWidgetState extends WidgetState {
+  podcastUrl: string;
+  podcastDetails: PodcastDetails;
+}
+
 export interface PodcastImage {
   link: string;
   url: string;

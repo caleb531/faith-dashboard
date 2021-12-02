@@ -1,3 +1,10 @@
+import { WidgetState } from '../types.d';
+
+export interface BibleVerseWidgetState extends WidgetState {
+  verseQuery: string;
+  verseContent: string;
+}
+
 export interface BibleVerseMeta {
   canonical: string;
   chapter_end: number[];
