@@ -2,7 +2,6 @@ import React, { useReducer, useContext } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import { AppContext } from '../app/AppContext';
 import { WidgetState, StateAction } from '../types';
-import widgetTypeMap from './widgetTypeMap';
 import LoadingIndicator from '../generic/LoadingIndicator';
 import { useWidgetUpdater } from '../hooks';
 
@@ -43,8 +42,6 @@ export function useWidgetShell(subReducer: Function, widget: WidgetState): [Widg
 }
 
 function WidgetShell({ widget, dispatch, provided, children }: { widget: WidgetState, dispatch: Function, provided: DraggableProvided, children: JSX.Element | JSX.Element[] }) {
-
-  const WidgetContents = widgetTypeMap[widget.type];
 
   const { dispatchToApp } = useContext(AppContext);
 
