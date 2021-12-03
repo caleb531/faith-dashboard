@@ -1,8 +1,8 @@
-type LocalStorageData = string | number | boolean | LocalStorageData[] | object;
+import { JSONSerializable } from '../types.d';
 
-export default function useLocalStorage(key: string, defaultValue: LocalStorageData): [Function, Function] {
+export default function useLocalStorage(key: string, defaultValue: JSONSerializable): [Function, Function] {
 
-  function getLocalStorage(): LocalStorageData {
+  function getLocalStorage(): JSONSerializable {
     const value = JSON.parse(localStorage.getItem(key));
     if (value) {
       return value;
@@ -11,7 +11,7 @@ export default function useLocalStorage(key: string, defaultValue: LocalStorageD
     }
   }
 
-  function setLocalStorage(myValue: LocalStorageData): void {
+  function setLocalStorage(myValue: JSONSerializable): void {
     localStorage.setItem(key, JSON.stringify(myValue));
   }
 
