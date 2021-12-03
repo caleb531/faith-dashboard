@@ -24,12 +24,12 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
   const [state, dispatch] = useWidgetShell(reducer, widget);
   const { podcastUrl, podcastDetails } = state as PodcastWidgetState;
 
-  const { fetchError, submitRequestData, requestDataInputRef } = useWidgetDataFetcher({
+  const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
     dispatch,
     shouldFetch: () => podcastUrl && !podcastDetails,
-    requestData: podcastUrl,
-    setRequestData: (newPodcastUrl: typeof podcastUrl) => {
+    requestQuery: podcastUrl,
+    setRequestQuery: (newPodcastUrl: typeof podcastUrl) => {
       dispatch({ type: 'setPodcastUrl', payload: newPodcastUrl });
     },
     getApiUrl: (query: typeof podcastUrl) => {
@@ -53,7 +53,7 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
         {widget.isSettingsOpen || !podcastUrl || !podcastDetails || fetchError ? (
           <form
             className="podcast-settings"
-            onSubmit={(event) => submitRequestData((event))}>
+            onSubmit={(event) => submitRequestQuery((event))}>
             <h2 className="podcast-settings-heading">Podcast</h2>
             <input
             type="url"
@@ -62,7 +62,7 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
             defaultValue={podcastUrl}
             placeholder="An Apple Podcast URL"
             required
-            ref={requestDataInputRef} />
+            ref={requestQueryInputRef} />
             <button className="podcast-url-submit">Submit</button>
             {fetchError ? (
               <p className="podcast-error">{fetchError}</p>

@@ -27,12 +27,12 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
   const [state, dispatch] = useWidgetShell(reducer, widget);
   const { verseQuery, verseContent } = state as BibleVerseWidgetState;
 
-  const { fetchError, submitRequestData, requestDataInputRef } = useWidgetDataFetcher({
+  const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
     dispatch,
     shouldFetch: () => verseQuery && !verseContent,
-    requestData: verseQuery,
-    setRequestData: (newQuery: typeof verseQuery) => {
+    requestQuery: verseQuery,
+    setRequestQuery: (newQuery: typeof verseQuery) => {
       return dispatch({ type: 'setVerseQuery', payload: newQuery });
     },
     getApiUrl: (query: typeof verseQuery) => {
@@ -56,7 +56,7 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
         {widget.isSettingsOpen || !verseQuery || !verseContent || fetchError ? (
           <form
             className="bible-verse-settings"
-            onSubmit={(event) => submitRequestData((event))}>
+            onSubmit={(event) => submitRequestQuery((event))}>
             <h2 className="bible-verse-heading">Bible Verse</h2>
             <input
               type="text"
@@ -65,7 +65,7 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
               defaultValue={verseQuery}
               placeholder="e.g. gen1.1, psa.23.1-5"
               required
-              ref={requestDataInputRef} />
+              ref={requestQueryInputRef} />
             <button className="bible-verse-search-submit">Submit</button>
             {fetchError ? (
               <p className="bible-verse-error">{fetchError}</p>

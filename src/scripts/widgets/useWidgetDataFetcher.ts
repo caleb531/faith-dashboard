@@ -6,7 +6,7 @@ import { JSONSerializable } from '../types.d';
 // arbitrary data from an API endpoint given some user-supplied request query
 // that's part of your widget; see the built-in widgets like BibleVerse or
 // Podcast for examples on how this hook is used
-export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, requestData, setRequestData, getApiUrl, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
+export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, requestQuery, setRequestQuery, getApiUrl, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
   // The current state of the widget from the useWidgetShell() call
   widget: WidgetState,
   // The dispatch function from the useWidgetShell() call
@@ -15,18 +15,17 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
   // this render, and false otherwise; normally, this condition should be if
   // the request data is populated, and if there is no cached content
   shouldFetch: () => any,
-  // The request data to be used in building the API request; this will
-  // probably be a user-entered query string of some sort
-  requestData: string,
+  // The user-entered query string to be used in building the API request
+  requestQuery: string,
   // Receives the user-entered query as its only argument, and
   // should set query on the widget state (e.g. call the dispatch() function
   // returned by useWidgetShell(), or even a setter function from useState(),
   // and provide the user-entered query string as the payload); this callback
   // receives the user-entered query as its only argument
-  setRequestData: (requestData: string) => void,
+  setRequestQuery: (requestQuery: string) => void,
   // Receives the request data as input, and returns a string representing the
   // full URL of the API endpoint to call; this
-  getApiUrl: (requestData: string) => string,
+  getApiUrl: (requestQuery: string) => string,
   // Parses the response from the designated API (which is assumed to be a JSON
   // response) by performing any property access to get at the objects or data
   // you actually want to store (or to simplify the object structure for later
@@ -56,11 +55,11 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
   // A reference to an HTML <input> element to which the request query should
   // be bound; this ref should be attached to whatever <input> you are
   // rendering into your widget's settings UI that represents the request query
-  requestDataInputRef: { current: HTMLInputElement },
+  requestQueryInputRef: { current: HTMLInputElement },
   // The submit handler; you should attach this to the <form> element in your
   // widget settings so that the request query can be set on the widget state
   // when the form is submitted
-  submitRequestData: Function
+  submitRequestQuery: Function
 } {
 
   const isLoading = false;
@@ -68,7 +67,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
 
   function fetchWidgetData(): Promise<void> {
     dispatch({ type: 'showLoading' });
-    return fetch(getApiUrl(requestData))
+    return fetch(getApiUrl(requestQuery))
       .then((rawResponse) => rawResponse.json())
       .then((response) => parseResponse(response))
       .then((data) => {
@@ -86,14 +85,14 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
   }
 
   // Store a ref to the input element to which the request data will be bound
-  const requestDataInputRef: {current: HTMLInputElement} = useRef(null);
+  const requestQueryInputRef: {current: HTMLInputElement} = useRef(null);
 
   // In order to avoid excessive renders, the <input> field for the user's
   // request data is uncontrolled, and instead, the user must explicitly submit
   // the form in order for the verse query to be set on the state
-  function submitRequestData(event: React.FormEvent): void {
+  function submitRequestQuery(event: React.FormEvent): void {
     event.preventDefault();
-    const input = requestDataInputRef.current;
+    const input = requestQueryInputRef.current;
     if (input) {
       // Further down, we need to make the error message from the last fetch
       // part of the condition for fetching again (i.e. don't fetch again if an
@@ -102,7 +101,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
       // request data changes, otherwise you would be unable to submit a valid
       // query after an error was returned
       dispatch({ type: 'setFetchError', payload: null });
-      setRequestData(input.value);
+      setRequestQuery(input.value);
     }
   }
 
@@ -113,6 +112,6 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
     }
   }, [...dependencies, isLoading, fetchError]);
 
-  return { fetchError, submitRequestData, requestDataInputRef };
+  return { fetchError, submitRequestQuery, requestQueryInputRef };
 
 }
