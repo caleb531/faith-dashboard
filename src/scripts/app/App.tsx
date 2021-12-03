@@ -6,7 +6,7 @@ import LoadingIndicator from '../generic/LoadingIndicator';
 import UpdateNotification from './UpdateNotification';
 import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
-import { useLocalStorage } from '../hooks';
+import useLocalStorage from './useLocalStorage';
 import defaultApp from './appStateDefault';
 
 // Lazy-load the widget board since react-beautiful-dnd is a large dependency

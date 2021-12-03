@@ -1,29 +1,7 @@
 import React, { useContext, useRef, useEffect } from 'react';
-import { AppContext } from './app/AppContext';
-import { WidgetState } from './types.d';
+import { WidgetState } from '../types';
 
-type LocalStorageData = string | number | boolean | LocalStorageData[] | object;
-
-export function useLocalStorage(key: string, defaultValue: LocalStorageData): [Function, Function] {
-
-  function getLocalStorage(): LocalStorageData {
-    const value = JSON.parse(localStorage.getItem(key));
-    if (value) {
-      return value;
-    } else {
-      return defaultValue;
-    }
-  }
-
-  function setLocalStorage(myValue: LocalStorageData): void {
-    localStorage.setItem(key, JSON.stringify(myValue));
-  }
-
-  return [getLocalStorage, setLocalStorage];
-
-}
-
-export function useWidgetDataFetcher({ widget, dispatch, shouldFetch, requestData, setRequestData, getApiUrl, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
+export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, requestData, setRequestData, getApiUrl, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
   widget: WidgetState,
   dispatch: Function,
   shouldFetch: Function,
@@ -91,22 +69,5 @@ export function useWidgetDataFetcher({ widget, dispatch, shouldFetch, requestDat
   }, [...dependencies, isLoading, fetchError]);
 
   return { fetchError, submitRequestData, requestDataInputRef };
-
-}
-
-export function useWidgetUpdater(widget: WidgetState): void {
-
-  const { dispatchToApp } = useContext(AppContext);
-
-  // Update widget list when changes are made
-  useEffect(() => {
-    dispatchToApp({
-      type: 'updateWidget',
-      payload: {
-        ...widget,
-        column: widget.column || 1
-      }
-    });
-  }, [widget]);
 
 }

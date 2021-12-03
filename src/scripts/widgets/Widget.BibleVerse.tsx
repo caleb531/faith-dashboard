@@ -2,8 +2,9 @@ import React, { useReducer, useRef, useEffect } from 'react';
 import HtmlReactParser from 'html-react-parser';
 import { StateAction, WidgetState, WidgetContentsParameters } from '../types.d';
 import { BibleVerseData, BibleVerseWidgetState } from './Widget.BibleVerse.d';
-import WidgetShell, { useWidgetShell } from './WidgetShell';
-import { useWidgetDataFetcher } from '../hooks';
+import WidgetShell from './WidgetShell';
+import useWidgetShell from './useWidgetShell';
+import useWidgetDataFetcher from './useWidgetDataFetcher';
 
 export function reducer(state: BibleVerseWidgetState, action: StateAction): BibleVerseWidgetState {
   switch (action.type) {

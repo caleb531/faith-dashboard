@@ -2,8 +2,9 @@ import React, { useReducer, useRef, useEffect } from 'react';
 import moment from 'moment';
 import { StateAction, WidgetContentsParameters } from '../types.d';
 import { PodcastWidgetState, PodcastDetails, PodcastEpisode } from './Widget.Podcast.d';
-import WidgetShell, { useWidgetShell } from './WidgetShell';
-import { useWidgetDataFetcher } from '../hooks';
+import WidgetShell from './WidgetShell';
+import useWidgetShell from './useWidgetShell';
+import useWidgetDataFetcher from './useWidgetDataFetcher';
 
 export function reducer(state: PodcastWidgetState, action: StateAction): PodcastWidgetState {
   switch (action.type) {
