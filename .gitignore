@@ -16,3 +16,6 @@ coverage/
 
 # Private ESV API configuration
 api.json
+
+# VS Code settings
+.vscode/
