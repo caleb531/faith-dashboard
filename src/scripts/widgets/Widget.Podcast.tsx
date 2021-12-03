@@ -12,7 +12,7 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
       return { ...state, podcastDetails };
     case 'setPodcastUrl':
       const podcastUrl = action.payload as string;
-      return { ...state, podcastUrl, podcastDetails: null };
+      return { ...state, podcastUrl, podcastDetails: null, fetchError: null };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
@@ -33,29 +33,27 @@ function Podcast({ widget, provided }: WidgetContentsParameters) {
     }
   }
 
-  const fetchError: any = null;
-
-  // const { fetchError } = useWidgetDataFetcher({
-  //   widget,
-  //   dispatchToWidget,
-  //   shouldFetch: () => {
-  //     return podcastUrl && !podcastDetails;
-  //   },
-  //   requestData: podcastUrl,
-  //   getApiUrl: (query: typeof podcastUrl) => {
-  //     return `widgets/Podcast/api.php?podcast_url=${encodeURIComponent(query)}`;
-  //   },
-  //   parseResponse: (data: {channel: PodcastDetails}) => data.channel,
-  //   hasResults: (data: typeof podcastDetails) => data.item && data.item.length,
-  //   onSuccess: (data: typeof podcastDetails) => {
-  //     dispatch({
-  //       type: 'setPodcastDetails',
-  //       payload: data
-  //     });
-  //   },
-  //   getNoResultsMessage: (data: typeof podcastDetails) => 'No Podcasts Found',
-  //   getErrorMessage: (error: Error) => 'Error Fetching Podcast'
-  // }, [podcastUrl, podcastDetails]);
+  const { fetchError } = useWidgetDataFetcher({
+    widget: state,
+    dispatch,
+    shouldFetch: () => {
+      return podcastUrl && !podcastDetails;
+    },
+    requestData: podcastUrl,
+    getApiUrl: (query: typeof podcastUrl) => {
+      return `widgets/Podcast/api.php?podcast_url=${encodeURIComponent(query)}`;
+    },
+    parseResponse: (data: {channel: PodcastDetails}) => data.channel,
+    hasResults: (data: typeof podcastDetails) => data.item && data.item.length,
+    onSuccess: (data: typeof podcastDetails) => {
+      dispatch({
+        type: 'setPodcastDetails',
+        payload: data
+      });
+    },
+    getNoResultsMessage: (data: typeof podcastDetails) => 'No Podcasts Found',
+    getErrorMessage: (error: Error) => 'Error Fetching Podcast'
+  }, [podcastUrl, podcastDetails]);
 
   return (
     <WidgetShell widget={state} dispatch={dispatch} provided={provided}>

@@ -12,7 +12,7 @@ export function reducer(state: BibleVerseWidgetState, action: StateAction): Bibl
       return { ...state, verseContent };
     case 'setVerseQuery':
       const verseQuery = action.payload as string;
-      return { ...state, verseQuery, verseContent: null };
+      return { ...state, verseQuery, verseContent: null, fetchError: null };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
@@ -39,28 +39,27 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
     }
   }
 
-  const fetchError: any = null;
-
-  // const { fetchError } = useWidgetDataFetcher({
-  //   dispatch,
-  //   shouldFetch: () => {
-  //     return verseQuery && !verseContent;
-  //   },
-  //   requestData: verseQuery,
-  //   getApiUrl: (query: typeof verseQuery) => {
-  //     return `widgets/BibleVerse/api.php?q=${encodeURIComponent(query)}`;
-  //   },
-  //   parseResponse: (response: BibleVerseData) => response.passages.join(''),
-  //   hasResults: (data: typeof verseContent) => (data !== ''),
-  //   onSuccess: (data: typeof verseContent) => {
-  //     dispatch({
-  //       type: 'setVerseContent',
-  //       payload: data
-  //     });
-  //   },
-  //   getNoResultsMessage: (data: typeof verseContent) => 'No Verses Found',
-  //   getErrorMessage: (error: Error) => 'Error Fetching Verse'
-  // }, [verseQuery, verseContent]);
+  const { fetchError } = useWidgetDataFetcher({
+    widget: state,
+    dispatch,
+    shouldFetch: () => {
+      return verseQuery && !verseContent;
+    },
+    requestData: verseQuery,
+    getApiUrl: (query: typeof verseQuery) => {
+      return `widgets/BibleVerse/api.php?q=${encodeURIComponent(query)}`;
+    },
+    parseResponse: (response: BibleVerseData) => response.passages.join(''),
+    hasResults: (data: typeof verseContent) => (data !== ''),
+    onSuccess: (data: typeof verseContent) => {
+      dispatch({
+        type: 'setVerseContent',
+        payload: data
+      });
+    },
+    getNoResultsMessage: (data: typeof verseContent) => 'No Verses Found',
+    getErrorMessage: (error: Error) => 'Error Fetching Verse'
+  }, [verseQuery, verseContent]);
 
   return (
     <WidgetShell widget={state} dispatch={dispatch} provided={provided}>
