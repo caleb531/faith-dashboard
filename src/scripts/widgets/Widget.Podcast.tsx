@@ -19,7 +19,7 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
   }
 }
 
-function Podcast({ widget, provided }: WidgetContentsParameters) {
+function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
 
   const [state, dispatch] = useWidgetShell(reducer, widget);
   const { podcastUrl, podcastDetails } = state as PodcastWidgetState;
@@ -90,4 +90,4 @@ function Podcast({ widget, provided }: WidgetContentsParameters) {
 
 }
 
-export default Podcast;
+export default PodcastWidget;
