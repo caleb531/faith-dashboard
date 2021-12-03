@@ -2,7 +2,7 @@ const path = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
-  entry: ['regenerator-runtime/runtime.js', './src/scripts/index.tsx'],
+  entry: ['./src/scripts/index.tsx'],
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   module: {
     rules: [

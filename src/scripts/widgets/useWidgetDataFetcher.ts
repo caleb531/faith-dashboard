@@ -66,23 +66,23 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
   const isLoading = false;
   const { fetchError } = widget;
 
-  async function fetchWidgetData(): Promise<JSONSerializable> {
+  function fetchWidgetData(): Promise<void> {
     dispatch({ type: 'showLoading' });
-    try {
-      const verseResponse = await fetch(getApiUrl(requestData)) as { json: Function };
-      const data = parseResponse(await verseResponse.json());
-      if (hasResults(data)) {
-        onSuccess(data);
-        dispatch({ type: 'showContent' });
-      } else {
-        dispatch({ type: 'setFetchError', payload: getNoResultsMessage(data) });
-      }
-      return data;
-    } catch (error) {
-      console.log('error', error);
-      dispatch({ type: 'setFetchError', payload: getErrorMessage(error) });
-      return null;
-    }
+    return fetch(getApiUrl(requestData))
+      .then((rawResponse) => rawResponse.json())
+      .then((response) => parseResponse(response))
+      .then((data) => {
+        if (hasResults(data)) {
+          onSuccess(data);
+          dispatch({ type: 'showContent' });
+        } else {
+          dispatch({ type: 'setFetchError', payload: getNoResultsMessage(data) });
+        }
+      })
+      .catch((error) => {
+        console.log('error', error);
+        dispatch({ type: 'setFetchError', payload: getErrorMessage(error) });
+      });
   }
 
   // Store a ref to the input element to which the request data will be bound
