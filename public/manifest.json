@@ -1,0 +1,26 @@
+{
+  "short_name": "Faith Dashboard",
+  "name": "Faith Dashboard",
+  "description": "Your one place for anything and everything that inspires your faith.",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#117777",
+  "background_color": "#222222",
+  "icons": [
+    {
+      "src": "app-icons/app-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "app-icons/app-icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "app-icons/app-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
