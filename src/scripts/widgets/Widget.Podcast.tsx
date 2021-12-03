@@ -12,7 +12,7 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
       return { ...state, podcastDetails };
     case 'setPodcastUrl':
       const podcastUrl = action.payload as string;
-      return { ...state, podcastUrl, podcastDetails: null, fetchError: null };
+      return { ...state, podcastUrl, podcastDetails: null };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
@@ -23,23 +23,14 @@ function Podcast({ widget, provided }: WidgetContentsParameters) {
   const [state, dispatch] = useWidgetShell(reducer, widget);
   const { podcastUrl, podcastDetails } = state as PodcastWidgetState;
 
-  const podcastUrlInputRef: {current: HTMLInputElement} = useRef(null);
-
-  function submitPodcastUrl(event: React.FormEvent): void {
-    event.preventDefault();
-    const input = podcastUrlInputRef.current;
-    if (input) {
-      dispatch({ type: 'setPodcastUrl', payload: input.value });
-    }
-  }
-
-  const { fetchError } = useWidgetDataFetcher({
+  const { fetchError, submitRequestData, requestDataInputRef } = useWidgetDataFetcher({
     widget: state,
     dispatch,
-    shouldFetch: () => {
-      return podcastUrl && !podcastDetails;
-    },
+    shouldFetch: () => podcastUrl && !podcastDetails,
     requestData: podcastUrl,
+    setRequestData: (newPodcastUrl: typeof podcastUrl) => {
+      dispatch({ type: 'setPodcastUrl', payload: newPodcastUrl });
+    },
     getApiUrl: (query: typeof podcastUrl) => {
       return `widgets/Podcast/api.php?podcast_url=${encodeURIComponent(query)}`;
     },
@@ -61,7 +52,7 @@ function Podcast({ widget, provided }: WidgetContentsParameters) {
         {widget.isSettingsOpen || !podcastUrl || !podcastDetails || fetchError ? (
           <form
             className="podcast-settings"
-            onSubmit={(event) => submitPodcastUrl((event))}>
+            onSubmit={(event) => submitRequestData((event))}>
             <h2 className="podcast-settings-heading">Podcast</h2>
             <input
             type="url"
@@ -70,7 +61,7 @@ function Podcast({ widget, provided }: WidgetContentsParameters) {
             defaultValue={podcastUrl}
             placeholder="An Apple Podcast URL"
             required
-            ref={podcastUrlInputRef} />
+            ref={requestDataInputRef} />
             <button className="podcast-url-submit">Submit</button>
             {fetchError ? (
               <p className="podcast-error">{fetchError}</p>

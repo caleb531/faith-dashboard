@@ -12,7 +12,7 @@ export function reducer(state: BibleVerseWidgetState, action: StateAction): Bibl
       return { ...state, verseContent };
     case 'setVerseQuery':
       const verseQuery = action.payload as string;
-      return { ...state, verseQuery, verseContent: null, fetchError: null };
+      return { ...state, verseQuery, verseContent: null };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
@@ -26,26 +26,14 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
   const [state, dispatch] = useWidgetShell(reducer, widget);
   const { verseQuery, verseContent } = state as BibleVerseWidgetState;
 
-  const searchInputRef: {current: HTMLInputElement} = useRef(null);
-
-  // In order to avoid excessive renders, the <input> for the user's verse
-  // query is uncontrolled, and instead, the user must explicitly submit the
-  // form in order for the verse query to be set on the state
-  function submitVerseSearch(event: React.FormEvent): void {
-    event.preventDefault();
-    const input = searchInputRef.current;
-    if (input) {
-      dispatch({ type: 'setVerseQuery', payload: input.value });
-    }
-  }
-
-  const { fetchError } = useWidgetDataFetcher({
+  const { fetchError, submitRequestData, requestDataInputRef } = useWidgetDataFetcher({
     widget: state,
     dispatch,
-    shouldFetch: () => {
-      return verseQuery && !verseContent;
-    },
+    shouldFetch: () => verseQuery && !verseContent,
     requestData: verseQuery,
+    setRequestData: (newQuery: typeof verseQuery) => {
+      return dispatch({ type: 'setVerseQuery', payload: newQuery });
+    },
     getApiUrl: (query: typeof verseQuery) => {
       return `widgets/BibleVerse/api.php?q=${encodeURIComponent(query)}`;
     },
@@ -67,7 +55,7 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
         {widget.isSettingsOpen || !verseQuery || !verseContent || fetchError ? (
           <form
             className="bible-verse-settings"
-            onSubmit={(event) => submitVerseSearch((event))}>
+            onSubmit={(event) => submitRequestData((event))}>
             <h2 className="bible-verse-heading">Bible Verse</h2>
             <input
               type="text"
@@ -76,7 +64,7 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
               defaultValue={verseQuery}
               placeholder="e.g. gen1.1, psa.23.1-5"
               required
-              ref={searchInputRef} />
+              ref={requestDataInputRef} />
             <button className="bible-verse-search-submit">Submit</button>
             {fetchError ? (
               <p className="bible-verse-error">{fetchError}</p>
