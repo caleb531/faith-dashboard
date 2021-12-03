@@ -109,8 +109,10 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
     // The React Docs suggest using an empty array when we only want a hook to
     // run exactly one time, which is the case here because we only want to
     // fetch data when the widget is initially loaded; any subsequent fetches
-    // should require the user to submit the Settings form; for more
-    // information, see:
+    // should require the user to submit the Settings form; previous attempts
+    // to synchronize this effect with state changes have resulted in infinite
+    // loops, and have made the code more fragile/tricky; for more information,
+    // see:
     // <https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects>
   }, []);
 
