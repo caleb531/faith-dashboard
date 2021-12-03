@@ -2,8 +2,18 @@ import React, { useReducer } from 'react';
 import { WidgetState, StateAction } from '../types';
 import useWidgetUpdater from './useWidgetUpdater';
 
+// The useWidgetShell() hook which must be called in any component which
+// implements a particular widget type; it manages several important
+// operations, like exposing global actions available to all widgets, and
+// attaching listeners that automatically persist the widget whenever its state
+// changes
 export default function useWidgetShell(subReducer: Function, widget: WidgetState): [WidgetState, Function] {
 
+  // The sub-reducer is an optional reducer belonging to the implementation
+  // component for a particular widget type; it is combined into a larger
+  // reducer containing general widget actions (this allows the compoment for
+  // each widget type implementation to reference the same widget state and
+  // dispatcher)
   function reducer(state: WidgetState, action: StateAction): WidgetState {
     switch (action.type) {
       case 'toggleSettings':
@@ -21,6 +31,9 @@ export default function useWidgetShell(subReducer: Function, widget: WidgetState
       case 'setFetchError':
         return { ...state, isLoading: false, fetchError: action.payload as string };
       default:
+        // As mentioned above, the sub-reducer is optional, and if you wish to
+        // omit it, simply pass `null` as the first argument to
+        // useWidgetShell()
         if (subReducer) {
           return subReducer(state, action);
         } else {
@@ -31,7 +44,7 @@ export default function useWidgetShell(subReducer: Function, widget: WidgetState
 
   const [state, dispatch] = useReducer(reducer, widget);
 
-  // Save updates to widget as changes are made
+  // Save updates to the widget as its state changes
   useWidgetUpdater(state);
 
   return [state, dispatch];

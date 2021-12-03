@@ -1,21 +1,64 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { WidgetState } from '../types';
 
+// The useWidgetDataFetcher() hook is a powerful hook that allows you to fetch
+// arbitrary data from an API endpoint given some user-supplied request query
+// that's part of your widget; see the built-in widgets like BibleVerse or
+// Podcast for examples on how this hook is used
 export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, requestData, setRequestData, getApiUrl, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
+  // The current state of the widget from the useWidgetShell() call
   widget: WidgetState,
+  // The dispatch function from the useWidgetShell() call
   dispatch: Function,
+  // A boolean function that should return true if the widget should fetch on
+  // this render, and false otherwise; normally, this condition should be if
+  // the request data is populated, and if there is no cached content
   shouldFetch: Function,
-  requestData: any,
+  // The request data to be used in building the API request; this will
+  // probably be a user-entered query string of some sort
+  requestData: string | object,
+  // Receives the user-entered query as its only argument, and
+  // should set query on the widget state (e.g. call the dispatch() function
+  // returned by useWidgetShell(), or even a setter function from useState(),
+  // and provide the user-entered query string as the payload); this callback
+  // receives the user-entered query as its only argument
   setRequestData: Function,
+  // Receives the request data as input, and returns a string representing the
+  // full URL of the API endpoint to call; this
   getApiUrl: Function,
+  // Parses the response from the designated API (which is assumed to be a JSON
+  // response) by performing any property access to get at the objects or data
+  // you actually want to store (or to simplify the object structure for later
+  // use)
   parseResponse: Function,
+  // A boolean function that should return true if the result of
+  // parseResponse() has content to display, or false if (in which case the No
+  // Results message is triggered)
   hasResults: Function,
+  // If hasResults() returns true, this callback runs with the return value of
+  // parseResponse() as its only argument; you will probably want to call a
+  // dispatch() function or useState() setter within this callback to persist
+  // the response data to the widget state
   onSuccess: Function,
+  // Accepts the return value of parseResponse() as its only argument, and
+  // should return a string representing the message to show if hasResults()
+  // returns false
   getNoResultsMessage: Function,
+  // Accepts an Error object as its only argument, and should return a string
+  // representing the message to show if the API returned an error response, or
+  // if some other runtime error occurred during the fetch
   getErrorMessage: Function,
 }, dependencies: any[]): {
+  // Either the return value of getNoResultsMessage(), the return value of
+  // getErrorMessage(), or null, depending on the outcome of the fetch
   fetchError: string,
+  // A reference to an HTML <input> element to which the request query should
+  // be bound; this ref should be attached to whatever <input> you are
+  // rendering into your widget's settings UI that represents the request query
   requestDataInputRef: { current: HTMLInputElement },
+  // The submit handler; you should attach this to the <form> element in your
+  // widget settings so that the request query can be set on the widget state
+  // when the form is submitted
   submitRequestData: Function
 } {
 
