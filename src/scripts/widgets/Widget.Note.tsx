@@ -47,30 +47,32 @@ function NoteWidget({ widget, provided }: WidgetContentsParameters) {
   }
 
   return (
-    <section className="note">
-      {widget.isSettingsOpen ? (
-        <>
-          <h2 className="note-heading">Note</h2>
-          <form className="note-formatting">
-            <input
-              type="range"
-              className="note-formatting-font-size"
-              onInput={(event) => changeFontSize(event)}
-              min="12"
-              max="50"
-              value={fontSize || defaultFontSize} />
-            <div className="note-formatting-preview" style={textStyles}>Example Text</div>
-          </form>
-        </>
-      ) : (
-        <textarea
-          className="note-text-box"
-          onInput={changeText}
-          placeholder="Type your note here..."
-          defaultValue={text}
-          style={textStyles}></textarea>
-      )}
-    </section>
+    <WidgetShell widget={state} dispatch={dispatch} provided={provided}>
+      <section className="note">
+        {widget.isSettingsOpen ? (
+          <>
+            <h2 className="note-heading">Note</h2>
+            <form className="note-formatting">
+              <input
+                type="range"
+                className="note-formatting-font-size"
+                onInput={(event) => changeFontSize(event)}
+                min="12"
+                max="50"
+                value={fontSize || defaultFontSize} />
+              <div className="note-formatting-preview" style={textStyles}>Example Text</div>
+            </form>
+          </>
+        ) : (
+          <textarea
+            className="note-text-box"
+            onInput={changeText}
+            placeholder="Type your note here..."
+            defaultValue={text}
+            style={textStyles}></textarea>
+        )}
+      </section>
+    </WidgetShell>
   );
 
 }

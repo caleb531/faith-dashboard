@@ -63,31 +63,33 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
   // }, [verseQuery, verseContent]);
 
   return (
-    <section className="bible-verse">
-      {widget.isSettingsOpen || !verseQuery || !verseContent || fetchError ? (
-        <form
-          className="bible-verse-settings"
-          onSubmit={(event) => submitVerseSearch((event))}>
-          <h2 className="bible-verse-heading">Bible Verse</h2>
-          <input
-            type="text"
-            className="bible-verse-search"
-            name="search"
-            defaultValue={verseQuery}
-            placeholder="e.g. gen1.1, psa.23.1-5"
-            required
-            ref={searchInputRef} />
-          <button className="bible-verse-search-submit">Submit</button>
-          {fetchError ? (
-            <p className="bible-verse-error">{fetchError}</p>
-          ) : null}
-        </form>
-      ) : verseQuery && verseContent ? (
-        <div className="bible-verse-content">
-          {HtmlReactParser(verseContent)}
-        </div>
-      ) : null}
-    </section>
+    <WidgetShell widget={state} dispatch={dispatch} provided={provided}>
+      <section className="bible-verse">
+        {widget.isSettingsOpen || !verseQuery || !verseContent || fetchError ? (
+          <form
+            className="bible-verse-settings"
+            onSubmit={(event) => submitVerseSearch((event))}>
+            <h2 className="bible-verse-heading">Bible Verse</h2>
+            <input
+              type="text"
+              className="bible-verse-search"
+              name="search"
+              defaultValue={verseQuery}
+              placeholder="e.g. gen1.1, psa.23.1-5"
+              required
+              ref={searchInputRef} />
+            <button className="bible-verse-search-submit">Submit</button>
+            {fetchError ? (
+              <p className="bible-verse-error">{fetchError}</p>
+            ) : null}
+          </form>
+        ) : verseQuery && verseContent ? (
+          <div className="bible-verse-content">
+            {HtmlReactParser(verseContent)}
+          </div>
+        ) : null}
+      </section>
+    </WidgetShell>
   );
 
 }
