@@ -8,7 +8,6 @@ export function createWidget(props: object): WidgetState {
       isSettingsOpen: false,
       column: null,
       height: null,
-      data: {},
     ...props
   };
 }
