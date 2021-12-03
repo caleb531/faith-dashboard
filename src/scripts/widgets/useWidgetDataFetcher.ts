@@ -63,7 +63,8 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
   submitRequestData: Function
 } {
 
-  const { isLoading, fetchError } = widget;
+  const isLoading = false;
+  const { fetchError } = widget;
 
   async function fetchWidgetData(): Promise<JSONSerializable> {
     dispatch({ type: 'showLoading' });
