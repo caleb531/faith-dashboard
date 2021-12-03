@@ -45,7 +45,7 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
     },
     getNoResultsMessage: (data: typeof podcastDetails) => 'No Podcasts Found',
     getErrorMessage: (error: Error) => 'Error Fetching Podcast'
-  }, [podcastUrl, podcastDetails]);
+  });
 
   return (
     <WidgetShell widget={state} dispatch={dispatch} provided={provided}>

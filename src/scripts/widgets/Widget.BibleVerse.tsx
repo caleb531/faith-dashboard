@@ -48,7 +48,7 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
     },
     getNoResultsMessage: (data: typeof verseContent) => 'No Verses Found',
     getErrorMessage: (error: Error) => 'Error Fetching Verse'
-  }, [verseQuery, verseContent]);
+  });
 
   return (
     <WidgetShell widget={state} dispatch={dispatch} provided={provided}>

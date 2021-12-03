@@ -48,7 +48,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
   // representing the message to show if the API returned an error response, or
   // if some other runtime error occurred during the fetch
   getErrorMessage: (error: Error) => string,
-}, dependencies: any[]): {
+}): {
   // Either the return value of getNoResultsMessage(), the return value of
   // getErrorMessage(), or null, depending on the outcome of the fetch
   fetchError: string,
@@ -65,9 +65,9 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
   const isLoading = false;
   const { fetchError } = widget;
 
-  function fetchWidgetData(): Promise<void> {
+  function fetchWidgetData(newRequestQuery: string): Promise<void> {
     dispatch({ type: 'showLoading' });
-    return fetch(getApiUrl(requestQuery))
+    return fetch(getApiUrl(newRequestQuery))
       .then((rawResponse) => rawResponse.json())
       .then((response) => parseResponse(response))
       .then((data) => {
@@ -94,23 +94,19 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
     event.preventDefault();
     const input = requestQueryInputRef.current;
     if (input) {
-      // Further down, we need to make the error message from the last fetch
-      // part of the condition for fetching again (i.e. don't fetch again if an
-      // error occurred), lest we trigger an infinite fetch loop; however, if
-      // we are to do this, we must also blank out the fetch error whenever the
-      // request data changes, otherwise you would be unable to submit a valid
-      // query after an error was returned
-      dispatch({ type: 'setFetchError', payload: null });
       setRequestQuery(input.value);
+      fetchWidgetData(input.value);
     }
   }
 
-  // Fetch the widget data if everything is properly reset
+  // Fetch the widget data when the widget initially loads (presuming the
+  // widget data is not already cached according to the logic dictated by
+  // shouldFetch())
   useEffect(() => {
-    if (shouldFetch() && !isLoading && !fetchError) {
-      fetchWidgetData();
+    if (shouldFetch()) {
+      fetchWidgetData(requestQuery);
     }
-  }, [...dependencies, isLoading, fetchError]);
+  }, []);
 
   return { fetchError, submitRequestQuery, requestQueryInputRef };
 
