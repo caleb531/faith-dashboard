@@ -36,7 +36,7 @@ export interface AppContextValue {
 }
 
 // A dropdown entry for an available app color theme
-interface ThemeListItem {
+interface AppThemeListItem {
   label: string;
   value: AppTheme;
 }

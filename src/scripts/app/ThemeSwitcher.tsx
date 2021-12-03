@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { AppContext } from './AppContext';
-import { AppTheme, ThemeListItem } from '../types.d';
+import { AppTheme, AppThemeListItem } from '../types.d';
 
-const themeList: ThemeListItem[] = [
+const themeList: AppThemeListItem[] = [
   {
     label: 'Brown',
     value: AppTheme.brown
