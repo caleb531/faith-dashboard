@@ -5,6 +5,7 @@ import { PodcastWidgetState, PodcastDetails, PodcastEpisode } from './Podcast.d'
 import WidgetShell from '../WidgetShell';
 import useWidgetShell from '../useWidgetShell';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
+import PodcastPlayer from './PodcastPlayer';
 
 export function reducer(state: PodcastWidgetState, action: StateAction): PodcastWidgetState {
   switch (action.type) {
@@ -22,6 +23,7 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
         nowPlaying: state.podcastUrl !== podcastUrl ?
           null :
           state.nowPlaying,
+        viewingNowPlaying: false,
         listeningHistory: state.podcastUrl !== podcastUrl ?
           {} :
           state.listeningHistory
@@ -30,8 +32,12 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
       const nowPlayingEpisodeGuid = action.payload as string;
       return {
         ...state,
-        nowPlaying: state.podcastDetails.item.find((episode) => episode.guid === nowPlayingEpisodeGuid)
+        nowPlaying: state.podcastDetails.item.find((episode) => episode.guid === nowPlayingEpisodeGuid),
+        isPlaying: true
       };
+    case 'setIsPlaying':
+      const isPlaying = action.payload as boolean;
+      return { ...state, isPlaying };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
@@ -40,7 +46,7 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
 function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
 
   const [state, dispatch] = useWidgetShell(reducer, widget);
-  const { podcastUrl, podcastDetails, nowPlaying } = state as PodcastWidgetState;
+  const { podcastUrl, podcastDetails, nowPlaying, isPlaying } = state as PodcastWidgetState;
 
   const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
@@ -99,11 +105,11 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
             <h2 className="podcast-title">{podcastDetails.title}</h2>
             <span className="podcast-episode-count">{podcastDetails.item.length === 1 ? `${podcastDetails.item.length} episode` : `${podcastDetails.item.length} episodes`}</span>
             {nowPlaying ? (
-              <audio
-                src={nowPlaying.enclosure['@attributes'].url}
-                controls
-                preload="metadata">
-              </audio>
+              <PodcastPlayer
+              nowPlaying={nowPlaying}
+              isPlaying={isPlaying}
+              dispatch={dispatch}
+              />
             ) : null}
             <ol className="podcast-episode-entries" onClick={clickEpisode}>
               {podcastDetails.item.map((episode: PodcastEpisode) => {

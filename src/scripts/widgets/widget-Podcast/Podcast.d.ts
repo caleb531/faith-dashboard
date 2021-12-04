@@ -5,6 +5,8 @@ export interface PodcastWidgetState extends WidgetState {
   podcastUrl: string;
   podcastDetails: PodcastDetails;
   nowPlaying: PodcastEpisode;
+  viewingNowPlaying: boolean;
+  isPlaying: boolean;
   listeningHistory: ListeningHistory
 }
 

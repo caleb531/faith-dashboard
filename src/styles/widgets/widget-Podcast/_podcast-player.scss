@@ -1,0 +1,15 @@
+.podcast-player-play,
+.podcast-player-pause {
+  $button-size: 36px;
+  width: $button-size;
+  height: $button-size;
+  padding: 6px;
+  border-radius: 50px;
+  font-size: 0;
+}
+
+.podcast-player-play-icon,
+.podcast-player-pause-icon {
+  width: 100%;
+  height: 100%;
+}
