@@ -19,9 +19,9 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
         podcastDetails: null,
         // Reset the transient metadata about the currently playing episode and
         // listening history whenever the podcast feed changes
-        currentlyPlaying: state.podcastUrl !== podcastUrl ?
+        nowPlaying: state.podcastUrl !== podcastUrl ?
           null :
-          state.currentlyPlaying,
+          state.nowPlaying,
         listeningHistory: state.podcastUrl !== podcastUrl ?
           {} :
           state.listeningHistory
@@ -34,7 +34,7 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
 function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
 
   const [state, dispatch] = useWidgetShell(reducer, widget);
-  const { podcastUrl, podcastDetails, currentlyPlaying } = state as PodcastWidgetState;
+  const { podcastUrl, podcastDetails, nowPlaying } = state as PodcastWidgetState;
 
   const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
