@@ -8,7 +8,7 @@ function AddWidgetPicker({ onCloseWidgetPicker }: { onCloseWidgetPicker: Functio
 
   return (
     <Modal onCloseModal={onCloseWidgetPicker}>
-        <div className="add-widget-picker">
+        <section className="add-widget-picker">
           <h2>Add Widget</h2>
           <ul className="add-widget-type-list">
             {widgetTypes.map((widgetType: WidgetType) => {
@@ -19,7 +19,7 @@ function AddWidgetPicker({ onCloseWidgetPicker }: { onCloseWidgetPicker: Functio
               );
             })}
           </ul>
-        </div>
+        </section>
     </Modal>
   );
 
