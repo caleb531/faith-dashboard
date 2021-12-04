@@ -33,10 +33,7 @@ gulp.task('sass', () => {
     .pipe(gulp.dest('dist/styles'));
 });
 gulp.task('sass:watch', () => {
-  return gulp.watch([
-    'src/styles/*.scss',
-    'src/styles/*/*.scss'
-  ], gulp.series('sass'));
+  return gulp.watch('src/styles/**/*.scss', gulp.series('sass'));
 });
 
 gulp.task('webpack', () => {
