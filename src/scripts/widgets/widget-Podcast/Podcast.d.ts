@@ -3,6 +3,8 @@ import { WidgetState } from '../../types.d';
 export interface PodcastWidgetState extends WidgetState {
   podcastUrl: string;
   podcastDetails: PodcastDetails;
+  currentlyPlaying: PodcastEpisodeGuid;
+  listeningHistory: ListeningHistoryEntry[]
 }
 
 export interface PodcastImage {
@@ -20,10 +22,19 @@ export interface PodcastEpisodeMedia {
 export interface PodcastEpisode {
   description: object;
   enclosure: { '@attributes': PodcastEpisodeMedia };
-  guid: string;
+  guid: PodcastEpisodeGuid;
   link: string;
   pubDate: string;
   title: string;
+  currentTime?: number;
+}
+
+type PodcastEpisodeGuid = string;
+
+export interface ListeningHistoryEntry {
+  episode: PodcastEpisodeGuid;
+  // The number of seconds into the episode audio where the user left off at
+  currentTime: number;
 }
 
 export interface PodcastDetails {

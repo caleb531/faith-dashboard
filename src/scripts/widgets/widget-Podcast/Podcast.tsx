@@ -13,7 +13,19 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
       return { ...state, podcastDetails };
     case 'setPodcastUrl':
       const podcastUrl = action.payload as string;
-      return { ...state, podcastUrl, podcastDetails: null };
+      return {
+        ...state,
+        podcastUrl,
+        podcastDetails: null,
+        // Reset the transient metadata about the currently playing episode and
+        // listening history whenever the podcast feed changes
+        currentlyPlaying: state.podcastUrl !== podcastUrl ?
+          null :
+          state.currentlyPlaying,
+        listeningHistory: state.podcastUrl !== podcastUrl ?
+          [] :
+          state.listeningHistory
+      };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
@@ -22,7 +34,7 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
 function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
 
   const [state, dispatch] = useWidgetShell(reducer, widget);
-  const { podcastUrl, podcastDetails } = state as PodcastWidgetState;
+  const { podcastUrl, podcastDetails, currentlyPlaying } = state as PodcastWidgetState;
 
   const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
