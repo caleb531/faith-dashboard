@@ -31,7 +31,7 @@ export interface StateAction {
 // component with the ability to dispatch actions to the top-level App
 // component
 export interface AppContextValue {
-  readonly app: AppState;
+  app: AppState;
   dispatchToApp: Function;
 }
 
