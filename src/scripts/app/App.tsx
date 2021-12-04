@@ -82,7 +82,9 @@ function App() {
   return (
     <AppContext.Provider value={{ app, dispatchToApp }}>
       <div className={`app theme-${app.theme}`}>
-          <UpdateNotification />
+          {navigator.serviceWorker ? (
+            <UpdateNotification />
+          ) : null}
           <AppHeader />
           <React.Suspense fallback={<LoadingIndicator />}>
             <WidgetBoard />
