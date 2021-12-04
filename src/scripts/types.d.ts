@@ -19,7 +19,7 @@ export interface AppState {
   widgets: WidgetState[];
 }
 
-// The action object for the App's reducer
+// The action object for any reducer within the application
 export interface StateAction {
   type: string;
   payload?: JSONSerializable;
