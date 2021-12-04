@@ -40,23 +40,21 @@ function PodcastAudioPlayer({ nowPlaying, isPlaying, dispatch }: { nowPlaying: P
 
   return (
     <div className="podcast-audio-player">
-      {isPlaying ? (
-        <button className="podcast-audio-player-pause" onClick={() => setIsPlaying(false)}>
+      <button className="podcast-audio-player-playpause" onClick={() => setIsPlaying(!isPlaying)}>
+        {isPlaying ? (
           <img
-            className="podcast-audio-player-pause-icon"
+            className="podcast-audio-player-playpause-icon"
             src="icons/pause-light.svg"
             alt="Pause"
             draggable="false" />
-        </button>
-      ) : (
-        <button className="podcast-audio-player-play" onClick={() => setIsPlaying(true)}>
+        ) : (
           <img
-            className="podcast-audio-player-play-icon"
+            className="podcast-audio-player-playpause-icon"
             src="icons/play-light.svg"
             alt="Play"
             draggable="false" />
-        </button>
-      )}
+        )}
+      </button>
     </div>
   );
 
