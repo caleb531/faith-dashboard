@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { debounce } from 'lodash-es';
 import { StateAction, WidgetContentsParameters } from '../types.d';
 import { NoteWidgetState } from './Widget.Note.d';

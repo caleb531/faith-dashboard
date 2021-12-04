@@ -1,4 +1,4 @@
-import React, { useReducer, useRef, useEffect } from 'react';
+import React from 'react';
 import moment from 'moment';
 import { StateAction, WidgetContentsParameters } from '../types.d';
 import { PodcastWidgetState, PodcastDetails, PodcastEpisode } from './Widget.Podcast.d';

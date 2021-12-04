@@ -1,4 +1,4 @@
-import React, { useReducer, useRef, useEffect } from 'react';
+import React from 'react';
 import HtmlReactParser from 'html-react-parser';
 import { StateAction, WidgetState, WidgetContentsParameters } from '../types.d';
 import { BibleVerseData, BibleVerseWidgetState } from './Widget.BibleVerse.d';
