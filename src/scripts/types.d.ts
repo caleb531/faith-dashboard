@@ -1,3 +1,4 @@
+import { Dispatch } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 
 // A type that represents any JSON-serializable value or structure
@@ -32,7 +33,7 @@ export interface StateAction {
 // component
 export interface AppContextValue {
   app: AppState;
-  dispatchToApp: Function;
+  dispatchToApp: Dispatch<StateAction>;
 }
 
 // A dropdown entry for an available app color theme
