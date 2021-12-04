@@ -1,4 +1,4 @@
-import { WidgetState } from '../types.d';
+import { WidgetState } from '../../types.d';
 
 export interface BibleVerseWidgetState extends WidgetState {
   verseQuery: string;

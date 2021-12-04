@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { debounce } from 'lodash-es';
-import { StateAction, WidgetContentsParameters } from '../types.d';
-import { NoteWidgetState } from './Widget.Note.d';
-import WidgetShell from './WidgetShell';
-import useWidgetShell from './useWidgetShell';
+import { StateAction, WidgetContentsParameters } from '../../types.d';
+import { NoteWidgetState } from './Note.d';
+import WidgetShell from '../WidgetShell';
+import useWidgetShell from '../useWidgetShell';
 
 export function reducer(state: NoteWidgetState, action: StateAction): NoteWidgetState {
   switch (action.type) {
