@@ -1,6 +1,7 @@
 {
   "sourceMap": true,
   "compilerOptions": {
+    "target": "es6",
     "jsx": "preserve",
     "noImplicitAny": true,
     "esModuleInterop": true
