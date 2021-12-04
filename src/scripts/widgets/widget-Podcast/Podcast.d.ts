@@ -4,7 +4,7 @@ import { WidgetState } from '../../types.d';
 export interface PodcastWidgetState extends WidgetState {
   podcastUrl: string;
   podcastDetails: PodcastDetails;
-  nowPlaying: PodcastEpisodeGuid;
+  nowPlaying: PodcastEpisode;
   listeningHistory: ListeningHistory
 }
 
@@ -27,7 +27,6 @@ export interface PodcastEpisode {
   link: string;
   pubDate: string;
   title: string;
-  currentTime?: number;
 }
 
 type PodcastEpisodeGuid = string;
