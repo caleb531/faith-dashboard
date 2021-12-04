@@ -1,10 +1,11 @@
+import { ListenerCallback } from 'workbox-window/utils/WorkboxEventTarget';
 import { WidgetState } from '../../types.d';
 
 export interface PodcastWidgetState extends WidgetState {
   podcastUrl: string;
   podcastDetails: PodcastDetails;
   currentlyPlaying: PodcastEpisodeGuid;
-  listeningHistory: ListeningHistoryEntry[]
+  listeningHistory: ListeningHistory
 }
 
 export interface PodcastImage {
@@ -30,6 +31,10 @@ export interface PodcastEpisode {
 }
 
 type PodcastEpisodeGuid = string;
+
+export interface ListeningHistory {
+  [key: PodcastEpisodeGuid]: ListeningHistoryEntry;
+}
 
 export interface ListeningHistoryEntry {
   episode: PodcastEpisodeGuid;

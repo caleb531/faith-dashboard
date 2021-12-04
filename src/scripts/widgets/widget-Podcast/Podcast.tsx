@@ -23,7 +23,7 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
           null :
           state.currentlyPlaying,
         listeningHistory: state.podcastUrl !== podcastUrl ?
-          [] :
+          {} :
           state.listeningHistory
       };
     default:
