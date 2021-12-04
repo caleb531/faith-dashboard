@@ -5,7 +5,7 @@ import { PodcastWidgetState, PodcastDetails, PodcastEpisode } from './Podcast.d'
 import WidgetShell from '../WidgetShell';
 import useWidgetShell from '../useWidgetShell';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
-import PodcastPlayer from './PodcastPlayer';
+import PodcastAudioPlayer from './PodcastAudioPlayer';
 
 export function reducer(state: PodcastWidgetState, action: StateAction): PodcastWidgetState {
   switch (action.type) {
@@ -105,10 +105,10 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
             <h2 className="podcast-title">{podcastDetails.title}</h2>
             <span className="podcast-episode-count">{podcastDetails.item.length === 1 ? `${podcastDetails.item.length} episode` : `${podcastDetails.item.length} episodes`}</span>
             {nowPlaying ? (
-              <PodcastPlayer
-              nowPlaying={nowPlaying}
-              isPlaying={isPlaying}
-              dispatch={dispatch}
+              <PodcastAudioPlayer
+                nowPlaying={nowPlaying}
+                isPlaying={isPlaying}
+                dispatch={dispatch}
               />
             ) : null}
             <ol className="podcast-episode-entries" onClick={clickEpisode}>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PodcastEpisode } from './Podcast.d';
 import useCachedAudio from './useCachedAudio';
 
-function PodcastPlayer({ nowPlaying, isPlaying, dispatch }: { nowPlaying: PodcastEpisode, isPlaying: boolean, dispatch: Function }) {
+function PodcastAudioPlayer({ nowPlaying, isPlaying, dispatch }: { nowPlaying: PodcastEpisode, isPlaying: boolean, dispatch: Function }) {
 
   const audioUrl = nowPlaying.enclosure['@attributes'].url;
 
@@ -39,19 +39,19 @@ function PodcastPlayer({ nowPlaying, isPlaying, dispatch }: { nowPlaying: Podcas
   }, [isPlaying, audioElement, audioUrl]);
 
   return (
-    <div className="podcast-player">
+    <div className="podcast-audio-player">
       {isPlaying ? (
-        <button className="podcast-player-pause" onClick={() => setIsPlaying(false)}>
+        <button className="podcast-audio-player-pause" onClick={() => setIsPlaying(false)}>
           <img
-            className="podcast-player-pause-icon"
+            className="podcast-audio-player-pause-icon"
             src="icons/pause-light.svg"
             alt="Pause"
             draggable="false" />
         </button>
       ) : (
-        <button className="podcast-player-play" onClick={() => setIsPlaying(true)}>
+        <button className="podcast-audio-player-play" onClick={() => setIsPlaying(true)}>
           <img
-            className="podcast-player-play-icon"
+            className="podcast-audio-player-play-icon"
             src="icons/play-light.svg"
             alt="Play"
             draggable="false" />
@@ -62,4 +62,4 @@ function PodcastPlayer({ nowPlaying, isPlaying, dispatch }: { nowPlaying: Podcas
 
 }
 
-export default PodcastPlayer;
+export default PodcastAudioPlayer;
