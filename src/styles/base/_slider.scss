@@ -87,16 +87,17 @@ input[type=range] {
   $slider-track-height: 4px;
   $slider-thumb-size: 14px;
   width: 100%;
+  margin: 0;
   padding-top: 15px;
   padding-bottom: 5px;
-  @include slider-track() {
-    -webkit-appearance: none;
-    position: relative;
-    width: 100%;
-    height: $slider-track-height;
-    border-radius: 10px;
-    background-color: $dark-25;
-  }
+  -webkit-appearance: none;
+  position: relative;
+  width: 100%;
+  height: $slider-track-height;
+  // border-radius: 10px;
+  background-color: $dark-25;
+  background-clip: content-box;
+  box-sizing: content-box;
   @include slider-thumb() {
     width: $slider-thumb-size;
     height: $slider-thumb-size;
@@ -104,11 +105,5 @@ input[type=range] {
     background-color: $light-100;
     border-width: 0;
     border-radius: 50%;
-  }
-  // On WebKit, the slider thumb is not vertically centered by default, but on
-  // Firefox, it is, so we need to target WebKit specifically to accommodate
-  // this
-  @include webkit-slider-thumb {
-    transform: translateY(-50%) translateY(math.div($slider-track-height, 2));
   }
 }

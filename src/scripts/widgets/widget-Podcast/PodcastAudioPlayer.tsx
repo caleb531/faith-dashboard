@@ -74,16 +74,29 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
     }
   }, [isPlaying, audioElement, audioUrl]);
 
-  //
-  function setInitialSeekerPosition(input: HTMLInputElement): void {
-    if (input && currentTime) {
-      input.value = String(currentTime);
-    }
-  }
-
   // Store a ref to the input slider so we can change it dynamically without
   // causing excessive renders on every miniscule slider movement
   const seekerInputRef: {current: HTMLInputElement} = useRef(null);
+
+  // Apply a "fill" to the seeker slider in a cross-browser manner using a CSS
+  // gradient
+  function updateSeekerFill(input: HTMLInputElement) {
+    if (input && audioElement.currentTime && audioElement.duration) {
+      const fillPercentage = audioElement.currentTime / audioElement.duration * 100;
+      const fillColor = '#fff';
+      const trackColor = 'rgba(0, 0, 0, 0.25)';
+      input.style.backgroundColor = 'transparent';
+      input.style.backgroundImage = `linear-gradient(to right, ${fillColor} 0%, ${fillColor} ${fillPercentage}%, ${trackColor} ${fillPercentage}%, ${trackColor} 100%)`;
+    }
+  }
+
+  // Set the position of the audio seeker when initially loading the player
+  function setInitialSeekerPosition(input: HTMLInputElement): void {
+    if (input && currentTime) {
+      input.value = String(currentTime);
+      updateSeekerFill(input);
+    }
+  }
 
   // Persist the user's seeking of the audio to the playback metadata
   function seekAudio(event: React.FormEvent): void {
@@ -130,18 +143,23 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
           max={audioElement.duration || 0}
           step="1"
           onChange={seekAudio}
+          onInput={(event) => updateSeekerFill(event.target as HTMLInputElement)}
           onMouseUp={saveCurrentTime}
           ref={setInitialSeekerPosition} />
         <div className="podcast-audio-player-time-info">
           <span className="podcast-audio-player-current-time">
             {!audioElement.duration ?
-              '--:--' :
+              'Loading...' :
               audioElement.currentTime >= 1 ?
-              moment.duration(audioElement.currentTime, 'seconds').format() :
+              moment.duration(Math.floor(audioElement.currentTime), 'seconds').format() :
               '0:00'
             }
           </span>
-          <span className="podcast-audio-player-time-remaining">{audioElement.duration ? `-${moment.duration(audioElement.duration - audioElement.currentTime, 'seconds').format()}` : '--:--'}</span>
+          <span className="podcast-audio-player-time-remaining">{audioElement.duration ?
+            Math.round(audioElement.duration - audioElement.currentTime) > 0 ?
+            `-${moment.duration(audioElement.duration - audioElement.currentTime, 'seconds').format()}`
+            : '0:00'
+           : null}</span>
         </div>
       </div>
     </div>
