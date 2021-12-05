@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { throttle } from 'lodash-es';
 import moment from 'moment';
 import 'moment-duration-format';
 import { PodcastEpisode, PodcastListeningMetadataEntry } from './Podcast.d';
@@ -73,12 +74,34 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
     }
   }, [isPlaying, audioElement, audioUrl]);
 
+  //
+  function setInitialSeekerPosition(input: HTMLInputElement): void {
+    if (input && currentTime) {
+      input.value = String(currentTime);
+    }
+  }
+
+  // Store a ref to the input slider so we can change it dynamically without
+  // causing excessive renders on every miniscule slider movement
+  const seekerInputRef: {current: HTMLInputElement} = useRef(null);
+
+  // Persist the user's seeking of the audio to the playback metadata
+  function seekAudio(event: React.FormEvent): void {
+    if (seekerInputRef) {
+      audioElement.currentTime = parseFloat((event.target as HTMLInputElement).value);
+    }
+  }
+
   useElementEvents(audioElement, {
     loadeddata: () => setIsFullAudioLoaded(true),
     loadedmetadata: () => setIsAudioMetadataLoaded(true),
-    timeupdate: () => {
-      saveCurrentTime();
-    }
+    // Throttle the timeupdate event so that it doesn't fire excessively when
+    // the user is seeking the audio (via the slider)
+    timeupdate: throttle(() => {
+      if (isPlaying) {
+        saveCurrentTime();
+      }
+    })
   });
 
   return (
@@ -98,10 +121,22 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
             draggable="false" />
         )}
       </button>
-      <div className="podcast-audio-player-scrubber-container">
+      <div className="podcast-audio-player-seeker-container">
+        <input
+          type="range"
+          className="podcast-audio-player-seeker-slider"
+          name="seeker"
+          min="0"
+          max={audioElement.duration || 0}
+          step="1"
+          onChange={seekAudio}
+          onMouseUp={saveCurrentTime}
+          ref={setInitialSeekerPosition} />
         <div className="podcast-audio-player-time-info">
           <span className="podcast-audio-player-current-time">
-            {audioElement.currentTime >= 1 ?
+            {!audioElement.duration ?
+              '--:--' :
+              audioElement.currentTime >= 1 ?
               moment.duration(audioElement.currentTime, 'seconds').format() :
               '0:00'
             }

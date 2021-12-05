@@ -18,8 +18,12 @@
   height: $icon-size;
 }
 
-.podcast-audio-player-scrubber-container {
+.podcast-audio-player-seeker-container {
   flex-grow: 1;
+}
+
+.podcast-audio-player-seeker-slider {
+  width: 100%;
 }
 
 .podcast-audio-player-time-info {
