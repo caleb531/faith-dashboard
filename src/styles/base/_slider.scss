@@ -1,0 +1,114 @@
+@use 'sass:math';
+
+// Slider reset styles from
+// <https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/>
+
+input[type='range'] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+input[type='range']:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type='range']::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+@mixin webkit-slider-thumb {
+  &::-webkit-slider-thumb {
+    @content;
+  }
+}
+@mixin moz-slider-thumb {
+  &::-moz-range-thumb {
+    @content;
+  }
+}
+@mixin ms-slider-thumb {
+  &::-ms-thumb {
+    @content;
+  }
+}
+
+@mixin slider-thumb() {
+  @include webkit-slider-thumb() {
+    @content;
+  }
+  @include moz-slider-thumb() {
+    @content;
+  }
+  @include ms-slider-thumb() {
+    @content;
+  }
+}
+
+@mixin webkit-slider-track {
+  &::-webkit-slider-runnable-track {
+    @content;
+  }
+}
+@mixin moz-slider-track {
+  &::-moz-range-track {
+    @content;
+  }
+}
+@mixin ms-slider-track {
+  &::-ms-track {
+    @content;
+  }
+}
+
+@mixin slider-track() {
+  @include webkit-slider-track() {
+    @content;
+  }
+  @include moz-slider-track() {
+    @content;
+  }
+  @include ms-slider-track() {
+    @content;
+  }
+}
+
+input[type='range'] {
+  $slider-track-height: 4px;
+  $slider-thumb-size: 14px;
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  @include slider-track() {
+    -webkit-appearance: none;
+    position: relative;
+    width: 100%;
+    height: $slider-track-height;
+    border-radius: 10px;
+    background-color: $dark-25;
+  }
+  @include slider-thumb() {
+    width: $slider-thumb-size;
+    height: $slider-thumb-size;
+    margin: 0;
+    background-color: $light-100;
+    border-width: 0;
+    border-radius: 50%;
+  }
+  // On WebKit, the slider thumb is not vertically centered by default, but on
+  // Firefox, it is, so we need to target WebKit specifically to accommodate
+  // this
+  @include webkit-slider-thumb {
+    transform: translateY(-50%) translateY(math.div($slider-track-height, 2));
+  }
+}
