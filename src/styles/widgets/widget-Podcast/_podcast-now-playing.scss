@@ -1,0 +1,38 @@
+.podcast-view-now-playing {
+  padding: 0 15px;
+  padding-bottom: 5px;
+  text-align: left;
+}
+
+.podcast-now-playing-return-to-list {
+  margin-top: 5px;
+  text-align: center;
+}
+
+.podcast-now-playing-header {
+  display: flex;
+  align-items: center;
+}
+
+.podcast-now-playing-image {
+  flex-shrink: 0;
+  $image-size: 50px;
+  width: $image-size;
+  height: $image-size;
+  margin-right: 15px;
+  border-radius: 5px;
+}
+
+h2.podcast-now-playing-episode-title {
+  font-size: $font-size-m;
+  margin-bottom: 0;
+}
+
+.podcast-now-playing-audio-player-container {
+  padding-top: 10px;
+  padding-left: 7px;
+}
+
+.podcast-now-playing-footer {
+  text-align: center;
+}

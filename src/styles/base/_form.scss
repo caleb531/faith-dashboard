@@ -61,6 +61,9 @@ button {
   padding-right: 15px;
   background-color: $dark-30;
   color: $light-100;
+  &[type="button"] {
+    border-radius: 20px;
+  }
   &:hover:active {
     background-color: $dark-50;
   }

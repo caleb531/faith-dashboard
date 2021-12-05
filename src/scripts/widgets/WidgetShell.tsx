@@ -46,7 +46,7 @@ function WidgetShell({ widget, dispatch, provided, children }: { widget: WidgetS
         </div>
       </div>
       <div className="widget-controls widget-controls-right">
-        <button className="widget-remove-control widget-control" onClick={() => removeWidget()}>
+        <button type="button" className="widget-remove-control widget-control" onClick={() => removeWidget()}>
           <img
             src="icons/remove-circle-light.svg"
             alt="Remove Widget"

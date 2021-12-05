@@ -66,7 +66,7 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
               placeholder="e.g. gen1.1, psa.23.1-5"
               required
               ref={requestQueryInputRef} />
-            <button className="bible-verse-search-submit">Submit</button>
+            <button type="submit" className="bible-verse-search-submit">Submit</button>
             {fetchError ? (
               <p className="bible-verse-error">{fetchError}</p>
             ) : null}

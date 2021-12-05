@@ -33,11 +33,15 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
       return {
         ...state,
         nowPlaying: state.podcastDetails.item.find((episode) => episode.guid === nowPlayingEpisodeGuid),
-        isPlaying: true
+        isPlaying: true,
+        viewingNowPlaying: true
       };
     case 'setIsPlaying':
       const isPlaying = action.payload as boolean;
       return { ...state, isPlaying };
+    case 'setViewingNowPlaying':
+      const viewingNowPlaying = action.payload as boolean;
+      return { ...state, viewingNowPlaying };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
@@ -46,7 +50,7 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
 function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
 
   const [state, dispatch] = useWidgetShell(reducer, widget);
-  const { podcastUrl, podcastDetails, nowPlaying, isPlaying } = state as PodcastWidgetState;
+  const { podcastUrl, podcastDetails, nowPlaying, isPlaying, viewingNowPlaying } = state as PodcastWidgetState;
 
   const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
@@ -79,6 +83,14 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
     dispatch({ type: 'setNowPlaying', payload: episodeGuid });
   }
 
+  function returnToEpisodeList() {
+    dispatch({ type: 'setViewingNowPlaying', payload: false });
+  }
+
+  function viewNowPlaying() {
+    dispatch({ type: 'setViewingNowPlaying', payload: true });
+  }
+
   return (
     <WidgetShell widget={state} dispatch={dispatch} provided={provided}>
       <section className="podcast">
@@ -95,22 +107,41 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
             placeholder="An Apple Podcast URL"
             required
             ref={requestQueryInputRef} />
-            <button className="podcast-url-submit">Submit</button>
+            <button type="submit" className="podcast-url-submit">Submit</button>
             {fetchError ? (
               <p className="podcast-error">{fetchError}</p>
               ) : null}
           </form>
-        ) : podcastUrl && podcastDetails ? (
-          <div className="podcast-view">
-            <h2 className="podcast-title">{podcastDetails.title}</h2>
-            <span className="podcast-episode-count">{podcastDetails.item.length === 1 ? `${podcastDetails.item.length} episode` : `${podcastDetails.item.length} episodes`}</span>
-            {nowPlaying ? (
+        ) : podcastUrl && podcastDetails && nowPlaying && viewingNowPlaying ? (
+          <div className="podcast-view-now-playing">
+            <header className="podcast-now-playing-header">
+                <img
+                  className="podcast-now-playing-image"
+                  src={podcastDetails.image.url}
+                  alt="" />
+                  <section className="podcast-now-playing-episode-info">
+                    <h2 className="podcast-now-playing-episode-title">{nowPlaying.title}</h2>
+                  </section>
+            </header>
+            <div className="podcast-now-playing-audio-player-container">
               <PodcastAudioPlayer
                 nowPlaying={nowPlaying}
                 isPlaying={isPlaying}
-                dispatch={dispatch}
-              />
-            ) : null}
+                dispatch={dispatch} />
+            </div>
+            <footer className="podcast-now-playing-footer">
+              <button type="button" className="podcast-now-playing-return-to-list" onClick={returnToEpisodeList}>Return to Episode List</button>
+            </footer>
+          </div>
+        ) : podcastUrl && podcastDetails && !viewingNowPlaying ? (
+          <section className="podcast-view-episodes">
+            <h2 className="podcast-title">{podcastDetails.title}</h2>
+            <div className="podcast-subtext">
+              {nowPlaying ? (
+                <button type="button" className="podcast-now-playing-link" onClick={viewNowPlaying}>Now Playing</button>
+              ) : null}
+              <div className="podcast-episode-count">{podcastDetails.item.length === 1 ? `${podcastDetails.item.length} episode` : `${podcastDetails.item.length} episodes`}</div>
+            </div>
             <ol className="podcast-episode-entries" onClick={clickEpisode}>
               {podcastDetails.item.map((episode: PodcastEpisode) => {
                 return (
@@ -121,7 +152,7 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
                 );
               })}
             </ol>
-          </div>
+          </section>
         ) : null}
       </section>
     </WidgetShell>
