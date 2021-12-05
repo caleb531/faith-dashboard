@@ -1,5 +1,5 @@
-import React, { useContext, useRef, useEffect } from 'react';
-import { WidgetState } from '../types';
+import React, { Dispatch, useContext, useRef, useEffect } from 'react';
+import { WidgetState, StateAction } from '../types';
 import { JSONSerializable } from '../types.d';
 
 // The useWidgetDataFetcher() hook is a powerful hook that allows you to fetch
@@ -10,7 +10,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
   // The current state of the widget from the useWidgetShell() call
   widget: WidgetState,
   // The dispatch function from the useWidgetShell() call
-  dispatch: Function,
+  dispatch: Dispatch<StateAction>,
   // A boolean function that should return true if the widget should fetch on
   // this render, and false otherwise; normally, this condition should be if
   // the request data is populated, and if there is no cached content

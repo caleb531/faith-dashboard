@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { Dispatch, useReducer } from 'react';
 import { WidgetState, StateAction } from '../types';
 import useWidgetUpdater from './useWidgetUpdater';
 
@@ -7,7 +7,7 @@ import useWidgetUpdater from './useWidgetUpdater';
 // operations, like exposing global actions available to all widgets, and
 // attaching listeners that automatically persist the widget whenever its state
 // changes
-export default function useWidgetShell(subReducer: Function, widget: WidgetState): [WidgetState, Function] {
+export default function useWidgetShell(subReducer: Function, widget: WidgetState): [WidgetState, Dispatch<StateAction>] {
 
   // The sub-reducer is an optional reducer belonging to the implementation
   // component for a particular widget type; it is combined into a larger
