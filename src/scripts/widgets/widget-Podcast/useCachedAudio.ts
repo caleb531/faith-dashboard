@@ -5,7 +5,7 @@ let cachedAudioElement: HTMLAudioElement = null;
 // audio throughout the application; this is to avoid issues of multiple Audio
 // elements playing at the same time; see the PodcastAudioPlayer component for
 // more reasons for this
-function useCachedAudio(initialSourceUrl: string): HTMLAudioElement {
+function useCachedAudio(initialSourceUrl?: string): HTMLAudioElement {
 
   if (cachedAudioElement) {
     return cachedAudioElement;
