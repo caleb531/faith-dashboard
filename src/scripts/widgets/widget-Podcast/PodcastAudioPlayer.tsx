@@ -113,11 +113,11 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
     loadedmetadata: () => setIsAudioMetadataLoaded(true),
     // Throttle the timeupdate event so that it doesn't fire excessively when
     // the user is seeking the audio (via the slider)
-    timeupdate: throttle(() => {
+    timeupdate: useCallback(throttle(() => {
       if (isPlaying) {
         saveCurrentTime();
       }
-    })
+    }), [isPlaying, audioElement.currentTime])
   });
 
   return (
