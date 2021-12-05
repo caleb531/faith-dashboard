@@ -98,17 +98,15 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
         )}
       </button>
       <div className="podcast-audio-player-scrubber-container">
-        {audioElement.duration ? (
-          <div className="podcast-audio-player-time-info">
-            <span className="podcast-audio-player-current-time">
-              {audioElement.currentTime >= 1 ?
-                moment.duration(audioElement.currentTime, 'seconds').format() :
-                '0:00'
-              }
-            </span>
-            <span className="podcast-audio-player-time-remaining">-{moment.duration(audioElement.duration - audioElement.currentTime, 'seconds').format()}</span>
-          </div>
-        ) : null}
+        <div className="podcast-audio-player-time-info">
+          <span className="podcast-audio-player-current-time">
+            {audioElement.currentTime >= 1 ?
+              moment.duration(audioElement.currentTime, 'seconds').format() :
+              '0:00'
+            }
+          </span>
+          <span className="podcast-audio-player-time-remaining">{audioElement.duration ? `-${moment.duration(audioElement.duration - audioElement.currentTime, 'seconds').format()}` : '--:--'}</span>
+        </div>
       </div>
     </div>
   );
