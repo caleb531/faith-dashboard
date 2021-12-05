@@ -89,6 +89,9 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
       input.style.backgroundImage = `linear-gradient(to right, ${fillColor} 0%, ${fillColor} ${fillPercentage}%, ${trackColor} ${fillPercentage}%, ${trackColor} 100%)`;
     }
   }
+  function updateSeekerFillFromEvent(event: React.FormEvent) {
+    updateSeekerFill(event.target as HTMLInputElement);
+  }
 
   // Set the position of the audio seeker when initially loading the player
   function setInitialSeekerPosition(input: HTMLInputElement): void {
@@ -143,7 +146,7 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
           max={audioElement.duration || 0}
           step="1"
           onChange={seekAudio}
-          onInput={(event) => updateSeekerFill(event.target as HTMLInputElement)}
+          onInput={updateSeekerFillFromEvent}
           onMouseUp={saveCurrentTime}
           ref={setInitialSeekerPosition} />
         <div className="podcast-audio-player-time-info">
