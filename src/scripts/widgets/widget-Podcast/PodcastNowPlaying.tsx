@@ -26,7 +26,7 @@ function PodcastNowPlaying({ podcastDetails, nowPlaying, isPlaying, dispatch }: 
           dispatch={dispatch} />
       </div>
       <footer className="podcast-now-playing-footer">
-        <button type="button" className="podcast-now-playing-return-to-list" onClick={returnToEpisodeList}>Return to Episode List</button>
+        <button type="button" className="podcast-now-playing-return-to-list" onClick={returnToEpisodeList}>Return to List</button>
       </footer>
     </div>
   );
