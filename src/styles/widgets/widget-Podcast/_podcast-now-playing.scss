@@ -31,10 +31,6 @@ h2.podcast-now-playing-episode-title {
 
 .podcast-now-playing-audio-player-container {
   padding-top: 10px;
-  // Position the Play/Pause button so it appears horizontally centered
-  // underneath the fixed-width podcast thumbnail (we're doing it this way to
-  // avoid introducing any complicated table or grid layout)
-  padding-left: 7px;
 }
 
 .podcast-now-playing-footer {
