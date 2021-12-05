@@ -3,6 +3,7 @@ import { throttle } from 'lodash-es';
 import moment from 'moment';
 import 'moment-duration-format';
 import { PodcastEpisode, PodcastListeningMetadataEntry } from './Podcast.d';
+import LoadingIndicator from '../../generic/LoadingIndicator';
 import useCachedAudio from './useCachedAudio';
 import useElementEvents from '../../useElementEvents';
 
@@ -122,8 +123,10 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
 
   return (
     <div className="podcast-audio-player">
-      <button className="podcast-audio-player-playpause" onClick={() => setIsPlaying(!isPlaying)}>
-        {isPlaying ? (
+      <button className="podcast-audio-player-playpause" onClick={() => setIsPlaying(!isPlaying)} disabled={!audioElement.duration}>
+        {!audioElement.duration ? (
+          <LoadingIndicator />
+        ) : isPlaying ? (
           <img
             className="podcast-audio-player-playpause-icon"
             src="icons/pause-light.svg"

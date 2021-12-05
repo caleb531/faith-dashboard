@@ -62,7 +62,9 @@ function WidgetShell({ widget, dispatch, provided, children }: { widget: WidgetS
         </button>
       </div>
       {widget.isLoading ? (
-        <LoadingIndicator />
+        <div className="loading-indicator-blocking-container">
+          <LoadingIndicator />
+        </div>
       ) : children}
     </article>
   );

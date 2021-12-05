@@ -12,6 +12,11 @@
   border-width: 0;
   border-radius: 50px;
   font-size: 0;
+  .loading-indicator {
+    $icon-size: 24px;
+    width: $icon-size;
+    height: $icon-size;
+  }
 }
 
 .podcast-audio-player-playpause-icon {
