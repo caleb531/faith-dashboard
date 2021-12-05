@@ -1,6 +1,6 @@
 import React from 'react';
 import { StateAction, WidgetContentsParameters } from '../../types.d';
-import { PodcastWidgetState, PodcastDetails, PodcastEpisode } from './Podcast.d';
+import { PodcastWidgetState, PodcastDetails, PodcastListeningMetadataEntry } from './Podcast.d';
 import WidgetShell from '../WidgetShell';
 import useWidgetShell from '../useWidgetShell';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
@@ -22,11 +22,11 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
         // listening history whenever the podcast feed changes
         nowPlaying: state.podcastUrl !== podcastUrl ?
           null :
-          state.nowPlaying,
+          state.nowPlaying || null,
         viewingNowPlaying: false,
-        listeningHistory: state.podcastUrl !== podcastUrl ?
+        listeningMetadata: state.podcastUrl !== podcastUrl ?
           {} :
-          state.listeningHistory
+          state.listeningMetadata || {}
       };
     case 'setNowPlaying':
       const nowPlayingEpisodeGuid = action.payload as string;
@@ -42,6 +42,17 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
     case 'setViewingNowPlaying':
       const viewingNowPlaying = action.payload as boolean;
       return { ...state, viewingNowPlaying };
+    case 'updateNowPlayingMetadata':
+      const metadataEntry = action.payload as PodcastListeningMetadataEntry;
+      return {
+        ...state,
+        listeningMetadata: state.nowPlaying ?
+          {
+            ...state.listeningMetadata,
+            [state.nowPlaying.guid]: { ...state.listeningMetadata[state.nowPlaying.guid], ...metadataEntry }
+          } :
+          state.listeningMetadata
+      };
     default:
       throw new ReferenceError(`action ${action.type} does not exist on reducer`);
   }
@@ -50,7 +61,8 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
 function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
 
   const [state, dispatch] = useWidgetShell(reducer, widget);
-  const { podcastUrl, podcastDetails, nowPlaying, isPlaying, viewingNowPlaying } = state as PodcastWidgetState;
+  const { podcastUrl, podcastDetails, nowPlaying, isPlaying, viewingNowPlaying, listeningMetadata } = state as PodcastWidgetState;
+  const nowPlayingMetadata = nowPlaying ? listeningMetadata[nowPlaying.guid] : null;
 
   const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
@@ -100,6 +112,7 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
           <PodcastNowPlaying
             podcastDetails={podcastDetails}
             nowPlaying={nowPlaying}
+            nowPlayingMetadata={nowPlayingMetadata}
             isPlaying={isPlaying}
             dispatch={dispatch} />
         ) : podcastUrl && podcastDetails && !viewingNowPlaying ? (

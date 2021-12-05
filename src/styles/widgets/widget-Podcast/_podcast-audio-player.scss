@@ -1,5 +1,12 @@
+.podcast-audio-player {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .podcast-audio-player-playpause {
   padding: 6px;
+  margin-right: 10px;
   border-width: 0;
   border-radius: 50px;
   font-size: 0;
@@ -9,4 +16,16 @@
   $icon-size: 24px;
   width: $icon-size;
   height: $icon-size;
+}
+
+.podcast-audio-player-scrubber-container {
+  flex-grow: 1;
+}
+
+.podcast-audio-player-time-info {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 300;
+  font-size: $font-size-xxxs;
+  font-family: $font-family-sans-serif;
 }

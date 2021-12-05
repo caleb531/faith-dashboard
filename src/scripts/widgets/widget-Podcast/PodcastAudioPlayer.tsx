@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { PodcastEpisode } from './Podcast.d';
+import React, { useState, useEffect, useCallback } from 'react';
+import moment from 'moment';
+import 'moment-duration-format';
+import { PodcastEpisode, PodcastListeningMetadataEntry } from './Podcast.d';
 import useCachedAudio from './useCachedAudio';
+import useElementEvents from '../../useElementEvents';
 
-function PodcastAudioPlayer({ nowPlaying, isPlaying, dispatch }: { nowPlaying: PodcastEpisode, isPlaying: boolean, dispatch: Function }) {
+function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: { nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Function }) {
 
   const audioUrl = nowPlaying.enclosure['@attributes'].url;
+  const [isFullAudioLoaded, setIsFullAudioLoaded] = useState(false);
+  const [isAudioMetadataLoaded, setIsAudioMetadataLoaded] = useState(false);
 
   // Use a single (cached) audio element across all episodes (and even across
   // all podcast instances) so that:
@@ -38,6 +43,21 @@ function PodcastAudioPlayer({ nowPlaying, isPlaying, dispatch }: { nowPlaying: P
     }
   }, [isPlaying, audioElement, audioUrl]);
 
+  useElementEvents(audioElement, {
+    loadeddata: () => setIsFullAudioLoaded(true),
+    loadedmetadata: () => setIsAudioMetadataLoaded(true),
+    timeupdate: () => {
+      if (!nowPlayingMetadata || Math.floor(audioElement.currentTime) !== Math.floor(nowPlayingMetadata.currentTime)) {
+        dispatch({
+          type: 'updateNowPlayingMetadata',
+          payload: {
+            currentTime: audioElement.currentTime
+          }
+        });
+      }
+    }
+  });
+
   return (
     <div className="podcast-audio-player">
       <button className="podcast-audio-player-playpause" onClick={() => setIsPlaying(!isPlaying)}>
@@ -55,6 +75,19 @@ function PodcastAudioPlayer({ nowPlaying, isPlaying, dispatch }: { nowPlaying: P
             draggable="false" />
         )}
       </button>
+      <div className="podcast-audio-player-scrubber-container">
+        {audioElement.duration ? (
+          <div className="podcast-audio-player-time-info">
+            <span className="podcast-audio-player-current-time">
+              {audioElement.currentTime >= 1 ?
+                moment.duration(audioElement.currentTime, 'seconds').format() :
+                '00:00'
+              }
+            </span>
+            <span className="podcast-audio-player-time-remaining">-{moment.duration(audioElement.duration - audioElement.currentTime, 'seconds').format()}</span>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 

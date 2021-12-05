@@ -7,7 +7,7 @@ export interface PodcastWidgetState extends WidgetState {
   nowPlaying: PodcastEpisode;
   viewingNowPlaying: boolean;
   isPlaying: boolean;
-  listeningHistory: ListeningHistory
+  listeningMetadata: PodcastListeningMetadata
 }
 
 export interface PodcastImage {
@@ -33,11 +33,11 @@ export interface PodcastEpisode {
 
 type PodcastEpisodeGuid = string;
 
-export interface ListeningHistory {
-  [key: PodcastEpisodeGuid]: ListeningHistoryEntry;
+export interface PodcastListeningMetadata {
+  [key: PodcastEpisodeGuid]: PodcastListeningMetadataEntry;
 }
 
-export interface ListeningHistoryEntry {
+export interface PodcastListeningMetadataEntry {
   episode: PodcastEpisodeGuid;
   // The number of seconds into the episode audio where the user left off at
   currentTime: number;
