@@ -45,16 +45,16 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
   // Synchronize the audio stream with widget state changes, such that if the
   // audio source URL changes higher up, then the audio will reset here
   useEffect(() => {
-    if (audioElement.src !== audioUrl) {
-      audioElement.src = audioUrl;
+    // Do not update the audio element if we are still on the same episode;
+    // this check prevents playback hiccups whenever React re-renders
+    if (audioElement.src === audioUrl) {
+      return;
     }
-  }, [audioUrl, audioElement]);
-
-  useEffect(() => {
+    audioElement.src = audioUrl;
     if (nowPlayingMetadata && hasCurrentTimeChanged()) {
       audioElement.currentTime = nowPlayingMetadata.currentTime;
     }
-  }, [nowPlayingMetadata]);
+  }, [audioUrl, audioElement, nowPlayingMetadata]);
 
   // Synchronize the play/pause state of the audio with the widget state
   useEffect(function () {
