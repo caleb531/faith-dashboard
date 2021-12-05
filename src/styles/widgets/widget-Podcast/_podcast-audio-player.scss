@@ -44,7 +44,7 @@ input[type=range].podcast-audio-player-seeker-slider {
   $slider-track-height: 4px;
   $slider-thumb-size: $slider-track-height;
   width: 100%;
-  padding-top: 15px;
+  padding-top: 10px;
   padding-bottom: 5px;
   @include slider-track() {
     opacity: 0;
