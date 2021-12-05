@@ -8,6 +8,7 @@ import useElementEvents from '../../useElementEvents';
 function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: { nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Function }) {
 
   const audioUrl = nowPlaying.enclosure['@attributes'].url;
+  const currentTime = nowPlayingMetadata ? nowPlayingMetadata.currentTime : 0;
   const [isFullAudioLoaded, setIsFullAudioLoaded] = useState(false);
   const [isAudioMetadataLoaded, setIsAudioMetadataLoaded] = useState(false);
 
@@ -29,7 +30,7 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
   // Return true if audio element's current time (in seconds) differs from
   // what's on the state (also in seconds)
   function hasCurrentTimeChanged(): boolean {
-    return !nowPlayingMetadata || Math.floor(audioElement.currentTime) !== Math.floor(nowPlayingMetadata.currentTime);
+    return Math.floor(audioElement.currentTime) !== Math.floor(currentTime);
   }
 
   // Save audio element's current time to state if seconds have changed
@@ -51,8 +52,8 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
       return;
     }
     audioElement.src = audioUrl;
-    if (nowPlayingMetadata && hasCurrentTimeChanged()) {
-      audioElement.currentTime = nowPlayingMetadata.currentTime;
+    if (hasCurrentTimeChanged()) {
+      audioElement.currentTime = currentTime;
     }
   }, [audioUrl, audioElement, nowPlayingMetadata]);
 
