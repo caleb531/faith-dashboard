@@ -33,7 +33,7 @@ function NoteWidget({ widget, provided }: WidgetContentsParameters) {
   // Cache the debounced function so that its internal debounce timer
   // transcends across render passes (otherwise, the debounce timer would
   // effectively be reset on every render)
-  const queueChangeWhenTypingStops = useCallback(debounce(function (text) {
+  const queueChangeWhenTypingStops = useCallback(debounce((text) => {
     dispatch({ type: 'updateText', payload: text });
   }, saveDelay), []);
 
