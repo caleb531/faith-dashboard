@@ -44,8 +44,8 @@ function useAudioSeeker(audioElement: HTMLAudioElement, currentTime: number, set
     }
   }
 
-  // The following object is to be spread (...) into the element used for a
-  // seeker element
+  // The following object is to be spread (...) into the element used for the
+  // audio seeker
   return {
     seekerProvided: {
       ref: setInitialSeekerPosition,
