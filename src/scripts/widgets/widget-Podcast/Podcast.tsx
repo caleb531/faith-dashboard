@@ -114,14 +114,14 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
               onSubmit={(event) => submitRequestQuery((event))}>
               <h2 className="podcast-settings-heading">Podcast</h2>
               <input
-              type="text"
+              type="search"
               className="podcast-query"
               name="search"
               defaultValue={podcastQuery}
               placeholder="Search for podcasts"
               required
               ref={requestQueryInputRef} />
-              <button type="submit" className="podcast-url-submit">Submit</button>
+              <button type="submit" className="podcast-url-submit">Search</button>
               {fetchError ? (
                 <p className="podcast-error">{fetchError}</p>
                 ) : null}

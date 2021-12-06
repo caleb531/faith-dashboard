@@ -59,14 +59,14 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
             onSubmit={(event) => submitRequestQuery((event))}>
             <h2 className="bible-verse-heading">Bible Verse</h2>
             <input
-              type="text"
+              type="search"
               className="bible-verse-search"
               name="search"
               defaultValue={verseQuery}
               placeholder="e.g. gen1.1, psa.23.1-5"
               required
               ref={requestQueryInputRef} />
-            <button type="submit" className="bible-verse-search-submit">Submit</button>
+            <button type="submit" className="bible-verse-search-submit">Search</button>
             {fetchError ? (
               <p className="bible-verse-error">{fetchError}</p>
             ) : null}
