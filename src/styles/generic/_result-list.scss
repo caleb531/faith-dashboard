@@ -1,0 +1,37 @@
+.result-list,
+.result {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.result-list {
+  flex-grow: 1;
+  max-height: 200px;
+  border-radius: 5px;
+  font-family: $font-family-sans-serif;
+  overflow-y: scroll;
+}
+
+.result {
+  padding: 7px 10px;
+  cursor: pointer;
+  background-color: $dark-10;
+  transition: background-color 150ms ease-in-out;
+  &:hover {
+    background-color: $dark-30;
+  }
+}
+
+h3.result-title {
+  margin: 0;
+  font-size: $font-size-xxxs;
+  font-weight: 300;
+}
+
+.result-subtitle {
+  font-weight: 300;
+  font-size: $font-size-xxxs;
+  color: $light-50;
+}

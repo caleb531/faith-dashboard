@@ -120,3 +120,12 @@ export interface WidgetMoveParameters {
   // after the move
   destinationColumn: number;
 }
+
+export interface Result {
+  id: string;
+  title: string;
+  subtitle: string;
+  data?: {
+    [key: string]: JSONSerializable
+  };
+}

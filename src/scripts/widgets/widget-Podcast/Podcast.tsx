@@ -5,7 +5,7 @@ import WidgetShell from '../WidgetShell';
 import useWidgetShell from '../useWidgetShell';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import PodcastNowPlaying from './PodcastNowPlaying';
-import PodcastEpisodes from './PodcastEpisodes';
+import PodcastEpisodeList from './PodcastEpisodeList';
 
 export function reducer(state: PodcastWidgetState, action: StateAction): PodcastWidgetState {
   switch (action.type) {
@@ -116,7 +116,7 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
             isPlaying={isPlaying}
             dispatch={dispatch} />
         ) : podcastUrl && podcastDetails && !viewingNowPlaying ? (
-          <PodcastEpisodes
+          <PodcastEpisodeList
             podcastDetails={podcastDetails}
             nowPlaying={nowPlaying}
             dispatch={dispatch} />

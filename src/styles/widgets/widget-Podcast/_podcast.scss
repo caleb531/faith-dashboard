@@ -24,44 +24,6 @@
   color: $light-50;
 }
 
-.podcast-episode-entries,
-.podcast-episode-entry {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  text-align: left;
-}
-
-.podcast-episode-entries {
-  flex-grow: 1;
-  max-height: 200px;
-  border-radius: 5px;
-  font-family: $font-family-sans-serif;
-  overflow-y: scroll;
-}
-
-.podcast-episode-entry {
-  padding: 7px 10px;
-  cursor: pointer;
-  background-color: $dark-10;
-  transition: background-color 150ms ease-in-out;
-  &:hover {
-    background-color: $dark-30;
-  }
-}
-
-h3.podcast-episode-entry-title {
-  margin: 0;
-  font-size: $font-size-xxxs;
-  font-weight: 300;
-}
-
-.podcast-episode-entry-date {
-  font-weight: 300;
-  font-size: $font-size-xxxs;
-  color: $light-50;
-}
-
 .podcast-error {
   margin-bottom: 10px;
 }
