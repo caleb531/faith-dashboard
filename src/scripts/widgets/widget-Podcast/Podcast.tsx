@@ -33,7 +33,7 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
       return {
         ...state,
         nowPlaying: state.podcastDetails.item.find((episode) => episode.guid === nowPlayingEpisodeGuid),
-        isPlaying: true,
+        isPlaying: false,
         viewingNowPlaying: true
       };
     case 'setIsPlaying':
