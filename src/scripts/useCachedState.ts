@@ -1,4 +1,4 @@
-// The storage variable for the cached Audio element
+// The storage map for the cached state values
 const stateCache: { [key: string]: any } = {};
 
 // The useCachedState() hook caches a particular value across component
