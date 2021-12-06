@@ -11,13 +11,17 @@ function PodcastNowPlaying({ podcastFeedData, nowPlaying, nowPlayingMetadata, is
   return (
     <div className="podcast-view-now-playing">
       <header className="podcast-now-playing-header">
+        {podcastFeedData.image ? (
           <img
             className="podcast-now-playing-image"
             src={podcastFeedData.image.url}
             alt="" />
-            <section className="podcast-now-playing-episode-info">
-              <h2 className="podcast-now-playing-episode-title">{nowPlaying.title}</h2>
-            </section>
+        ) : (
+          <div className="podcast-now-playing-image podcast-now-playing-image-missing">?</div>
+        )}
+        <section className="podcast-now-playing-episode-info">
+        <h2 className="podcast-now-playing-episode-title">{nowPlaying.title}</h2>
+        </section>
       </header>
       <div className="podcast-now-playing-audio-player-container">
         <PodcastAudioPlayer

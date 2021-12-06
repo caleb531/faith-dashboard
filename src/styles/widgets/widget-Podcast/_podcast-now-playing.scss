@@ -23,6 +23,11 @@
   border-radius: 5px;
   background-color: $grey;
 }
+.podcast-now-playing-image-missing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 h2.podcast-now-playing-episode-title {
   font-size: $font-size-m;
