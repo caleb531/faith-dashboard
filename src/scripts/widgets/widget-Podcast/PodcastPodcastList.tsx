@@ -6,31 +6,12 @@ import useWidgetDataFetcher from '../useWidgetDataFetcher';
 
 function PodcastPodcastList({ widget, podcastList, dispatch }: { widget: WidgetState, podcastList: PodcastInfo[], dispatch: Dispatch<StateAction> }) {
 
-  function choosePodcast(result: Result) {
-    dispatch({ type: 'setPodcastFeedUrl', payload: result.data.feedUrl });
-  }
-
-  // Convert the current podcast search results list to a proper ResultList
-  // structure
-  function getPodcastResultList(): Result[] {
-    return podcastList.map((podcast: PodcastInfo) => {
-      return {
-        id: String(podcast.trackId),
-        title: podcast.trackName,
-        subtitle: podcast.artistName,
-        data: {
-          feedUrl: podcast.feedUrl
-        }
-      };
-    });
-  }
-
   const { podcastFeedUrl, podcastFeedData } = widget as PodcastWidgetState;
 
-  const { fetchError } = useWidgetDataFetcher({
+  const { fetchError, fetchWidgetData } = useWidgetDataFetcher({
     widget,
     dispatch,
-    shouldFetch: () => podcastFeedUrl && !podcastFeedData,
+    shouldFetchInitially: () => podcastFeedUrl && !podcastFeedData,
     requestQuery: podcastFeedUrl,
     setRequestQuery: (newPodcastFeedUrl: typeof podcastFeedUrl) => {
       dispatch({ type: 'setPodcastFeedUrl', payload: newPodcastFeedUrl });
@@ -50,11 +31,29 @@ function PodcastPodcastList({ widget, podcastList, dispatch }: { widget: WidgetS
     getErrorMessage: (error: Error) => 'Error Fetching Podcast'
   });
 
+  function choosePodcast(result: Result) {
+    dispatch({ type: 'setPodcastFeedUrl', payload: result.data.feedUrl });
+    fetchWidgetData(result.data.feedUrl);
+  }
+
+  // Convert the current podcast search results list to a proper ResultList
+  // structure
+  function getPodcastResultList(): Result[] {
+    return podcastList.map((podcast: PodcastInfo) => {
+      return {
+        id: String(podcast.trackId),
+        title: podcast.trackName,
+        subtitle: podcast.artistName,
+        data: {
+          feedUrl: podcast.feedUrl
+        }
+      };
+    });
+  }
+
   return (
     <div className="podcast-result-list-container">
-        {fetchError ? (
-          <p className="podcast-error">{fetchError}</p>
-        ) : podcastList && podcastList.length ? (
+        {podcastList && podcastList.length ? (
           <div className="podcast-podcast-count">{podcastList.length === 1 ? `${podcastList.length} podcast` : `${podcastList.length} podcasts`}</div>
         ) : null}
       <ResultList

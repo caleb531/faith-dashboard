@@ -6,15 +6,16 @@ import { JSONSerializable } from '../types.d';
 // arbitrary data from an API endpoint given some user-supplied request query
 // that's part of your widget; see the built-in widgets like BibleVerse or
 // Podcast for examples on how this hook is used
-export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, requestQuery, setRequestQuery, getApiUrl, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
+export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInitially, requestQuery, setRequestQuery, getApiUrl, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
   // The current state of the widget from the useWidgetShell() call
   widget: WidgetState,
   // The dispatch function from the useWidgetShell() call
   dispatch: Dispatch<StateAction>,
   // A boolean function that should return true if the widget should fetch on
-  // this render, and false otherwise; normally, this condition should be if
-  // the request data is populated, and if there is no cached content
-  shouldFetch: () => any,
+  // the initial render, and false otherwise; normally, this condition should
+  // evaluate if the request data is populated, and if there is no cached
+  // content
+  shouldFetchInitially: () => any,
   // The user-entered query string to be used in building the API request
   requestQuery: string,
   // Receives the user-entered query as its only argument, and
@@ -59,14 +60,18 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
   // The submit handler; you should attach this to the <form> element in your
   // widget settings so that the request query can be set on the widget state
   // when the form is submitted
-  submitRequestQuery: Function
+  submitRequestQuery: Function,
+  // This hook will also expose the low-level fetchWidgetData() function,
+  // allowing you to fetch widget data manually (perhaps based on some action
+  // other than the user submitting a form, therefore making
+  // submitRequestQuery() a non-ideal solution)
+  fetchWidgetData: Function
 } {
 
   const isLoading = false;
   const { fetchError } = widget;
 
   function fetchWidgetData(newRequestQuery: string): Promise<void> {
-    console.log('newRequestQuery', newRequestQuery);
     dispatch({ type: 'showLoading' });
     return fetch(getApiUrl(newRequestQuery))
       .then((rawResponse) => rawResponse.json())
@@ -102,9 +107,9 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
 
   // Fetch the widget data when the widget initially loads (presuming the
   // widget data is not already cached according to the logic dictated by
-  // shouldFetch())
+  // shouldFetchInitially())
   useEffect(() => {
-    if (shouldFetch()) {
+    if (shouldFetchInitially()) {
       fetchWidgetData(requestQuery);
     }
     // The React Docs suggest using an empty array when we only want a hook to
@@ -117,6 +122,11 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
     // <https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects>
   }, []);
 
-  return { fetchError, submitRequestQuery, requestQueryInputRef };
+  return {
+    fetchError,
+    submitRequestQuery,
+    fetchWidgetData,
+    requestQueryInputRef
+  };
 
 }

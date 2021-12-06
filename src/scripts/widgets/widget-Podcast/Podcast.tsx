@@ -15,7 +15,11 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
       return { ...state, podcastFeedData };
     case 'setPodcastQuery':
       const podcastQuery = action.payload as string;
-      return { ...state, podcastQuery };
+      return {
+        ...state,
+        podcastQuery,
+        podcastFeedUrl: null
+      };
     case 'setPodcastFeedUrl':
       const podcastFeedUrl = action.payload as string;
       return {
@@ -80,7 +84,7 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
   const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
     dispatch,
-    shouldFetch: () => podcastQuery && !podcastFeedData,
+    shouldFetchInitially: () => podcastQuery && !podcastFeedData,
     requestQuery: podcastQuery,
     setRequestQuery: (newPodcastQuery: typeof podcastQuery) => {
       dispatch({ type: 'setPodcastQuery', payload: newPodcastQuery });
@@ -91,7 +95,6 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
     parseResponse: (data: PodcastSearchResponse) => data.results,
     hasResults: (results: typeof podcastList) => results && results.length,
     onSuccess: (results: typeof podcastList) => {
-      console.log('podcast search results', results);
       setPodcastList(results);
     },
     getNoResultsMessage: (results: typeof podcastFeedData) => 'No Podcasts Found',

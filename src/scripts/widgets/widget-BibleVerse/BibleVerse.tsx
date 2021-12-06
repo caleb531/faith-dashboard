@@ -30,7 +30,7 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
   const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
     dispatch,
-    shouldFetch: () => verseQuery && !verseContent,
+    shouldFetchInitially: () => verseQuery && !verseContent,
     requestQuery: verseQuery,
     setRequestQuery: (newQuery: typeof verseQuery) => {
       return dispatch({ type: 'setVerseQuery', payload: newQuery });
