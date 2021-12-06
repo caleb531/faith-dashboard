@@ -5,6 +5,10 @@
   padding-bottom: 5px;
 }
 
+.podcast-podcast-count {
+  margin: 10px 0;
+}
+
 .podcast-title {
   margin-bottom: 5px;
 }
@@ -19,6 +23,7 @@
   font-size: $font-size-xxxs;
 }
 
+.podcast-podcast-count,
 .podcast-episode-count {
   font-size: $font-size-xxs;
   color: $light-50;

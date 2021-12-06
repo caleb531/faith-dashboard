@@ -5,7 +5,8 @@ import { Result } from '../types.d';
 // list of data (search results or otherwise)
 function ResultList({ results, onChooseResult }: { results: Result[], onChooseResult: (result: Result) => void }) {
 
-  function clickResult(event: React.MouseEvent) {
+  // Use event delegation to determine which result was clicked
+  function clickResult(event: React.MouseEvent): void {
     const clickedElement = event.target as HTMLElement;
     const resultElement = clickedElement.closest('.result');
     const resultId = resultElement.getAttribute('data-result-id');

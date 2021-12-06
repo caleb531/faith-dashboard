@@ -66,6 +66,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetch, re
   const { fetchError } = widget;
 
   function fetchWidgetData(newRequestQuery: string): Promise<void> {
+    console.log('newRequestQuery', newRequestQuery);
     dispatch({ type: 'showLoading' });
     return fetch(getApiUrl(newRequestQuery))
       .then((rawResponse) => rawResponse.json())

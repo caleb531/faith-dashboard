@@ -3,8 +3,8 @@ import { WidgetState } from '../../types.d';
 
 export interface PodcastWidgetState extends WidgetState {
   podcastQuery: string;
-  podcastUrl: string;
-  podcastDetails: PodcastDetails;
+  podcastFeedUrl: string;
+  podcastFeedData: PodcastFeedData;
   nowPlaying: PodcastEpisode;
   viewingNowPlaying: boolean;
   isPlaying: boolean;
@@ -44,7 +44,7 @@ export interface PodcastListeningMetadataEntry {
   currentTime: number;
 }
 
-export interface PodcastDetails {
+export interface PodcastFeedData {
   copyright: string;
   description: string;
   image: PodcastImage;
@@ -56,14 +56,14 @@ export interface PodcastDetails {
 
 export interface PodcastSearchResponse {
   resultCount: number;
-  results: PodcastSearchResult[]
+  results: PodcastInfo[]
 }
 
-export interface PodcastSearchResult {
+export interface PodcastInfo {
   kind: string;
   trackName: string;
   artistName: string;
-  trackId: string;
-  artistId: string;
+  trackId: number;
+  artistId: number;
   feedUrl: string;
 }

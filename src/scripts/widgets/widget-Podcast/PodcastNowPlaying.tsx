@@ -1,8 +1,8 @@
 import React from 'react';
-import { PodcastDetails, PodcastEpisode, PodcastListeningMetadataEntry } from './Podcast.d';
+import { PodcastFeedData, PodcastEpisode, PodcastListeningMetadataEntry } from './Podcast.d';
 import PodcastAudioPlayer from './PodcastAudioPlayer';
 
-function PodcastNowPlaying({ podcastDetails, nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: { podcastDetails: PodcastDetails, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Function }) {
+function PodcastNowPlaying({ podcastFeedData, nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: { podcastFeedData: PodcastFeedData, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Function }) {
 
   function returnToEpisodeList() {
     dispatch({ type: 'setViewingNowPlaying', payload: false });
@@ -13,7 +13,7 @@ function PodcastNowPlaying({ podcastDetails, nowPlaying, nowPlayingMetadata, isP
       <header className="podcast-now-playing-header">
           <img
             className="podcast-now-playing-image"
-            src={podcastDetails.image.url}
+            src={podcastFeedData.image.url}
             alt="" />
             <section className="podcast-now-playing-episode-info">
               <h2 className="podcast-now-playing-episode-title">{nowPlaying.title}</h2>

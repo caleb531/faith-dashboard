@@ -1,33 +1,34 @@
 import React, { useState } from 'react';
 import { StateAction, WidgetContentsParameters } from '../../types.d';
-import { PodcastWidgetState, PodcastDetails, PodcastListeningMetadataEntry, PodcastSearchResponse, PodcastSearchResult } from './Podcast.d';
+import { PodcastWidgetState, PodcastFeedData, PodcastListeningMetadataEntry, PodcastSearchResponse, PodcastInfo } from './Podcast.d';
 import WidgetShell from '../WidgetShell';
 import useWidgetShell from '../useWidgetShell';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
+import PodcastPodcastList from './PodcastPodcastList';
 import PodcastNowPlaying from './PodcastNowPlaying';
 import PodcastEpisodeList from './PodcastEpisodeList';
 
 export function reducer(state: PodcastWidgetState, action: StateAction): PodcastWidgetState {
   switch (action.type) {
-    case 'setPodcastDetails':
-      const podcastDetails = action.payload as PodcastDetails;
-      return { ...state, podcastDetails };
+    case 'setPodcastFeedData':
+      const podcastFeedData = action.payload as PodcastFeedData;
+      return { ...state, podcastFeedData };
     case 'setPodcastQuery':
       const podcastQuery = action.payload as string;
       return { ...state, podcastQuery };
-    case 'setPodcastUrl':
-      const podcastUrl = action.payload as string;
+    case 'setPodcastFeedUrl':
+      const podcastFeedUrl = action.payload as string;
       return {
         ...state,
-        podcastUrl,
-        podcastDetails: null,
+        podcastFeedUrl,
+        podcastFeedData: null,
         // Reset the transient metadata about the currently playing episode and
         // listening history whenever the podcast feed changes
-        nowPlaying: state.podcastUrl !== podcastUrl ?
+        nowPlaying: state.podcastFeedUrl !== podcastFeedUrl ?
           null :
           state.nowPlaying || null,
         viewingNowPlaying: false,
-        listeningMetadata: state.podcastUrl !== podcastUrl ?
+        listeningMetadata: state.podcastFeedUrl !== podcastFeedUrl ?
           {} :
           state.listeningMetadata || {}
       };
@@ -35,7 +36,7 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
       const nowPlayingEpisodeGuid = action.payload as string;
       return {
         ...state,
-        nowPlaying: state.podcastDetails.item.find((episode) => episode.guid === nowPlayingEpisodeGuid),
+        nowPlaying: state.podcastFeedData.item.find((episode) => episode.guid === nowPlayingEpisodeGuid),
         isPlaying: false,
         viewingNowPlaying: true
       };
@@ -66,20 +67,20 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
   const [state, dispatch] = useWidgetShell(reducer, widget);
   const {
     podcastQuery,
-    podcastUrl,
-    podcastDetails,
+    podcastFeedUrl,
+    podcastFeedData,
     nowPlaying,
     isPlaying,
     viewingNowPlaying,
     listeningMetadata
   } = state as PodcastWidgetState;
   const nowPlayingMetadata = nowPlaying ? listeningMetadata[nowPlaying.guid] : null;
-  const podcastSearchResults = useState([]);
+  const [podcastList, setPodcastList] = useState([]);
 
   const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
     dispatch,
-    shouldFetch: () => podcastQuery && !podcastDetails,
+    shouldFetch: () => podcastQuery && !podcastFeedData,
     requestQuery: podcastQuery,
     setRequestQuery: (newPodcastQuery: typeof podcastQuery) => {
       dispatch({ type: 'setPodcastQuery', payload: newPodcastQuery });
@@ -87,50 +88,53 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
     getApiUrl: (query: typeof podcastQuery) => {
       return `widgets/Podcast/search-podcasts.php?q=${encodeURIComponent(query)}`;
     },
-    parseResponse: (data: PodcastSearchResponse) => data,
-    hasResults: (data: PodcastSearchResponse) => data.results && data.results.length,
-    onSuccess: (data: PodcastSearchResult[]) => {
-      console.log('results', data);
-      // dispatch({
-      //   type: 'setPodcastDetails',
-      //   payload: data
-      // });
+    parseResponse: (data: PodcastSearchResponse) => data.results,
+    hasResults: (results: typeof podcastList) => results && results.length,
+    onSuccess: (results: typeof podcastList) => {
+      console.log('podcast search results', results);
+      setPodcastList(results);
     },
-    getNoResultsMessage: (data: typeof podcastDetails) => 'No Podcasts Found',
-    getErrorMessage: (error: Error) => 'Error Fetching Podcast'
+    getNoResultsMessage: (results: typeof podcastFeedData) => 'No Podcasts Found',
+    getErrorMessage: (error: Error) => 'Error Searching for Podcasts'
   });
 
   return (
     <WidgetShell widget={state} dispatch={dispatch} provided={provided}>
       <section className="podcast">
-        {widget.isSettingsOpen || !podcastUrl || !podcastDetails || fetchError ? (
-          <form
-            className="podcast-settings"
-            onSubmit={(event) => submitRequestQuery((event))}>
-            <h2 className="podcast-settings-heading">Podcast</h2>
-            <input
-            type="text"
-            className="podcast-query"
-            name="search"
-            defaultValue={podcastQuery}
-            placeholder="Search for podcasts"
-            required
-            ref={requestQueryInputRef} />
-            <button type="submit" className="podcast-url-submit">Submit</button>
-            {fetchError ? (
-              <p className="podcast-error">{fetchError}</p>
-              ) : null}
-          </form>
-        ) : podcastUrl && podcastDetails && nowPlaying && viewingNowPlaying ? (
+        {widget.isSettingsOpen || !podcastFeedUrl || !podcastFeedData || fetchError ? (
+          <div className="podcast-search">
+            <form
+              className="podcast-settings"
+              onSubmit={(event) => submitRequestQuery((event))}>
+              <h2 className="podcast-settings-heading">Podcast</h2>
+              <input
+              type="text"
+              className="podcast-query"
+              name="search"
+              defaultValue={podcastQuery}
+              placeholder="Search for podcasts"
+              required
+              ref={requestQueryInputRef} />
+              <button type="submit" className="podcast-url-submit">Submit</button>
+              {fetchError ? (
+                <p className="podcast-error">{fetchError}</p>
+                ) : null}
+            </form>
+            <PodcastPodcastList
+              widget={state}
+              podcastList={podcastList}
+              dispatch={dispatch} />
+          </div>
+        ) : podcastFeedUrl && podcastFeedData && nowPlaying && viewingNowPlaying ? (
           <PodcastNowPlaying
-            podcastDetails={podcastDetails}
+            podcastFeedData={podcastFeedData}
             nowPlaying={nowPlaying}
             nowPlayingMetadata={nowPlayingMetadata}
             isPlaying={isPlaying}
             dispatch={dispatch} />
-        ) : podcastUrl && podcastDetails && !viewingNowPlaying ? (
+        ) : podcastFeedUrl && podcastFeedData && !viewingNowPlaying ? (
           <PodcastEpisodeList
-            podcastDetails={podcastDetails}
+            podcastFeedData={podcastFeedData}
             nowPlaying={nowPlaying}
             dispatch={dispatch} />
         ) : null}
