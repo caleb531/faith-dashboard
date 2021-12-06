@@ -36,7 +36,7 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
       return dispatch({ type: 'setVerseQuery', payload: newQuery });
     },
     getApiUrl: (query: typeof verseQuery) => {
-      return `widgets/BibleVerse/api.php?q=${encodeURIComponent(query)}`;
+      return `widgets/BibleVerse/get-verse.php?q=${encodeURIComponent(query)}`;
     },
     parseResponse: (response: BibleVerseData) => response.passages.join(''),
     hasResults: (data: typeof verseContent) => (data !== ''),

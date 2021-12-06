@@ -73,7 +73,7 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
       dispatch({ type: 'setPodcastUrl', payload: newPodcastUrl });
     },
     getApiUrl: (query: typeof podcastUrl) => {
-      return `widgets/Podcast/api.php?podcast_url=${encodeURIComponent(query)}`;
+      return `widgets/Podcast/get-podcast.php?podcast_url=${encodeURIComponent(query)}`;
     },
     parseResponse: (data: {channel: PodcastDetails}) => data.channel,
     hasResults: (data: typeof podcastDetails) => data.item && data.item.length,

@@ -2,7 +2,7 @@
 
   $API_BASE_URL = 'https://api.esv.org/v3/passage/html/?';
 
-  $api_info = json_decode(file_get_contents('api.json'));
+  $api_info = json_decode(file_get_contents('api-credentials.json'));
 
   if ( empty( $api_info ) ) {
     $obj = new StdClass();
