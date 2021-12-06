@@ -2,6 +2,7 @@ import { ListenerCallback } from 'workbox-window/utils/WorkboxEventTarget';
 import { WidgetState } from '../../types.d';
 
 export interface PodcastWidgetState extends WidgetState {
+  podcastQuery: string;
   podcastUrl: string;
   podcastDetails: PodcastDetails;
   nowPlaying: PodcastEpisode;
@@ -51,4 +52,18 @@ export interface PodcastDetails {
   link: string;
   title: string;
   item: PodcastEpisode[];
+}
+
+export interface PodcastSearchResponse {
+  resultCount: number;
+  results: PodcastSearchResult[]
+}
+
+export interface PodcastSearchResult {
+  kind: string;
+  trackName: string;
+  artistName: string;
+  trackId: string;
+  artistId: string;
+  feedUrl: string;
 }

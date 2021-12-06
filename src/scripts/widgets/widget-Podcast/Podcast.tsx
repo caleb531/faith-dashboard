@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StateAction, WidgetContentsParameters } from '../../types.d';
-import { PodcastWidgetState, PodcastDetails, PodcastListeningMetadataEntry } from './Podcast.d';
+import { PodcastWidgetState, PodcastDetails, PodcastListeningMetadataEntry, PodcastSearchResponse, PodcastSearchResult } from './Podcast.d';
 import WidgetShell from '../WidgetShell';
 import useWidgetShell from '../useWidgetShell';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
@@ -12,6 +12,9 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
     case 'setPodcastDetails':
       const podcastDetails = action.payload as PodcastDetails;
       return { ...state, podcastDetails };
+    case 'setPodcastQuery':
+      const podcastQuery = action.payload as string;
+      return { ...state, podcastQuery };
     case 'setPodcastUrl':
       const podcastUrl = action.payload as string;
       return {
@@ -61,27 +64,37 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
 function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
 
   const [state, dispatch] = useWidgetShell(reducer, widget);
-  const { podcastUrl, podcastDetails, nowPlaying, isPlaying, viewingNowPlaying, listeningMetadata } = state as PodcastWidgetState;
+  const {
+    podcastQuery,
+    podcastUrl,
+    podcastDetails,
+    nowPlaying,
+    isPlaying,
+    viewingNowPlaying,
+    listeningMetadata
+  } = state as PodcastWidgetState;
   const nowPlayingMetadata = nowPlaying ? listeningMetadata[nowPlaying.guid] : null;
+  const podcastSearchResults = useState([]);
 
   const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
     dispatch,
-    shouldFetch: () => podcastUrl && !podcastDetails,
-    requestQuery: podcastUrl,
-    setRequestQuery: (newPodcastUrl: typeof podcastUrl) => {
-      dispatch({ type: 'setPodcastUrl', payload: newPodcastUrl });
+    shouldFetch: () => podcastQuery && !podcastDetails,
+    requestQuery: podcastQuery,
+    setRequestQuery: (newPodcastQuery: typeof podcastQuery) => {
+      dispatch({ type: 'setPodcastQuery', payload: newPodcastQuery });
     },
-    getApiUrl: (query: typeof podcastUrl) => {
-      return `widgets/Podcast/get-podcast.php?podcast_url=${encodeURIComponent(query)}`;
+    getApiUrl: (query: typeof podcastQuery) => {
+      return `widgets/Podcast/search-podcasts.php?q=${encodeURIComponent(query)}`;
     },
-    parseResponse: (data: {channel: PodcastDetails}) => data.channel,
-    hasResults: (data: typeof podcastDetails) => data.item && data.item.length,
-    onSuccess: (data: typeof podcastDetails) => {
-      dispatch({
-        type: 'setPodcastDetails',
-        payload: data
-      });
+    parseResponse: (data: PodcastSearchResponse) => data,
+    hasResults: (data: PodcastSearchResponse) => data.results && data.results.length,
+    onSuccess: (data: PodcastSearchResult[]) => {
+      console.log('results', data);
+      // dispatch({
+      //   type: 'setPodcastDetails',
+      //   payload: data
+      // });
     },
     getNoResultsMessage: (data: typeof podcastDetails) => 'No Podcasts Found',
     getErrorMessage: (error: Error) => 'Error Fetching Podcast'
@@ -96,11 +109,11 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
             onSubmit={(event) => submitRequestQuery((event))}>
             <h2 className="podcast-settings-heading">Podcast</h2>
             <input
-            type="url"
-            className="podcast-url"
+            type="text"
+            className="podcast-query"
             name="search"
-            defaultValue={podcastUrl}
-            placeholder="An Apple Podcast URL"
+            defaultValue={podcastQuery}
+            placeholder="Search for podcasts"
             required
             ref={requestQueryInputRef} />
             <button type="submit" className="podcast-url-submit">Submit</button>
