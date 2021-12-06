@@ -3,7 +3,7 @@ import moment from 'moment';
 import 'moment-duration-format';
 import { PodcastEpisode, PodcastListeningMetadataEntry } from './Podcast.d';
 import LoadingIndicator from '../../generic/LoadingIndicator';
-import useCachedAudio from './useCachedAudio';
+import useCachedState from '../../useCachedState';
 import useAudioLoader from './useAudioLoader';
 import useAudioTime from './useAudioTime';
 import useAudioPlayPause from './useAudioPlayPause';
@@ -21,7 +21,9 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
   //    uninterrupted
   // 2) We eliminate any issues of multiple audio streams playing at the same
   //    time
-  const audioElement = useCachedAudio();
+  const [audioElement, setAudioElement] = useCachedState<HTMLAudioElement>('podcast-audio-global', () => {
+    return new Audio();
+  });
 
   useAudioLoader(audioElement);
 

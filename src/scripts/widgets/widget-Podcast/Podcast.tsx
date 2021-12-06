@@ -4,6 +4,7 @@ import { PodcastWidgetState, PodcastFeedData, PodcastListeningMetadataEntry, Pod
 import WidgetShell from '../WidgetShell';
 import useWidgetShell from '../useWidgetShell';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
+import useCachedState from '../../useCachedState';
 import PodcastPodcastList from './PodcastPodcastList';
 import PodcastNowPlaying from './PodcastNowPlaying';
 import PodcastEpisodeList from './PodcastEpisodeList';
@@ -79,7 +80,9 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
     listeningMetadata
   } = state as PodcastWidgetState;
   const nowPlayingMetadata = nowPlaying ? listeningMetadata[nowPlaying.guid] : null;
-  const [podcastList, setPodcastList] = useState([]);
+  const [podcastList, setPodcastList] = useCachedState<PodcastInfo[]>(`podcast-list-for-widget-${widget.id}`, () => {
+    return [];
+  });
 
   const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
