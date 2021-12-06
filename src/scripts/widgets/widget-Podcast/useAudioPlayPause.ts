@@ -8,7 +8,8 @@ function useAudioPlayPause(audioElement: HTMLAudioElement, isPlaying: boolean, s
   // Synchronize the play/pause state of the audio with the widget state
   useEffect(function () {
     if (isPlaying) {
-      audioElement.play().catch(() => {
+      audioElement.play().catch((error) => {
+        console.log(error);
         // It is possible for isPlaying to be true when the page initially
         // loads, thus the app will attempt to play the audio element;
         // however, if the browser has blocked the audio from autoplaying,
