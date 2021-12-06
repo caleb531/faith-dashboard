@@ -20,8 +20,7 @@ function useAudioTime(audioElement: HTMLAudioElement, audioUrl: string, isPlayin
   }
 
   useElementEvents(audioElement, {
-    // Throttle the timeupdate event so that it doesn't fire excessively when
-    // the user is seeking the audio (via the slider)
+    // Update the listening history as the audio is playing
     timeupdate: () => {
       if (isPlaying) {
         setCurrentTime();
