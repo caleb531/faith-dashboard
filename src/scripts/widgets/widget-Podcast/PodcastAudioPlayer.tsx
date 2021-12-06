@@ -34,14 +34,15 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
   }
   useAudioPlayPause(audioElement, isPlaying, setIsPlaying);
 
-  const { setCurrentTime } = useAudioTime(audioElement, audioUrl, isPlaying, currentTime, () => {
+  function setCurrentTime() {
     dispatch({
       type: 'updateNowPlayingMetadata',
       payload: { currentTime: audioElement.currentTime }
     });
-  });
+  }
+  useAudioTime(audioElement, audioUrl, isPlaying, currentTime, setCurrentTime);
 
-  const { seekerProvided } = useAudioSeeker(audioElement, currentTime);
+  const { seekerProvided } = useAudioSeeker(audioElement, currentTime, setCurrentTime);
 
   return (
     <div className="podcast-audio-player">
@@ -70,8 +71,7 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
           min="0"
           max={audioElement.duration || 0}
           step="1"
-          {...seekerProvided}
-          onMouseUp={setCurrentTime} />
+          {...seekerProvided} />
         <div className="podcast-audio-player-time-info">
           <span className="podcast-audio-player-current-time">
             {!audioElement.duration ?

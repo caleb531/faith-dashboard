@@ -4,7 +4,7 @@ import useElementEvents from '../../useElementEvents';
 // The useAudioTime() hook exposes a setter that allows you to synchronize the
 // current time of the given Audio element to whatever internal state you so
 // desire
-function useAudioTime(audioElement: HTMLAudioElement, audioUrl: string, isPlaying: boolean, currentTime: number, setCurrentTimeAlways: () => void) {
+function useAudioTime(audioElement: HTMLAudioElement, audioUrl: string, isPlaying: boolean, currentTime: number, setCurrentTime: () => void): void {
 
   // Return true if audio element's current time (in seconds) differs from
   // what's on the state (also in seconds)
@@ -12,18 +12,13 @@ function useAudioTime(audioElement: HTMLAudioElement, audioUrl: string, isPlayin
     return Math.floor(audioElement.currentTime) !== Math.floor(currentTime);
   }
 
-  // Save audio element's current time to state if seconds have changed
-  function setCurrentTime(): void {
-    if (hasCurrentTimeChanged()) {
-      setCurrentTimeAlways();
-    }
-  }
-
   useElementEvents(audioElement, {
     // Update the listening history as the audio is playing
     timeupdate: () => {
       if (isPlaying) {
-        setCurrentTime();
+        if (hasCurrentTimeChanged()) {
+          setCurrentTime();
+        }
       }
     }
   });
@@ -41,8 +36,6 @@ function useAudioTime(audioElement: HTMLAudioElement, audioUrl: string, isPlayin
       audioElement.currentTime = currentTime;
     }
   }, [audioUrl, audioElement]);
-
-  return { setCurrentTime };
 
 }
 

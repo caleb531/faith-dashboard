@@ -3,7 +3,12 @@ import React, { useRef } from 'react';
 // The useAudioSeeker() hook provides attributes that you can attach to an a
 // range input (representing your seeker) for the purpose of synchronizing that
 // seeker element with your the given current time
-function useAudioSeeker(audioElement: HTMLAudioElement, currentTime: number) {
+function useAudioSeeker(audioElement: HTMLAudioElement, currentTime: number, setCurrentTime: () => void): { seekerProvided: {
+  ref: (input: HTMLInputElement) => void,
+  onInput: (event: React.FormEvent) => void,
+  onChange: (event: React.FormEvent) => void,
+  onMouseUp: () => void
+} } {
 
   // Store a ref to the input slider so we can change it dynamically without
   // causing excessive renders on every miniscule slider movement
@@ -45,7 +50,8 @@ function useAudioSeeker(audioElement: HTMLAudioElement, currentTime: number) {
     seekerProvided: {
       ref: setInitialSeekerPosition,
       onInput: updateSeekerFillFromEvent,
-      onChange: seekAudio
+      onChange: seekAudio,
+      onMouseUp: setCurrentTime
     }
   };
 
