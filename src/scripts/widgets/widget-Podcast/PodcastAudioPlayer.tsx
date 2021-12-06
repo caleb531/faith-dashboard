@@ -34,7 +34,7 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
   }
   useAudioPlayPause(audioElement, isPlaying, setIsPlaying);
 
-  function setCurrentTime() {
+  function setCurrentTime(): void {
     dispatch({
       type: 'updateNowPlayingMetadata',
       payload: { currentTime: audioElement.currentTime }
