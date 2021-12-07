@@ -109,7 +109,12 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
   // widget data is not already cached according to the logic dictated by
   // shouldFetchInitially())
   useEffect(() => {
-    if (shouldFetchInitially()) {
+    // There are cases where even though this effect should only run when the
+    // page initially loads, an unmount/re-mount of the component can also
+    // trigger this effect to run, and if there was a fetch error, cause an
+    // infinite loop; to fix this, we stop fetching if the previous fetch
+    // resulted in an error
+    if (shouldFetchInitially() && !isLoading && !fetchError) {
       fetchWidgetData(requestQuery);
     }
     // The React Docs suggest using an empty array when we only want a hook to
