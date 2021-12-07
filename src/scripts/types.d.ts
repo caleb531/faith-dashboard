@@ -6,7 +6,7 @@ export type JSONSerializable = string | number | boolean | Array<JSONSerializabl
 
 // An available color theme that can be set by the user to personalize their
 // app dashboard
-export enum AppTheme {
+export const enum AppTheme {
   brown = 'brown',
   green = 'green',
   teal = 'teal',
@@ -43,7 +43,7 @@ interface AppThemeListItem {
 }
 
 // The unique identifier of an implemented widget type
-export enum WidgetTypeId {
+export const enum WidgetTypeId {
   BibleVerse = 'BibleVerse',
   Note = 'Note',
   Podcast = 'Podcast'
