@@ -1,4 +1,5 @@
 import React, { Dispatch, useContext, useRef, useEffect } from 'react';
+import moment from 'moment';
 import { WidgetState, StateAction } from '../types';
 import { JSONSerializable } from '../types.d';
 
@@ -105,6 +106,13 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
     }
   }
 
+  // Returns true if the given UNIX timestamp (in milliseconds; generated from
+  // Date.now()) matches today's date
+  const dateFormat = 'L';
+  function isDateToday(dateTime: number): boolean {
+    return moment(dateTime).format(dateFormat) === moment().format(dateFormat);
+  }
+
   // Fetch the widget data when the widget initially loads (presuming the
   // widget data is not already cached according to the logic dictated by
   // shouldFetchInitially())
@@ -114,7 +122,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
     // trigger this effect to run, and if there was a fetch error, cause an
     // infinite loop; to fix this, we stop fetching if the previous fetch
     // resulted in an error
-    if (shouldFetchInitially() && !isLoading && !fetchError) {
+    if ((shouldFetchInitially() || !isDateToday(widget.lastFetchDateTime)) && !isLoading && !fetchError) {
       fetchWidgetData(requestQuery);
     }
     // The React Docs suggest using an empty array when we only want a hook to

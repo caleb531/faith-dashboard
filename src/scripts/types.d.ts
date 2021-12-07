@@ -78,6 +78,9 @@ export interface WidgetState {
   isLoading?: boolean;
   // Any error the widget experienced while fetching data
   fetchError?: string;
+  // A timestamp representing the date/time the application last fetched data
+  // for this widget
+  lastFetchDateTime?: number;
   // A flag that is set when the widget is marked for removal (allowing us to
   // run some cleanup code before the widget is removed)
   isMarkedForRemoval?: boolean;

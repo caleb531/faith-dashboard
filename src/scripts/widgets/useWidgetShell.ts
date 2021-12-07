@@ -26,7 +26,13 @@ export default function useWidgetShell(subReducer: (state: WidgetState, action: 
       case 'showLoading':
         return { ...state, isLoading: true };
       case 'showContent':
-        return { ...state, isLoading: false, isSettingsOpen: false, fetchError: null };
+        return {
+          ...state,
+          isLoading: false,
+          isSettingsOpen: false,
+          fetchError: null,
+          lastFetchDateTime: Date.now()
+        };
       case 'setFetchError':
         return { ...state, isLoading: false, fetchError: action.payload as string };
       case 'markWidgetForRemoval':
