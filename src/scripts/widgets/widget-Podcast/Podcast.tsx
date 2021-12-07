@@ -4,6 +4,7 @@ import { PodcastWidgetState, PodcastFeedData, PodcastListeningMetadataEntry, Pod
 import WidgetShell from '../WidgetShell';
 import useWidgetShell from '../useWidgetShell';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
+import useWidgetCleanupOnRemove from '../useWidgetCleanupOnRemove';
 import useCachedState from '../../useCachedState';
 import useCachedAudio from './useCachedAudio';
 import PodcastPodcastList from './PodcastPodcastList';
@@ -143,6 +144,12 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
     },
     getNoResultsMessage: (results: typeof podcastFeedData) => 'No Podcasts Found',
     getErrorMessage: (error: Error) => 'Error Searching for Podcasts'
+  });
+
+  // Pause the audio in case it's still playing when the user removes the
+  // widget from their dashboard
+  useWidgetCleanupOnRemove(state, () => {
+    audioElement.pause();
   });
 
   return (

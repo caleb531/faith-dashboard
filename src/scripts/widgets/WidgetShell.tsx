@@ -1,11 +1,10 @@
-import React, { useReducer, useContext } from 'react';
+import React, { Dispatch, useContext, useEffect } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import { AppContext } from '../app/AppContext';
 import { WidgetState, StateAction } from '../types';
 import LoadingIndicator from '../generic/LoadingIndicator';
-import useWidgetUpdater from './useWidgetUpdater';
 
-function WidgetShell({ widget, dispatch, provided, children }: { widget: WidgetState, dispatch: Function, provided: DraggableProvided, children: JSX.Element | JSX.Element[] }) {
+function WidgetShell({ widget, dispatch, provided, children }: { widget: WidgetState, dispatch: Dispatch<StateAction>, provided: DraggableProvided, children: JSX.Element | JSX.Element[] }) {
 
   const { dispatchToApp } = useContext(AppContext);
 
@@ -13,9 +12,20 @@ function WidgetShell({ widget, dispatch, provided, children }: { widget: WidgetS
   function removeWidget() {
     const confirmation = confirm('Are you sure you want to permanently delete this widget?');
     if (confirmation) {
-      dispatchToApp({ type: 'removeWidget', payload: widget });
+      dispatch({ type: 'markWidgetForRemoval' });
     }
   }
+
+  // Unfortunately, if we try to call dispatchToApp() immediately after calling
+  // dispatch() within the same handler, the dispatch() function will never
+  // run; therefore, we must dispatch() the markWidgetForRemoval action first
+  // to set the isMarkedForRemoval flag, then actually remove the widget on the
+  // next render (once that flag is seen)
+  useEffect(() => {
+    if (widget.isMarkedForRemoval) {
+        dispatchToApp({ type: 'removeWidget', payload: widget });
+    }
+  }, [widget.isMarkedForRemoval]);
 
   function handleResize(event: React.MouseEvent) {
     const newHeight = parseFloat((event.currentTarget as HTMLElement).style.height);

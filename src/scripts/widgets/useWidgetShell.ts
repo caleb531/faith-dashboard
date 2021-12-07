@@ -1,4 +1,4 @@
-import React, { Dispatch, useReducer } from 'react';
+import { Dispatch, useReducer } from 'react';
 import { WidgetState, StateAction } from '../types';
 import useWidgetUpdater from './useWidgetUpdater';
 
@@ -7,7 +7,7 @@ import useWidgetUpdater from './useWidgetUpdater';
 // operations, like exposing global actions available to all widgets, and
 // attaching listeners that automatically persist the widget whenever its state
 // changes
-export default function useWidgetShell(subReducer: Function, widget: WidgetState): [WidgetState, Dispatch<StateAction>] {
+export default function useWidgetShell(subReducer: (state: WidgetState, action: StateAction) => WidgetState, widget: WidgetState): [WidgetState, Dispatch<StateAction>] {
 
   // The sub-reducer is an optional reducer belonging to the implementation
   // component for a particular widget type; it is combined into a larger
@@ -30,6 +30,8 @@ export default function useWidgetShell(subReducer: Function, widget: WidgetState
         return { ...state, isLoading: false, isSettingsOpen: false, fetchError: null };
       case 'setFetchError':
         return { ...state, isLoading: false, fetchError: action.payload as string };
+      case 'markWidgetForRemoval':
+          return { ...state, isMarkedForRemoval: true };
       default:
         // As mentioned above, the sub-reducer is optional, and if you wish to
         // omit it, simply pass `null` as the first argument to
