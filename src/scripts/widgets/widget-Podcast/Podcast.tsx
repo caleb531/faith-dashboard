@@ -66,6 +66,9 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
           {} :
           state.listeningMetadata || {}
       };
+    case 'setPodcastImage':
+      const podcastImage = action.payload as string;
+      return { ...state, podcastImage };
     case 'setNowPlaying':
       const nowPlayingEpisodeGuid = action.payload as string;
       return {
@@ -102,6 +105,7 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
   const {
     podcastQuery,
     podcastFeedUrl,
+    podcastImage,
     podcastFeedData,
     nowPlaying,
     isPlaying,
@@ -171,6 +175,7 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
         ) : podcastFeedUrl && podcastFeedData && nowPlaying && viewingNowPlaying ? (
           <PodcastNowPlaying
             podcastFeedData={podcastFeedData}
+            podcastImage={podcastImage}
             nowPlaying={nowPlaying}
             nowPlayingMetadata={nowPlayingMetadata}
             isPlaying={isPlaying}

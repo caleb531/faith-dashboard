@@ -2,7 +2,7 @@ import React from 'react';
 import { PodcastFeedData, PodcastEpisode, PodcastListeningMetadataEntry } from './Podcast.d';
 import PodcastAudioPlayer from './PodcastAudioPlayer';
 
-function PodcastNowPlaying({ podcastFeedData, nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: { podcastFeedData: PodcastFeedData, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Function }) {
+function PodcastNowPlaying({ podcastFeedData, podcastImage, nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: { podcastFeedData: PodcastFeedData, podcastImage: string, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Function }) {
 
   function returnToEpisodeList() {
     dispatch({ type: 'setViewingNowPlaying', payload: false });
@@ -11,10 +11,10 @@ function PodcastNowPlaying({ podcastFeedData, nowPlaying, nowPlayingMetadata, is
   return (
     <div className="podcast-view-now-playing">
       <header className="podcast-now-playing-header">
-        {podcastFeedData.image ? (
+        {podcastImage || podcastFeedData.image ? (
           <img
             className="podcast-now-playing-image"
-            src={podcastFeedData.image.url}
+            src={podcastImage || podcastFeedData.image.url}
             alt="" />
         ) : (
           <div className="podcast-now-playing-image podcast-now-playing-image-missing">?</div>

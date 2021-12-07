@@ -33,6 +33,7 @@ function PodcastPodcastList({ widget, podcastList, dispatch }: { widget: WidgetS
 
   function choosePodcast(result: Result) {
     dispatch({ type: 'setPodcastFeedUrl', payload: result.data.feedUrl });
+    dispatch({ type: 'setPodcastImage', payload: result.data.image });
     fetchWidgetData(result.data.feedUrl);
   }
 
@@ -45,7 +46,8 @@ function PodcastPodcastList({ widget, podcastList, dispatch }: { widget: WidgetS
         title: podcast.trackName,
         subtitle: podcast.artistName,
         data: {
-          feedUrl: podcast.feedUrl
+          feedUrl: podcast.feedUrl,
+          image: podcast.artworkUrl100
         }
       };
     });

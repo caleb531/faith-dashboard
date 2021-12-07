@@ -4,6 +4,7 @@ import { WidgetState } from '../../types.d';
 export interface PodcastWidgetState extends WidgetState {
   podcastQuery: string;
   podcastFeedUrl: string;
+  podcastImage: string;
   podcastFeedData: PodcastFeedData;
   nowPlaying: PodcastEpisode;
   viewingNowPlaying: boolean;
@@ -66,4 +67,8 @@ export interface PodcastInfo {
   trackId: number;
   artistId: number;
   feedUrl: string;
+  artworkUrl30: string;
+  artworkUrl60: string;
+  artworkUrl100: string;
+  artworkUrl600: string;
 }
