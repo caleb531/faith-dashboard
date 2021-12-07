@@ -9,11 +9,10 @@ import useWidgetUpdater from './useWidgetUpdater';
 // changes
 export default function useWidgetShell(subReducer: (state: WidgetState, action: StateAction) => WidgetState, widget: WidgetState): [WidgetState, Dispatch<StateAction>] {
 
-  // The sub-reducer is an optional reducer belonging to the implementation
-  // component for a particular widget type; it is combined into a larger
-  // reducer containing general widget actions (this allows the compoment for
-  // each widget type implementation to reference the same widget state and
-  // dispatcher)
+  // The reducer below contains general widget actions, and the widget
+  // type-specific "sub-reducer" supplied above is merged into this larger
+  // reducer; this allows the compoment for each widget type implementation to
+  // reference the same widget state and dispatcher
   function reducer(state: WidgetState, action: StateAction): WidgetState {
     switch (action.type) {
       case 'toggleSettings':
