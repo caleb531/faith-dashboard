@@ -5,6 +5,7 @@ import WidgetShell from '../WidgetShell';
 import useWidgetShell from '../useWidgetShell';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useCachedState from '../../useCachedState';
+import useCachedAudio from './useCachedAudio';
 import PodcastPodcastList from './PodcastPodcastList';
 import PodcastNowPlaying from './PodcastNowPlaying';
 import PodcastEpisodeList from './PodcastEpisodeList';
@@ -112,6 +113,8 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
     return [];
   });
 
+  const audioElement = useCachedAudio();
+
   const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
     dispatch,
@@ -126,6 +129,12 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
     parseResponse: (data: PodcastSearchResponse) => data.results,
     hasResults: (results: typeof podcastList) => results && results.length,
     onSuccess: (results: typeof podcastList) => {
+      // When the user searches with a new query, access is lost to the Now
+      // Playing UI, since the feed URL has been reset (which is necessary in
+      // order for the UX to flow properly); however, the Audio element may
+      // still be playing from the previous podcast, so we must stop the audio
+      // since the user can't control it anyway
+      audioElement.pause();
       setPodcastList(results);
     },
     getNoResultsMessage: (results: typeof podcastFeedData) => 'No Podcasts Found',
