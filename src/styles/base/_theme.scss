@@ -1,0 +1,5 @@
+@each $theme-name, $theme-color in $theme-colors {
+  .theme-#{$theme-name} {
+    background-color: $theme-color;
+  }
+}

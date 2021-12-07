@@ -3,11 +3,6 @@
   flex-direction: column;
   text-align: center;
   padding: 0 10px;
-  @each $theme-name, $theme-color in $theme-colors {
-    &.theme-#{$theme-name} {
-      background-color: $theme-color;
-    }
-  }
   @include layout(desktop) {
     padding: 0 20px;
   }

@@ -7,6 +7,7 @@ import UpdateNotification from './UpdateNotification';
 import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
 import useLocalStorage from './useLocalStorage';
+import useThemeForEntirePage from './useThemeForEntirePage';
 import defaultApp from './appStateDefault';
 
 // Lazy-load the widget board since react-beautiful-dnd is a large dependency
@@ -78,6 +79,7 @@ function App() {
     saveApp(app);
   }, [app, saveApp]);
 
+  useThemeForEntirePage(app.theme);
 
   return (
     <AppContext.Provider value={{ app, dispatchToApp }}>
