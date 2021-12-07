@@ -5,23 +5,23 @@ import { AppTheme, AppThemeListItem } from '../types.d';
 const themeList: AppThemeListItem[] = [
   {
     label: 'Brown',
-    value: AppTheme.brown
+    value: 'brown'
   },
   {
     label: 'Green',
-    value: AppTheme.green
+    value: 'green'
   },
   {
     label: 'Teal',
-    value: AppTheme.teal
+    value: 'teal'
   },
   {
     label: 'Blue',
-    value: AppTheme.blue
+    value: 'blue'
   },
   {
     label: 'Rose',
-    value: AppTheme.rose
+    value: 'rose'
   }
 ];
 

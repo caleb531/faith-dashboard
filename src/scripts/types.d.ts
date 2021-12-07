@@ -6,13 +6,7 @@ export type JSONSerializable = string | number | boolean | Array<JSONSerializabl
 
 // An available color theme that can be set by the user to personalize their
 // app dashboard
-export const enum AppTheme {
-  brown = 'brown',
-  green = 'green',
-  teal = 'teal',
-  blue = 'blue',
-  rose = 'rose'
-}
+export type AppTheme = 'brown' | 'green' | 'teal' | 'blue' | 'rose';
 
 // The state of the application; an instance of
 export interface AppState {
@@ -43,11 +37,7 @@ interface AppThemeListItem {
 }
 
 // The unique identifier of an implemented widget type
-export const enum WidgetTypeId {
-  BibleVerse = 'BibleVerse',
-  Note = 'Note',
-  Podcast = 'Podcast'
-}
+export type WidgetTypeId = 'BibleVerse' | 'Note' | 'Podcast';
 
 // The metadata for a widget type, much of which is displayed in the "Add
 // Widget" Picker, where the user can add a new widget instance to their board
@@ -71,7 +61,7 @@ export interface WidgetType {
 export interface WidgetState {
   // A UUID v4 string that uniquely identifies the widget instance
   id: string;
-  // An string-based enum identifier representing the type of widget
+  // An string-based identifier representing the type of widget
   type: WidgetTypeId;
   // A boolean representing whether or not the widget's Settings screen is
   // currently visible
