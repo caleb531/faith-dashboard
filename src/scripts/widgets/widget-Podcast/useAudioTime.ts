@@ -33,9 +33,7 @@ function useAudioTime(audioElement: HTMLAudioElement, audioUrl: string, isPlayin
       return;
     }
     audioElement.src = audioUrl;
-    if (hasCurrentTimeChanged()) {
-      audioElement.currentTime = currentTime;
-    }
+    audioElement.currentTime = currentTime;
   }, [audioUrl, audioElement]);
 
 }
