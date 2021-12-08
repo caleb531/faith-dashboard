@@ -27,7 +27,8 @@ function useAudioTime(audioElement: HTMLAudioElement, audioUrl: string, isPlayin
   // audio source URL changes higher up, then the audio will reset here
   useEffect(() => {
     // Do not update the audio element if we are still on the same episode;
-    // this check prevents playback hiccups whenever React re-renders
+    // this check prevents playback hiccups whenever the widget
+    // unmounts/re-mounts (e.g. when the widget is dragged to a new column)
     if (audioElement.src === audioUrl) {
       return;
     }
