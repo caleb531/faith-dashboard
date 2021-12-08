@@ -31,8 +31,8 @@ function ThemeSwitcher() {
 
   return (
     <div className="theme-switcher">
-      <label className="theme-switcher-label" htmlFor="theme-switcher-dropdown">
-        Color Theme:
+      <label className="theme-switcher-label accessibility-only" htmlFor="theme-switcher-dropdown">
+        Color Theme
       </label>
       <select className="theme-switcher-dropdown" id="theme-switcher-dropdown" value={app.theme} onChange={(event) => dispatchToApp({ type: 'changeTheme', payload: event.target.value })}>
         <optgroup label="Color Theme">

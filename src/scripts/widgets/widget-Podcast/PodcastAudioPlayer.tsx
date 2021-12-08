@@ -8,6 +8,7 @@ import useAudioLoader from './useAudioLoader';
 import useAudioTime from './useAudioTime';
 import useAudioPlayPause from './useAudioPlayPause';
 import useAudioSeeker from './useAudioSeeker';
+import useUniqueFieldId from '../../useUniqueFieldId';
 
 function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: { nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Function }) {
 
@@ -42,6 +43,8 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
 
   const { seekerProvided } = useAudioSeeker(audioElement, currentTime, setCurrentTime);
 
+  const seekerFieldId = useUniqueFieldId('podcast-audio-player-seeker-slider');
+
   return (
     <div className="podcast-audio-player">
       <button className="podcast-audio-player-playpause" onClick={() => setIsPlaying(!isPlaying)} disabled={!audioElement.duration}>
@@ -62,8 +65,12 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
         )}
       </button>
       <div className="podcast-audio-player-seeker-container">
+        <label htmlFor={seekerFieldId} className="podcast-search accessibility-only">
+          Search Query
+        </label>
         <input
           type="range"
+          id={seekerFieldId}
           className="podcast-audio-player-seeker-slider"
           name="seeker"
           min="0"

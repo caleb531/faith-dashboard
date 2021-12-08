@@ -5,6 +5,7 @@ import { BibleVerseData, BibleVerseWidgetState } from './BibleVerse.d';
 import WidgetShell from '../WidgetShell';
 import useWidgetShell from '../useWidgetShell';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
+import useUniqueFieldId from '../../useUniqueFieldId';
 
 export function reducer(state: BibleVerseWidgetState, action: StateAction): BibleVerseWidgetState {
   switch (action.type) {
@@ -50,6 +51,8 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
     getErrorMessage: (error: Error) => 'Error Fetching Verse'
   });
 
+  const searchFieldId = useUniqueFieldId('bible-verse-search');
+
   return (
     <WidgetShell widget={state} dispatch={dispatch} provided={provided}>
       <section className="bible-verse">
@@ -58,8 +61,12 @@ function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
             className="bible-verse-settings"
             onSubmit={(event) => submitRequestQuery((event))}>
             <h2 className="bible-verse-heading">Bible Verse</h2>
+            <label htmlFor={searchFieldId} className="bible-verse-search accessibility-only">
+              Search Query
+            </label>
             <input
               type="search"
+              id={searchFieldId}
               className="bible-verse-search"
               name="search"
               defaultValue={verseQuery}

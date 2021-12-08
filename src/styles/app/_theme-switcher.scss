@@ -2,12 +2,6 @@
   display: flex;
   align-items: stretch;
 }
-// Hide the label from the UI but still be readable by screen readers
-.theme-switcher-label {
-  position: absolute;
-  top: -1000px;
-  left: -10000px;
-}
 .theme-switcher-dropdown {
   -webkit-appearance: none;
   -moz-appearance: none;

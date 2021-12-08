@@ -14,7 +14,18 @@
 }
 
 label {
+  display: block;
+  margin-bottom: 5px;
   font-family: $font-family-sans-serif;
+  font-size: $font-size-xxxs;
+  text-align: center;
+}
+
+// Hide some labels from the UI but still be readable by screen readers
+.accessibility-only {
+  position: absolute;
+  top: -1000px;
+  left: -10000px;
 }
 
 input[type=text],

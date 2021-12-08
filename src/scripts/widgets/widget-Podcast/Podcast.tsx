@@ -7,6 +7,7 @@ import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useWidgetCleanupOnRemove from '../useWidgetCleanupOnRemove';
 import useCachedState from '../../useCachedState';
 import useCachedAudio from './useCachedAudio';
+import useUniqueFieldId from '../../useUniqueFieldId';
 import PodcastPodcastList from './PodcastPodcastList';
 import PodcastNowPlaying from './PodcastNowPlaying';
 import PodcastEpisodeList from './PodcastEpisodeList';
@@ -152,6 +153,8 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
     audioElement.pause();
   });
 
+  const searchFieldId = useUniqueFieldId('podcast-search');
+
   return (
     <WidgetShell widget={state} dispatch={dispatch} provided={provided}>
       <section className="podcast">
@@ -161,9 +164,13 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
               className="podcast-settings"
               onSubmit={(event) => submitRequestQuery((event))}>
               <h2 className="podcast-settings-heading">Podcast</h2>
+              <label htmlFor={searchFieldId} className="podcast-search accessibility-only">
+                Search Query
+              </label>
               <input
               type="search"
-              className="podcast-query"
+              id={searchFieldId}
+              className="podcast-search"
               name="search"
               defaultValue={podcastQuery}
               placeholder="Search for podcasts"

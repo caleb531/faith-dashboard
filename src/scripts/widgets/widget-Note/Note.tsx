@@ -54,8 +54,12 @@ function NoteWidget({ widget, provided }: WidgetContentsParameters) {
           <>
             <h2 className="note-heading">Note</h2>
             <form className="note-formatting">
+              <label htmlFor={`note-formatting-font-size-${state.id}`} className="bible-verse-search">
+                Font Size
+              </label>
               <input
                 type="range"
+                id={`note-formatting-font-size-${state.id}`}
                 className="note-formatting-font-size"
                 onInput={(event) => changeFontSize(event)}
                 min="12"
