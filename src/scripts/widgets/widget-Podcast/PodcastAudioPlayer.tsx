@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { Dispatch, useEffect, useRef } from 'react';
 import moment from 'moment';
 import 'moment-duration-format';
+import { StateAction } from '../../types.d';
 import { PodcastEpisode, PodcastListeningMetadataEntry } from './Podcast.d';
 import LoadingIndicator from '../../generic/LoadingIndicator';
 import useCachedAudio from './useCachedAudio';
@@ -10,7 +11,7 @@ import useAudioPlayPause from './useAudioPlayPause';
 import useAudioSeeker from './useAudioSeeker';
 import useUniqueFieldId from '../../useUniqueFieldId';
 
-function PodcastAudioPlayer({ audioElementKey, nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: { audioElementKey: string, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Function }) {
+function PodcastAudioPlayer({ audioElementKey, nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: { audioElementKey: string, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Dispatch<StateAction> }) {
 
   const audioUrl = nowPlaying.enclosure['@attributes'].url;
   const currentTime = nowPlayingMetadata ? nowPlayingMetadata.currentTime : 0;

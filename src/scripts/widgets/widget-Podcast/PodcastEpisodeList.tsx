@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import moment from 'moment';
 import { PodcastFeedData, PodcastEpisode } from './Podcast.d';
-import { Result } from '../../types.d';
+import { StateAction, Result } from '../../types.d';
 import ResultList from '../../generic/ResultList';
 
-function PodcastEpisodeList({ podcastFeedData, nowPlaying, dispatch }: { podcastFeedData: PodcastFeedData, nowPlaying: PodcastEpisode, dispatch: Function }) {
+function PodcastEpisodeList({ podcastFeedData, nowPlaying, dispatch }: { podcastFeedData: PodcastFeedData, nowPlaying: PodcastEpisode, dispatch: Dispatch<StateAction> }) {
 
   // Use event delegation to determine which episode entry was clicked
   function chooseEpisode(result: Result) {
