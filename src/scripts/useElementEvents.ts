@@ -15,7 +15,9 @@ function useElementEvents(element: HTMLElement, eventMap: { [key: string]: (even
         element.removeEventListener(eventType, eventMap[eventType]);
       });
     };
-  });
+    // By using an empty dependencies array, we prevent listeners from being
+    // repeatedly bound/unbound while the audio plays
+  }, []);
 
 }
 
