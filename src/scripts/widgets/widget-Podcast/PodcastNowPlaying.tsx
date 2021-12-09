@@ -1,8 +1,9 @@
 import React from 'react';
+import { WidgetState } from '../../types.d';
 import { PodcastFeedData, PodcastEpisode, PodcastListeningMetadataEntry } from './Podcast.d';
 import PodcastAudioPlayer from './PodcastAudioPlayer';
 
-function PodcastNowPlaying({ podcastFeedData, podcastImage, nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: { podcastFeedData: PodcastFeedData, podcastImage: string, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Function }) {
+function PodcastNowPlaying({ widget, podcastFeedData, podcastImage, nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: { widget: WidgetState, podcastFeedData: PodcastFeedData, podcastImage: string, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Function }) {
 
   function returnToEpisodeList() {
     dispatch({ type: 'setViewingNowPlaying', payload: false });
@@ -25,6 +26,7 @@ function PodcastNowPlaying({ podcastFeedData, podcastImage, nowPlaying, nowPlayi
       </header>
       <div className="podcast-now-playing-audio-player-container">
         <PodcastAudioPlayer
+          audioElementKey={widget.id}
           nowPlaying={nowPlaying}
           nowPlayingMetadata={nowPlayingMetadata}
           isPlaying={isPlaying}

@@ -10,7 +10,7 @@ import useAudioPlayPause from './useAudioPlayPause';
 import useAudioSeeker from './useAudioSeeker';
 import useUniqueFieldId from '../../useUniqueFieldId';
 
-function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: { nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Function }) {
+function PodcastAudioPlayer({ audioElementKey, nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: { audioElementKey: string, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Function }) {
 
   const audioUrl = nowPlaying.enclosure['@attributes'].url;
   const currentTime = nowPlayingMetadata ? nowPlayingMetadata.currentTime : 0;
@@ -22,7 +22,7 @@ function PodcastAudioPlayer({ nowPlaying, nowPlayingMetadata, isPlaying, dispatc
   //    uninterrupted
   // 2) We eliminate any issues of multiple audio streams playing at the same
   //    time
-  const audioElement = useCachedAudio();
+  const audioElement = useCachedAudio(audioElementKey);
 
   useAudioLoader(audioElement);
 

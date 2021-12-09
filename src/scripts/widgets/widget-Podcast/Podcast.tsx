@@ -119,7 +119,7 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
     return [];
   });
 
-  const audioElement = useCachedAudio();
+  const audioElement = useCachedAudio(state.id);
 
   const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
@@ -188,6 +188,7 @@ function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
           </div>
         ) : podcastFeedUrl && podcastFeedData && nowPlaying && viewingNowPlaying ? (
           <PodcastNowPlaying
+            widget={state}
             podcastFeedData={podcastFeedData}
             podcastImage={podcastImage}
             nowPlaying={nowPlaying}
