@@ -15,10 +15,8 @@ function useAudioTime(audioElement: HTMLAudioElement, audioUrl: string, isPlayin
   useElementEvents(audioElement, {
     // Update the listening history as the audio is playing
     timeupdate: () => {
-      if (isPlaying) {
-        if (hasCurrentTimeChanged()) {
-          setCurrentTime();
-        }
+      if (hasCurrentTimeChanged()) {
+        setCurrentTime();
       }
     }
   });
