@@ -4,7 +4,7 @@ import { AppContext } from '../app/AppContext';
 import { WidgetState, WidgetType } from '../types.d';
 import AddWidgetButton from './AddWidgetButton';
 
-type Props = { widgetType: WidgetType, onAddWidget: Function };
+type Props = { widgetType: WidgetType, onAddWidget: () => void };
 
 function AddWidgetEntry({ widgetType, onAddWidget }: Props) {
 
@@ -32,7 +32,7 @@ function AddWidgetEntry({ widgetType, onAddWidget }: Props) {
           {widgetType.name}
           <img src={`icons/${widgetType.icon}.svg`} alt="" className="add-widget-entry-icon" />
         </h2>
-        <AddWidgetButton onPressButton={() => addWidget()} />
+        <AddWidgetButton onPressButton={addWidget} />
       </header>
       <p className="add-widget-entry-description">{widgetType.description}</p>
     </div>
