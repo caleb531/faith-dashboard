@@ -15,7 +15,7 @@ function useElementEvents(element: HTMLElement, eventMap: { [key: string]: (even
         element.removeEventListener(eventType, eventMap[eventType]);
       });
     };
-  });
+  }, [element]);
 
 }
 

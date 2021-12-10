@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import useElementEvents from '../../useElementEvents';
 
 // The useAudioTime() hook exposes a setter that allows you to synchronize the
@@ -6,15 +6,29 @@ import useElementEvents from '../../useElementEvents';
 // desire
 function useAudioTime(audioElement: HTMLAudioElement, audioUrl: string, currentTime: number, setCurrentTime: (newCurrentTime: number) => void): void {
 
+  // Store the latest value from currentTime in a ref so that
+  // hasCurrentTimeChanged() always has access to the latest value of
+  // currentTime; this is important because, for performance, we only bind the
+  // timeupdate() listener once for the lifetime of the Audio
+  // element (rather than being constantly bound and un-bound for every second
+  // of playback when the component re-rendered, as was the case previously)
+  const currentTimeRef = useRef(currentTime);
+  currentTimeRef.current = currentTime;
+
   // Return true if audio element's current time (in seconds) differs from
   // what's on the state (also in seconds)
   function hasCurrentTimeChanged(): boolean {
-    return Math.floor(audioElement.currentTime) !== Math.floor(currentTime);
+    return Math.floor(audioElement.currentTime) !== Math.floor(currentTimeRef.current);
   }
 
   useElementEvents(audioElement, {
     // Update the listening history as the audio is playing
     timeupdate: () => {
+      // The timeupdate() event appears to run several times every second, at
+      // least in Chromium-based browsers; however, since we are only
+      // displaying the times in second-precision in the UI, we can reduce
+      // excessive rendering by checking if the Audio element's current time is
+      // at least one second difference from the state's current time
       if (hasCurrentTimeChanged()) {
         setCurrentTime(audioElement.currentTime);
       }
