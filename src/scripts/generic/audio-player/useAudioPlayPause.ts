@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 function useAudioPlayPause(audioElement: HTMLAudioElement, isPlaying: boolean, setIsPlaying: (isPlaying: boolean) => void): void {
 
   // Synchronize the play/pause state of the audio with the widget state
-  useEffect(function () {
+  useEffect(() => {
     if (isPlaying) {
       audioElement.play().catch((error) => {
         console.log(error);
