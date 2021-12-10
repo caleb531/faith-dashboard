@@ -115,9 +115,7 @@ function PodcastWidget({ widget, provided }: WidgetParameters) {
     listeningMetadata
   } = state as PodcastWidgetState;
   const nowPlayingMetadata = nowPlaying ? listeningMetadata[nowPlaying.guid] : null;
-  const [podcastList, setPodcastList] = useCachedState<PodcastInfo[]>(`podcast-list-for-widget-${widget.id}`, () => {
-    return [];
-  });
+  const [podcastList, setPodcastList] = useCachedState<PodcastInfo[]>(`podcast-list-for-widget-${widget.id}`, () => []);
 
   const audioElement = useCachedAudio(state.id);
 
