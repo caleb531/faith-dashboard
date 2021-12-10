@@ -13,7 +13,9 @@ function useAudioTime(audioElement: HTMLAudioElement, audioUrl: string, currentT
   // element (rather than being constantly bound and un-bound for every second
   // of playback when the component re-rendered, as was the case previously)
   const currentTimeRef = useRef(currentTime);
-  currentTimeRef.current = currentTime;
+  useEffect(() => {
+    currentTimeRef.current = currentTime;
+  }, [currentTime]);
 
   // Return true if audio element's current time (in seconds) differs from
   // what's on the state (also in seconds)
