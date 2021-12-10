@@ -1,4 +1,3 @@
-import { ListenerCallback } from 'workbox-window/utils/WorkboxEventTarget';
 import { WidgetState } from '../../types.d';
 
 export interface PodcastWidgetState extends WidgetState {
