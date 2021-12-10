@@ -3,7 +3,9 @@ import { StateAction, WidgetState } from '../../types.d';
 import { PodcastFeedData, PodcastEpisode, PodcastListeningMetadataEntry } from './Podcast.d';
 import PodcastAudioPlayer from './PodcastAudioPlayer';
 
-function PodcastNowPlaying({ widget, podcastFeedData, podcastImage, nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: { widget: WidgetState, podcastFeedData: PodcastFeedData, podcastImage: string, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Dispatch<StateAction> }) {
+type Props = { widget: WidgetState, podcastFeedData: PodcastFeedData, podcastImage: string, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Dispatch<StateAction> };
+
+function PodcastNowPlaying({ widget, podcastFeedData, podcastImage, nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: Props) {
 
   function returnToEpisodeList() {
     dispatch({ type: 'setViewingNowPlaying', payload: false });

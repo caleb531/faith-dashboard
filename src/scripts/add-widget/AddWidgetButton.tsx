@@ -1,6 +1,8 @@
 import React from 'react';
 
-function AddWidget({ onPressButton }: { onPressButton: Function }) {
+type Props = { onPressButton: Function };
+
+function AddWidget({ onPressButton }: Props) {
 
   return (
     <button type="button" className="add-widget-button" aria-label="Add Widget" onClick={() => onPressButton()}>

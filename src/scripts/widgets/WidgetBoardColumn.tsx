@@ -4,7 +4,9 @@ import { WidgetState } from '../types.d';
 import Widget from './WidgetShell';
 import widgetTypeMap from './widgetTypeMap';
 
-function WidgetBoardColumn({ widgets, widgetIdsToIndices, columnIndex }: { widgets: WidgetState[], widgetIdsToIndices: {[key: string]: number}, columnIndex: number }) {
+type Props = { widgets: WidgetState[], widgetIdsToIndices: {[key: string]: number}, columnIndex: number };
+
+function WidgetBoardColumn({ widgets, widgetIdsToIndices, columnIndex }: Props) {
 
   return (
     <Droppable droppableId={`column-${columnIndex + 1}`}>

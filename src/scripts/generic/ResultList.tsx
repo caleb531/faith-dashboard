@@ -3,7 +3,9 @@ import { Result } from '../types.d';
 
 // A generic result list to be used within any widget and which can contain any
 // list of data (search results or otherwise)
-function ResultList({ results, onChooseResult }: { results: Result[], onChooseResult: (result: Result) => void }) {
+type Props = { results: Result[], onChooseResult: (result: Result) => void };
+
+function ResultList({ results, onChooseResult }: Props) {
 
   // Use event delegation to determine which result was clicked
   function clickResult(event: React.MouseEvent): void {

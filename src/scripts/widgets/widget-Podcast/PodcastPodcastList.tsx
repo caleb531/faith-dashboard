@@ -4,7 +4,9 @@ import { StateAction, WidgetState, Result } from '../../types.d';
 import ResultList from '../../generic/ResultList';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 
-function PodcastPodcastList({ widget, podcastList, dispatch }: { widget: WidgetState, podcastList: PodcastInfo[], dispatch: Dispatch<StateAction> }) {
+type Props = { widget: WidgetState, podcastList: PodcastInfo[], dispatch: Dispatch<StateAction> };
+
+function PodcastPodcastList({ widget, podcastList, dispatch }: Props) {
 
   const { podcastFeedUrl, podcastFeedData } = widget as PodcastWidgetState;
 

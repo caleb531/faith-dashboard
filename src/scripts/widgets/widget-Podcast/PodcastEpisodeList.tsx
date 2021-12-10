@@ -4,7 +4,9 @@ import { PodcastFeedData, PodcastEpisode } from './Podcast.d';
 import { StateAction, Result } from '../../types.d';
 import ResultList from '../../generic/ResultList';
 
-function PodcastEpisodeList({ podcastFeedData, nowPlaying, dispatch }: { podcastFeedData: PodcastFeedData, nowPlaying: PodcastEpisode, dispatch: Dispatch<StateAction> }) {
+type Props = { podcastFeedData: PodcastFeedData, nowPlaying: PodcastEpisode, dispatch: Dispatch<StateAction> };
+
+function PodcastEpisodeList({ podcastFeedData, nowPlaying, dispatch }: Props) {
 
   // Use event delegation to determine which episode entry was clicked
   function chooseEpisode(result: Result) {

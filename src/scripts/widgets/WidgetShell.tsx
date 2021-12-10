@@ -4,7 +4,9 @@ import { AppContext } from '../app/AppContext';
 import { WidgetState, StateAction } from '../types';
 import LoadingIndicator from '../generic/LoadingIndicator';
 
-function WidgetShell({ widget, dispatch, provided, children }: { widget: WidgetState, dispatch: Dispatch<StateAction>, provided: DraggableProvided, children: JSX.Element | JSX.Element[] }) {
+type Props = { widget: WidgetState, dispatch: Dispatch<StateAction>, provided: DraggableProvided, children: JSX.Element | JSX.Element[] };
+
+function WidgetShell({ widget, dispatch, provided, children }: Props) {
 
   const { dispatchToApp } = useContext(AppContext);
 

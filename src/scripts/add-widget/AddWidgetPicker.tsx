@@ -4,7 +4,9 @@ import AddWidgetEntry from './AddWidgetEntry';
 import widgetTypes from '../widgets/widgetTypes';
 import { WidgetType } from '../types.d';
 
-function AddWidgetPicker({ onCloseWidgetPicker }: { onCloseWidgetPicker: Function }) {
+type Props = { onCloseWidgetPicker: Function };
+
+function AddWidgetPicker({ onCloseWidgetPicker }: Props) {
 
   return (
     <Modal onCloseModal={onCloseWidgetPicker}>
