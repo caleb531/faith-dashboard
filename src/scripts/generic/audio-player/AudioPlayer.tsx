@@ -24,7 +24,7 @@ function AudioPlayer({ audioElementKey, audioUrl, currentTime, setCurrentTime, i
 
   useAudioLoader(audioElement);
   useAudioPlayPause(audioElement, isPlaying, setIsPlaying);
-  useAudioTime(audioElement, audioUrl, isPlaying, currentTime, setCurrentTime);
+  useAudioTime(audioElement, audioUrl, currentTime, setCurrentTime);
   const { seekerProvided } = useAudioSeeker(audioElement, currentTime, setCurrentTime);
   const seekerFieldId = useUniqueFieldId('audio-player-seeker-slider');
 
