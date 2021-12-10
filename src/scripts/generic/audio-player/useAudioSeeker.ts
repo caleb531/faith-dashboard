@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 // The useAudioSeeker() hook provides attributes that you can attach to an a
 // range input (representing your seeker) for the purpose of synchronizing that
 // seeker element with your the given current time
-function useAudioSeeker(audioElement: HTMLAudioElement, currentTime: number, setCurrentTime: () => void): { seekerProvided: {
+function useAudioSeeker(audioElement: HTMLAudioElement, currentTime: number, setCurrentTime: (newCurrentTime: number) => void): { seekerProvided: {
   ref: (input: HTMLInputElement) => void,
   onInput: (event: React.FormEvent) => void,
   onChange: (event: React.FormEvent) => void,
@@ -51,7 +51,7 @@ function useAudioSeeker(audioElement: HTMLAudioElement, currentTime: number, set
       ref: setInitialSeekerPosition,
       onInput: updateSeekerFillFromEvent,
       onChange: seekAudio,
-      onMouseUp: setCurrentTime
+      onMouseUp: () => setCurrentTime(audioElement.currentTime)
     }
   };
 

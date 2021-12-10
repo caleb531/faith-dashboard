@@ -1,12 +1,12 @@
 @use 'sass:math';
 
-.podcast-audio-player {
+.audio-player {
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 
-.podcast-audio-player-playpause {
+.audio-player-playpause {
   padding: 6px;
   margin-right: 10px;
   border-width: 0;
@@ -19,19 +19,19 @@
   }
 }
 
-.podcast-audio-player-playpause-icon {
+.audio-player-playpause-icon {
   $icon-size: 24px;
   width: $icon-size;
   height: $icon-size;
 }
 
-.podcast-audio-player-seeker-container {
+.audio-player-seeker-container {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
 
-.podcast-audio-player-time-info {
+.audio-player-time-info {
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
@@ -40,7 +40,7 @@
   font-family: $font-family-sans-serif;
 }
 
-input[type=range].podcast-audio-player-seeker-slider {
+input[type=range].audio-player-seeker-slider {
   $slider-track-height: 4px;
   $slider-thumb-size: $slider-track-height;
   width: 100%;

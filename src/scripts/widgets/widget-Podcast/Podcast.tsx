@@ -6,7 +6,7 @@ import useWidgetShell from '../useWidgetShell';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useWidgetCleanupOnRemove from '../useWidgetCleanupOnRemove';
 import useCachedState from '../../useCachedState';
-import useCachedAudio from './useCachedAudio';
+import useCachedAudio from '../../generic/audio-player/useCachedAudio';
 import useUniqueFieldId from '../../useUniqueFieldId';
 import PodcastPodcastList from './PodcastPodcastList';
 import PodcastNowPlaying from './PodcastNowPlaying';
