@@ -1,6 +1,6 @@
 import HtmlReactParser from 'html-react-parser';
 import React from 'react';
-import { StateAction, WidgetContentsParameters } from '../../types.d';
+import { StateAction, WidgetParameters } from '../../types.d';
 import useUniqueFieldId from '../../useUniqueFieldId';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useWidgetShell from '../useWidgetShell';
@@ -20,7 +20,7 @@ export function reducer(state: BibleVerseWidgetState, action: StateAction): Bibl
   }
 }
 
-function BibleVerseWidget({ widget, provided }: WidgetContentsParameters) {
+function BibleVerseWidget({ widget, provided }: WidgetParameters) {
 
   // If the user refreshes the page while a verse is loading, it will still be
   // persisted to localStorage by the time we load the page again, so we must

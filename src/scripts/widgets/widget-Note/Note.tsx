@@ -1,6 +1,6 @@
 import { debounce } from 'lodash-es';
 import React, { useCallback } from 'react';
-import { StateAction, WidgetContentsParameters } from '../../types.d';
+import { StateAction, WidgetParameters } from '../../types.d';
 import useWidgetShell from '../useWidgetShell';
 import WidgetShell from '../WidgetShell';
 import { NoteWidgetState } from './Note.d';
@@ -18,7 +18,7 @@ export function reducer(state: NoteWidgetState, action: StateAction): NoteWidget
   }
 }
 
-function NoteWidget({ widget, provided }: WidgetContentsParameters) {
+function NoteWidget({ widget, provided }: WidgetParameters) {
 
   const [state, dispatch] = useWidgetShell(reducer, widget);
   const { fontSize, text } = state as NoteWidgetState;

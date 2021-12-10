@@ -86,9 +86,9 @@ export interface WidgetState {
   isMarkedForRemoval?: boolean;
 }
 
-// The function parameters to a WidgetContents component, useful when creating
-// a new widget type
-export interface WidgetContentsParameters {
+// The function parameters to a widget component, useful when creating a new
+// widget type
+export interface WidgetParameters {
   // Every widget implementation receives the widget object as a parameter, so
   // that the author can implement a settings view for their widget type, etc.
   widget: WidgetState;

@@ -1,6 +1,6 @@
 import React from 'react';
 import useCachedAudio from '../../generic/audio-player/useCachedAudio';
-import { StateAction, WidgetContentsParameters } from '../../types.d';
+import { StateAction, WidgetParameters } from '../../types.d';
 import useCachedState from '../../useCachedState';
 import useUniqueFieldId from '../../useUniqueFieldId';
 import useWidgetCleanupOnRemove from '../useWidgetCleanupOnRemove';
@@ -101,7 +101,7 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
   }
 }
 
-function PodcastWidget({ widget, provided }: WidgetContentsParameters) {
+function PodcastWidget({ widget, provided }: WidgetParameters) {
 
   const [state, dispatch] = useWidgetShell(reducer, widget);
   const {
