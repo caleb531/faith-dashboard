@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import React from 'react';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { WidgetState } from '../types.d';
-import Widget from './WidgetShell';
 import widgetTypeMap from './widgetTypeMap';
 
 type Props = { widgets: WidgetState[], widgetIdsToIndices: {[key: string]: number}, columnIndex: number };

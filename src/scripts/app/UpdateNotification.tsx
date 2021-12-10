@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Workbox, messageSW } from 'workbox-window';
-import { StateAction } from '../types.d';
+import React, { useEffect, useState } from 'react';
+import { messageSW, Workbox } from 'workbox-window';
 
 function UpdateNotification() {
 

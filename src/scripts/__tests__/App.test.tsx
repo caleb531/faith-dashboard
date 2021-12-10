@@ -1,9 +1,8 @@
-import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { render } from '@testing-library/react';
-import { AppState, WidgetState } from '../types.d';
 import '@testing-library/jest-dom';
+import { render } from '@testing-library/react';
+import React from 'react';
 import App, { reducer } from '../app/App';
+import { AppState, WidgetState } from '../types.d';
 import { createWidget } from './__utils__/test-utils';
 
 describe('App Component', function () {

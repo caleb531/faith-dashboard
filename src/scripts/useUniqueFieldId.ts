@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { uniqueId } from 'lodash';
+import { useState } from 'react';
 
 // The useUniqueFieldId() generates an ID for an HTML <input> in a way that
 // allows it to be reused for a companion <label> element; this ID is

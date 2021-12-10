@@ -1,5 +1,5 @@
 import { Dispatch, useReducer } from 'react';
-import { WidgetState, StateAction } from '../types';
+import { StateAction, WidgetState } from '../types';
 import useWidgetUpdater from './useWidgetUpdater';
 
 // The useWidgetShell() hook which must be called in any component which

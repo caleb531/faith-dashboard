@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
-import { StateAction, WidgetState } from '../../types.d';
-import { PodcastFeedData, PodcastEpisode, PodcastListeningMetadataEntry } from './Podcast.d';
 import AudioPlayer from '../../generic/audio-player/AudioPlayer';
+import { StateAction, WidgetState } from '../../types.d';
+import { PodcastEpisode, PodcastFeedData, PodcastListeningMetadataEntry } from './Podcast.d';
 
 type Props = { widget: WidgetState, podcastFeedData: PodcastFeedData, podcastImage: string, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Dispatch<StateAction> };
 

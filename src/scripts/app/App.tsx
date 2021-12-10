@@ -1,14 +1,14 @@
-import React, { useReducer, useEffect } from 'react';
 import { sortBy } from 'lodash-es';
-import { AppContext } from './AppContext';
-import { AppState, StateAction, AppTheme, WidgetState, WidgetMoveParameters } from '../types.d';
+import React, { useEffect, useReducer } from 'react';
 import LoadingIndicator from '../generic/LoadingIndicator';
-import UpdateNotification from './UpdateNotification';
-import AppHeader from './AppHeader';
+import { AppState, AppTheme, StateAction, WidgetMoveParameters, WidgetState } from '../types.d';
+import { AppContext } from './AppContext';
 import AppFooter from './AppFooter';
+import AppHeader from './AppHeader';
+import defaultApp from './appStateDefault';
+import UpdateNotification from './UpdateNotification';
 import useLocalStorage from './useLocalStorage';
 import useThemeForEntirePage from './useThemeForEntirePage';
-import defaultApp from './appStateDefault';
 
 // Lazy-load the widget board since react-beautiful-dnd is a large dependency
 const WidgetBoard = React.lazy(() => import('../widgets/WidgetBoard'));

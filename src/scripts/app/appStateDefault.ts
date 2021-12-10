@@ -1,4 +1,3 @@
-import { AppTheme, WidgetTypeId } from '../types.d';
 
 export default {
   theme: 'teal',

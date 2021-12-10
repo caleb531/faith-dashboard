@@ -1,13 +1,13 @@
-import React from 'react';
 import moment from 'moment';
 import 'moment-duration-format';
+import React from 'react';
 import LoadingIndicator from '../../generic/LoadingIndicator';
-import useCachedAudio from './useCachedAudio';
+import useUniqueFieldId from '../../useUniqueFieldId';
 import useAudioLoader from './useAudioLoader';
-import useAudioTime from './useAudioTime';
 import useAudioPlayPause from './useAudioPlayPause';
 import useAudioSeeker from './useAudioSeeker';
-import useUniqueFieldId from '../../useUniqueFieldId';
+import useAudioTime from './useAudioTime';
+import useCachedAudio from './useCachedAudio';
 
 type Props = { audioElementKey: string, audioUrl: string, currentTime: number, setCurrentTime: (newCurrentTime: number) => void, isPlaying: boolean, setIsPlaying: (newIsPlaying: boolean) => void };
 

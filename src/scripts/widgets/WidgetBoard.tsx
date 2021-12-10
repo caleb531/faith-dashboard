@@ -1,6 +1,6 @@
+import { fromPairs, times } from 'lodash-es';
 import React, { useContext } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { fromPairs, times } from 'lodash-es';
 import { AppContext } from '../app/AppContext';
 import WidgetBoardColumn from './WidgetBoardColumn';
 

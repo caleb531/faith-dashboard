@@ -1,8 +1,8 @@
 import React from 'react';
 import Modal from '../generic/Modal';
-import AddWidgetEntry from './AddWidgetEntry';
-import widgetTypes from '../widgets/widgetTypes';
 import { WidgetType } from '../types.d';
+import widgetTypes from '../widgets/widgetTypes';
+import AddWidgetEntry from './AddWidgetEntry';
 
 type Props = { onCloseWidgetPicker: Function };
 

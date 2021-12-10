@@ -1,4 +1,3 @@
-import { WidgetTypeId } from '../types.d';
 
 export default [
   {

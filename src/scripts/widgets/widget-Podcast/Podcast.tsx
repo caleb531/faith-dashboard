@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { StateAction, WidgetContentsParameters } from '../../types.d';
-import { PodcastWidgetState, PodcastFeedData, PodcastListeningMetadataEntry, PodcastSearchResponse, PodcastInfo } from './Podcast.d';
-import WidgetShell from '../WidgetShell';
-import useWidgetShell from '../useWidgetShell';
-import useWidgetDataFetcher from '../useWidgetDataFetcher';
-import useWidgetCleanupOnRemove from '../useWidgetCleanupOnRemove';
-import useCachedState from '../../useCachedState';
+import React from 'react';
 import useCachedAudio from '../../generic/audio-player/useCachedAudio';
+import { StateAction, WidgetContentsParameters } from '../../types.d';
+import useCachedState from '../../useCachedState';
 import useUniqueFieldId from '../../useUniqueFieldId';
-import PodcastPodcastList from './PodcastPodcastList';
-import PodcastNowPlaying from './PodcastNowPlaying';
+import useWidgetCleanupOnRemove from '../useWidgetCleanupOnRemove';
+import useWidgetDataFetcher from '../useWidgetDataFetcher';
+import useWidgetShell from '../useWidgetShell';
+import WidgetShell from '../WidgetShell';
+import { PodcastFeedData, PodcastInfo, PodcastListeningMetadataEntry, PodcastSearchResponse, PodcastWidgetState } from './Podcast.d';
 import PodcastEpisodeList from './PodcastEpisodeList';
+import PodcastNowPlaying from './PodcastNowPlaying';
+import PodcastPodcastList from './PodcastPodcastList';
 
 export function reducer(state: PodcastWidgetState, action: StateAction): PodcastWidgetState {
   switch (action.type) {

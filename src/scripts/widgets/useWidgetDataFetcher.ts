@@ -1,6 +1,6 @@
-import React, { Dispatch, useContext, useRef, useEffect } from 'react';
 import moment from 'moment';
-import { WidgetState, StateAction } from '../types';
+import React, { Dispatch, useEffect, useRef } from 'react';
+import { StateAction, WidgetState } from '../types';
 import { JSONSerializable } from '../types.d';
 
 // The useWidgetDataFetcher() hook is a powerful hook that allows you to fetch
