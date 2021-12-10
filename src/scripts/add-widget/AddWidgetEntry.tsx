@@ -11,7 +11,6 @@ function AddWidgetEntry({ widgetType, onAddWidget }: Props) {
   const { dispatchToApp } = useContext(AppContext);
 
   function addWidget() {
-    // TODO: add the widget by dispatching to the App
     dispatchToApp({
       type: 'addWidget',
       payload: {
