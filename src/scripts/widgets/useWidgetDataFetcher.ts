@@ -133,6 +133,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
     // loops, and have made the code more fragile/tricky; for more information,
     // see:
     // <https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects>
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
 
   return {

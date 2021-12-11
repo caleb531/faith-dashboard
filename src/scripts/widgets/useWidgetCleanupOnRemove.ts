@@ -15,6 +15,6 @@ export default function useWidgetCleanupOnRemove(widgetToRemove: WidgetState, on
     if (widgetToRemove.isMarkedForRemoval) {
       onRemove();
     }
-  }, [widgetToRemove.isMarkedForRemoval]);
+  }, [onRemove, widgetToRemove.isMarkedForRemoval]);
 
 }

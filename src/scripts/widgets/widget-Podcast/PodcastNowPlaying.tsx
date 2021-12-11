@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useCallback } from 'react';
 import AudioPlayer from '../../generic/audio-player/AudioPlayer';
 import { StateAction, WidgetState } from '../../types.d';
 import { PodcastEpisode, PodcastFeedData, PodcastListeningMetadataEntry } from './Podcast.d';
@@ -10,18 +10,18 @@ function PodcastNowPlaying({ widget, podcastFeedData, podcastImage, nowPlaying, 
   const audioUrl = nowPlaying.enclosure['@attributes'].url;
   const currentTime = nowPlayingMetadata ? nowPlayingMetadata.currentTime : 0;
 
-  function setCurrentTime(newCurrentTime: number): void {
+  const setCurrentTime = useCallback((newCurrentTime: number) => {
     dispatch({
       type: 'updateNowPlayingMetadata',
       payload: { currentTime: newCurrentTime }
     });
-  }
+  }, [dispatch]);
 
   // Control the play/pause state of the podcast widget when the appropriate
   // player controls are clicked
-  function setIsPlaying(newIsPlaying: boolean): void {
+  const setIsPlaying = useCallback((newIsPlaying: boolean) => {
     dispatch({ type: 'setIsPlaying', payload: newIsPlaying });
-  }
+  }, [dispatch]);
 
   function returnToEpisodeList() {
     dispatch({ type: 'setViewingNowPlaying', payload: false });

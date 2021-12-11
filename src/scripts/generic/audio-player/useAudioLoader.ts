@@ -11,10 +11,11 @@ function useAudioLoader(audioElement: HTMLAudioElement): [boolean, boolean] {
 
   useEventListener(audioElement, 'loadeddata', () => {
     setIsFullAudioLoaded(true);
-  });
+  }, [setIsFullAudioLoaded]);
+
   useEventListener(audioElement, 'loadeddata', () => {
     setIsAudioMetadataLoaded(true);
-  });
+  }, [setIsAudioMetadataLoaded]);
 
   return [isAudioMetadataLoaded, isFullAudioLoaded];
 

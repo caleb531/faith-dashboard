@@ -33,6 +33,7 @@ function NoteWidget({ widget, provided }: WidgetParameters) {
   // Cache the debounced function so that its internal debounce timer
   // transcends across render passes (otherwise, the debounce timer would
   // effectively be reset on every render)
+  /* eslint-disable-next-line react-hooks/exhaustive-deps */
   const queueChangeWhenTypingStops = useCallback(debounce((text) => {
     dispatch({ type: 'updateText', payload: text });
   }, saveDelay), []);

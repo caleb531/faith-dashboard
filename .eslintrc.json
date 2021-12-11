@@ -34,6 +34,11 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended"
   ],
+  "settings": {
+    "react": {
+      "version": "17.0"
+    }
+  },
   "rules": {
     "no-cond-assign": ["error", "always"],
     "no-debugger": ["error"],
@@ -146,7 +151,6 @@
     "no-var": ["error"],
     "prefer-const": ["error"],
     "constructor-super": ["error"],
-    "no-this-before-super": ["error"],
-    "react-hooks/exhaustive-deps": ["off"]
+    "no-this-before-super": ["error"]
   }
 }

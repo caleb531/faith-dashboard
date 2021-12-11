@@ -27,7 +27,7 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
     if (widget.isMarkedForRemoval) {
         dispatchToApp({ type: 'removeWidget', payload: widget });
     }
-  }, [widget.isMarkedForRemoval]);
+  }, [widget, widget.isMarkedForRemoval, dispatchToApp]);
 
   function handleResize(event: React.MouseEvent) {
     const newHeight = parseFloat((event.currentTarget as HTMLElement).style.height);

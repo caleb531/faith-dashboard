@@ -17,12 +17,6 @@ function useAudioTime(audioElement: HTMLAudioElement, audioUrl: string, currentT
     currentTimeRef.current = currentTime;
   }, [currentTime]);
 
-  // Return true if audio element's current time (in seconds) differs from
-  // what's on the state (also in seconds)
-  function hasCurrentTimeChanged(): boolean {
-    return Math.floor(audioElement.currentTime) !== Math.floor(currentTimeRef.current);
-  }
-
   // Update the listening history as the audio is playing
   useEventListener(audioElement, 'timeupdate', () => {
     // The timeupdate() event appears to run several times every second, at
@@ -30,10 +24,10 @@ function useAudioTime(audioElement: HTMLAudioElement, audioUrl: string, currentT
     // the times in second-precision in the UI, we can reduce excessive
     // rendering by checking if the Audio element's current time is at least
     // one second difference from the state's current time
-    if (hasCurrentTimeChanged()) {
+    if (Math.floor(audioElement.currentTime) !== Math.floor(currentTimeRef.current)) {
       setCurrentTime(audioElement.currentTime);
     }
-  });
+  }, [audioElement, currentTimeRef, setCurrentTime]);
 
   // Synchronize the audio stream with widget state changes, such that if the
   // audio source URL changes higher up, then the audio will reset here
@@ -46,7 +40,7 @@ function useAudioTime(audioElement: HTMLAudioElement, audioUrl: string, currentT
     }
     audioElement.src = audioUrl;
     audioElement.currentTime = currentTime;
-  }, [audioUrl, audioElement]);
+  }, [audioUrl, audioElement, currentTime]);
 
 }
 

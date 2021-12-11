@@ -18,6 +18,6 @@ export default function useWidgetUpdater(widget: WidgetState): void {
         column: widget.column || 1
       }
     });
-  }, [widget]);
+  }, [widget, dispatchToApp]);
 
 }

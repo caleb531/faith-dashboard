@@ -43,6 +43,7 @@ function UpdateNotification() {
   }
 
   // Initialize service worker when component is first loaded
+  /* eslint-disable-next-line react-hooks/exhaustive-deps */
   useEffect(() => initialize(), []);
 
   return (

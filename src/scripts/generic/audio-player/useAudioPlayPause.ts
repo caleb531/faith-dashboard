@@ -20,7 +20,7 @@ function useAudioPlayPause(audioElement: HTMLAudioElement, isPlaying: boolean, s
     } else {
       audioElement.pause();
     }
-  }, [isPlaying, audioElement]);
+  }, [isPlaying, audioElement, setIsPlaying]);
 
 }
 
