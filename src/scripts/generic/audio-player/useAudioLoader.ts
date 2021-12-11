@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useElementEvents from '../../useElementEvents';
+import useEventListener from '../../useEventListener';
 
 // The useAudioLoader() hook returns variables that indicate when an audio
 // track (represented by the given Audio element) has loaded at different
@@ -9,9 +9,11 @@ function useAudioLoader(audioElement: HTMLAudioElement): [boolean, boolean] {
   const [isAudioMetadataLoaded, setIsAudioMetadataLoaded] = useState(false);
   const [isFullAudioLoaded, setIsFullAudioLoaded] = useState(false);
 
-  useElementEvents(audioElement, {
-    loadeddata: () => setIsFullAudioLoaded(true),
-    loadedmetadata: () => setIsAudioMetadataLoaded(true)
+  useEventListener(audioElement, 'loadeddata', () => {
+    setIsFullAudioLoaded(true);
+  });
+  useEventListener(audioElement, 'loadeddata', () => {
+    setIsAudioMetadataLoaded(true);
   });
 
   return [isAudioMetadataLoaded, isFullAudioLoaded];
