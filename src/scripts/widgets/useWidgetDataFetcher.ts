@@ -61,12 +61,12 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
   // The submit handler; you should attach this to the <form> element in your
   // widget settings so that the request query can be set on the widget state
   // when the form is submitted
-  submitRequestQuery: Function,
+  submitRequestQuery: (event: React.FormEvent) => void,
   // This hook will also expose the low-level fetchWidgetData() function,
   // allowing you to fetch widget data manually (perhaps based on some action
   // other than the user submitting a form, therefore making
   // submitRequestQuery() a non-ideal solution)
-  fetchWidgetData: Function
+  fetchWidgetData: (newRequestQuery: string) => Promise<void>
 } {
 
   const isLoading = false;

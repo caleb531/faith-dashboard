@@ -34,9 +34,10 @@ function PodcastPodcastList({ widget, podcastList, dispatch }: Props) {
   });
 
   function choosePodcast(result: Result) {
-    dispatch({ type: 'setPodcastFeedUrl', payload: result.data.feedUrl });
-    dispatch({ type: 'setPodcastImage', payload: result.data.image });
-    fetchWidgetData(result.data.feedUrl);
+    const data = result.data as { feedUrl: string, image: string };
+    dispatch({ type: 'setPodcastFeedUrl', payload: data.feedUrl });
+    dispatch({ type: 'setPodcastImage', payload: data.image });
+    fetchWidgetData(data.feedUrl);
   }
 
   // Convert the current podcast search results list to a proper ResultList
