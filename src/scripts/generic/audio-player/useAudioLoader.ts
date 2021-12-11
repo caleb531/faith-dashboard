@@ -13,7 +13,7 @@ function useAudioLoader(audioElement: HTMLAudioElement): [boolean, boolean] {
     setIsFullAudioLoaded(true);
   }, [setIsFullAudioLoaded]);
 
-  useEventListener(audioElement, 'loadeddata', () => {
+  useEventListener(audioElement, 'loadedmetadata', () => {
     setIsAudioMetadataLoaded(true);
   }, [setIsAudioMetadataLoaded]);
 
