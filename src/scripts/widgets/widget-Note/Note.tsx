@@ -1,5 +1,5 @@
 import { debounce } from 'lodash-es';
-import React, { useCallback } from 'react';
+import React, { useMemo } from 'react';
 import { StateAction, WidgetParameters } from '../../types.d';
 import useWidgetShell from '../useWidgetShell';
 import WidgetShell from '../WidgetShell';
@@ -32,11 +32,16 @@ function NoteWidget({ widget, provided }: WidgetParameters) {
 
   // Cache the debounced function so that its internal debounce timer
   // transcends across render passes (otherwise, the debounce timer would
-  // effectively be reset on every render)
-  /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  const queueChangeWhenTypingStops = useCallback(debounce((text) => {
-    dispatch({ type: 'updateText', payload: text });
-  }, saveDelay), []);
+  // effectively be reset on every render); useMemo will also provide us access
+  // to the original (cancelable) return value of debounce(); for more
+  // information, see:
+  // <https://github.com/facebook/react/issues/19240#issuecomment-652945246>
+  // <https://github.com/facebook/react/issues/19240#issuecomment-867885511>
+  const queueChangeWhenTypingStops = useMemo(() => {
+    return debounce((text) => {
+      dispatch({ type: 'updateText', payload: text });
+    }, saveDelay);
+  }, [dispatch]);
 
   // Register a change of the user's preferred font size for this note
   function changeFontSize(event: React.FormEvent): void {
