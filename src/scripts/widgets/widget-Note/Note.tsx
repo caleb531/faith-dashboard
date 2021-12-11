@@ -53,6 +53,28 @@ function NoteWidget({ widget, provided }: WidgetParameters) {
     queueChangeWhenTypingStops((event.target as HTMLTextAreaElement).value);
   }
 
+  // Return a truncated excerpt of the entered text for display as the Font
+  // Size preview text
+  function getTextPreview(text: string): string {
+    if (!text) {
+      return 'Example Text';
+    }
+    const words = text.trim().split(' ');
+    const originalWordCount = words.length;
+    const currentFontSize = fontSize || defaultFontSize;
+    // Use a linear equation of the form (ax + b) to represent the number of
+    // words we want to show given a particular font size; the below constants
+    // can be adjusted to change
+    const a = (-4 / 19); // When font size is 12, word count should be 10
+    const b = (238 / 19); // When font size is 50, word count should be 2
+    const maxExcerptWordCount = (a * currentFontSize) + b;
+    return (
+      words.slice(0, maxExcerptWordCount).join(' ')
+      +
+      ((originalWordCount > maxExcerptWordCount) ? '...' : '')
+    );
+  }
+
   return (
     <WidgetShell widget={state} dispatch={dispatch} provided={provided}>
       <section className="note">
@@ -71,7 +93,7 @@ function NoteWidget({ widget, provided }: WidgetParameters) {
                 min="12"
                 max="50"
                 value={fontSize || defaultFontSize} />
-              <div className="note-formatting-preview" style={textStyles}>Example Text</div>
+              <div className="note-formatting-preview" style={textStyles}>{getTextPreview(text)}</div>
             </form>
           </>
         ) : (
