@@ -59,6 +59,7 @@ function AudioPlayer({ audioElementKey, audioUrl, currentTime, setCurrentTime, i
           min="0"
           max={audioElement.duration || 0}
           step="1"
+          disabled={!audioElement.duration}
           {...seekerProvided} />
         <div className="audio-player-time-info">
           <span className="audio-player-current-time">
