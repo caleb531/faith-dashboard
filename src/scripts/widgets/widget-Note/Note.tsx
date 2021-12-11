@@ -45,12 +45,14 @@ function NoteWidget({ widget, provided }: WidgetParameters) {
 
   // Register a change of the user's preferred font size for this note
   function changeFontSize(event: React.FormEvent): void {
-    dispatch({ type: 'updateFontSize', payload: Number((event.target as HTMLInputElement).value) });
+    const input = (event.target as HTMLInputElement);
+    dispatch({ type: 'updateFontSize', payload: Number(input.value) });
   }
 
   // Register a change of the user-entered text for this note
   function changeText(event: React.FormEvent): void {
-    queueChangeWhenTypingStops((event.target as HTMLTextAreaElement).value);
+    const textarea = (event.target as HTMLTextAreaElement);
+    queueChangeWhenTypingStops(textarea.value);
   }
 
   // Return a truncated excerpt of the entered text for display as the Font
