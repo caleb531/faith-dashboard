@@ -43,7 +43,6 @@
     "accessor-pairs": ["error"],
     "array-callback-return": ["error"],
     "block-scoped-var": ["error"],
-    "block-spacing": ["warn", "never"],
     "brace-style": ["warn", "1tbs", { "allowSingleLine": false }],
     "comma-dangle": ["error", "never"],
     "comma-spacing": ["warn"],
