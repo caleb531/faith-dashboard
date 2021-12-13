@@ -20,7 +20,7 @@ export function reducer(state: BibleVerseWidgetState, action: StateAction): Bibl
   }
 }
 
-function BibleVerseWidget({ widget, provided }: WidgetParameters) {
+const BibleVerseWidget = React.memo(function BibleVerseWidget({ widget, provided }: WidgetParameters) {
 
   // If the user refreshes the page while a verse is loading, it will still be
   // persisted to localStorage by the time we load the page again, so we must
@@ -87,6 +87,6 @@ function BibleVerseWidget({ widget, provided }: WidgetParameters) {
     </WidgetShell>
   );
 
-}
+});
 
 export default BibleVerseWidget;

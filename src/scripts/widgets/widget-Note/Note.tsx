@@ -18,7 +18,7 @@ export function reducer(state: NoteWidgetState, action: StateAction): NoteWidget
   }
 }
 
-function NoteWidget({ widget, provided }: WidgetParameters) {
+const NoteWidget = React.memo(function NoteWidget({ widget, provided }: WidgetParameters) {
 
   const [state, dispatch] = useWidgetShell(reducer, widget);
   const { fontSize, text } = state as NoteWidgetState;
@@ -110,6 +110,6 @@ function NoteWidget({ widget, provided }: WidgetParameters) {
     </WidgetShell>
   );
 
-}
+});
 
 export default NoteWidget;

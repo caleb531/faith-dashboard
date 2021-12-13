@@ -101,7 +101,7 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
   }
 }
 
-function PodcastWidget({ widget, provided }: WidgetParameters) {
+const PodcastWidget = React.memo(function PodcastWidget({ widget, provided }: WidgetParameters) {
 
   const [state, dispatch] = useWidgetShell(reducer, widget);
   const {
@@ -203,6 +203,6 @@ function PodcastWidget({ widget, provided }: WidgetParameters) {
     </WidgetShell>
   );
 
-}
+});
 
 export default PodcastWidget;
