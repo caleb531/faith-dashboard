@@ -128,7 +128,6 @@
     "radix": ["error"],
     "react/jsx-curly-newline": ["warn", "consistent"],
     "react/jsx-curly-spacing": ["warn", { "when": "never", "allowMultiline": true }],
-    "react/jsx-indent": ["warn", 2, { "checkAttributes": true, "indentLogicalExpressions": true }],
     "rest-spread-spacing": ["warn", "never"],
     "semi-spacing": ["error", { "before": false, "after": true }],
     "semi-style": ["warn"],
