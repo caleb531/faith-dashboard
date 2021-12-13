@@ -126,7 +126,6 @@
     "prefer-promise-reject-errors": ["warn"],
     "quotes": ["error", "single", { "allowTemplateLiterals": true }],
     "radix": ["error"],
-    "react/jsx-curly-newline": ["warn", "consistent"],
     "react/jsx-curly-spacing": ["warn", { "when": "never", "allowMultiline": true }],
     "react/jsx-no-constructed-context-values": ["error"],
     "rest-spread-spacing": ["warn", "never"],
