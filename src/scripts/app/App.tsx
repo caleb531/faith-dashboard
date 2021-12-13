@@ -33,7 +33,7 @@ export function reducer(state: AppState, action: StateAction): AppState {
         widgets: state.widgets.map((widget) => {
           // Only touch the reference of the widget we wish to update
           if (widget.id === widgetToUpdate.id) {
-            return { ...widgetToUpdate };
+            return widgetToUpdate;
           } else {
             return widget;
           }

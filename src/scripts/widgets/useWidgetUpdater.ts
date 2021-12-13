@@ -13,10 +13,7 @@ export default function useWidgetUpdater(widget: WidgetState): void {
   useEffect(() => {
     dispatchToApp({
       type: 'updateWidget',
-      payload: {
-        ...widget,
-        column: widget.column || 1
-      }
+      payload: widget
     });
   }, [widget, dispatchToApp]);
 
