@@ -8,7 +8,7 @@ type Props = { widgetType: WidgetType, onAddWidget: () => void };
 
 function AddWidgetEntry({ widgetType, onAddWidget }: Props) {
 
-  const { dispatchToApp } = useContext(AppContext);
+  const dispatchToApp = useContext(AppContext);
 
   function addWidget() {
     dispatchToApp({

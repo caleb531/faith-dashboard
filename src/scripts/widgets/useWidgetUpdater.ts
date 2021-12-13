@@ -7,7 +7,7 @@ import { WidgetState } from '../types.d';
 // useWidgetShell() hook, which already makes use of useWidgetUpdater()
 export default function useWidgetUpdater(widget: WidgetState): void {
 
-  const { dispatchToApp } = useContext(AppContext);
+  const dispatchToApp = useContext(AppContext);
 
   // Update widget list when changes are made
   useEffect(() => {

@@ -25,10 +25,7 @@ export interface StateAction {
 // to the current global state of the application, as well as providing any
 // component with the ability to dispatch actions to the top-level App
 // component
-export interface AppContextValue {
-  app: AppState;
-  dispatchToApp: Dispatch<StateAction>;
-}
+export type AppContextValue = Dispatch<StateAction>;
 
 // A dropdown entry for an available app color theme
 interface AppThemeListItem {

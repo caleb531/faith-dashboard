@@ -8,7 +8,7 @@ type Props = { widget: WidgetState, dispatch: Dispatch<StateAction>, provided: D
 
 function WidgetShell({ widget, dispatch, provided, children }: Props) {
 
-  const { dispatchToApp } = useContext(AppContext);
+  const dispatchToApp = useContext(AppContext);
 
   // Signal to the global application that we want to remove the widget
   function removeWidget() {

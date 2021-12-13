@@ -82,14 +82,14 @@ function App() {
   useThemeForEntirePage(app.theme);
 
   return (
-    <AppContext.Provider value={{ app, dispatchToApp }}>
+    <AppContext.Provider value={dispatchToApp}>
       <div className={`app theme-${app.theme}`}>
           {navigator.serviceWorker ? (
             <UpdateNotification />
           ) : null}
-          <AppHeader />
+          <AppHeader app={app} />
           <React.Suspense fallback={<LoadingIndicator />}>
-            <WidgetBoard />
+            <WidgetBoard widgets={app.widgets} />
           </React.Suspense>
           <AppFooter />
       </div>

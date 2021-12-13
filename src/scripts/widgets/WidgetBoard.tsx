@@ -2,6 +2,7 @@ import { fromPairs, times } from 'lodash-es';
 import React, { useContext } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { AppContext } from '../app/AppContext';
+import { WidgetState } from '../types.d';
 import WidgetBoardColumn from './WidgetBoardColumn';
 
 // Convert the ID of a dropzone to a base-1 column index (e.g. "column-3" => 3)
@@ -9,9 +10,11 @@ function getColumnFromDroppableId(droppableId: string): number {
   return Number(droppableId.match(/\d$/)[0]);
 }
 
-function WidgetBoard() {
+type Props = { widgets: WidgetState[] };
 
-  const { app, dispatchToApp } = useContext(AppContext);
+function WidgetBoard({ widgets }: Props) {
+
+  const dispatchToApp = useContext(AppContext);
   const columnCount = 3;
 
   // Because the widgets are stored in a one-dimensional array, yet we are
@@ -20,7 +23,7 @@ function WidgetBoard() {
   // later to handle drag-and-drop (pre-computing these values will allow us to
   // perform an O(1) lookup when rendering each widget, rather than an O(n)
   // indexOf at the time each widget is rendered)
-  const widgetIdsToIndices = fromPairs(app.widgets.map((widget, w) => {
+  const widgetIdsToIndices = fromPairs(widgets.map((widget, w) => {
     return [widget.id, w];
   }));
 
@@ -43,7 +46,7 @@ function WidgetBoard() {
     dispatchToApp({
       type: 'moveWidget',
       payload: {
-        widgetToMove: app.widgets[source.index],
+        widgetToMove: widgets[source.index],
         sourceIndex: source.index,
         sourceColumn,
         destinationIndex: destination.index,
@@ -59,7 +62,7 @@ function WidgetBoard() {
         {times(columnCount, (columnIndex) => {
           return (
             <WidgetBoardColumn
-              widgets={app.widgets}
+              widgets={widgets}
               widgetIdsToIndices={widgetIdsToIndices}
               columnIndex={columnIndex}
               key={columnIndex} />
