@@ -87,7 +87,7 @@ function App() {
           {navigator.serviceWorker ? (
             <UpdateNotification />
           ) : null}
-          <AppHeader app={app} />
+          <AppHeader theme={app.theme} />
           <React.Suspense fallback={<LoadingIndicator />}>
             <WidgetBoard widgets={app.widgets} />
           </React.Suspense>

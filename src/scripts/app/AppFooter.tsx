@@ -1,6 +1,6 @@
 import React from 'react';
 
-function AppFooter() {
+const AppFooter = React.memo(function AppFooter() {
 
   return (
     <footer className="app-footer">
@@ -10,6 +10,6 @@ function AppFooter() {
     </footer>
   );
 
-}
+});
 
 export default AppFooter;
