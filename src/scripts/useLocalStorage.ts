@@ -1,4 +1,4 @@
-import { JSONSerializable } from '../types.d';
+import { JSONSerializable } from './types.d';
 
 // The useLocalStorage() hook is a simple wrapper around the localStorage API's
 // getItem() and setItem() functions; it is especially handy because it handles

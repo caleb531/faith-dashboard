@@ -54,12 +54,17 @@ export interface WidgetType {
   requiresConfiguration: boolean;
 }
 
-// The schema for a widget object
-export interface WidgetState {
+// A lightweight pointer to a widget instance, storing only the ID of the
+// widget and its designated type
+export interface WidgetHead {
   // A UUID v4 string that uniquely identifies the widget instance
   id: string;
   // An string-based identifier representing the type of widget
   type: WidgetTypeId;
+}
+
+// The schema for a widget object
+export interface WidgetState extends WidgetHead {
   // A boolean representing whether or not the widget's Settings screen is
   // currently visible
   isSettingsOpen: boolean;

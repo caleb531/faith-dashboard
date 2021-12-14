@@ -1,13 +1,21 @@
 import { Dispatch, useReducer } from 'react';
-import { StateAction, WidgetState } from '../types';
+import { StateAction, WidgetHead, WidgetState } from '../types';
+import useLocalStorage from '../useLocalStorage';
 import useWidgetUpdater from './useWidgetUpdater';
+
+// Instantiates a new widget object using the given header information about
+// the widget (namely, id and type)
+export function createNewWidget(widgetHead: WidgetHead): WidgetHead {
+  // TODO: write this function
+  return widgetHead;
+}
 
 // The useWidgetShell() hook which must be called in any component which
 // implements a particular widget type; it manages several important
 // operations, like exposing global actions available to all widgets, and
 // attaching listeners that automatically persist the widget whenever its state
 // changes
-export default function useWidgetShell(subReducer: (state: WidgetState, action: StateAction) => WidgetState, widget: WidgetState): [WidgetState, Dispatch<StateAction>] {
+export default function useWidgetShell(subReducer: (state: WidgetState, action: StateAction) => WidgetState, widgetHead: WidgetHead): [WidgetState, Dispatch<StateAction>] {
 
   // The reducer below contains general widget actions, and the widget
   // type-specific "sub-reducer" supplied above is merged into this larger
@@ -49,7 +57,11 @@ export default function useWidgetShell(subReducer: (state: WidgetState, action: 
     }
   }
 
-  const [state, dispatch] = useReducer(reducer, widget);
+  const [restoreWidget, saveWidget] = useLocalStorage(
+    `fd-widget-${widgetHead.type}:${widgetHead.id}`,
+    createNewWidget(widgetHead)
+  );
+  const [state, dispatch] = useReducer(reducer, null, () => restoreWidget());
 
   // Save updates to the widget as its state changes
   useWidgetUpdater(state);
