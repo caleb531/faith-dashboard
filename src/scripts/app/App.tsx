@@ -55,7 +55,15 @@ export function reducer(state: AppState, action: StateAction): AppState {
         (widget) => widget.id !== widgetToMove.id);
       // Insert the widget at its new position; also update the column field on
       // the widget itself
-      newWidgets.splice(newDestinationIndex, 0, { ...widgetToMove, column: destinationColumn });
+      newWidgets.splice(newDestinationIndex, 0, {
+        // Eliminate extraneous widget data from the old architecture (since
+        // that is now stored separately, on a per-widget basis; only include
+        // the widget head information like ID and Type); this reduces
+        // duplication of widget data in localStorage when moving widgets
+        id: widgetToMove.id,
+        type: widgetToMove.type,
+        column: destinationColumn
+      });
       // There are edge cases (when dragging-and-dropping and adding new
       // widgets) where the widgets in a particular column are no longer
       // contiguous in the widgets array; this scenario violates a stipulation
