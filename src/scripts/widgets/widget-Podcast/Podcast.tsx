@@ -101,9 +101,9 @@ export function reducer(state: PodcastWidgetState, action: StateAction): Podcast
   }
 }
 
-const PodcastWidget = React.memo(function PodcastWidget({ widget, provided }: WidgetParameters) {
+const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }: WidgetParameters) {
 
-  const [state, dispatch] = useWidgetShell(reducer, widget);
+  const [state, dispatch] = useWidgetShell(reducer, widgetHead);
   const {
     podcastQuery,
     podcastFeedUrl,
@@ -115,7 +115,7 @@ const PodcastWidget = React.memo(function PodcastWidget({ widget, provided }: Wi
     listeningMetadata
   } = state as PodcastWidgetState;
   const nowPlayingMetadata = nowPlaying ? listeningMetadata[nowPlaying.guid] : null;
-  const [podcastList, setPodcastList] = useCachedState<PodcastInfo[]>(`podcast-list-for-widget-${widget.id}`, () => []);
+  const [podcastList, setPodcastList] = useCachedState<PodcastInfo[]>(`podcast-list-for-widget-${state.id}`, () => []);
 
   const audioElement = useCachedAudio(state.id);
 
@@ -156,7 +156,7 @@ const PodcastWidget = React.memo(function PodcastWidget({ widget, provided }: Wi
   return (
     <WidgetShell widget={state} dispatch={dispatch} provided={provided}>
       <section className="podcast">
-        {widget.isSettingsOpen || !podcastFeedUrl || !podcastFeedData || fetchError ? (
+        {state.isSettingsOpen || !podcastFeedUrl || !podcastFeedData || fetchError ? (
           <div className="podcast-search">
             <form
               className="podcast-settings"

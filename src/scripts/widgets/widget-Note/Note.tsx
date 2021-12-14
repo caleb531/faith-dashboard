@@ -18,9 +18,9 @@ export function reducer(state: NoteWidgetState, action: StateAction): NoteWidget
   }
 }
 
-const NoteWidget = React.memo(function NoteWidget({ widget, provided }: WidgetParameters) {
+const NoteWidget = React.memo(function NoteWidget({ widgetHead, provided }: WidgetParameters) {
 
-  const [state, dispatch] = useWidgetShell(reducer, widget);
+  const [state, dispatch] = useWidgetShell(reducer, widgetHead);
   const { fontSize, text } = state as NoteWidgetState;
   // The amount of time (in milliseconds) after the user's last keystroke
   // before assuming that the user has stopped typing
@@ -80,7 +80,7 @@ const NoteWidget = React.memo(function NoteWidget({ widget, provided }: WidgetPa
   return (
     <WidgetShell widget={state} dispatch={dispatch} provided={provided}>
       <section className="note">
-        {widget.isSettingsOpen ? (
+        {state.isSettingsOpen ? (
           <>
             <h2 className="note-heading">Note</h2>
             <form className="note-formatting">

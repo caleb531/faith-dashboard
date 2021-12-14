@@ -20,12 +20,12 @@ export function reducer(state: BibleVerseWidgetState, action: StateAction): Bibl
   }
 }
 
-const BibleVerseWidget = React.memo(function BibleVerseWidget({ widget, provided }: WidgetParameters) {
+const BibleVerseWidget = React.memo(function BibleVerseWidget({ widgetHead, provided }: WidgetParameters) {
 
   // If the user refreshes the page while a verse is loading, it will still be
   // persisted to localStorage by the time we load the page again, so we must
   // reset the flag to prevent the widget from loading infinitely
-  const [state, dispatch] = useWidgetShell(reducer, widget);
+  const [state, dispatch] = useWidgetShell(reducer, widgetHead);
   const { verseQuery, verseContent } = state as BibleVerseWidgetState;
 
   const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
@@ -56,7 +56,7 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({ widget, provided
   return (
     <WidgetShell widget={state} dispatch={dispatch} provided={provided}>
       <section className="bible-verse">
-        {widget.isSettingsOpen || !verseQuery || !verseContent || fetchError ? (
+        {state.isSettingsOpen || !verseQuery || !verseContent || fetchError ? (
           <form
             className="bible-verse-settings"
             onSubmit={(event) => submitRequestQuery((event))}>

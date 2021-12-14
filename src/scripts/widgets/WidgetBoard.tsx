@@ -2,7 +2,7 @@ import { fromPairs, times } from 'lodash-es';
 import React, { useContext } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { AppContext } from '../app/AppContext';
-import { WidgetState } from '../types.d';
+import { WidgetHead } from '../types.d';
 import WidgetBoardColumn from './WidgetBoardColumn';
 
 // Convert the ID of a dropzone to a base-1 column index (e.g. "column-3" => 3)
@@ -10,7 +10,7 @@ function getColumnFromDroppableId(droppableId: string): number {
   return Number(droppableId.match(/\d$/)[0]);
 }
 
-type Props = { widgets: WidgetState[] };
+type Props = { widgets: WidgetHead[] };
 
 function WidgetBoard({ widgets }: Props) {
 

@@ -11,7 +11,7 @@ export type AppTheme = 'brown' | 'green' | 'teal' | 'blue' | 'rose';
 // The state of the application; an instance of
 export interface AppState {
   theme: AppTheme;
-  widgets: WidgetState[];
+  widgets: WidgetHead[];
 }
 
 // The action object for any reducer within the application
@@ -61,6 +61,9 @@ export interface WidgetHead {
   id: string;
   // An string-based identifier representing the type of widget
   type: WidgetTypeId;
+  // The base-1 index of the dashboard column where the widget will display in
+  // the UI
+  column: number;
 }
 
 // The schema for a widget object
@@ -68,9 +71,6 @@ export interface WidgetState extends WidgetHead {
   // A boolean representing whether or not the widget's Settings screen is
   // currently visible
   isSettingsOpen: boolean;
-  // The base-1 index of the dashboard column where the widget will display in
-  // the UI
-  column: number;
   // The pixel height of the widget; this is not necessarily the widget's
   // current height at any point in time, and it may be adjustable by the user
   // via the widget's resize handle (which is only available for certain widget
@@ -93,7 +93,7 @@ export interface WidgetState extends WidgetHead {
 export interface WidgetParameters {
   // Every widget implementation receives the widget object as a parameter, so
   // that the author can implement a settings view for their widget type, etc.
-  widget: WidgetState;
+  widgetHead: WidgetHead;
   // The Draggable props provided by react-beautiful-dnd; in order to enable
   // the drag-and-drop functionality, these props must be spread onto the
   // top-level JSX element representing the widget,

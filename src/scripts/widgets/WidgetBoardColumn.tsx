@@ -1,9 +1,9 @@
 import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { WidgetState } from '../types.d';
+import { WidgetHead } from '../types.d';
 import widgetTypeMap from './widgetTypeMap';
 
-type Props = { widgets: WidgetState[], widgetIdsToIndices: {[key: string]: number}, columnIndex: number };
+type Props = { widgets: WidgetHead[], widgetIdsToIndices: {[key: string]: number}, columnIndex: number };
 
 function WidgetBoardColumn({ widgets, widgetIdsToIndices, columnIndex }: Props) {
 
@@ -15,14 +15,14 @@ function WidgetBoardColumn({ widgets, widgetIdsToIndices, columnIndex }: Props) 
           {...provided.droppableProps}
           ref={provided.innerRef}>
           {widgets
-            .filter((widget) => (widget.column || 1) === (columnIndex + 1))
-            .map((widget) => {
+            .filter((widgetHead) => (widgetHead.column || 1) === (columnIndex + 1))
+            .map((widgetHead) => {
               return (
-                <Draggable draggableId={widget.id} key={widget.id} index={widgetIdsToIndices[widget.id]}>
+                <Draggable draggableId={widgetHead.id} key={widgetHead.id} index={widgetIdsToIndices[widgetHead.id]}>
                   {(provided) => {
-                    const Widget = widgetTypeMap[widget.type];
+                    const Widget = widgetTypeMap[widgetHead.type];
                     return <Widget
-                      widget={widget}
+                      widgetHead={widgetHead}
                       provided={provided} />;
                   }}
                 </Draggable>
