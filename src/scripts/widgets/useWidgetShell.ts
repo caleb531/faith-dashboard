@@ -1,13 +1,19 @@
 import { Dispatch, useReducer } from 'react';
 import { StateAction, WidgetHead, WidgetState } from '../types';
 import useLocalStorage from '../useLocalStorage';
+import widgetTypes from '../widgets/widgetTypes';
 import useWidgetUpdater from './useWidgetUpdater';
 
 // Instantiates a new widget object using the given header information about
 // the widget (namely, id and type)
-export function createNewWidget(widgetHead: WidgetHead): WidgetHead {
-  // TODO: write this function
-  return widgetHead;
+export function createNewWidget(widgetHead: WidgetHead): WidgetState {
+  const widgetType = widgetTypes.find((widgetType) => widgetType.type === widgetHead.type);
+  const isSettingsOpen = widgetType ? widgetType.requiresConfiguration : false;
+  // In order to preserve backwards-compatibility, assume the widget head may
+  // contain any and all other widget properties from the previous architecture
+  // (where *all* widget data was stored in the AppState); therefore, it's
+  // crucial that we spread in the widget head *after* all defaults
+  return { isSettingsOpen, ...widgetHead };
 }
 
 // The useWidgetShell() hook which must be called in any component which
@@ -57,14 +63,14 @@ export default function useWidgetShell(subReducer: (state: WidgetState, action: 
     }
   }
 
-  const [restoreWidget, saveWidget] = useLocalStorage(
-    `fd-widget-${widgetHead.type}:${widgetHead.id}`,
+  const [restoreWidget, saveWidget] = useLocalStorage<WidgetState>(
+    `faith-dashboard-widget-${widgetHead.type}:${widgetHead.id}`,
     createNewWidget(widgetHead)
   );
   const [state, dispatch] = useReducer(reducer, null, () => restoreWidget());
 
   // Save updates to the widget as its state changes
-  useWidgetUpdater(state);
+  useWidgetUpdater(state, saveWidget);
 
   return [state, dispatch];
 

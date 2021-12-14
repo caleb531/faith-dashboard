@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { AppContext } from '../app/AppContext';
-import { WidgetState, WidgetType } from '../types.d';
+import { WidgetHead, WidgetType } from '../types.d';
 import AddWidgetButton from './AddWidgetButton';
 
 type Props = { widgetType: WidgetType, onAddWidget: () => void };
@@ -17,9 +17,8 @@ function AddWidgetEntry({ widgetType, onAddWidget }: Props) {
         id: uuidv4(),
         type: widgetType.type,
         column: 1,
-        data: {},
-        isSettingsOpen: widgetType.requiresConfiguration || false
-      } as WidgetState
+        a: true
+      } as WidgetHead
     });
     // Call user-defined callback passed to component
     onAddWidget();
