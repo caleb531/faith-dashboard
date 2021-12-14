@@ -2,7 +2,7 @@ import { fromPairs, times } from 'lodash-es';
 import React, { useContext } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { AppContext } from '../app/AppContext';
-import { WidgetHead } from '../types.d';
+import { WidgetHead } from './widget.d';
 import WidgetBoardColumn from './WidgetBoardColumn';
 
 // Convert the ID of a dropzone to a base-1 column index (e.g. "column-3" => 3)

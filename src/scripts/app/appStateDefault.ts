@@ -1,4 +1,4 @@
-import { AppState } from '../types.d';
+import { AppState } from './app.d';
 
 
 export default {

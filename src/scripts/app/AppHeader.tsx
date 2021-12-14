@@ -1,6 +1,6 @@
 import React from 'react';
 import AddWidgetHeader from '../add-widget/AddWidgetHeader';
-import { AppTheme } from '../types.d';
+import { AppTheme } from './app.d';
 import ThemeSwitcher from './ThemeSwitcher';
 
 type Props = { theme: AppTheme };

@@ -1,4 +1,4 @@
-import { WidgetState } from '../../types';
+import { WidgetState } from '../widget.d';
 
 export interface NoteWidgetState extends WidgetState {
   text: string;

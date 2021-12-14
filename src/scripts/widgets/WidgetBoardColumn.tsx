@@ -1,6 +1,6 @@
 import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { WidgetHead } from '../types.d';
+import { WidgetHead } from './widget.d';
 import widgetTypeMap from './widgetTypeMap';
 
 type Props = { widgets: WidgetHead[], widgetIdsToIndices: {[key: string]: number}, columnIndex: number };

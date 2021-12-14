@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { WidgetState } from '../types';
+import { WidgetState } from './widget.d';
 
 // The useWidgetCleanupOnRemove() hook runs some arbitrary cleanup code
 // whenever the user removes a widget from their dashboard

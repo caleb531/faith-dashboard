@@ -1,8 +1,10 @@
 import React, { Dispatch } from 'react';
 import ResultList from '../../generic/ResultList';
-import { Result, StateAction, WidgetState } from '../../types.d';
+import { Result } from '../../generic/resultList.d';
+import { StateAction } from '../../types.d';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
-import { PodcastFeedData, PodcastInfo, PodcastWidgetState } from './Podcast.d';
+import { WidgetState } from '../widget.d';
+import { PodcastFeedData, PodcastInfo, PodcastWidgetState } from './podcast.d';
 
 type Props = { widget: WidgetState, podcastList: PodcastInfo[], dispatch: Dispatch<StateAction> };
 

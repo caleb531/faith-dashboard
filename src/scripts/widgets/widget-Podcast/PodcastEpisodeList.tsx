@@ -1,8 +1,9 @@
 import moment from 'moment';
 import React, { Dispatch } from 'react';
 import ResultList from '../../generic/ResultList';
-import { Result, StateAction } from '../../types.d';
-import { PodcastEpisode, PodcastFeedData } from './Podcast.d';
+import { Result } from '../../generic/resultList.d';
+import { StateAction } from '../../types.d';
+import { PodcastEpisode, PodcastFeedData } from './podcast.d';
 
 type Props = { podcastFeedData: PodcastFeedData, nowPlaying: PodcastEpisode, dispatch: Dispatch<StateAction> };
 

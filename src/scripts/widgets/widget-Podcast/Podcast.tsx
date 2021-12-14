@@ -1,13 +1,14 @@
 import React from 'react';
 import useCachedAudio from '../../generic/audio-player/useCachedAudio';
-import { StateAction, WidgetParameters } from '../../types.d';
+import { StateAction } from '../../types.d';
 import useCachedState from '../../useCachedState';
 import useUniqueFieldId from '../../useUniqueFieldId';
 import useWidgetCleanupOnRemove from '../useWidgetCleanupOnRemove';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useWidgetShell from '../useWidgetShell';
+import { WidgetParameters } from '../widget.d';
 import WidgetShell from '../WidgetShell';
-import { PodcastFeedData, PodcastInfo, PodcastListeningMetadataEntry, PodcastSearchResponse, PodcastWidgetState } from './Podcast.d';
+import { PodcastFeedData, PodcastInfo, PodcastListeningMetadataEntry, PodcastSearchResponse, PodcastWidgetState } from './podcast.d';
 import PodcastEpisodeList from './PodcastEpisodeList';
 import PodcastNowPlaying from './PodcastNowPlaying';
 import PodcastPodcastList from './PodcastPodcastList';

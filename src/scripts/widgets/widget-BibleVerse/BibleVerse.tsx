@@ -1,11 +1,12 @@
 import HtmlReactParser from 'html-react-parser';
 import React from 'react';
-import { StateAction, WidgetParameters } from '../../types.d';
+import { StateAction } from '../../types.d';
 import useUniqueFieldId from '../../useUniqueFieldId';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useWidgetShell from '../useWidgetShell';
+import { WidgetParameters } from '../widget.d';
 import WidgetShell from '../WidgetShell';
-import { BibleVerseData, BibleVerseWidgetState } from './BibleVerse.d';
+import { BibleVerseData, BibleVerseWidgetState } from './bibleVerse.d';
 
 export function reducer(state: BibleVerseWidgetState, action: StateAction): BibleVerseWidgetState {
   switch (action.type) {

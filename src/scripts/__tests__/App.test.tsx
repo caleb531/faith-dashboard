@@ -2,7 +2,8 @@ import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import React from 'react';
 import App, { reducer } from '../app/App';
-import { AppState, WidgetState } from '../types.d';
+import { AppState } from '../app/app.d';
+import { WidgetState } from '../widgets/widget.d';
 import { createWidget } from './__utils__/test-utils';
 
 describe('App Component', function () {

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { AppTheme } from '../types.d';
+import { AppTheme } from './app.d';
 
 // The useThemeForEntirePage() hook takes the given color theme and applies it
 // to the

@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { Dispatch, useEffect, useRef } from 'react';
-import { StateAction, WidgetState } from '../types';
-import { JSONSerializable } from '../types.d';
+import { JSONSerializable, StateAction } from '../types.d';
+import { WidgetState } from './widget.d';
 
 // The useWidgetDataFetcher() hook is a powerful hook that allows you to fetch
 // arbitrary data from an API endpoint given some user-supplied request query

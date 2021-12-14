@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from '../generic/Modal';
-import { WidgetType } from '../types.d';
+import { WidgetType } from '../widgets/widget.d';
 import widgetTypes from '../widgets/widgetTypes';
 import AddWidgetEntry from './AddWidgetEntry';
 
