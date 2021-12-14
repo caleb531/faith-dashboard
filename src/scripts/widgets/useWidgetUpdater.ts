@@ -9,7 +9,9 @@ export default function useWidgetUpdater(widget: WidgetState, saveWidget: (widge
   // Update widget when changes are made
   useEffect(() => {
     // The saveWidget() function is guaranteed to be stable per the
-    saveWidget(widget);
+    if (!widget.isMarkedForRemoval) {
+      saveWidget(widget);
+    }
   }, [widget, saveWidget]);
 
 }
