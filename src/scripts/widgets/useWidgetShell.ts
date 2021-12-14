@@ -63,14 +63,14 @@ export default function useWidgetShell(subReducer: (state: WidgetState, action: 
     }
   }
 
-  const [restoreWidget, saveWidget] = useLocalStorage<WidgetState>(
+  const [restoreWidget, saveWidget, removeWidget] = useLocalStorage<WidgetState>(
     `faith-dashboard-widget-${widgetHead.type}:${widgetHead.id}`,
     createNewWidget(widgetHead)
   );
   const [state, dispatch] = useReducer(reducer, null, () => restoreWidget());
 
   // Save updates to the widget as its state changes
-  useWidgetUpdater(state, saveWidget);
+  useWidgetUpdater(state, saveWidget, removeWidget);
 
   return [state, dispatch];
 

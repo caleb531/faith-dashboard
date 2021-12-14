@@ -5,7 +5,11 @@ import { useCallback } from 'react';
 // all JSON serialization/deserialization on your behalf, so you can pass it an
 // object initially, and expect to receive that object back from the setter
 // function, without any need to call JSON.parse()
-export default function useLocalStorage<T>(key: string, defaultValue: T): [() => T, (newValue: T) => void] {
+export default function useLocalStorage<T>(key: string, defaultValue: T): [
+  () => T,
+  (newValue: T) => void,
+  () => void
+] {
 
   // The getLocalStorage() function is guaranteed to be stable for the lifetime
   // of the component
@@ -24,6 +28,10 @@ export default function useLocalStorage<T>(key: string, defaultValue: T): [() =>
     localStorage.setItem(key, JSON.stringify(myValue));
   }, [key]);
 
-  return [getLocalStorage, setLocalStorage];
+  const removeLocalStorage = useCallback(function removeLocalStorage(): void {
+    localStorage.removeItem(key);
+  }, [key]);
+
+  return [getLocalStorage, setLocalStorage, removeLocalStorage];
 
 }
