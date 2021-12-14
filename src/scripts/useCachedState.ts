@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 // The storage map for the cached state values
 const stateCache: { [key: string]: any } = {};
 
@@ -17,9 +19,11 @@ function useCachedState<T>(cacheKey: string, init: () => T): [
     }
   }
 
-  function setState(newState: T): void {
+  // The setState() function is guaranteed to be stable for the lifetime of the
+  // component
+  const setState = useCallback(function setState(newState: T): void {
     stateCache[cacheKey] = newState;
-  }
+  }, [cacheKey]);
 
   return [getState(), setState];
 
