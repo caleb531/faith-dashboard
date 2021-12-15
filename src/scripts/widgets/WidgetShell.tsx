@@ -7,7 +7,7 @@ import { WidgetState } from './widget.d';
 
 type Props = { widget: WidgetState, dispatch: Dispatch<StateAction>, provided: DraggableProvided, children: JSX.Element | JSX.Element[] };
 
-const WidgetShell = React.memo(function WidgetShell({ widget, dispatch, provided, children }: Props) {
+function WidgetShell({ widget, dispatch, provided, children }: Props) {
 
   const dispatchToApp = useContext(AppContext);
 
@@ -82,6 +82,6 @@ const WidgetShell = React.memo(function WidgetShell({ widget, dispatch, provided
     </article>
   );
 
-});
+}
 
 export default WidgetShell;
