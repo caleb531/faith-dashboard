@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, { Dispatch, useEffect, useRef } from 'react';
-import { JSONSerializable, StateAction } from '../types.d';
+import { JSONSerializable, StateAction } from '../global.d';
 import { WidgetState } from './widget.d';
 
 // The useWidgetDataFetcher() hook is a powerful hook that allows you to fetch

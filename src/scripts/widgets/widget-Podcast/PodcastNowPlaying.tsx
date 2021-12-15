@@ -1,6 +1,6 @@
 import React, { Dispatch, useCallback } from 'react';
 import AudioPlayer from '../../generic/audio-player/AudioPlayer';
-import { StateAction } from '../../types.d';
+import { StateAction } from '../../global.d';
 import { WidgetState } from '../widget.d';
 import { PodcastEpisode, PodcastFeedData, PodcastListeningMetadataEntry } from './podcast.d';
 

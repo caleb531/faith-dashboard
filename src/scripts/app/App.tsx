@@ -1,7 +1,7 @@
 import { sortBy } from 'lodash-es';
 import React, { useEffect, useReducer } from 'react';
 import LoadingIndicator from '../generic/LoadingIndicator';
-import { StateAction } from '../types.d';
+import { StateAction } from '../global.d';
 import useLocalStorage from '../useLocalStorage';
 import { WidgetMoveParameters, WidgetState } from '../widgets/widget.d';
 import { AppState, AppTheme } from './app.d';

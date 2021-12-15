@@ -1,6 +1,6 @@
 import HtmlReactParser from 'html-react-parser';
 import React from 'react';
-import { StateAction } from '../../types.d';
+import { StateAction } from '../../global.d';
 import useUniqueFieldId from '../../useUniqueFieldId';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useWidgetShell from '../useWidgetShell';

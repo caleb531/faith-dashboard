@@ -1,6 +1,6 @@
 import React from 'react';
 import useCachedAudio from '../../generic/audio-player/useCachedAudio';
-import { StateAction } from '../../types.d';
+import { StateAction } from '../../global.d';
 import useCachedState from '../../useCachedState';
 import useUniqueFieldId from '../../useUniqueFieldId';
 import useWidgetCleanupOnRemove from '../useWidgetCleanupOnRemove';

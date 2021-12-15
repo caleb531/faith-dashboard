@@ -2,7 +2,7 @@ import React, { Dispatch, useContext, useEffect } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import { AppContext } from '../app/AppContext';
 import LoadingIndicator from '../generic/LoadingIndicator';
-import { StateAction } from '../types';
+import { StateAction } from '../global.d';
 import { WidgetState } from './widget.d';
 
 type Props = { widget: WidgetState, dispatch: Dispatch<StateAction>, provided: DraggableProvided, children: JSX.Element | JSX.Element[] };

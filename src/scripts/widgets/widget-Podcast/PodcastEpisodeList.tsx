@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { Dispatch } from 'react';
 import ResultList from '../../generic/ResultList';
 import { Result } from '../../generic/resultList.d';
-import { StateAction } from '../../types.d';
+import { StateAction } from '../../global.d';
 import { PodcastEpisode, PodcastFeedData } from './podcast.d';
 
 type Props = { podcastFeedData: PodcastFeedData, nowPlaying: PodcastEpisode, dispatch: Dispatch<StateAction> };

@@ -1,6 +1,6 @@
 import { debounce } from 'lodash-es';
 import React, { useMemo } from 'react';
-import { StateAction } from '../../types.d';
+import { StateAction } from '../../global.d';
 import useWidgetShell from '../useWidgetShell';
 import { WidgetParameters } from '../widget.d';
 import WidgetShell from '../WidgetShell';

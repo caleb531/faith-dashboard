@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import ResultList from '../../generic/ResultList';
 import { Result } from '../../generic/resultList.d';
-import { StateAction } from '../../types.d';
+import { StateAction } from '../../global.d';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import { WidgetState } from '../widget.d';
 import { PodcastFeedData, PodcastInfo, PodcastWidgetState } from './podcast.d';

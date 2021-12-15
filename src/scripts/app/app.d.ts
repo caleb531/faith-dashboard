@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { StateAction } from '../types.d';
+import { StateAction } from '../global.d';
 import { WidgetHead } from '../widgets/widget.d';
 
 // An available color theme that can be set by the user to personalize their

@@ -1,5 +1,5 @@
 import { Dispatch, useReducer } from 'react';
-import { StateAction } from '../types';
+import { StateAction } from '../global.d';
 import useLocalStorage from '../useLocalStorage';
 import { WidgetHead, WidgetState } from '../widgets/widget.d';
 import widgetTypes from '../widgets/widgetTypes';

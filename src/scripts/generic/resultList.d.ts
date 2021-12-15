@@ -1,4 +1,4 @@
-import { JSONSerializable } from '../types';
+import { JSONSerializable } from '../global.d';
 
 export interface Result {
   id: string;
