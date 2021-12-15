@@ -7,13 +7,15 @@ import { AppTheme } from './app.d';
 export default function useThemeForEntirePage(theme: AppTheme) {
 
   useEffect(() => {
-    // Remove any previous theme-* classes applied to the <body>
-    Array.from(document.body.classList).forEach((className) => {
-      if (/^theme-/.test(className)) {
-        document.body.classList.remove(className);
-      }
-    });
     document.body.classList.add(`theme-${theme}`);
+    return () => {
+      // Remove any previous theme-* classes applied to the <body>
+      Array.from(document.body.classList).forEach((className) => {
+        if (/^theme-/.test(className)) {
+          document.body.classList.remove(className);
+        }
+      });
+    };
   }, [theme]);
 
 }
