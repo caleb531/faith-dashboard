@@ -44,7 +44,7 @@ export function update(wb: Workbox, availableUpdate: WaitingEvent): void {
 function UpdateNotification() {
 
   const [availableUpdate, setAvailableUpdate] = useState(null);
-  const [wb, setWb] = useState(() => new Workbox('service-worker.js'));
+  const [wb] = useState(() => new Workbox('service-worker.js'));
 
   // Initialize service worker when component is first loaded
   useEffect(() => {

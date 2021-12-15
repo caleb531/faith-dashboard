@@ -7,7 +7,7 @@ import useCachedState from '../../useCachedState';
 // can re-use that audio element for each episode played within that widget
 function useCachedAudio(cacheKey: string): HTMLAudioElement {
 
-  const [audioElement, setAudioElement] = useCachedState<HTMLAudioElement>(`podcast-audio-${cacheKey}`, () => {
+  const [audioElement] = useCachedState<HTMLAudioElement>(`podcast-audio-${cacheKey}`, () => {
     return new Audio();
   });
 
