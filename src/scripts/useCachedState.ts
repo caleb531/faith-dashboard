@@ -21,7 +21,7 @@ function useCachedState<T>(cacheKey: string, init: () => T): [
 
   // The setState() function is guaranteed to be stable for the lifetime of the
   // component
-  const setState = useCallback(function setState(newState: T): void {
+  const setState = useCallback((newState: T): void => {
     stateCache[cacheKey] = newState;
   }, [cacheKey]);
 

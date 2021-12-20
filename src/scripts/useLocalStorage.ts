@@ -13,7 +13,7 @@ export default function useLocalStorage<T>(key: string, defaultValue: T): [
 
   // The getLocalStorage() function is guaranteed to be stable for the lifetime
   // of the component
-  const getLocalStorage = useCallback(function getLocalStorage(): T {
+  const getLocalStorage = useCallback((): T => {
     const value = JSON.parse(localStorage.getItem(key));
     if (value) {
       return value;
@@ -24,11 +24,11 @@ export default function useLocalStorage<T>(key: string, defaultValue: T): [
 
   // The setLocalStorage() function is guaranteed to be stable for the lifetime
   // of the component
-  const setLocalStorage = useCallback(function setLocalStorage(myValue: T): void {
+  const setLocalStorage = useCallback((myValue: T): void => {
     localStorage.setItem(key, JSON.stringify(myValue));
   }, [key]);
 
-  const removeLocalStorage = useCallback(function removeLocalStorage(): void {
+  const removeLocalStorage = useCallback((): void => {
     localStorage.removeItem(key);
   }, [key]);
 
