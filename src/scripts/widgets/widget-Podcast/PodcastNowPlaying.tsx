@@ -29,7 +29,7 @@ function PodcastNowPlaying({ widget, podcastFeedData, podcastImage, nowPlaying, 
   }
 
   return (
-    <div className="podcast-view-now-playing">
+    <section className="podcast-view-now-playing">
       <header className="podcast-now-playing-header">
         {podcastImage || podcastFeedData.image ? (
           <img
@@ -55,7 +55,7 @@ function PodcastNowPlaying({ widget, podcastFeedData, podcastImage, nowPlaying, 
       <footer className="podcast-now-playing-footer">
         <button type="button" className="podcast-now-playing-return-to-list" onClick={returnToEpisodeList}>Return to List</button>
       </footer>
-    </div>
+    </section>
   );
 
 }
