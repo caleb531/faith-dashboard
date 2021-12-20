@@ -1,3 +1,4 @@
+import { WidgetType } from './widget.d';
 
 export default [
   {
@@ -21,4 +22,4 @@ export default [
     icon: 'podcast-dark',
     requiresConfiguration: true
   }
-];
+] as WidgetType[];
