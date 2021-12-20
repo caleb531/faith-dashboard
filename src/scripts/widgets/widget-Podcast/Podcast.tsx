@@ -116,9 +116,9 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
     listeningMetadata
   } = state as PodcastWidgetState;
   const nowPlayingMetadata = nowPlaying ? listeningMetadata[nowPlaying.guid] : null;
-  const [podcastList, setPodcastList] = useCachedState<PodcastInfo[]>(`podcast-list-for-widget-${state.id}`, () => []);
+  const [podcastList, setPodcastList, removePodcastList] = useCachedState<PodcastInfo[]>(`podcast-list-for-widget-${state.id}`, () => []);
 
-  const audioElement = useCachedAudio(state.id);
+  const [audioElement, removeAudioElement] = useCachedAudio(state.id);
 
   const { fetchError, submitRequestQuery, requestQueryInputRef } = useWidgetDataFetcher({
     widget: state,
@@ -150,6 +150,8 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
   // widget from their dashboard
   useWidgetCleanupOnRemove(state, () => {
     audioElement.pause();
+    removeAudioElement();
+    removePodcastList();
   });
 
   const searchFieldId = useUniqueFieldId('podcast-search');

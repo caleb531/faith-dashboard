@@ -5,13 +5,18 @@ import useCachedState from '../../useCachedState';
 // string key that is provided; this key should probably be the widget ID in
 // most cases, such that each widget has its own (dedicated) audio element, and
 // can re-use that audio element for each episode played within that widget
-function useCachedAudio(cacheKey: string): HTMLAudioElement {
+function useCachedAudio(cacheKey: string): [
+  HTMLAudioElement,
+  () => void
+] {
 
-  const [audioElement] = useCachedState<HTMLAudioElement>(`podcast-audio-${cacheKey}`, () => {
+  const [audioElement, setAudioElement, removeAudioElement] = useCachedState<HTMLAudioElement>(`podcast-audio-${cacheKey}`, () => {
     return new Audio();
   });
 
-  return audioElement;
+  // We don't expose the above setter function because losing references to an
+  // Audio element means we can no longer control it
+  return [audioElement, removeAudioElement];
 
 }
 

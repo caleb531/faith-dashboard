@@ -7,7 +7,8 @@ const stateCache: { [key: string]: any } = {};
 // mount/unmounts, using a unique key to identify the state along the way
 function useCachedState<T>(cacheKey: string, init: () => T): [
   T,
-  (newState: T) => void
+  (newState: T) => void,
+  () => void
 ] {
 
   function getState() {
@@ -25,7 +26,13 @@ function useCachedState<T>(cacheKey: string, init: () => T): [
     stateCache[cacheKey] = newState;
   }, [cacheKey]);
 
-  return [getState(), setState];
+  // The removeState() function is guaranteed to be stable for the lifetime of
+  // the component
+  const removeState = useCallback((): void => {
+    delete stateCache[cacheKey];
+  }, [cacheKey]);
+
+  return [getState(), setState, removeState];
 
 }
 

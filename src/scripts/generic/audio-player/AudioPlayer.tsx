@@ -20,7 +20,7 @@ function AudioPlayer({ audioElementKey, audioUrl, currentTime, setCurrentTime, i
   //    uninterrupted
   // 2) We eliminate any issues of multiple audio streams playing at the same
   //    time (at least within the same widget)
-  const audioElement = useCachedAudio(audioElementKey);
+  const [audioElement] = useCachedAudio(audioElementKey);
 
   useAudioLoader(audioElement);
   useAudioPlayPause(audioElement, isPlaying, setIsPlaying);
