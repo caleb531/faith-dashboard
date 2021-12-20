@@ -16,8 +16,7 @@ function AddWidgetEntry({ widgetType, onAddWidget }: Props) {
       payload: {
         id: uuidv4(),
         type: widgetType.type,
-        column: 1,
-        a: true
+        column: 1
       } as WidgetHead
     });
     // Call user-defined callback passed to component
