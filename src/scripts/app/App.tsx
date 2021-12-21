@@ -19,7 +19,6 @@ export type AppAction =
   { type: 'changeTheme', payload: AppTheme } |
   { type: 'addWidget', payload: WidgetHead } |
   { type: 'removeWidget', payload: WidgetHead } |
-  { type: 'updateWidget', payload: WidgetHead } |
   { type: 'moveWidget', payload: WidgetMoveParameters };
 
 export function reducer(state: AppState, action: StateAction): AppState {
@@ -35,19 +34,6 @@ export function reducer(state: AppState, action: StateAction): AppState {
       return {
         ...state,
         widgets: state.widgets.filter((widget) => widget.id !== widgetToRemove.id)
-      };
-    case 'updateWidget':
-      const widgetToUpdate = action.payload as WidgetHead;
-      return {
-        ...state,
-        widgets: state.widgets.map((widget) => {
-          // Only touch the reference of the widget we wish to update
-          if (widget.id === widgetToUpdate.id) {
-            return widgetToUpdate;
-          } else {
-            return widget;
-          }
-        })
       };
     case 'moveWidget':
       const { widgetToMove, sourceIndex, sourceColumn, destinationIndex, destinationColumn } = action.payload as WidgetMoveParameters;
