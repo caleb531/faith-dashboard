@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { StateAction } from '../global.d';
+import { AppAction } from '../app/App';
 import { WidgetHead } from '../widgets/widget.d';
 
 // An available color theme that can be set by the user to personalize their
@@ -17,7 +17,7 @@ export interface AppState {
 // to the current global state of the application, as well as providing any
 // component with the ability to dispatch actions to the top-level App
 // component
-export type AppContextValue = Dispatch<StateAction>;
+export type AppContextValue = Dispatch<AppAction>;
 
 // A dropdown entry for an available app color theme
 interface AppThemeListItem {

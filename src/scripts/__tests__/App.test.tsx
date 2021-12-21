@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import React from 'react';
-import App, { reducer } from '../app/App';
+import App, { AppAction, reducer } from '../app/App';
 import { AppState } from '../app/app.d';
 import { WidgetState } from '../widgets/widget.d';
 import { createWidget } from './__utils__/test-utils';
@@ -17,8 +17,8 @@ describe('App Component', function () {
     const app: AppState = { widgets: [] as WidgetState[], theme: 'teal' };
     expect(reducer(
       app,
-      { type: 'changeTheme', payload: 'periwinkle' }
-    )).toEqual({ widgets: [], theme: 'periwinkle' });
+      { type: 'changeTheme', payload: 'rose' } as AppAction
+    )).toEqual({ widgets: [], theme: 'rose' });
   });
 
   it('should add widget as only widget', function () {
@@ -26,7 +26,7 @@ describe('App Component', function () {
     const newWidget = createWidget({ column: 1 });
     expect(reducer(
       app,
-      { type: 'addWidget', payload: newWidget }
+      { type: 'addWidget', payload: newWidget } as AppAction
     )).toEqual({ theme: 'teal', widgets: [newWidget] });
   });
 
@@ -36,7 +36,7 @@ describe('App Component', function () {
     const newWidget = createWidget({ column: 1 });
     expect(reducer(
       app,
-      { type: 'addWidget', payload: newWidget }
+      { type: 'addWidget', payload: newWidget } as AppAction
     )).toEqual({ theme: 'teal', widgets: [newWidget].concat(widgets) });
   });
 
@@ -49,7 +49,7 @@ describe('App Component', function () {
     const app: AppState = { theme: 'teal', widgets };
     expect(reducer(
       app,
-      { type: 'removeWidget', payload: { id: widgets[1].id } }
+      { type: 'removeWidget', payload: { id: widgets[1].id } } as AppAction
     )).toEqual({ theme: 'teal', widgets: [widgets[0], widgets[2]] });
   });
 

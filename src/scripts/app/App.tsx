@@ -3,7 +3,7 @@ import React, { useEffect, useReducer } from 'react';
 import LoadingIndicator from '../generic/LoadingIndicator';
 import { StateAction } from '../global.d';
 import useLocalStorage from '../useLocalStorage';
-import { WidgetMoveParameters, WidgetState } from '../widgets/widget.d';
+import { WidgetHead, WidgetMoveParameters } from '../widgets/widget.d';
 import { AppState, AppTheme } from './app.d';
 import { AppContext } from './AppContext';
 import AppFooter from './AppFooter';
@@ -15,21 +15,29 @@ import useThemeForEntirePage from './useThemeForEntirePage';
 // Lazy-load the widget board since react-beautiful-dnd is a large dependency
 const WidgetBoard = React.lazy(() => import('../widgets/WidgetBoard'));
 
+export type AppAction =
+  { type: 'changeTheme', payload: AppTheme } |
+  { type: 'addWidget', payload: WidgetHead } |
+  { type: 'removeWidget', payload: WidgetHead } |
+  { type: 'updateWidget', payload: WidgetHead } |
+  { type: 'moveWidget', payload: WidgetMoveParameters };
+
 export function reducer(state: AppState, action: StateAction): AppState {
   switch (action.type) {
     case 'changeTheme':
-      return { ...state, theme: action.payload as AppTheme };
+      const newTheme = action.payload as AppTheme;
+      return { ...state, theme: newTheme };
     case 'addWidget':
-      const newWidget = action.payload as WidgetState;
+      const newWidget = action.payload as WidgetHead;
       return { ...state, widgets: [newWidget, ...state.widgets] };
     case 'removeWidget':
-      const widgetToRemove = action.payload as WidgetState;
+      const widgetToRemove = action.payload as WidgetHead;
       return {
         ...state,
         widgets: state.widgets.filter((widget) => widget.id !== widgetToRemove.id)
       };
     case 'updateWidget':
-      const widgetToUpdate = action.payload as WidgetState;
+      const widgetToUpdate = action.payload as WidgetHead;
       return {
         ...state,
         widgets: state.widgets.map((widget) => {

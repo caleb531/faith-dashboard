@@ -71,7 +71,7 @@ export interface WidgetParameters {
 // dashboard
 export interface WidgetMoveParameters {
   // The widget instance to move to a different column and/or position
-  widgetToMove: WidgetState;
+  widgetToMove: WidgetHead;
   // The base-0 index of the widget in the application's widgets array before
   // the move
   sourceIndex: number;

@@ -36,7 +36,7 @@ function ThemeSwitcher({ theme }: Props) {
       <label className="theme-switcher-label accessibility-only" htmlFor="theme-switcher-dropdown">
         Color Theme
       </label>
-      <select className="theme-switcher-dropdown" id="theme-switcher-dropdown" value={theme} onChange={(event) => dispatchToApp({ type: 'changeTheme', payload: event.target.value })}>
+      <select className="theme-switcher-dropdown" id="theme-switcher-dropdown" value={theme} onChange={(event) => dispatchToApp({ type: 'changeTheme', payload: event.target.value as AppTheme })}>
         <optgroup label="Color Theme">
           {themeList.map((themeListItem) => {
             return (<option value={themeListItem.value} key={themeListItem.value}>
