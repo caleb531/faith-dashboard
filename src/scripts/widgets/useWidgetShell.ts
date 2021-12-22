@@ -17,18 +17,28 @@ export function createNewWidget(widgetHead: WidgetHead): WidgetState {
   return { isSettingsOpen, ...widgetHead };
 }
 
+type WidgetAction =
+  { type: 'toggleSettings' } |
+  { type: 'openSettings' } |
+  { type: 'closeSettings' } |
+  { type: 'resizeWidget', payload: number } |
+  { type: 'showLoading' } |
+  { type: 'showContent' } |
+  { type: 'setFetchError', payload: string } |
+  { type: 'markWidgetForRemoval' };
+
 // The useWidgetShell() hook which must be called in any component which
 // implements a particular widget type; it manages several important
 // operations, like exposing global actions available to all widgets, and
 // attaching listeners that automatically persist the widget whenever its state
 // changes
-export default function useWidgetShell(subReducer: (state: WidgetState, action: StateAction) => WidgetState, widgetHead: WidgetHead): [WidgetState, Dispatch<StateAction>] {
+export default function useWidgetShell<Action>(subReducer: (state: WidgetState, action: Action) => WidgetState, widgetHead: WidgetHead): [WidgetState, Dispatch<StateAction>] {
 
   // The reducer below contains general widget actions, and the widget
   // type-specific "sub-reducer" supplied above is merged into this larger
   // reducer; this allows the compoment for each widget type implementation to
   // reference the same widget state and dispatcher
-  function reducer(state: WidgetState, action: StateAction): WidgetState {
+  function reducer(state: WidgetState, action: T & WidgetAction): WidgetState {
     switch (action.type) {
       case 'toggleSettings':
         return { ...state, isSettingsOpen: !state.isSettingsOpen };
@@ -59,7 +69,7 @@ export default function useWidgetShell(subReducer: (state: WidgetState, action: 
         if (subReducer) {
           return subReducer(state, action);
         } else {
-          throw new ReferenceError(`action ${action.type} does not exist on reducer`);
+          return state;
         }
     }
   }
