@@ -2,21 +2,21 @@ import React from 'react';
 import Modal from '../generic/Modal';
 import { WidgetType } from '../widgets/widget.d';
 import widgetTypes from '../widgets/widgetTypes';
-import AddWidgetEntry from './AddWidgetEntry';
+import WidgetPickerEntry from './WidgetPickerEntry';
 
 type Props = { onCloseWidgetPicker: () => void };
 
-function AddWidgetPicker({ onCloseWidgetPicker }: Props) {
+function WidgetPicker({ onCloseWidgetPicker }: Props) {
 
   return (
     <Modal onCloseModal={onCloseWidgetPicker}>
-        <section className="add-widget-picker">
+        <section className="widget-picker">
           <h2>Add Widget</h2>
-          <ul className="add-widget-type-list">
+          <ul className="widget-picker-list">
             {widgetTypes.map((widgetType: WidgetType) => {
               return (
-                <li className="add-widget-type-list-item" key={widgetType.type}>
-                  <AddWidgetEntry widgetType={widgetType} onAddWidget={onCloseWidgetPicker} />
+                <li className="widget-picker-list-item" key={widgetType.type}>
+                  <WidgetPickerEntry widgetType={widgetType} onAddWidget={onCloseWidgetPicker} />
                 </li>
               );
             })}
@@ -27,4 +27,4 @@ function AddWidgetPicker({ onCloseWidgetPicker }: Props) {
 
 }
 
-export default AddWidgetPicker;
+export default WidgetPicker;

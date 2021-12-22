@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import AppContext from '../app/AppContext';
+import AddWidgetButton from '../generic/AddWidgetButton';
 import { WidgetHead, WidgetType } from '../widgets/widget.d';
-import AddWidgetButton from './AddWidgetButton';
 
 type Props = { widgetType: WidgetType, onAddWidget: () => void };
 
-function AddWidgetEntry({ widgetType, onAddWidget }: Props) {
+function WidgetPickerEntry({ widgetType, onAddWidget }: Props) {
 
   const dispatchToApp = useContext(AppContext);
 
@@ -24,18 +24,18 @@ function AddWidgetEntry({ widgetType, onAddWidget }: Props) {
   }
 
   return (
-    <div className="add-widget-entry">
-      <header className="add-widget-entry-header">
-        <h2 className="add-widget-entry-heading">
+    <div className="widget-picker-entry">
+      <header className="widget-picker-entry-header">
+        <h2 className="widget-picker-entry-heading">
           {widgetType.name}
-          <img src={`icons/${widgetType.icon}.svg`} alt="" className="add-widget-entry-icon" />
+          <img src={`icons/${widgetType.icon}.svg`} alt="" className="widget-picker-entry-icon" />
         </h2>
         <AddWidgetButton onPressButton={addWidget} />
       </header>
-      <p className="add-widget-entry-description">{widgetType.description}</p>
+      <p className="widget-picker-entry-description">{widgetType.description}</p>
     </div>
   );
 
 }
 
-export default AddWidgetEntry;
+export default WidgetPickerEntry;

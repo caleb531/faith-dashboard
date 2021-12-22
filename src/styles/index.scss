@@ -8,6 +8,7 @@
 @import 'base/slider';
 
 @import 'generic/loading-indicator';
+@import 'generic/add-widget-button';
 @import 'generic/modal';
 @import 'generic/result-list';
 @import 'generic/audio-player';
@@ -18,8 +19,8 @@
 @import 'app/update-notification';
 @import 'app/app-footer';
 
-@import 'add-widget/add-widget';
-@import 'add-widget/add-widget-button';
+@import 'widget-picker/widget-picker';
+@import 'widget-picker/widget-picker-entry';
 
 @import 'widgets/widget-board';
 @import 'widgets/widget';

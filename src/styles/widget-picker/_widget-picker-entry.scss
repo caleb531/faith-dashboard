@@ -1,32 +1,20 @@
-.add-widget-header {
-  margin: 0 15px;
-}
-
-.add-widget-type-list,
-.add-widget-type-list-item {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  text-align: left;
-}
-
-.add-widget-entry-header {
+.widget-picker-entry-header {
   display: flex;
   align-items: center;
   padding-top: 15px;
 }
-.add-widget-entry-heading {
+.widget-picker-entry-heading {
   display: flex;
   align-items: center;
   flex-grow: 1;
   margin: 0;
 }
-.add-widget-entry-icon {
+.widget-picker-entry-icon {
   margin: 0 10px;
 }
 
 @each $theme-name, $theme-color in $theme-colors {
-  .theme-#{$theme-name} .add-widget-entry .add-widget-button {
+  .theme-#{$theme-name} .widget-picker-entry .add-widget-button {
     background-color: $theme-color;
     &:hover:active {
       background-color: darken($theme-color, 10%);
