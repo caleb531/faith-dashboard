@@ -1,25 +1,12 @@
 import HtmlReactParser from 'html-react-parser';
 import React from 'react';
-import { StateAction } from '../../global.d';
 import useUniqueFieldId from '../../useUniqueFieldId';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useWidgetShell from '../useWidgetShell';
 import { WidgetParameters } from '../widget.d';
 import WidgetShell from '../WidgetShell';
 import { BibleVerseData, BibleVerseWidgetState } from './bibleVerse.d';
-
-export function reducer(state: BibleVerseWidgetState, action: StateAction): BibleVerseWidgetState {
-  switch (action.type) {
-    case 'setVerseContent':
-      const verseContent = action.payload as string;
-      return { ...state, verseContent };
-    case 'setVerseQuery':
-      const verseQuery = action.payload as string;
-      return { ...state, verseQuery, verseContent: null };
-    default:
-      throw new ReferenceError(`action ${action.type} does not exist on reducer`);
-  }
-}
+import reducer from './BibleVerseReducer';
 
 const BibleVerseWidget = React.memo(function BibleVerseWidget({ widgetHead, provided }: WidgetParameters) {
 

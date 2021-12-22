@@ -1,4 +1,4 @@
-import { PodcastFeedData, PodcastListeningMetadataEntry, PodcastWidgetState } from './podcast.d';
+import { PodcastFeedData, PodcastWidgetState } from './podcast.d';
 
 export type PodcastAction =
   { type: 'setPodcastFeedData', payload: PodcastFeedData } |
@@ -8,7 +8,7 @@ export type PodcastAction =
   { type: 'setNowPlaying', payload: string } |
   { type: 'setIsPlaying', payload: boolean } |
   { type: 'setViewingNowPlaying', payload: boolean } |
-  { type: 'updateNowPlayingMetadata', payload: PodcastListeningMetadataEntry };
+  { type: 'updateNowPlayingMetadata', payload: { currentTime: number } };
 
 export default function reducer(state: PodcastWidgetState, action: PodcastAction): PodcastWidgetState {
   switch (action.type) {
