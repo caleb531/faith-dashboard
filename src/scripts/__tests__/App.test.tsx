@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import React from 'react';
-import App, { AppAction, reducer } from '../app/App';
+import App from '../app/App';
 import { AppState } from '../app/app.d';
+import reducer, { AppAction } from '../app/AppReducer';
 import { WidgetState } from '../widgets/widget.d';
 import { createWidget } from './__utils__/test-utils';
 

@@ -1,6 +1,5 @@
-import React, { Dispatch, useContext } from 'react';
+import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { AppAction } from '../app/App';
 import { AppContext } from '../app/AppContext';
 import { WidgetHead, WidgetType } from '../widgets/widget.d';
 import AddWidgetButton from './AddWidgetButton';
@@ -9,7 +8,7 @@ type Props = { widgetType: WidgetType, onAddWidget: () => void };
 
 function AddWidgetEntry({ widgetType, onAddWidget }: Props) {
 
-  const dispatchToApp: Dispatch<AppAction> = useContext(AppContext);
+  const dispatchToApp = useContext(AppContext);
 
   function addWidget() {
     dispatchToApp({

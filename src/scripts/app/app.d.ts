@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
-import { AppAction } from '../app/App';
 import { WidgetHead } from '../widgets/widget.d';
+import { AppAction } from './AppReducer';
 
 // An available color theme that can be set by the user to personalize their
 // app dashboard
