@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React, { Dispatch, useEffect, useRef } from 'react';
-import { JSONSerializable, StateAction } from '../global.d';
+import { JSONSerializable } from '../global.d';
+import { WidgetAction } from './useWidgetShell';
 import { WidgetState } from './widget.d';
 
 // The useWidgetDataFetcher() hook is a powerful hook that allows you to fetch
@@ -11,7 +12,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
   // The current state of the widget from the useWidgetShell() call
   widget: WidgetState,
   // The dispatch function from the useWidgetShell() call
-  dispatch: Dispatch<StateAction>,
+  dispatch: Dispatch<WidgetAction>,
   // A boolean function that should return true if the widget should fetch on
   // the initial render, and false otherwise; normally, this condition should
   // evaluate if the request data is populated, and if there is no cached

@@ -17,7 +17,7 @@ export function createNewWidget(widgetHead: WidgetHead): WidgetState {
   return { isSettingsOpen, ...widgetHead };
 }
 
-type WidgetAction =
+export type WidgetAction =
   { type: 'toggleSettings' } |
   { type: 'openSettings' } |
   { type: 'closeSettings' } |
@@ -38,7 +38,7 @@ export default function useWidgetShell<Action>(subReducer: (state: WidgetState, 
   // type-specific "sub-reducer" supplied above is merged into this larger
   // reducer; this allows the compoment for each widget type implementation to
   // reference the same widget state and dispatcher
-  function reducer(state: WidgetState, action: T & WidgetAction): WidgetState {
+  function reducer(state: WidgetState, action: WidgetAction): WidgetState {
     switch (action.type) {
       case 'toggleSettings':
         return { ...state, isSettingsOpen: !state.isSettingsOpen };
@@ -67,7 +67,7 @@ export default function useWidgetShell<Action>(subReducer: (state: WidgetState, 
         // omit it, simply pass `null` as the first argument to
         // useWidgetShell()
         if (subReducer) {
-          return subReducer(state, action);
+          return subReducer(state, action as Action);
         } else {
           return state;
         }

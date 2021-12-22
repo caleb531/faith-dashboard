@@ -1,10 +1,11 @@
 import React, { Dispatch, useCallback } from 'react';
 import AudioPlayer from '../../generic/audio-player/AudioPlayer';
+import { WidgetAction } from '../useWidgetShell';
 import { WidgetState } from '../widget.d';
 import { PodcastEpisode, PodcastFeedData, PodcastListeningMetadataEntry } from './podcast.d';
 import { PodcastAction } from './PodcastReducer';
 
-type Props = { widget: WidgetState, podcastFeedData: PodcastFeedData, podcastImage: string, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Dispatch<PodcastAction> };
+type Props = { widget: WidgetState, podcastFeedData: PodcastFeedData, podcastImage: string, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry, isPlaying: boolean, dispatch: Dispatch<PodcastAction | WidgetAction> };
 
 function PodcastNowPlaying({ widget, podcastFeedData, podcastImage, nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: Props) {
 
