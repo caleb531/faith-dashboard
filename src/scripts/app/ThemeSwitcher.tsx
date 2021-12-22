@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { AppTheme, AppThemeListItem } from './app.d';
-import { AppContext } from './AppContext';
+import AppContext from './AppContext';
 
 const themeList: AppThemeListItem[] = [
   {

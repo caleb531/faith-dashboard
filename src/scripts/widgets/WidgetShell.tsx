@@ -1,6 +1,6 @@
 import React, { Dispatch, useContext, useEffect } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
-import { AppContext } from '../app/AppContext';
+import AppContext from '../app/AppContext';
 import LoadingIndicator from '../generic/LoadingIndicator';
 import { StateAction } from '../global.d';
 import { WidgetState } from './widget.d';

@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import LoadingIndicator from '../generic/LoadingIndicator';
 import useLocalStorage from '../useLocalStorage';
 import { AppState } from './app.d';
-import { AppContext } from './AppContext';
+import AppContext from './AppContext';
 import AppFooter from './AppFooter';
 import AppHeader from './AppHeader';
 import reducer from './AppReducer';

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { AppContext } from '../app/AppContext';
+import AppContext from '../app/AppContext';
 import { WidgetHead, WidgetType } from '../widgets/widget.d';
 import AddWidgetButton from './AddWidgetButton';
 

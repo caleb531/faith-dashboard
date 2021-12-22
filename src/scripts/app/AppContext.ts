@@ -1,4 +1,5 @@
-import { createContext } from 'react';
-import { AppContextValue } from './app.d';
+import { createContext, Dispatch } from 'react';
+import { AppAction } from './AppReducer';
 
-export const AppContext = createContext(<AppContextValue>{});
+const AppContext = createContext<Dispatch<AppAction>>(null);
+export default AppContext;
