@@ -1,23 +1,10 @@
 import { debounce } from 'lodash-es';
 import React, { useMemo } from 'react';
-import { StateAction } from '../../global.d';
 import useWidgetShell from '../useWidgetShell';
 import { WidgetParameters } from '../widget.d';
 import WidgetShell from '../WidgetShell';
 import { NoteWidgetState } from './note.d';
-
-export function reducer(state: NoteWidgetState, action: StateAction): NoteWidgetState {
-  switch (action.type) {
-    case 'updateText':
-      const text = action.payload as string;
-      return { ...state, text };
-    case 'updateFontSize':
-      const fontSize = action.payload as number;
-      return { ...state, fontSize };
-    default:
-      throw new ReferenceError(`action ${action.type} does not exist on reducer`);
-  }
-}
+import reducer from './NoteReducer';
 
 const NoteWidget = React.memo(function NoteWidget({ widgetHead, provided }: WidgetParameters) {
 
