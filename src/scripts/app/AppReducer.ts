@@ -11,19 +11,19 @@ export type AppAction =
 export default function reducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
     case 'changeTheme':
-      const newTheme = action.payload as AppTheme;
+      const newTheme = action.payload;
       return { ...state, theme: newTheme };
     case 'addWidget':
-      const newWidget = action.payload as WidgetHead;
+      const newWidget = action.payload;
       return { ...state, widgets: [newWidget, ...state.widgets] };
     case 'removeWidget':
-      const widgetToRemove = action.payload as WidgetHead;
+      const widgetToRemove = action.payload;
       return {
         ...state,
         widgets: state.widgets.filter((widget) => widget.id !== widgetToRemove.id)
       };
     case 'moveWidget':
-      const { widgetToMove, sourceIndex, sourceColumn, destinationIndex, destinationColumn } = action.payload as WidgetMoveParameters;
+      const { widgetToMove, sourceIndex, sourceColumn, destinationIndex, destinationColumn } = action.payload;
       // The destination index from react-beautiful-dnd assumes that the
       // widget-to-move is still at the source index; however, because the
       // widget is about to be removed from its original position (via the
