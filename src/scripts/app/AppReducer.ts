@@ -1,5 +1,4 @@
 import { sortBy } from 'lodash-es';
-import { StateAction } from '../global.d';
 import { WidgetHead, WidgetMoveParameters } from '../widgets/widget';
 import { AppState, AppTheme } from './app.d';
 
@@ -9,7 +8,7 @@ export type AppAction =
   { type: 'removeWidget', payload: WidgetHead } |
   { type: 'moveWidget', payload: WidgetMoveParameters };
 
-export default function reducer(state: AppState, action: StateAction): AppState {
+export default function reducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
     case 'changeTheme':
       const newTheme = action.payload as AppTheme;
@@ -57,6 +56,6 @@ export default function reducer(state: AppState, action: StateAction): AppState 
       // will not alter the user order of widgets within the same column)
       return { ...state, widgets: sortBy(newWidgets, 'column') };
     default:
-      throw new ReferenceError(`action ${action.type} does not exist on reducer`);
+      return state;
   }
 }
