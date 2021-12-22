@@ -10,7 +10,7 @@ function useCachedAudio(cacheKey: string): [
   () => void
 ] {
 
-  const [audioElement, setAudioElement, removeAudioElement] = useCachedState<HTMLAudioElement>(`podcast-audio-${cacheKey}`, () => {
+  const [audioElement, setAudioElement, removeAudioElement] = useCachedState(`podcast-audio-${cacheKey}`, () => {
     return new Audio();
   });
 

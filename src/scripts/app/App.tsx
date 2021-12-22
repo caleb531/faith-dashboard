@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 import LoadingIndicator from '../generic/LoadingIndicator';
 import useLocalStorage from '../useLocalStorage';
-import { AppState } from './app.d';
 import AppContext from './AppContext';
 import AppFooter from './AppFooter';
 import AppHeader from './AppHeader';
@@ -15,7 +14,7 @@ const WidgetBoard = React.lazy(() => import('../widgets/WidgetBoard'));
 
 function App() {
 
-  const [restoreApp, saveApp] = useLocalStorage<AppState>('faith-dashboard-app', defaultApp);
+  const [restoreApp, saveApp] = useLocalStorage('faith-dashboard-app', defaultApp);
   const [app, dispatchToApp] = useReducer(reducer, null, () => restoreApp());
 
   // Serialize the app to localStorage whenever the app's state changes
