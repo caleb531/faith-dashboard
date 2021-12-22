@@ -2,10 +2,10 @@ import moment from 'moment';
 import React, { Dispatch } from 'react';
 import ResultList from '../../generic/ResultList';
 import { Result } from '../../generic/resultList.d';
-import { StateAction } from '../../global.d';
 import { PodcastEpisode, PodcastFeedData } from './podcast.d';
+import { PodcastAction } from './PodcastReducer';
 
-type Props = { podcastFeedData: PodcastFeedData, nowPlaying: PodcastEpisode, dispatch: Dispatch<StateAction> };
+type Props = { podcastFeedData: PodcastFeedData, nowPlaying: PodcastEpisode, dispatch: Dispatch<PodcastAction> };
 
 function PodcastEpisodeList({ podcastFeedData, nowPlaying, dispatch }: Props) {
 

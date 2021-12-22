@@ -1,12 +1,12 @@
 import React, { Dispatch } from 'react';
 import ResultList from '../../generic/ResultList';
 import { Result } from '../../generic/resultList.d';
-import { StateAction } from '../../global.d';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import { WidgetState } from '../widget.d';
 import { PodcastFeedData, PodcastInfo, PodcastWidgetState } from './podcast.d';
+import { PodcastAction } from './PodcastReducer';
 
-type Props = { widget: WidgetState, podcastList: PodcastInfo[], dispatch: Dispatch<StateAction> };
+type Props = { widget: WidgetState, podcastList: PodcastInfo[], dispatch: Dispatch<PodcastAction> };
 
 function PodcastPodcastList({ widget, podcastList, dispatch }: Props) {
 
