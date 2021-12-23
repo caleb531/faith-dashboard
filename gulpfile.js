@@ -6,7 +6,8 @@ const autoprefixer = require('gulp-autoprefixer');
 const webpack = require('webpack-stream');
 const webpackConfig = require('./webpack.config.js');
 const workboxBuild = require('workbox-build');
-const connect = require('gulp-connect');
+const ts = require('gulp-typescript');
+const tsConfig = require('./tsconfig.json');
 
 gulp.task('clean', () => {
   return del('dist/**');
@@ -44,6 +45,14 @@ gulp.task('webpack:watch', (cb) => {
   return gulp.src('src/scripts/index.tsx')
     .pipe(webpack(Object.assign({}, webpackConfig, { watch: true })))
     .pipe(gulp.dest('dist/scripts'));
+});
+gulp.task('ts', () => {
+  return gulp.src('src/server.ts')
+    .pipe(ts(tsConfig.compilerOptions))
+    .pipe(gulp.dest('dist'));
+});
+gulp.task('ts:watch', () => {
+  return gulp.watch('src/server.ts', gulp.series('ts'));
 });
 
 gulp.task('sw', () => {
@@ -83,13 +92,15 @@ gulp.task('build', gulp.series(
   gulp.parallel(
     'assets',
     'sass',
-    'webpack'
+    'webpack',
+    'ts'
   ),
   'sw'
 ));
 gulp.task('watch', gulp.parallel(
   'assets:watch',
   'webpack:watch',
+  'ts:watch',
   'sass:watch',
   'sw:watch'
 ));
@@ -99,10 +110,7 @@ gulp.task('build:watch', gulp.series(
 ));
 
 gulp.task('connect', () => {
-  connect.server({
-    root: 'dist',
-    host: '0.0.0.0'
-  });
+  require('./dist/server.js');
 });
 gulp.task('serve', gulp.series(
   'build',

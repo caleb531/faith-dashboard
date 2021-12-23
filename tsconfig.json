@@ -6,7 +6,7 @@
     "esModuleInterop": true
   },
   "include": [
-    "src/scripts/**/*",
+    "src/**/*",
     "./jest-setup.ts"
   ],
   "exclude": ["node_modules"]
