@@ -8,7 +8,7 @@ export default function (app: Express): void {
 
   app.get('/widgets/bible-verse/get-verse/:query', async (req, res) => {
 
-    const API_BASE_URL = 'https://api.esv.org/v3/passage/html/?';
+    const API_BASE_URL = 'https://api.esv.org/v3/passage/html/';
 
     if (!apiInfo) {
       res.json({ error: 'API key is missing' });
