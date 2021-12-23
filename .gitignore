@@ -15,7 +15,7 @@ coverage/
 .env
 
 # Private ESV API configuration
-api-credentials.json
+api-credentials.*
 
 # VS Code settings
 .vscode/

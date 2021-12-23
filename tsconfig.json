@@ -3,8 +3,7 @@
   "compilerOptions": {
     "jsx": "preserve",
     "noImplicitAny": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true
+    "esModuleInterop": true
   },
   "include": [
     "src/**/*",
