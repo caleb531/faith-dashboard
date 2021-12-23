@@ -10,7 +10,7 @@
   margin: 0;
 }
 .widget-picker-entry-icon {
-  margin: 0 10px;
+  margin-right: 10px;
 }
 
 @each $theme-name, $theme-color in $theme-colors {

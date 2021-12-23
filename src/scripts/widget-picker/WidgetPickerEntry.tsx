@@ -27,8 +27,8 @@ function WidgetPickerEntry({ widgetType, onAddWidget }: Props) {
     <div className="widget-picker-entry">
       <header className="widget-picker-entry-header">
         <h2 className="widget-picker-entry-heading">
-          {widgetType.name}
           <img src={`icons/${widgetType.icon}.svg`} alt="" className="widget-picker-entry-icon" />
+          {widgetType.name}
         </h2>
         <AddWidgetButton onPressButton={addWidget} />
       </header>
