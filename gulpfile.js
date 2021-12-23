@@ -46,21 +46,22 @@ gulp.task('webpack:watch', (cb) => {
     .pipe(webpack(Object.assign({}, webpackConfig, { watch: true })))
     .pipe(gulp.dest('dist/scripts'));
 });
-gulp.task('ts', () => {
-  return gulp.src('src/server.ts')
+gulp.task('ts:server', () => {
+  return gulp.src([
+      'src/server/**/*.ts'
+    ])
     .pipe(ts(tsConfig.compilerOptions))
-    .pipe(gulp.dest('dist'));
-});
-gulp.task('ts:watch', () => {
-  return gulp.watch('src/server.ts', gulp.series('ts'));
+    .pipe(gulp.dest('dist/server'));
 });
 
 gulp.task('sw', () => {
   return workboxBuild.injectManifest({
     globDirectory: 'dist',
     globPatterns: [
-      '**\/*.{js,css,png}',
-      'icons/*.svg'
+      'scripts/**/*.js',
+      'styles/*.css',
+      'icons/*.svg',
+      'app-icons/*.png'
     ],
     // Precaching index.html using templatedURLs fixes a "Response served by
     // service worker has redirections" error on iOS 12; see
@@ -93,14 +94,13 @@ gulp.task('build', gulp.series(
     'assets',
     'sass',
     'webpack',
-    'ts'
+    'ts:server'
   ),
   'sw'
 ));
 gulp.task('watch', gulp.parallel(
   'assets:watch',
   'webpack:watch',
-  'ts:watch',
   'sass:watch',
   'sw:watch'
 ));
@@ -110,7 +110,7 @@ gulp.task('build:watch', gulp.series(
 ));
 
 gulp.task('connect', () => {
-  require('./dist/server.js');
+  require('./dist/server/index.js');
 });
 gulp.task('serve', gulp.series(
   'build',

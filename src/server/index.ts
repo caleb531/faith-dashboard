@@ -4,6 +4,7 @@ import expressEnforcesSSL from 'express-enforces-ssl';
 import helmet from 'helmet';
 import { AddressInfo } from 'net';
 import path from 'path';
+import routeGetVerse from './widgets/widget-BibleVerse/get-verse';
 
 // Express server
 
@@ -21,10 +22,8 @@ app.use(compression());
 
 // Routes
 
-app.get('/widgets/*/*.js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-app.use(express.static(__dirname));
+routeGetVerse(app);
+app.use(express.static(path.dirname(__dirname)));
 
 // HTTP server wrapper
 
