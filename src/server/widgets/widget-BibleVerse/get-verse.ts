@@ -5,7 +5,6 @@ import fetch from 'node-fetch';
 import apiInfo from './api-credentials';
 
 export default function (app: Express): void {
-
   app.get('/widgets/bible-verse/get-verse/:query', async (req, res) => {
 
     const API_BASE_URL = 'https://api.esv.org/v3/passage/html/';
@@ -38,5 +37,4 @@ export default function (app: Express): void {
     res.status(response.status);
 
   });
-
 }
