@@ -25,7 +25,7 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({ widgetHead, prov
       return dispatch({ type: 'setVerseQuery', payload: newQuery });
     },
     getApiUrl: (query: typeof verseQuery) => {
-      return `widgets/BibleVerse/get-verse.php?q=${encodeURIComponent(query)}`;
+      return `widgets/bible-verse/get-verse/${encodeURIComponent(query)}`;
     },
     parseResponse: (response: BibleVerseData) => response.passages.join(''),
     hasResults: (data: typeof verseContent) => (data !== ''),
