@@ -26,8 +26,6 @@ export default function (app: Express): void {
       'include-audio-link': 'false'
     };
     const paramsStr = new URLSearchParams(params).toString();
-    console.log(req.params.query);
-    console.log(paramsStr);
     const response = await fetch(`${API_BASE_URL}?${paramsStr}`, {
       headers: { 'Authorization': `Token ${apiInfo.api_token}` }
     });
