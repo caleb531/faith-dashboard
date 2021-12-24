@@ -1,6 +1,4 @@
 import { Express } from 'express';
-// node-fetch v2 is required since TypeScript is compiling these ES6 import
-// calls to require() calls
 import fetch from 'node-fetch';
 import apiInfo from './api-credentials';
 
