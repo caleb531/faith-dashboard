@@ -10,8 +10,8 @@ export default function (app: Express): void {
     const API_BASE_URL = 'https://api.esv.org/v3/passage/html/';
 
     if (!apiInfo) {
-      res.json({ error: 'API key is missing' });
       res.status(500);
+      res.json({ error: 'API key is missing' });
     }
 
     const params = {
@@ -33,8 +33,8 @@ export default function (app: Express): void {
     });
     const data = await response.json();
 
-    res.json(data);
     res.status(response.status);
+    res.json(data);
 
   });
 }
