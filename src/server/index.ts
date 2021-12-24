@@ -4,9 +4,9 @@ import expressEnforcesSSL from 'express-enforces-ssl';
 import helmet from 'helmet';
 import { AddressInfo } from 'net';
 import path from 'path';
-import routeBibleVerseSearch from './widgets/widget-BibleVerse/search';
-import routePodcastFeedFetch from './widgets/widget-Podcast/get-feed';
-import routePodcastSearch from './widgets/widget-Podcast/search';
+import routeBibleVerseSearch from './widgets/widget-BibleVerse/bible-verse';
+import routePodcastFeedFetch from './widgets/widget-Podcast/feed';
+import routePodcastSearch from './widgets/widget-Podcast/podcast';
 
 // Express server
 
