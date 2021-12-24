@@ -9,7 +9,7 @@ type Props = { widget: WidgetState, podcastFeedData: PodcastFeedData, podcastIma
 
 function PodcastNowPlaying({ widget, podcastFeedData, podcastImage, nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: Props) {
 
-  const audioUrl = nowPlaying.enclosure['@attributes'].url;
+  const audioUrl = nowPlaying.enclosure.url;
   const currentTime = nowPlayingMetadata ? nowPlayingMetadata.currentTime : 0;
 
   const setCurrentTime = useCallback((newCurrentTime: number) => {

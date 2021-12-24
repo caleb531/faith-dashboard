@@ -25,7 +25,7 @@ export interface PodcastEpisodeMedia {
 
 export interface PodcastEpisode {
   description: object;
-  enclosure: { '@attributes': PodcastEpisodeMedia };
+  enclosure: PodcastEpisodeMedia;
   guid: PodcastEpisodeGuid;
   link: string;
   pubDate: string;
