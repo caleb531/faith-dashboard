@@ -14,8 +14,9 @@ coverage/
 # Private environment variables for deployment
 .env
 
-# Private ESV API configuration
+# Private API credentials
 api-credentials.*
+*.secret.*
 
 # VS Code settings
 .vscode/

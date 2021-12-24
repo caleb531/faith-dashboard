@@ -1,6 +1,6 @@
 import { Express } from 'express';
 import fetch from 'node-fetch';
-import apiInfo from './api-credentials';
+import apiInfo from './api-credentials.secret';
 
 const API_BASE_URL = 'https://api.esv.org/v3/passage/html/';
 
