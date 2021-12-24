@@ -8,9 +8,9 @@ import xml2js from 'xml2js';
 const MAX_EPISODE_COUNT = 50;
 
 export default function (app: Express): void {
-  app.get('/widgets/podcast/feed/:url', async (req, res) => {
+  app.get('/widgets/podcast/feed', async (req, res) => {
 
-    const response = await fetch(req.params.url);
+    const response = await fetch(String(req.query.url));
     const xmlStr = await response.text();
 
     const result = await xml2js.parseStringPromise(xmlStr, {

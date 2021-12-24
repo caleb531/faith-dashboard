@@ -5,7 +5,7 @@ import apiInfo from './api-credentials.secret';
 const API_BASE_URL = 'https://api.esv.org/v3/passage/html/';
 
 export default function (app: Express): void {
-  app.get('/widgets/bible-verse/search/:query', async (req, res) => {
+  app.get('/widgets/bible-verse', async (req, res) => {
 
     if (!apiInfo || !apiInfo.api_token) {
       res.status(500);
@@ -14,7 +14,7 @@ export default function (app: Express): void {
     }
 
     const params = new URLSearchParams({
-      'q': req.params.query,
+      'q': String(req.query.q),
       // The ESV API requires that all of these values are strings (either
       // 'true' or 'false')
       'include-footnotes': 'false',
