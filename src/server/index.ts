@@ -4,9 +4,9 @@ import expressEnforcesSSL from 'express-enforces-ssl';
 import helmet from 'helmet';
 import { AddressInfo } from 'net';
 import path from 'path';
-import routeBibleVerseSearch from './widgets/widget-BibleVerse/bible-verse';
-import routePodcastFeedFetch from './widgets/widget-Podcast/feed';
-import routePodcastSearch from './widgets/widget-Podcast/podcast';
+import routeBibleVerse from './widgets/widget-BibleVerse/bible-verse';
+import routePodcastFeed from './widgets/widget-Podcast/feed';
+import routePodcast from './widgets/widget-Podcast/podcast';
 
 // Express server
 
@@ -24,9 +24,9 @@ app.use(compression());
 
 // Routes
 
-routeBibleVerseSearch(app);
-routePodcastSearch(app);
-routePodcastFeedFetch(app);
+routeBibleVerse(app);
+routePodcast(app);
+routePodcastFeed(app);
 app.use(express.static(path.dirname(__dirname)));
 
 // HTTP server wrapper
