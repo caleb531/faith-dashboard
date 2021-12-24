@@ -84,6 +84,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
+    "gulp-nodemon": "^2.5.0",
     "gulp-noop": "^1.0.1",
     "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^3.0.0",

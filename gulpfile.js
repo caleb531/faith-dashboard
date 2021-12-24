@@ -8,6 +8,7 @@ const webpackConfig = require('./webpack.config.js');
 const workboxBuild = require('workbox-build');
 const ts = require('gulp-typescript');
 const tsConfig = require('./tsconfig.json');
+const nodemon = require('gulp-nodemon');
 
 gulp.task('clean', () => {
   return del('dist/**');
@@ -109,8 +110,15 @@ gulp.task('build:watch', gulp.series(
   'watch'
 ));
 
-gulp.task('connect', () => {
-  require('./dist/server/index.js');
+gulp.task('connect', (done) => {
+  nodemon({
+    script: './dist/server/index.js',
+    watch: ['src/server'],
+    ext: 'ts',
+    tasks: ['ts:server'],
+    env: { NODE_ENV: 'development' },
+    done
+  });
 });
 gulp.task('serve', gulp.series(
   'build',
