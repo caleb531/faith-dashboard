@@ -13,8 +13,10 @@ export default function (app: Express): void {
       return;
     }
 
-    const params = {
+    const params = new URLSearchParams({
       'q': req.params.query,
+      // The ESV API requires that all of these values are strings (either
+      // 'true' or 'false')
       'include-footnotes': 'false',
       'include-footnote-body': 'false',
       'include-chapter-numbers': 'false',
@@ -23,9 +25,8 @@ export default function (app: Express): void {
       'include-headings': 'false',
       'include-subheadings': 'false',
       'include-audio-link': 'false'
-    };
-    const paramsStr = new URLSearchParams(params).toString();
-    const response = await fetch(`${API_BASE_URL}?${paramsStr}`, {
+    });
+    const response = await fetch(`${API_BASE_URL}?${params}`, {
       headers: { 'Authorization': `Token ${apiInfo.api_token}` }
     });
     const data = await response.json();
