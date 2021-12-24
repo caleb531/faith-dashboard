@@ -2,10 +2,10 @@ import { Express } from 'express';
 import fetch from 'node-fetch';
 import apiInfo from './api-credentials';
 
+const API_BASE_URL = 'https://api.esv.org/v3/passage/html/';
+
 export default function (app: Express): void {
   app.get('/widgets/bible-verse/get-verse/:query', async (req, res) => {
-
-    const API_BASE_URL = 'https://api.esv.org/v3/passage/html/';
 
     if (!apiInfo || !apiInfo.api_token) {
       res.status(500);
