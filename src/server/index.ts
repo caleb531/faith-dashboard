@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import { AddressInfo } from 'net';
 import path from 'path';
 import routeGetVerse from './widgets/widget-BibleVerse/get-verse';
+import routeSearchPodcasts from './widgets/widget-Podcast/search-podcasts';
 
 // Express server
 
@@ -23,6 +24,7 @@ app.use(compression());
 // Routes
 
 routeGetVerse(app);
+routeSearchPodcasts(app);
 app.use(express.static(path.dirname(__dirname)));
 
 // HTTP server wrapper

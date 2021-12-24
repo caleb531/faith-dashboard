@@ -40,7 +40,7 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
       dispatch({ type: 'setPodcastQuery', payload: newPodcastQuery });
     },
     getApiUrl: (query: typeof podcastQuery) => {
-      return `widgets/Podcast/search-podcasts.php?q=${encodeURIComponent(query)}`;
+      return `widgets/podcast/search/${encodeURIComponent(query)}`;
     },
     parseResponse: (data: PodcastSearchResponse) => data.results,
     hasResults: (results: typeof podcastList) => results && results.length,
