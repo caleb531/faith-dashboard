@@ -21,22 +21,17 @@ npm install
 ### Obtain ESV API token (for use in the Bible app widget)
 
 In order for the Bible app widget to function locally, you must obtain an API
-token for the ESV API. Once you have it, create a file called `api.json` under
-`public/widgets/BibleVerse/` with the following contents:
+token for the [ESV API](https://api.esv.org/). Once you have it, create a file
+called `api-credentials.secret.ts` under
+`src/server/widgets/widget-BibleVerse/` with the following contents:
 
-```json
-{
-  "api_token": "YOUR_API_TOKEN_HERE"
-}
+```ts
+export default {
+  api_token: 'YOUR_API_TOKEN_HERE'
+};
 ```
 
 ### Run app
-
-Currently, because the ESV API does not support CORS, a PHP script is used to
-proxy requests to the API.
-
-This implies that the project will only run via Apache or nginx if you want to
-use the Bible Verse widget. But otherwise, you can run the local server like so:
 
 ```sh
 gulp serve
