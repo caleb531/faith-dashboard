@@ -120,7 +120,7 @@ gulp.task('connect', (done) => {
     tasks: ['ts:server'],
     env: {
       NODE_ENV: process.env.NODE_ENV || 'development',
-      ESV_API_TOKEN: process.env.ESV_API_TOKEN
+      ESV_API_KEY: process.env.ESV_API_KEY
     },
     done
   });

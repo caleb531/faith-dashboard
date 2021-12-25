@@ -25,7 +25,7 @@ token for the [ESV API](https://api.esv.org/). Once you have it, create a file
 called `.env` in the root of your repository with the following contents:
 
 ```
-ESV_API_TOKEN=PASTE_YOUR_API_TOKEN_HERE
+ESV_API_KEY=PASTE_YOUR_API_TOKEN_HERE
 ```
 
 ### Run app

@@ -6,9 +6,9 @@ const API_BASE_URL = 'https://api.esv.org/v3/passage/html/';
 export default function (app: Express): void {
   app.get('/widgets/bible-verse', async (req, res) => {
 
-    if (!process.env.ESV_API_TOKEN) {
+    if (!process.env.ESV_API_KEY) {
       res.status(500);
-      res.json({ error: 'API token is missing' });
+      res.json({ error: 'API key is missing' });
       return;
     }
 
@@ -26,7 +26,7 @@ export default function (app: Express): void {
       'include-audio-link': 'false'
     });
     const response = await fetch(`${API_BASE_URL}?${params}`, {
-      headers: { 'Authorization': `Token ${process.env.ESV_API_TOKEN}` }
+      headers: { 'Authorization': `Token ${process.env.ESV_API_KEY}` }
     });
     const data = await response.json();
 
