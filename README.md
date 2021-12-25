@@ -22,13 +22,10 @@ npm install
 
 In order for the Bible app widget to function locally, you must obtain an API
 token for the [ESV API](https://api.esv.org/). Once you have it, create a file
-called `api-credentials.secret.ts` under
-`src/server/widgets/widget-BibleVerse/` with the following contents:
+called `.env` in the root of your repository with the following contents:
 
-```ts
-export default {
-  api_token: 'YOUR_API_TOKEN_HERE'
-};
+```
+ESV_API_TOKEN=PASTE_YOUR_API_TOKEN_HERE
 ```
 
 ### Run app

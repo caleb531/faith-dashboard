@@ -9,6 +9,8 @@ const workboxBuild = require('workbox-build');
 const ts = require('gulp-typescript');
 const tsConfig = require('./tsconfig.json');
 const nodemon = require('gulp-nodemon');
+const dotenv = require('dotenv');
+dotenv.config();
 
 gulp.task('clean', () => {
   return del('dist/**');
@@ -116,7 +118,10 @@ gulp.task('connect', (done) => {
     watch: ['src/server'],
     ext: 'ts',
     tasks: ['ts:server'],
-    env: { NODE_ENV: 'development' },
+    env: {
+      NODE_ENV: 'development',
+      ESV_API_TOKEN: process.env.ESV_API_TOKEN
+    },
     done
   });
 });
