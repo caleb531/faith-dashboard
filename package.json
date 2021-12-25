@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "node dist/server/index.js",
     "build": "gulp build",
     "test": "jest"
   },
