@@ -31,7 +31,7 @@ app.use(helmet({
       // function, since it leverages the Workbox v5 CDN script
       'script-src': [ "'self'", 'https://storage.googleapis.com', "'unsafe-eval'" ],
       'child-src': [ "'self'" ],
-      'connect-src': [ "'self'" ],
+      'connect-src': [ "'self'", 'https://fonts.googleapis.com' ],
       'manifest-src': [ "'self'" ],
       // Podcast audio can be from any origin
       'media-src': [ '*' ]
