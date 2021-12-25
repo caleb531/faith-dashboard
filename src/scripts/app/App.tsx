@@ -27,7 +27,7 @@ function App() {
   return (
     <AppContext.Provider value={dispatchToApp}>
       <div className={`app theme-${app.theme}`}>
-          {navigator.serviceWorker ? (
+          {navigator.serviceWorker && window.location.port !== '8080' ? (
             <UpdateNotification />
           ) : null}
           <AppHeader theme={app.theme} />
