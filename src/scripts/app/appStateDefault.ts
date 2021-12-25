@@ -20,9 +20,10 @@ export default {
       column: 2
     },
     {
-      id: '0f0923aa-6ba1-4958-9168-41a5085a57c2',
-      type: 'Note',
-      column: 3
+      id: 'ac67b3fc-7c60-463a-b0cd-2301cb8e0b0a',
+      type: 'Podcast',
+      column: 3,
+      podcastQuery: 'sermon of the day'
     }
   ]
 } as AppState;
