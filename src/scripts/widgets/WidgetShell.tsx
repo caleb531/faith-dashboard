@@ -78,7 +78,7 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
         <div className="loading-indicator-blocking-container">
           <LoadingIndicator />
         </div>
-      ) : children}
+      ) : <div className="widget-contents">{children}</div>}
     </article>
   );
 

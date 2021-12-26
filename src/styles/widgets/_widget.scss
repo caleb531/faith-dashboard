@@ -10,7 +10,6 @@
   background-color: $dark-20;
   backdrop-filter: blur(10px);
   box-shadow: 0 3px 5px $dark-10;
-  overflow: hidden;
   color: $light-100;
   a {
     color: inherit;
@@ -20,6 +19,9 @@
     resize: none !important;
     height: auto !important;
   }
+}
+.widget-contents {
+  overflow: hidden;
 }
 
 .widget-controls {
@@ -39,9 +41,6 @@
 }
 
 .widget-control {
-  // Use pointer-events:none instead of visibility:hidden so that screen
-  // readers can still detect these controls for accessibility
-  pointer-events: none;
   // Disable text selection of these controls
   user-select: none;
   $control-size: 20px;
@@ -50,12 +49,15 @@
   padding: 0;
   margin-bottom: 10px;
   border-width: 0;
+  box-sizing: content-box;
   background: none;
   opacity: 0;
   transition: opacity 250ms ease-in-out;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
   .widget:hover & {
     opacity: 0.5;
-    pointer-events: auto;
   }
   &:active {
     opacity: 1 !important;
@@ -73,9 +75,21 @@
   $control-size: 24px;
   width: $control-size;
   height: $control-size;
+  position: relative;
+  margin-bottom: 0;
   cursor: grab;
   &:active {
     cursor: grabbing;
+  }
+}
+
+// Increase click area of drag control (for easier dragging)
+.widget-controls-left {
+  $drag-control-padding: 10px;
+  transform: translate(-$drag-control-padding, -$drag-control-padding);
+  .widget-drag-handle {
+    padding-top: $drag-control-padding;
+    padding-left: $drag-control-padding;
   }
 }
 
