@@ -22,7 +22,7 @@ function PodcastPodcastList({ widget, podcastList, dispatch }: Props) {
       dispatch({ type: 'setPodcastFeedUrl', payload: newPodcastFeedUrl });
     },
     getApiUrl: (feedUrl: typeof podcastFeedUrl) => {
-      return `widgets/podcast/feed?url=${encodeURIComponent(feedUrl)}`;
+      return `/widgets/podcast/feed?url=${encodeURIComponent(feedUrl)}`;
     },
     parseResponse: (data: {channel: PodcastFeedData}) => data.channel,
     hasResults: (data: typeof podcastFeedData) => data.item && data.item.length,
