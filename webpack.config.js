@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -20,6 +21,14 @@ module.exports = {
     filename: '[name].bundle.js'
   },
   plugins: [
-    // new BundleAnalyzerPlugin()
+    // By default, Webpack compiles all Moment locales into a single bundle,
+    // which substantially increases page weight; to fix, use the IgnorePlugin
+    // plugin to discard all locale files (the 'en' locale appears to be baked
+    // into the MomentJS core); see
+    // <https://github.com/jmblog/how-to-optimize-momentjs-with-webpack>
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/
+    })
   ]
 };
