@@ -14,4 +14,4 @@ $font-size-m: 1rem;
 $font-size-l: #{math.div($font-size-base + 1, $font-size-base)}rem;
 $font-size-xl: #{math.div($font-size-base + 2, $font-size-base)}rem;
 $font-size-xxl: #{math.div($font-size-base + 3, $font-size-base)}rem;
-$font-size-xxxl: #{math.div($font-size-base + 4, $font-size-base)}rem;
+$font-size-xxxl: #{math.div($font-size-base + 7, $font-size-base)}rem;
