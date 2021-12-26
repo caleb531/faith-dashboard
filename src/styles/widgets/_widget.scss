@@ -10,6 +10,7 @@
   background-color: $dark-20;
   backdrop-filter: blur(10px);
   box-shadow: 0 3px 5px $dark-10;
+  overflow: hidden;
   color: $light-100;
   a {
     color: inherit;
@@ -19,9 +20,6 @@
     resize: none !important;
     height: auto !important;
   }
-}
-.widget-contents {
-  overflow: hidden;
 }
 
 .widget-controls {
