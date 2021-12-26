@@ -1,4 +1,4 @@
-import { uniqueId } from 'lodash';
+import { uniqueId } from 'lodash-es';
 import { useState } from 'react';
 
 // The useUniqueFieldId() generates an ID for an HTML <input> in a way that
