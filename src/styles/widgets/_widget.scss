@@ -10,7 +10,6 @@
   background-color: $dark-20;
   backdrop-filter: blur(10px);
   box-shadow: 0 3px 5px $dark-10;
-  overflow: hidden;
   color: $light-100;
   a {
     color: inherit;
@@ -20,6 +19,9 @@
     resize: none !important;
     height: auto !important;
   }
+}
+.widget-contents {
+  overflow: hidden;
 }
 
 .widget-controls {
@@ -82,14 +84,14 @@
 }
 
 // Increase click area of drag control (for easier dragging)
-// .widget-controls-left {
-//   $drag-control-padding: 10px;
-//   transform: translate(-$drag-control-padding, -$drag-control-padding);
-//   .widget-drag-handle {
-//     padding-top: $drag-control-padding;
-//     padding-left: $drag-control-padding;
-//   }
-// }
+.widget-controls-left {
+  $drag-control-padding: 10px;
+  transform: translate(-$drag-control-padding, -$drag-control-padding);
+  .widget-drag-handle {
+    padding-top: $drag-control-padding;
+    padding-left: $drag-control-padding;
+  }
+}
 
 .widget-settings-open:hover .widget-settings-toggle {
   opacity: 1;
