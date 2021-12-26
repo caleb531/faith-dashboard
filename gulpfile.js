@@ -64,7 +64,11 @@ gulp.task('sw', () => {
       'scripts/**/*.js',
       'styles/*.css',
       'icons/*.svg',
-      'app-icons/*.png'
+      'app-icons/*.png',
+      // We need to invalidate index.html (and thus trigger a service worker
+      // update in the app) if the server entry point changes; this is because
+      // the index.html headers are controlled by this server file
+      'server/index.js'
     ],
     // Precaching index.html using templatedURLs fixes a "Response served by
     // service worker has redirections" error on iOS 12; see
