@@ -82,14 +82,14 @@
 }
 
 // Increase click area of drag control (for easier dragging)
-.widget-controls-left {
-  $drag-control-padding: 10px;
-  transform: translate(-$drag-control-padding, -$drag-control-padding);
-  .widget-drag-handle {
-    padding-top: $drag-control-padding;
-    padding-left: $drag-control-padding;
-  }
-}
+// .widget-controls-left {
+//   $drag-control-padding: 10px;
+//   transform: translate(-$drag-control-padding, -$drag-control-padding);
+//   .widget-drag-handle {
+//     padding-top: $drag-control-padding;
+//     padding-left: $drag-control-padding;
+//   }
+// }
 
 .widget-settings-open:hover .widget-settings-toggle {
   opacity: 1;
