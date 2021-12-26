@@ -24,14 +24,14 @@ app.use(helmet({
       /* eslint-disable quotes */
       'default-src': [ "'none'" ],
       'style-src': [ "'self'", "'unsafe-inline'", 'https://fonts.googleapis.com' ],
-      'font-src': [ "'self'", 'https://*.gstatic.com', 'data:' ],
+      'font-src': [ "'self'", 'https://fonts.gstatic.com', 'data:' ],
       // Podcast thumbnails can be from any origin
       'img-src': [ '*' ],
       // https://storage.googleapis.com is required for service worker to
       // function, since it leverages the Workbox v5 CDN script
       'script-src': [ "'self'", 'https://storage.googleapis.com', "'unsafe-eval'" ],
       'child-src': [ "'self'" ],
-      'connect-src': [ "'self'", 'https://fonts.googleapis.com', 'https://*.gstatic.com' ],
+      'connect-src': [ "'self'", 'https://fonts.googleapis.com', 'https://fonts.gstatic.com' ],
       'manifest-src': [ "'self'" ],
       // Podcast audio can be from any origin
       'media-src': [ '*' ]
