@@ -51,7 +51,7 @@
   &:hover {
     background-color: $dark-10;
   }
-  &:hover:active {
+  &:not([disabled]):hover:active {
     background-color: $dark-20;
   }
 }

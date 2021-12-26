@@ -16,7 +16,7 @@
 @each $theme-name, $theme-color in $theme-colors {
   .theme-#{$theme-name} .widget-picker-entry .add-widget-button {
     background-color: $theme-color;
-    &:hover:active {
+    &:not([disabled]):hover:active {
       background-color: darken($theme-color, 10%);
     }
   }
