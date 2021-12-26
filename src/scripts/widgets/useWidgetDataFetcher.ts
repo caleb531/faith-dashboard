@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { format } from 'date-fns';
 import React, { Dispatch, useEffect, useRef } from 'react';
 import { JSONSerializable } from '../global.d';
 import { WidgetAction } from './useWidgetShell';
@@ -108,9 +108,9 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
 
   // Returns true if the given UNIX timestamp (in milliseconds; generated from
   // Date.now()) matches today's date
-  const dateFormat = 'L';
+  const dateFormat = 'yyyy-MM-dd';
   function isDateToday(dateTime: number): boolean {
-    return moment(dateTime).format(dateFormat) === moment().format(dateFormat);
+    return format(dateTime || Date.now(), dateFormat) === format(Date.now(), dateFormat);
   }
 
   // Fetch the widget data when the widget initially loads (presuming the

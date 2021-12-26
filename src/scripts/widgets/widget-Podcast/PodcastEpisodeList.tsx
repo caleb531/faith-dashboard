@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { formatDistanceToNow } from 'date-fns';
 import React, { Dispatch } from 'react';
 import ResultList from '../../generic/ResultList';
 import { Result } from '../../generic/resultList.d';
@@ -24,7 +24,9 @@ function PodcastEpisodeList({ podcastFeedData, nowPlaying, dispatch }: Props) {
       return {
         id: episode.guid,
         title: episode.title,
-        subtitle: moment(episode.pubDate).fromNow()
+        subtitle: formatDistanceToNow(new Date(episode.pubDate), {
+          addSuffix: true
+        })
       };
     });
   }

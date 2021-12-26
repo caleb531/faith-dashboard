@@ -1,5 +1,4 @@
-import moment from 'moment';
-import 'moment-duration-format';
+import { intervalToDuration } from 'date-fns';
 import React from 'react';
 import LoadingIndicator from '../../generic/LoadingIndicator';
 import useUniqueFieldId from '../../useUniqueFieldId';
@@ -27,6 +26,25 @@ function AudioPlayer({ audioElementKey, audioUrl, currentTime, setCurrentTime, i
   useAudioTime(audioElement, audioUrl, currentTime, setCurrentTime);
   const { seekerProvided } = useAudioSeeker(audioElement, currentTime, setCurrentTime);
   const seekerFieldId = useUniqueFieldId('audio-player-seeker-slider');
+
+  // Zero-pad the given number if it's a single-digit; used for computing
+  // hh:mm:ss timestamps in the below formatSecondsAsTimestamp() function
+  function padWithZero(value: number): string {
+    return (value < 10) ? `0${value}` : String(value);
+  }
+
+  // Format the given number of seconds
+  function formatSecondsAsTimestamp(totalSeconds: number): string {
+    const { hours, minutes, seconds } = intervalToDuration({
+      start: 0,
+      end: Math.floor(totalSeconds) * 1000
+    });
+    if (hours) {
+      return [hours, padWithZero(minutes), padWithZero(seconds)].join(':');
+    } else {
+      return [minutes, padWithZero(seconds)].join(':');
+    }
+  }
 
   return (
     <div className="audio-player">
@@ -66,13 +84,13 @@ function AudioPlayer({ audioElementKey, audioUrl, currentTime, setCurrentTime, i
             {!audioElement.duration ?
               'Loading...' :
               audioElement.currentTime >= 1 ?
-              moment.duration(Math.floor(audioElement.currentTime), 'seconds').format() :
+              formatSecondsAsTimestamp(Math.floor(audioElement.currentTime)) :
               '0:00'
             }
           </span>
           <span className="audio-player-time-remaining">{audioElement.duration ?
             Math.round(audioElement.duration - audioElement.currentTime) > 0 ?
-            `-${moment.duration(audioElement.duration - audioElement.currentTime, 'seconds').format()}`
+            `-${formatSecondsAsTimestamp(audioElement.duration - audioElement.currentTime)}`
             : '0:00'
            : null}</span>
         </div>
