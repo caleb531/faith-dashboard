@@ -11,12 +11,17 @@
     margin-bottom: 0;
   }
   // ESV Copyright link
-  p:last-of-type {
+  p:not([class]) {
     margin-top: 0;
     position: absolute;
     bottom: 10px;
     right: 10px;
     font-size: $font-size-xxs;
+    // If the user fetches multiple verses, then multiple copyright links will
+    // be brought in; only show one of them
+    &:not(:last-of-type) {
+      display: none;
+    }
   }
 }
 .bible-verse-error {
