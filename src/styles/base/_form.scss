@@ -36,6 +36,7 @@ input[type=email],
 input[type=tel],
 input[type=url],
 button {
+  -webkit-appearance: none;
   padding-top: 5px;
   padding-bottom: 5px;
   font-family: $font-family-sans-serif;
