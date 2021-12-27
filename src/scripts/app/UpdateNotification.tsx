@@ -61,15 +61,12 @@ function UpdateNotification() {
     }
   }, [wb, isUpdating, availableUpdate]);
 
-  return (
-    <div className={`update-notification ${availableUpdate ? 'update-available' : ''}`} onClick={() => setIsUpdating(true)}>
-      {isUpdating ?
-        <LoadingIndicator /> :
-        <span className="update-notification-message">Update available! Click here to update.</span>
-      }
+  return availableUpdate ? (
+    <div className={`update-notification ${availableUpdate ? 'update-available' : ''} ${isUpdating ? 'is-updating' : ''}`} onClick={() => setIsUpdating(true)}>
+      {isUpdating ? <div className="update-loading-container"><LoadingIndicator /></div> : null}
+      <span className="update-notification-message">Update available! Click here to update.</span>
     </div>
-  );
-
+  ) : null;
 }
 
 export default UpdateNotification;
