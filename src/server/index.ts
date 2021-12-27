@@ -4,6 +4,7 @@ import expressEnforcesSSL from 'express-enforces-ssl';
 import helmet from 'helmet';
 import { AddressInfo } from 'net';
 import path from 'path';
+import { redirectWwwToNonWww } from './redirects';
 import routeBibleVerse from './widgets/widget-BibleVerse/bible-verse';
 import routePodcastFeed from './widgets/widget-Podcast/feed';
 import routePodcast from './widgets/widget-Podcast/podcast';
@@ -39,6 +40,9 @@ app.use(helmet({
     }
   }
 }));
+
+// Prefer the non-www version of the app
+app.use(redirectWwwToNonWww);
 
 // Serve assets using gzip compression
 app.use(compression());
