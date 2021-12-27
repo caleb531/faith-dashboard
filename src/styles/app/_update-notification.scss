@@ -25,3 +25,10 @@
   font-size: $font-size-m;
   font-weight: 400;
 }
+
+.update-notification .loading-indicator-icon {
+  $icon-max-size: 20px;
+  max-width: $icon-max-size;
+  max-height: $icon-max-size;
+  stroke: $light-100;
+}

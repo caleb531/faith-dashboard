@@ -4,6 +4,7 @@ import {
   Workbox,
   WorkboxLifecycleWaitingEvent as WaitingEvent
 } from 'workbox-window';
+import LoadingIndicator from '../generic/LoadingIndicator';
 
 // Update mechanism code borrowed from
 // <https://developers.google.com/web/tools/workbox/guides/advanced-recipes#offer_a_page_reload_for_users>
@@ -43,7 +44,8 @@ export function update(wb: Workbox, availableUpdate: WaitingEvent): void {
 
 function UpdateNotification() {
 
-  const [availableUpdate, setAvailableUpdate] = useState(null);
+  const [availableUpdate, setAvailableUpdate] = useState(null as WaitingEvent);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [wb] = useState(() => new Workbox('service-worker.js'));
 
   // Initialize service worker when component is first loaded
@@ -51,9 +53,20 @@ function UpdateNotification() {
     initialize(wb, setAvailableUpdate);
   }, [wb, setAvailableUpdate]);
 
+  // Make sure the service worker updates asynchronously so that we can show a
+  // loading indicator in the UI
+  useEffect(() => {
+    if (isUpdating) {
+      update(wb, availableUpdate);
+    }
+  }, [wb, isUpdating, availableUpdate]);
+
   return (
-    <div className={`update-notification ${availableUpdate ? 'update-available' : ''}`} onClick={() => update(wb, availableUpdate)}>
-      <span className="update-notification-message">Update available! Click here to update.</span>
+    <div className={`update-notification ${availableUpdate ? 'update-available' : ''}`} onClick={() => setIsUpdating(true)}>
+      {isUpdating ?
+        <LoadingIndicator /> :
+        <span className="update-notification-message">Update available! Click here to update.</span>
+      }
     </div>
   );
 

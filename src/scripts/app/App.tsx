@@ -12,6 +12,15 @@ import useThemeForEntirePage from './useThemeForEntirePage';
 // Lazy-load the widget board since react-beautiful-dnd is a large dependency
 const WidgetBoard = React.lazy(() => import('../widgets/WidgetBoard'));
 
+// Return a truthy value if the app's service worker should be loaded; the
+// service worker always loads in a Production environment; however, by
+// default, the service workr is *not* loaded in a local environment because
+// other projects use localhost; this can be overridden via a single
+// sessionStorage entry
+function shouldLoadServiceWorker() {
+  return navigator.serviceWorker && (window.location.port !== '8080' || sessionStorage.getItem('forceServiceWorkerInLocalhost'));
+}
+
 function App() {
 
   const [restoreApp, saveApp] = useLocalStorage('faith-dashboard-app', defaultApp);
@@ -27,7 +36,7 @@ function App() {
   return (
     <AppContext.Provider value={dispatchToApp}>
       <div className={`app theme-${app.theme}`}>
-          {navigator.serviceWorker && window.location.port !== '8080' ? (
+          {shouldLoadServiceWorker() ? (
             <UpdateNotification />
           ) : null}
           <AppHeader theme={app.theme} />
