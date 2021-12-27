@@ -35,7 +35,7 @@ function App() {
 
   return (
     <AppContext.Provider value={dispatchToApp}>
-      <div className={`app theme-${app.theme}`}>
+      <div className={`app theme-${app.theme} ${window.ontouchstart !== undefined ? 'is-touch-device' : 'is-not-touch-device'}`}>
           {shouldLoadServiceWorker() ? (
             <UpdateNotification />
           ) : null}
