@@ -17,6 +17,9 @@
     width: $icon-size;
     height: $icon-size;
   }
+  .loading-indicator-icon {
+    stroke-width: 6;
+  }
 }
 
 .audio-player-playpause-icon {
