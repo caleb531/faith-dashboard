@@ -18,6 +18,9 @@
   padding: 20px 30px;
   font-family: inherit;
   color: $light-100;
+  // Disable resize on the textarea since it should automatically fit to the
+  // widget container, which is itself resizable
+  resize: none;
   &:focus {
     outline-width: 0;
     box-shadow: inset 0 0 0 1px $light-100;
