@@ -13,7 +13,7 @@ export const contentSecurityPolicy = {
     'img-src': [ '*' ],
     // https://storage.googleapis.com is required for service worker to
     // function, since it leverages the Workbox v5 CDN script
-    'script-src': [ "'self'", 'https://storage.googleapis.com', "'unsafe-eval'" ],
+    'script-src': [ "'self'", 'https://storage.googleapis.com', "https://www.googletagmanager.com", "'unsafe-inline'", "'unsafe-eval'" ],
     'child-src': [ "'self'" ],
     'connect-src': [ "'self'", 'https://fonts.googleapis.com', 'https://fonts.gstatic.com' ],
     'manifest-src': [ "'self'" ],
