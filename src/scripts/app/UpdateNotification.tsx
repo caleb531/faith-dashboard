@@ -44,7 +44,7 @@ export function update(wb: Workbox, availableUpdate: WaitingEvent): void {
 
 function UpdateNotification() {
 
-  const [availableUpdate, setAvailableUpdate] = useState(null as WaitingEvent);
+  const [availableUpdate, setAvailableUpdate] = useState<WaitingEvent>(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [wb] = useState(() => new Workbox('service-worker.js'));
 
