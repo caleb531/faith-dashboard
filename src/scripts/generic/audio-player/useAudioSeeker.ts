@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 // The useAudioSeeker() hook provides attributes that you can attach to an a
 // range input (representing your seeker) for the purpose of synchronizing that
@@ -9,10 +9,6 @@ function useAudioSeeker(audioElement: HTMLAudioElement, currentTime: number, set
   onChange: (event: React.FormEvent) => void,
   onMouseUp: () => void
 } } {
-
-  // Store a ref to the input slider so we can change it dynamically without
-  // causing excessive renders on every miniscule slider movement
-  const seekerInputRef: {current: HTMLInputElement} = useRef(null);
 
   // Apply a "fill" to the seeker slider in a cross-browser manner using a CSS
   // gradient
@@ -39,9 +35,7 @@ function useAudioSeeker(audioElement: HTMLAudioElement, currentTime: number, set
 
   // Persist the user's seeking of the audio to the playback metadata
   function seekAudio(event: React.FormEvent): void {
-    if (seekerInputRef) {
-      audioElement.currentTime = parseFloat((event.target as HTMLInputElement).value);
-    }
+    audioElement.currentTime = parseFloat((event.target as HTMLInputElement).value);
   }
 
   // The following object is to be spread (...) into the element used for the

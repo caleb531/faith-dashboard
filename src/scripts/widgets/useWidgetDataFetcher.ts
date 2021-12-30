@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import React, { Dispatch, useEffect, useRef } from 'react';
+import React, { Dispatch, RefObject, useEffect, useRef } from 'react';
 import { JSONSerializable } from '../global.d';
 import { WidgetAction } from './useWidgetShell';
 import { WidgetState } from './widget.d';
@@ -58,7 +58,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
   // A reference to an HTML <input> element to which the request query should
   // be bound; this ref should be attached to whatever <input> you are
   // rendering into your widget's settings UI that represents the request query
-  requestQueryInputRef: { current: HTMLInputElement },
+  requestQueryInputRef: RefObject<HTMLInputElement>,
   // The submit handler; you should attach this to the <form> element in your
   // widget settings so that the request query can be set on the widget state
   // when the form is submitted
@@ -92,7 +92,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
   }
 
   // Store a ref to the input element to which the request data will be bound
-  const requestQueryInputRef: {current: HTMLInputElement} = useRef(null);
+  const requestQueryInputRef = useRef<HTMLInputElement>(null);
 
   // In order to avoid excessive renders, the <input> field for the user's
   // request data is uncontrolled, and instead, the user must explicitly submit
