@@ -10,6 +10,7 @@
   background-color: $dark-20;
   backdrop-filter: blur(10px);
   box-shadow: 0 3px 5px $dark-10;
+  overflow: hidden;
   color: $light-100;
   a {
     color: inherit;
@@ -22,7 +23,6 @@
 }
 .widget-contents {
   border-radius: inherit;
-  overflow: hidden;
 }
 
 .widget-controls {
@@ -86,7 +86,7 @@
 
 // Increase click area of drag control (for easier dragging)
 .widget-controls-left {
-  $drag-control-padding: 10px;
+  $drag-control-padding: 5px;
   transform: translate(-$drag-control-padding, -$drag-control-padding);
   .widget-drag-handle {
     padding-top: $drag-control-padding;
