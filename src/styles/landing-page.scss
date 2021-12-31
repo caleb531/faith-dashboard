@@ -34,6 +34,13 @@ h3 {
 
 img {
   vertical-align: middle;
+  &.block-image {
+    display: block;
+    max-width: 50%;
+    margin: 20px auto;
+    border: solid 1px rgba(#fff, 0.25);
+    border-radius: 5px;
+  }
 }
 
 button[type] {
