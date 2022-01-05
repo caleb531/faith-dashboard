@@ -47,7 +47,7 @@ export default function useWidgetShell<Action>(subReducer: (state: WidgetState, 
       case 'closeSettings':
         return { ...state, isSettingsOpen: false };
       case 'resizeWidget':
-        return { ...state, height: action.payload as number };
+        return { ...state, height: action.payload };
       case 'showLoading':
         return { ...state, isLoading: true };
       case 'showContent':
@@ -59,7 +59,7 @@ export default function useWidgetShell<Action>(subReducer: (state: WidgetState, 
           lastFetchDateTime: Date.now()
         };
       case 'setFetchError':
-        return { ...state, isLoading: false, fetchError: action.payload as string };
+        return { ...state, isLoading: false, fetchError: action.payload };
       case 'markWidgetForRemoval':
           return { ...state, isMarkedForRemoval: true };
       default:

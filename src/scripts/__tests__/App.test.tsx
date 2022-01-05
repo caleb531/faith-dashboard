@@ -3,8 +3,7 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import App from '../app/App';
 import { AppState } from '../app/app.d';
-import reducer, { AppAction } from '../app/AppReducer';
-import { WidgetState } from '../widgets/widget.d';
+import reducer from '../app/AppReducer';
 import { createWidget } from './__utils__/test-utils';
 
 describe('App Component', function () {
@@ -15,29 +14,29 @@ describe('App Component', function () {
   });
 
   it('should change theme', function () {
-    const app: AppState = { widgets: [] as WidgetState[], theme: 'teal' };
+    const app: AppState = { widgets: [], theme: 'teal' };
     expect(reducer(
       app,
-      { type: 'changeTheme', payload: 'rose' } as AppAction
+      { type: 'changeTheme', payload: 'rose' }
     )).toEqual({ widgets: [], theme: 'rose' });
   });
 
   it('should add widget as only widget', function () {
-    const app: AppState = { theme: 'teal', widgets: [] as WidgetState[] };
+    const app: AppState = { theme: 'teal', widgets: [] };
     const newWidget = createWidget({ column: 1 });
     expect(reducer(
       app,
-      { type: 'addWidget', payload: newWidget } as AppAction
+      { type: 'addWidget', payload: newWidget }
     )).toEqual({ theme: 'teal', widgets: [newWidget] });
   });
 
   it('should add widget to front of array', function () {
-    const widgets = [createWidget({ column: 2 })] as WidgetState[];
+    const widgets = [createWidget({ column: 2 })];
     const app: AppState = { theme: 'teal', widgets: widgets };
     const newWidget = createWidget({ column: 1 });
     expect(reducer(
       app,
-      { type: 'addWidget', payload: newWidget } as AppAction
+      { type: 'addWidget', payload: newWidget }
     )).toEqual({ theme: 'teal', widgets: [newWidget].concat(widgets) });
   });
 
@@ -46,11 +45,18 @@ describe('App Component', function () {
       createWidget({ column: 2 }),
       createWidget({ column: 1 }),
       createWidget({ column: 3 })
-    ] as WidgetState[];
+    ];
     const app: AppState = { theme: 'teal', widgets };
     expect(reducer(
       app,
-      { type: 'removeWidget', payload: { id: widgets[1].id } } as AppAction
+      {
+        type: 'removeWidget',
+        payload: {
+          id: widgets[1].id,
+          type: null,
+          column: null
+        }
+      }
     )).toEqual({ theme: 'teal', widgets: [widgets[0], widgets[2]] });
   });
 
@@ -60,7 +66,7 @@ describe('App Component', function () {
       createWidget({ column: 1 }),
       createWidget({ column: 2 }),
       createWidget({ column: 3 })
-    ] as WidgetState[];
+    ];
     const app: AppState = { theme: 'teal', widgets };
     expect(reducer(
       app,
@@ -83,7 +89,7 @@ describe('App Component', function () {
       createWidget({ column: 1 }),
       createWidget({ column: 2 }),
       createWidget({ column: 3 })
-    ] as WidgetState[];
+    ];
     const app: AppState = { theme: 'teal', widgets };
     expect(reducer(
       app,
@@ -106,7 +112,7 @@ describe('App Component', function () {
       createWidget({ column: 1 }),
       createWidget({ column: 1 }),
       createWidget({ column: 3 })
-    ] as WidgetState[];
+    ];
     const app: AppState = { theme: 'teal', widgets };
     expect(reducer(
       app,

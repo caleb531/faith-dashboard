@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import AppContext from '../app/AppContext';
 import AddWidgetButton from '../generic/AddWidgetButton';
-import { WidgetHead, WidgetType } from '../widgets/widget.d';
+import { WidgetType } from '../widgets/widget.d';
 
 type Props = { widgetType: WidgetType, onAddWidget: () => void };
 
@@ -17,7 +17,7 @@ function WidgetPickerEntry({ widgetType, onAddWidget }: Props) {
         id: uuidv4(),
         type: widgetType.type,
         column: 1
-      } as WidgetHead
+      }
     });
     // Call user-defined callback passed to component
     onAddWidget();
