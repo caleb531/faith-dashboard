@@ -1,18 +1,16 @@
-<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"  xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"  xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <!-- a widget representing a section of the Cross -->
-    <rect id="fd-widget" x="-1" y="-1" width="2" height="2" />
+    <rect id="fd-widget" x="-3" y="-3" width="6" height="6" />
   </defs>
   <!-- canvas background -->
-  <rect x="0" y="0" width="100%" height="100%" fill="#fff" rx="3" ry="3" />
+  <rect x="0" y="0" width="100%" height="100%" fill="#fff" />
   <!-- vertical beam (from top to bottom) -->
-  <use xlink:href="#fd-widget" x="8" y="2" fill="#177" />
-  <use xlink:href="#fd-widget" x="8" y="5" fill="#875" />
-  <use xlink:href="#fd-widget" x="8" y="8" fill="#875" />
-  <use xlink:href="#fd-widget" x="8" y="11" fill="#875" />
-  <use xlink:href="#fd-widget" x="8" y="14" fill="#875" />
+  <use xlink:href="#fd-widget" x="16" y="4" fill="#177" />
+  <use xlink:href="#fd-widget" x="16" y="12" fill="#875" />
+  <use xlink:href="#fd-widget" x="16" y="20" fill="#875" />
+  <use xlink:href="#fd-widget" x="16" y="28" fill="#875" />
   <!-- horizontal beam (from left to right) -->
-  <use xlink:href="#fd-widget" x="5" y="5" fill="#474" />
-  <use xlink:href="#fd-widget" x="5" y="5" fill="#474" />
-  <use xlink:href="#fd-widget" x="11" y="5" fill="#36a" />
+  <use xlink:href="#fd-widget" x="8" y="12" fill="#474" />
+  <use xlink:href="#fd-widget" x="24" y="12" fill="#36a" />
 </svg>
