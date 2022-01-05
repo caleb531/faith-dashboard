@@ -8,7 +8,7 @@ import { WidgetState } from './widget.d';
 // arbitrary data from an API endpoint given some user-supplied request query
 // that's part of your widget; see the built-in widgets like BibleVerse or
 // Podcast for examples on how this hook is used
-export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInitially, requestQuery, setRequestQuery, getApiUrl, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
+export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInitially, fetchFrequency, requestQuery, setRequestQuery, getApiUrl, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
   // The current state of the widget from the useWidgetShell() call
   widget: WidgetState,
   // The dispatch function from the useWidgetShell() call
@@ -18,6 +18,9 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
   // evaluate if the request data is populated, and if there is no cached
   // content
   shouldFetchInitially: () => any,
+  // Optional; a rough amount of time that must pass before the widget attempts
+  // to fetch the latest widget data
+  fetchFrequency?: 'daily',
   // The user-entered query string to be used in building the API request
   requestQuery: string,
   // Receives the user-entered query as its only argument, and
@@ -122,7 +125,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
     // trigger this effect to run, and if there was a fetch error, cause an
     // infinite loop; to fix this, we stop fetching if the previous fetch
     // resulted in an error
-    if ((shouldFetchInitially() || !isDateToday(widget.lastFetchDateTime)) && !isLoading && !fetchError) {
+    if ((shouldFetchInitially() || (fetchFrequency && !isDateToday(widget.lastFetchDateTime))) && !isLoading && !fetchError) {
       fetchWidgetData(requestQuery);
     }
     // The React Docs suggest using an empty array when we only want a hook to

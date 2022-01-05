@@ -7,7 +7,7 @@ import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useWidgetShell from '../useWidgetShell';
 import { WidgetParameters } from '../widget.d';
 import WidgetShell from '../WidgetShell';
-import { PodcastInfo, PodcastSearchResponse, PodcastWidgetState } from './podcast.d';
+import { PodcastFeedData, PodcastInfo, PodcastSearchResponse, PodcastWidgetState } from './podcast.d';
 import PodcastEpisodeList from './PodcastEpisodeList';
 import PodcastNowPlaying from './PodcastNowPlaying';
 import PodcastPodcastList from './PodcastPodcastList';
@@ -57,6 +57,30 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
     getErrorMessage: (error: Error) => 'Error Searching for Podcasts'
   });
 
+  const feedFetcher = useWidgetDataFetcher({
+    widget: state,
+    dispatch,
+    shouldFetchInitially: () => podcastFeedUrl && !podcastFeedData,
+    fetchFrequency: 'daily',
+    requestQuery: podcastFeedUrl,
+    setRequestQuery: (newPodcastFeedUrl: typeof podcastFeedUrl) => {
+      dispatch({ type: 'setPodcastFeedUrl', payload: newPodcastFeedUrl });
+    },
+    getApiUrl: (feedUrl: typeof podcastFeedUrl) => {
+      return `/widgets/podcast/feed?url=${encodeURIComponent(feedUrl)}`;
+    },
+    parseResponse: (data: {channel: PodcastFeedData}) => data.channel,
+    hasResults: (data: typeof podcastFeedData) => data.item && data.item.length,
+    onSuccess: (data: typeof podcastFeedData) => {
+      dispatch({
+        type: 'setPodcastFeedData',
+        payload: data
+      });
+    },
+    getNoResultsMessage: (data: typeof podcastFeedData) => 'No Podcasts Found',
+    getErrorMessage: (error: Error) => 'Error Fetching Podcast'
+  });
+
   // Pause the audio in case it's still playing when the user removes the
   // widget from their dashboard
   useWidgetCleanupOnRemove(state, () => {
@@ -96,6 +120,7 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
             <PodcastPodcastList
               widget={state}
               podcastList={podcastList}
+              fetchPodcastFeed={feedFetcher.fetchWidgetData}
               dispatch={dispatch} />
           </div>
         ) : podcastFeedUrl && podcastFeedData && nowPlaying && viewingNowPlaying ? (
