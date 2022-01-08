@@ -15,7 +15,7 @@ export const contentSecurityPolicy = {
     // function, since it leverages the Workbox v5 CDN script
     'script-src': [ "'self'", 'https://storage.googleapis.com', "https://www.googletagmanager.com", "'unsafe-inline'", "'unsafe-eval'" ],
     'child-src': [ "'self'" ],
-    'connect-src': [ "'self'", 'https://fonts.googleapis.com', 'https://fonts.gstatic.com' ],
+    'connect-src': [ "'self'", 'https://fonts.googleapis.com', 'https://fonts.gstatic.com', 'https://www.google-analytics.com' ],
     'manifest-src': [ "'self'" ],
     // Podcast audio can be from any origin
     'media-src': [ '*' ]
