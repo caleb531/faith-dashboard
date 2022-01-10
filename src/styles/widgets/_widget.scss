@@ -51,7 +51,7 @@
   margin-bottom: 10px;
   border-width: 0;
   box-sizing: content-box;
-  background: none;
+  background: none !important;
   opacity: 0.5;
   transition: opacity 250ms ease-in-out;
   &:last-of-type {
