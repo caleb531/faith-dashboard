@@ -32,6 +32,22 @@
 .podcast-episode-count {
   font-size: $font-size-xxs;
   color: $light-50;
+  vertical-align: middle;
+}
+.podcast-episodes-refresh-control {
+  opacity: 0.5;
+  $icon-size: 16px;
+  width: $icon-size;
+  height: $icon-size;
+  margin-left: 5px;
+  vertical-align: middle;
+  .is-not-touch-device .widget:not(:hover) & {
+    opacity: 0.5;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .podcast-error {

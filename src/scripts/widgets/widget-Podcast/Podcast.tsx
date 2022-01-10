@@ -134,8 +134,10 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
             dispatch={dispatch} />
         ) : podcastFeedUrl && podcastFeedData && !viewingNowPlaying ? (
           <PodcastEpisodeList
+            podcastFeedUrl={podcastFeedUrl}
             podcastFeedData={podcastFeedData}
             nowPlaying={nowPlaying}
+            fetchPodcastFeed={feedFetcher.fetchWidgetData}
             dispatch={dispatch} />
         ) : null}
       </section>
