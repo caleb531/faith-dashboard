@@ -11,7 +11,7 @@
     margin-bottom: 0;
   }
   // ESV Copyright link
-  p:not([class]) {
+  p:not([class]):not([id]) {
     margin-top: 0;
     position: absolute;
     bottom: 10px;
