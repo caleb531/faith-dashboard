@@ -40,7 +40,7 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
       dispatch({ type: 'setPodcastQuery', payload: newPodcastQuery });
     },
     getApiUrl: (query: typeof podcastQuery) => {
-      return `/widgets/podcast?q=${encodeURIComponent(query)}`;
+      return `/api/widgets/podcast?q=${encodeURIComponent(query)}`;
     },
     parseResponse: (data: PodcastSearchResponse) => data.results,
     hasResults: (results: typeof podcastList) => results && results.length,
@@ -67,7 +67,7 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
       dispatch({ type: 'setPodcastFeedUrl', payload: newPodcastFeedUrl });
     },
     getApiUrl: (feedUrl: typeof podcastFeedUrl) => {
-      return `/widgets/podcast/feed?url=${encodeURIComponent(feedUrl)}`;
+      return `/api/widgets/podcast/feed?url=${encodeURIComponent(feedUrl)}`;
     },
     parseResponse: (data: {channel: PodcastFeedData}) => data.channel,
     hasResults: (data: typeof podcastFeedData) => data.item && data.item.length,
