@@ -3,6 +3,7 @@ import LoadingIndicator from '../generic/LoadingIndicator';
 import useLocalStorage from '../useLocalStorage';
 import AppContext from './AppContext';
 import AppFooter from './AppFooter';
+import AppHead from './AppHead';
 import AppHeader from './AppHeader';
 import reducer from './AppReducer';
 import defaultApp from './appStateDefault';
@@ -42,6 +43,7 @@ function App() {
 
   return (
     <AppContext.Provider value={dispatchToApp}>
+      <AppHead />
       <div className={`app theme-${app.theme} ${isTouchDevice() ? 'is-touch-device' : 'is-not-touch-device'}`}>
           {shouldLoadServiceWorker() ? (
             <UpdateNotification />
