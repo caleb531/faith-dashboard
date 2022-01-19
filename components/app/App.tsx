@@ -18,7 +18,12 @@ const WidgetBoard = React.lazy(() => import('../widgets/WidgetBoard'));
 // other projects use localhost; this can be overridden via a single
 // sessionStorage entry
 function shouldLoadServiceWorker() {
-  return navigator.serviceWorker && (window.location.port !== '8080' || sessionStorage.getItem('forceServiceWorkerInLocalhost'));
+  return typeof navigator !== 'undefined' && navigator.serviceWorker && (window.location.port !== '8080' || sessionStorage.getItem('forceServiceWorkerInLocalhost'));
+}
+
+// Return true if the user agent is a touch device; otherwise, return false
+function isTouchDevice(): boolean {
+  return typeof window !== 'undefined' && window.ontouchstart !== undefined;
 }
 
 function App() {
@@ -35,7 +40,7 @@ function App() {
 
   return (
     <AppContext.Provider value={dispatchToApp}>
-      <div className={`app theme-${app.theme} ${window.ontouchstart !== undefined ? 'is-touch-device' : 'is-not-touch-device'}`}>
+      <div className={`app theme-${app.theme} ${isTouchDevice() ? 'is-touch-device' : 'is-not-touch-device'}`}>
           {shouldLoadServiceWorker() ? (
             <UpdateNotification />
           ) : null}

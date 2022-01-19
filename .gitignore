@@ -13,6 +13,10 @@ coverage/
 
 # Private environment variables for deployment
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Private API credentials
 api-credentials.*
@@ -20,3 +24,18 @@ api-credentials.*
 
 # VS Code settings
 .vscode/
+
+# NextJS
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo

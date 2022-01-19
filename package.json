@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node dist/server/index.js",
-    "build": "gulp build",
-    "test": "jest"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "compression": "^1.7.4",
@@ -15,6 +15,7 @@
     "helmet": "^4.6.0",
     "html-react-parser": "^1.4.0",
     "lodash-es": "^4.17.21",
+    "next": "^12.0.8",
     "node-fetch": "^2.6.6",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",
