@@ -17,7 +17,10 @@ const WidgetBoard = React.lazy(() => import('../widgets/WidgetBoard'));
 // other projects use localhost; this can be overridden via a single
 // sessionStorage entry
 function shouldLoadServiceWorker() {
-  return typeof navigator !== 'undefined' && navigator.serviceWorker && (window.location.port !== '8080' || sessionStorage.getItem('forceServiceWorkerInLocalhost'));
+  // TODO: re-enable service worker once file is properly generated using
+  // NextJS
+  return false;
+  // return typeof navigator !== 'undefined' && navigator.serviceWorker && (window.location.port !== '8080' || sessionStorage.getItem('forceServiceWorkerInLocalhost'));
 }
 
 // Return true if the user agent is a touch device; otherwise, return false
