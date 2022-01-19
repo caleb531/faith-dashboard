@@ -42,7 +42,9 @@ function App() {
             <UpdateNotification />
           ) : null}
           <AppHeader theme={app.theme} />
-            <WidgetBoard widgets={app.widgets} />
+            {typeof window !== 'undefined' ?
+              <WidgetBoard widgets={app.widgets} />
+            : null}
           <AppFooter />
       </div>
     </AppContext.Provider>
