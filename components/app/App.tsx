@@ -1,6 +1,6 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { Suspense, useEffect, useReducer } from 'react';
+import LoadingIndicator from '../generic/LoadingIndicator';
 import useLocalStorage from '../useLocalStorage';
-import WidgetBoard from '../widgets/WidgetBoard';
 import AppContext from './AppContext';
 import AppFooter from './AppFooter';
 import AppHeader from './AppHeader';
@@ -8,6 +8,8 @@ import reducer from './AppReducer';
 import defaultApp from './appStateDefault';
 import UpdateNotification from './UpdateNotification';
 import useThemeForEntirePage from './useThemeForEntirePage';
+
+const WidgetBoard = React.lazy(() => import('../widgets/WidgetBoard'));
 
 // Return a truthy value if the app's service worker should be loaded; the
 // service worker always loads in a Production environment; however, by
@@ -43,7 +45,9 @@ function App() {
           ) : null}
           <AppHeader theme={app.theme} />
             {typeof window !== 'undefined' ?
-              <WidgetBoard widgets={app.widgets} />
+              <Suspense fallback={<LoadingIndicator />}>
+                <WidgetBoard widgets={app.widgets} />
+              </Suspense>
             : null}
           <AppFooter />
       </div>
