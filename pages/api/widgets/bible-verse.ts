@@ -7,7 +7,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!process.env.ESV_API_KEY) {
     res.status(500);
-    res.json({ error: 'API key is missing' });
+    res.json({ error: 'Missing API key' });
+    return;
+  }
+
+  if (!req.query.q) {
+    res.status(400);
+    res.json({ error: 'Missing parameter: q' });
     return;
   }
 

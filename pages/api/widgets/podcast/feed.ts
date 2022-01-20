@@ -9,6 +9,12 @@ const MAX_EPISODE_COUNT = 50;
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 
+  if (!req.query.url) {
+    res.status(400);
+    res.json({ error: 'Missing parameter: url' });
+    return;
+  }
+
   const response = await fetch(String(req.query.url));
   const xmlStr = await response.text();
 
