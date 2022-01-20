@@ -1,8 +1,20 @@
+import Head from 'next/head';
 import React from 'react';
 
 function Help() {
   return (
     <article className="landing-page">
+      <Head>
+        <title>Help | Faith Dashboard</title>
+        <meta property="og:title" content="Help | Faith Dashboard" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://faithdashboard.com/help/" />
+        <meta property="og:image" content="https://faithdashboard.com/images/og-image.jpg" />
+        <meta
+          name="description"
+          property="og:description"
+          content="Documentation on how to get started with Faith Dashboard, your one place for anything and everything that inspires your faith." />
+      </Head>
       <p><a href="../">Return to App</a></p>
 
       <h1>Help | Faith Dashboard</h1>
