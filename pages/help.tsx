@@ -2,7 +2,7 @@ import React from 'react';
 
 function Help() {
   return (
-    <article className="help landing-page">
+    <article className="landing-page">
       <p><a href="../">Return to App</a></p>
 
       <h1>Help | Faith Dashboard</h1>
