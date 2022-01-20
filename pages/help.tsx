@@ -3,6 +3,8 @@ import React from 'react';
 function Help() {
   return (
     <div className="help landing-page">
+      <p><a href="../">Return to App</a></p>
+
       <h1>Help | Faith Dashboard</h1>
 
       <p>Faith Dashboard is <strong>your one place for anything and everything that inspires your faith.</strong> It&apos;s a private board for your favorite Bible verses, sermons, and anything you&apos;d like. Come back to it whenever you need encouragement, wisdom, or simple truth.</p>
