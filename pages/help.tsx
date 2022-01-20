@@ -15,9 +15,9 @@ function Help() {
       view with a few &quot;widgets&quot; for you to try. These widgets let you do things like:</p>
 
       <ul>
-      <li>Display your favorite Bible verses</li>
-      <li>Listen to your favorite faith podcast</li>
-      <li>Jot down anything you&apos;d like!</li>
+        <li>Display your favorite Bible verses</li>
+        <li>Listen to your favorite faith podcast</li>
+        <li>Jot down anything you&apos;d like!</li>
       </ul>
 
       <h3>Add new widget</h3>
