@@ -4,7 +4,7 @@ import TagManager from 'react-gtm-module';
 import '../styles/index.scss';
 import '../styles/landing-page.scss';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function AppWrapper({ Component, pageProps }: AppProps) {
   // Initialize Google Tag Manager when page is mounted
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -14,4 +14,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />;
 }
 
-export default MyApp;
+export default AppWrapper;
