@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 // (this protects us when running in the NextJS Server-Side Rendering (SSR)
 // context);
 function isLocalStorageSupported(): boolean {
-  return typeof window !== 'undefined' && window.localStorage !== undefined;
+  return typeof localStorage !== 'undefined';
 }
 
 // The useLocalStorage() hook is a simple wrapper around the localStorage API's
