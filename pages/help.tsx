@@ -2,7 +2,7 @@ import React from 'react';
 
 function Help() {
   return (
-    <div className="help landing-page">
+    <article className="help landing-page">
       <p><a href="../">Return to App</a></p>
 
       <h1>Help | Faith Dashboard</h1>
@@ -59,7 +59,7 @@ function Help() {
       <p>This app is dedicated to Christ our Lord.</p>
 
       <p><a href="../">Return to App</a></p>
-    </div>
+    </article>
   );
 }
 export default Help;
