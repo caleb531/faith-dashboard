@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useReducer } from 'react';
 import LoadingIndicator from '../generic/LoadingIndicator';
 import useLocalStorage from '../useLocalStorage';
+import useMountListener from '../useMountListener';
 import AppContext from './AppContext';
 import AppFooter from './AppFooter';
 import AppHead from './AppHead';
@@ -41,21 +42,20 @@ function App() {
 
   useThemeForEntirePage(app.theme);
 
+  const isMounted = useMountListener();
   return (
     <AppContext.Provider value={dispatchToApp}>
       <AppHead />
-      <div className={`app theme-${app.theme} ${isTouchDevice() ? 'is-touch-device' : 'is-not-touch-device'}`}>
+      {isMounted ? <div className={`app theme-${app.theme} ${isTouchDevice() ? 'is-touch-device' : 'is-not-touch-device'}`}>
           {shouldLoadServiceWorker() ? (
             <UpdateNotification />
           ) : null}
           <AppHeader theme={app.theme} />
-            {typeof window !== 'undefined' ?
-              <Suspense fallback={<LoadingIndicator />}>
-                <WidgetBoard widgets={app.widgets} />
-              </Suspense>
-            : null}
+            <Suspense fallback={<LoadingIndicator />}>
+              <WidgetBoard widgets={app.widgets} />
+            </Suspense>
           <AppFooter />
-      </div>
+      </div> : null}
     </AppContext.Provider>
   );
 
