@@ -39,3 +39,8 @@ api-credentials.*
 
 # typescript
 *.tsbuildinfo
+
+# next-pwa
+public/service-worker.js
+public/workbox-*.js
+public/*.map

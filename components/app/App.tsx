@@ -21,7 +21,7 @@ const WidgetBoard = React.lazy(() => import('../widgets/WidgetBoard'));
 function shouldLoadServiceWorker() {
   // TODO: re-enable service worker once file is properly generated using
   // NextJS
-  return false;
+  return true;
   // return typeof navigator !== 'undefined' && navigator.serviceWorker && (window.location.port !== '8080' || sessionStorage.getItem('forceServiceWorkerInLocalhost'));
 }
 
