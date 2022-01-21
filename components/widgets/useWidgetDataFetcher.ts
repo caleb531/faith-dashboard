@@ -4,6 +4,12 @@ import { JSONSerializable } from '../global.d';
 import { WidgetAction } from './useWidgetShell';
 import { WidgetState } from './widget.d';
 
+// Return true if the user currently has network connectivity, and false
+// otherwise; this behavior may vary slightly depending on the browser
+function isOnline() {
+  return typeof navigator !== 'undefined' && navigator.onLine;
+}
+
 // Returns true if the given UNIX timestamp (in milliseconds; generated from
 // Date.now()) matches today's date
 const dateFormat = 'yyyy-MM-dd';
@@ -125,7 +131,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
     // trigger this effect to run, and if there was a fetch error, cause an
     // infinite loop; to fix this, we stop fetching if the previous fetch
     // resulted in an error
-    if ((shouldFetchInitially() || (fetchFrequency && !isDateToday(widget.lastFetchDateTime))) && !isLoading && !fetchError) {
+    if ((shouldFetchInitially() || (fetchFrequency && !isDateToday(widget.lastFetchDateTime))) && !isLoading && !fetchError && isOnline()) {
       fetchWidgetData(requestQuery);
     }
     // The React Docs suggest using an empty array when we only want a hook to
