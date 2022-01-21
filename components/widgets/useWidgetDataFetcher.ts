@@ -4,6 +4,13 @@ import { JSONSerializable } from '../global.d';
 import { WidgetAction } from './useWidgetShell';
 import { WidgetState } from './widget.d';
 
+// Returns true if the given UNIX timestamp (in milliseconds; generated from
+// Date.now()) matches today's date
+const dateFormat = 'yyyy-MM-dd';
+function isDateToday(dateTime: number): boolean {
+  return format(dateTime || Date.now(), dateFormat) === format(Date.now(), dateFormat);
+}
+
 // The useWidgetDataFetcher() hook is a powerful hook that allows you to fetch
 // arbitrary data from an API endpoint given some user-supplied request query
 // that's part of your widget; see the built-in widgets like BibleVerse or
@@ -107,13 +114,6 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
       setRequestQuery(input.value);
       fetchWidgetData(input.value);
     }
-  }
-
-  // Returns true if the given UNIX timestamp (in milliseconds; generated from
-  // Date.now()) matches today's date
-  const dateFormat = 'yyyy-MM-dd';
-  function isDateToday(dateTime: number): boolean {
-    return format(dateTime || Date.now(), dateFormat) === format(Date.now(), dateFormat);
   }
 
   // Fetch the widget data when the widget initially loads (presuming the
