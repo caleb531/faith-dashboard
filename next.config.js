@@ -14,7 +14,9 @@ const nextConfig = withPWA({
     register: false,
     // Disable service worker generation in development mode
     // (source: https://stackoverflow.com/a/67124165/560642)
-    disable: false
+    disable: process.env.NODE_ENV === 'development',
+    // Enable app to reload service worker when clicking update banner
+    skipWaiting: true
   }
 });
 
