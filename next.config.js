@@ -15,8 +15,13 @@ const nextConfig = withPWA({
     // Disable service worker generation in development mode
     // (source: https://stackoverflow.com/a/67124165/560642)
     disable: process.env.NODE_ENV === 'development',
-    // Enable app to reload service worker when clicking update banner
-    skipWaiting: true
+    // Enable app to reload service worker when clicking update banner; per the
+    // documentation on Workbox's GenerateSW class: "[If true, then] add an
+    // unconditional call to skipWaiting() to the generated service worker. If
+    // false, then a message listener will be added instead, allowing you to
+    // conditionally call skipWaiting() by posting a message containing {type:
+    // 'SKIP_WAITING'}."
+    skipWaiting: false
   }
 });
 
