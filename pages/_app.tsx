@@ -1,4 +1,3 @@
-import { GetServerSideProps } from 'next';
 import type { AppProps } from 'next/app';
 import React, { useEffect } from 'react';
 import TagManager from 'react-gtm-module';
@@ -14,19 +13,5 @@ function AppWrapper({ Component, pageProps }: AppProps) {
   }, []);
   return <Component {...pageProps} />;
 }
-
-// A regular express used for matching a www domain
-const wwwRegex = /^www\./;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { req, res } = context;
-  if (wwwRegex.test(req.headers.host)) {
-    res.writeHead(301, {
-      location: 'https://' + req.headers.host.replace(/^www./, '') + req.url
-    });
-    res.end();
-  }
-  return { props: {} };
-};
 
 export default AppWrapper;
