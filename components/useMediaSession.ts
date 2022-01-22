@@ -1,6 +1,6 @@
 /* global MediaMetadata */
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 // The useMediaSession() hook should receive the same input parameters as the
 // MediaMetadata() constructor, along with an additional parameter representing
@@ -31,13 +31,23 @@ export default function useMediaSession({
   seekForwardSeconds
 }: UseMediaSessionParameters): [() => void] {
 
+  // Use a ref to keep track of when the media session's metadata needs to be
+  // updated, based on changes to the audio's source URL
+  const audioSrcRef = useRef(null);
+
   useEffect(() => {
+    // If nothing is playing anymore, unset the media session
     if (!title || !artist || !album) {
       clearMediaSession();
       return;
     }
+    // Do not re-instantiate media session if nothing has changed
+    if (audioElement.src === audioSrcRef.current) {
+      return;
+    }
     const { mediaSession } = navigator;
-    mediaSession.metadata = new MediaMetadata({ title, artist, album, artwork });
+    mediaSession.metadata = new MediaMetadata({ title, artist, album, artwork: artwork });
+    audioSrcRef.current = audioElement.src;
     if (seekBackwardSeconds) {
       mediaSession.setActionHandler('seekbackward', () => {
         audioElement.currentTime = Math.max(
