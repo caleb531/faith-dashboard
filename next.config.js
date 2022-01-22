@@ -20,7 +20,8 @@ const nextConfig = withPWA({
     // unconditional call to skipWaiting() to the generated service worker. If
     // false, then a message listener will be added instead, allowing you to
     // conditionally call skipWaiting() by posting a message containing {type:
-    // 'SKIP_WAITING'}."
+    // 'SKIP_WAITING'}." (source:
+    // https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.GenerateSW#GenerateSW)
     skipWaiting: false
   }
 });
