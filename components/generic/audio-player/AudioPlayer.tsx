@@ -27,6 +27,14 @@ function AudioPlayer({ audioElementKey, audioUrl, currentTime, setCurrentTime, i
   const { seekerProvided } = useAudioSeeker(audioElement, currentTime, setCurrentTime);
   const seekerFieldId = useUniqueFieldId('audio-player-seeker-slider');
 
+  function toggleAudioElementPlayback() {
+    if (audioElement.paused) {
+      audioElement.play();
+    } else {
+      audioElement.pause();
+    }
+  }
+
   // Zero-pad the given number if it's a single-digit; used for computing
   // hh:mm:ss timestamps in the below formatSecondsAsTimestamp() function
   function padWithZero(value: number): string {
@@ -48,20 +56,20 @@ function AudioPlayer({ audioElementKey, audioUrl, currentTime, setCurrentTime, i
 
   return (
     <div className="audio-player">
-      <button className="audio-player-playpause" onClick={() => setIsPlaying(!isPlaying)} disabled={!audioElement.duration}>
+      <button className="audio-player-playpause" onClick={() => toggleAudioElementPlayback()} disabled={!audioElement.duration}>
         {!audioElement.duration ? (
           <LoadingIndicator />
-        ) : isPlaying ? (
-          <img
-            className="audio-player-playpause-icon"
-            src="icons/pause-light.svg"
-            alt="Pause"
-            draggable="false" />
-        ) : (
+        ) : (audioElement.paused) ? (
           <img
             className="audio-player-playpause-icon"
             src="icons/play-light.svg"
             alt="Play"
+            draggable="false" />
+        ) : (
+          <img
+            className="audio-player-playpause-icon"
+            src="icons/pause-light.svg"
+            alt="Pause"
             draggable="false" />
         )}
       </button>
