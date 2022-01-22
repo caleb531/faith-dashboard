@@ -11,12 +11,6 @@ export interface PodcastWidgetState extends WidgetState {
   listeningMetadata: PodcastListeningMetadata
 }
 
-export interface PodcastImage {
-  link: string;
-  url: string;
-  title: object;
-}
-
 export interface PodcastEpisodeMedia {
   length: string;
   type: string;

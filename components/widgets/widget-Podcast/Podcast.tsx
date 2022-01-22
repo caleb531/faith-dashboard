@@ -82,17 +82,21 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
     getErrorMessage: (error: Error) => 'Error Fetching Podcast'
   });
 
-  useMediaSession({
+  const [clearMediaSession] = useMediaSession({
     title: nowPlaying?.title,
     artist: podcastFeedData?.['itunes:author'],
     album: podcastFeedData?.title,
-    audioElement
+    artwork: podcastFeedData?.['itunes:image'] ? [{ src: podcastFeedData['itunes:image'].href }] : [],
+    audioElement,
+    seekBackwardSeconds: 15,
+    seekForwardSeconds: 15
   });
 
   // Pause the audio in case it's still playing when the user removes the
   // widget from their dashboard
   useWidgetCleanupOnRemove(state, () => {
     audioElement.pause();
+    clearMediaSession();
     removeAudioElement();
     removePodcastList();
   });
