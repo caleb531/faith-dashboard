@@ -47,12 +47,12 @@ export interface PodcastListeningMetadataEntry {
 export interface PodcastFeedData {
   copyright: string;
   description: string;
-  image: PodcastImage;
   language: string;
   link: string;
   title: string;
   item: PodcastEpisode[];
   'itunes:author': string;
+  'itunes:image': { href: string };
 }
 
 export interface PodcastSearchResponse {

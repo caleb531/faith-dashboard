@@ -32,10 +32,10 @@ function PodcastNowPlaying({ widget, podcastFeedData, podcastImage, nowPlaying, 
   return (
     <section className="podcast-view-now-playing">
       <header className="podcast-now-playing-header">
-        {podcastImage || podcastFeedData.image ? (
+        {podcastImage || podcastFeedData['itunes:image'] ? (
           <img
             className="podcast-now-playing-image"
-            src={podcastImage || podcastFeedData.image.url}
+            src={podcastImage || podcastFeedData['itunes:image'].href}
             alt="" />
         ) : (
           <div className="podcast-now-playing-image podcast-now-playing-image-missing">?</div>
