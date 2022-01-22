@@ -1,6 +1,7 @@
 import React from 'react';
 import useCachedAudio from '../../generic/audio-player/useCachedAudio';
 import useCachedState from '../../useCachedState';
+import useMediaSession from '../../useMediaSession';
 import useUniqueFieldId from '../../useUniqueFieldId';
 import useWidgetCleanupOnRemove from '../useWidgetCleanupOnRemove';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
@@ -79,6 +80,13 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
     },
     getNoResultsMessage: (data: typeof podcastFeedData) => 'No Podcasts Found',
     getErrorMessage: (error: Error) => 'Error Fetching Podcast'
+  });
+
+  useMediaSession({
+    title: nowPlaying?.title,
+    artist: podcastFeedData?.['itunes:author'],
+    album: podcastFeedData?.title,
+    audioElement
   });
 
   // Pause the audio in case it's still playing when the user removes the

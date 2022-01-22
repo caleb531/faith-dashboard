@@ -52,6 +52,7 @@ export interface PodcastFeedData {
   link: string;
   title: string;
   item: PodcastEpisode[];
+  'itunes:author': string;
 }
 
 export interface PodcastSearchResponse {
