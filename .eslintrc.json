@@ -31,8 +31,7 @@
   ],
   "parser": "@typescript-eslint/parser",
   "extends": [
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended"
+    "next"
   ],
   "settings": {
     "react": {
@@ -77,6 +76,8 @@
     "no-extra-semi": ["error"],
     "no-floating-decimal": ["error"],
     "no-global-assign": ["error"],
+    "@next/next/no-img-element": ["off"],
+    "import/no-anonymous-default-export": ["off"],
     "no-implicit-coercion": ["error"],
     "no-implicit-globals": ["error"],
     "no-implied-eval": ["error"],

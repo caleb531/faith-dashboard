@@ -1,0 +1,26 @@
+.theme-switcher {
+  display: flex;
+  align-items: stretch;
+}
+.theme-switcher-dropdown {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-width: 0;
+  border-radius: 20px;
+  padding: 8px 0;
+  padding-left: 35px;
+  padding-right: 25px;
+  background-color: $dark-30;
+  line-height: 1;
+  font-family: $font-family-sans-serif;
+  font-size: $font-size-xxxs;
+  color: $light-100;
+  vertical-align: middle;
+  background-image:
+    url('../../public/icons/paintbrush-light.svg'),
+    url('../../public/icons/chevron-down-light.svg');
+  background-repeat: no-repeat;
+  $icon-size: 18px;
+  background-size: $icon-size;
+  background-position: left 10px center, right 5px center;
+}

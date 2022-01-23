@@ -1,0 +1,27 @@
+html,
+body {
+  min-height: 100%;
+  height: 100%;
+}
+
+body,
+main,
+#__next,
+.app {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: $grey;
+  font-family: $font-family-serif;
+  color: $light-100;
+  text-align: center;
+}
