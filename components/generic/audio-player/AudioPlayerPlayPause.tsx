@@ -2,9 +2,9 @@ import React from 'react';
 import LoadingIndicator from '../LoadingIndicator';
 import useAudioPlayPause from './useAudioPlayPause';
 
-type Props = { audioElement: HTMLAudioElement, isPlaying: boolean, setIsPlaying: (newIsPlaying: boolean) => void };
+type Props = { audioElement: HTMLAudioElement, audioUrl: string, isPlaying: boolean, setIsPlaying: (newIsPlaying: boolean) => void };
 
-function AudioPlayerPlayPause({ audioElement, isPlaying, setIsPlaying }: Props) {
+function AudioPlayerPlayPause({ audioElement, audioUrl, isPlaying, setIsPlaying }: Props) {
 
   function toggleAudioElementPlayback() {
     if (audioElement.paused) {
@@ -18,7 +18,7 @@ function AudioPlayerPlayPause({ audioElement, isPlaying, setIsPlaying }: Props) 
 
   return (
     <button className="audio-player-playpause" onClick={() => toggleAudioElementPlayback()} disabled={!audioElement.duration}>
-      {!audioElement.duration ? (
+      {!audioElement.duration || audioElement.src !== audioUrl ? (
         <LoadingIndicator />
       ) : (audioElement.paused) ? (
         <img

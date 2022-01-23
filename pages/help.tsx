@@ -6,6 +6,7 @@ function Help() {
     <article className="landing-page">
       <Head>
         <title>Help | Faith Dashboard</title>
+        <link rel="canonical" href="https://faithdashboard.com/help/" />
         <meta property="og:title" content="Help | Faith Dashboard" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://faithdashboard.com/help/" />

@@ -1,0 +1,11 @@
+# Travis CI Configuration
+
+language: node_js
+node_js:
+  - "16"
+install:
+  - npm install
+before_script:
+  - next build
+script:
+  - tsc --noEmit
