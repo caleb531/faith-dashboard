@@ -23,6 +23,7 @@ function AudioPlayer({ audioElementKey, audioUrl, currentTime, setCurrentTime, i
     <div className="audio-player">
       <AudioPlayerPlayPause
         audioElement={audioElement}
+        audioUrl={audioUrl}
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying} />
       <AudioPlayerSeeker

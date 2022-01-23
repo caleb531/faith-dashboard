@@ -48,14 +48,14 @@ function AudioPlayerSeeker({ audioElement, audioUrl, currentTime, setCurrentTime
         {...seekerProvided} />
       <div className="audio-player-time-info">
         <span className="audio-player-current-time">
-          {!audioElement.duration ?
+          {!audioElement.duration || audioElement.src !== audioUrl ?
             'Loading...' :
             audioElement.currentTime >= 1 ?
             formatSecondsAsTimestamp(Math.floor(audioElement.currentTime)) :
             '0:00'
           }
         </span>
-        <span className="audio-player-time-remaining">{audioElement.duration ?
+        <span className="audio-player-time-remaining">{audioElement.duration && audioElement.src === audioUrl ?
           Math.round(audioElement.duration - audioElement.currentTime) > 0 ?
           `-${formatSecondsAsTimestamp(audioElement.duration - audioElement.currentTime)}`
           : '0:00'
