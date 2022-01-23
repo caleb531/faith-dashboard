@@ -1,13 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
-import { WidgetState } from '../../widgets/widget.d';
+import { WidgetHead } from '../../widgets/widget.d';
 
-export function createWidget(props: object): WidgetState {
+export function createWidget(props: object): WidgetHead {
   return {
       id: uuidv4(),
       type: null,
-      isSettingsOpen: false,
       column: null,
-      height: null,
     ...props
   };
 }
