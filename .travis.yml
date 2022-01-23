@@ -8,4 +8,5 @@ install:
 before_script:
   - next build
 script:
+  - eslint components/**/*.* pages/**/*.*
   - tsc --noEmit
