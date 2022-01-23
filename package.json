@@ -10,7 +10,9 @@
     "build": "next build",
     "start": "next start"
   },
-  "cacheDirectories": [".next/cache"],
+  "cacheDirectories": [
+    ".next/cache"
+  ],
   "dependencies": {
     "compression": "^1.7.4",
     "date-fns": "^2.27.0",
