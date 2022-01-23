@@ -35,6 +35,10 @@ export default function useMediaSession({
   const audioSrcRef = useRef(null);
 
   useEffect(() => {
+    // Do nothing if the user's browser does not support the Media Session API
+    if (!navigator.mediaSession) {
+      return;
+    }
     // If nothing is playing anymore, unset the media session
     if (!title || !artist || !album) {
       clearMediaSession();
