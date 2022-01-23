@@ -23,6 +23,31 @@ const nextConfig = withPWA({
     // 'SKIP_WAITING'}." (source:
     // https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.GenerateSW#GenerateSW)
     skipWaiting: false
+  },
+  async headers() {
+    const headers = [
+      {
+        key: 'X-Frame-Options',
+        value: 'SAMEORIGIN'
+      },
+      {
+        key: 'X-Content-Type-Options',
+        value: 'nosniff'
+      },
+      {
+        key: 'Content-Security-Policy',
+        /* eslint-disable-next-line quotes */
+        value: "default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src *; script-src 'self' https://storage.googleapis.com https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'; child-src 'self'; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://www.google-analytics.com; manifest-src 'self'; media-src *;"
+      }
+    ];
+    // The HSTS header should only be sent for HTTPS websites; because localhost is server over plain HTTP, we do not want to enable HSTS there
+    if (process.env.NODE_ENV === 'production') {
+      headers.push({
+        key: 'Strict-Transport-Security',
+        value: 'max-age=15552000; includeSubDomains'
+      });
+    }
+    return [{ source: '/:path*', headers }];
   }
 });
 
