@@ -7,6 +7,7 @@ function Copyright() {
     <article className="landing-page">
       <Head>
         <title>Copyright | Faith Dashboard</title>
+        <link rel="canonical" href="https://faithdashboard.com/copyright/" />
         <meta property="og:title" content="Copyright | Faith Dashboard" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://faithdashboard.com/copyright/" />
