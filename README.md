@@ -8,7 +8,7 @@ verses, notes, sermons, or other things that strengthen your faith.
 
 **This project is currently in development; things may change or break at any time.**
 
-[Live Demo](https://projects.calebevans.me/faith-dashboard/)
+[Live Demo](https://faithdashboard.com/)
 
 ## Setup
 
