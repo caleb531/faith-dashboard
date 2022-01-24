@@ -23,18 +23,9 @@ function forceHTTPS(req: NextRequest) {
 function redirectWwwToNonWww(req: NextRequest) {
   const host = req.headers.get('host');
   const wwwRegex = /^www\./;
-  if (wwwRegex.test(host)) {
+  if (wwwRegex.test(host) && !req.headers.get('host').includes('localhost')) {
     const newHost = host.replace(wwwRegex, '');
-    if (req.headers.get('host').includes('localhost')) {
-      // If we are running a production build locally, still redirect to
-      // non-www, but stay on HTTP because we are on localhost
-      return NextResponse.redirect(`http://${newHost}`, 301);
-    } else {
-      // Otherwise, if the client is on a non-localhost domain (e.g.
-      // faithdashboard.com), then redirect directly to HTTPS in addition to
-      // redirecting to non-www
-      return NextResponse.redirect(`https://${newHost}`, 301);
-    }
+    return NextResponse.redirect(`https://${newHost}`, 301);
   }
 }
 
