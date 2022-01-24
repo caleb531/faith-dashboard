@@ -1,6 +1,6 @@
 # Faith Dashboard
 
-*Copyright 2021, Caleb Evans*  
+*Copyright 2021-2022, Caleb Evans*  
 *Released under the MIT License*
 
 This app is designed to be a central dashboard for displaying your favorite
