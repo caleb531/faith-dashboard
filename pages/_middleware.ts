@@ -25,7 +25,7 @@ function redirectWwwToNonWww(req: NextRequest) {
   const wwwRegex = /^www\./;
   if (wwwRegex.test(host) && !req.headers.get('host').includes('localhost')) {
     const newHost = host.replace(wwwRegex, '');
-    return NextResponse.redirect(`https://${newHost}`, 301);
+    return NextResponse.redirect(`https://${newHost}${req.nextUrl.pathname}`, 301);
   }
 }
 
