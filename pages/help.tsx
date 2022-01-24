@@ -16,7 +16,7 @@ function Help() {
           property="og:description"
           content="Documentation on how to get started with Faith Dashboard, your one place for anything and everything that inspires your faith." />
       </Head>
-      <p><a href="../">Return to App</a></p>
+      <p><a href="/">Return to App</a></p>
 
       <h1>Help | Faith Dashboard</h1>
 
@@ -71,7 +71,7 @@ function Help() {
 
       <p>This app is dedicated to Christ our Lord.</p>
 
-      <p><a href="../">Return to App</a></p>
+      <p><a href="/">Return to App</a></p>
     </article>
   );
 }
