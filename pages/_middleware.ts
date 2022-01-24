@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Force-redirect a plain HTTP pagw request to HTTPS
+// Force-redirect every HTTP request to HTTPS
 function forceHTTPS(req: NextRequest) {
   console.log('protocol', req.nextUrl.protocol);
   console.log('hostname', req.nextUrl.hostname);
@@ -17,7 +17,7 @@ function forceHTTPS(req: NextRequest) {
   }
 }
 
-// Redirect a www page request to the non-www equivalent
+// Redirect every www request to the non-www equivalent
 function redirectWwwToNonWww(req: NextRequest) {
   const host = String(req.nextUrl.host);
   const wwwRegex = /^www\./;
