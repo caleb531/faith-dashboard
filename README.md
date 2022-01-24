@@ -6,8 +6,6 @@
 This app is designed to be a central dashboard for displaying your favorite
 verses, notes, sermons, or other things that strengthen your faith.
 
-**This project is currently in development; things may change or break at any time.**
-
 [Live Demo](https://faithdashboard.com/)
 
 ## Setup
