@@ -29,6 +29,16 @@ function setActionHandler(...args: Parameters<typeof navigator.mediaSession.setA
   }
 }
 
+// Update the native Media Session UI when the audio element changes (source:
+// https://css-tricks.com/give-users-control-the-media-session-api/#aa-wrapping-up)
+function updatePositionState(audioElement: HTMLAudioElement) {
+  navigator.mediaSession.setPositionState({
+    duration: audioElement.duration,
+    playbackRate: audioElement.playbackRate,
+    position: audioElement.currentTime
+  });
+}
+
 // The useMediaSession() hook allows any component to broadcast information
 // about the currently-playing audio to the browser- or OS-native audio player
 export default function useMediaSession({
@@ -63,8 +73,14 @@ export default function useMediaSession({
     mediaSession.metadata = new MediaMetadata({ title, artist, album, artwork });
     audioSrcRef.current = audioElement.src;
 
-    setActionHandler('play', () => audioElement.play());
-    setActionHandler('pause', () => audioElement.pause());
+    setActionHandler('play', () => {
+      audioElement.play();
+      updatePositionState(audioElement);
+    });
+    setActionHandler('pause', () => {
+      audioElement.pause();
+      updatePositionState(audioElement);
+    });
     setActionHandler('seekto', (details) => {
       // Not all browsers support fast-seeking for the seekto action, so we
       // first must check if it's supported
@@ -73,18 +89,21 @@ export default function useMediaSession({
       } else {
         audioElement.currentTime = details.seekTime;
       }
+      updatePositionState(audioElement);
     });
     setActionHandler('seekbackward', ({ seekOffset }) => {
       audioElement.currentTime = Math.max(
         0,
         audioElement.currentTime - (seekOffset || defaultSeekBackwardOffset)
       );
+      updatePositionState(audioElement);
     });
     setActionHandler('seekforward', ({ seekOffset }) => {
       audioElement.currentTime = Math.min(
         audioElement.currentTime + (seekOffset || defaultSeekForwardOffset),
         audioElement.duration
       );
+      updatePositionState(audioElement);
     });
 
   }, [title, artist, album, artwork, defaultSeekBackwardOffset, defaultSeekForwardOffset, audioElement]);
