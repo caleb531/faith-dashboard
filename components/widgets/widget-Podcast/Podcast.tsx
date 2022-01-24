@@ -88,8 +88,8 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
     album: podcastFeedData?.title,
     artwork: podcastFeedData?.['itunes:image'] ? [{ src: podcastFeedData['itunes:image'].href }] : [],
     audioElement,
-    seekBackwardSeconds: 15,
-    seekForwardSeconds: 15
+    defaultSeekBackwardOffset: 15,
+    defaultSeekForwardOffset: 15
   });
 
   // Pause the audio in case it's still playing when the user removes the
