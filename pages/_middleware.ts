@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // Force-redirect a plain HTTP pagw request to HTTPS
 function forceHTTPS(req: NextRequest) {
+  console.log('protocol', req.nextUrl.protocol);
+  console.log('hostname', req.nextUrl.hostname);
+  console.log('headers', req.headers);
   if (process.env.NODE_ENV === 'production' &&
     req.headers.get('x-forwarded-proto') !== 'https'
     &&
