@@ -40,15 +40,8 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
     }
   }
 
-  // Enforce any user-defined height of the widget (at least when the height is
-  // adjustable for that specific widget type)
-  const widgetStyles = {
-    height: widget.height,
-    ...provided.draggableProps.style
-  };
-
   return (
-    <article className={`widget widget-type-${widget.type} ${widget.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} style={widgetStyles} onMouseUp={(event) => handleResize(event)}>
+    <article className={`widget widget-type-${widget.type} ${widget.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps}>
       <div className="widget-controls widget-controls-left">
         <div className="widget-drag-handle widget-control" {...provided.dragHandleProps}>
           <img
@@ -78,7 +71,9 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
         <div className="loading-indicator-blocking-container">
           <LoadingIndicator />
         </div>
-      ) : <div className="widget-contents">{children}</div>}
+      ) : <div className="widget-contents" style={{ height: widget.height }} onMouseUp={(event) => handleResize(event)}>
+        {children}
+      </div>}
     </article>
   );
 

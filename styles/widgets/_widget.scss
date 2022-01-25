@@ -3,14 +3,11 @@
   position: relative;
   min-width: 100px;
   width: 100%;
-  min-height: 100px;
   margin: 10px 0;
   border-radius: 10px;
-  padding: 20px;
   background-color: $dark-20;
   backdrop-filter: blur(10px);
   box-shadow: 0 3px 5px $dark-10;
-  overflow: hidden;
   color: $light-100;
   a {
     color: inherit;
@@ -22,7 +19,11 @@
   }
 }
 .widget-contents {
+  position: relative;
+  min-height: 100px;
   border-radius: inherit;
+  padding: 20px;
+  overflow: hidden;
 }
 
 .widget-controls {
