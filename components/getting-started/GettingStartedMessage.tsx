@@ -1,12 +1,24 @@
 import React, { useContext } from 'react';
 import GettingStartedContext from './GettingStartedContext';
 
-function GettingStartedMessage() {
+type Props = { isCurrentStep: boolean };
 
-  const { currentStep } = useContext(GettingStartedContext);
+function GettingStartedMessage({ isCurrentStep }: Props) {
+
+  const { currentStep, currentStepIndex, moveToNextStep } = useContext(GettingStartedContext);
 
   return (
-    <div className="getting-started-message"></div>
+    isCurrentStep ? <div className="getting-started-message">
+      {currentStep.message}
+      <div className="getting-started-message-controls">
+        <button
+          className="getting-started-message-control"
+          onClick={moveToNextStep}>
+          {currentStepIndex === 0 ? 'Start' : 'Next'}
+        </button>
+        <button className="getting-started-message-control">Skip Tutorial</button>
+      </div>
+    </div> : null
   );
 }
 

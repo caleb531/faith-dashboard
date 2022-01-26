@@ -1,0 +1,18 @@
+.getting-started-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 400;
+  transform: translate(-50%, -50%);
+}
+.getting-started-message-controls {
+  margin-top: 10px;
+}
+.getting-started-message-control {
+  margin: 0 5px;
+  @each $theme-name, $theme-color in $theme-colors {
+    .theme-#{$theme-name} & {
+      background-color: darken($theme-color, 9%);
+    }
+  }
+}

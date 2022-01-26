@@ -2,6 +2,8 @@ import { fromPairs, times } from 'lodash-es';
 import React, { useContext } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import AppContext from '../app/AppContext';
+import GettingStartedMessage from '../getting-started/GettingStartedMessage';
+import useGettingStartedStep from '../getting-started/useGettingStartedStep';
 import { WidgetHead } from './widget.d';
 import WidgetBoardColumn from './WidgetBoardColumn';
 
@@ -16,6 +18,8 @@ function WidgetBoard({ widgets }: Props) {
 
   const dispatchToApp = useContext(AppContext);
   const columnCount = 3;
+
+  const { isCurrentStep } = useGettingStartedStep('welcome');
 
   // Because the widgets are stored in a one-dimensional array, yet we are
   // iterating over the widgets column-wise, we need to pre-compute the
@@ -58,6 +62,7 @@ function WidgetBoard({ widgets }: Props) {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      <GettingStartedMessage isCurrentStep={isCurrentStep} />
       <div className="widget-board">
         {times(columnCount, (columnIndex) => {
           return (

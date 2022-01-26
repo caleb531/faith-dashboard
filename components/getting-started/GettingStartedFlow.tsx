@@ -32,6 +32,7 @@ function GettingStartedFlow({ shouldShow, children }: Props) {
   const contextValue: GettingStartedContextValue = useMemo(() => {
     return {
       inProgress,
+      currentStepIndex,
       currentStep: gettingStartedSteps[currentStepIndex],
       moveToNextStep
     };

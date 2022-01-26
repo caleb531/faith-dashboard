@@ -11,6 +11,7 @@ export interface GettingStartedStep {
 // allow any one step to advance the Getting Started flow
 interface GettingStartedContextValue {
   inProgress: boolean;
+  currentStepIndex: number;
   currentStep: GettingStartedStep;
   moveToNextStep: () => void;
 }
