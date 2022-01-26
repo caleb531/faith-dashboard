@@ -18,7 +18,8 @@
 .app-header-controls {
   display: flex;
   align-items: stretch;
-  & > .add-widget-button {
-    margin: 0 15px;
-  }
+}
+.app-header-add-widget-wrapper {
+  position: relative;
+  margin: 0 15px;
 }

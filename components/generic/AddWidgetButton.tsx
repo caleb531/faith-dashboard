@@ -1,11 +1,11 @@
 import React from 'react';
 
-type Props = { onPressButton: () => void };
+type Props = { onPressButton: () => void, buttonProps?: object };
 
-function AddWidget({ onPressButton }: Props) {
+function AddWidget({ onPressButton, buttonProps = {} }: Props) {
 
   return (
-    <button type="button" className="add-widget-button" aria-label="Add Widget" onClick={onPressButton}>
+    <button type="button" className="add-widget-button" aria-label="Add Widget" onClick={onPressButton} {...buttonProps}>
       <img
         className="add-widget-button-icon"
         src="icons/add-light.svg"

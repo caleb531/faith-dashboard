@@ -1,6 +1,7 @@
 .getting-started-message {
   position: absolute;
   z-index: 400;
+  min-width: 300px;
   padding: 0 10px;
   font-size: $font-size-xs;
   &.position-middle {
@@ -17,9 +18,11 @@
     margin-top: 10px;
   }
   &.alignment-left {
+    left: 0;
     text-align: left;
   }
   &.alignment-right {
+    right: 0;
     text-align: right;
   }
   &.alignment-center {
