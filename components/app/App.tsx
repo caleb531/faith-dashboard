@@ -43,9 +43,9 @@ function App() {
   const isMounted = useMountListener();
   return (
     <AppContext.Provider value={dispatchToApp}>
-      {isMounted ? <GettingStartedFlow shouldShow={app.shouldShowGettingStarted}>
         <AppHead />
         <div className={`app theme-${app.theme} ${isTouchDevice() ? 'is-touch-device' : 'is-not-touch-device'}`}>
+          {isMounted ? <GettingStartedFlow shouldShow={app.shouldShowGettingStarted}>
             {shouldLoadServiceWorker() ? (
               <UpdateNotification />
             ) : null}
@@ -54,8 +54,8 @@ function App() {
               <WidgetBoard widgets={app.widgets} />
             </Suspense>
             <AppFooter />
+          </GettingStartedFlow> : null}
         </div>
-      </GettingStartedFlow> : null}
     </AppContext.Provider>
   );
 
