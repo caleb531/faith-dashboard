@@ -1,15 +1,24 @@
-import React, { useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
+import AppContext from '../app/AppContext';
+import useLocalStorage from '../useLocalStorage';
 import { GettingStartedContextValue } from './gettingStarted';
 import GettingStartedContext from './GettingStartedContext';
 import GettingStartedOverlay from './GettingStartedOverlay';
 import gettingStartedSteps from './gettingStartedSteps';
 
-type Props = { children: JSX.Element | JSX.Element[] };
+type Props = { shouldShow: boolean, children: JSX.Element | JSX.Element[] };
 
-function GettingStartedFlow({ children }: Props) {
+function GettingStartedFlow({ shouldShow, children }: Props) {
 
-  const [inProgress, setInProgress] = useState(false);
-  const [currentStepId, setCurrentStepId] = useState(gettingStartedSteps[1].id);
+  const dispatchToApp = useContext(AppContext);
+
+  const [restoreHasCompleted, saveHasCompleted] = useLocalStorage(
+    'faith-dashboard-widget-getting-started',
+    shouldShow || false
+  );
+
+  const [inProgress] = useState(() => restoreHasCompleted());
+  const [currentStepId, setCurrentStepId] = useState(gettingStartedSteps[0].id);
 
   // We want to send multiple values (the count and a setter) to the below
   // context; however, if we try to inline an object, the context value will
