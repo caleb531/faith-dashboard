@@ -30,7 +30,11 @@ function GettingStartedFlow({ shouldShow, children }: Props) {
   // context; to fix, we can memoize the object (representing the latest
   // context value) until the current step changes
   const contextValue: GettingStartedContextValue = useMemo(() => {
-    return { inProgress, currentStepIndex, moveToNextStep };
+    return {
+      inProgress,
+      currentStep: gettingStartedSteps[currentStepIndex],
+      moveToNextStep
+    };
   }, [inProgress, currentStepIndex, moveToNextStep]);
 
   return (

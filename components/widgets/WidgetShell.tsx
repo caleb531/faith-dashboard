@@ -2,6 +2,7 @@ import React, { Dispatch, useContext, useEffect } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import AppContext from '../app/AppContext';
 import LoadingIndicator from '../generic/LoadingIndicator';
+import GettingStartedMessage from '../getting-started/GettingStartedMessage';
 import useGettingStartedStep from '../getting-started/useGettingStartedStep';
 import { WidgetAction } from './useWidgetShell';
 import { WidgetState } from './widget.d';
@@ -44,6 +45,7 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
 
   return (
     <article className={`widget widget-type-${widget.type} ${widget.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} {...gettingStartedStepProps}>
+      <GettingStartedMessage />
       <div className="widget-controls widget-controls-left">
         <div className="widget-drag-handle widget-control" {...provided.dragHandleProps}>
           <img

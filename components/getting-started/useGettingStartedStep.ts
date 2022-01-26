@@ -6,11 +6,10 @@ import gettingStartedSteps from './gettingStartedSteps';
 // be highlighted as a step in the "Getting Started" UX
 function useGettingStartedStep(componentStepId: string): object {
 
-  const { inProgress, currentStepIndex } = useContext(GettingStartedContext);
-  const componentStepIndex = gettingStartedSteps.findIndex((step) => step.id === componentStepId);
-  const componentStep = gettingStartedSteps[componentStepIndex];
+  const { inProgress, currentStep } = useContext(GettingStartedContext);
+  const componentStep = gettingStartedSteps.find((step) => step.id === componentStepId);
 
-  return inProgress && componentStepIndex === currentStepIndex ? {
+  return inProgress && componentStep === currentStep ? {
     'data-getting-started-step-active': componentStep.id
   } : null;
 
