@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import AppContext from '../app/AppContext';
 import useLocalStorage from '../useLocalStorage';
 import { GettingStartedContextValue } from './gettingStarted';
@@ -18,7 +18,11 @@ function GettingStartedFlow({ shouldShow, children }: Props) {
   );
 
   const [inProgress] = useState(() => restoreHasCompleted());
-  const [currentStepId, setCurrentStepId] = useState(gettingStartedSteps[0].id);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+
+  const moveToNextStep = useCallback(() => {
+    setCurrentStepIndex((newIndex) => (newIndex + 1) % gettingStartedSteps.length);
+  }, [setCurrentStepIndex]);
 
   // We want to send multiple values (the count and a setter) to the below
   // context; however, if we try to inline an object, the context value will
@@ -26,8 +30,8 @@ function GettingStartedFlow({ shouldShow, children }: Props) {
   // context; to fix, we can memoize the object (representing the latest
   // context value) until the current step changes
   const contextValue: GettingStartedContextValue = useMemo(() => {
-    return { inProgress, currentStepId, setCurrentStepId };
-  }, [inProgress, currentStepId]);
+    return { inProgress, currentStepIndex, moveToNextStep };
+  }, [inProgress, currentStepIndex, moveToNextStep]);
 
   return (
     <GettingStartedContext.Provider value={contextValue}>
