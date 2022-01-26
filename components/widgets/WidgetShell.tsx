@@ -2,6 +2,7 @@ import React, { Dispatch, useContext, useEffect } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import AppContext from '../app/AppContext';
 import LoadingIndicator from '../generic/LoadingIndicator';
+import useGettingStartedStep from '../getting-started/useGettingStartedStep';
 import { WidgetAction } from './useWidgetShell';
 import { WidgetState } from './widget.d';
 
@@ -10,6 +11,7 @@ type Props = { widget: WidgetState, dispatch: Dispatch<WidgetAction>, provided: 
 function WidgetShell({ widget, dispatch, provided, children }: Props) {
 
   const dispatchToApp = useContext(AppContext);
+  const gettingStartedStepProps = useGettingStartedStep(`widget-${widget.id}`);
 
   // Signal to the global application that we want to remove the widget
   function removeWidget() {
@@ -41,7 +43,7 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
   }
 
   return (
-    <article className={`widget widget-type-${widget.type} ${widget.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps}>
+    <article className={`widget widget-type-${widget.type} ${widget.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} {...gettingStartedStepProps}>
       <div className="widget-controls widget-controls-left">
         <div className="widget-drag-handle widget-control" {...provided.dragHandleProps}>
           <img
