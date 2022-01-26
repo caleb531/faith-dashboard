@@ -1,8 +1,14 @@
+import classNames from 'classnames';
 import React from 'react';
 
-function GettingStartedOverlay() {
+type Props = { isVisible: boolean };
+
+function GettingStartedOverlay({ isVisible }: Props) {
   return (
-    <div className="getting-started-overlay"></div>
+    <div className={classNames(
+      'getting-started-overlay',
+      { 'is-visible': isVisible }
+    )} />
   );
 }
 

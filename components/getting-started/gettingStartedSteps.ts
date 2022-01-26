@@ -10,7 +10,7 @@ export default [
   {
     id: 'widget-2c342850-2237-4dab-8b08-b10cae7c7a4e',
     message: 'Search for a verse to post to your dashboard with the Bible Verse widget!',
-    position: 'top',
+    position: 'bottom',
     alignment: 'left'
   },
   {

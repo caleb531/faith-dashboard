@@ -4,13 +4,13 @@ import gettingStartedSteps from './gettingStartedSteps';
 
 // The useGettingStartedStep() hook exposes data for an arbitrary component to
 // be highlighted as a step in the "Getting Started" UX
-function useGettingStartedStep(componentStepId: string) {
+function useGettingStartedStep(componentStepId: string): object {
 
-  const { currentStepId } = useContext(GettingStartedContext);
+  const { inProgress, currentStepId } = useContext(GettingStartedContext);
   const componentStep = gettingStartedSteps.find((step) => step.id === componentStepId);
 
-  return componentStep?.id === currentStepId ? {
-    'data-getting-started-step-active': componentStep
+  return inProgress && componentStep?.id === currentStepId ? {
+    'data-getting-started-step-active': componentStep.id
   } : null;
 
 }

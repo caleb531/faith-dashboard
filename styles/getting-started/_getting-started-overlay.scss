@@ -1,0 +1,18 @@
+.getting-started-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.75);
+  backdrop-filter: blur(10px);
+  z-index: 200;
+  &:not(.is-visible) {
+    display: none;
+  }
+}
+@each $theme-name, $theme-color in $theme-colors {
+  .theme-#{$theme-name} [data-getting-started-step-active] {
+    background-color: darken($theme-color, 9%);
+  }
+}

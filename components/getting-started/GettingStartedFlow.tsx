@@ -8,8 +8,8 @@ type Props = { children: JSX.Element | JSX.Element[] };
 
 function GettingStartedFlow({ children }: Props) {
 
-  const [inProgress, setInProgress] = useState(true);
-  const [currentStepId, setCurrentStepId] = useState(gettingStartedSteps[0].id);
+  const [inProgress, setInProgress] = useState(false);
+  const [currentStepId, setCurrentStepId] = useState(gettingStartedSteps[1].id);
 
   // We want to send multiple values (the count and a setter) to the below
   // context; however, if we try to inline an object, the context value will
@@ -22,7 +22,7 @@ function GettingStartedFlow({ children }: Props) {
 
   return (
     <GettingStartedContext.Provider value={contextValue}>
-      <GettingStartedOverlay />
+      <GettingStartedOverlay isVisible={inProgress} />
       {children}
     </GettingStartedContext.Provider>
   );
