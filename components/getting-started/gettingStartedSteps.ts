@@ -29,6 +29,7 @@ export default [
     id: 'add-widget',
     message: 'Add more widgets any time!',
     position: 'bottom',
-    alignment: 'right'
+    alignment: 'right',
+    width: 'max-content'
   }
 ] as GettingStartedStep[];

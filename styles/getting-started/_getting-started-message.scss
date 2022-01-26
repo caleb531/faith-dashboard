@@ -1,7 +1,7 @@
 .getting-started-message {
   position: absolute;
   z-index: 400;
-  min-width: 300px;
+  max-width: 100vw;
   padding: 0 10px;
   font-size: $font-size-xs;
   &.position-middle {

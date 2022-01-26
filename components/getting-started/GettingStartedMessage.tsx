@@ -13,7 +13,7 @@ function GettingStartedMessage({ isCurrentStep }: Props) {
       'getting-started-message',
       `position-${currentStep.position}`,
       `alignment-${currentStep.alignment}`
-    )}>
+    )} style={{ width: currentStep.width || '100%' }}>
       {currentStep.message}
       <div className="getting-started-message-controls">
         <button

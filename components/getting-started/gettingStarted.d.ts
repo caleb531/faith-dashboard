@@ -5,6 +5,7 @@ export interface GettingStartedStep {
   message: string;
   position: 'top' | 'bottom';
   alignment: 'left' | 'center' | 'right';
+  width?: number | string;
 }
 
 // Provide details about where the user is in the Getting Started flow, and
