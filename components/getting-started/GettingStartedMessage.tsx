@@ -6,7 +6,7 @@ type Props = { isCurrentStep: boolean };
 
 function GettingStartedMessage({ isCurrentStep }: Props) {
 
-  const { currentStep, currentStepIndex, moveToNextStep } = useContext(GettingStartedContext);
+  const { currentStep, currentStepIndex, moveToNextStep, skipGettingStarted } = useContext(GettingStartedContext);
 
   return (
     isCurrentStep ? <div className={classNames(
@@ -24,7 +24,8 @@ function GettingStartedMessage({ isCurrentStep }: Props) {
         </button>
         <button
           type="button"
-          className="getting-started-message-control warning">
+          className="getting-started-message-control warning"
+          onClick={skipGettingStarted}>
           Skip Tutorial
         </button>
       </div>

@@ -14,4 +14,5 @@ interface GettingStartedContextValue {
   currentStepIndex: number;
   currentStep: GettingStartedStep;
   moveToNextStep: () => void;
+  skipGettingStarted: () => void;
 }

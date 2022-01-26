@@ -17,12 +17,17 @@ function GettingStartedFlow({ shouldShow, children }: Props) {
     shouldShow || false
   );
 
-  const [inProgress] = useState(() => restoreHasCompleted());
+  const [inProgress, setInProgress] = useState(() => restoreHasCompleted());
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   const moveToNextStep = useCallback(() => {
     setCurrentStepIndex((newIndex) => (newIndex + 1) % gettingStartedSteps.length);
   }, [setCurrentStepIndex]);
+
+  const skipGettingStarted = useCallback(() => {
+    setInProgress(false);
+    dispatchToApp({ type: 'skipGettingStarted' });
+  }, [setInProgress, dispatchToApp]);
 
   // We want to send multiple values (the count and a setter) to the below
   // context; however, if we try to inline an object, the context value will
@@ -34,9 +39,10 @@ function GettingStartedFlow({ shouldShow, children }: Props) {
       inProgress,
       currentStepIndex,
       currentStep: gettingStartedSteps[currentStepIndex],
-      moveToNextStep
+      moveToNextStep,
+      skipGettingStarted
     };
-  }, [inProgress, currentStepIndex, moveToNextStep]);
+  }, [inProgress, currentStepIndex, moveToNextStep, skipGettingStarted]);
 
   return (
     <GettingStartedContext.Provider value={contextValue}>
