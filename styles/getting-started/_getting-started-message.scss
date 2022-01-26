@@ -33,7 +33,10 @@
   margin-top: 10px;
 }
 .getting-started-message-control {
-  margin-right: 10px;
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+  margin-bottom: 10px;
   @each $theme-name, $theme-color in $theme-colors {
     .theme-#{$theme-name} & {
       background-color: darken($theme-color, 9%);
