@@ -12,7 +12,6 @@ type Props = { widget: WidgetState, dispatch: Dispatch<WidgetAction>, provided: 
 function WidgetShell({ widget, dispatch, provided, children }: Props) {
 
   const dispatchToApp = useContext(AppContext);
-  console.log(widget.id);
   const { isCurrentStep, gettingStartedStepProps } = useGettingStartedStep(`widget-${widget.id}`);
 
   // Signal to the global application that we want to remove the widget
