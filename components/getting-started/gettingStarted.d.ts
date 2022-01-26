@@ -9,7 +9,8 @@ export interface GettingStartedStep {
 
 // Provide details about where the user is in the Getting Started flow, and
 // allow any one step to advance the Getting Started flow
-type GettingStartedContextValue = [
-  string,
-  (newCurrentStep: string) => void
-];
+interface GettingStartedContextValue {
+  inProgress: boolean;
+  currentStepId: string;
+  setCurrentStepId: (newCurrentStep: string) => void;
+}
