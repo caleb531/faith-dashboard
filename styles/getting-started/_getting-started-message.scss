@@ -34,9 +34,15 @@
   @each $theme-name, $theme-color in $theme-colors {
     .theme-#{$theme-name} & {
       background-color: darken($theme-color, 9%);
+      &:hover:active {
+        background-color: darken($theme-color, 12%);
+      }
     }
   }
   &.warning {
     background-color: $red;
+    &:hover:active {
+      background-color: darken($red, 10%);
+    }
   }
 }
