@@ -12,8 +12,6 @@ function useGettingStartedStep(componentStepId: string): ReturnValue {
   const componentStep = gettingStartedSteps.find((step) => step.id === componentStepId);
   const isCurrentStep = (componentStep === currentStep);
 
-  console.log(currentStep, componentStep);
-
   return inProgress && isCurrentStep ? {
     isCurrentStep,
     gettingStartedStepProps: {
