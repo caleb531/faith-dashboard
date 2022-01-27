@@ -9,6 +9,7 @@ import AppHead from './AppHead';
 import AppHeader from './AppHeader';
 import reducer from './AppReducer';
 import defaultApp from './appStateDefault';
+import AppWelcome from './AppWelcome';
 import UpdateNotification from './UpdateNotification';
 import useThemeForEntirePage from './useThemeForEntirePage';
 
@@ -50,6 +51,7 @@ function App() {
               <UpdateNotification />
             ) : null}
             <AppHeader theme={app.theme} />
+            <AppWelcome />
             <Suspense fallback={<LoadingIndicator />}>
               <WidgetBoard widgets={app.widgets} />
             </Suspense>

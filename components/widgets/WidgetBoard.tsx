@@ -19,7 +19,7 @@ function WidgetBoard({ widgets }: Props) {
   const dispatchToApp = useContext(AppContext);
   const columnCount = 3;
 
-  const { isCurrentStep } = useGettingStartedStep('welcome');
+  const { isCurrentStep, stepProps } = useGettingStartedStep('widget-board');
 
   // Because the widgets are stored in a one-dimensional array, yet we are
   // iterating over the widgets column-wise, we need to pre-compute the
@@ -63,7 +63,7 @@ function WidgetBoard({ widgets }: Props) {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <GettingStartedMessage isCurrentStep={isCurrentStep} />
-      <div className="widget-board">
+      <div className="widget-board" {...stepProps}>
         {times(columnCount, (columnIndex) => {
           return (
             <WidgetBoardColumn

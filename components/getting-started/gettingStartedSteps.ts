@@ -10,6 +10,13 @@ const gettingStartedSteps: GettingStartedStep[] = [
     primaryButtonLabel: 'Get Started'
   },
   {
+    id: 'widget-board',
+    message: 'This is your dashboard. It has different types of "widgets" that help inspire your faith',
+    position: 'middle',
+    alignment: 'center',
+    width: 320
+  },
+  {
     id: 'widget-2c342850-2237-4dab-8b08-b10cae7c7a4e',
     message: 'Search for a verse to post to your dashboard with the Bible Verse widget',
     position: 'right',
