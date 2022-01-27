@@ -6,6 +6,7 @@ export interface GettingStartedStep {
   position: 'top' | 'bottom';
   alignment: 'left' | 'center' | 'right';
   width?: number | string;
+  primaryButtonLabel?: string;
 }
 
 // Provide details about where the user is in the Getting Started flow, and

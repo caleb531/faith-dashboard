@@ -13,14 +13,14 @@ function GettingStartedMessage({ isCurrentStep }: Props) {
       'getting-started-message',
       `position-${currentStep.position}`,
       `alignment-${currentStep.alignment}`
-    )} style={{ width: currentStep.width || '100%' }}>
+    )} style={{ width: currentStep.width || 'auto' }}>
       {currentStep.message}
       <div className="getting-started-message-controls">
         <button
           type="button"
           className="getting-started-message-control"
           onClick={moveToNextStep}>
-          {currentStepIndex === 0 ? 'Start' : 'Next'}
+          {currentStep.primaryButtonLabel || 'Next'}
         </button>
         <button
           type="button"

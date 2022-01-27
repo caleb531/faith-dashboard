@@ -5,7 +5,9 @@ export default [
     id: 'welcome',
     message: 'Welcome to Faith Dashboard!',
     position: 'middle',
-    alignment: 'center'
+    alignment: 'center',
+    width: 'auto',
+    primaryButtonLabel: 'Get Started'
   },
   {
     id: 'widget-2c342850-2237-4dab-8b08-b10cae7c7a4e',
