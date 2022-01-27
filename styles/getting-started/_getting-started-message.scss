@@ -30,7 +30,6 @@ $getting-started-message-color: $dark-100;
 @mixin getting-started-message-position-left() {
   right: 100%;
   margin-right: $getting-started-message-margin;
-  text-align: left;
   &:before {
     top: $getting-started-message-arrow-size * 2;
     left: 100%;
@@ -40,7 +39,6 @@ $getting-started-message-color: $dark-100;
 @mixin getting-started-message-position-right() {
   left: 100%;
   margin-left: $getting-started-message-margin;
-  text-align: right;
   &:before {
     top: $getting-started-message-arrow-size * 2;
     right: 100%;
