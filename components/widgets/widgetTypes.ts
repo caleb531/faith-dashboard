@@ -1,6 +1,6 @@
 import { WidgetType } from './widget.d';
 
-export default [
+const widgetTypes: WidgetType[] = [
   {
     type: 'BibleVerse',
     name: 'Bible Verse',
@@ -22,4 +22,6 @@ export default [
     icon: 'podcast-dark',
     requiresConfiguration: true
   }
-] as WidgetType[];
+];
+
+export default widgetTypes;
