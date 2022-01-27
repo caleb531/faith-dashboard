@@ -62,6 +62,7 @@ $getting-started-message-color: $dark-100;
   color: $getting-started-message-color;
   font-family: $font-family-sans-serif;
   font-size: $font-size-xs;
+  box-shadow: 0 1px 10px 1px $dark-50;
   &:before {
     content: '';
     position: absolute;
