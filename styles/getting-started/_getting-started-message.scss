@@ -11,6 +11,7 @@
   color: $dark-100;
   font-family: $font-family-sans-serif;
   font-size: $font-size-xs;
+  $message-margin: 10px;
   &.position-middle {
     top: 50%;
     left: 50%;
@@ -18,14 +19,21 @@
   }
   &.position-top {
     bottom: 100%;
-    margin-bottom: 10px;
+    margin-bottom: $message-margin;
   }
   &.position-bottom {
     top: 100%;
-    margin-top: 10px;
+    margin-top: $message-margin;
+  }
+  &.position-left {
+    right: 100%;
+    margin-right: $message-margin;
+  }
+  &.position-right {
+    left: 100%;
+    margin-left: $message-margin;
   }
   &.alignment-left {
-    left: 0;
     text-align: left;
   }
   &.alignment-right {

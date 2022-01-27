@@ -3,7 +3,7 @@
 export interface GettingStartedStep {
   id: string;
   message: string;
-  position: 'top' | 'bottom';
+  position: 'top' | 'bottom' | 'left' | 'right' | 'middle';
   alignment: 'left' | 'center' | 'right';
   width?: number | string;
   primaryButtonLabel?: string;
