@@ -17,7 +17,7 @@ function GettingStartedMessage({ isCurrentStep }: Props) {
       <span className="getting-started-message-text">{currentStep.message}</span>
       <div className="getting-started-message-controls">
         <button
-          type="button"
+          type="submit"
           className="getting-started-message-control"
           onClick={moveToNextStep}>
           {currentStep.primaryButtonLabel || 'Next'}
