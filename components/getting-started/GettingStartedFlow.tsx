@@ -20,14 +20,20 @@ function GettingStartedFlow({ shouldShow, children }: Props) {
   const [inProgress, setInProgress] = useState(() => restoreHasCompleted());
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
-  const moveToNextStep = useCallback(() => {
-    setCurrentStepIndex((newIndex) => (newIndex + 1) % gettingStartedSteps.length);
-  }, [setCurrentStepIndex]);
-
   const skipGettingStarted = useCallback(() => {
     setInProgress(false);
     dispatchToApp({ type: 'skipGettingStarted' });
   }, [setInProgress, dispatchToApp]);
+
+  const moveToNextStep = useCallback(() => {
+    if ((currentStepIndex + 1) === gettingStartedSteps.length) {
+      // Close Getting Started UI when all steps are completed
+      skipGettingStarted();
+    } else {
+      // Otherwise, just advance to the next step in the flow
+      setCurrentStepIndex((newIndex) => (newIndex + 1));
+    }
+  }, [currentStepIndex, skipGettingStarted, setCurrentStepIndex]);
 
   // We want to send multiple values (the count and a setter) to the below
   // context; however, if we try to inline an object, the context value will
