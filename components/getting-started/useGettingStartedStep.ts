@@ -15,8 +15,8 @@ function useGettingStartedStep(componentStepId: string): ReturnValue {
   return inProgress && isCurrentStep ? {
     isCurrentStep,
     stepProps: {
-      'data-getting-started-step': 'true',
-      'data-getting-started-step-active': componentStep.id
+      'data-getting-started-step': componentStep.id,
+      'data-getting-started-is-current-step': componentStep.id
     }
   } : {
     isCurrentStep: false,

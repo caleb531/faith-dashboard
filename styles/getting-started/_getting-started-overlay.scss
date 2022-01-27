@@ -12,7 +12,7 @@
   }
 }
 @each $theme-name, $theme-color in $theme-colors {
-  .theme-#{$theme-name} [data-getting-started-step-active] {
+  .theme-#{$theme-name} [data-getting-started-is-current-step] {
     background-color: darken($theme-color, 9%);
   }
 }
