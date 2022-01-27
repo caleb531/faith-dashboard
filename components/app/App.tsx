@@ -44,8 +44,8 @@ function App() {
   return (
     <AppContext.Provider value={dispatchToApp}>
         <AppHead />
-        <div className={`app theme-${app.theme} ${isTouchDevice() ? 'is-touch-device' : 'is-not-touch-device'}`}>
-          {isMounted ? <GettingStartedFlow shouldShow={app.shouldShowGettingStarted}>
+        {isMounted ? <div className={`app theme-${app.theme} ${isTouchDevice() ? 'is-touch-device' : 'is-not-touch-device'}`}>
+          <GettingStartedFlow shouldShow={app.shouldShowGettingStarted}>
             {shouldLoadServiceWorker() ? (
               <UpdateNotification />
             ) : null}
@@ -54,8 +54,8 @@ function App() {
               <WidgetBoard widgets={app.widgets} />
             </Suspense>
             <AppFooter />
-          </GettingStartedFlow> : null}
-        </div>
+          </GettingStartedFlow>
+        </div> : null}
     </AppContext.Provider>
   );
 
