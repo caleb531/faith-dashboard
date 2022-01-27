@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import AppContext from '../app/AppContext';
-import useLocalStorage from '../useLocalStorage';
 import { GettingStartedContextValue } from './gettingStarted';
 import GettingStartedContext from './GettingStartedContext';
 import GettingStartedOverlay from './GettingStartedOverlay';
@@ -12,12 +11,7 @@ function GettingStartedFlow({ shouldShow, children }: Props) {
 
   const dispatchToApp = useContext(AppContext);
 
-  const [restoreHasCompleted, saveHasCompleted] = useLocalStorage(
-    'faith-dashboard-widget-getting-started',
-    shouldShow || false
-  );
-
-  const [inProgress, setInProgress] = useState(() => restoreHasCompleted());
+  const [inProgress, setInProgress] = useState(shouldShow);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   const skipGettingStarted = useCallback(() => {
