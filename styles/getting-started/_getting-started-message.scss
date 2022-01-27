@@ -104,6 +104,7 @@ $getting-started-message-color: $dark-100;
 }
 .getting-started-message-controls {
   margin-top: 10px;
+  white-space: nowrap;
 }
 .getting-started-message-control {
   &:not(:last-child) {
