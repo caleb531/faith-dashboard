@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import GettingStartedContext from './GettingStartedContext';
 import gettingStartedSteps from './gettingStartedSteps';
 
-type ReturnValue = { isCurrentStep: boolean, gettingStartedStepProps: object }
+type ReturnValue = { isCurrentStep: boolean, stepProps: object }
 
 // The useGettingStartedStep() hook exposes data for an arbitrary component to
 // be highlighted as a step in the "Getting Started" UX
@@ -14,10 +14,10 @@ function useGettingStartedStep(componentStepId: string): ReturnValue {
 
   return inProgress && isCurrentStep ? {
     isCurrentStep,
-    gettingStartedStepProps: {
+    stepProps: {
       'data-getting-started-step-active': componentStep.id
     }
-  } : { isCurrentStep: false, gettingStartedStepProps: {} };
+  } : { isCurrentStep: false, stepProps: {} };
 
 }
 

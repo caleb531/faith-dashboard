@@ -5,13 +5,13 @@ import useGettingStartedStep from '../getting-started/useGettingStartedStep';
 import WidgetPicker from '../widget-picker/WidgetPicker';
 
 function AppHeaderAddWidgetButton() {
-  const { isCurrentStep, gettingStartedStepProps } = useGettingStartedStep('add-widget');
+  const { isCurrentStep, stepProps } = useGettingStartedStep('add-widget');
   const [widgetPickerIsOpen, setWidgetPickerIsOpen] = useState(false);
   return (
     <div className="app-header-add-widget-wrapper">
       <AddWidgetButton
         onPressButton={() => setWidgetPickerIsOpen(true)}
-        buttonProps={gettingStartedStepProps} />
+        buttonProps={stepProps} />
       <GettingStartedMessage isCurrentStep={isCurrentStep} />
       {widgetPickerIsOpen ? (
         <WidgetPicker onCloseWidgetPicker={() => setWidgetPickerIsOpen(false)} />

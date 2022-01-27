@@ -12,7 +12,7 @@ type Props = { widget: WidgetState, dispatch: Dispatch<WidgetAction>, provided: 
 function WidgetShell({ widget, dispatch, provided, children }: Props) {
 
   const dispatchToApp = useContext(AppContext);
-  const { isCurrentStep, gettingStartedStepProps } = useGettingStartedStep(`widget-${widget.id}`);
+  const { isCurrentStep, stepProps } = useGettingStartedStep(`widget-${widget.id}`);
 
   // Signal to the global application that we want to remove the widget
   function removeWidget() {
@@ -44,7 +44,7 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
   }
 
   return (
-    <article className={`widget widget-type-${widget.type} ${widget.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} {...gettingStartedStepProps}>
+    <article className={`widget widget-type-${widget.type} ${widget.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} {...stepProps}>
       <GettingStartedMessage isCurrentStep={isCurrentStep} />
       <div className="widget-controls widget-controls-left">
         <div className="widget-drag-handle widget-control" {...provided.dragHandleProps}>
