@@ -1,5 +1,6 @@
 import classNames from 'classnames';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
+import useScrollIntoView from '../useScrollIntoView';
 import GettingStartedContext from './GettingStartedContext';
 
 type Props = { isCurrentStep: boolean };
@@ -11,17 +12,10 @@ function GettingStartedMessage({ isCurrentStep }: Props) {
 
   // Scroll the highlighted element into view when that respective Getting
   // Started step is active
-  useEffect(() => {
-    if (isCurrentStep) {
-      messageRef.current.scrollIntoView({
-        // Animate the scrolling
-        behavior: 'smooth',
-        // Try to center the viewport around the message tooltip so that the
-        // highlighted element is increasingly likely to be in view
-        block: 'center'
-      });
-    }
-  }, [isCurrentStep]);
+  useScrollIntoView({
+    shouldScrollIntoView: isCurrentStep,
+    ref: messageRef
+  });
 
   return (
     isCurrentStep ? <div
