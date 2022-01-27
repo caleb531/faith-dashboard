@@ -12,14 +12,14 @@ const gettingStartedSteps: GettingStartedStep[] = [
   {
     id: 'widget-2c342850-2237-4dab-8b08-b10cae7c7a4e',
     message: 'Search for a verse to post to your dashboard with the Bible Verse widget!',
-    position: 'bottom',
+    position: 'right',
     alignment: 'left',
     width: '100%'
   },
   {
     id: 'widget-50546223-76c8-4643-a402-87c4cf213849',
     message: 'Type something encouraging or whatever you want with the Note widget!',
-    position: 'top',
+    position: 'right',
     alignment: 'left',
     width: '100%'
   },
