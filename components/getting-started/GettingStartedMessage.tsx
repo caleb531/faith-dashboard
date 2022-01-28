@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { useContext, useRef } from 'react';
 import useScrollIntoView from '../useScrollIntoView';
 import GettingStartedContext from './GettingStartedContext';
+import gettingStartedSteps from './gettingStartedSteps';
 import useGettingStartedStepMessagePositioner from './useGettingStartedStepMessagePositioner';
 
 type Props = { isCurrentStep: boolean };
@@ -10,6 +11,7 @@ function GettingStartedMessage({ isCurrentStep }: Props) {
 
   const { currentStep, currentStepIndex, moveToNextStep, skipGettingStarted } = useContext(GettingStartedContext);
   const messageRef = useRef<HTMLDivElement>(null);
+  const isLastStep = (currentStepIndex === (gettingStartedSteps.length - 1));
 
   // Scroll the highlighted element into view when that respective Getting
   // Started step is active
@@ -39,14 +41,17 @@ function GettingStartedMessage({ isCurrentStep }: Props) {
           type="submit"
           className="getting-started-message-control"
           onClick={moveToNextStep}>
-          {currentStep.primaryButtonLabel || 'Next'}
+          {
+            currentStep.primaryButtonLabel ||
+            (isLastStep ? 'Done' : 'Next')
+          }
         </button>
-        <button
+        {isLastStep === false ? <button
           type="button"
           className="getting-started-message-control warning"
           onClick={skipGettingStarted}>
           Skip Tutorial
-        </button>
+        </button> : null}
       </div>
     </div> : null
   );
