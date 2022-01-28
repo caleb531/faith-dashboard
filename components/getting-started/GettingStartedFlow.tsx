@@ -12,7 +12,7 @@ function GettingStartedFlow({ shouldShow, children }: Props) {
   const dispatchToApp = useContext(AppContext);
 
   const [inProgress, setInProgress] = useState(shouldShow);
-  const [currentStepIndex, setCurrentStepIndex] = useState(2);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   const skipGettingStarted = useCallback(() => {
     setInProgress(false);
