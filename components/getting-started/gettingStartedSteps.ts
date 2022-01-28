@@ -46,10 +46,11 @@ const gettingStartedSteps: GettingStartedStep[] = [
   },
   {
     id: 'change-theme',
-    message: 'Change your board\'s theme to personalize it!',
+    message: 'And finally, change your board\'s theme to personalize it!',
     position: 'bottom',
     alignment: 'right',
-    width: 'max-content'
+    width: 'max-content',
+    primaryButtonLabel: 'Done'
   }
 ];
 
