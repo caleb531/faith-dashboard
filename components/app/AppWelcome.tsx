@@ -5,7 +5,7 @@ import useGettingStartedStep from '../getting-started/useGettingStartedStep';
 function AppWelcome() {
   const { isCurrentStep } = useGettingStartedStep('welcome');
   return (
-    <GettingStartedMessage isCurrentStep={isCurrentStep} />
+    isCurrentStep ? <GettingStartedMessage /> : null
   );
 }
 

@@ -62,7 +62,7 @@ function WidgetBoard({ widgets }: Props) {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <GettingStartedMessage isCurrentStep={isCurrentStep} />
+      {isCurrentStep ? <GettingStartedMessage /> : null}
       <div className="widget-board" {...stepProps}>
         {times(columnCount, (columnIndex) => {
           return (

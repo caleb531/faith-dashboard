@@ -5,9 +5,10 @@ import GettingStartedContext from './GettingStartedContext';
 import gettingStartedSteps from './gettingStartedSteps';
 import useGettingStartedStepMessagePositioner from './useGettingStartedStepMessagePositioner';
 
-type Props = { isCurrentStep: boolean };
-
-function GettingStartedMessage({ isCurrentStep }: Props) {
+// When using the <GettingStartedMessage /> component, the component should be
+// wrapped inside of an isCurrentStep check (from the useGettingStartedStep()
+// hook), so that only one instance of GettingStartedMessage is active at a time
+function GettingStartedMessage() {
 
   const { currentStep, currentStepIndex, moveToNextStep, skipGettingStarted } = useContext(GettingStartedContext);
   const messageRef = useRef<HTMLDivElement>(null);
@@ -16,18 +17,17 @@ function GettingStartedMessage({ isCurrentStep }: Props) {
   // Scroll the highlighted element into view when that respective Getting
   // Started step is active
   useScrollIntoView({
-    shouldScrollIntoView: isCurrentStep,
+    shouldScrollIntoView: true,
     ref: messageRef
   });
 
   const calculatedPosition = useGettingStartedStepMessagePositioner({
-    isCurrentStep,
     currentStep,
     ref: messageRef
   }) || currentStep.position;
 
   return (
-    isCurrentStep ? <div
+    <div
         className={classNames(
         'getting-started-message',
         `position-${calculatedPosition}`,
@@ -53,7 +53,7 @@ function GettingStartedMessage({ isCurrentStep }: Props) {
           Skip Tutorial
         </button> : null}
       </div>
-    </div> : null
+    </div>
   );
 }
 

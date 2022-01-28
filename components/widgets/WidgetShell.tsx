@@ -45,7 +45,7 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
 
   return (
     <article className={`widget widget-type-${widget.type} ${widget.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} {...stepProps}>
-      <GettingStartedMessage isCurrentStep={isCurrentStep} />
+      {isCurrentStep ? <GettingStartedMessage /> : null}
       <div className="widget-controls widget-controls-left">
         <div className="widget-drag-handle widget-control" {...provided.dragHandleProps}>
           <img

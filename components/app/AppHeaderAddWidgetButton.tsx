@@ -12,7 +12,7 @@ function AppHeaderAddWidgetButton() {
       <AddWidgetButton
         onPressButton={() => setWidgetPickerIsOpen(true)}
         buttonProps={stepProps} />
-      <GettingStartedMessage isCurrentStep={isCurrentStep} />
+      {isCurrentStep ? <GettingStartedMessage /> : null}
       {widgetPickerIsOpen ? (
         <WidgetPicker onCloseWidgetPicker={() => setWidgetPickerIsOpen(false)} />
       ) : null}

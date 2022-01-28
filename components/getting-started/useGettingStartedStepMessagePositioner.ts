@@ -10,23 +10,26 @@ function recalculatePosition(ref: RefObject<HTMLElement>, originalPosition: Posi
   if (!ref.current) {
     return;
   }
+  if (originalPosition !== 'auto') {
+    return;
+  }
   const messageBounds = ref.current.getBoundingClientRect();
   const targetBounds = ref.current.parentElement.getBoundingClientRect();
   const bodyBounds = document.body.getBoundingClientRect();
-  if ((targetBounds.left - messageBounds.width) > bodyBounds.left) {
-    setPosition('left');
-  } else if ((targetBounds.right + messageBounds.width) < bodyBounds.right) {
+  if ((targetBounds.right + messageBounds.width) < bodyBounds.right) {
     setPosition('right');
-  } else if ((targetBounds.top - messageBounds.height) > bodyBounds.top) {
-    setPosition('top');
+  } else if ((targetBounds.left - messageBounds.width) > bodyBounds.left) {
+    setPosition('left');
   } else if ((targetBounds.bottom + messageBounds.height) < bodyBounds.bottom) {
     setPosition('bottom');
+  } else if ((targetBounds.top - messageBounds.height) > bodyBounds.top) {
+    setPosition('top');
   }
 }
 
-type Params = { isCurrentStep: boolean, currentStep: GettingStartedStep, ref: RefObject<HTMLElement> }
+type Params = { currentStep: GettingStartedStep, ref: RefObject<HTMLElement> }
 
-function useGettingStartedStepMessagePositioner({ isCurrentStep, currentStep, ref }: Params): Position {
+function useGettingStartedStepMessagePositioner({ currentStep, ref }: Params): Position {
 
   const [position, setPosition] = useState<Position>(null);
   // Keep track of a dummy state variable so that we can trigger a re-render
@@ -35,19 +38,14 @@ function useGettingStartedStepMessagePositioner({ isCurrentStep, currentStep, re
 
   const resizeHandler = useMemo(() => {
     return debounce(() => {
-      if (isCurrentStep) {
-        setResizeCount((count) => count + 1);
-      }
+      setResizeCount((count) => count + 1);
     }, 100);
-  }, [isCurrentStep]);
+  }, []);
   useEventListener(window, 'resize', resizeHandler);
 
   useLayoutEffect(() => {
-    console.log(isCurrentStep, ref.current);
-    if (isCurrentStep && ref.current) {
-      recalculatePosition(ref, currentStep.position, setPosition);
-    }
-  }, [isCurrentStep, currentStep, ref, resizeCount]);
+    recalculatePosition(ref, currentStep.position, setPosition);
+  }, [currentStep, ref, resizeCount]);
 
   return position;
 

@@ -40,7 +40,7 @@ function ThemeSwitcher({ theme }: Props) {
 
   return (
     <div className="theme-switcher">
-      <GettingStartedMessage isCurrentStep={isCurrentStep} />
+      {isCurrentStep ? <GettingStartedMessage /> : null}
       <label className="theme-switcher-label accessibility-only" htmlFor="theme-switcher-dropdown">
         Color Theme
       </label>
