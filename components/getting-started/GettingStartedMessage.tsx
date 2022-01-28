@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { useContext, useRef } from 'react';
 import useScrollIntoView from '../useScrollIntoView';
 import GettingStartedContext from './GettingStartedContext';
+import useGettingStartedStepMessagePositioner from './useGettingStartedStepMessagePositioner';
 
 type Props = { isCurrentStep: boolean };
 
@@ -17,11 +18,17 @@ function GettingStartedMessage({ isCurrentStep }: Props) {
     ref: messageRef
   });
 
+  const calculatedPosition = useGettingStartedStepMessagePositioner({
+    isCurrentStep,
+    currentStep,
+    ref: messageRef
+  }) || currentStep.position;
+
   return (
     isCurrentStep ? <div
         className={classNames(
         'getting-started-message',
-        `position-${currentStep.position}`,
+        `position-${calculatedPosition}`,
         `alignment-${currentStep.alignment}`
       )}
       style={{ width: currentStep.width || 'auto' }}

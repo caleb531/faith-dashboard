@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 // The useEventListener() hook provides an easy abstraction for binding and
 // unbinding a single event to any type of DOM element
-function useEventListener(element: HTMLElement, eventType: string, eventCallback: (event: Event) => void, dependencies: any[] = []): void {
+function useEventListener(element: HTMLElement | Window, eventType: string, eventCallback: (event: Event) => void, dependencies: any[] = []): void {
 
   useEffect(() => {
     element.addEventListener(eventType, eventCallback);

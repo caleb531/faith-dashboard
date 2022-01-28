@@ -1,9 +1,11 @@
+type GettingStartedStepPosition = 'top' | 'bottom' | 'left' | 'right' | 'middle';
+
 // An object representing a particular step in the Getting Started flow; each
 // step will inform the user of what they can do in the application
 export interface GettingStartedStep {
   id: string;
   message: string;
-  position: 'top' | 'bottom' | 'left' | 'right' | 'middle';
+  position: GettingStartedStepPosition;
   alignment: 'left' | 'center' | 'right';
   width?: number | string;
   primaryButtonLabel?: string;
