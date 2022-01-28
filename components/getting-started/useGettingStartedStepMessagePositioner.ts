@@ -13,13 +13,6 @@ function recalculatePosition(ref: RefObject<HTMLElement>, originalPosition: Posi
   const messageBounds = ref.current.getBoundingClientRect();
   const targetBounds = ref.current.parentElement.getBoundingClientRect();
   const bodyBounds = document.body.getBoundingClientRect();
-  const availableSpace = {
-    top: messageBounds.top - bodyBounds.top,
-    bottom: bodyBounds.bottom - messageBounds.bottom,
-    left: messageBounds.left - bodyBounds.left,
-    right: bodyBounds.right - messageBounds.right,
-    middle: 0
-  };
   if ((targetBounds.left - messageBounds.width) > bodyBounds.left) {
     setPosition('left');
   } else if ((targetBounds.right + messageBounds.width) < bodyBounds.right) {
