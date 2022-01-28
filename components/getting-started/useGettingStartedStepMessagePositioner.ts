@@ -29,21 +29,25 @@ type Params = { isCurrentStep: boolean, currentStep: GettingStartedStep, ref: Re
 function useGettingStartedStepMessagePositioner({ isCurrentStep, currentStep, ref }: Params): Position {
 
   const [position, setPosition] = useState<Position>(null);
+  // Keep track of a dummy state variable so that we can trigger a re-render
+  // for every (debounced) resize event
+  const [resizeCount, setResizeCount] = useState(0);
 
   const resizeHandler = useMemo(() => {
     return debounce(() => {
-      if (isCurrentStep && ref.current) {
-        recalculatePosition(ref, currentStep.position, setPosition);
+      if (isCurrentStep) {
+        setResizeCount((count) => count + 1);
       }
     }, 100);
-  }, [isCurrentStep, currentStep.position, ref]);
+  }, [isCurrentStep]);
   useEventListener(window, 'resize', resizeHandler);
 
   useLayoutEffect(() => {
+    console.log(isCurrentStep, ref.current);
     if (isCurrentStep && ref.current) {
       recalculatePosition(ref, currentStep.position, setPosition);
     }
-  }, [isCurrentStep, currentStep, ref]);
+  }, [isCurrentStep, currentStep, ref, resizeCount]);
 
   return position;
 

@@ -1,4 +1,4 @@
-type GettingStartedStepPosition = 'top' | 'bottom' | 'left' | 'right' | 'middle';
+type GettingStartedStepPosition = 'top' | 'bottom' | 'left' | 'right' | 'middle' | 'auto';
 
 // An object representing a particular step in the Getting Started flow; each
 // step will inform the user of what they can do in the application
