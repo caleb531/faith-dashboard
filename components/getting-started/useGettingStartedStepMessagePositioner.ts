@@ -1,4 +1,4 @@
-import { debounce, maxBy } from 'lodash-es';
+import { debounce } from 'lodash-es';
 import { RefObject, useLayoutEffect, useMemo, useState } from 'react';
 import useEventListener from '../useEventListener';
 import {
@@ -6,9 +6,9 @@ import {
   GettingStartedStepPosition as Position
 } from './gettingStarted.d';
 
-function recalculatePosition(ref: RefObject<HTMLElement>, currentPosition: Position, setPosition: (position: Position) => void) {
+function recalculatePosition(ref: RefObject<HTMLElement>, originalPosition: Position, setPosition: (position: Position) => void) {
   if (ref) {
-    const messageBounds = ref.current.parentElement.getBoundingClientRect();
+    const messageBounds = ref.current.getBoundingClientRect();
     const bodyBounds = document.body.getBoundingClientRect();
     const availableSpace = {
       top: messageBounds.top - bodyBounds.top,
@@ -17,18 +17,15 @@ function recalculatePosition(ref: RefObject<HTMLElement>, currentPosition: Posit
       right: bodyBounds.right - messageBounds.right,
       middle: 0
     };
-    console.log('body', bodyBounds.width);
-    console.log('space', availableSpace);
-    // If the current message position already has enough space, keep it as-is
-    if (currentPosition === 'right' && availableSpace.right < bodyBounds.width) {
-      console.log('keep');
-      return;
+    if (messageBounds.top > bodyBounds.top) {
+      setPosition('top');
+    } else if (messageBounds.right < bodyBounds.right) {
+      setPosition('right');
+    } else if (messageBounds.left > bodyBounds.left) {
+      setPosition('left');
+    } else if (messageBounds.right < bodyBounds.right) {
+      setPosition('right');
     }
-    const mostAvailablePositionName: Position = maxBy(
-      Object.keys(availableSpace) as Position[],
-      (positionName: Position) => availableSpace[positionName]
-    );
-    setPosition(mostAvailablePositionName);
   }
 }
 
