@@ -7,26 +7,27 @@ import {
 } from './gettingStarted.d';
 
 function recalculatePosition(ref: RefObject<HTMLElement>, originalPosition: Position, setPosition: (position: Position) => void) {
-  if (ref) {
-    const messageBounds = ref.current.getBoundingClientRect();
-    const targetBounds = ref.current.parentElement.getBoundingClientRect();
-    const bodyBounds = document.body.getBoundingClientRect();
-    const availableSpace = {
-      top: messageBounds.top - bodyBounds.top,
-      bottom: bodyBounds.bottom - messageBounds.bottom,
-      left: messageBounds.left - bodyBounds.left,
-      right: bodyBounds.right - messageBounds.right,
-      middle: 0
-    };
-    if ((targetBounds.left - messageBounds.width) > bodyBounds.left) {
-      setPosition('left');
-    } else if ((targetBounds.right + messageBounds.width) < bodyBounds.right) {
-      setPosition('right');
-    } else if ((targetBounds.top - messageBounds.height) > bodyBounds.top) {
-      setPosition('top');
-    } else if ((targetBounds.bottom + messageBounds.height) < bodyBounds.bottom) {
-      setPosition('bottom');
-    }
+  if (!ref.current) {
+    return;
+  }
+  const messageBounds = ref.current.getBoundingClientRect();
+  const targetBounds = ref.current.parentElement.getBoundingClientRect();
+  const bodyBounds = document.body.getBoundingClientRect();
+  const availableSpace = {
+    top: messageBounds.top - bodyBounds.top,
+    bottom: bodyBounds.bottom - messageBounds.bottom,
+    left: messageBounds.left - bodyBounds.left,
+    right: bodyBounds.right - messageBounds.right,
+    middle: 0
+  };
+  if ((targetBounds.left - messageBounds.width) > bodyBounds.left) {
+    setPosition('left');
+  } else if ((targetBounds.right + messageBounds.width) < bodyBounds.right) {
+    setPosition('right');
+  } else if ((targetBounds.top - messageBounds.height) > bodyBounds.top) {
+    setPosition('top');
+  } else if ((targetBounds.bottom + messageBounds.height) < bodyBounds.bottom) {
+    setPosition('bottom');
   }
 }
 
@@ -38,7 +39,7 @@ function useGettingStartedStepMessagePositioner({ isCurrentStep, currentStep, re
 
   const resizeHandler = useMemo(() => {
     return debounce(() => {
-      if (isCurrentStep) {
+      if (isCurrentStep && ref.current) {
         recalculatePosition(ref, currentStep.position, setPosition);
       }
     }, 100);
@@ -46,7 +47,7 @@ function useGettingStartedStepMessagePositioner({ isCurrentStep, currentStep, re
   useEventListener(window, 'resize', resizeHandler);
 
   useLayoutEffect(() => {
-    if (isCurrentStep) {
+    if (isCurrentStep && ref.current) {
       recalculatePosition(ref, currentStep.position, setPosition);
     }
   }, [isCurrentStep, currentStep, ref]);
