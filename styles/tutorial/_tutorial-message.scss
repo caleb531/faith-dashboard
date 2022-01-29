@@ -28,7 +28,7 @@ $tutorial-message-color: $dark-100;
     border-width: $tutorial-message-arrow-size;
     border-color: transparent;
   }
-  &.position-middle {
+  &.position-center {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

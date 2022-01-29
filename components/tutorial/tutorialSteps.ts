@@ -4,7 +4,7 @@ const tutorialSteps: TutorialStep[] = [
   {
     id: 'welcome',
     message: 'Welcome to Faith Dashboard!',
-    position: 'middle',
+    position: 'center',
     alignment: 'center',
     width: 'auto',
     primaryButtonLabel: 'Get Started'
@@ -12,7 +12,7 @@ const tutorialSteps: TutorialStep[] = [
   {
     id: 'widget-board',
     message: 'This is your dashboard. It has different types of "widgets" that help inspire your faith.',
-    position: 'middle',
+    position: 'center',
     alignment: 'center',
     width: 320
   },
@@ -79,7 +79,7 @@ const tutorialSteps: TutorialStep[] = [
   {
     id: 'completed',
     message: 'And that\'s it! May this dashboard help you grow closer to Jesus.',
-    position: 'middle',
+    position: 'center',
     alignment: 'center',
     width: 260
   }

@@ -1,4 +1,4 @@
-type TutorialStepPosition = 'top' | 'bottom' | 'left' | 'right' | 'middle' | 'auto';
+type TutorialStepPosition = 'top' | 'bottom' | 'left' | 'right' | 'center' | 'auto';
 type TutorialStepAlignment = 'left' | 'center' | 'right' | 'center';
 
 // An object representing a particular step in the Tutorial flow; each
