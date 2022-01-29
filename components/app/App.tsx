@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { Suspense, useEffect, useReducer } from 'react';
 import LoadingIndicator from '../generic/LoadingIndicator';
 import TutorialFlow from '../tutorial/TutorialFlow';
@@ -46,7 +47,12 @@ function App() {
   return (
     <AppContext.Provider value={dispatchToApp}>
         <AppHead />
-        {isMounted ? <div className={`app theme-${app.theme} ${isTouchDevice() ? 'is-touch-device' : 'is-not-touch-device'}`}>
+        {isMounted ? <div className={classNames(
+          'app',
+          `theme-${app.theme}`,
+          { 'is-touch-device': isTouchDevice() },
+          { 'is-not-touch-device': !isTouchDevice() }
+        )}>
           <TutorialFlow shouldShow={app.shouldShowTutorial}>
             {shouldLoadServiceWorker() ? (
               <UpdateNotification />

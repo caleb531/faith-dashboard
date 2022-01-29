@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { Dispatch, useContext, useEffect } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import AppContext from '../app/AppContext';
@@ -48,7 +49,17 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
   }
 
   return (
-    <article className={`widget widget-type-${widget.type} ${widget.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} {...widgetStepData.stepProps} {...dragStepData.stepProps} {...removeStepData.stepProps} {...settingsStepData.stepProps}>
+    <article className={classNames(
+        'widget',
+        `widget-type-${widget.type}`,
+        { 'widget-settings-open': widget.isSettingsOpen }
+      )}
+      ref={provided.innerRef}
+      {...provided.draggableProps}
+      {...widgetStepData.stepProps}
+      {...dragStepData.stepProps}
+      {...removeStepData.stepProps}
+      {...settingsStepData.stepProps}>
       {isCurrentStep ? <TutorialMessage /> : null}
       <div className="widget-controls widget-controls-left">
         <div className="widget-drag-handle widget-control" {...provided.dragHandleProps} {...dragStepData.stepProps}>

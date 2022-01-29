@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import {
   messageSW,
@@ -62,7 +63,12 @@ function UpdateNotification() {
   }, [wb, isUpdating, availableUpdate]);
 
   return availableUpdate ? (
-    <div className={`update-notification ${availableUpdate ? 'update-available' : ''} ${isUpdating ? 'is-updating' : ''}`} onClick={() => setIsUpdating(true)}>
+    <div className={classNames(
+        'update-notification',
+        { 'update-available': availableUpdate },
+        { 'is-updating': isUpdating }
+      )}
+      onClick={() => setIsUpdating(true)}>
       {isUpdating ? <div className="update-loading-container"><LoadingIndicator /></div> : null}
       <span className="update-notification-message">Update available! Click here to update.</span>
     </div>
