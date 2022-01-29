@@ -2,18 +2,28 @@ import Head from 'next/head';
 import React from 'react';
 
 function AppHead() {
+  const title = 'Faith Dashboard';
+  const description = 'Be strengthened every day with this private board for your favorite Bible verses, sermons, and anything you need to be encouraged when life happens.';
+  const image = 'https://faithdashboard.com/images/og-image.jpg';
+  const url = 'https://faithdashboard.com/';
+  const twitterUsernameSite = '@faithdashboard';
+  const twitterUsernameCreator = '@caleb531';
   return (
     <Head>
-      <title>Faith Dashboard</title>
-      <link rel="canonical" href="https://faithdashboard.com/" />
-      <meta property="og:title" content="Faith Dashboard" />
+      <title>{title}</title>
+      <link rel="canonical" href={url} />
+      <meta property="og:title" content={title} />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://faithdashboard.com" />
-      <meta property="og:image" content="https://faithdashboard.com/images/og-image.jpg" />
-      <meta
-        name="description"
-        property="og:description"
-        content="Be strengthened every day with this private board for your favorite Bible verses, sermons, and anything you need to be encouraged when life happens." />
+      <meta property="og:url" content={url} />
+      <meta property="og:image" content={image} />
+      <meta property="og:description" content={description} />
+      <meta name="description" content={description} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content={twitterUsernameSite} />
+      <meta name="twitter:creator" content={twitterUsernameCreator} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
     </Head>
   );
 }
