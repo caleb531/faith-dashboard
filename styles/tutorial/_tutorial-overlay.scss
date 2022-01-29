@@ -1,4 +1,4 @@
-.getting-started-overlay {
+.tutorial-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,7 +12,7 @@
   }
 }
 @each $theme-name, $theme-color in $theme-colors {
-  .theme-#{$theme-name} [data-getting-started-is-current-step] {
+  .theme-#{$theme-name} [data-tutorial-is-current-step] {
     background-color: darken($theme-color, 9%);
   }
 }

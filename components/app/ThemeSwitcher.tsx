@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import GettingStartedMessage from '../getting-started/GettingStartedMessage';
-import useGettingStartedStep from '../getting-started/useGettingStartedStep';
+import TutorialMessage from '../tutorial/TutorialMessage';
+import useTutorialStep from '../tutorial/useTutorialStep';
 import { AppTheme, AppThemeListItem } from './app.d';
 import AppContext from './AppContext';
 
@@ -36,11 +36,11 @@ type Props = { theme: AppTheme };
 function ThemeSwitcher({ theme }: Props) {
 
   const dispatchToApp = useContext(AppContext);
-  const { isCurrentStep, stepProps } = useGettingStartedStep('change-theme');
+  const { isCurrentStep, stepProps } = useTutorialStep('change-theme');
 
   return (
     <div className="theme-switcher">
-      {isCurrentStep ? <GettingStartedMessage /> : null}
+      {isCurrentStep ? <TutorialMessage /> : null}
       <label className="theme-switcher-label accessibility-only" htmlFor="theme-switcher-dropdown">
         Color Theme
       </label>

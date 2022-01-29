@@ -4,7 +4,7 @@ import { AppState, AppTheme } from './app.d';
 
 export type AppAction =
   { type: 'changeTheme', payload: AppTheme } |
-  { type: 'skipGettingStarted' } |
+  { type: 'skipTutorial' } |
   { type: 'addWidget', payload: WidgetHead } |
   { type: 'removeWidget', payload: WidgetHead } |
   { type: 'moveWidget', payload: WidgetMoveParameters };
@@ -14,8 +14,8 @@ export default function reducer(state: AppState, action: AppAction): AppState {
     case 'changeTheme':
       const newTheme = action.payload;
       return { ...state, theme: newTheme };
-    case 'skipGettingStarted':
-      return { ...state, shouldShowGettingStarted: false };
+    case 'skipTutorial':
+      return { ...state, shouldShowTutorial: false };
     case 'addWidget':
       const newWidget = action.payload;
       return { ...state, widgets: [newWidget, ...state.widgets] };

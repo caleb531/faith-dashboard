@@ -1,6 +1,6 @@
-import { GettingStartedStep } from './gettingStarted';
+import { TutorialStep } from './tutorial';
 
-const gettingStartedSteps: GettingStartedStep[] = [
+const tutorialSteps: TutorialStep[] = [
   {
     id: 'welcome',
     message: 'Welcome to Faith Dashboard!',
@@ -66,4 +66,4 @@ const gettingStartedSteps: GettingStartedStep[] = [
   }
 ];
 
-export default gettingStartedSteps;
+export default tutorialSteps;

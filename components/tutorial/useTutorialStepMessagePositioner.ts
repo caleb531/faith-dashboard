@@ -2,9 +2,9 @@ import { debounce } from 'lodash-es';
 import { RefObject, useLayoutEffect, useMemo, useState } from 'react';
 import useEventListener from '../useEventListener';
 import {
-  GettingStartedStep,
-  GettingStartedStepPosition as Position
-} from './gettingStarted.d';
+    TutorialStep,
+    TutorialStepPosition as Position
+} from './tutorial.d';
 
 function recalculatePosition(ref: RefObject<HTMLElement>, originalPosition: Position, setPosition: (position: Position) => void) {
   if (!ref.current) {
@@ -27,9 +27,9 @@ function recalculatePosition(ref: RefObject<HTMLElement>, originalPosition: Posi
   }
 }
 
-type Params = { currentStep: GettingStartedStep, ref: RefObject<HTMLElement> }
+type Params = { currentStep: TutorialStep, ref: RefObject<HTMLElement> }
 
-function useGettingStartedStepMessagePositioner({ currentStep, ref }: Params): Position {
+function useTutorialStepMessagePositioner({ currentStep, ref }: Params): Position {
 
   const [position, setPosition] = useState<Position>(null);
   // Keep track of a dummy state variable so that we can trigger a re-render
@@ -51,4 +51,4 @@ function useGettingStartedStepMessagePositioner({ currentStep, ref }: Params): P
 
 }
 
-export default useGettingStartedStepMessagePositioner;
+export default useTutorialStepMessagePositioner;

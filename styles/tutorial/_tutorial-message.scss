@@ -1,9 +1,9 @@
-$getting-started-message-margin: 15px;
-$getting-started-message-arrow-size: 10px;
-$getting-started-message-background: $light-100;
-$getting-started-message-color: $dark-100;
+$tutorial-message-margin: 15px;
+$tutorial-message-arrow-size: 10px;
+$tutorial-message-background: $light-100;
+$tutorial-message-color: $dark-100;
 
-.getting-started-message {
+.tutorial-message {
   position: absolute;
   z-index: 400;
   max-width: 100vw;
@@ -14,8 +14,8 @@ $getting-started-message-color: $dark-100;
   // at the bottom of the message container
   padding-bottom: 0;
   border-radius: 10px;
-  background-color: $getting-started-message-background;
-  color: $getting-started-message-color;
+  background-color: $tutorial-message-background;
+  color: $tutorial-message-color;
   font-family: $font-family-sans-serif;
   font-size: $font-size-xs;
   box-shadow: 0 1px 10px 1px $dark-50;
@@ -25,7 +25,7 @@ $getting-started-message-color: $dark-100;
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: $getting-started-message-arrow-size;
+    border-width: $tutorial-message-arrow-size;
     border-color: transparent;
   }
   &.position-middle {
@@ -39,38 +39,38 @@ $getting-started-message-color: $dark-100;
   }
   &.position-top {
     bottom: 100%;
-    margin-bottom: $getting-started-message-margin;
+    margin-bottom: $tutorial-message-margin;
     text-align: left;
     &:before {
       top: 100%;
-      border-top-color: $getting-started-message-background;
+      border-top-color: $tutorial-message-background;
     }
   }
   &.position-bottom {
     top: 100%;
-    margin-top: $getting-started-message-margin;
+    margin-top: $tutorial-message-margin;
     text-align: left;
     &:before {
       bottom: 100%;
-      border-bottom-color: $getting-started-message-background;
+      border-bottom-color: $tutorial-message-background;
     }
   }
   &.position-left {
     right: 100%;
-    margin-right: $getting-started-message-margin;
+    margin-right: $tutorial-message-margin;
     &:before {
-      top: $getting-started-message-arrow-size * 2;
+      top: $tutorial-message-arrow-size * 2;
       left: 100%;
-      border-left-color: $getting-started-message-background;
+      border-left-color: $tutorial-message-background;
     }
   }
   &.position-right {
     left: 100%;
-    margin-left: $getting-started-message-margin;
+    margin-left: $tutorial-message-margin;
     &:before {
-      top: $getting-started-message-arrow-size * 2;
+      top: $tutorial-message-arrow-size * 2;
       right: 100%;
-      border-right-color: $getting-started-message-background;
+      border-right-color: $tutorial-message-background;
     }
   }
   &.position-top.alignment-center,
@@ -88,7 +88,7 @@ $getting-started-message-color: $dark-100;
     left: 0;
     text-align: left;
     &:before {
-      left: $getting-started-message-arrow-size * 2;
+      left: $tutorial-message-arrow-size * 2;
     }
   }
   &.position-top.alignment-right,
@@ -96,15 +96,15 @@ $getting-started-message-color: $dark-100;
     right: 0;
     text-align: right;
     &:before {
-      right: $getting-started-message-arrow-size * 2;
+      right: $tutorial-message-arrow-size * 2;
     }
   }
 }
-.getting-started-message-controls {
+.tutorial-message-controls {
   margin-top: 10px;
   white-space: nowrap;
 }
-.getting-started-message-control {
+.tutorial-message-control {
   &:not(:last-child) {
     margin-right: 10px;
   }

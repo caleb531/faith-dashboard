@@ -1,11 +1,11 @@
 import React from 'react';
-import GettingStartedMessage from '../getting-started/GettingStartedMessage';
-import useGettingStartedStep from '../getting-started/useGettingStartedStep';
+import TutorialMessage from '../tutorial/TutorialMessage';
+import useTutorialStep from '../tutorial/useTutorialStep';
 
 function AppWelcome() {
-  const { isCurrentStep } = useGettingStartedStep('welcome');
+  const { isCurrentStep } = useTutorialStep('welcome');
   return (
-    isCurrentStep ? <GettingStartedMessage /> : null
+    isCurrentStep ? <TutorialMessage /> : null
   );
 }
 

@@ -1,17 +1,17 @@
 import React from 'react';
-import GettingStartedMessage from '../getting-started/GettingStartedMessage';
-import useGettingStartedStep from '../getting-started/useGettingStartedStep';
+import TutorialMessage from '../tutorial/TutorialMessage';
+import useTutorialStep from '../tutorial/useTutorialStep';
 
 const AppFooter = React.memo(function AppFooter() {
 
-  const { isCurrentStep, stepProps } = useGettingStartedStep('help');
+  const { isCurrentStep, stepProps } = useTutorialStep('help');
 
   return (
     <footer className="app-footer">
       <small className="app-footer-dedication">By <a href="https://calebevans.me/">Caleb Evans</a>. Dedicated to Christ our Lord</small>
       &nbsp;&middot;&nbsp;
       <span className="app-footer-help-container">
-      {isCurrentStep ? <GettingStartedMessage /> : null}
+      {isCurrentStep ? <TutorialMessage /> : null}
       <a href="help/" {...stepProps}>Help</a>
       </span>
       &nbsp;&middot;&nbsp;

@@ -1,12 +1,12 @@
 import React from 'react';
-import GettingStartedMessage from '../getting-started/GettingStartedMessage';
-import useGettingStartedStep from '../getting-started/useGettingStartedStep';
+import TutorialMessage from '../tutorial/TutorialMessage';
+import useTutorialStep from '../tutorial/useTutorialStep';
 
-function AppFinishGettingStarted() {
-  const { isCurrentStep } = useGettingStartedStep('completed');
+function AppCompletedTutorial() {
+  const { isCurrentStep } = useTutorialStep('completed');
   return (
-    isCurrentStep ? <GettingStartedMessage /> : null
+    isCurrentStep ? <TutorialMessage /> : null
   );
 }
 
-export default AppFinishGettingStarted;
+export default AppCompletedTutorial;

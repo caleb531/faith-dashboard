@@ -3,13 +3,13 @@ import React from 'react';
 
 type Props = { isVisible: boolean };
 
-function GettingStartedOverlay({ isVisible }: Props) {
+function TutorialOverlay({ isVisible }: Props) {
   return (
     <div className={classNames(
-      'getting-started-overlay',
+      'tutorial-overlay',
       { 'is-visible': isVisible }
     )} />
   );
 }
 
-export default GettingStartedOverlay;
+export default TutorialOverlay;

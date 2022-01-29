@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useReducer } from 'react';
 import LoadingIndicator from '../generic/LoadingIndicator';
-import GettingStartedFlow from '../getting-started/GettingStartedFlow';
+import TutorialFlow from '../tutorial/TutorialFlow';
 import useLocalStorage from '../useLocalStorage';
 import useMountListener from '../useMountListener';
 import AppCompletedTutorial from './AppCompletedTutorial';
@@ -47,7 +47,7 @@ function App() {
     <AppContext.Provider value={dispatchToApp}>
         <AppHead />
         {isMounted ? <div className={`app theme-${app.theme} ${isTouchDevice() ? 'is-touch-device' : 'is-not-touch-device'}`}>
-          <GettingStartedFlow shouldShow={app.shouldShowGettingStarted}>
+          <TutorialFlow shouldShow={app.shouldShowTutorial}>
             {shouldLoadServiceWorker() ? (
               <UpdateNotification />
             ) : null}
@@ -58,7 +58,7 @@ function App() {
               <WidgetBoard widgets={app.widgets} />
             </Suspense>
             <AppFooter />
-          </GettingStartedFlow>
+          </TutorialFlow>
         </div> : null}
     </AppContext.Provider>
   );
