@@ -21,7 +21,7 @@ npm install
 
 In order for the Bible app widget to function locally, you must obtain an API
 token for the [ESV API](https://api.esv.org/). Once you have it, create a file
-called `.env` in the root of your repository with the following contents:
+called `.env.local` in the root of your repository with the following contents:
 
 ```
 ESV_API_KEY=PASTE_YOUR_API_TOKEN_HERE
@@ -30,7 +30,7 @@ ESV_API_KEY=PASTE_YOUR_API_TOKEN_HERE
 ### Run app
 
 ```sh
-gulp serve
+next dev
 ```
 
-The local server will be available at `http://localhost:8080`.
+The local server will be available at `http://localhost:3000`.
