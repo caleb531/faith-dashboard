@@ -3,52 +3,6 @@ $getting-started-message-arrow-size: 10px;
 $getting-started-message-background: $light-100;
 $getting-started-message-color: $dark-100;
 
-@mixin getting-started-message-position-middle() {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  &:before {
-    display: none;
-  }
-}
-@mixin getting-started-message-position-top() {
-  bottom: 100%;
-  margin-bottom: $getting-started-message-margin;
-  text-align: left;
-  &:before {
-    top: 100%;
-    border-top-color: $getting-started-message-background;
-  }
-}
-@mixin getting-started-message-position-bottom() {
-  top: 100%;
-  margin-top: $getting-started-message-margin;
-  text-align: left;
-  &:before {
-    bottom: 100%;
-    border-bottom-color: $getting-started-message-background;
-  }
-}
-@mixin getting-started-message-position-left() {
-  right: 100%;
-  margin-right: $getting-started-message-margin;
-  &:before {
-    top: $getting-started-message-arrow-size * 2;
-    left: 100%;
-    border-left-color: $getting-started-message-background;
-  }
-}
-@mixin getting-started-message-position-right() {
-  left: 100%;
-  margin-left: $getting-started-message-margin;
-  &:before {
-    top: $getting-started-message-arrow-size * 2;
-    right: 100%;
-    border-right-color: $getting-started-message-background;
-  }
-}
-
 .getting-started-message {
   position: absolute;
   z-index: 400;
@@ -75,19 +29,49 @@ $getting-started-message-color: $dark-100;
     border-color: transparent;
   }
   &.position-middle {
-    @include getting-started-message-position-middle();
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    &:before {
+      display: none;
+    }
   }
   &.position-top {
-    @include getting-started-message-position-top();
+    bottom: 100%;
+    margin-bottom: $getting-started-message-margin;
+    text-align: left;
+    &:before {
+      top: 100%;
+      border-top-color: $getting-started-message-background;
+    }
   }
   &.position-bottom {
-    @include getting-started-message-position-bottom();
+    top: 100%;
+    margin-top: $getting-started-message-margin;
+    text-align: left;
+    &:before {
+      bottom: 100%;
+      border-bottom-color: $getting-started-message-background;
+    }
   }
   &.position-left {
-    @include getting-started-message-position-left();
+    right: 100%;
+    margin-right: $getting-started-message-margin;
+    &:before {
+      top: $getting-started-message-arrow-size * 2;
+      left: 100%;
+      border-left-color: $getting-started-message-background;
+    }
   }
   &.position-right {
-    @include getting-started-message-position-right();
+    left: 100%;
+    margin-left: $getting-started-message-margin;
+    &:before {
+      top: $getting-started-message-arrow-size * 2;
+      right: 100%;
+      border-right-color: $getting-started-message-background;
+    }
   }
   &.position-top.alignment-center,
   &.position-bottom.alignment-center {
