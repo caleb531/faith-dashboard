@@ -15,6 +15,8 @@ const AppFooter = React.memo(function AppFooter() {
         <a href="help/" {...stepProps}>Help</a>
         </span>
         &nbsp;&middot;&nbsp;
+        <a href="https://github.com/caleb531/faith-dashboard">GitHub</a>
+        &nbsp;&middot;&nbsp;
         <a href="copyright/">Copyright</a>
       </div>
     </footer>
