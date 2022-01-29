@@ -54,19 +54,19 @@ const tutorialSteps: TutorialStep[] = [
   {
     id: 'remove-widget-4deca405-3e4e-4baa-94c8-82ebf5bcbcde',
     message: 'Remove any widget you don\'t want with the minus (-) icon.',
-    position: 'top',
+    position: 'auto',
     alignment: 'right'
   },
   {
     id: 'configure-widget-4deca405-3e4e-4baa-94c8-82ebf5bcbcde',
     message: 'Tweak the settings for any widget with the Gear icon.',
-    position: 'top',
+    position: 'auto',
     alignment: 'right'
   },
   {
     id: 'drag-widget-4deca405-3e4e-4baa-94c8-82ebf5bcbcde',
     message: 'And, you can rearrange your widgets with the drag-handle icon on any widget.',
-    position: 'top',
+    position: 'auto',
     alignment: 'left'
   },
   {
