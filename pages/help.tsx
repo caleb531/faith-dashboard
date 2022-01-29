@@ -10,7 +10,7 @@ function Help() {
         <meta property="og:title" content="Help | Faith Dashboard" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://faithdashboard.com/help/" />
-        <meta property="og:image" content="https://faithdashboard.com/images/og-image.jpg" />
+        <meta property="og:image" content="https://faithdashboard.com/images/social-preview.png" />
         <meta
           name="description"
           property="og:description"

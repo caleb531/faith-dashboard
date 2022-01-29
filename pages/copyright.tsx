@@ -11,7 +11,7 @@ function Copyright() {
         <meta property="og:title" content="Copyright | Faith Dashboard" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://faithdashboard.com/copyright/" />
-        <meta property="og:image" content="https://faithdashboard.com/images/og-image.jpg" />
+        <meta property="og:image" content="https://faithdashboard.com/images/social-preview.png" />
         <meta
           name="description"
           property="og:description"

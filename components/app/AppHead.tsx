@@ -4,7 +4,7 @@ import React from 'react';
 function AppHead() {
   const title = 'Faith Dashboard';
   const description = 'Be strengthened every day with this private board for your favorite Bible verses, sermons, and anything you need to be encouraged when life happens.';
-  const image = 'https://faithdashboard.com/images/og-image.jpg';
+  const image = 'https://faithdashboard.com/images/social-preview.png';
   const url = 'https://faithdashboard.com/';
   const twitterUsernameSite = '@faithdashboard';
   const twitterUsernameCreator = '@caleb531';

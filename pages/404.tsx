@@ -7,7 +7,7 @@ function PageNotFound() {
     <article className="landing-page">
       <Head>
         <title>Page Not Found | Faith Dashboard</title>
-        <meta property="og:image" content="https://faithdashboard.com/images/og-image.jpg" />
+        <meta property="og:image" content="https://faithdashboard.com/images/social-preview.png" />
       </Head>
       <h1>Page Not Found | Faith Dashboard</h1>
 
