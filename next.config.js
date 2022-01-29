@@ -24,8 +24,13 @@ const nextConfig = withPWA({
     // 'SKIP_WAITING'}." (source:
     // https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.GenerateSW#GenerateSW)
     skipWaiting: false,
+    // Fix bad-precaching-response error from service worker due to use of
+    // middleware
     runtimeCaching,
-    buildExcludes: [/middleware-manifest\.json$/]
+    buildExcludes: [
+      /middleware-manifest\.json$/,
+      /middleware-runtime\.js$/
+    ]
   },
   async headers() {
     const headers = [
