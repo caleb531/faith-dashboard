@@ -4,9 +4,9 @@ import React from 'react';
 function AppHead() {
   return (
     <Head>
-      <title>Faith Dashboard | Your place for encouragement every day</title>
+      <title>Faith Dashboard</title>
       <link rel="canonical" href="https://faithdashboard.com/" />
-      <meta property="og:title" content="Faith Dashboard | Your place for encouragement every day" />
+      <meta property="og:title" content="Faith Dashboard" />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://faithdashboard.com" />
       <meta property="og:image" content="https://faithdashboard.com/images/og-image.jpg" />
