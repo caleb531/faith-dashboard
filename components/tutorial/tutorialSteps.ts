@@ -52,22 +52,22 @@ const tutorialSteps: TutorialStep[] = [
     width: 300
   },
   {
-    id: 'remove-widget-2c342850-2237-4dab-8b08-b10cae7c7a4e',
+    id: 'remove-widget-4deca405-3e4e-4baa-94c8-82ebf5bcbcde',
     message: 'Remove any widget you don\'t want with the minus (-) icon.',
-    position: 'bottom',
-    alignment: 'center'
+    position: 'top',
+    alignment: 'right'
   },
   {
-    id: 'configure-widget-2c342850-2237-4dab-8b08-b10cae7c7a4e',
+    id: 'configure-widget-4deca405-3e4e-4baa-94c8-82ebf5bcbcde',
     message: 'Tweak the settings for any widget with the Gear icon.',
-    position: 'bottom',
-    alignment: 'center'
+    position: 'top',
+    alignment: 'right'
   },
   {
-    id: 'drag-widget-2c342850-2237-4dab-8b08-b10cae7c7a4e',
+    id: 'drag-widget-4deca405-3e4e-4baa-94c8-82ebf5bcbcde',
     message: 'And, you can rearrange your widgets with the drag-handle icon on any widget.',
-    position: 'bottom',
-    alignment: 'center'
+    position: 'top',
+    alignment: 'left'
   },
   {
     id: 'help',
