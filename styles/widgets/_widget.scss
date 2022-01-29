@@ -66,6 +66,9 @@
   .is-not-touch-device .widget:not(:hover) & {
     opacity: 0;
   }
+  .is-not-touch-device &:hover {
+    opacity: 0.5 !important;
+  }
   .is-not-touch-device &:active {
     opacity: 1 !important;
   }

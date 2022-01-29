@@ -1,7 +1,7 @@
 // When highlighting a widget control as part of a Tutorial step, hide the
 // other widget controls
 [data-tutorial-is-current-step] .widget-control[data-tutorial-step]:not([data-tutorial-is-current-step]) {
-  opacity: 0 !important;
+  opacity: 0;
 }
 [data-tutorial-is-current-step] {
   opacity: 1 !important;
