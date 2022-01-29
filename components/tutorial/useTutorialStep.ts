@@ -16,7 +16,7 @@ function useTutorialStep(componentStepId: string): ReturnValue {
     isCurrentStep,
     stepProps: {
       'data-tutorial-step': componentStep.id,
-      'data-tutorial-is-current-step': componentStep.id
+      'data-tutorial-current-step': componentStep.id
     }
   } : {
     isCurrentStep: false,
