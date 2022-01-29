@@ -29,7 +29,8 @@ const nextConfig = withPWA({
     runtimeCaching,
     buildExcludes: [
       /middleware-manifest\.json$/,
-      /middleware-runtime\.js$/
+      /middleware-runtime\.js$/,
+      /_middleware\.js$/
     ]
   },
   async headers() {
