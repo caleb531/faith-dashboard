@@ -2,7 +2,7 @@ import React from 'react';
 import TutorialMessage from '../tutorial/TutorialMessage';
 import useTutorialStep from '../tutorial/useTutorialStep';
 
-const AppFooter = React.memo(function AppFooter() {
+function AppFooter() {
 
   const { isCurrentStep, stepProps } = useTutorialStep('help');
 
@@ -22,6 +22,6 @@ const AppFooter = React.memo(function AppFooter() {
     </footer>
   );
 
-});
+}
 
 export default AppFooter;
