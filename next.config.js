@@ -1,5 +1,6 @@
 const path = require('path');
 const withPWA = require('next-pwa');
+const runtimeCaching = require('next-pwa/cache');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withPWA({
@@ -22,7 +23,9 @@ const nextConfig = withPWA({
     // conditionally call skipWaiting() by posting a message containing {type:
     // 'SKIP_WAITING'}." (source:
     // https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.GenerateSW#GenerateSW)
-    skipWaiting: false
+    skipWaiting: false,
+    runtimeCaching,
+    buildExcludes: [/middleware-manifest\.json$/]
   },
   async headers() {
     const headers = [
