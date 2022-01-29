@@ -62,7 +62,8 @@ const tutorialSteps: TutorialStep[] = [
     id: 'completed',
     message: 'And that\'s it! May this dashboard help you grow closer to Jesus',
     position: 'middle',
-    alignment: 'center'
+    alignment: 'center',
+    width: 260
   }
 ];
 
