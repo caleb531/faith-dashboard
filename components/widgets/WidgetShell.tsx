@@ -12,7 +12,11 @@ type Props = { widget: WidgetState, dispatch: Dispatch<WidgetAction>, provided: 
 function WidgetShell({ widget, dispatch, provided, children }: Props) {
 
   const dispatchToApp = useContext(AppContext);
-  const { isCurrentStep, stepProps } = useTutorialStep(`widget-${widget.id}`);
+  const widgetStepData = useTutorialStep(`widget-${widget.id}`);
+  const dragStepData = useTutorialStep(`drag-widget-${widget.id}`);
+  const removeStepData = useTutorialStep(`remove-widget-${widget.id}`);
+  const settingsStepData = useTutorialStep(`configure-widget-${widget.id}`);
+  const isCurrentStep = widgetStepData.isCurrentStep || dragStepData.isCurrentStep || removeStepData.isCurrentStep || settingsStepData.isCurrentStep;
 
   // Signal to the global application that we want to remove the widget
   function removeWidget() {
@@ -44,10 +48,10 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
   }
 
   return (
-    <article className={`widget widget-type-${widget.type} ${widget.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} {...stepProps}>
+    <article className={`widget widget-type-${widget.type} ${widget.isSettingsOpen ? 'widget-settings-open' : ''}`} ref={provided.innerRef} {...provided.draggableProps} {...widgetStepData.stepProps} {...dragStepData.stepProps} {...removeStepData.stepProps} {...settingsStepData.stepProps}>
       {isCurrentStep ? <TutorialMessage /> : null}
       <div className="widget-controls widget-controls-left">
-        <div className="widget-drag-handle widget-control" {...provided.dragHandleProps}>
+        <div className="widget-drag-handle widget-control" {...provided.dragHandleProps} {...dragStepData.stepProps}>
           <img
             src="icons/drag-handle-light.svg"
             alt="Drag Widget"
@@ -56,14 +60,14 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
         </div>
       </div>
       <div className="widget-controls widget-controls-right">
-        <button type="button" className="widget-remove-control widget-control" onClick={() => removeWidget()}>
+        <button type="button" className="widget-remove-control widget-control" onClick={() => removeWidget()} {...removeStepData.stepProps}>
           <img
             src="icons/remove-circle-light.svg"
             alt="Remove Widget"
             className="widget-remove-control-icon widget-control-icon"
             draggable="false" />
         </button>
-        <button className="widget-settings-toggle widget-control" onClick={(event) => dispatch({ type: 'toggleSettings' })}>
+        <button className="widget-settings-toggle widget-control" onClick={(event) => dispatch({ type: 'toggleSettings' })} {...settingsStepData.stepProps}>
           <img
             src="icons/settings-light.svg"
             alt="Toggle Settings"

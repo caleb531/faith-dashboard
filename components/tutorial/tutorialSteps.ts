@@ -52,6 +52,24 @@ const tutorialSteps: TutorialStep[] = [
     width: 300
   },
   {
+    id: 'remove-widget-2c342850-2237-4dab-8b08-b10cae7c7a4e',
+    message: 'You can remove any widget you don\'t want with the minus (-) button',
+    position: 'bottom',
+    alignment: 'center'
+  },
+  {
+    id: 'configure-widget-2c342850-2237-4dab-8b08-b10cae7c7a4e',
+    message: 'You can tweak the settings for any widget with the Gear icon',
+    position: 'bottom',
+    alignment: 'center'
+  },
+  {
+    id: 'drag-widget-2c342850-2237-4dab-8b08-b10cae7c7a4e',
+    message: 'And, you can rearrange your widgets with the drag-handle icon on any widget',
+    position: 'bottom',
+    alignment: 'center'
+  },
+  {
     id: 'help',
     message: 'Finally, if you ever need help, click the Help link at the bottom of the page',
     position: 'top',
