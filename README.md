@@ -3,10 +3,11 @@
 *Copyright 2021-2022, Caleb Evans*  
 *Released under the MIT License*
 
-This app is designed to be a central dashboard for displaying your favorite
-verses, notes, sermons, or other things that strengthen your faith.
+Faith Dashboard is a private board for your favorite Bible verses, sermons, and
+anything you'd like. Come back to it whenever you need encouragement, wisdom,
+or simple truth.
 
-[Live Demo](https://faithdashboard.com/)
+[Live App](https://faithdashboard.com/)
 
 ## Setup
 
