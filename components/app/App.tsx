@@ -3,6 +3,7 @@ import LoadingIndicator from '../generic/LoadingIndicator';
 import GettingStartedFlow from '../getting-started/GettingStartedFlow';
 import useLocalStorage from '../useLocalStorage';
 import useMountListener from '../useMountListener';
+import AppCompletedTutorial from './AppCompletedTutorial';
 import AppContext from './AppContext';
 import AppFooter from './AppFooter';
 import AppHead from './AppHead';
@@ -52,6 +53,7 @@ function App() {
             ) : null}
             <AppHeader theme={app.theme} />
             <AppWelcome />
+            <AppCompletedTutorial />
             <Suspense fallback={<LoadingIndicator />}>
               <WidgetBoard widgets={app.widgets} />
             </Suspense>

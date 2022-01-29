@@ -46,10 +46,23 @@ const gettingStartedSteps: GettingStartedStep[] = [
   },
   {
     id: 'change-theme',
-    message: 'And finally, change your board\'s theme to personalize it!',
+    message: 'And finally, change your board\'s color theme to personalize it!',
     position: 'bottom',
     alignment: 'right',
     width: 300
+  },
+  {
+    id: 'help',
+    message: 'Finally, if you ever need help, click the Help link at the bottom of the page',
+    position: 'top',
+    alignment: 'center',
+    width: 200
+  },
+  {
+    id: 'completed',
+    message: 'And that\'s it! May this dashboard help you grow closer to Jesus',
+    position: 'middle',
+    alignment: 'center'
   }
 ];
 
