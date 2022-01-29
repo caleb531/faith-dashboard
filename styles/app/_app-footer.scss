@@ -7,6 +7,12 @@
 .app-footer-dedication {
   font-size: inherit;
 }
+.app-footer-links {
+  @include layout(desktop) {
+    display: inline-block;
+    margin: 5px;
+  }
+}
 .app-footer-help-container {
   position: relative;
 }
