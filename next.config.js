@@ -24,8 +24,8 @@ const nextConfig = withPWA({
     // 'SKIP_WAITING'}." (source:
     // https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.GenerateSW#GenerateSW)
     skipWaiting: false,
-    // Fix bad-precaching-response error from service worker due to use of
-    // middleware
+    // Fix bad-precaching-response errors from service worker due to use of
+    // middleware (source: https://github.com/shadowwalker/next-pwa/issues/291)
     runtimeCaching,
     buildExcludes: [
       /middleware-manifest\.json$/,
