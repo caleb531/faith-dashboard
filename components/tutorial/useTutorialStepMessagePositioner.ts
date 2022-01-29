@@ -2,8 +2,8 @@ import { debounce } from 'lodash-es';
 import { RefObject, useLayoutEffect, useMemo, useState } from 'react';
 import useEventListener from '../useEventListener';
 import {
-    TutorialStep,
-    TutorialStepPosition as Position
+  TutorialStep,
+  TutorialStepPosition as Position
 } from './tutorial.d';
 
 function recalculatePosition(ref: RefObject<HTMLElement>, originalPosition: Position, setPosition: (position: Position) => void) {
