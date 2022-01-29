@@ -3,10 +3,10 @@ import { TutorialStep } from './tutorial';
 const tutorialSteps: TutorialStep[] = [
   {
     id: 'welcome',
-    message: 'Welcome to Faith Dashboard!',
+    message: 'Welcome to Faith Dashboard, your personalized home for strength and encouragement every day.',
     position: 'center',
     alignment: 'center',
-    width: 'auto',
+    width: 280,
     primaryButtonLabel: 'Get Started'
   },
   {
