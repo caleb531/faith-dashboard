@@ -13,7 +13,7 @@ function AppHead() {
       <meta
         name="description"
         property="og:description"
-        content="A private board for your favorite Bible verses, sermons, and anything you'd like. Come back to it whenever you need encouragement, wisdom, or simple truth." />
+        content="Be strengthened every day with this private board for your favorite Bible verses, sermons, and anything you need to be encouraged when life happens." />
     </Head>
   );
 }
