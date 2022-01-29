@@ -41,7 +41,7 @@ const gettingStartedSteps: GettingStartedStep[] = [
     id: 'add-widget',
     message: 'Add more widgets at any time!',
     position: 'bottom',
-    alignment: 'right',
+    alignment: 'center',
     width: 'max-content'
   },
   {

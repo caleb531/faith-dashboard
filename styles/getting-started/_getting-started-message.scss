@@ -89,6 +89,16 @@ $getting-started-message-color: $dark-100;
   &.position-right {
     @include getting-started-message-position-right();
   }
+  &.position-top.alignment-center,
+  &.position-bottom.alignment-center {
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    &:before {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
   &.position-top.alignment-left,
   &.position-bottom.alignment-left {
     left: 0;
