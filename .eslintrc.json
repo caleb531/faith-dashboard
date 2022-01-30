@@ -137,7 +137,6 @@
     "space-in-parens": ["warn", "never"],
     "space-infix-ops": ["error"],
     "space-unary-ops": ["error", { "words": true, "nonwords": false }],
-    "spaced-comment": ["warn", "always"],
     "strict": ["error", "safe"],
     "switch-colon-spacing": ["warn"],
     "template-curly-spacing": ["warn"],

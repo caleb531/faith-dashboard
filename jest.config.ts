@@ -16,7 +16,7 @@ const config: Config.InitialOptions = {
   // (rather than creating a .babelrc config, which will cause NextJS to use
   // Babel instead of the much-faster SVC for building the project)
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
+    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }]
   }
 };
 export default config;
