@@ -1,5 +1,9 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import React from 'react';
+import addToHomeScreenImage1 from '../public/images/help/ios-add-to-home-screen-ios-1.jpg';
+import addToHomeScreenImage2 from '../public/images/help/ios-add-to-home-screen-ios-2.jpg';
+import addToHomeScreenImage3 from '../public/images/help/ios-add-to-home-screen-ios-3.jpg';
 
 function Help() {
   return (
@@ -61,9 +65,9 @@ function Help() {
       <li>On the next screen, tap the <strong>Add</strong> button</li>
       </ol>
 
-      <img src="/images/help/ios-add-to-home-screen-ios-1.jpg" alt="Share Icon" className="block-image" />
-      <img src="/images/help/ios-add-to-home-screen-ios-2.jpg" alt="Share Sheet" className="block-image" />
-      <img src="/images/help/ios-add-to-home-screen-ios-3.jpg" alt="Add to Home Screen" className="block-image" />
+      <Image src={addToHomeScreenImage1} alt="Share Icon" className="block-image" layout="responsive" />
+      <Image src={addToHomeScreenImage2} alt="Share Sheet" className="block-image" layout="responsive" />
+      <Image src={addToHomeScreenImage3} alt="Add to Home Screen" className="block-image" layout="responsive" />
 
       <h2>Contact</h2>
 
