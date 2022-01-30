@@ -48,8 +48,7 @@ const tutorialSteps: TutorialStep[] = [
     id: 'change-theme',
     message: 'Change your board\'s color theme to personalize it!',
     position: 'bottom',
-    alignment: 'right',
-    width: 300
+    alignment: 'right'
   },
   {
     id: 'remove-widget-4deca405-3e4e-4baa-94c8-82ebf5bcbcde',
