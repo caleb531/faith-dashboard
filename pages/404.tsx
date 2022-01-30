@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Head from 'next/head';
 import React from 'react';
 
@@ -11,7 +12,7 @@ function PageNotFound() {
       </Head>
       <h1>Page Not Found | Faith Dashboard</h1>
 
-      <p>Sorry about that! You ended up on a page that doesn&apos;t exist.</p>
+      <p>Sorry about that! You ended up on a page that doesn't exist.</p>
 
       <p><a href="/">Return to App</a></p>
     </article>
