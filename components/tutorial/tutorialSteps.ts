@@ -72,8 +72,7 @@ const tutorialSteps: TutorialStep[] = [
     id: 'help',
     message: 'Finally, if you ever need help, click the Help link at the bottom of the page.',
     position: 'top',
-    alignment: 'center',
-    width: 200
+    alignment: 'center'
   },
   {
     id: 'completed',
