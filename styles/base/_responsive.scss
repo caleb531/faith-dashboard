@@ -15,5 +15,7 @@ $min-width-desktop: 768px;
 		@media (min-width: $min-width-desktop) {
 			@content;
 		}
-	}
+	} @else {
+    @error 'invalid layout name: #{$layout}';
+  }
 }
