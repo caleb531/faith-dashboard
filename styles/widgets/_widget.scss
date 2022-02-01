@@ -47,7 +47,7 @@
 .widget-control {
   // Disable text selection of these controls
   user-select: none;
-  $control-size: 20px;
+  $control-size: 24px;
   width: $control-size;
   height: $control-size;
   padding: 0;
@@ -62,6 +62,11 @@
   }
   @include layout(tablet) {
     margin-bottom: 5px;
+  }
+  @include layout(desktop) {
+    $control-size: 20px;
+    width: $control-size;
+    height: $control-size;
   }
   .is-not-touch-device .widget:not(:hover) & {
     opacity: 0;
