@@ -1,18 +1,42 @@
 .app-footer {
   margin-top: 5px;
-  margin-bottom: 7px;
-  font-size: $font-size-xxs;
+  margin-bottom: 10px;
+  font-size: $font-size-xs;
   color: $light-50;
+  @include layout(desktop) {
+    font-size: $font-size-xs;
+  }
 }
 .app-footer-dedication {
   font-size: inherit;
-}
-.app-footer-links {
   @include layout(desktop) {
-    display: inline-block;
-    margin: 5px;
+    &:after {
+      content: '|';
+      margin-left: 10px;
+    }
   }
 }
-.app-footer-help-container {
+.app-footer-links {
+  display: block;
+  margin: 10px 0;
+  padding: 0;
+  @include layout(desktop) {
+    display: inline-block;
+    margin: 0;
+    margin-left: 10px;
+  }
+}
+.app-footer-links li {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  &:not(:last-child) {
+    &:after {
+      content: '|';
+      margin: 0 10px;
+    }
+  }
+}
+.app-footer-link-help {
   position: relative;
 }
