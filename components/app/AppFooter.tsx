@@ -19,7 +19,7 @@ function AppFooter() {
           </span>
         </li>
         <li className="app-footer-link">
-          <a href="https://github.com/caleb531/faith-dashboard">GitHub</a>
+          <a href="https://twitter.com/faithdashboard">@faithdashboard</a>
         </li>
         <li className="app-footer-link">
           <Link href="copyright/">Copyright</Link>
