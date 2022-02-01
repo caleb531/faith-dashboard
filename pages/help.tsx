@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import addToHomeScreenImage1 from '../public/images/help/ios-add-to-home-screen-ios-1.jpg';
 import addToHomeScreenImage2 from '../public/images/help/ios-add-to-home-screen-ios-2.jpg';
@@ -21,7 +22,7 @@ function Help() {
           property="og:description"
           content="Documentation on how to get started with Faith Dashboard, your one place for anything and everything that inspires your faith." />
       </Head>
-      <p><a href="/">Return to App</a></p>
+      <p><Link href="/">Return to App</Link></p>
 
       <h1>Help | Faith Dashboard</h1>
 
@@ -78,7 +79,7 @@ function Help() {
 
       <p>This app is dedicated to Christ our Lord.</p>
 
-      <p><a href="/">Return to App</a></p>
+      <p><Link href="/">Return to App</Link></p>
     </article>
   );
 }

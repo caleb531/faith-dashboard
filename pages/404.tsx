@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import Head from 'next/head';
+import Link from 'next/link';
 import React from 'react';
 
 function PageNotFound() {
@@ -14,7 +15,7 @@ function PageNotFound() {
 
       <p>Sorry about that! You ended up on a page that doesn't exist.</p>
 
-      <p><a href="/">Return to App</a></p>
+      <p><Link href="/">Return to App</Link></p>
     </article>
   );
 

@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import React from 'react';
 
 function Copyright() {
@@ -21,7 +22,7 @@ function Copyright() {
 
       <p>Scripture quotations marked “ESV” are from the ESV® Bible (The Holy Bible, English Standard Version®), copyright © 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. All rights reserved. You may not copy or download more than 500 consecutive verses of the ESV Bible or more than one half of any book of the ESV Bible.</p>
 
-      <p><a href="/">Return to App</a></p>
+      <p><Link href="/">Return to App</Link></p>
     </article>
   );
 
