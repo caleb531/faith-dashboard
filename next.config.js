@@ -46,7 +46,7 @@ const nextConfig = withPWA({
       {
         key: 'Content-Security-Policy',
         /* eslint-disable-next-line quotes */
-        value: "default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src * data:; script-src 'self' https://storage.googleapis.com www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'; child-src 'self'; connect-src *; manifest-src 'self'; media-src *;"
+        value: "default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src * data:; script-src 'self' https://storage.googleapis.com www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'; child-src 'self'; prefetch-src 'self'; connect-src *; manifest-src 'self'; media-src *;"
       }
     ];
     // The HSTS header should only be sent for HTTPS websites; because localhost is server over plain HTTP, we do not want to enable HSTS there
