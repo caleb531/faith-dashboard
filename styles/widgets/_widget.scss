@@ -14,7 +14,7 @@
     color: inherit;
   }
   // Ensure that widget settings are never clipped by a manually-set height
-  &.widget-settings-open {
+  &.widget-settings-open .widget-contents {
     resize: none !important;
     height: auto !important;
   }
