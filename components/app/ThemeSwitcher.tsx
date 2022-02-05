@@ -32,6 +32,14 @@ const themeList: AppThemeListItem[] = [
   {
     label: 'Orange',
     value: 'orange'
+  },
+  {
+    label: 'Yellow',
+    value: 'yellow'
+  },
+  {
+    label: 'Violet',
+    value: 'violet'
   }
 ];
 
