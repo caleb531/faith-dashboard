@@ -44,3 +44,6 @@ api-credentials.*
 public/service-worker.js
 public/workbox-*.js
 public/*.map
+
+# Local Netlify folder
+.netlify
