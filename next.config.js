@@ -5,6 +5,11 @@ const runtimeCaching = require('next-pwa/cache');
 /** @type {import('next').NextConfig} */
 const nextConfig = withPWA({
   reactStrictMode: true,
+  // Environment variables
+  env: {
+    ESV_API_KEY: process.env.ESV_API_KEY
+  },
+  // Service worker configuration
   pwa: {
     // The destination directory of the generated service worker
     dest: 'public',
