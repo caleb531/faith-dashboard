@@ -1,10 +1,11 @@
+import { sortBy } from 'lodash-es';
 import React, { useContext } from 'react';
 import TutorialMessage from '../tutorial/TutorialMessage';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import { AppTheme, AppThemeListItem } from './app.d';
 import AppContext from './AppContext';
 
-const themeList: AppThemeListItem[] = [
+const themeList: AppThemeListItem[] = sortBy([
   {
     label: 'Brown',
     value: 'brown'
@@ -41,7 +42,7 @@ const themeList: AppThemeListItem[] = [
     label: 'Violet',
     value: 'violet'
   }
-];
+], 'label');
 
 type Props = { theme: AppTheme };
 
