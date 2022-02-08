@@ -118,7 +118,7 @@ $tutorial-message-color: $dark-100;
     }
   }
   &.warning {
-    background-color: $red;
+    background-color: darken(saturate($red, 15%), 5%);
     &:hover:active {
       background-color: darken($red, 10%);
     }
