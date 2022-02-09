@@ -30,9 +30,9 @@ function PodcastEpisodeList({ podcastFeedUrl, podcastFeedData, nowPlaying, fetch
       return {
         id: episode.guid,
         title: episode.title,
-        subtitle: formatDistanceToNow(new Date(episode.pubDate), {
+        subtitle: episode.pubDate ? formatDistanceToNow(new Date(episode.pubDate), {
           addSuffix: true
-        })
+        }) : null
       };
     });
   }
