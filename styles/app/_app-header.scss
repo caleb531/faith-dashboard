@@ -9,7 +9,8 @@
   margin: 0;
   text-align: left;
   font-size: $font-size-xxs;
-  color: $dark-50;
+  color: $light-100;
+  mix-blend-mode: soft-light;
   @include layout(tablet) {
     font-size: $font-size-m;
   }
