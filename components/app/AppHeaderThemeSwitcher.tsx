@@ -10,7 +10,7 @@ import photoThemeList from './appPhotoThemeList';
 
 type Props = { theme: AppTheme };
 
-function ThemeSwitcher({ theme }: Props) {
+function AppHeaderThemeSwitcher({ theme }: Props) {
 
   const dispatchToApp = useContext(AppContext);
   const { isCurrentStep, stepProps } = useTutorialStep('change-theme');
@@ -42,4 +42,4 @@ function ThemeSwitcher({ theme }: Props) {
 
 }
 
-export default ThemeSwitcher;
+export default AppHeaderThemeSwitcher;
