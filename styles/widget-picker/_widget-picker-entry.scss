@@ -21,3 +21,11 @@
     }
   }
 }
+@each $theme-name, $theme-color in $theme-photos {
+  .theme-#{$theme-name} .widget-picker-entry .add-widget-button {
+    background-color: $theme-color;
+    &:not([disabled]):hover:active {
+      background-color: darken($theme-color, 10%);
+    }
+  }
+}

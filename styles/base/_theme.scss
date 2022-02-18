@@ -1,13 +1,22 @@
-// Names of available photo theme
-$theme-photos: 'word', 'worship', 'grass', 'mountain', 'shore';
+// Store available photo theme in a map, where the key is the ID of the photo
+// theme, and the value is an accent color used for things like buttons,
+// controls, etc.
+$theme-photos: (
+  'word': $blue,
+  'worship': $orange,
+  'grass': $green,
+  'mountain': $blue,
+  'shore': $blue
+);
 
 @each $theme-name, $theme-color in $theme-colors {
   .theme-#{$theme-name} {
     background-color: $theme-color;
   }
 }
-@each $theme-name in $theme-photos {
+@each $theme-name, $theme-color in $theme-photos {
   .theme-#{$theme-name} {
+    background-color: $theme-color;
     background-image: url('../../public/images/background-photos/#{$theme-name}.jpg');
     background-repeat: no-repeat;
     background-size: cover;
