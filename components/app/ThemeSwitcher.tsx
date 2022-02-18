@@ -5,7 +5,30 @@ import useTutorialStep from '../tutorial/useTutorialStep';
 import { AppTheme, AppThemeListItem } from './app.d';
 import AppContext from './AppContext';
 
-const themeList: AppThemeListItem[] = sortBy([
+const photoThemeList: AppThemeListItem[] = sortBy([
+  {
+    label: 'Word',
+    value: 'word'
+  },
+  {
+    label: 'Worship',
+    value: 'worship'
+  },
+  {
+    label: 'Grass',
+    value: 'grass'
+  },
+  {
+    label: 'Mountain',
+    value: 'mountain'
+  },
+  {
+    label: 'Shore',
+    value: 'shore'
+  }
+]);
+
+const colorThemeList: AppThemeListItem[] = sortBy([
   {
     label: 'Brown',
     value: 'brown'
@@ -62,8 +85,15 @@ function ThemeSwitcher({ theme }: Props) {
         Color Theme
       </label>
       <select className="theme-switcher-dropdown" id="theme-switcher-dropdown" value={theme} onChange={(event) => dispatchToApp({ type: 'changeTheme', payload: event.target.value as AppTheme })} {...stepProps}>
+        <optgroup label="Photo Theme">
+          {photoThemeList.map((themeListItem) => {
+            return (<option value={themeListItem.value} key={themeListItem.value}>
+              {themeListItem.label}
+            </option>);
+          })}
+        </optgroup>
         <optgroup label="Color Theme">
-          {themeList.map((themeListItem) => {
+          {colorThemeList.map((themeListItem) => {
             return (<option value={themeListItem.value} key={themeListItem.value}>
               {themeListItem.label}
             </option>);

@@ -1,5 +1,16 @@
+// Names of available photo theme
+$theme-photos: 'word', 'worship', 'grass', 'mountain', 'shore';
+
 @each $theme-name, $theme-color in $theme-colors {
   .theme-#{$theme-name} {
     background-color: $theme-color;
+  }
+}
+@each $theme-name in $theme-photos {
+  .theme-#{$theme-name} {
+    background-image: url('../../public/images/background-photos/#{$theme-name}.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
   }
 }
