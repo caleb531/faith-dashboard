@@ -1,42 +1,30 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import TutorialMessage from '../tutorial/TutorialMessage';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import { AppTheme } from './app.d';
 import colorThemeList from './appColorThemeList';
-import AppContext from './AppContext';
 import photoThemeList from './appPhotoThemeList';
 
-
+const allThemes = [...photoThemeList, ...colorThemeList];
 
 type Props = { theme: AppTheme };
 
 function AppHeaderThemeSwitcher({ theme }: Props) {
 
-  const dispatchToApp = useContext(AppContext);
   const { isCurrentStep, stepProps } = useTutorialStep('change-theme');
+  const [themeSwitcherIsOpen, setThemeSwitcherIsOpen] = useState(false);
 
   return (
-    <div className="theme-switcher">
+    <div className="app-header-theme-switcher">
       {isCurrentStep ? <TutorialMessage /> : null}
       <label className="theme-switcher-label accessibility-only" htmlFor="theme-switcher-dropdown">
         Color Theme
       </label>
-      <select className="theme-switcher-dropdown" id="theme-switcher-dropdown" value={theme} onChange={(event) => dispatchToApp({ type: 'changeTheme', payload: event.target.value as AppTheme })} {...stepProps}>
-        <optgroup label="Photo Theme">
-          {photoThemeList.map((themeListItem) => {
-            return (<option value={themeListItem.value} key={themeListItem.value}>
-              {themeListItem.label}
-            </option>);
-          })}
-        </optgroup>
-        <optgroup label="Color Theme">
-          {colorThemeList.map((themeListItem) => {
-            return (<option value={themeListItem.value} key={themeListItem.value}>
-              {themeListItem.label}
-            </option>);
-          })}
-        </optgroup>
-      </select>
+      <button className="app-header-theme-switcher-button" id="theme-switcher-dropdown" onClick={() => setThemeSwitcherIsOpen(true)} {...stepProps}>
+        {allThemes.find((themeListItem) => {
+          return themeListItem.value === theme;
+        })?.label}
+      </button>
     </div>
   );
 
