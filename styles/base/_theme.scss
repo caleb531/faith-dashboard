@@ -6,7 +6,7 @@ $theme-photos: (
   'worship': $orange,
   'grass': $green,
   'mountain': $blue,
-  'shore': $blue
+  'shore': $teal
 );
 
 @each $theme-name, $theme-color in $theme-colors {
