@@ -1,75 +1,12 @@
-import { sortBy } from 'lodash-es';
 import React, { useContext } from 'react';
 import TutorialMessage from '../tutorial/TutorialMessage';
 import useTutorialStep from '../tutorial/useTutorialStep';
-import { AppTheme, AppThemeListItem } from './app.d';
+import { AppTheme } from './app.d';
+import colorThemeList from './appColorThemeList';
 import AppContext from './AppContext';
+import photoThemeList from './appPhotoThemeList';
 
-const photoThemeList: AppThemeListItem[] = sortBy([
-  {
-    label: 'Word',
-    value: 'word'
-  },
-  {
-    label: 'Worship',
-    value: 'worship'
-  },
-  {
-    label: 'Grass',
-    value: 'grass'
-  },
-  {
-    label: 'Mountain',
-    value: 'mountain'
-  },
-  {
-    label: 'Shore',
-    value: 'shore'
-  }
-]);
 
-const colorThemeList: AppThemeListItem[] = sortBy([
-  {
-    label: 'Brown',
-    value: 'brown'
-  },
-  {
-    label: 'Green',
-    value: 'green'
-  },
-  {
-    label: 'Teal',
-    value: 'teal'
-  },
-  {
-    label: 'Blue',
-    value: 'blue'
-  },
-  {
-    label: 'Purple',
-    value: 'purple'
-  },
-  {
-    label: 'Rose',
-    value: 'rose'
-  },
-  {
-    label: 'Red',
-    value: 'red'
-  },
-  {
-    label: 'Orange',
-    value: 'orange'
-  },
-  {
-    label: 'Yellow',
-    value: 'yellow'
-  },
-  {
-    label: 'Violet',
-    value: 'violet'
-  }
-], 'label');
 
 type Props = { theme: AppTheme };
 
