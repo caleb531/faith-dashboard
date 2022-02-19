@@ -4,6 +4,9 @@ $color-theme-column-count: 5;
 
 .theme-switcher {
   text-align: center;
+  h2 {
+    margin-top: 20px;
+  }
 }
 
 .theme-switcher-list {
@@ -34,7 +37,29 @@ $color-theme-column-count: 5;
   height: $swatch-size;
   border-radius: 50%;
 }
-.theme-switcher-color-theme-label {
+.theme-switcher-label {
   padding-top: 3px;
+  font-size: $font-size-xs;
   font-family: $font-family-sans-serif;
+}
+
+.theme-switcher-photo-themes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 200px);
+}
+
+.theme-switcher-photo-theme {
+  display: inline-block;
+  padding: 5px 20px;
+}
+
+.theme-switcher-photo-theme-photo-container {
+  display: flex;
+  border: solid 5px $light-100;
+  padding-bottom: 0;
+}
+.theme-switcher-photo-theme-photo {
+  border-radius: 10px;
 }
