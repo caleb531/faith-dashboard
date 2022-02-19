@@ -22,7 +22,7 @@ function AppHeaderThemeSwitcher({ currentTheme }: Props) {
         Color Theme
       </label>
       <button className="app-header-theme-switcher-button" id="theme-switcher-dropdown" onClick={() => setThemeSwitcherIsOpen(true)} {...stepProps}>
-        Theme: {allThemes.find((themeListItem) => {
+        {allThemes.find((themeListItem) => {
           return themeListItem.value === currentTheme;
         })?.label}
       </button>
