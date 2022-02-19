@@ -41,6 +41,8 @@ $color-theme-column-count: 5;
   padding-top: 3px;
   font-size: $font-size-xs;
   font-family: $font-family-sans-serif;
+  cursor: default;
+  user-select: none;
 }
 
 .theme-switcher-photo-themes {
@@ -62,4 +64,12 @@ $color-theme-column-count: 5;
 }
 .theme-switcher-photo-theme-photo {
   border-radius: 10px;
+}
+
+// Indicate which theme the user is switching to
+.theme-switcher-color-theme-swatch,
+.theme-switcher-photo-theme-photo {
+  .theme-switcher-list-item:hover:active & {
+    filter: brightness(60%);
+  }
 }
