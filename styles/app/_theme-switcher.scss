@@ -27,11 +27,28 @@ $color-theme-column-count: 5;
   list-style-type: none;
 }
 .theme-switcher-theme-button {
+  position: relative;
   margin: 0;
   padding: 5px;
   border-width: 0;
   border-radius: 0;
   background: none !important;
+}
+.theme-switcher-theme-selected .theme-switcher-theme-selected-icon {
+  $icon-size: 75%;
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  width: $icon-size;
+  height: $icon-size;
+  background-image: url('../../public/icons/check-light.svg');
+  background-repeat: no-repeat;
+  background-size: $icon-size;
+  background-position: center center;
+  filter: drop-shadow(0 1px 3px $dark-50);
 }
 .theme-switcher-label {
   font-size: $font-size-xs;
@@ -56,6 +73,12 @@ $color-theme-column-count: 5;
 .theme-switcher-photo-theme-photo {
   border-radius: 10px;
 }
+.theme-switcher-photo-theme .theme-switcher-theme-selected-icon {
+  $icon-size: 70px;
+  width: $icon-size;
+  height: $icon-size;
+  background-size: $icon-size;
+}
 
 // Color themes
 
@@ -69,4 +92,10 @@ $color-theme-column-count: 5;
   width: $swatch-size;
   height: $swatch-size;
   border-radius: 50%;
+}
+.theme-switcher-color-theme .theme-switcher-theme-selected-icon {
+  $icon-size: 28px;
+  width: $icon-size;
+  height: $icon-size;
+  background-size: $icon-size;
 }

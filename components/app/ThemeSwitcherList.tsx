@@ -1,18 +1,16 @@
 import classNames from 'classnames';
 import Image from 'next/image';
-import React, { useContext } from 'react';
+import React from 'react';
 import { AppTheme, AppThemeListItem } from './app.d';
-import AppContext from './AppContext';
 
 type Props = {
   themeList: AppThemeListItem[],
   themeType: 'photo' | 'color',
-  onChooseTheme: (newTheme: AppTheme) => any
+  onChooseTheme: (newTheme: AppTheme) => any,
+  currentTheme: AppTheme
 };
 
-function ThemeSwitcherList({ themeList, themeType, onChooseTheme }: Props) {
-
-  const dispatchToApp = useContext(AppContext);
+function ThemeSwitcherList({ themeList, themeType, onChooseTheme, currentTheme }: Props) {
 
   // Since there can be many themes, use event delegation to attach only a
   // single listener and figure out which theme was clicked
@@ -21,7 +19,6 @@ function ThemeSwitcherList({ themeList, themeType, onChooseTheme }: Props) {
     const themeElement = target.closest('.theme-switcher-theme');
     if (target.closest('[data-action="change-theme"]') && themeElement) {
       const newTheme = themeElement.getAttribute('data-theme') as AppTheme;
-      dispatchToApp({ type: 'changeTheme', payload: newTheme });
       onChooseTheme(newTheme);
     }
   }
@@ -40,12 +37,16 @@ function ThemeSwitcherList({ themeList, themeType, onChooseTheme }: Props) {
           data-theme={themeListItem.value}
           className={classNames(
             'theme-switcher-theme',
-            `theme-switcher-${themeType}-theme`
+            `theme-switcher-${themeType}-theme`,
+            { 'theme-switcher-theme-selected': themeListItem.value === currentTheme }
           )}>
           <button
             type="button"
             className="theme-switcher-theme-button"
             data-action="change-theme">
+            {themeListItem.value === currentTheme ? (
+              <div className="theme-switcher-theme-selected-icon"></div>
+            ) : null}
             {themeType === 'photo' ? (
               <div className="theme-switcher-photo-theme-photo-container">
                 <Image
