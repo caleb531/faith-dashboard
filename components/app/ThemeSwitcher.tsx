@@ -6,6 +6,10 @@ import AppContext from './AppContext';
 import photoThemeList from './appPhotoThemeList';
 import ThemeSwitcherList from './ThemeSwitcherList';
 
+// The number of milliseconds that the Theme Switcher modal will stay open
+// after choosing a theme (to give the user time to react to the change)
+const themeChangeDelay = 250;
+
 type Props = { currentTheme: AppTheme, onCloseThemeSwitcher: () => void };
 
 function ThemeSwitcher({ currentTheme, onCloseThemeSwitcher }: Props) {
@@ -14,7 +18,12 @@ function ThemeSwitcher({ currentTheme, onCloseThemeSwitcher }: Props) {
 
   function onChooseTheme(newTheme: AppTheme): void {
     dispatchToApp({ type: 'changeTheme', payload: newTheme });
-    onCloseThemeSwitcher();
+    // Close modal after short delay to give user time to see that the selected
+    // theme has been changed (since the 'selected' checkmark will now show up
+    // over the theme they just clicked)
+    setTimeout(() => {
+      onCloseThemeSwitcher();
+    }, themeChangeDelay);
   }
 
   return (
