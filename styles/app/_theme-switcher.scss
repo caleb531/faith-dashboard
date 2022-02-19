@@ -22,26 +22,37 @@ $color-theme-column-count: 5;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 15px;
   padding-bottom: 0;
   list-style-type: none;
 }
+.theme-switcher-theme-button {
+  margin: 0;
+  padding: 5px;
+  border-width: 0;
+  border-radius: 0;
+  background: none !important;
+}
 .theme-switcher-label {
-  padding-top: 3px;
   font-size: $font-size-xs;
   font-family: $font-family-sans-serif;
+  color: $dark-75;
   cursor: default;
   user-select: none;
 }
 // Indicate which theme the user is switching to
-.theme-switcher-theme-target {
+.theme-switcher-theme-visual {
   &:hover:active {
     filter: brightness(60%);
+    color: $dark-100;
   }
 }
 
 // Photo themes
 
+.theme-switcher-photo-theme-photo-container {
+  display: flex;
+}
 .theme-switcher-photo-theme-photo {
   border-radius: 10px;
 }

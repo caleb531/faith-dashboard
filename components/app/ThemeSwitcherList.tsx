@@ -19,7 +19,7 @@ function ThemeSwitcherList({ themeList, themeType, onChooseTheme }: Props) {
   function selectTheme(event: React.MouseEvent) {
     const target = event.target as HTMLUListElement;
     const themeElement = target.closest('.theme-switcher-theme');
-    if (target.closest('.theme-switcher-theme-target') && themeElement) {
+    if (target.closest('[data-action="change-theme"]') && themeElement) {
       const newTheme = themeElement.getAttribute('data-theme') as AppTheme;
       dispatchToApp({ type: 'changeTheme', payload: newTheme });
       onChooseTheme(newTheme);
@@ -42,11 +42,14 @@ function ThemeSwitcherList({ themeList, themeType, onChooseTheme }: Props) {
             'theme-switcher-theme',
             `theme-switcher-${themeType}-theme`
           )}>
-          <div className="theme-switcher-theme-target">
+          <button
+            type="button"
+            className="theme-switcher-theme-button"
+            data-action="change-theme">
             {themeType === 'photo' ? (
               <div className="theme-switcher-photo-theme-photo-container">
                 <Image
-                  className="theme-switcher-photo-theme-photo"
+                  className="theme-switcher-theme-visual theme-switcher-photo-theme-photo"
                   src={`/images/background-photos/${themeListItem.value}.jpg`}
                   alt=""
                   aria-labelledby={`theme-${themeListItem.value}`}
@@ -55,14 +58,17 @@ function ThemeSwitcherList({ themeList, themeType, onChooseTheme }: Props) {
                   draggable="false" />
               </div>
             ) : themeType === 'color' ? (
-              <div className={classNames(
-                'theme-switcher-color-theme-swatch',
-                `theme-${themeListItem.value}`
-              )} />
+              <div
+                className={classNames(
+                  'theme-switcher-theme-visual',
+                  'theme-switcher-color-theme-swatch',
+                  `theme-${themeListItem.value}`
+                )} />
             ) : null}
-          </div>
+          </button>
           <span
             className="theme-switcher-label"
+            data-action="change-theme"
             id={`${themeListItem.label}`}>
             {themeListItem.label}
           </span>
