@@ -18,8 +18,8 @@ function ThemeSwitcherList({ themeList, themeType, onChooseTheme }: Props) {
   // single listener and figure out which theme was clicked
   function selectTheme(event: React.MouseEvent) {
     const target = event.target as HTMLUListElement;
-    const themeElement = target.closest('.theme-switcher-list-item');
-    if (themeElement) {
+    const themeElement = target.closest('.theme-switcher-theme');
+    if (target.closest('.theme-switcher-theme-target') && themeElement) {
       const newTheme = themeElement.getAttribute('data-theme') as AppTheme;
       dispatchToApp({ type: 'changeTheme', payload: newTheme });
       onChooseTheme(newTheme);
@@ -28,31 +28,44 @@ function ThemeSwitcherList({ themeList, themeType, onChooseTheme }: Props) {
 
   return (
     <ul
-      className="theme-switcher-list theme-switcher-photo-themes"
+      className={classNames(
+        'theme-switcher-themes',
+        `theme-switcher-${themeType}-themes`
+      )}
       onClick={selectTheme}>
       {themeList.map((themeListItem) => {
         return (
           <li
           key={themeListItem.value}
           data-theme={themeListItem.value}
-          className="theme-switcher-list-item theme-switcher-photo-theme">
-          {themeType === 'photo' ? (
-            <div className="theme-switcher-photo-theme-photo-container">
-              <Image
-                className="theme-switcher-photo-theme-photo"
-                src={`/images/background-photos/${themeListItem.value}.jpg`}
-                alt=""
-                width="200"
-                height="100"
-                draggable="false" />
-            </div>
-          ) : themeType === 'color' ? (
-            <div className={classNames(
-              'theme-switcher-color-theme-swatch',
-              `theme-${themeListItem.value}`
-            )}></div>
-          ) : null}
-          <span className="theme-switcher-label">{themeListItem.label}</span>
+          className={classNames(
+            'theme-switcher-theme',
+            `theme-switcher-${themeType}-theme`
+          )}>
+          <div className="theme-switcher-theme-target">
+            {themeType === 'photo' ? (
+              <div className="theme-switcher-photo-theme-photo-container">
+                <Image
+                  className="theme-switcher-photo-theme-photo"
+                  src={`/images/background-photos/${themeListItem.value}.jpg`}
+                  alt=""
+                  aria-labelledby={`theme-${themeListItem.value}`}
+                  width="200"
+                  height="100"
+                  draggable="false" />
+              </div>
+            ) : themeType === 'color' ? (
+              <div className={classNames(
+                'theme-switcher-color-theme-swatch',
+                `theme-${themeListItem.value}`
+              )} />
+            ) : null}
+          </div>
+          <span
+            className="theme-switcher-label"
+            id={`${themeListItem.label}`}>
+            {themeListItem.label}
+          </span>
           </li>
         );
       })}

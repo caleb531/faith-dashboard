@@ -2,6 +2,8 @@
 
 $color-theme-column-count: 5;
 
+// Theme switcher view itself
+
 .theme-switcher {
   text-align: center;
   h2 {
@@ -9,33 +11,20 @@ $color-theme-column-count: 5;
   }
 }
 
-.theme-switcher-list {
+// Styles for all theme types
+
+.theme-switcher-themes {
   margin: 0;
   padding: 0;
 }
-
-.theme-switcher-list-item {
-  list-style-type: none;
-}
-
-.theme-switcher-color-themes {
-  display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(auto-fill, 80px);
-}
-
-.theme-switcher-color-theme {
+.theme-switcher-theme {
   display: inline-flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   padding: 10px 20px;
-}
-.theme-switcher-color-theme-swatch {
-  $swatch-size: 40px;
-  width: $swatch-size;
-  height: $swatch-size;
-  border-radius: 50%;
+  padding-bottom: 0;
+  list-style-type: none;
 }
 .theme-switcher-label {
   padding-top: 3px;
@@ -44,32 +33,29 @@ $color-theme-column-count: 5;
   cursor: default;
   user-select: none;
 }
-
-.theme-switcher-photo-themes {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  grid-template-columns: repeat(auto-fill, 200px);
+// Indicate which theme the user is switching to
+.theme-switcher-theme-target {
+  &:hover:active {
+    filter: brightness(60%);
+  }
 }
 
-.theme-switcher-photo-theme {
-  display: inline-block;
-  padding: 5px 20px;
-}
+// Photo themes
 
-.theme-switcher-photo-theme-photo-container {
-  display: flex;
-  border: solid 5px $light-100;
-  padding-bottom: 0;
-}
 .theme-switcher-photo-theme-photo {
   border-radius: 10px;
 }
 
-// Indicate which theme the user is switching to
-.theme-switcher-color-theme-swatch,
-.theme-switcher-photo-theme-photo {
-  .theme-switcher-list-item:hover:active & {
-    filter: brightness(60%);
-  }
+// Color themes
+
+.theme-switcher-color-themes {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 80px);
+}
+.theme-switcher-color-theme-swatch {
+  $swatch-size: 40px;
+  width: $swatch-size;
+  height: $swatch-size;
+  border-radius: 50%;
 }
