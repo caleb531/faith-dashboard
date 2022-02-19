@@ -43,7 +43,8 @@ function ThemeSwitcherList({ themeList, themeType, onChooseTheme }: Props) {
                 src={`/images/background-photos/${themeListItem.value}.jpg`}
                 alt=""
                 width="200"
-                height="100" />
+                height="100"
+                draggable="false" />
             </div>
           ) : themeType === 'color' ? (
             <div className={classNames(
