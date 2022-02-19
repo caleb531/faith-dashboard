@@ -4,12 +4,13 @@ import useTutorialStep from '../tutorial/useTutorialStep';
 import { AppTheme } from './app.d';
 import colorThemeList from './appColorThemeList';
 import photoThemeList from './appPhotoThemeList';
+import ThemeSwitcher from './ThemeSwitcher';
 
 const allThemes = [...photoThemeList, ...colorThemeList];
 
-type Props = { theme: AppTheme };
+type Props = { currentTheme: AppTheme };
 
-function AppHeaderThemeSwitcher({ theme }: Props) {
+function AppHeaderThemeSwitcher({ currentTheme }: Props) {
 
   const { isCurrentStep, stepProps } = useTutorialStep('change-theme');
   const [themeSwitcherIsOpen, setThemeSwitcherIsOpen] = useState(false);
@@ -21,10 +22,13 @@ function AppHeaderThemeSwitcher({ theme }: Props) {
         Color Theme
       </label>
       <button className="app-header-theme-switcher-button" id="theme-switcher-dropdown" onClick={() => setThemeSwitcherIsOpen(true)} {...stepProps}>
-        {allThemes.find((themeListItem) => {
-          return themeListItem.value === theme;
+        Theme: {allThemes.find((themeListItem) => {
+          return themeListItem.value === currentTheme;
         })?.label}
       </button>
+      {themeSwitcherIsOpen ? (
+        <ThemeSwitcher currentTheme={currentTheme} onCloseThemeSwitcher={() => setThemeSwitcherIsOpen(false)} />
+      ) : null}
     </div>
   );
 

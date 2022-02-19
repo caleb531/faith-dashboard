@@ -1,0 +1,40 @@
+@use 'sass:math';
+
+$color-theme-column-count: 5;
+
+.theme-switcher {
+  text-align: center;
+}
+
+.theme-switcher-list {
+  margin: 0;
+  padding: 0;
+}
+
+.theme-switcher-list-item {
+  list-style-type: none;
+}
+
+.theme-switcher-color-themes {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, 80px);
+}
+
+.theme-switcher-color-theme {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 20px;
+}
+.theme-switcher-color-theme-swatch {
+  $swatch-size: 40px;
+  width: $swatch-size;
+  height: $swatch-size;
+  border-radius: 50%;
+}
+.theme-switcher-color-theme-label {
+  padding-top: 3px;
+  font-family: $font-family-sans-serif;
+}

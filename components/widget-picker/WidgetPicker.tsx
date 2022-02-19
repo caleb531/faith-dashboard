@@ -11,7 +11,7 @@ function WidgetPicker({ onCloseWidgetPicker }: Props) {
   return (
     <Modal onCloseModal={onCloseWidgetPicker}>
         <section className="widget-picker">
-          <h2>Add Widget</h2>
+          <h1>Add Widget</h1>
           <ul className="widget-picker-list">
             {widgetTypes.map((widgetType: WidgetType) => {
               return (

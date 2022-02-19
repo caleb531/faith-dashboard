@@ -57,7 +57,7 @@ function App() {
             {shouldLoadServiceWorker() ? (
               <UpdateNotification />
             ) : null}
-            <AppHeader theme={app.theme} />
+            <AppHeader currentTheme={app.theme} />
             <AppWelcome />
             <AppCompletedTutorial />
             <Suspense fallback={<LoadingIndicator />}>
