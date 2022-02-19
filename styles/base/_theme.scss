@@ -7,7 +7,7 @@ $theme-photos: (
   'grass': $green,
   'mountain': $blue,
   'shore': $teal,
-  'stars': $blue
+  'stars': $purple
 );
 
 @each $theme-name, $theme-color in $theme-colors {
