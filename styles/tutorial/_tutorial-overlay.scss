@@ -16,3 +16,8 @@
     background-color: darken($theme-color, 9%);
   }
 }
+@each $theme-name, $theme-color in $theme-photos {
+  .theme-#{$theme-name} [data-tutorial-current-step] {
+    background-color: darken($theme-color, 9%);
+  }
+}
