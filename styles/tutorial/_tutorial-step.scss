@@ -7,4 +7,15 @@
   opacity: 1 !important;
   position: relative;
   z-index: 300;
+  // Use a box-shadow to act as an overlay that darkens everything except the
+  // element owning the box-shadow; the spread radius of this box-shadow must
+  // be large enough to cover the entire viewport, no matter how large the
+  // viewport is (source: https://stackoverflow.com/a/32967660/560642)
+  box-shadow: 0 0 0 9999vw $dark-75 !important;
+}
+// Do not add box-shadow to nested tutorial steps (e.g. while each widget
+// control is a tutorial step and should be highlighted, the entire parent
+// widget should also be highlighted for context)
+[data-tutorial-current-step] [data-tutorial-current-step] {
+  box-shadow: none !important;
 }
