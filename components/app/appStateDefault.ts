@@ -2,7 +2,7 @@ import { AppState } from './app.d';
 
 
 export default {
-  theme: 'teal',
+  theme: 'shore',
   shouldShowTutorial: true,
   widgets: [
     {
