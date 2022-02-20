@@ -117,6 +117,14 @@ $tutorial-message-color: $dark-100;
       }
     }
   }
+  @each $theme-name, $theme-color in $theme-photos {
+    .theme-#{$theme-name} & {
+      background-color: darken($theme-color, 0%);
+      &:hover:active {
+        background-color: darken($theme-color, 9%);
+      }
+    }
+  }
   &.warning {
     background-color: darken(saturate($red, 15%), 5%);
     &:hover:active {
