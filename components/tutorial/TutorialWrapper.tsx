@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import AppContext from '../app/AppContext';
 import { TutorialContextValue } from './tutorial';
@@ -7,7 +8,7 @@ import tutorialSteps from './tutorialSteps';
 
 type Props = { shouldShow: boolean, children: JSX.Element | JSX.Element[] };
 
-function TutorialFlow({ shouldShow, children }: Props) {
+function TutorialWrapper({ shouldShow, children }: Props) {
 
   const dispatchToApp = useContext(AppContext);
 
@@ -46,10 +47,15 @@ function TutorialFlow({ shouldShow, children }: Props) {
 
   return (
     <TutorialContext.Provider value={contextValue}>
-      <TutorialOverlay isVisible={inProgress} />
-      {children}
+      <div className={classNames([
+        'tutorial-wrapper',
+        { 'tutorial-in-progress': inProgress }
+      ])}>
+        <TutorialOverlay isVisible={inProgress} />
+        {children}
+      </div>
     </TutorialContext.Provider>
   );
 }
 
-export default TutorialFlow;
+export default TutorialWrapper;

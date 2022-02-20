@@ -7,7 +7,8 @@ body {
 body,
 main,
 #__next,
-.app {
+.app,
+.tutorial-wrapper {
   flex-grow: 1;
   display: flex;
   flex-direction: column;

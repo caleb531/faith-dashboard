@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { Suspense, useEffect, useReducer } from 'react';
 import LoadingIndicator from '../generic/LoadingIndicator';
-import TutorialFlow from '../tutorial/TutorialFlow';
+import TutorialWrapper from '../tutorial/TutorialWrapper';
 import useLocalStorage from '../useLocalStorage';
 import useMountListener from '../useMountListener';
 import AppCompletedTutorial from './AppCompletedTutorial';
@@ -53,7 +53,7 @@ function App() {
           { 'is-touch-device': isTouchDevice() },
           { 'is-not-touch-device': !isTouchDevice() }
         )}>
-          <TutorialFlow shouldShow={app.shouldShowTutorial}>
+          <TutorialWrapper shouldShow={app.shouldShowTutorial}>
             {shouldLoadServiceWorker() ? (
               <UpdateNotification />
             ) : null}
@@ -64,7 +64,7 @@ function App() {
               <WidgetBoard widgets={app.widgets} />
             </Suspense>
             <AppFooter />
-          </TutorialFlow>
+          </TutorialWrapper>
         </div> : null}
     </AppContext.Provider>
   );
