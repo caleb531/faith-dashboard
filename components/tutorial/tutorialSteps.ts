@@ -46,7 +46,7 @@ const tutorialSteps: TutorialStep[] = [
   },
   {
     id: 'change-theme',
-    message: 'Change your board\'s color theme to personalize it!',
+    message: 'Change your board\'s theme to personalize it!',
     position: 'bottom',
     alignment: 'right'
   },
