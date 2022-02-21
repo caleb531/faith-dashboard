@@ -10,6 +10,7 @@ export interface TutorialStep {
   alignment: TutorialStepAlignment;
   width?: number | string;
   primaryButtonLabel?: string;
+  positionPrecedence?: TutorialStepPosition[];
 }
 
 // Provide details about where the user is in the Tutorial flow, and

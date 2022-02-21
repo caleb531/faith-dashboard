@@ -66,7 +66,8 @@ const tutorialSteps: TutorialStep[] = [
     id: 'drag-widget-4deca405-3e4e-4baa-94c8-82ebf5bcbcde',
     message: 'And, you can rearrange your widgets with the drag-handle icon on any widget.',
     position: 'auto',
-    alignment: 'left'
+    alignment: 'left',
+    positionPrecedence: ['left', 'right', 'top', 'bottom']
   },
   {
     id: 'help',
