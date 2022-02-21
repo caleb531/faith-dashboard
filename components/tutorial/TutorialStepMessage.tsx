@@ -5,10 +5,10 @@ import TutorialContext from './TutorialContext';
 import tutorialSteps from './tutorialSteps';
 import useTutorialStepMessagePositioner from './useTutorialStepMessagePositioner';
 
-// When using the <TutorialMessage /> component, the component should be
+// When using the <TutorialStepMessage /> component, the component should be
 // wrapped inside of an isCurrentStep check (from the useTutorialStep()
-// hook), so that only one instance of TutorialMessage is active at a time
-function TutorialMessage() {
+// hook), so that only one instance of TutorialStepMessage is active at a time
+function TutorialStepMessage() {
 
   const { currentStep, currentStepIndex, moveToNextStep, skipTutorial } = useContext(TutorialContext);
   const messageRef = useRef<HTMLDivElement>(null);
@@ -29,17 +29,17 @@ function TutorialMessage() {
   return (
     <div
         className={classNames(
-        'tutorial-message',
+        'tutorial-step-message',
         `position-${calculatedPosition}`,
         `alignment-${currentStep.alignment}`
       )}
       style={{ width: currentStep.width || 'auto' }}
       ref={messageRef}>
-      <span className="tutorial-message-text">{currentStep.message}</span>
-      <div className="tutorial-message-controls">
+      <span className="tutorial-step-message-text">{currentStep.message}</span>
+      <div className="tutorial-step-message-controls">
         <button
           type="submit"
-          className="tutorial-message-control"
+          className="tutorial-step-message-control"
           onClick={moveToNextStep}>
           {
             currentStep.primaryButtonLabel ||
@@ -48,7 +48,7 @@ function TutorialMessage() {
         </button>
         {isLastStep === false ? <button
           type="button"
-          className="tutorial-message-control warning"
+          className="tutorial-step-message-control warning"
           onClick={skipTutorial}>
           Skip Tutorial
         </button> : null}
@@ -57,4 +57,4 @@ function TutorialMessage() {
   );
 }
 
-export default TutorialMessage;
+export default TutorialStepMessage;

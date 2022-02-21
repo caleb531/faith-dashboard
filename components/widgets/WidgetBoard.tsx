@@ -2,7 +2,7 @@ import { fromPairs, times } from 'lodash-es';
 import React, { useContext } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import AppContext from '../app/AppContext';
-import TutorialMessage from '../tutorial/TutorialMessage';
+import TutorialStepMessage from '../tutorial/TutorialStepMessage';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import { WidgetHead } from './widget.d';
 import WidgetBoardColumn from './WidgetBoardColumn';
@@ -62,7 +62,7 @@ function WidgetBoard({ widgets }: Props) {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      {isCurrentStep ? <TutorialMessage /> : null}
+      {isCurrentStep ? <TutorialStepMessage /> : null}
       <div className="widget-board" {...stepProps}>
         {times(columnCount, (columnIndex) => {
           return (

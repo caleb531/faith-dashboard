@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TutorialMessage from '../tutorial/TutorialMessage';
+import TutorialStepMessage from '../tutorial/TutorialStepMessage';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import { AppTheme } from './app.d';
 import colorThemeList from './appColorThemeList';
@@ -17,7 +17,7 @@ function AppHeaderThemeSwitcher({ currentTheme }: Props) {
 
   return (
     <div className="app-header-theme-switcher">
-      {isCurrentStep ? <TutorialMessage /> : null}
+      {isCurrentStep ? <TutorialStepMessage /> : null}
       <label className="theme-switcher-label accessibility-only" htmlFor="theme-switcher-dropdown">
         Color Theme
       </label>

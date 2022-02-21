@@ -1,11 +1,11 @@
 import React from 'react';
-import TutorialMessage from '../tutorial/TutorialMessage';
+import TutorialStepMessage from '../tutorial/TutorialStepMessage';
 import useTutorialStep from '../tutorial/useTutorialStep';
 
 function AppWelcome() {
   const { isCurrentStep } = useTutorialStep('welcome');
   return (
-    isCurrentStep ? <TutorialMessage /> : null
+    isCurrentStep ? <TutorialStepMessage /> : null
   );
 }
 

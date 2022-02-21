@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AddWidgetButton from '../generic/AddWidgetButton';
-import TutorialMessage from '../tutorial/TutorialMessage';
+import TutorialStepMessage from '../tutorial/TutorialStepMessage';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import WidgetPicker from '../widget-picker/WidgetPicker';
 
@@ -12,7 +12,7 @@ function AppHeaderAddWidgetButton() {
       <AddWidgetButton
         onPressButton={() => setWidgetPickerIsOpen((isOpen) => !isOpen)}
         buttonProps={stepProps} />
-      {isCurrentStep ? <TutorialMessage /> : null}
+      {isCurrentStep ? <TutorialStepMessage /> : null}
       {widgetPickerIsOpen ? (
         <WidgetPicker onCloseWidgetPicker={() => setWidgetPickerIsOpen(false)} />
       ) : null}
