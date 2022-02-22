@@ -1,0 +1,73 @@
+{
+  "theme": "shore",
+  "widgets": [
+    {
+      "id": "44ad1b15-6274-424e-85b2-a9c559f31a0b",
+      "type": "Podcast",
+      "column": 1,
+      "podcastQuery": "sermon of the day",
+      "podcastFeedUrl": "https://feed.desiringgod.org/sermon-of-the-day.rss",
+      "nowPlaying": {
+        "title": "The Free Gift of God Is Eternal Life, Part 2",
+        "itunes:image": {
+          "href": "https://dg.imgix.net/god-s-gift-our-work-sgzgu1wg-en/landscape/god-s-gift-our-work-sgzgu1wg-4f67773135d9f34ae6445c9a5206a5cd.jpg?ts=1513883329&ixlib=rails-4.2.0&auto=format%2Ccompress&fit=min&w=800&h=450"
+        },
+        "itunes:subtitle": "Part 2",
+        "itunes:author": "John Piper",
+        "itunes:duration": "00:39:08",
+        "dc:creator": "John Piper",
+        "pubDate": "Thu, 23 Dec 2021 10:00:00 -0000",
+        "link": "https://feed.desiringgod.org/link/10721/13092629/gods-gift-our-work",
+        "itunes:keywords": "sermon, daily sermon, message, preaching, John Piper, Desiring God, 163859",
+        "guid": "https://feed.desiringgod.org/link/10721/7819305/10831403.mp3",
+        "enclosure": {
+          "url": "https://feed.desiringgod.org/link/10721/7819305/10831403.mp3",
+          "length": "9393164",
+          "type": "audio/mpeg"
+        }
+      },
+      "viewingNowPlaying": true,
+      "listeningMetadata": {
+        "https://feed.desiringgod.org/link/10721/7819305/10831403.mp3": {
+          "currentTime": 1175
+        }
+      },
+      "podcastImage": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts113/v4/53/59/38/535938be-7e7b-554b-841b-53136de28029/mza_12935232606719538957.jpg/100x100bb.jpg",
+      "isPlaying": false
+    },
+    {
+      "id": "2bf675c5-f8cd-4087-b2d4-927571f16d32",
+      "type": "Podcast",
+      "column": 1,
+      "podcastQuery": "ask pastor john",
+      "podcastFeedUrl": "https://feed.desiringgod.org/ask-pastor-john.rss"
+    },
+    {
+      "id": "bdcd3778-9872-44ca-b240-fe099260cdd0",
+      "type": "Note",
+      "column": 2,
+      "text": "There will always be grace",
+      "fontSize": 31,
+      "height": 115
+    },
+    {
+      "id": "875f3da2-7cdf-4008-b56f-e57a74d7ee66",
+      "type": "BibleVerse",
+      "column": 2,
+      "verseQuery": "Romans 8:28"
+    },
+    {
+      "id": "7eaa4700-825b-471f-8e2d-7dd0b57b7c54",
+      "type": "Note",
+      "column": 3,
+      "text": "God is good",
+      "fontSize": 42
+    },
+    {
+      "id": "92199d17-ad44-4fb7-81ad-db59ef281116",
+      "type": "BibleVerse",
+      "column": 3,
+      "verseQuery": "Psalm 23:1"
+    }
+  ]
+}
