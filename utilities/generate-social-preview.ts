@@ -32,7 +32,7 @@ async function main(): Promise<void> {
   });
 
   console.log('waiting for dashboard to fully load...');
-  await page.reload({ waitUntil: ['networkidle0', 'load'] });
+  await page.reload({ waitUntil: ['load', 'networkidle0'] });
 
   console.log('generating screenshot...');
   await page.screenshot({
