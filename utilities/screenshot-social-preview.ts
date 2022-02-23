@@ -4,7 +4,11 @@ import puppeteer from 'puppeteer';
 const screenshotWidth = 1200;
 const screenshotHeight = 630;
 // The path to the social preview image to generate
-const screenshotPath = './public/images/social-preview.png';
+const screenshotPath = './public/images/social-preview.jpg';
+// The file format of the screenshot (should be either 'jpeg' or 'png')
+const screenshotFormat = 'jpeg';
+// The quality percentage of the screenshot (set to null if not a JPEG)
+const screenshotQuality: number = 85;
 
 async function main(): Promise<void> {
 
@@ -37,7 +41,8 @@ async function main(): Promise<void> {
   console.log('generating screenshot...');
   await page.screenshot({
     path: screenshotPath,
-    type: 'png',
+    type: screenshotFormat,
+    quality: screenshotQuality || undefined,
     captureBeyondViewport: false
   });
 
