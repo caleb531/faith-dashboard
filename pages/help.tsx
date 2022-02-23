@@ -31,13 +31,15 @@ function Help() {
       <h2>What can I do?</h2>
 
       <p>When you load the app for the first time, you'll see a three-column
-      view with a few &quot;widgets&quot; for you to try. These widgets let you do things like:</p>
+      view with a few "widgets" for you to try. These widgets let you do things like:</p>
 
       <ul>
         <li>Display your favorite Bible verses</li>
         <li>Listen to your favorite faith podcast</li>
         <li>Jot down anything you'd like!</li>
       </ul>
+
+      <p>You can also personalize your board with a photo or color theme!</p>
 
       <h3>Add new widget</h3>
 
@@ -57,7 +59,11 @@ function Help() {
 
       <p>If you want to change which Bible verse you are displaying or which Podcast you are listening to, click the <img src="/icons/settings-light.svg" alt="Settings" /> icon in the top-right corner of any widget.</p>
 
-      <h2>Add to your home screen (iOS)</h2>
+      <h3>Changing themes</h3>
+
+      <p>There are several background themes you can choose from for your dashboard. Some are photos, other are solid colors. To pick one, click the <button type="button" disabled className="app-header-theme-switcher-button">Shore</button> icon ("Shore" is the name of whatever current theme). You'll see a gallery of themes to chooes from. Click one to use it.</p>
+
+      <h2>Add Faith Dashboard to your home screen (iOS)</h2>
 
       <p>If you are using an iPhone or iPad, you can visit <a href="https://faithdashboard.com"><strong>faithdashboard.com</strong></a> and add it to your home screen like so:</p>
 
