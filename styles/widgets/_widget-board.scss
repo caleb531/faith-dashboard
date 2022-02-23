@@ -1,3 +1,6 @@
+$widget-min-width: 240px;
+$widget-min-height: 100px;
+
 .widget-board {
   flex-grow: 1;
   display: flex;
@@ -10,7 +13,7 @@
 .widget-board-column {
   flex-grow: 1;
   flex-basis: 0;
-  min-width: 240px;
+  min-width: $widget-min-width;
   display: flex;
   flex-direction: column;
   margin: 0 10px;

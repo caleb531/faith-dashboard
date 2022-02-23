@@ -1,8 +1,8 @@
 .widget {
   display: inline-block;
   position: relative;
-  min-width: 240px;
-  min-height: 100px;
+  min-width: $widget-min-width;
+  min-height: $widget-min-height;
   width: 100%;
   margin: 10px 0;
   border-radius: 10px;
