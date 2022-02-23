@@ -23,6 +23,10 @@ const colorThemeList: AppThemeListItem[] = sortBy([
     value: 'purple'
   },
   {
+    label: 'Royal',
+    value: 'royal'
+  },
+  {
     label: 'Rose',
     value: 'rose'
   },
