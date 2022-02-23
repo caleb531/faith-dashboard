@@ -16,6 +16,8 @@ function AppHead() {
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:width" content="2400" />
+      <meta property="og:image:height" content="1260" />
       <meta property="og:description" content={description} />
       <meta name="description" content={description} />
       <meta name="twitter:card" content="summary_large_image" />
