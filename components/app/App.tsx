@@ -7,7 +7,6 @@ import useMountListener from '../useMountListener';
 import AppCompletedTutorial from './AppCompletedTutorial';
 import AppContext from './AppContext';
 import AppFooter from './AppFooter';
-import AppHead from './AppHead';
 import AppHeader from './AppHeader';
 import reducer from './AppReducer';
 import defaultApp from './appStateDefault';
@@ -46,7 +45,6 @@ function App() {
   const isMounted = useMountListener();
   return (
     <AppContext.Provider value={dispatchToApp}>
-        <AppHead />
         {isMounted ? <div className={classNames(
           'app',
           `theme-${app.theme}`,

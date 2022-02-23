@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unescaped-entities */
-import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -10,18 +9,6 @@ import addToHomeScreenImage3 from '../public/images/help/ios-add-to-home-screen-
 function Help() {
   return (
     <article className="landing-page">
-      <Head>
-        <title>Help | Faith Dashboard</title>
-        <link rel="canonical" href="https://faithdashboard.com/help/" />
-        <meta property="og:title" content="Help | Faith Dashboard" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://faithdashboard.com/help/" />
-        <meta property="og:image" content="https://faithdashboard.com/images/social-preview.jpg?v=2" />
-        <meta
-          name="description"
-          property="og:description"
-          content="Documentation on how to get started with Faith Dashboard, your one place for anything and everything that inspires your faith." />
-      </Head>
       <p><Link href="/">Return to App</Link></p>
 
       <h1>Help | Faith Dashboard</h1>
@@ -89,4 +76,15 @@ function Help() {
     </article>
   );
 }
+
+export async function getStaticProps() {
+  return {
+    props: {
+      pagePath: '/help',
+      pageTitle: 'Help | Faith Dashboard',
+      pageDescription: 'Documentation on how to get started with Faith Dashboard, your one place for anything and everything that inspires your faith.'
+    }
+  };
+}
+
 export default Help;
