@@ -5,7 +5,7 @@ export async function getStaticProps() {
     props: {
       pagePath: '/',
       pageTitle: 'Faith Dashboard',
-      pageDescription: 'Be strengthened every day with this private board for your favorite Bible verses, sermons, and anything you need to be encouraged when life happens.'
+      pageDescription: 'Be strengthened every day with this private board for your favorite Bible verses, sermons, and anything else you need to be encouraged when life happens.'
     }
   };
 }

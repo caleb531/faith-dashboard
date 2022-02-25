@@ -13,7 +13,7 @@ function Help() {
 
       <h1>Help | Faith Dashboard</h1>
 
-      <p>Faith Dashboard is <strong>your one place for anything and everything that strenthens your faith.</strong> It's a private board for your favorite Bible verses, sermons, and anything you need to be encouraged when life happens.</p>
+      <p>Be strengthened every day with Faith Dashboard, a private board for your favorite Bible verses, sermons, and anything else you need to be encouraged when life happens.</p>
 
       <h2>What can I do?</h2>
 

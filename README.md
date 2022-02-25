@@ -3,9 +3,9 @@
 *Copyright 2021-2022, Caleb Evans*  
 *Released under the MIT License*
 
-Faith Dashboard is a private board for your favorite Bible verses, sermons, and
-anything you'd like. Come back to it whenever you need encouragement, wisdom,
-or simple truth.
+Be strengthened every day with Faith Dashboard, a private board for your
+favorite Bible verses, sermons, and anything else you need to be encouraged
+when life happens. Keep it open in a browser tab, and come back to it as needed.
 
 [Live App](https://faithdashboard.com/)
 
