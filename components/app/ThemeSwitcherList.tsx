@@ -14,10 +14,10 @@ function ThemeSwitcherList({ themeList, themeType, onChooseTheme, currentTheme }
 
   // Since there can be many themes, use event delegation to attach only a
   // single listener and figure out which theme was clicked
-  function selectTheme(event: React.MouseEvent<HTMLUListElement>) {
-    const currentTarget = event.currentTarget;
-    const themeElement = currentTarget.closest('.theme-switcher-theme');
-    if (currentTarget.closest('[data-action="change-theme"]') && themeElement) {
+  function selectTheme(event: React.MouseEvent) {
+    const target = event.target as HTMLUListElement;
+    const themeElement = target.closest('.theme-switcher-theme');
+    if (target.closest('[data-action="change-theme"]') && themeElement) {
       const newTheme = themeElement.getAttribute('data-theme') as AppTheme;
       onChooseTheme(newTheme);
     }
