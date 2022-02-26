@@ -35,6 +35,7 @@ $color-theme-column-count: 5;
   background: none !important;
 }
 .theme-switcher-theme-selected .theme-switcher-theme-selected-icon {
+  pointer-events: none;
   $icon-size: 75%;
   content: '';
   position: absolute;
