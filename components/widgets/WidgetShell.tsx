@@ -38,8 +38,8 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
     }
   }, [widget, widget.isMarkedForRemoval, dispatchToApp]);
 
-  function handleResize(event: React.MouseEvent) {
-    const newHeight = parseFloat((event.currentTarget as HTMLElement).style.height);
+  function handleResize(event: React.MouseEvent<HTMLElement>) {
+    const newHeight = parseFloat(event.currentTarget.style.height);
     // Only trigger the resizeWidget action when the height actually changes
     // (this is to prevent the action from firing whenever mouseUp is called,
     // which could be all the time)

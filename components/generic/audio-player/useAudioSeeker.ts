@@ -21,8 +21,8 @@ function useAudioSeeker(audioElement: HTMLAudioElement, currentTime: number, set
       input.style.backgroundImage = `linear-gradient(to right, ${fillColor} 0%, ${fillColor} ${fillPercentage}%, ${trackColor} ${fillPercentage}%, ${trackColor} 100%)`;
     }
   }
-  function updateSeekerFillFromEvent(event: React.FormEvent) {
-    updateSeekerFill(event.target as HTMLInputElement);
+  function updateSeekerFillFromEvent(event: React.FormEvent<HTMLInputElement>) {
+    updateSeekerFill(event.currentTarget);
   }
 
   // Set the position of the audio seeker when initially loading the player
@@ -34,8 +34,8 @@ function useAudioSeeker(audioElement: HTMLAudioElement, currentTime: number, set
   }
 
   // Persist the user's seeking of the audio to the playback metadata
-  function seekAudio(event: React.FormEvent): void {
-    audioElement.currentTime = parseFloat((event.target as HTMLInputElement).value);
+  function seekAudio(event: React.FormEvent<HTMLInputElement>): void {
+    audioElement.currentTime = parseFloat(event.currentTarget.value);
   }
 
   // The following object is to be spread (...) into the element used for the
