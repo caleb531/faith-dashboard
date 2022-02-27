@@ -1,3 +1,5 @@
+// To run this utility, run `esr utilities/screenshot-social-preview.ts` from
+// the root project directory on the CLI
 import puppeteer from 'puppeteer';
 
 // The non-retina dimensions of the social preview image to capture (the
