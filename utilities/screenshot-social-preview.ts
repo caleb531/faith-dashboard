@@ -1,8 +1,10 @@
 import puppeteer from 'puppeteer';
 
-// The non-retina dimensions of the social preview image to generate
+// The non-retina dimensions of the social preview image to capture (the
+// dimensions of the generated image will be twice these)
 const screenshotWidth = 1200;
 const screenshotHeight = 630;
+const screenshotScaleFactor = 2;
 // The path to the social preview image to generate
 const screenshotPath = './public/images/social-preview.jpg';
 // The file format of the screenshot (should be either 'jpeg' or 'png')
@@ -20,14 +22,14 @@ async function main(): Promise<void> {
   await page.setViewport({
     width: screenshotWidth,
     height: screenshotHeight,
-    deviceScaleFactor: 2
+    deviceScaleFactor: screenshotScaleFactor
   });
 
   console.log('navigating to app...');
   await page.goto('http://localhost:3000');
 
   console.log('configuring dashboard...');
-  await page.evaluate(async (_) => {
+  await page.evaluate(async () => {
     const socialPreviewAppState = await (await fetch('./social-preview-app-state.json')).json();
     localStorage.setItem(
       'faith-dashboard-app',
