@@ -1,5 +1,9 @@
 .add-widget-button {
   padding: 3px 12px;
+  // Because the plus icon SVG contains some intrinsic whitespace around the
+  // icon, we can subtract off that spacing to make the button feel more
+  // equally padded
+  padding-left: 10px;
   font-size: $font-size-xxxs;
 }
 .add-widget-button-icon,
