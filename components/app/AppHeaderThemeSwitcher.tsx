@@ -26,9 +26,16 @@ function AppHeaderThemeSwitcher({ currentTheme }: Props) {
         id="theme-switcher-dropdown"
         onClick={() => setThemeSwitcherIsOpen((isOpen) => !isOpen)}
         {...stepProps}>
-        {allThemes.find((themeListItem) => {
-          return themeListItem.value === currentTheme;
-        })?.label}
+        <img
+          className="app-header-theme-switcher-button-icon"
+          src="icons/paintbrush-light.svg"
+          alt=""
+          draggable="false" />
+        <span className="app-header-theme-switcher-button-label">
+          {allThemes.find((themeListItem) => {
+            return themeListItem.value === currentTheme;
+          })?.label}
+        </span>
       </button>
       {themeSwitcherIsOpen ? (
         <ThemeSwitcher currentTheme={currentTheme} onCloseThemeSwitcher={() => setThemeSwitcherIsOpen(false)} />
