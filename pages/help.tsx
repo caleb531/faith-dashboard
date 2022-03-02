@@ -48,7 +48,7 @@ function Help() {
 
       <h3>Changing themes</h3>
 
-      <p>There are several background themes you can choose from for your dashboard. Some are photos, other are solid colors. To pick one, click the <button type="button" disabled className="app-header-theme-switcher-button">Shore</button> icon ("Shore" is the name of whatever current theme). You'll see a gallery of themes to chooes from. Click one to use it.</p>
+      <p>There are several background themes you can choose from for your dashboard. Some are photos, other are solid colors. To pick one, click the <button type="button" disabled className="app-header-theme-switcher-button">Shore</button> icon ("Shore" is the name of whatever current theme). You'll see a gallery of themes to choose from. Click one to use it.</p>
 
       <h2>Add Faith Dashboard to your home screen (iOS)</h2>
 
