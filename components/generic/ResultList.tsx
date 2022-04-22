@@ -11,8 +11,14 @@ function ResultList({ results, onChooseResult }: Props) {
   function clickResult(event: React.MouseEvent): void {
     const clickedElement = event.target as HTMLElement;
     const resultElement = clickedElement.closest('.result');
+    if (!resultElement) {
+      return;
+    }
     const resultId = resultElement.getAttribute('data-result-id');
     const result = results.find((result) => result.id === resultId);
+    if (!result) {
+      return;
+    }
     onChooseResult(result);
   }
 

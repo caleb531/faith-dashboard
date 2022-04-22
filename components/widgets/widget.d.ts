@@ -25,12 +25,12 @@ export interface WidgetType {
 // widget and its designated type
 export interface WidgetHead {
   // A UUID v4 string that uniquely identifies the widget instance
-  id: string;
+  id: string | null;
   // An string-based identifier representing the type of widget
-  type: WidgetTypeId;
+  type: WidgetTypeId | null;
   // The base-1 index of the dashboard column where the widget will display in
   // the UI
-  column: number;
+  column: number | null;
 }
 
 // The schema for a widget object

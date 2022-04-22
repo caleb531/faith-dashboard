@@ -6,7 +6,7 @@ import TutorialContext from './TutorialContext';
 import TutorialOverlay from './TutorialOverlay';
 import tutorialSteps from './tutorialSteps';
 
-type Props = { shouldShow: boolean, children: JSX.Element | JSX.Element[] };
+type Props = { shouldShow: boolean, children: JSX.Element | (JSX.Element | null)[] | null };
 
 function TutorialWrapper({ shouldShow, children }: Props) {
 

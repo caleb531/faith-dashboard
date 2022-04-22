@@ -23,10 +23,12 @@ function AudioPlayerSeeker({ audioElement, audioUrl, currentTime, setCurrentTime
       start: 0,
       end: Math.floor(totalSeconds) * 1000
     });
-    if (hours) {
+    if (hours && minutes && seconds) {
       return [hours, padWithZero(minutes), padWithZero(seconds)].join(':');
-    } else {
+    } else if (minutes && seconds) {
       return [minutes, padWithZero(seconds)].join(':');
+    } else {
+      return '';
     }
   }
 

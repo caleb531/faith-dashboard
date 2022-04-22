@@ -62,7 +62,7 @@ type Params = { currentStep: TutorialStep, ref: RefObject<HTMLElement> }
 
 function useTutorialStepMessagePositioner({ currentStep, ref }: Params): Position {
 
-  const [position, setPosition] = useState<Position>(null);
+  const [position, setPosition] = useState<Position>('bottom');
   // Keep track of a dummy state variable so that we can trigger a re-render
   // for every (debounced) resize event
   const [resizeCount, setResizeCount] = useState(0);

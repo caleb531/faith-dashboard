@@ -11,7 +11,7 @@ function useCachedAudio(cacheKey: string): [
 ] {
 
   const [audioElement, setAudioElement, removeAudioElement] = useCachedState(`podcast-audio-${cacheKey}`, () => {
-    return typeof Audio !== 'undefined' ? new Audio() : null;
+    return new Audio();
   });
 
   // We don't expose the above setter function because losing references to an

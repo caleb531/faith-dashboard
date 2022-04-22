@@ -5,8 +5,8 @@ import React from 'react';
 // seeker element with your the given current time
 function useAudioSeeker(audioElement: HTMLAudioElement, currentTime: number, setCurrentTime: (newCurrentTime: number) => void): { seekerProvided: {
   ref: (input: HTMLInputElement) => void,
-  onInput: (event: React.FormEvent) => void,
-  onChange: (event: React.FormEvent) => void,
+  onInput: (event: React.FormEvent<HTMLInputElement>) => void,
+  onChange: (event: React.FormEvent<HTMLInputElement>) => void,
   onMouseUp: () => void
 } } {
 

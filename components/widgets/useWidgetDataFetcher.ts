@@ -13,7 +13,7 @@ function isOnline() {
 // Returns true if the given UNIX timestamp (in milliseconds; generated from
 // Date.now()) matches today's date
 const dateFormat = 'yyyy-MM-dd';
-function isDateToday(dateTime: number): boolean {
+function isDateToday(dateTime: number | undefined): boolean {
   return format(dateTime || Date.now(), dateFormat) === format(Date.now(), dateFormat);
 }
 
@@ -66,7 +66,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
   // Accepts an Error object as its only argument, and should return a string
   // representing the message to show if the API returned an error response, or
   // if some other runtime error occurred during the fetch
-  getErrorMessage: (error: Error) => string,
+  getErrorMessage: (error: any) => string,
 }): {
   // Either the return value of getNoResultsMessage(), the return value of
   // getErrorMessage(), or null, depending on the outcome of the fetch

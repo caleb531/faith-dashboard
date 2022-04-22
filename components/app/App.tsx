@@ -51,7 +51,7 @@ function App() {
           { 'is-touch-device': isTouchDevice() },
           { 'is-not-touch-device': !isTouchDevice() }
         )}>
-          <TutorialWrapper shouldShow={app.shouldShowTutorial}>
+          <TutorialWrapper shouldShow={Boolean(app.shouldShowTutorial)}>
             {shouldLoadServiceWorker() ? (
               <UpdateNotification />
             ) : null}
