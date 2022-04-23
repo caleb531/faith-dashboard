@@ -49,11 +49,11 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
   // response) by performing any property access to get at the objects or data
   // you actually want to store (or to simplify the object structure for later
   // use)
-  parseResponse: (data: JSONSerializable) => JSONSerializable,
+  parseResponse: (response: JSONSerializable) => JSONSerializable,
   // A boolean function that should return true if the result of
   // parseResponse() has content to display, or false if (in which case the No
   // Results message is triggered)
-  hasResults: (data: JSONSerializable) => any,
+  hasResults: <T>(data: T) => any,
   // If hasResults() returns true, this callback runs with the return value of
   // parseResponse() as its only argument; you will probably want to call a
   // dispatch() function or useState() setter within this callback to persist
@@ -70,7 +70,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
 }): {
   // Either the return value of getNoResultsMessage(), the return value of
   // getErrorMessage(), or null, depending on the outcome of the fetch
-  fetchError: string,
+  fetchError?: string | null,
   // A reference to an HTML <input> element to which the request query should
   // be bound; this ref should be attached to whatever <input> you are
   // rendering into your widget's settings UI that represents the request query

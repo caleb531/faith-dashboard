@@ -10,7 +10,7 @@ function forceHTTPS(req: NextRequest) {
     // can use `req.headers.get('host')` to get the true host (e.g.
     // 'faithdashboard.com'), whereas `req.nextUrl.host` is always
     // 'localhost:3000'
-    !req.headers.get('host').includes('localhost')
+    !(req.headers.get('host')?.includes('localhost'))
   ) {
     return NextResponse.redirect(
       `https://${req.headers.get('host')}${req.nextUrl.pathname}`,
@@ -21,9 +21,9 @@ function forceHTTPS(req: NextRequest) {
 
 // Redirect every www request to the non-www equivalent
 function redirectWwwToNonWww(req: NextRequest) {
-  const host = req.headers.get('host');
+  const host = req.headers.get('host') || '';
   const wwwRegex = /^www\./;
-  if (wwwRegex.test(host) && !req.headers.get('host').includes('localhost')) {
+  if (wwwRegex.test(host) && !req.headers.get('host')?.includes('localhost')) {
     const newHost = host.replace(wwwRegex, '');
     return NextResponse.redirect(`https://${newHost}${req.nextUrl.pathname}`, 301);
   }

@@ -24,9 +24,9 @@ export default function useLocalStorage<T>(key: string, defaultValue: T): [
     if (!isLocalStorageSupported()) {
       return defaultValue;
     }
-    const value = JSON.parse(localStorage.getItem(key));
-    if (value) {
-      return value;
+    const rawValue = localStorage.getItem(key);
+    if (rawValue) {
+      return JSON.parse(rawValue);
     } else {
       return defaultValue;
     }

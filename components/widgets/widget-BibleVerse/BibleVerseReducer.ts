@@ -1,10 +1,11 @@
+import { WidgetAction } from '../useWidgetShell';
 import { BibleVerseWidgetState } from './bibleVerse.d';
 
 export type BibleVerseAction =
   { type: 'setVerseContent', payload: string } |
   { type: 'setVerseQuery', payload: string };
 
-export default function reducer(state: BibleVerseWidgetState, action: BibleVerseAction): BibleVerseWidgetState {
+export default function reducer(state: BibleVerseWidgetState, action: BibleVerseAction | WidgetAction): BibleVerseWidgetState {
   switch (action.type) {
     case 'setVerseContent':
       const verseContent = action.payload as string;

@@ -39,6 +39,9 @@ function recalculatePosition(
   if (!ref.current) {
     return;
   }
+  if (!ref.current.parentElement) {
+    return;
+  }
   if (currentStep.position !== 'auto') {
     return;
   }

@@ -1,5 +1,4 @@
 import { Dispatch, useReducer } from 'react';
-import { StateAction } from '../global.d';
 import useLocalStorage from '../useLocalStorage';
 import { WidgetHead, WidgetState } from '../widgets/widget.d';
 import widgetTypes from '../widgets/widgetTypes';
@@ -32,13 +31,13 @@ export type WidgetAction =
 // operations, like exposing global actions available to all widgets, and
 // attaching listeners that automatically persist the widget whenever its state
 // changes
-export default function useWidgetShell<Action>(subReducer: (state: WidgetState, action: Action) => WidgetState, widgetHead: WidgetHead): [WidgetState, Dispatch<StateAction>] {
+export default function useWidgetShell<State extends WidgetState, Action extends WidgetAction>(subReducer: (state: State, action: Action) => State, widgetHead: WidgetHead): [State, Dispatch<Action>] {
 
   // The reducer below contains general widget actions, and the widget
   // type-specific "sub-reducer" supplied above is merged into this larger
   // reducer; this allows the compoment for each widget type implementation to
   // reference the same widget state and dispatcher
-  function reducer(state: WidgetState, action: WidgetAction): WidgetState {
+  function reducer(state: State, action: Action): WidgetState {
     switch (action.type) {
       case 'toggleSettings':
         return { ...state, isSettingsOpen: !state.isSettingsOpen };
@@ -67,7 +66,7 @@ export default function useWidgetShell<Action>(subReducer: (state: WidgetState, 
         // omit it, simply pass `null` as the first argument to
         // useWidgetShell()
         if (subReducer) {
-          return subReducer(state, action as Action);
+          return subReducer(state, action);
         } else {
           return state;
         }

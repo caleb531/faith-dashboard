@@ -52,9 +52,7 @@ describe('App Component', function () {
       {
         type: 'removeWidget',
         payload: {
-          id: widgets[1].id,
-          type: null,
-          column: null
+          id: widgets[1].id
         }
       }
     )).toEqual({ theme: 'teal', widgets: [widgets[0], widgets[2]] });

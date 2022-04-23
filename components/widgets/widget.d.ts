@@ -25,12 +25,12 @@ export interface WidgetType {
 // widget and its designated type
 export interface WidgetHead {
   // A UUID v4 string that uniquely identifies the widget instance
-  id: string | null;
+  id: string;
   // An string-based identifier representing the type of widget
-  type: WidgetTypeId | null;
+  type: WidgetTypeId;
   // The base-1 index of the dashboard column where the widget will display in
   // the UI
-  column: number | null;
+  column: number;
 }
 
 // The schema for a widget object
@@ -46,7 +46,7 @@ export interface WidgetState extends WidgetHead {
   // Whether the widget is currently in a loading state
   isLoading?: boolean;
   // Any error the widget experienced while fetching data
-  fetchError?: string;
+  fetchError?: string | null;
   // A timestamp representing the date/time the application last fetched data
   // for this widget
   lastFetchDateTime?: number;

@@ -52,7 +52,7 @@ export default function useMediaSession({
 }: UseMediaSessionParameters): [() => void] {
   // Use a ref to keep track of when the media session's metadata needs to be
   // updated, based on changes to the audio's source URL
-  const audioSrcRef = useRef(null);
+  const audioSrcRef = useRef(audioElement.src);
   useEffect(() => {
 
     // Do nothing if the user's browser does not support the Media Session API
@@ -84,9 +84,9 @@ export default function useMediaSession({
     setActionHandler('seekto', (details) => {
       // Not all browsers support fast-seeking for the seekto action, so we
       // first must check if it's supported
-      if (details.fastSeek && audioElement.fastSeek) {
+      if (details.seekTime && details.fastSeek && audioElement.fastSeek) {
         audioElement.fastSeek(details.seekTime);
-      } else {
+      } else if (details.seekTime) {
         audioElement.currentTime = details.seekTime;
       }
       updatePositionState(audioElement);

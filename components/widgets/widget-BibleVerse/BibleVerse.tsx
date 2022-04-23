@@ -35,8 +35,8 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({ widgetHead, prov
         payload: data
       });
     },
-    getNoResultsMessage: (data: typeof verseContent) => 'No Verses Found',
-    getErrorMessage: (error: Error) => 'Error Fetching Verse'
+    getNoResultsMessage: () => 'No Verses Found',
+    getErrorMessage: () => 'Error Fetching Verse'
   });
 
   const searchFieldId = useUniqueFieldId('bible-verse-search');

@@ -6,7 +6,7 @@ export type AppAction =
   { type: 'changeTheme', payload: AppTheme } |
   { type: 'skipTutorial' } |
   { type: 'addWidget', payload: WidgetHead } |
-  { type: 'removeWidget', payload: WidgetHead } |
+  { type: 'removeWidget', payload: Omit<WidgetHead, 'type' | 'column'> } |
   { type: 'moveWidget', payload: WidgetMoveParameters };
 
 export default function reducer(state: AppState, action: AppAction): AppState {
