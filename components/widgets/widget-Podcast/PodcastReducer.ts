@@ -10,7 +10,10 @@ export type PodcastAction =
   { type: 'setViewingNowPlaying', payload: boolean } |
   { type: 'updateNowPlayingMetadata', payload: { currentTime: number } };
 
-export default function reducer(state: PodcastWidgetState, action: PodcastAction): PodcastWidgetState {
+export default function reducer(
+  state: PodcastWidgetState,
+  action: PodcastAction
+): PodcastWidgetState {
   switch (action.type) {
     case 'setPodcastFeedData':
       const podcastFeedData = action.payload;

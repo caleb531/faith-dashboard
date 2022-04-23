@@ -4,7 +4,10 @@ export type NoteAction =
   { type: 'updateText', payload: string } |
   { type: 'updateFontSize', payload: number };
 
-export default function reducer(state: NoteWidgetState, action: NoteAction): NoteWidgetState {
+export default function reducer(
+  state: NoteWidgetState,
+  action: NoteAction
+): NoteWidgetState {
   switch (action.type) {
     case 'updateText':
       const text = action.payload;

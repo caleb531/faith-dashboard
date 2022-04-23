@@ -9,7 +9,10 @@ export type AppAction =
   { type: 'removeWidget', payload: Omit<WidgetHead, 'type' | 'column'> } |
   { type: 'moveWidget', payload: WidgetMoveParameters };
 
-export default function reducer(state: AppState, action: AppAction): AppState {
+export default function reducer(
+  state: AppState,
+  action: AppAction
+): AppState {
   switch (action.type) {
     case 'changeTheme':
       const newTheme = action.payload;
