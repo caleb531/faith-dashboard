@@ -3,9 +3,13 @@ import { AppTheme } from './app.d';
 import AppHeaderAddWidgetButton from './AppHeaderAddWidgetButton';
 import AppHeaderThemeSwitcher from './AppHeaderThemeSwitcher';
 
-type Props = { currentTheme: AppTheme };
+type Props = {
+  currentTheme: AppTheme
+};
 
-function AppHeader({ currentTheme }: Props) {
+function AppHeader({
+  currentTheme
+}: Props) {
 
   return (
     <header className="app-header" role="banner">

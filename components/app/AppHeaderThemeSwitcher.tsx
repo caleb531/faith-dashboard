@@ -8,9 +8,13 @@ import ThemeSwitcher from './ThemeSwitcher';
 
 const allThemes = [...photoThemeList, ...colorThemeList];
 
-type Props = { currentTheme: AppTheme };
+type Props = {
+  currentTheme: AppTheme
+};
 
-function AppHeaderThemeSwitcher({ currentTheme }: Props) {
+function AppHeaderThemeSwitcher({
+  currentTheme
+}: Props) {
 
   const { isCurrentStep, stepProps } = useTutorialStep('change-theme');
   const [themeSwitcherIsOpen, setThemeSwitcherIsOpen] = useState(false);

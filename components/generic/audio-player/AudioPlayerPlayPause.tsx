@@ -2,9 +2,19 @@ import React from 'react';
 import LoadingIndicator from '../LoadingIndicator';
 import useAudioPlayPause from './useAudioPlayPause';
 
-type Props = { audioElement: HTMLAudioElement, audioUrl: string, isPlaying: boolean, setIsPlaying: (newIsPlaying: boolean) => void };
+type Props = {
+  audioElement: HTMLAudioElement,
+  audioUrl: string,
+  isPlaying: boolean,
+  setIsPlaying: (newIsPlaying: boolean) => void
+};
 
-function AudioPlayerPlayPause({ audioElement, audioUrl, isPlaying, setIsPlaying }: Props) {
+function AudioPlayerPlayPause({
+  audioElement,
+  audioUrl,
+  isPlaying,
+  setIsPlaying
+}: Props) {
 
   function toggleAudioElementPlayback() {
     if (audioElement.paused) {

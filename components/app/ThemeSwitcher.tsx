@@ -10,9 +10,15 @@ import ThemeSwitcherList from './ThemeSwitcherList';
 // after choosing a theme (to give the user time to react to the change)
 const themeChangeDelay = 250;
 
-type Props = { currentTheme: AppTheme, onCloseThemeSwitcher: () => void };
+type Props = {
+  currentTheme: AppTheme,
+  onCloseThemeSwitcher: () => void
+};
 
-function ThemeSwitcher({ currentTheme, onCloseThemeSwitcher }: Props) {
+function ThemeSwitcher({
+  currentTheme,
+  onCloseThemeSwitcher
+}: Props) {
 
   const dispatchToApp = useContext(AppContext);
 

@@ -8,9 +8,19 @@ import useTutorialStep from '../tutorial/useTutorialStep';
 import { WidgetAction } from './useWidgetShell';
 import { WidgetState } from './widget.d';
 
-type Props = { widget: WidgetState, dispatch: Dispatch<WidgetAction>, provided: DraggableProvided, children: JSX.Element | JSX.Element[] };
+type Props = {
+  widget: WidgetState,
+  dispatch: Dispatch<WidgetAction>,
+  provided: DraggableProvided,
+  children: JSX.Element | JSX.Element[]
+};
 
-function WidgetShell({ widget, dispatch, provided, children }: Props) {
+function WidgetShell({
+  widget,
+  dispatch,
+  provided,
+  children
+}: Props) {
 
   const dispatchToApp = useContext(AppContext);
   const widgetStepData = useTutorialStep(`widget-${widget.id}`);

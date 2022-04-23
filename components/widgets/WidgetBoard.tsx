@@ -13,9 +13,13 @@ function getColumnFromDroppableId(droppableId: string): number {
   return Number(matches && matches[0]);
 }
 
-type Props = { widgets: WidgetHead[] };
+type Props = {
+  widgets: WidgetHead[]
+};
 
-function WidgetBoard({ widgets }: Props) {
+function WidgetBoard({
+  widgets
+}: Props) {
 
   const dispatchToApp = useContext(AppContext);
   const columnCount = 3;

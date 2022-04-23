@@ -4,9 +4,23 @@ import AudioPlayerSeeker from './AudioPlayerSeeker';
 import useAudioLoader from './useAudioLoader';
 import useCachedAudio from './useCachedAudio';
 
-type Props = { audioElementKey: string, audioUrl: string, currentTime: number, setCurrentTime: (newCurrentTime: number) => void, isPlaying: boolean, setIsPlaying: (newIsPlaying: boolean) => void };
+type Props = {
+  audioElementKey: string,
+  audioUrl: string,
+  currentTime: number,
+  setCurrentTime: (newCurrentTime: number) => void,
+  isPlaying: boolean,
+  setIsPlaying: (newIsPlaying: boolean) => void
+};
 
-function AudioPlayer({ audioElementKey, audioUrl, currentTime, setCurrentTime, isPlaying, setIsPlaying }: Props) {
+function AudioPlayer({
+  audioElementKey,
+  audioUrl,
+  currentTime,
+  setCurrentTime,
+  isPlaying,
+  setIsPlaying
+}: Props) {
 
   // Use a single (cached) audio element across all episodes (however, still
   // per Widget) so that:

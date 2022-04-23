@@ -4,9 +4,19 @@ import useUniqueFieldId from '../../useUniqueFieldId';
 import useAudioSeeker from './useAudioSeeker';
 import useAudioTime from './useAudioTime';
 
-type Props = { audioElement: HTMLAudioElement, audioUrl: string, currentTime: number, setCurrentTime: (newCurrentTime: number) => void };
+type Props = {
+  audioElement: HTMLAudioElement,
+  audioUrl: string,
+  currentTime: number,
+  setCurrentTime: (newCurrentTime: number) => void
+};
 
-function AudioPlayerSeeker({ audioElement, audioUrl, currentTime, setCurrentTime }: Props) {
+function AudioPlayerSeeker({
+  audioElement,
+  audioUrl,
+  currentTime,
+  setCurrentTime
+}: Props) {
 
   const { seekerProvided } = useAudioSeeker(audioElement, currentTime, setCurrentTime);
   useAudioTime(audioElement, audioUrl, currentTime, setCurrentTime);

@@ -1,8 +1,14 @@
 import React from 'react';
 
-type Props = { children: JSX.Element | (JSX.Element | null)[] | null, onCloseModal: () => void };
+type Props = {
+  children: JSX.Element | (JSX.Element | null)[] | null,
+  onCloseModal: () => void
+};
 
-function Modal({ children, onCloseModal }: Props) {
+function Modal({
+  children,
+  onCloseModal
+}: Props) {
 
   return (
     <div className="modal-scroll-container">

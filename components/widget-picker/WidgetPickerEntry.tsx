@@ -4,9 +4,15 @@ import AppContext from '../app/AppContext';
 import AddWidgetButton from '../generic/AddWidgetButton';
 import { WidgetType } from '../widgets/widget.d';
 
-type Props = { widgetType: WidgetType, onAddWidget: () => void };
+type Props = {
+  widgetType: WidgetType,
+  onAddWidget: () => void
+};
 
-function WidgetPickerEntry({ widgetType, onAddWidget }: Props) {
+function WidgetPickerEntry({
+  widgetType,
+  onAddWidget
+}: Props) {
 
   const dispatchToApp = useContext(AppContext);
 

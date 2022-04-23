@@ -10,7 +10,12 @@ type Props = {
   currentTheme: AppTheme
 };
 
-function ThemeSwitcherList({ themeList, themeType, onChooseTheme, currentTheme }: Props) {
+function ThemeSwitcherList({
+  themeList,
+  themeType,
+  onChooseTheme,
+  currentTheme
+}: Props) {
 
   // Since there can be many themes, use event delegation to attach only a
   // single listener and figure out which theme was clicked

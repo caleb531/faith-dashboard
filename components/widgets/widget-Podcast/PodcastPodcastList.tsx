@@ -10,9 +10,15 @@ type Props = {
   widget: WidgetState,
   podcastList: PodcastInfo[],
   fetchPodcastFeed: (url: string) => Promise<void>,
-  dispatch: Dispatch<PodcastAction | WidgetAction> };
+  dispatch: Dispatch<PodcastAction | WidgetAction>
+};
 
-function PodcastPodcastList({ widget, podcastList, fetchPodcastFeed, dispatch }: Props) {
+function PodcastPodcastList({
+  widget,
+  podcastList,
+  fetchPodcastFeed,
+  dispatch
+}: Props) {
 
   const { podcastFeedUrl, podcastFeedData } = widget as PodcastWidgetState;
 

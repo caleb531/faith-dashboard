@@ -3,9 +3,17 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { WidgetHead } from './widget.d';
 import widgetTypeMap from './widgetTypeMap';
 
-type Props = { widgets: WidgetHead[], widgetIdsToIndices: {[key: string]: number}, columnIndex: number };
+type Props = {
+  widgets: WidgetHead[],
+  widgetIdsToIndices: {[key: string]: number},
+  columnIndex: number
+};
 
-function WidgetBoardColumn({ widgets, widgetIdsToIndices, columnIndex }: Props) {
+function WidgetBoardColumn({
+  widgets,
+  widgetIdsToIndices,
+  columnIndex
+}: Props) {
 
   return (
     <Droppable droppableId={`column-${columnIndex + 1}`}>

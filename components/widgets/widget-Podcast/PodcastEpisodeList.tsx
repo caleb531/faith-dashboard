@@ -13,7 +13,13 @@ type Props = {
   dispatch: Dispatch<PodcastAction>
 };
 
-function PodcastEpisodeList({ podcastFeedUrl, podcastFeedData, nowPlaying, fetchPodcastFeed, dispatch }: Props) {
+function PodcastEpisodeList({
+  podcastFeedUrl,
+  podcastFeedData,
+  nowPlaying,
+  fetchPodcastFeed,
+  dispatch
+}: Props) {
 
   // Use event delegation to determine which episode entry was clicked
   function chooseEpisode(result: Result) {

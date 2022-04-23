@@ -5,9 +5,25 @@ import { WidgetState } from '../widget.d';
 import { PodcastEpisode, PodcastFeedData, PodcastListeningMetadataEntry } from './podcast.d';
 import { PodcastAction } from './PodcastReducer';
 
-type Props = { widget: WidgetState, podcastFeedData: PodcastFeedData, podcastImage: string, nowPlaying: PodcastEpisode, nowPlayingMetadata: PodcastListeningMetadataEntry | null, isPlaying: boolean, dispatch: Dispatch<PodcastAction | WidgetAction> };
+type Props = {
+  widget: WidgetState,
+  podcastFeedData: PodcastFeedData,
+  podcastImage: string,
+  nowPlaying: PodcastEpisode,
+  nowPlayingMetadata: PodcastListeningMetadataEntry | null,
+  isPlaying: boolean,
+  dispatch: Dispatch<PodcastAction | WidgetAction>
+};
 
-function PodcastNowPlaying({ widget, podcastFeedData, podcastImage, nowPlaying, nowPlayingMetadata, isPlaying, dispatch }: Props) {
+function PodcastNowPlaying({
+  widget,
+  podcastFeedData,
+  podcastImage,
+  nowPlaying,
+  nowPlayingMetadata,
+  isPlaying,
+  dispatch
+}: Props) {
 
   const audioUrl = nowPlaying.enclosure.url;
   const currentTime = nowPlayingMetadata ? nowPlayingMetadata.currentTime : 0;
