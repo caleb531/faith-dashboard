@@ -10,7 +10,7 @@ function forceHTTPS(req: NextRequest) {
     // can use `req.headers.get('host')` to get the true host (e.g.
     // 'faithdashboard.com'), whereas `req.nextUrl.host` is always
     // 'localhost:3000'
-    !(req.headers.get('host')?.includes('localhost'))
+    !req.headers.get('host')?.includes('localhost')
   ) {
     return NextResponse.redirect(
       `https://${req.headers.get('host')}${req.nextUrl.pathname}`,
