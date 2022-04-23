@@ -63,9 +63,9 @@ function recalculatePosition(
 
 type Params = { currentStep: TutorialStep, ref: RefObject<HTMLElement> }
 
-function useTutorialStepMessagePositioner({ currentStep, ref }: Params): Position {
+function useTutorialStepMessagePositioner({ currentStep, ref }: Params): Position | undefined {
 
-  const [position, setPosition] = useState<Position>('bottom');
+  const [position, setPosition] = useState<Position>();
   // Keep track of a dummy state variable so that we can trigger a re-render
   // for every (debounced) resize event
   const [resizeCount, setResizeCount] = useState(0);
