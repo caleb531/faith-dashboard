@@ -2,7 +2,7 @@ import { WidgetState } from '../widget.d';
 
 export interface BibleVerseWidgetState extends WidgetState {
   verseQuery: string;
-  verseContent: string;
+  verseContent: string | null;
 }
 
 export interface BibleVerseMeta {

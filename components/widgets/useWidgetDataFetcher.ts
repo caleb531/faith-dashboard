@@ -53,7 +53,7 @@ export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInit
   // A boolean function that should return true if the result of
   // parseResponse() has content to display, or false if (in which case the No
   // Results message is triggered)
-  hasResults: <T>(data: T) => any,
+  hasResults: (data: JSONSerializable) => any,
   // If hasResults() returns true, this callback runs with the return value of
   // parseResponse() as its only argument; you will probably want to call a
   // dispatch() function or useState() setter within this callback to persist

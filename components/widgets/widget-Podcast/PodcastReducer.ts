@@ -72,7 +72,7 @@ export default function reducer(state: PodcastWidgetState, action: PodcastAction
       const nowPlayingEpisodeGuid = action.payload;
       return {
         ...state,
-        nowPlaying: state.podcastFeedData.item.find((episode) => episode.guid === nowPlayingEpisodeGuid),
+        nowPlaying: state.podcastFeedData?.item.find((episode) => episode.guid === nowPlayingEpisodeGuid),
         isPlaying: false,
         viewingNowPlaying: true
       };

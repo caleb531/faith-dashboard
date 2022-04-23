@@ -43,7 +43,7 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
     getApiUrl: (query: typeof podcastQuery) => {
       return `/api/widgets/podcast?q=${encodeURIComponent(query)}`;
     },
-    parseResponse: (data: PodcastSearchResponse) => data.results,
+    parseResponse: (response: PodcastSearchResponse) => response.results,
     hasResults: (results: typeof podcastList) => results && results.length,
     onSuccess: (results: typeof podcastList) => {
       // When the user searches with a new query, access is lost to the Now
@@ -54,7 +54,7 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
       audioElement.pause();
       setPodcastList(results);
     },
-    getNoResultsMessage: (results: typeof podcastFeedData) => 'No Podcasts Found',
+    getNoResultsMessage: (results: typeof podcastList) => 'No Podcasts Found',
     getErrorMessage: (error: Error) => 'Error Searching for Podcasts'
   });
 
@@ -63,15 +63,15 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
     dispatch,
     shouldFetchInitially: () => podcastFeedUrl && !podcastFeedData,
     fetchFrequency: 'daily',
-    requestQuery: podcastFeedUrl,
+    requestQuery: podcastFeedUrl || '',
     setRequestQuery: (newPodcastFeedUrl: typeof podcastFeedUrl) => {
       dispatch({ type: 'setPodcastFeedUrl', payload: newPodcastFeedUrl });
     },
     getApiUrl: (feedUrl: typeof podcastFeedUrl) => {
-      return `/api/widgets/podcast/feed?url=${encodeURIComponent(feedUrl)}`;
+      return `/api/widgets/podcast/feed?url=${encodeURIComponent(feedUrl || '')}`;
     },
     parseResponse: (data: {channel: PodcastFeedData}) => data.channel,
-    hasResults: (data: typeof podcastFeedData) => data.item && data.item.length,
+    hasResults: (data: typeof podcastFeedData) => data && data.item && data.item.length,
     onSuccess: (data: typeof podcastFeedData) => {
       dispatch({
         type: 'setPodcastFeedData',

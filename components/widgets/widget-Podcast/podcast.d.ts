@@ -2,10 +2,10 @@ import { WidgetState } from '../widget.d';
 
 export interface PodcastWidgetState extends WidgetState {
   podcastQuery: string;
-  podcastFeedUrl: string;
+  podcastFeedUrl: string | null;
   podcastImage: string;
-  podcastFeedData: PodcastFeedData;
-  nowPlaying: PodcastEpisode;
+  podcastFeedData: PodcastFeedData | null;
+  nowPlaying?: PodcastEpisode | null;
   viewingNowPlaying: boolean;
   isPlaying: boolean;
   listeningMetadata: PodcastListeningMetadata

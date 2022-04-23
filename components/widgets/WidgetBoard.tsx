@@ -9,7 +9,8 @@ import WidgetBoardColumn from './WidgetBoardColumn';
 
 // Convert the ID of a dropzone to a base-1 column index (e.g. "column-3" => 3)
 function getColumnFromDroppableId(droppableId: string): number {
-  return Number(droppableId.match(/\d$/)[0]);
+  const matches = droppableId.match(/\d$/);
+  return Number(matches && matches[0]);
 }
 
 type Props = { widgets: WidgetHead[] };
@@ -36,12 +37,12 @@ function WidgetBoard({ widgets }: Props) {
     // Do nothing if the destination is invalid (this happens if the user drags
     // a widget outside of one of the columns)
     if (!destination) {
-      return null;
+      return;
     }
 
     // Do nothing if the item is dragged to the same place
     if (source.droppableId === destination.droppableId && destination.index === source.index) {
-      return null;
+      return;
     }
 
     const sourceColumn = getColumnFromDroppableId(source.droppableId);
