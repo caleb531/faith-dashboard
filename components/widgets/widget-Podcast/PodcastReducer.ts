@@ -1,6 +1,8 @@
+import { WidgetAction } from '../useWidgetShell';
 import { PodcastFeedData, PodcastWidgetState } from './podcast.d';
 
 export type PodcastAction =
+  WidgetAction |
   { type: 'setPodcastFeedData', payload: PodcastFeedData | null } |
   { type: 'setPodcastQuery', payload: string } |
   { type: 'setPodcastFeedUrl', payload: string | null } |

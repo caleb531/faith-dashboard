@@ -1,6 +1,8 @@
+import { WidgetAction } from '../useWidgetShell';
 import { BibleVerseWidgetState } from './bibleVerse.d';
 
 export type BibleVerseAction =
+  WidgetAction |
   { type: 'setVerseContent', payload: string | null } |
   { type: 'setVerseQuery', payload: string };
 

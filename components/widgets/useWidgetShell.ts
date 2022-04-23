@@ -72,7 +72,7 @@ export default function useWidgetShell<Action>(
         // omit it, simply pass `null` as the first argument to
         // useWidgetShell()
         if (subReducer) {
-          return subReducer(state, action as Action);
+          return subReducer(state, action);
         } else {
           return state;
         }
