@@ -1,4 +1,3 @@
-import { WidgetAction } from '../useWidgetShell';
 import { BibleVerseWidgetState } from './bibleVerse.d';
 
 export type BibleVerseAction =
@@ -7,7 +6,7 @@ export type BibleVerseAction =
 
 export default function reducer(
   state: BibleVerseWidgetState,
-  action: BibleVerseAction | WidgetAction
+  action: BibleVerseAction
 ): BibleVerseWidgetState {
   switch (action.type) {
     case 'setVerseContent':
