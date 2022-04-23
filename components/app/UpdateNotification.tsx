@@ -38,14 +38,14 @@ export function update(wb: Workbox, availableUpdate: WaitingEvent): void {
   // event listener above.
   // Note: for this to work, you have to add a message
   // listener in your service worker. See below.
-  if (availableUpdate) {
+  if (availableUpdate && availableUpdate.sw) {
     messageSW(availableUpdate.sw, { type: 'SKIP_WAITING' });
   }
 }
 
 function UpdateNotification() {
 
-  const [availableUpdate, setAvailableUpdate] = useState<WaitingEvent>(null);
+  const [availableUpdate, setAvailableUpdate] = useState<WaitingEvent>();
   const [isUpdating, setIsUpdating] = useState(false);
   const [wb] = useState(() => new Workbox('service-worker.js'));
 
@@ -57,7 +57,7 @@ function UpdateNotification() {
   // Make sure the service worker updates asynchronously so that we can show a
   // loading indicator in the UI
   useEffect(() => {
-    if (isUpdating) {
+    if (isUpdating && availableUpdate) {
       update(wb, availableUpdate);
     }
   }, [wb, isUpdating, availableUpdate]);
