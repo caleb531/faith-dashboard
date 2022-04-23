@@ -1,5 +1,4 @@
 import { Dispatch, useReducer } from 'react';
-import { StateAction } from '../global.d';
 import useLocalStorage from '../useLocalStorage';
 import { WidgetHead, WidgetState } from '../widgets/widget.d';
 import widgetTypes from '../widgets/widgetTypes';
@@ -37,7 +36,7 @@ export default function useWidgetShell<Action>(
   widgetHead: WidgetHead
 ): [
   WidgetState,
-  Dispatch<StateAction>
+  Dispatch<Action | WidgetAction>
 ] {
 
   // The reducer below contains general widget actions, and the widget

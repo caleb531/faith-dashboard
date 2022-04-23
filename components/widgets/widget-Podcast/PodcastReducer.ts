@@ -1,9 +1,9 @@
 import { PodcastFeedData, PodcastWidgetState } from './podcast.d';
 
 export type PodcastAction =
-  { type: 'setPodcastFeedData', payload: PodcastFeedData } |
+  { type: 'setPodcastFeedData', payload: PodcastFeedData | null } |
   { type: 'setPodcastQuery', payload: string } |
-  { type: 'setPodcastFeedUrl', payload: string } |
+  { type: 'setPodcastFeedUrl', payload: string | null } |
   { type: 'setPodcastImage', payload: string } |
   { type: 'setNowPlaying', payload: string } |
   { type: 'setIsPlaying', payload: boolean } |
@@ -19,9 +19,9 @@ export default function reducer(
       const podcastFeedData = action.payload;
       return {
         ...state,
-        podcastFeedData: {
+        podcastFeedData: podcastFeedData ? {
           ...podcastFeedData,
-          item: podcastFeedData.item
+          item: podcastFeedData?.item
             // Some podcasts have bad data episode details without any media
             // information attached to them; filter these out
             .filter((episode) => episode.enclosure)
@@ -42,8 +42,8 @@ export default function reducer(
                   (episode.enclosure.url || episode.title) :
                   episode.guid
               };
-            })
-        }
+            }) || []
+        } : null
       };
     case 'setPodcastQuery':
       const podcastQuery = action.payload;
