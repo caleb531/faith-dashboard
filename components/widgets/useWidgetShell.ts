@@ -32,7 +32,13 @@ export type WidgetAction =
 // operations, like exposing global actions available to all widgets, and
 // attaching listeners that automatically persist the widget whenever its state
 // changes
-export default function useWidgetShell<Action>(subReducer: (state: WidgetState, action: Action) => WidgetState, widgetHead: WidgetHead): [WidgetState, Dispatch<StateAction>] {
+export default function useWidgetShell<Action>(
+  subReducer: (state: WidgetState, action: Action) => WidgetState,
+  widgetHead: WidgetHead
+): [
+  WidgetState,
+  Dispatch<StateAction>
+] {
 
   // The reducer below contains general widget actions, and the widget
   // type-specific "sub-reducer" supplied above is merged into this larger

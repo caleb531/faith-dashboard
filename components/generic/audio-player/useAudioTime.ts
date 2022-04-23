@@ -4,7 +4,12 @@ import useEventListener from '../../useEventListener';
 // The useAudioTime() hook exposes a setter that allows you to synchronize the
 // current time of the given Audio element to whatever internal state you so
 // desire
-function useAudioTime(audioElement: HTMLAudioElement, audioUrl: string, currentTime: number, setCurrentTime: (newCurrentTime: number) => void): void {
+function useAudioTime(
+  audioElement: HTMLAudioElement,
+  audioUrl: string,
+  currentTime: number,
+  setCurrentTime: (newCurrentTime: number) => void
+): void {
 
   // Store the latest value from currentTime in a ref so that
   // hasCurrentTimeChanged() always has access to the latest value of

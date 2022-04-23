@@ -21,7 +21,20 @@ function isDateToday(dateTime: number | undefined): boolean {
 // arbitrary data from an API endpoint given some user-supplied request query
 // that's part of your widget; see the built-in widgets like BibleVerse or
 // Podcast for examples on how this hook is used
-export default function useWidgetDataFetcher({ widget, dispatch, shouldFetchInitially, fetchFrequency, requestQuery, setRequestQuery, getApiUrl, parseResponse, hasResults, onSuccess, getNoResultsMessage, getErrorMessage }: {
+export default function useWidgetDataFetcher({
+  widget,
+  dispatch,
+  shouldFetchInitially,
+  fetchFrequency,
+  requestQuery,
+  setRequestQuery,
+  getApiUrl,
+  parseResponse,
+  hasResults,
+  onSuccess,
+  getNoResultsMessage,
+  getErrorMessage
+}: {
   // The current state of the widget from the useWidgetShell() call
   widget: WidgetState,
   // The dispatch function from the useWidgetShell() call

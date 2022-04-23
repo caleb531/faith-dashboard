@@ -3,7 +3,10 @@ import { WidgetState } from './widget.d';
 
 // The useWidgetCleanupOnRemove() hook runs some arbitrary cleanup code
 // whenever the user removes a widget from their dashboard
-export default function useWidgetCleanupOnRemove(widgetToRemove: WidgetState, onRemove: () => void): void {
+export default function useWidgetCleanupOnRemove(
+  widgetToRemove: WidgetState,
+  onRemove: () => void
+): void {
 
   // Update widget list when changes are made
   useEffect(() => {

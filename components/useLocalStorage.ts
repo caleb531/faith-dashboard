@@ -12,7 +12,10 @@ function isLocalStorageSupported(): boolean {
 // all JSON serialization/deserialization on your behalf, so you can pass it an
 // object initially, and expect to receive that object back from the setter
 // function, without any need to call JSON.parse()
-export default function useLocalStorage<T>(key: string, defaultValue: T): [
+export default function useLocalStorage<T>(
+  key: string,
+  defaultValue: T
+): [
   () => T,
   (newValue: T) => void,
   () => void

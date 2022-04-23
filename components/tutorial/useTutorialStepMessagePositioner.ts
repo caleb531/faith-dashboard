@@ -63,7 +63,10 @@ function recalculatePosition(
 
 type Params = { currentStep: TutorialStep, ref: RefObject<HTMLElement> }
 
-function useTutorialStepMessagePositioner({ currentStep, ref }: Params): Position | undefined {
+function useTutorialStepMessagePositioner({
+  currentStep,
+  ref
+}: Params): Position | undefined {
 
   const [position, setPosition] = useState<Position>();
   // Keep track of a dummy state variable so that we can trigger a re-render
