@@ -4,8 +4,6 @@ import { WidgetHead } from '../../widgets/widget.d';
 export function createWidget(props: object): WidgetHead {
   return {
       id: uuidv4(),
-      type: 'BibleVerse',
-      column: 1,
-    ...props
+    ...props as Omit<WidgetHead, 'id'>
   };
 }
