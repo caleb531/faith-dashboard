@@ -29,3 +29,7 @@ $theme-photos: (
 .theme-mountain {
   background-position: center center;
 }
+.theme-forest .app-header-title {
+  mix-blend-mode: normal;
+  color: $dark-30;
+}
