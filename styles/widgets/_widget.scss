@@ -15,7 +15,7 @@
   min-width: $widget-min-width;
   min-height: $widget-min-height;
   width: 100%;
-  margin: 10px 0;
+  margin: $widget-margin-y $widget-margin-x;
   border-radius: 10px;
   background-color: $dark-30;
   @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
