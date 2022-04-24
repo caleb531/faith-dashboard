@@ -1,3 +1,7 @@
+// The below transition duration MUST match the setTimeout() value in the
+// WidgetShell component
+$widget-transition-duration: 350ms;
+
 .widget {
   display: inline-block;
   position: relative;
@@ -11,11 +15,6 @@
     background-color: $dark-15;
     backdrop-filter: blur(30px);
   }
-  transition-property: opacity, margin-bottom;
-  // The below transition duration MUST match the setTimeout() value in the
-  // WidgetShell component
-  transition-duration: 350ms;
-  transition-timing-function: ease-in-out;
   box-shadow: 0 3px 5px $dark-10;
   color: $light-100;
   a {
@@ -26,21 +25,32 @@
     resize: none !important;
     height: auto !important;
   }
+  // Transition widget when either adding or removing it (in order for the
+  // transitions to behave properly, the transitions can only be enabled when
+  // we are actually ready to transition)
+  &.adding-widget,
+  &.removing-widget {
+    transition-property: opacity, margin-bottom;
+    transition-duration: $widget-transition-duration;
+    transition-timing-function: ease-in-out;
+  }
   &.adding-widget {
-    // In addition to the above (static) style declarations, additional inline
-    // styles are added to the widget when it's being added to achieve the
-    // desired effect (i.e. the widget slides into view, while the widget below
-    // moves out of the way to make room); in order to override these inline
-    // styles, the !important keyword must be used
-    opacity: 1 !important;
     margin-bottom: $widget-margin-y !important;
+    // In addition to the above style declarations, additional inline styles
+    // are added to the widget when it's being added to achieve the desired
+    // effect (i.e. the widget slides into view, while the widget below moves
+    // out of the way to make room); in order to override these inline styles,
+    // the !important keyword must be used within the @keyframes definition
   }
   &.removing-widget {
+    transition-property: opacity, margin-bottom;
+    transition-duration: $widget-transition-duration;
+    transition-timing-function: ease-in-out;
     opacity: 0;
-    // In addition to the above (static) style declarations, additional inline
-    // styles are added to the widget when it's being removed to achieve the
-    // desired effect (i.e. the widget slides up and disappears, while the
-    // widget below moves up to take its place)
+    // In addition to the above style declarations, additional inline styles
+    // are added to the widget when it's being removed to achieve the desired
+    // effect (i.e. the widget slides up and disappears, while the widget below
+    // moves up to take its place)
   }
 }
 .widget-contents {

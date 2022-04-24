@@ -33,7 +33,7 @@ function useWidgetTransitioner({
   const transitionWidgetAddition = useCallback((widget: WidgetState, widgetElement: HTMLElement) => {
     const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
     widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       widgetElement.classList.add('adding-widget');
       setTimeout(() => {
         widgetElement.style.marginBottom = '';
