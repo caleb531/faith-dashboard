@@ -1,7 +1,6 @@
-import { sortBy } from 'lodash-es';
 import { AppThemeListItem } from './app.d';
 
-const photoThemeList: AppThemeListItem[] = sortBy([
+const photoThemeList: AppThemeListItem[] = [
   {
     label: 'Word',
     value: 'word'
@@ -30,6 +29,6 @@ const photoThemeList: AppThemeListItem[] = sortBy([
     label: 'Pasture',
     value: 'pasture'
   }
-]);
+];
 
 export default photoThemeList;
