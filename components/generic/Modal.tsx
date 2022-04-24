@@ -14,7 +14,7 @@ function Modal({
     <div className="modal-scroll-container">
       <div className="modal-overlay" onClick={onCloseModal}></div>
       <aside className="modal" role="dialog">
-        <button type="button" className="modal-close-control" onClick={() => onCloseModal()}>
+        <button type="button" className="modal-close-control" onClick={onCloseModal}>
           <img
             className="modal-close-control-icon"
             src="icons/close-dark.svg"
