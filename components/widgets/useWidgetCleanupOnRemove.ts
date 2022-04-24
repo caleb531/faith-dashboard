@@ -8,7 +8,7 @@ export default function useWidgetCleanupOnRemove(
   onRemove: () => void
 ): void {
 
-  // Update widget list when changes are made
+  // Run arbitrary cleanup code when widget is removed from dashboard
   useEffect(() => {
     // The widget is unmounted when the widget is removed, but the widget can
     // also be un-mounted (then subsequently re-mounted) when the widget is

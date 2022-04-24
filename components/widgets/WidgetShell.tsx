@@ -8,6 +8,11 @@ import useTutorialStep from '../tutorial/useTutorialStep';
 import { WidgetAction } from './useWidgetShell';
 import { WidgetState } from './widget.d';
 
+// The duration (in ms) of a widget transitioning onto / off of the dashboard
+// (i.e as the result of adding or removing a widget); this value MUST match
+// the transition duration in _widgets.scss
+const widgetTransitionDuration = 500;
+
 type Props = {
   widget: WidgetState,
   dispatch: Dispatch<WidgetAction>,
@@ -44,7 +49,11 @@ function WidgetShell({
   // next render (once that flag is seen)
   useEffect(() => {
     if (widget.isMarkedForRemoval) {
-        dispatchToApp({ type: 'removeWidget', payload: widget });
+        // Wait for the widget to transition out of view before removing the
+        // widget from the array (which will cause an immediate re-render)
+        setTimeout(() => {
+          dispatchToApp({ type: 'removeWidget', payload: widget });
+        }, widgetTransitionDuration);
     }
   }, [widget, widget.isMarkedForRemoval, dispatchToApp]);
 
@@ -58,11 +67,26 @@ function WidgetShell({
     }
   }
 
+  // Handle widget transitions (such as when adding or removing a widget)
+  function handleWidgetTransition(widgetContentsElement: HTMLDivElement) {
+    if (!widgetContentsElement) {
+      return;
+    }
+    if (widget.isMarkedForRemoval && widgetContentsElement.parentElement) {
+      const widgetElement = widgetContentsElement.parentElement;
+      const widgetSpaceVertical = widgetElement.offsetHeight + parseFloat(window.getComputedStyle(widgetElement)?.marginBottom);
+      widgetElement.style.marginBottom = `-${widgetSpaceVertical}px`;
+    }
+  }
+
   return (
     <article className={classNames(
         'widget',
         `widget-type-${widget.type}`,
-        { 'widget-settings-open': widget.isSettingsOpen }
+        {
+          'widget-settings-open': widget.isSettingsOpen,
+          'removing-widget': widget.isMarkedForRemoval
+        }
       )}
       ref={provided.innerRef}
       {...provided.draggableProps}
@@ -100,9 +124,15 @@ function WidgetShell({
         <div className="loading-indicator-blocking-container">
           <LoadingIndicator />
         </div>
-      ) : <div className="widget-contents" style={{ height: widget.height }} onMouseUp={(event) => handleResize(event)}>
-        {children}
-      </div>}
+      ) : (
+        <div
+          className="widget-contents"
+          style={{ height: widget.height }}
+          onMouseUp={(event) => handleResize(event)}
+          ref={handleWidgetTransition}>
+          {children}
+        </div>
+      )}
     </article>
   );
 

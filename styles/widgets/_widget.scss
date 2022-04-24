@@ -11,6 +11,11 @@
     background-color: $dark-15;
     backdrop-filter: blur(30px);
   }
+  transition-property: opacity, margin-bottom;
+  // The below transition duration MUST match the setTimeout() value in the
+  // WidgetShell component
+  transition-duration: 500ms;
+  transition-timing-function: ease-in-out;
   box-shadow: 0 3px 5px $dark-10;
   color: $light-100;
   a {
@@ -20,6 +25,13 @@
   &.widget-settings-open .widget-contents {
     resize: none !important;
     height: auto !important;
+  }
+  &.removing-widget {
+    opacity: 0;
+    // In addition to the above (static) style declarations, additional inline
+    // styles are added to the widget when it's being removed to achieve the
+    // desired effect (i.e. the widget slides up and disappears, while the
+    // widget below moves up to take its place)
   }
 }
 .widget-contents {
