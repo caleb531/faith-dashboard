@@ -11,7 +11,7 @@ import { WidgetState } from './widget.d';
 // The duration (in ms) of a widget transitioning onto / off of the dashboard
 // (i.e as the result of adding or removing a widget); this value MUST match
 // the transition duration in _widgets.scss
-const widgetTransitionDuration = 500;
+const widgetTransitionDuration = 350;
 
 type Props = {
   widget: WidgetState,

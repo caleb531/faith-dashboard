@@ -14,7 +14,7 @@
   transition-property: opacity, margin-bottom;
   // The below transition duration MUST match the setTimeout() value in the
   // WidgetShell component
-  transition-duration: 500ms;
+  transition-duration: 350ms;
   transition-timing-function: ease-in-out;
   box-shadow: 0 3px 5px $dark-10;
   color: $light-100;
