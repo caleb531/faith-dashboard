@@ -67,7 +67,6 @@ function useWidgetTransitioner({
       return;
     }
     if (widget.isAdding) {
-      // TODO: finish logic to transition widget when adding to dashboard
       transitionWidgetAddition(widget, widgetElement);
     }
     if (widget.isRemoving) {
