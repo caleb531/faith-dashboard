@@ -6,12 +6,8 @@ import LoadingIndicator from '../generic/LoadingIndicator';
 import TutorialStepMessage from '../tutorial/TutorialStepMessage';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import { WidgetAction } from './useWidgetShell';
+import useWidgetTransitioner from './useWidgetTransitioner';
 import { WidgetState } from './widget.d';
-
-// The duration (in ms) of a widget transitioning onto / off of the dashboard
-// (i.e as the result of adding or removing a widget); this value MUST match
-// the transition duration in _widgets.scss
-const widgetTransitionDuration = 350;
 
 type Props = {
   widget: WidgetState,
@@ -52,48 +48,15 @@ function WidgetShell({
     }
   }
 
-  // Retrieve the verical space (in pixels) occupied by the widget onscreen
-  function getWidgetVerticalSpace(widgetElement: HTMLElement): number {
-    return (
-      widgetElement.offsetHeight
-      +
-      parseFloat(window.getComputedStyle(widgetElement)?.marginBottom)
-    );
-  }
-
-  const transitionWidgetAddition = useCallback((widget: WidgetState, widgetElement: HTMLElement) => {
-    const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
-    widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
-    widgetElement.classList.add('adding-widget');
-  }, []);
-
-  const transitionWidgetRemoval = useCallback((widget: WidgetState, widgetElement: HTMLElement) => {
-    const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
-    widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
-    widgetElement.classList.add('removing-widget');
-    // Wait for the widget to transition out of view before removing the
-    // widget from the array (which will cause an immediate re-render)
-    setTimeout(() => {
+  const { handleWidgetTransition } = useWidgetTransitioner({
+    widget,
+    onAddTransitionEnd: useCallback((widget) => {
+      dispatch({ type: 'markWidgetAsAdded' });
+    }, [dispatch]),
+    onRemoveTransitionEnd: useCallback((widget) => {
       dispatchToApp({ type: 'removeWidget', payload: widget });
-    }, widgetTransitionDuration);
-  }, [dispatchToApp]);
-
-  // Handle widget transitions (such as when adding or removing a widget)
-  const handleWidgetTransition = useCallback((widgetContentsElement: HTMLElement | null) => {
-    if (!widgetContentsElement) {
-      return;
-    }
-    if (!widgetContentsElement.parentElement) {
-      return;
-    }
-    const widgetElement = widgetContentsElement.parentElement;
-    if (widget.isAdding) {
-      // TODO: finish logic to transition widget when adding to dashboard
-      transitionWidgetAddition(widget, widgetElement);
-    } else if (widget.isRemoving) {
-      transitionWidgetRemoval(widget, widgetElement);
-    }
-  }, [widget, transitionWidgetAddition, transitionWidgetRemoval]);
+    }, [dispatchToApp])
+  });
 
   return (
     <article className={classNames(

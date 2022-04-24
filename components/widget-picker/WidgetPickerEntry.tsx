@@ -22,7 +22,8 @@ function WidgetPickerEntry({
       payload: {
         id: uuidv4(),
         type: widgetType.type,
-        column: 1
+        column: 1,
+        isAdding: true
       }
     });
     // Call user-defined callback passed to component

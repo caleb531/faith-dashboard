@@ -31,6 +31,9 @@ export interface WidgetHead {
   // The base-1 index of the dashboard column where the widget will display in
   // the UI
   column: number;
+  // A flag that is set when the widget is being added (allowing us to
+  // transition the widget into place on the dashboard)
+  isAdding?: boolean;
 }
 
 // The schema for a widget object
@@ -50,9 +53,6 @@ export interface WidgetState extends WidgetHead {
   // A timestamp representing the date/time the application last fetched data
   // for this widget
   lastFetchDateTime?: number;
-  // A flag that is set when the widget is being added (allowing us to
-  // transition the widget into place on the dashboard)
-  isAdding?: boolean;
   // A flag that is set when the widget is being removed (allowing us to
   // transition the widget off the dashboard; it also allows us to run some
   // arbitrary cleanup code, depending on the widget type)

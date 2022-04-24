@@ -1,3 +1,4 @@
+import { omit } from 'lodash-es';
 import { Dispatch, useReducer } from 'react';
 import useLocalStorage from '../useLocalStorage';
 import { WidgetHead, WidgetState } from '../widgets/widget.d';
@@ -24,6 +25,7 @@ export type WidgetAction =
   { type: 'showLoading' } |
   { type: 'showContent' } |
   { type: 'setFetchError', payload: string } |
+  { type: 'markWidgetAsAdded' } |
   { type: 'markWidgetForRemoval' };
 
 // The useWidgetShell() hook which must be called in any component which
@@ -65,6 +67,8 @@ export default function useWidgetShell<Action>(
         };
       case 'setFetchError':
         return { ...state, isLoading: false, fetchError: action.payload };
+      case 'markWidgetAsAdded':
+          return omit(state, ['isAdding']);
       case 'markWidgetForRemoval':
           return { ...state, isRemoving: true };
       default:
