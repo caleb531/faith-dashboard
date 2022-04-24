@@ -142,7 +142,7 @@ $widget-transition-duration: 250ms;
 }
 
 .widget-settings-open:hover .widget-settings-toggle {
-  opacity: 1;
+  opacity: 1 !important;
   visibility: visible;
 }
 
