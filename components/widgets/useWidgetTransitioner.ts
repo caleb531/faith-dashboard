@@ -32,10 +32,12 @@ function useWidgetTransitioner({
 
   const transitionWidgetAddition = useCallback((widget: WidgetState, widgetElement: HTMLElement) => {
     const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
+    widgetElement.style.opacity = '0';
     widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
     requestAnimationFrame(() => {
       widgetElement.classList.add('adding-widget');
       setTimeout(() => {
+        widgetElement.style.opacity = '';
         widgetElement.style.marginBottom = '';
         widgetElement.classList.remove('adding-widget');
         onAddTransitionEnd(widget);

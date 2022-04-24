@@ -35,6 +35,7 @@ $widget-transition-duration: 250ms;
     transition-timing-function: ease-in-out;
   }
   &.adding-widget {
+    opacity: 1 !important;
     margin-bottom: $widget-margin-y !important;
     // In addition to the above style declarations, additional inline styles
     // are added to the widget when it's being added to achieve the desired
