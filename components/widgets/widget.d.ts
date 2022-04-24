@@ -50,8 +50,12 @@ export interface WidgetState extends WidgetHead {
   // A timestamp representing the date/time the application last fetched data
   // for this widget
   lastFetchDateTime?: number;
-  // A flag that is set when the widget is marked for removal (allowing us to
-  // run some cleanup code before the widget is removed)
+  // A flag that is set when the widget is being added (allowing us to
+  // transition the widget into place on the dashboard)
+  isAdding?: boolean;
+  // A flag that is set when the widget is being removed (allowing us to
+  // transition the widget off the dashboard; it also allows us to run some
+  // arbitrary cleanup code, depending on the widget type)
   isRemoving?: boolean;
 }
 

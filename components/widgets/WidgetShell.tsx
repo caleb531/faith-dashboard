@@ -67,15 +67,33 @@ function WidgetShell({
     }
   }
 
+  // Retrieve the verical space (in pixels) occupied by the widget onscreen
+  function getWidgetVerticalSpace(widgetElement: HTMLElement): number {
+    return (
+      widgetElement.offsetHeight
+      +
+      parseFloat(window.getComputedStyle(widgetElement)?.marginBottom)
+    );
+  }
+
   // Handle widget transitions (such as when adding or removing a widget)
   function handleWidgetTransition(widgetContentsElement: HTMLDivElement) {
     if (!widgetContentsElement) {
       return;
     }
-    if (widget.isRemoving && widgetContentsElement.parentElement) {
-      const widgetElement = widgetContentsElement.parentElement;
-      const widgetSpaceVertical = widgetElement.offsetHeight + parseFloat(window.getComputedStyle(widgetElement)?.marginBottom);
-      widgetElement.style.marginBottom = `-${widgetSpaceVertical}px`;
+    if (!widgetContentsElement.parentElement) {
+      return;
+    }
+    const widgetElement = widgetContentsElement.parentElement;
+    if (widget.isAdding) {
+      // TODO: finish logic to transition widget when adding to dashboard
+      const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
+      widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
+      widgetElement.classList.add('adding-widget');
+    } else if (widget.isRemoving) {
+      const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
+      widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
+      widgetElement.classList.add('removing-widget');
     }
   }
 
@@ -84,8 +102,7 @@ function WidgetShell({
         'widget',
         `widget-type-${widget.type}`,
         {
-          'widget-settings-open': widget.isSettingsOpen,
-          'removing-widget': widget.isRemoving
+          'widget-settings-open': widget.isSettingsOpen
         }
       )}
       ref={provided.innerRef}
