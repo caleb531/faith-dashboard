@@ -11,8 +11,8 @@ const photoThemeList: AppThemeListItem[] = sortBy([
     value: 'worship'
   },
   {
-    label: 'Pasture',
-    value: 'pasture'
+    label: 'Forest',
+    value: 'forest'
   },
   {
     label: 'Mountains',
@@ -27,8 +27,8 @@ const photoThemeList: AppThemeListItem[] = sortBy([
     value: 'stars'
   },
   {
-    label: 'Forest',
-    value: 'forest'
+    label: 'Pasture',
+    value: 'pasture'
   }
 ]);
 
