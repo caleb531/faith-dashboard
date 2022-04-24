@@ -25,6 +25,10 @@ const photoThemeList: AppThemeListItem[] = sortBy([
   {
     label: 'Stars',
     value: 'stars'
+  },
+  {
+    label: 'Forest',
+    value: 'forest'
   }
 ]);
 
