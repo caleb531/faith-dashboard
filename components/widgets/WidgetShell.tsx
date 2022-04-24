@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { Dispatch, useContext, useEffect } from 'react';
+import React, { Dispatch, useCallback, useContext } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import AppContext from '../app/AppContext';
 import LoadingIndicator from '../generic/LoadingIndicator';
@@ -42,21 +42,6 @@ function WidgetShell({
     }
   }
 
-  // Unfortunately, if we try to call dispatchToApp() immediately after calling
-  // dispatch() within the same handler, the dispatch() function will never
-  // run; therefore, we must dispatch() the markWidgetForRemoval action first
-  // to set the isRemoving flag, then actually remove the widget on the next
-  // render (once that flag is seen)
-  useEffect(() => {
-    if (widget.isRemoving) {
-        // Wait for the widget to transition out of view before removing the
-        // widget from the array (which will cause an immediate re-render)
-        setTimeout(() => {
-          dispatchToApp({ type: 'removeWidget', payload: widget });
-        }, widgetTransitionDuration);
-    }
-  }, [widget, widget.isRemoving, dispatchToApp]);
-
   function handleResize(event: React.MouseEvent<HTMLElement>) {
     const newHeight = parseFloat(event.currentTarget.style.height);
     // Only trigger the resizeWidget action when the height actually changes
@@ -76,8 +61,25 @@ function WidgetShell({
     );
   }
 
+  const transitionWidgetAddition = useCallback((widget: WidgetState, widgetElement: HTMLElement) => {
+    const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
+    widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
+    widgetElement.classList.add('adding-widget');
+  }, []);
+
+  const transitionWidgetRemoval = useCallback((widget: WidgetState, widgetElement: HTMLElement) => {
+    const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
+    widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
+    widgetElement.classList.add('removing-widget');
+    // Wait for the widget to transition out of view before removing the
+    // widget from the array (which will cause an immediate re-render)
+    setTimeout(() => {
+      dispatchToApp({ type: 'removeWidget', payload: widget });
+    }, widgetTransitionDuration);
+  }, [dispatchToApp]);
+
   // Handle widget transitions (such as when adding or removing a widget)
-  function handleWidgetTransition(widgetContentsElement: HTMLDivElement) {
+  const handleWidgetTransition = useCallback((widgetContentsElement: HTMLElement | null) => {
     if (!widgetContentsElement) {
       return;
     }
@@ -87,15 +89,11 @@ function WidgetShell({
     const widgetElement = widgetContentsElement.parentElement;
     if (widget.isAdding) {
       // TODO: finish logic to transition widget when adding to dashboard
-      const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
-      widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
-      widgetElement.classList.add('adding-widget');
+      transitionWidgetAddition(widget, widgetElement);
     } else if (widget.isRemoving) {
-      const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
-      widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
-      widgetElement.classList.add('removing-widget');
+      transitionWidgetRemoval(widget, widgetElement);
     }
-  }
+  }, [widget, transitionWidgetAddition, transitionWidgetRemoval]);
 
   return (
     <article className={classNames(
