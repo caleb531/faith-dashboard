@@ -13,16 +13,16 @@ export default function useWidgetUpdater(
   // Update widget when changes are made
   useEffect(() => {
     // The saveWidget() function is guaranteed to be stable per the
-    if (!widget.isMarkedForRemoval) {
+    if (!widget.isRemoving) {
       saveWidget(widget);
     }
   }, [widget, saveWidget]);
 
   // Purge widget data from localStorage when the widget is being removed
   useEffect(() => {
-    if (widget.isMarkedForRemoval) {
+    if (widget.isRemoving) {
       removeWidget();
     }
-  }, [widget.isMarkedForRemoval, removeWidget]);
+  }, [widget.isRemoving, removeWidget]);
 
 }

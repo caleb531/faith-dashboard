@@ -15,9 +15,9 @@ export default function useWidgetCleanupOnRemove(
     // moved to a different column; therefore, when the user clicks the Remove
     // Widget control in the UI, we mark the widget for removal so that we know
     // when to actually run the below cleanup code
-    if (widgetToRemove.isMarkedForRemoval) {
+    if (widgetToRemove.isRemoving) {
       onRemove();
     }
-  }, [onRemove, widgetToRemove.isMarkedForRemoval]);
+  }, [onRemove, widgetToRemove.isRemoving]);
 
 }

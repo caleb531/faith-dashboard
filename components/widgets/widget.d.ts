@@ -52,7 +52,7 @@ export interface WidgetState extends WidgetHead {
   lastFetchDateTime?: number;
   // A flag that is set when the widget is marked for removal (allowing us to
   // run some cleanup code before the widget is removed)
-  isMarkedForRemoval?: boolean;
+  isRemoving?: boolean;
 }
 
 // The function parameters to a widget component, useful when creating a new

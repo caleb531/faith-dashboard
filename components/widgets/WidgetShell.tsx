@@ -45,17 +45,17 @@ function WidgetShell({
   // Unfortunately, if we try to call dispatchToApp() immediately after calling
   // dispatch() within the same handler, the dispatch() function will never
   // run; therefore, we must dispatch() the markWidgetForRemoval action first
-  // to set the isMarkedForRemoval flag, then actually remove the widget on the
-  // next render (once that flag is seen)
+  // to set the isRemoving flag, then actually remove the widget on the next
+  // render (once that flag is seen)
   useEffect(() => {
-    if (widget.isMarkedForRemoval) {
+    if (widget.isRemoving) {
         // Wait for the widget to transition out of view before removing the
         // widget from the array (which will cause an immediate re-render)
         setTimeout(() => {
           dispatchToApp({ type: 'removeWidget', payload: widget });
         }, widgetTransitionDuration);
     }
-  }, [widget, widget.isMarkedForRemoval, dispatchToApp]);
+  }, [widget, widget.isRemoving, dispatchToApp]);
 
   function handleResize(event: React.MouseEvent<HTMLElement>) {
     const newHeight = parseFloat(event.currentTarget.style.height);
@@ -72,7 +72,7 @@ function WidgetShell({
     if (!widgetContentsElement) {
       return;
     }
-    if (widget.isMarkedForRemoval && widgetContentsElement.parentElement) {
+    if (widget.isRemoving && widgetContentsElement.parentElement) {
       const widgetElement = widgetContentsElement.parentElement;
       const widgetSpaceVertical = widgetElement.offsetHeight + parseFloat(window.getComputedStyle(widgetElement)?.marginBottom);
       widgetElement.style.marginBottom = `-${widgetSpaceVertical}px`;
@@ -85,7 +85,7 @@ function WidgetShell({
         `widget-type-${widget.type}`,
         {
           'widget-settings-open': widget.isSettingsOpen,
-          'removing-widget': widget.isMarkedForRemoval
+          'removing-widget': widget.isRemoving
         }
       )}
       ref={provided.innerRef}

@@ -66,7 +66,7 @@ export default function useWidgetShell<Action>(
       case 'setFetchError':
         return { ...state, isLoading: false, fetchError: action.payload };
       case 'markWidgetForRemoval':
-          return { ...state, isMarkedForRemoval: true };
+          return { ...state, isRemoving: true };
       default:
         // As mentioned above, the sub-reducer is optional, and if you wish to
         // omit it, simply pass `null` as the first argument to
