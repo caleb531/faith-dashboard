@@ -8,7 +8,7 @@ import '../styles/landing-page.scss';
 function AppWrapper({ Component, pageProps }: AppProps) {
   // Initialize Google Tag Manager when page is mounted
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
       TagManager.initialize({ gtmId: 'GTM-M3QKM2Z' });
     }
   }, []);
