@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppTheme } from './app.d';
+import AppHeaderAccountMenu from './AppHeaderAccountMenu';
 import AppHeaderAddWidgetButton from './AppHeaderAddWidgetButton';
 import AppHeaderThemeSwitcher from './AppHeaderThemeSwitcher';
 
@@ -17,6 +18,7 @@ function AppHeader({
       <div className="app-header-controls">
         <AppHeaderAddWidgetButton />
         <AppHeaderThemeSwitcher currentTheme={currentTheme} />
+        <AppHeaderAccountMenu />
       </div>
     </header>
   );

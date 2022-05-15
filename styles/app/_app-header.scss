@@ -29,6 +29,7 @@
   display: flex;
   align-items: stretch;
   position: relative;
+  margin-right: 15px;
 }
 .app-header-theme-switcher-button {
   -webkit-appearance: none;
@@ -60,4 +61,13 @@
   @include layout(tablet) {
     display: inline;
   }
+}
+
+.app-header-account-menu-button-icon {
+  $icon-size: 18px;
+  width: $icon-size;
+  height: $icon-size;
+}
+.app-header-account-menu-button {
+  padding: 3px 12px;
 }
