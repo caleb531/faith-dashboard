@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Modal from '../generic/Modal';
-import { supabase } from '../supabaseClient';
 
 type Props = {
   onCloseSignInModal: () => void
@@ -18,7 +17,8 @@ function AppHeaderSignInModal({
     event.preventDefault();
     const formElement = event.currentTarget as HTMLFormElement;
     const emailInput = formElement.elements.namedItem('email') as HTMLInputElement;
-    supabase.auth.signIn({ email: emailInput.value });
+    // TODO: re-enable this after testing
+    // supabase.auth.signIn({ email: emailInput.value });
     setIsFormSubmitted(true);
   }
   return (
