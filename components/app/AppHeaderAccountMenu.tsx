@@ -1,22 +1,24 @@
 import React, { useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 
+async function signIn() {
+  const { user, session, error } = await supabase.auth.signIn({
+    email: 'caleb@calebevans.me'
+  });
+  console.log('user', user);
+  console.log('session', session);
+  console.log('error', error);
+}
+
+async function signOut() {
+  const { error } = await supabase.auth.signOut();
+  console.log('error', error);
+}
+
 function AppHeaderAccountMenu() {
   useEffect(() => {
     console.log('user', supabase.auth.user());
   }, []);
-  async function signIn() {
-    const { user, session, error } = await supabase.auth.signIn({
-      email: 'caleb@calebevans.me'
-    });
-    console.log('user', user);
-    console.log('session', session);
-    console.log('error', error);
-  }
-  async function signOut() {
-    const { error } = await supabase.auth.signOut();
-    console.log('error', error);
-  }
   return (
     <div className="app-header-account-menu">
       <label className="app-header-account-menu-label accessibility-only" htmlFor="app-header-account-menu-button">
