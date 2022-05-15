@@ -8,11 +8,18 @@
   flex-grow: 1;
   margin: 0;
   text-align: left;
-  font-size: $font-size-xxs;
+  font-size: 0;
   color: $light-100;
   mix-blend-mode: soft-light;
+  &:before {
+    content: 'FD';
+    font-size: $font-size-xxs;
+  }
   @include layout(tablet) {
     font-size: $font-size-m;
+    &:before {
+      content: '';
+    }
   }
 }
 
@@ -21,6 +28,8 @@
   align-items: stretch;
 }
 .app-header-add-widget-wrapper {
+  display: flex;
+  align-items: stretch;
   position: relative;
   margin: 0 15px;
 }
@@ -63,11 +72,17 @@
   }
 }
 
+.app-header-account-menu {
+  display: flex;
+  align-items: stretch;
+}
+.app-header-account-menu-button {
+  display: flex;
+  align-items: center;
+  padding: 3px 12px;
+}
 .app-header-account-menu-button-icon {
   $icon-size: 18px;
   width: $icon-size;
   height: $icon-size;
-}
-.app-header-account-menu-button {
-  padding: 3px 12px;
 }

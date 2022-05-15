@@ -61,12 +61,13 @@
   border-radius: 0;
   border-bottom-left-radius: 10px;
   padding: 10px;
-  background: none;
+  // Need to override the theme-specific styling on modal buttons
+  background: none !important;
   &:hover {
-    background-color: $dark-10;
+    background-color: $dark-10 !important;
   }
   &:not([disabled]):hover:active {
-    background-color: $dark-20;
+    background-color: $dark-20 !important;
   }
 }
 .modal-close-control-icon {
