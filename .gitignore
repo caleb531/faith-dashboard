@@ -47,3 +47,7 @@ public/*.map
 
 # Local Netlify folder
 .netlify
+
+# Supabase
+**/supabase/.branches
+**/supabase/.temp
