@@ -22,12 +22,12 @@ function AppHeaderThemeSwitcher({
   return (
     <div className="app-header-theme-switcher">
       {isCurrentStep ? <TutorialStepMessage /> : null}
-      <label className="theme-switcher-label accessibility-only" htmlFor="theme-switcher-dropdown">
+      <label className="theme-switcher-label accessibility-only" htmlFor="app-header-theme-switcher-button">
         Color Theme
       </label>
       <button
         className="app-header-theme-switcher-button"
-        id="theme-switcher-dropdown"
+        id="app-header-theme-switcher-button"
         onClick={() => setThemeSwitcherIsOpen((isOpen) => !isOpen)}
         {...stepProps}>
         <img
