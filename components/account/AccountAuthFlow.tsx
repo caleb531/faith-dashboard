@@ -1,11 +1,13 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react';
 import Modal from '../generic/Modal';
+import SignUpForm from './SignUpForm';
 
 type Props = {
   onCloseModal: () => void
 };
 
-function AppHeaderAuthFlow({
+function AccountAuthFlow({
   onCloseModal
 }: Props) {
   const [isFormShowing, setIsFormShowing] = useState(false);
@@ -24,26 +26,21 @@ function AppHeaderAuthFlow({
   return (
     <Modal onCloseModal={onCloseModal}>
       <section className="account-auth-flow">
-        <h1>Account</h1>
-        <p>Create a Faith Dashboard account to sync your dashboard and gain other features!</p>
         {isFormShowing ? (
-          <form className="account-auth-flow-form" onSubmit={submitForm}>
-            <label htmlFor="account-auth-flow-email">Email</label>
-            <input
-              className="account-auth-flow-form-email"
-              type="email"
-              id="account-auth-flow-email"
-              name="email"
-              placeholder="me@somewebsite.com"
-              autoFocus
-              />
-              <button type="submit" className="account-auth-flow-submit">Submit</button>
-          </form>
+          <div className="account-auth-flow-sign-up">
+            <h1>Sign Up</h1>
+            <p>By signing up with Faith Dashboard, you'll be able to sync your settings and widgets across all your devices!</p>
+            <SignUpForm onSubmit={submitForm} />
+          </div>
         ) : (
-          <div className="account-auth-flow-cta-container">
-            {/* Signing in with a new email address is the same as signing up */}
-            <button className="account-auth-flow-cta" onClick={showAuthForm}>Sign Up</button>
-            <button className="account-auth-flow-cta" onClick={showAuthForm}>Sign In</button>
+          <div className="account-auth-flow-start">
+            <h1>Account</h1>
+            <p>Create a Faith Dashboard account to sync your dashboard and gain other features!</p>
+            <div className="account-auth-flow-cta-container">
+              {/* Signing in with a new email address is the same as signing up */}
+              <button className="account-auth-flow-cta" onClick={showAuthForm}>Sign Up</button>
+              <button className="account-auth-flow-cta" onClick={showAuthForm}>Sign In</button>
+            </div>
           </div>
         )}
       </section>
@@ -51,4 +48,4 @@ function AppHeaderAuthFlow({
   );
 }
 
-export default AppHeaderAuthFlow;
+export default AccountAuthFlow;

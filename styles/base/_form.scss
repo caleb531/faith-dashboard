@@ -17,7 +17,7 @@ label {
   display: block;
   margin-bottom: 5px;
   font-family: $font-family-sans-serif;
-  font-size: $font-size-xxxs;
+  font-size: $font-size-s;
   text-align: center;
 }
 
@@ -53,7 +53,7 @@ input[type=tel],
 input[type=url],
 textarea {
   max-width: 100%;
-  width: 160px;
+  width: 100%;
   margin: 0;
   padding-left: 10px;
   padding-right: 10px;
