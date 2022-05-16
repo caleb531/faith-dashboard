@@ -1,7 +1,10 @@
 .app-header {
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 10px;
+  @include layout(desktop) {
+    padding: 10px 20px;
+  }
 }
 
 .app-header-title {
@@ -13,7 +16,7 @@
   mix-blend-mode: soft-light;
   &:before {
     content: 'FD';
-    font-size: $font-size-xxs;
+    font-size: $font-size-m;
   }
   @include layout(tablet) {
     font-size: $font-size-m;
