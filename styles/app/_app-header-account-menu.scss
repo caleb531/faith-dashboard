@@ -1,0 +1,14 @@
+.app-header-account-menu {
+  display: flex;
+  align-items: stretch;
+}
+.app-header-account-menu-button {
+  display: flex;
+  align-items: center;
+  padding: 3px 12px;
+}
+.app-header-account-menu-button-icon {
+  $icon-size: 18px;
+  width: $icon-size;
+  height: $icon-size;
+}

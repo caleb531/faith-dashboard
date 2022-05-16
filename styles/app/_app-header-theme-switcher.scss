@@ -1,0 +1,37 @@
+.app-header-theme-switcher {
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  margin-right: 15px;
+}
+.app-header-theme-switcher-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-width: 0;
+  border-radius: 20px;
+  padding: 3px 12px;
+  background-color: $dark-30;
+  line-height: 1;
+  font-family: $font-family-sans-serif;
+  font-size: $font-size-xxxs;
+  color: $light-100;
+  vertical-align: middle;
+}
+.app-header-theme-switcher-button-icon {
+  $icon-size: 18px;
+  width: $icon-size;
+  height: $icon-size;
+  @include layout(tablet) {
+    margin-right: 4px;
+  }
+}
+.app-header-theme-switcher-button-icon,
+.app-header-theme-switcher-button-label {
+  vertical-align: middle;
+}
+.app-header-theme-switcher-button-label {
+  display: none;
+  @include layout(tablet) {
+    display: inline;
+  }
+}
