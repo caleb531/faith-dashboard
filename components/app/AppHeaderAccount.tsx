@@ -8,6 +8,10 @@ function AppHeaderAccount() {
   const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
 
   async function signOut() {
+    const confirmation = confirm('Are you sure you want to sign out? This means syncing will stop working until you sign back in again.');
+    if (!confirmation) {
+      return;
+    }
     const { error } = await supabase.auth.signOut();
     console.log('error', error);
   }
@@ -40,6 +44,10 @@ function AppHeaderAccount() {
       </button>
       {isShowingMenu ? (
         <div className="app-header-account-menu">
+          <div
+            className="app-header-account-menu-overlay"
+            onClick={() => setIsShowingMenu(false)}>
+          </div>
           <menu className="app-header-account-menu-list">
             <li
               className="app-header-account-menu-list-item app-header-account-menu-list-item-email"

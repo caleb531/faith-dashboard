@@ -14,6 +14,15 @@
   height: $icon-size;
 }
 
+.app-header-account-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 40;
+  width: 100%;
+  height: 100%;
+}
+
 .app-header-account-menu-list,
 .app-header-account-menu-list-item {
   margin: 0;
