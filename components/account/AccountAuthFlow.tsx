@@ -1,36 +1,47 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react';
 import Modal from '../generic/Modal';
+import { supabase } from '../supabaseClient';
+import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 
 type Props = {
   onCloseModal: () => void
 };
 
+// The possible steps in the account authentication flow
+type FlowStep = 'start' | 'sign-up' | 'sign-in' | 'form-submitted';
+
 function AccountAuthFlow({
   onCloseModal
 }: Props) {
-  const [isFormShowing, setIsFormShowing] = useState(false);
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-  function showAuthForm() {
-    setIsFormShowing(true);
-  }
-  function submitForm(event: React.FormEvent) {
+  const [currentFlowStep, setCurrentFlowStep] = useState<FlowStep>('start');
+  async function submitForm(event: React.FormEvent) {
     event.preventDefault();
     const formElement = event.currentTarget as HTMLFormElement;
     const emailInput = formElement.elements.namedItem('email') as HTMLInputElement;
-    // TODO: re-enable this after testing
-    // supabase.auth.signIn({ email: emailInput.value });
-    setIsFormSubmitted(true);
+    await supabase.auth.signIn({ email: emailInput.value });
+    setCurrentFlowStep('form-submitted');
   }
   return (
     <Modal onCloseModal={onCloseModal}>
       <section className="account-auth-flow">
-        {isFormShowing ? (
+        {currentFlowStep === 'sign-up' ? (
           <div className="account-auth-flow-sign-up">
             <h1>Sign Up</h1>
             <p>By signing up with Faith Dashboard, you'll be able to sync your settings and widgets across all your devices!</p>
             <SignUpForm onSubmit={submitForm} />
+          </div>
+        ) : currentFlowStep === 'sign-in' ? (
+          <div className="account-auth-flow-sign-in">
+            <h1>Sign In</h1>
+            <p>Sign in using just your email address; you will be emailed a link to finish the sign-in process.</p>
+            <SignInForm onSubmit={submitForm} />
+          </div>
+        ) : currentFlowStep === 'form-submitted' ? (
+          <div className="account-auth-flow-form-submitted">
+            <h1>Almost Done!</h1>
+            <p>Thank you! Please check your email for a magic link to automatically finish signing you in.</p>
           </div>
         ) : (
           <div className="account-auth-flow-start">
@@ -38,8 +49,16 @@ function AccountAuthFlow({
             <p>Create a Faith Dashboard account to sync your dashboard and gain other features!</p>
             <div className="account-auth-flow-cta-container">
               {/* Signing in with a new email address is the same as signing up */}
-              <button className="account-auth-flow-cta" onClick={showAuthForm}>Sign Up</button>
-              <button className="account-auth-flow-cta" onClick={showAuthForm}>Sign In</button>
+              <button
+                className="account-auth-flow-cta"
+                onClick={() => setCurrentFlowStep('sign-up')}>
+                Sign Up
+              </button>
+              <button
+                className="account-auth-flow-cta"
+                onClick={() => setCurrentFlowStep('sign-in')}>
+                Sign In
+              </button>
             </div>
           </div>
         )}

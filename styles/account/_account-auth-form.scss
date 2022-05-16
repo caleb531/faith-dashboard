@@ -1,6 +1,16 @@
 input.account-auth-form-input {
-   width: 400px;
+  width: 400px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border-color: $dark-30;
+  font-weight: 300;
+  font-size: $font-size-xxl;
 }
+button.account-auth-form-submit {
+  margin-top: 5px;
+  font-size: $font-size-xxl;
+}
+
 
 .account-auth-form-submit {
   display: block;
