@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import AccountAuthFlow from '../account/AccountAuthFlow';
 import { supabase } from '../supabaseClient';
-import AppHeaderSignInModal from './AppHeaderSignInModal';
 
 function AppHeaderAccountMenu() {
   const [user, setUser] = useState(supabase.auth.user());
-  const [signInModalIsOpen, setSignInModalIsOpen] = useState(false);
+  const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
 
   async function signOut() {
     const { error } = await supabase.auth.signOut();
@@ -46,8 +46,8 @@ function AppHeaderAccountMenu() {
         onClick={() => setSignInModalIsOpen(true)}>
         Sign Up/In
       </button>
-      {signInModalIsOpen ? (
-        <AppHeaderSignInModal onCloseSignInModal={onCloseSignInModal} />
+      {authModalIsOpen ? (
+        <AccountAuthFlow onCloseModal={onCloseSignInModal} />
       ) : null}
     </div>
   );

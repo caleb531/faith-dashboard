@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import Modal from '../generic/Modal';
 
 type Props = {
-  onCloseSignInModal: () => void
+  onCloseModal: () => void
 };
 
-function AppHeaderSignInModal({
-  onCloseSignInModal
+function AppHeaderAuthFlow({
+  onCloseModal
 }: Props) {
   const [isFormShowing, setIsFormShowing] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-  function showSignInForm() {
+  function showAuthForm() {
     setIsFormShowing(true);
   }
   function submitForm(event: React.FormEvent) {
@@ -22,28 +22,28 @@ function AppHeaderSignInModal({
     setIsFormSubmitted(true);
   }
   return (
-    <Modal onCloseModal={onCloseSignInModal}>
-      <section className="sign-in">
+    <Modal onCloseModal={onCloseModal}>
+      <section className="account-auth-flow">
         <h1>Account</h1>
         <p>Create a Faith Dashboard account to sync your dashboard and gain other features!</p>
         {isFormShowing ? (
-          <form className="sign-in-form" onSubmit={submitForm}>
-            <label htmlFor="sign-in-email">Email</label>
+          <form className="account-auth-flow-form" onSubmit={submitForm}>
+            <label htmlFor="account-auth-flow-email">Email</label>
             <input
-              className="sign-in-form-email"
+              className="account-auth-flow-form-email"
               type="email"
-              id="sign-in-email"
+              id="account-auth-flow-email"
               name="email"
               placeholder="me@somewebsite.com"
               autoFocus
               />
-              <button type="submit" className="sign-in-submit">Submit</button>
+              <button type="submit" className="account-auth-flow-submit">Submit</button>
           </form>
         ) : (
-          <div className="sign-in-cta-container">
+          <div className="account-auth-flow-cta-container">
             {/* Signing in with a new email address is the same as signing up */}
-            <button className="sign-in-cta" onClick={showSignInForm}>Sign Up</button>
-            <button className="sign-in-cta" onClick={showSignInForm}>Sign In</button>
+            <button className="account-auth-flow-cta" onClick={showAuthForm}>Sign Up</button>
+            <button className="account-auth-flow-cta" onClick={showAuthForm}>Sign In</button>
           </div>
         )}
       </section>
@@ -51,4 +51,4 @@ function AppHeaderSignInModal({
   );
 }
 
-export default AppHeaderSignInModal;
+export default AppHeaderAuthFlow;

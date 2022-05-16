@@ -1,4 +1,4 @@
-.sign-in-cta {
+.account-auth-flow-cta {
   padding: 6px 20px;
   border-radius: 40px;
   font-size: $font-size-xxxl;
@@ -7,14 +7,14 @@
   }
 }
 
-input[type=email].sign-in-form-email {
+input[type=email].account-auth-flow-form-email {
   width: 100%;
   border-radius: 5px;
   border-color: $dark-30;
   font-size: $font-size-xxxl;
   font-weight: 300;
 }
-button.sign-in-submit {
+button.account-auth-flow-submit {
   margin-top: 5px;
   border-radius: 40px;
   font-size: $font-size-xxl;
