@@ -28,11 +28,13 @@ function AppHeaderSignInModal({
         <p>Create a Faith Dashboard account to sync your dashboard and gain other features!</p>
         {isFormShowing ? (
           <form className="sign-in-form" onSubmit={submitForm}>
+            <label htmlFor="sign-in-email">Email</label>
             <input
               className="sign-in-form-email"
               type="email"
+              id="sign-in-email"
               name="email"
-              placeholder="Your email address"
+              placeholder="me@somewebsite.com"
               autoFocus
               />
               <button type="submit" className="sign-in-submit">Submit</button>
