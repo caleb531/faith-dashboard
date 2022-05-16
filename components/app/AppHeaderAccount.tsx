@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
 import { supabase } from '../supabaseClient';
 
-function AppHeaderAccountMenu() {
+function AppHeaderAccount() {
+  const [isShowingMenu, setIsShowingMenu] = useState(false);
   const [user, setUser] = useState(supabase.auth.user());
   const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
 
@@ -23,26 +24,40 @@ function AppHeaderAccountMenu() {
   }, []);
 
   return user ? (
-    <div className="app-header-account-menu">
-      <label className="app-header-account-menu-label accessibility-only" htmlFor="app-header-account-menu-button">
+    <div className="app-header-account">
+      <label className="app-header-account-label accessibility-only" htmlFor="app-header-account-button">
          Your Account
       </label>
       <button
         type="button"
-        className="app-header-account-menu-button"
-        onClick={signOut}>
+        className="app-header-account-button"
+        onClick={() => setIsShowingMenu(!isShowingMenu)}>
         <img
-        className="app-header-account-menu-button-icon"
+        className="app-header-account-button-icon"
         src="icons/account-light.svg"
         alt=""
         draggable="false" />
       </button>
+      {isShowingMenu ? (
+        <div className="app-header-account-menu">
+          <menu className="app-header-account-menu-list">
+            <li
+              className="app-header-account-menu-list-item app-header-account-menu-list-item-email"
+              data-disabled>{user.email}</li>
+            <li
+              className="app-header-account-menu-list-item app-header-account-menu-list-item-sign-out"
+              onClick={signOut}>
+              Sign Out
+            </li>
+          </menu>
+        </div>
+      ) : null}
     </div>
   ) : (
-    <div className="app-header-account-menu">
+    <div className="app-header-account">
       <button
         type="button"
-        className="app-header-account-menu-button"
+        className="app-header-account-button"
         onClick={() => setSignInModalIsOpen(true)}>
         Sign Up/In
       </button>
@@ -53,4 +68,4 @@ function AppHeaderAccountMenu() {
   );
 }
 
-export default AppHeaderAccountMenu;
+export default AppHeaderAccount;
