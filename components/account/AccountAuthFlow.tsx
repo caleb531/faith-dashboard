@@ -23,8 +23,14 @@ function AccountAuthFlow({
     await supabase.auth.signIn({ email: emailInput.value });
     setCurrentFlowStep('form-submitted');
   }
+  function canGoBack() {
+    return currentFlowStep === 'sign-up' || currentFlowStep === 'sign-in';
+  }
+  function goBack() {
+    setCurrentFlowStep('start');
+  }
   return (
-    <Modal onCloseModal={onCloseModal}>
+    <Modal onCloseModal={onCloseModal} onBackButton={canGoBack() ? goBack : null}>
       <section className="account-auth-flow">
         {currentFlowStep === 'sign-up' ? (
           <div className="account-auth-flow-sign-up">

@@ -51,15 +51,13 @@
   }
 }
 
-.modal-close-control {
+.modal-control {
   position: absolute;
   top: 0;
-  right: 0;
   $close-button-size: 50px;
   width: $close-button-size;
   height: $close-button-size;
   border-radius: 0;
-  border-bottom-left-radius: 10px;
   padding: 10px;
   // Need to override the theme-specific styling on modal buttons
   background: none !important;
@@ -70,6 +68,14 @@
     background-color: $dark-20 !important;
   }
 }
-.modal-close-control-icon {
+.modal-back-control {
+  left: 0;
+  border-bottom-right-radius: 10px;
+}
+.modal-close-control {
+  right: 0;
+  border-bottom-left-radius: 10px;
+}
+.modal-control-icon {
   width: 100%;
 }
