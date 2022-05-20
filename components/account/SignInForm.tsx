@@ -15,6 +15,7 @@ function SignInForm({ onSubmit }: Props) {
         id="sign-in-form-email"
         name="email"
         placeholder="Email"
+        required
         autoFocus
         />
       <button type="submit" className="account-auth-form-submit sign-in-form-submit">Submit</button>

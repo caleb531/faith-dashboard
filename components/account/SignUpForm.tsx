@@ -15,6 +15,7 @@ function SignUpForm({ onSubmit }: Props) {
         id="sign-up-form-email"
         name="email"
         placeholder="Email"
+        required
         autoFocus
         />
       <button type="submit" className="account-auth-form-submit sign-up-form-submit">Submit</button>
