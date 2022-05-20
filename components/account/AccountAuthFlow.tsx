@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react';
 import Modal from '../generic/Modal';
-import { supabase } from '../supabaseClient';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 
@@ -16,19 +15,19 @@ function AccountAuthFlow({
   onCloseModal
 }: Props) {
   const [currentFlowStep, setCurrentFlowStep] = useState<FlowStep>('start');
+
   async function submitForm(event: React.FormEvent) {
-    event.preventDefault();
-    const formElement = event.currentTarget as HTMLFormElement;
-    const emailInput = formElement.elements.namedItem('email') as HTMLInputElement;
-    await supabase.auth.signIn({ email: emailInput.value });
     setCurrentFlowStep('form-submitted');
   }
+
   function canGoBack() {
     return currentFlowStep === 'sign-up' || currentFlowStep === 'sign-in';
   }
+
   function goBack() {
     setCurrentFlowStep('start');
   }
+
   return (
     <Modal onCloseModal={onCloseModal} onBackButton={canGoBack() ? goBack : null}>
       <section className="account-auth-flow">
