@@ -1,10 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
+import type { ApiError } from '@supabase/supabase-js';
 import React from 'react';
 import { supabase } from '../supabaseClient';
 import useFormSerializer from './useFormSerializer';
 
 type Props = {
-  onSubmit: (event: React.FormEvent) => void
+  onSubmit: (event: React.FormEvent, error: ApiError | null) => void
 }
 
 function SignInForm({ onSubmit }: Props) {
@@ -14,11 +15,14 @@ function SignInForm({ onSubmit }: Props) {
   async function signIn(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const fields = serializeForm(event.currentTarget);
-    await supabase.auth.signIn({
+    const { user, session, error } = await supabase.auth.signIn({
       email: fields.email,
       password: fields.password
     });
-    onSubmit(event);
+    console.log('user', user);
+    console.log('session', session);
+    console.log('error', error);
+    onSubmit(event, error);
   }
 
   return (

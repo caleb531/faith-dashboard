@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import type { ApiError } from '@supabase/supabase-js';
 import React, { useState } from 'react';
 import Modal from '../generic/Modal';
 import SignInForm from './SignInForm';
@@ -15,9 +16,14 @@ function AccountAuthFlow({
   onCloseModal
 }: Props) {
   const [currentFlowStep, setCurrentFlowStep] = useState<FlowStep>('start');
+  const [formError, setFormError] = useState<string>();
 
-  async function submitForm(event: React.FormEvent) {
-    setCurrentFlowStep('form-submitted');
+  function submitForm(event: React.FormEvent, error: ApiError | null) {
+    if (error) {
+      setFormError(error.message);
+    } else {
+      setCurrentFlowStep('form-submitted');
+    }
   }
 
   function canGoBack() {

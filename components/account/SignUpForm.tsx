@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
+import type { ApiError } from '@supabase/supabase-js';
 import { omit } from 'lodash-es';
 import React, { useRef } from 'react';
 import { supabase } from '../supabaseClient';
 import useFormSerializer from './useFormSerializer';
 
 type Props = {
-  onSubmit: (event: React.FormEvent) => void
+  onSubmit: (event: React.FormEvent, error: ApiError | null) => void
 }
 
 function SignUpForm({ onSubmit }: Props) {
@@ -16,13 +17,16 @@ function SignUpForm({ onSubmit }: Props) {
   async function signUp(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const fields = serializeForm(event.currentTarget);
-    await supabase.auth.signUp({
+    const { user, session, error } = await supabase.auth.signUp({
       email: fields.email,
       password: fields.password
     }, {
       data: omit(fields, ['email', 'password', 'confirm_password'])
     });
-    onSubmit(event);
+    console.log('user', user);
+    console.log('session', session);
+    console.log('error', error);
+    onSubmit(event, error);
   }
 
   function checkIfPasswordsMatch(event: React.FormEvent<HTMLInputElement>) {
