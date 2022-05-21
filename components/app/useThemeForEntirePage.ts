@@ -1,12 +1,11 @@
-import { useLayoutEffect } from 'react';
+import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 import { AppTheme } from './app.d';
 
 // The useThemeForEntirePage() hook takes the given color theme and applies it
-// to the
-// <body> element of the page
+// to the <body> element of the page
 export default function useThemeForEntirePage(theme: AppTheme) {
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     document.body.classList.add(`theme-${theme}`);
     return () => {
       // Remove any previous theme-* classes applied to the <body>
