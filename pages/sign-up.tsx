@@ -44,7 +44,11 @@ function SignUpForm({ pageTitle }: Props) {
   return (
     <LandingPage heading={pageTitle} altLink={{ title: 'Sign In', href: 'sign-in' }}>
       <p>By signing up with Faith Dashboard, you'll be able to sync your settings and widgets across all your devices!</p>
-      <AuthForm onSubmit={signUp}>
+      <AuthForm
+        onSubmit={signUp}
+        submitLabel="Sign Up"
+        submittingLabel="Submitting..."
+        successLabel="Success! Redirecting...">
         <label htmlFor="sign-up-form-first-name" className="accessibility-only">First Name</label>
         <input
           className="account-auth-form-input"
@@ -93,7 +97,6 @@ function SignUpForm({ pageTitle }: Props) {
           required
           onChange={checkIfPasswordsMatch}
           />
-        <button type="submit" className="account-auth-form-submit sign-up-form-submit">Submit</button>
       </AuthForm>
     </LandingPage>
   );

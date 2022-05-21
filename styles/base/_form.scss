@@ -87,6 +87,9 @@ a.button {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
+  &[disabled] {
+    opacity: 0.75;
+  }
   &:not([disabled]):hover:active {
     background-color: $dark-50;
   }

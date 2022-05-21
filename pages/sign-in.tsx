@@ -30,7 +30,11 @@ function SignUpForm({ pageTitle }: Props) {
   return (
     <LandingPage heading={pageTitle} altLink={{ title: 'Sign Up', href: 'sign-up' }}>
       <p>Sign in using just your email address; you will be emailed a link to finish the sign-in process.</p>
-      <AuthForm onSubmit={signIn}>
+      <AuthForm
+        onSubmit={signIn}
+        submitLabel="Sign In"
+        submittingLabel="Submitting..."
+        successLabel="Success! Redirecting...">
         <label htmlFor="sign-in-form-email" className="accessibility-only">Email</label>
         <input
           className="account-auth-form-input"
@@ -50,7 +54,6 @@ function SignUpForm({ pageTitle }: Props) {
           placeholder="Password"
           required
           />
-        <button type="submit" className="account-auth-form-submit sign-in-form-submit">Submit</button>
       </AuthForm>
     </LandingPage>
   );
