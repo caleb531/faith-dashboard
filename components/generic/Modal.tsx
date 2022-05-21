@@ -16,15 +16,6 @@ function Modal({
     <div className="modal-scroll-container">
       <div className="modal-overlay" onClick={onCloseModal}></div>
       <aside className="modal" role="dialog">
-        {onBackButton ? (
-          <button type="button" className="modal-control modal-back-control" onClick={onBackButton}>
-          <img
-            className="modal-control-icon modal-back-control-icon"
-            src="icons/back-dark.svg"
-            alt="Go Back"
-            draggable="false" />
-          </button>
-        ) : null}
         <button type="button" className="modal-control modal-close-control" onClick={onCloseModal}>
           <img
             className="modal-control-icon modal-close-control-icon"
