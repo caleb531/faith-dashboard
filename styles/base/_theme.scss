@@ -17,7 +17,16 @@ $theme-photos: (
   }
 }
 @each $theme-name, $theme-color in $theme-photos {
-  .theme-#{$theme-name} {
+  // Since iOS does not support background-attachment:fixed, we must add a
+  // pseudo-element on the <body> and add the background-image to that
+  .theme-#{$theme-name}:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
     background-color: $grey;
     background-image: url('../../public/images/background-photos/#{$theme-name}.jpg');
     background-repeat: no-repeat;
