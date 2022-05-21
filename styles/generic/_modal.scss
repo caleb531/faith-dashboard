@@ -54,11 +54,15 @@
 .modal-control {
   position: absolute;
   top: 0;
-  $close-button-size: 50px;
-  width: $close-button-size;
-  height: $close-button-size;
+  $control-size: 30px;
+  width: $control-size;
+  height: $control-size;
   border-radius: 0;
   padding: 10px;
+  box-sizing: content-box;
+  // Fixed the vertical centering of the control icon if the control happens to
+  // be an <a> tag
+  line-height: 1;
   // Need to override the theme-specific styling on modal buttons
   background: none !important;
   &:hover {

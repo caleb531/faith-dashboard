@@ -1,8 +1,15 @@
 @import 'base/colors';
+@import 'base/fonts';
+@import 'generic/modal';
 
 .landing-page {
+  margin: 0 auto;
+}
+
+.landing-page-section {
+  position: relative;
   max-width: 800px;
-  margin: 30px auto;
+  margin: 20px 10px;
   border-radius: 20px;
   padding: 10px 30px 10px;
   background-color: $light-100;
@@ -13,7 +20,7 @@
   -webkit-font-smoothing: antialiased;
   color: $dark-100;
   box-shadow: 0 2px 5px $dark-50;
-
+  overflow: hidden;
   h1 {
     margin-top: 30px;
     margin-bottom: 10px;
@@ -47,4 +54,16 @@
   button[type] {
     margin: 0 5px;
   }
+}
+.landing-page-control {
+  @extend .modal-control;
+  $control-size: 20px;
+  width: $control-size;
+  height: $control-size;
+}
+.landing-page-back-control {
+  @extend .modal-back-control;
+}
+.landing-page-control-icon {
+  @extend .modal-control-icon;
 }

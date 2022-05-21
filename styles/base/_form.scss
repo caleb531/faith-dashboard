@@ -70,7 +70,9 @@ textarea {
 input[type=search]::-webkit-search-cancel-button {
   display: none;
 }
-button {
+button,
+a.button {
+  display: inline-block;
   user-select: none;
   border: solid 1px transparent;
   border-radius: 20px;
@@ -78,6 +80,9 @@ button {
   padding-right: 15px;
   background-color: $dark-30;
   color: $light-100;
+  font-size: $font-size-xs;
+  font-weight: 400;
+  text-decoration: none;
   input + & {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;

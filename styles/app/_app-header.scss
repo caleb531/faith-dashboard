@@ -36,3 +36,9 @@
   position: relative;
   margin: 0 15px;
 }
+
+.app-header button,
+.app-header a.button {
+  font-family: $font-family-sans-serif;
+  font-size: $font-size-xxxs;
+}

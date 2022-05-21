@@ -2,18 +2,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import useLandingPage from '../components/useLandingPage';
+import LandingPage from '../components/LandingPage';
 import addToHomeScreenImage1 from '../public/images/help/ios-add-to-home-screen-ios-1.jpg';
 import addToHomeScreenImage2 from '../public/images/help/ios-add-to-home-screen-ios-2.jpg';
 import addToHomeScreenImage3 from '../public/images/help/ios-add-to-home-screen-ios-3.jpg';
 
 function Help() {
 
-  useLandingPage();
-
   return (
-    <article className="landing-page">
-      <p><Link href="/">Return to App</Link></p>
+    <LandingPage>
 
       <h1>Help | Faith Dashboard</h1>
 
@@ -76,8 +73,8 @@ function Help() {
 
       <p>This app is dedicated to Christ our Lord.</p>
 
-      <p><Link href="/">Return to App</Link></p>
-    </article>
+      <p><Link href="/"><a className="button">Return to App</a></Link></p>
+    </LandingPage>
   );
 }
 
