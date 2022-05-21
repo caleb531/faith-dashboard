@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { omit } from 'lodash-es';
 import React, { useRef } from 'react';
+import useAutoFocus from '../components/account/useAutoFocus';
 import useFormSerializer from '../components/account/useFormSerializer';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
@@ -16,6 +17,7 @@ function SignUpForm({ pageTitle }: Props) {
 
   const [serializeForm] = useFormSerializer();
   const passwordInputRef = useRef<HTMLInputElement>(null);
+  const firstNameAutoFocus = useAutoFocus<HTMLInputElement>();
 
   async function signUp(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -53,7 +55,7 @@ function SignUpForm({ pageTitle }: Props) {
           name="first-name"
           placeholder="First Name"
           required
-          autoFocus
+          {...firstNameAutoFocus}
           />
         <label htmlFor="sign-up-form-last-name" className="accessibility-only">Last Name</label>
         <input
