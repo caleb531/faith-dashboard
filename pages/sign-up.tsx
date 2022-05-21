@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { omit } from 'lodash-es';
 import React, { useRef } from 'react';
+import AuthForm from '../components/account/AuthForm';
 import useAutoFocus from '../components/account/useAutoFocus';
 import useFormSerializer from '../components/account/useFormSerializer';
 import LandingPage from '../components/LandingPage';
@@ -9,7 +10,7 @@ import useLandingPage from '../components/useLandingPage';
 
 type Props = {
   pageTitle: string
-}
+};
 
 function SignUpForm({ pageTitle }: Props) {
 
@@ -19,18 +20,15 @@ function SignUpForm({ pageTitle }: Props) {
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const firstNameAutoFocus = useAutoFocus<HTMLInputElement>();
 
-  async function signUp(event: React.FormEvent<HTMLFormElement>) {
+  function signUp(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const fields = serializeForm(event.currentTarget);
-    const { user, session, error } = await supabase.auth.signUp({
+    return supabase.auth.signUp({
       email: fields.email,
       password: fields.password
     }, {
       data: omit(fields, ['email', 'password', 'confirm_password'])
     });
-    console.log('user', user);
-    console.log('session', session);
-    console.log('error', error);
   }
 
   function checkIfPasswordsMatch(event: React.FormEvent<HTMLInputElement>) {
@@ -46,7 +44,7 @@ function SignUpForm({ pageTitle }: Props) {
   return (
     <LandingPage heading={pageTitle} altLink={{ title: 'Sign In', href: 'sign-in' }}>
       <p>By signing up with Faith Dashboard, you'll be able to sync your settings and widgets across all your devices!</p>
-      <form className="account-auth-form sign-up-form" onSubmit={signUp}>
+      <AuthForm onSubmit={signUp}>
         <label htmlFor="sign-up-form-first-name" className="accessibility-only">First Name</label>
         <input
           className="account-auth-form-input"
@@ -96,7 +94,7 @@ function SignUpForm({ pageTitle }: Props) {
           onChange={checkIfPasswordsMatch}
           />
         <button type="submit" className="account-auth-form-submit sign-up-form-submit">Submit</button>
-      </form>
+      </AuthForm>
     </LandingPage>
   );
 }

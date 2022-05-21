@@ -1,27 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
-import type { ApiError } from '@supabase/supabase-js';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 import Modal from '../generic/Modal';
 
 type Props = {
   onCloseModal: () => void
 };
 
-// The possible steps in the account authentication flow
-type FlowStep = 'start' | 'sign-up' | 'sign-in' | 'form-submitted';
-
 function AccountAuthFlow({
   onCloseModal
 }: Props) {
-  const [formError, setFormError] = useState<string>();
-
-  function submitForm(event: React.FormEvent, error: ApiError | null) {
-    if (error) {
-      setFormError(error.message);
-    }
-  }
-
   return (
     <Modal onCloseModal={onCloseModal}>
       <section className="account-auth-flow">
