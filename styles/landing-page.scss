@@ -54,13 +54,20 @@
 }
 .landing-page-control {
   @extend .sheet-control;
-  $control-size: 20px;
-  width: $control-size;
-  height: $control-size;
 }
 .landing-page-home-control {
   @extend .sheet-control-left;
 }
+.landing-page-alt-control {
+  @extend .sheet-control-right;
+  padding: 15px 15px;
+  text-decoration: none;
+  font-size: $font-size-xs;
+  font-weight: 400;
+}
 .landing-page-control-icon {
   @extend .sheet-control-icon;
+  $control-size: 20px;
+  width: $control-size;
+  height: $control-size;
 }

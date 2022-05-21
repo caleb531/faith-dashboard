@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unescaped-entities */
-import type { ApiError } from '@supabase/supabase-js';
 import React from 'react';
 import useFormSerializer from '../components/account/useFormSerializer';
 import LandingPage from '../components/LandingPage';
@@ -7,10 +6,10 @@ import { supabase } from '../components/supabaseClient';
 import useLandingPage from '../components/useLandingPage';
 
 type Props = {
-  onSubmit: (event: React.FormEvent, error: ApiError | null) => void
-}
+  pageTitle: string
+};
 
-function SignUpForm({ onSubmit }: Props) {
+function SignUpForm({ pageTitle }: Props) {
 
   useLandingPage();
 
@@ -26,11 +25,10 @@ function SignUpForm({ onSubmit }: Props) {
     console.log('user', user);
     console.log('session', session);
     console.log('error', error);
-    onSubmit(event, error);
   }
 
   return (
-    <LandingPage>
+    <LandingPage heading={pageTitle} altLink={{ title: 'Sign Up', href: 'sign-up' }}>
       <h1>Sign In</h1>
       <p>Sign in using just your email address; you will be emailed a link to finish the sign-in process.</p>
       <form className="account-auth-form sign-in-form" onSubmit={signIn}>

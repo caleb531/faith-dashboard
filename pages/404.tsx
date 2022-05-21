@@ -3,11 +3,14 @@ import Link from 'next/link';
 import React from 'react';
 import LandingPage from '../components/LandingPage';
 
-function PageNotFound() {
+type Props = {
+  pageTitle: string
+};
+
+function PageNotFound({ pageTitle }: Props) {
 
   return (
-    <LandingPage>
-      <h1>Page Not Found | Faith Dashboard</h1>
+    <LandingPage heading={pageTitle}>
 
       <p>Sorry about that! You ended up on a page that doesn't exist.</p>
 

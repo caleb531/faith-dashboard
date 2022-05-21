@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unescaped-entities */
-import type { ApiError } from '@supabase/supabase-js';
 import { omit } from 'lodash-es';
 import React, { useRef } from 'react';
 import useFormSerializer from '../components/account/useFormSerializer';
@@ -8,10 +7,10 @@ import { supabase } from '../components/supabaseClient';
 import useLandingPage from '../components/useLandingPage';
 
 type Props = {
-  onSubmit: (event: React.FormEvent, error: ApiError | null) => void
+  pageTitle: string
 }
 
-function SignUpForm({ onSubmit }: Props) {
+function SignUpForm({ pageTitle }: Props) {
 
   useLandingPage();
 
@@ -30,7 +29,6 @@ function SignUpForm({ onSubmit }: Props) {
     console.log('user', user);
     console.log('session', session);
     console.log('error', error);
-    onSubmit(event, error);
   }
 
   function checkIfPasswordsMatch(event: React.FormEvent<HTMLInputElement>) {
@@ -44,8 +42,7 @@ function SignUpForm({ onSubmit }: Props) {
   }
 
   return (
-    <LandingPage>
-      <h1>Sign Up</h1>
+    <LandingPage heading={pageTitle} altLink={{ title: 'Sign In', href: 'sign-in' }}>
       <p>By signing up with Faith Dashboard, you'll be able to sync your settings and widgets across all your devices!</p>
       <form className="account-auth-form sign-up-form" onSubmit={signUp}>
         <label htmlFor="sign-up-form-first-name" className="accessibility-only">First Name</label>

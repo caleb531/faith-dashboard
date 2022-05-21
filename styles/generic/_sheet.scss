@@ -10,9 +10,6 @@
 .sheet-control {
   position: absolute;
   top: 0;
-  $control-size: 30px;
-  width: $control-size;
-  height: $control-size;
   border-radius: 0;
   padding: 10px;
   box-sizing: content-box;
@@ -38,5 +35,7 @@
   border-bottom-left-radius: 10px;
 }
 .sheet-control-icon {
-  width: 100%;
+  $control-size: 30px;
+  width: $control-size;
+  height: $control-size;
 }

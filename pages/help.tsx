@@ -10,9 +10,7 @@ import addToHomeScreenImage3 from '../public/images/help/ios-add-to-home-screen-
 function Help() {
 
   return (
-    <LandingPage>
-
-      <h1>Help | Faith Dashboard</h1>
+    <LandingPage heading="Help | Faith Dashboard">
 
       <p>Be strengthened every day with Faith Dashboard, a private board for your favorite Bible verses, sermons, and anything else you need to be encouraged when life happens.</p>
 
