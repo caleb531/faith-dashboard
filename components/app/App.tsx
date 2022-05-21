@@ -47,7 +47,6 @@ function App() {
     <AppContext.Provider value={dispatchToApp}>
         {isMounted ? <div className={classNames(
           'app',
-          `theme-${app.theme}`,
           { 'is-touch-device': isTouchDevice() },
           { 'is-not-touch-device': !isTouchDevice() }
         )}>

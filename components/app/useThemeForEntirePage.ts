@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { AppTheme } from './app.d';
 
 // The useThemeForEntirePage() hook takes the given color theme and applies it
@@ -6,7 +6,7 @@ import { AppTheme } from './app.d';
 // <body> element of the page
 export default function useThemeForEntirePage(theme: AppTheme) {
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.body.classList.add(`theme-${theme}`);
     return () => {
       // Remove any previous theme-* classes applied to the <body>

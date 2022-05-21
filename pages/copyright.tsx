@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import React from 'react';
+import useLandingPage from '../components/useLandingPage';
 
 function Copyright() {
+
+  useLandingPage();
 
   return (
     <article className="landing-page">

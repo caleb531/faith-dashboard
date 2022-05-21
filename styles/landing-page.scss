@@ -1,12 +1,19 @@
+@import 'base/colors';
+
 .landing-page {
   max-width: 800px;
-  margin: 0 auto;
-  padding: 0 20px;
+  margin: 30px auto;
+  border-radius: 20px;
+  padding: 10px 30px 10px;
+  background-color: $light-100;
   font-weight: 300;
   text-align: left;
   line-height: 1.7;
   font-family: 'Merriweather Sans';
   -webkit-font-smoothing: antialiased;
+  color: $dark-100;
+  box-shadow: 0 2px 5px $dark-50;
+
   h1 {
     margin-top: 30px;
     margin-bottom: 10px;
