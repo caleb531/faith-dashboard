@@ -39,14 +39,10 @@ function AccountAuthFlow({
       <section className="account-auth-flow">
         {currentFlowStep === 'sign-up' ? (
           <div className="account-auth-flow-sign-up">
-            <h1>Sign Up</h1>
-            <p>By signing up with Faith Dashboard, you'll be able to sync your settings and widgets across all your devices!</p>
             <SignUpForm onSubmit={submitForm} />
           </div>
         ) : currentFlowStep === 'sign-in' ? (
           <div className="account-auth-flow-sign-in">
-            <h1>Sign In</h1>
-            <p>Sign in using just your email address; you will be emailed a link to finish the sign-in process.</p>
             <SignInForm onSubmit={submitForm} />
           </div>
         ) : currentFlowStep === 'form-submitted' ? (

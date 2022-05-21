@@ -27,6 +27,8 @@ function SignInForm({ onSubmit }: Props) {
 
   return (
     <form className="account-auth-form sign-in-form" onSubmit={signIn}>
+      <h1>Sign In</h1>
+      <p>Sign in using just your email address; you will be emailed a link to finish the sign-in process.</p>
       <label htmlFor="sign-in-form-email" className="accessibility-only">Email</label>
       <input
         className="account-auth-form-input"

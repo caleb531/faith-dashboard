@@ -41,6 +41,8 @@ function SignUpForm({ onSubmit }: Props) {
 
   return (
     <form className="account-auth-form sign-up-form" onSubmit={signUp}>
+      <h1>Sign Up</h1>
+      <p>By signing up with Faith Dashboard, you'll be able to sync your settings and widgets across all your devices!</p>
       <label htmlFor="sign-up-form-first-name" className="accessibility-only">First Name</label>
       <input
         className="account-auth-form-input"
