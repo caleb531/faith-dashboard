@@ -35,6 +35,7 @@
 }
 
 .modal {
+  @extend .sheet;
   position: relative;
   width: 100%;
   max-width: 640px;
@@ -42,44 +43,20 @@
   border-radius: 10px;
   padding: 30px;
   background-color: $light-100;
-  font-family: $font-family-serif;
   color: $dark-75;
   box-shadow: 0 1px 3px $dark-25;
   overflow: hidden;
-  h1 {
-    font-family: $font-family-sans-serif;
-  }
 }
 
 .modal-control {
-  position: absolute;
-  top: 0;
-  $control-size: 30px;
-  width: $control-size;
-  height: $control-size;
-  border-radius: 0;
-  padding: 10px;
-  box-sizing: content-box;
-  // Fixed the vertical centering of the control icon if the control happens to
-  // be an <a> tag
-  line-height: 1;
-  // Need to override the theme-specific styling on modal buttons
-  background: none !important;
-  &:hover {
-    background-color: $dark-10 !important;
-  }
-  &:not([disabled]):hover:active {
-    background-color: $dark-20 !important;
-  }
+  @extend .sheet-control;
 }
 .modal-back-control {
-  left: 0;
-  border-bottom-right-radius: 10px;
+  @extend .sheet-control-left;
 }
 .modal-close-control {
-  right: 0;
-  border-bottom-left-radius: 10px;
+  @extend .sheet-control-right;
 }
 .modal-control-icon {
-  width: 100%;
+  @extend .sheet-control-icon;
 }
