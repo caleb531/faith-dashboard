@@ -92,6 +92,7 @@ a.button {
   }
   &:not([disabled]):hover:active {
     background-color: $dark-50;
+    color: $light-100;
   }
 }
 

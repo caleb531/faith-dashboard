@@ -40,9 +40,15 @@ $theme-photos: (
   .theme-#{$theme-name} .landing-page {
     button,
     a.button {
-      background-color: $theme-color;
+      background: none;
+      border: solid 2px $theme-color;
+      font-weight: bold;
+      color: $theme-color;
       &:not([disabled]):hover:active {
-        background-color: darken($theme-color, 10%);
+        $active-theme-color: darken($theme-color, 10%);
+        border-color: $active-theme-color;
+        background-color: $active-theme-color;
+        color: $light-100;
       }
     }
   }
