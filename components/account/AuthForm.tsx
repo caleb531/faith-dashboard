@@ -17,7 +17,6 @@ function AuthForm(props: Props) {
 
   const [formError, setFormError] = useState<ApiError | null>();
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
-  const [isFormSuccess, setIsFormSuccess] = useState(false);
 
   async function onSubmitWrapper(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -30,7 +29,6 @@ function AuthForm(props: Props) {
     // If there is no error, the value is conveniently null
     setFormError(error);
     if (session) {
-      setIsFormSuccess(true);
       // Redirect to the main app if the user has been properly authenticated
       // with a session; the "Submitting..." button label will continue showing
       // while the browser is in the process of redirecting
@@ -56,12 +54,8 @@ function AuthForm(props: Props) {
       <button
         type="submit"
         className="account-auth-form-submit"
-        disabled={isFormSubmitting || isFormSuccess}>
-        {isFormSubmitting ?
-          props.submittingLabel :
-          isFormSuccess ?
-            props.successLabel :
-            props.submitLabel}
+        disabled={isFormSubmitting}>
+        {isFormSubmitting ? props.submittingLabel : props.submitLabel}
       </button>
 
     </form>
