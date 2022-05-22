@@ -54,7 +54,7 @@ function SignUpForm({ pageTitle }: Props) {
           className="account-auth-form-input"
           type="text"
           id="sign-up-form-first-name"
-          name="first-name"
+          name="first_name"
           placeholder="First Name"
           required
           {...firstNameAutoFocus}
@@ -64,7 +64,7 @@ function SignUpForm({ pageTitle }: Props) {
           className="account-auth-form-input"
           type="text"
           id="sign-up-form-last-name"
-          name="last-name"
+          name="last_name"
           placeholder="Last Name"
           required
           />
