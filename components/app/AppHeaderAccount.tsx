@@ -4,7 +4,7 @@ import { supabase } from '../supabaseClient';
 
 function AppHeaderAccount() {
   const [isShowingMenu, setIsShowingMenu] = useState(false);
-  const [user, setUser] = useState(supabase.auth.user());
+  const [session, setSession] = useState(supabase.auth.session());
   const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
 
   async function signOut() {
@@ -23,11 +23,11 @@ function AppHeaderAccount() {
   // Re-render the view when the user signs in or out
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user || null);
+      setSession(session);
     });
   }, []);
 
-  return user ? (
+  return session?.user ? (
     <div className="app-header-account">
       <label className="app-header-account-label accessibility-only" htmlFor="app-header-account-button">
          Your Account
@@ -51,7 +51,7 @@ function AppHeaderAccount() {
           <menu className="app-header-account-menu-list">
             <li
               className="app-header-account-menu-list-item app-header-account-menu-list-item-email"
-              data-disabled>{user.email}</li>
+              data-disabled>{session.user.email}</li>
             <li
               className="app-header-account-menu-list-item app-header-account-menu-list-item-sign-out"
               onClick={signOut}>
