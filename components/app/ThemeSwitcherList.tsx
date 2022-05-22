@@ -75,7 +75,7 @@ function ThemeSwitcherList({
           <span
             className="theme-switcher-label"
             data-action="change-theme"
-            id={`${themeListItem.label}`}>
+            id={`theme-${themeListItem.value}`}>
             {themeListItem.label}
           </span>
           </li>
