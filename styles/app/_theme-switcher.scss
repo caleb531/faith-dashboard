@@ -30,7 +30,7 @@ $color-theme-column-count: 5;
   position: relative;
   margin: 0;
   padding: 5px;
-  border-width: 0;
+  border-width: 0 !important;
   border-radius: 0;
   background: none !important;
 }
