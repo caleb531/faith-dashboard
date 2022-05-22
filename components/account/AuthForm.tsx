@@ -42,6 +42,12 @@ function AuthForm(props: Props) {
 
       {props.children}
 
+      {formError?.message ? (
+        <div className="account-auth-form-validation-area">
+          <div className="account-auth-form-validation-message">{formError.message}</div>
+        </div>
+      ) : null}
+
       <button
         type="submit"
         className="account-auth-form-submit"
@@ -52,10 +58,6 @@ function AuthForm(props: Props) {
             props.successLabel :
             props.submitLabel}
       </button>
-
-      {formError?.message ? (
-        <div className="account-auth-form-validation-message">{formError.message}</div>
-      ) : null}
 
     </form>
   );
