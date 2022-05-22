@@ -35,19 +35,7 @@ $theme-photos: (
   }
 }
 
-@each $theme-name, $theme-color in $theme-colors {
-  .theme-#{$theme-name} .modal,
-  .theme-#{$theme-name} .landing-page {
-    button,
-    a.button {
-      background-color: $theme-color;
-      &:not([disabled]):hover:active {
-        background-color: darken($theme-color, 10%);
-      }
-    }
-  }
-}
-@each $theme-name, $theme-color in $theme-photos {
+@each $theme-name, $theme-color in join($theme-colors, $theme-photos) {
   .theme-#{$theme-name} .modal,
   .theme-#{$theme-name} .landing-page {
     button,
