@@ -29,7 +29,7 @@ function SignUpForm({ pageTitle }: Props) {
 
   return (
     <LandingPage heading={pageTitle} altLink={{ title: 'Sign Up', href: 'sign-up' }}>
-      <p>Sign in using just your email address; you will be emailed a link to finish the sign-in process.</p>
+      <p>Sign in below to sync your settings and widgets across all your devices.</p>
       <AuthForm
         onSubmit={signIn}
         submitLabel="Sign In"
