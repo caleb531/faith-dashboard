@@ -50,8 +50,15 @@ function AppHeaderAccount() {
           </div>
           <menu className="app-header-account-menu-list">
             <li
-              className="app-header-account-menu-list-item app-header-account-menu-list-item-email"
-              data-disabled>{session.user.email}</li>
+              className="app-header-account-menu-list-item app-header-account-menu-list-item-user-info"
+              data-disabled>
+                <div className="app-header-account-menu-user-name">
+                  {session.user.user_metadata.first_name} {session.user.user_metadata.last_name}
+                </div>
+                <div className="app-header-account-menu-user-email">
+                  {session.user.email}
+                </div>
+              </li>
             <li
               className="app-header-account-menu-list-item app-header-account-menu-list-item-sign-out"
               onClick={signOut}>
