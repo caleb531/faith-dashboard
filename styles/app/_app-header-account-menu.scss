@@ -59,6 +59,7 @@
   position: relative;
   border-radius: 5px;
   padding: 5px 10px;
+  white-space: nowrap;
   &:not([data-disabled]):hover {
     background-color: $blue;
     color: $light-100;
