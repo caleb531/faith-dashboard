@@ -5,6 +5,13 @@
   font-family: $font-family-sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
+  button,
+  a.button {
+    background-color: var(--current-theme-color);
+    &:not([disabled]):hover:active {
+      background-color: var(--current-theme-color-dark);
+    }
+  }
 }
 
 .sheet-control {

@@ -46,19 +46,6 @@ $theme-photos: (
   background-position: center top;
 }
 
-// Style buttons within modals and landing page sections to be colored based on
-// the current theme
-.modal,
-.landing-page {
-  button,
-  a.button {
-    background-color: var(--current-theme-color);
-    &:not([disabled]):hover:active {
-      background-color: var(--current-theme-color-dark);
-    }
-  }
-}
-
 // Theme-specific adjustments
 .theme-mountain {
   background-position: center center;
