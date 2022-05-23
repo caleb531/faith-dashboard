@@ -114,7 +114,8 @@ $widget-transition-duration: 250ms;
   .is-not-touch-device .widget:not(:hover) & {
     opacity: 0;
   }
-  .is-not-touch-device &:hover {
+  .is-not-touch-device &:hover,
+  &:focus-visible {
     opacity: 0.5 !important;
   }
   .is-not-touch-device &:active {
