@@ -19,9 +19,15 @@ $theme-photos: (
     --current-theme-color-dark: #{darken($theme-color, 10%)};
   }
 }
+// There is a bug in Chrome where a CSS variable defined as a background-image
+// will cause the browser to redundantly repaint and request the image multiple
+// times, causing the image to flicker even though it hasn't changed; even
+// though we'd prefer to define the image URL as a CSS variable, we need to
+// hardcode the background-image per every photo theme in order to avoid the
+// flicker / redundant requests
 @each $theme-name, $theme-color in $theme-photos {
-  .theme-#{$theme-name} {
-    --current-theme-photo-url: url('../../public/images/background-photos/#{$theme-name}.jpg');
+  .photo-theme.theme-#{$theme-name}:before {
+    background-image: url('../../public/images/background-photos/#{$theme-name}.jpg');
   }
 }
 
@@ -40,7 +46,6 @@ $theme-photos: (
   width: 100%;
   height: 100%;
   background-color: $grey;
-  background-image: var(--current-theme-photo-url);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;
