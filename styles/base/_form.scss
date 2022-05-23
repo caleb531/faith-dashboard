@@ -95,6 +95,14 @@ a.button {
   }
 }
 
+button,
+a {
+  &:focus-visible {
+    outline-width: 0;
+    box-shadow: 0 0 0 1px $light-100, 0 0 0 3px $blue;
+  }
+}
+
 .form-error-message {
   font-size: $font-size-m;
 }
