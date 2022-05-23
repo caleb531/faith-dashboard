@@ -51,7 +51,7 @@ function PodcastEpisodeList({
       ) : null}
       <div className="podcast-subtext">
         <span className="podcast-episode-count">{podcastFeedData?.item.length === 1 ? `${podcastFeedData.item.length} episode` : `${podcastFeedData?.item.length} episodes`}</span>
-        <button className="podcast-episodes-refresh-control widget-control" onClick={() => fetchPodcastFeed(podcastFeedUrl)}>
+        <button type="button" className="podcast-episodes-refresh-control widget-control" onClick={() => fetchPodcastFeed(podcastFeedUrl)}>
           <img
             className="podcast-episodes-refresh-control-icon"
             src="icons/refresh.svg"

@@ -90,7 +90,7 @@ function WidgetShell({
             className="widget-remove-control-icon widget-control-icon"
             draggable="false" />
         </button>
-        <button className="widget-settings-toggle widget-control" onClick={(event) => dispatch({ type: 'toggleSettings' })} {...settingsStepData.stepProps}>
+        <button type="button" className="widget-settings-toggle widget-control" onClick={(event) => dispatch({ type: 'toggleSettings' })} {...settingsStepData.stepProps}>
           <img
             src="icons/settings-light.svg"
             alt="Toggle Settings"
