@@ -1,4 +1,4 @@
-// Store available photo theme in a map, where the key is the ID of the photo
+// Store available photo themes in a map, where the key is the ID of the photo
 // theme, and the value is an accent color used for things like buttons,
 // controls, etc.
 $theme-photos: (
@@ -11,39 +11,50 @@ $theme-photos: (
   'forest': $forest
 );
 
-@each $theme-name, $theme-color in $theme-colors {
+// Dynamically define CSS variables / custom properties using Sass variable
+// interpolation
+@each $theme-name, $theme-color in join($theme-colors, $theme-photos) {
   .theme-#{$theme-name} {
-    background-color: $theme-color;
+    --current-theme-color: #{$theme-color};
+    --current-theme-color-dark: #{darken($theme-color, 10%)};
   }
 }
 @each $theme-name, $theme-color in $theme-photos {
-  // Since iOS does not support background-attachment:fixed, we must add a
-  // pseudo-element on the <body> and add the background-image to that
-  .theme-#{$theme-name}:before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    background-color: $grey;
-    background-image: url('../../public/images/background-photos/#{$theme-name}.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center top;
+  .theme-#{$theme-name} {
+    --current-theme-photo-url: url('../../public/images/background-photos/#{$theme-name}.jpg');
   }
 }
 
-@each $theme-name, $theme-color in join($theme-colors, $theme-photos) {
-  .theme-#{$theme-name} .modal,
-  .theme-#{$theme-name} .landing-page {
-    button,
-    a.button {
-      background-color: $theme-color;
-      &:not([disabled]):hover:active {
-        background-color: darken($theme-color, 10%);
-      }
+// Set <body> background as solid color for color themes
+.color-theme {
+  background-color: var(--current-theme-color);
+}
+// Since iOS does not support background-attachment:fixed, we must add a
+// pseudo-element on the <body> and add the background-image to that
+.photo-theme:before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background-color: $grey;
+  background-image: var(--current-theme-photo-url);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+}
+
+// Style buttons within modals and landing page sections to be colored based on
+// the current theme
+.modal,
+.landing-page {
+  button,
+  a.button {
+    background-color: var(--current-theme-color);
+    &:not([disabled]):hover:active {
+      background-color: var(--current-theme-color-dark);
     }
   }
 }
