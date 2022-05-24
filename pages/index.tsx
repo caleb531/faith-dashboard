@@ -3,7 +3,6 @@ import App from '../components/app/App';
 import AppCompletedTutorial from '../components/app/AppCompletedTutorial';
 import AppWelcome from '../components/app/AppWelcome';
 import LoadingIndicator from '../components/generic/LoadingIndicator';
-import TutorialWrapper from '../components/tutorial/TutorialWrapper';
 import WidgetBoard from '../components/widgets/WidgetBoard';
 
 function Home() {
@@ -12,15 +11,13 @@ function Home() {
 
   return (
     <App>
-      {(app) => (
-        <TutorialWrapper shouldShow={Boolean(app.shouldShowTutorial)}>
-          <AppWelcome />
-          <AppCompletedTutorial />
-          <Suspense fallback={<LoadingIndicator />}>
-            <WidgetBoard widgets={app.widgets} />
-          </Suspense>
-        </TutorialWrapper>
-      )}
+      {(app) => <>
+        <AppWelcome />
+        <AppCompletedTutorial />
+        <Suspense fallback={<LoadingIndicator />}>
+          <WidgetBoard widgets={app.widgets} />
+        </Suspense>
+      </>}
     </App>
   );
 }
