@@ -11,7 +11,7 @@ type Props = {
   children: JSX.Element | (JSX.Element | null)[] | null
 };
 
-function TutorialWrapper({
+function TutorialFlow({
   inProgress,
   children
 }: Props) {
@@ -52,7 +52,7 @@ function TutorialWrapper({
   return (
     <TutorialContext.Provider value={contextValue}>
       <div className={classNames([
-        'tutorial-wrapper',
+        'tutorial-flow-wrapper',
         { 'tutorial-in-progress': inProgress }
       ])}>
         <TutorialOverlay isVisible={inProgress} />
@@ -62,4 +62,4 @@ function TutorialWrapper({
   );
 }
 
-export default TutorialWrapper;
+export default TutorialFlow;

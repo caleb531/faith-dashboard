@@ -1,5 +1,5 @@
 import React from 'react';
-import TutorialWrapper from '../tutorial/TutorialWrapper';
+import TutorialFlow from '../tutorial/TutorialFlow';
 import useMountListener from '../useMountListener';
 import useTouchDeviceDetection from '../useTouchDeviceDetection';
 import { AppState } from './app.d';
@@ -41,13 +41,13 @@ function App({
         {shouldLoadServiceWorker() ? (
           <UpdateNotification />
         ) : null}
-        <TutorialWrapper inProgress={Boolean(app.shouldShowTutorial && enableTutorial)}>
+        <TutorialFlow inProgress={Boolean(app.shouldShowTutorial && enableTutorial)}>
           <AppHeader currentTheme={app.theme} />
           {isMounted ? <div className="app-contents">
             {children(app)}
           </div> : null}
           <AppFooter />
-        </TutorialWrapper>
+        </TutorialFlow>
       </div>
     </AppContext.Provider>
   );
