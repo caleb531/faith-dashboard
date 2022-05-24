@@ -1,18 +1,15 @@
 import classNames from 'classnames';
-import React, { Suspense, useEffect, useReducer } from 'react';
+import React, { Suspense } from 'react';
 import LoadingIndicator from '../generic/LoadingIndicator';
 import TutorialWrapper from '../tutorial/TutorialWrapper';
-import useLocalStorage from '../useLocalStorage';
 import useMountListener from '../useMountListener';
 import AppCompletedTutorial from './AppCompletedTutorial';
 import AppContext from './AppContext';
 import AppFooter from './AppFooter';
 import AppHeader from './AppHeader';
-import reducer from './AppReducer';
-import defaultApp from './appStateDefault';
 import AppWelcome from './AppWelcome';
 import UpdateNotification from './UpdateNotification';
-import useThemeForEntirePage from './useThemeForEntirePage';
+import useApp from './useApp';
 
 const WidgetBoard = React.lazy(() => import('../widgets/WidgetBoard'));
 
@@ -32,15 +29,7 @@ function isTouchDevice(): boolean {
 
 function App() {
 
-  const [restoreApp, saveApp] = useLocalStorage('faith-dashboard-app', defaultApp);
-  const [app, dispatchToApp] = useReducer(reducer, null, () => restoreApp());
-
-  // Serialize the app to localStorage whenever the app's state changes
-  useEffect(() => {
-    saveApp(app);
-  }, [app, saveApp]);
-
-  useThemeForEntirePage(app.theme);
+  const [app, dispatchToApp] = useApp();
 
   const isMounted = useMountListener();
   return (

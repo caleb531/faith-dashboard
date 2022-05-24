@@ -4,9 +4,9 @@ import React, { useRef } from 'react';
 import AuthForm from '../components/account/AuthForm';
 import useAutoFocus from '../components/account/useAutoFocus';
 import useFormSerializer from '../components/account/useFormSerializer';
+import useApp from '../components/app/useApp';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
-import useLandingPage from '../components/useLandingPage';
 
 type Props = {
   pageTitle: string
@@ -14,7 +14,7 @@ type Props = {
 
 function SignUpForm({ pageTitle }: Props) {
 
-  useLandingPage();
+  useApp();
 
   const [serializeForm] = useFormSerializer();
   const passwordInputRef = useRef<HTMLInputElement>(null);

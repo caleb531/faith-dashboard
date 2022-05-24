@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { Session } from '@supabase/supabase-js';
+import React, { useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
 import { supabase } from '../supabaseClient';
+import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 
 function AppHeaderAccount() {
   const [isShowingMenu, setIsShowingMenu] = useState(false);
-  const [session, setSession] = useState(supabase.auth.session());
+  // The session will be loaded asynchronously and isomorphically, via a
+  // useEffect() call later in this function; this is done to avoid SSR
+  // mismatches (please see the hook below)
+  const [session, setSession] = useState<Session | null>(null);
   const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
 
   async function signOut() {
@@ -19,6 +24,13 @@ function AppHeaderAccount() {
   function onCloseSignInModal() {
     setSignInModalIsOpen(false);
   }
+
+  // Update session asynchronously and isomorphically (so as to avoid any SSR
+  // mismatch with the rendered page HTML); we use useIsomorphicLayoutEffect()
+  // instead of useEffect() directly to minimize any possible page flicker
+  useIsomorphicLayoutEffect(() => {
+    setSession(supabase.auth.session());
+  }, []);
 
   return session?.user ? (
     <div className="app-header-account">

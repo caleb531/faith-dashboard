@@ -7,7 +7,8 @@ export type AppAction =
   { type: 'skipTutorial' } |
   { type: 'addWidget', payload: WidgetHead } |
   { type: 'removeWidget', payload: Omit<WidgetHead, 'type' | 'column'> } |
-  { type: 'moveWidget', payload: WidgetMoveParameters };
+  { type: 'moveWidget', payload: WidgetMoveParameters } |
+  { type: 'replaceApp', payload: AppState };
 
 export default function reducer(
   state: AppState,
@@ -61,6 +62,8 @@ export default function reducer(
       // of every drag (sidenote: Lodash's sortBy is a stable sort, so this
       // will not alter the user order of widgets within the same column)
       return { ...state, widgets: sortBy(newWidgets, 'column') };
+    case 'replaceApp':
+      return action.payload;
     default:
       return state;
   }
