@@ -99,7 +99,7 @@ button,
 a {
   &:focus-visible {
     outline-width: 0;
-    box-shadow: 0 0 0 1px $light-100, 0 0 0 3px $blue;
+    box-shadow: 0 0 0 2px $light-100, 0 0 0 4px $blue;
   }
 }
 
