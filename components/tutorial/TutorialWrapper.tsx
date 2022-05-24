@@ -7,24 +7,22 @@ import TutorialOverlay from './TutorialOverlay';
 import tutorialSteps from './tutorialSteps';
 
 type Props = {
-  shouldShow: boolean,
+  inProgress: boolean,
   children: JSX.Element | (JSX.Element | null)[] | null
 };
 
 function TutorialWrapper({
-  shouldShow,
+  inProgress,
   children
 }: Props) {
 
   const dispatchToApp = useContext(AppContext);
 
-  const [inProgress, setInProgress] = useState(shouldShow);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   const skipTutorial = useCallback(() => {
-    setInProgress(false);
     dispatchToApp({ type: 'skipTutorial' });
-  }, [setInProgress, dispatchToApp]);
+  }, [dispatchToApp]);
 
   const moveToNextStep = useCallback(() => {
     if ((currentStepIndex + 1) === tutorialSteps.length) {

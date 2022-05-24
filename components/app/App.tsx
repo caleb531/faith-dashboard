@@ -41,7 +41,7 @@ function App({
         {shouldLoadServiceWorker() ? (
           <UpdateNotification />
         ) : null}
-        <TutorialWrapper shouldShow={Boolean(app.shouldShowTutorial && enableTutorial)}>
+        <TutorialWrapper inProgress={Boolean(app.shouldShowTutorial && enableTutorial)}>
           <AppHeader currentTheme={app.theme} />
           {isMounted ? <div className="app-contents">
             {children(app)}
