@@ -37,18 +37,18 @@ function App({
   const isMounted = useMountListener();
   return (
     <AppContext.Provider value={dispatchToApp}>
-      {isMounted ? <div className="app">
+      <div className="app">
         {shouldLoadServiceWorker() ? (
           <UpdateNotification />
         ) : null}
         <TutorialWrapper shouldShow={Boolean(app.shouldShowTutorial && enableTutorial)}>
           <AppHeader currentTheme={app.theme} />
-          <div className="app-contents">
+          {isMounted ? <div className="app-contents">
             {children(app)}
-          </div>
+          </div> : null}
           <AppFooter />
         </TutorialWrapper>
-      </div> : null}
+      </div>
     </AppContext.Provider>
   );
 
