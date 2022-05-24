@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { AppTheme } from './app.d';
 import AppHeaderAccount from './AppHeaderAccount';
@@ -16,7 +17,9 @@ function AppHeader({
 
   return (
     <header className="app-header" role="banner">
-      <h1 className="app-header-title">Faith Dashboard</h1>
+      <h1 className="app-header-title">
+        <Link href="/"><a className="app-header-title-link">Faith Dashboard</a></Link>
+      </h1>
       <div className="app-header-controls">
         {allowAddWidget ? <AppHeaderAddWidgetButton /> : null}
         <AppHeaderThemeSwitcher currentTheme={currentTheme} />

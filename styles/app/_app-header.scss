@@ -12,8 +12,11 @@
   margin: 0;
   text-align: left;
   font-size: 0;
+}
+.app-header-title-link {
   color: $light-100;
   mix-blend-mode: soft-light;
+  text-decoration: none;
   &:before {
     content: 'FD';
     font-size: $font-size-m;
