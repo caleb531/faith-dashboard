@@ -16,13 +16,13 @@ export default function useThemeForEntirePage(theme: AppTheme) {
   useIsomorphicLayoutEffect(() => {
     document.body.classList.add(
       'theme',
-      `theme-${theme}`,
-      colorThemesById[theme] ?
-        'color-theme' :
-        photoThemesById[theme] ?
-          'photo-theme' :
-          ''
+      `theme-${theme}`
     );
+    if (colorThemesById[theme]) {
+      document.body.classList.add('color-theme');
+    } else if (photoThemesById[theme]) {
+      document.body.classList.add('photo-theme');
+    }
     return () => {
       // Remove any previous theme-* or *-theme classes applied to the <body>
       Array.from(document.body.classList).forEach((className) => {
