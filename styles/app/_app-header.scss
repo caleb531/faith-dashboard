@@ -40,6 +40,10 @@
   margin: 0 15px;
 }
 .app-header-control-button {
+  // Make all header buttons the same height on all pages, even if the Add
+  // Widget button (which is slightly taller than the natural height of the
+  // other buttons) isn't present
+  min-height: 28px;
   padding: 4px 12px;
   font-size: $font-size-xxxs;
 }

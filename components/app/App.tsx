@@ -22,11 +22,13 @@ function shouldLoadServiceWorker() {
 
 type Props = {
   enableTutorial?: boolean,
+  canAddWidgets?: boolean,
   children: (app: AppState) => JSX.Element | (JSX.Element | null)[] | null,
 }
 
 function App({
   enableTutorial = false,
+  canAddWidgets = false,
   children
 }: Props) {
 
@@ -42,7 +44,7 @@ function App({
           <UpdateNotification />
         ) : null}
         <TutorialFlow inProgress={Boolean(app.shouldShowTutorial && enableTutorial)}>
-          <AppHeader currentTheme={app.theme} />
+          <AppHeader currentTheme={app.theme} canAddWidgets={canAddWidgets} />
           {isMounted ? <div className="app-contents">
             {children(app)}
           </div> : null}

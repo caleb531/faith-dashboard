@@ -7,12 +7,12 @@ import AppHeaderThemeSwitcher from './AppHeaderThemeSwitcher';
 
 type Props = {
   currentTheme: AppTheme,
-  allowAddWidget?: boolean
+  canAddWidgets?: boolean
 };
 
 function AppHeader({
   currentTheme,
-  allowAddWidget = true
+  canAddWidgets
 }: Props) {
 
   return (
@@ -21,7 +21,7 @@ function AppHeader({
         <Link href="/"><a className="app-header-title-link">Faith Dashboard</a></Link>
       </h1>
       <div className="app-header-controls">
-        {allowAddWidget ? <AppHeaderAddWidgetButton /> : null}
+        {canAddWidgets ? <AppHeaderAddWidgetButton /> : null}
         <AppHeaderThemeSwitcher currentTheme={currentTheme} />
         <AppHeaderAccount />
       </div>
