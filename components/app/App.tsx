@@ -1,8 +1,8 @@
-import classNames from 'classnames';
 import React, { Suspense } from 'react';
 import LoadingIndicator from '../generic/LoadingIndicator';
 import TutorialWrapper from '../tutorial/TutorialWrapper';
 import useMountListener from '../useMountListener';
+import useTouchDeviceDetection from '../useTouchDeviceDetection';
 import AppCompletedTutorial from './AppCompletedTutorial';
 import AppContext from './AppContext';
 import AppFooter from './AppFooter';
@@ -22,23 +22,16 @@ function shouldLoadServiceWorker() {
   return typeof navigator !== 'undefined' && navigator.serviceWorker && (!window.location.hostname.includes('localhost') || sessionStorage.getItem('sw'));
 }
 
-// Return true if the user agent is a touch device; otherwise, return false
-function isTouchDevice(): boolean {
-  return typeof window !== 'undefined' && window.ontouchstart !== undefined;
-}
-
 function App() {
 
   const [app, dispatchToApp] = useApp();
 
+  useTouchDeviceDetection();
+
   const isMounted = useMountListener();
   return (
     <AppContext.Provider value={dispatchToApp}>
-        {isMounted ? <div className={classNames(
-          'app',
-          { 'is-touch-device': isTouchDevice() },
-          { 'is-not-touch-device': !isTouchDevice() }
-        )}>
+        {isMounted ? <div className="app">
           <TutorialWrapper shouldShow={Boolean(app.shouldShowTutorial)}>
             {shouldLoadServiceWorker() ? (
               <UpdateNotification />
