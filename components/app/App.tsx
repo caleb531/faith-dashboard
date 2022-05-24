@@ -21,10 +21,14 @@ function shouldLoadServiceWorker() {
 }
 
 type Props = {
+  enableTutorial?: boolean,
   children: (app: AppState) => JSX.Element | (JSX.Element | null)[] | null,
 }
 
-function App({ children }: Props) {
+function App({
+  enableTutorial = false,
+  children
+}: Props) {
 
   const [app, dispatchToApp] = useApp();
 
@@ -37,7 +41,7 @@ function App({ children }: Props) {
         {shouldLoadServiceWorker() ? (
           <UpdateNotification />
         ) : null}
-        <TutorialWrapper shouldShow={Boolean(app.shouldShowTutorial)}>
+        <TutorialWrapper shouldShow={Boolean(app.shouldShowTutorial && enableTutorial)}>
           <AppHeader currentTheme={app.theme} />
           <div className="app-contents">
             {children(app)}

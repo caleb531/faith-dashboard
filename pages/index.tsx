@@ -10,7 +10,7 @@ function Home() {
 
 
   return (
-    <App>
+    <App enableTutorial={true}>
       {(app) => <>
         <AppWelcome />
         <AppCompletedTutorial />
