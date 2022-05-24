@@ -2,28 +2,28 @@ import { AppThemeListItem } from './app.d';
 
 const photoThemeList: AppThemeListItem[] = [
   {
-    label: 'Word',
-    value: 'word'
-  },
-  {
-    label: 'Worship',
-    value: 'worship'
+    label: 'Shore',
+    value: 'shore'
   },
   {
     label: 'Forest',
     value: 'forest'
   },
   {
+    label: 'Stars',
+    value: 'stars'
+  },
+  {
     label: 'Mountains',
     value: 'mountain'
   },
   {
-    label: 'Shore',
-    value: 'shore'
+    label: 'Word',
+    value: 'word'
   },
   {
-    label: 'Stars',
-    value: 'stars'
+    label: 'Worship',
+    value: 'worship'
   },
   {
     label: 'Pasture',
