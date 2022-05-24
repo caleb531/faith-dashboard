@@ -1,13 +1,11 @@
-import React, { Suspense } from 'react';
-import LoadingIndicator from '../generic/LoadingIndicator';
+import React from 'react';
 import TutorialWrapper from '../tutorial/TutorialWrapper';
 import useMountListener from '../useMountListener';
 import useTouchDeviceDetection from '../useTouchDeviceDetection';
-import AppCompletedTutorial from './AppCompletedTutorial';
+import { AppState } from './app.d';
 import AppContext from './AppContext';
 import AppFooter from './AppFooter';
 import AppHeader from './AppHeader';
-import AppWelcome from './AppWelcome';
 import UpdateNotification from './UpdateNotification';
 import useApp from './useApp';
 
@@ -22,7 +20,11 @@ function shouldLoadServiceWorker() {
   return typeof navigator !== 'undefined' && navigator.serviceWorker && (!window.location.hostname.includes('localhost') || sessionStorage.getItem('sw'));
 }
 
-function App() {
+type Props = {
+  children: (app: AppState) => JSX.Element | (JSX.Element | null)[] | null,
+}
+
+function App({ children }: Props) {
 
   const [app, dispatchToApp] = useApp();
 
@@ -31,20 +33,18 @@ function App() {
   const isMounted = useMountListener();
   return (
     <AppContext.Provider value={dispatchToApp}>
-        {isMounted ? <div className="app">
-          <TutorialWrapper shouldShow={Boolean(app.shouldShowTutorial)}>
-            {shouldLoadServiceWorker() ? (
-              <UpdateNotification />
-            ) : null}
-            <AppHeader currentTheme={app.theme} />
-            <AppWelcome />
-            <AppCompletedTutorial />
-            <Suspense fallback={<LoadingIndicator />}>
-              <WidgetBoard widgets={app.widgets} />
-            </Suspense>
-            <AppFooter />
-          </TutorialWrapper>
-        </div> : null}
+      {isMounted ? <div className="app">
+        {shouldLoadServiceWorker() ? (
+          <UpdateNotification />
+        ) : null}
+        <TutorialWrapper shouldShow={Boolean(app.shouldShowTutorial)}>
+          <AppHeader currentTheme={app.theme} />
+          <div className="app-children">
+            {children(app)}
+          </div>
+          <AppFooter />
+        </TutorialWrapper>
+      </div> : null}
     </AppContext.Provider>
   );
 

@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import React from 'react';
-import App from '../app/App';
+import Home from '../../pages/index';
 import { AppState } from '../app/app.d';
 import reducer from '../app/AppReducer';
 import { createWidget } from './__utils__/test-utils';
@@ -9,7 +9,7 @@ import { createWidget } from './__utils__/test-utils';
 describe('App Component', function () {
 
   it('should render', function () {
-    const { getByText } = render(<App />);
+    const { getByText } = render(<Home />);
     expect(getByText('Faith Dashboard')).toBeInTheDocument();
   });
 
