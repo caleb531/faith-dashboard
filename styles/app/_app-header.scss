@@ -17,6 +17,10 @@
   color: $light-100;
   mix-blend-mode: soft-light;
   text-decoration: none;
+  .theme-forest & {
+    mix-blend-mode: normal;
+    color: $dark-50;
+  }
   &:before {
     content: 'FD';
     font-size: $font-size-m;
