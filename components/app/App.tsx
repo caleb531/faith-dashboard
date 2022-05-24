@@ -39,7 +39,7 @@ function App({ children }: Props) {
         ) : null}
         <TutorialWrapper shouldShow={Boolean(app.shouldShowTutorial)}>
           <AppHeader currentTheme={app.theme} />
-          <div className="app-children">
+          <div className="app-contents">
             {children(app)}
           </div>
           <AppFooter />
