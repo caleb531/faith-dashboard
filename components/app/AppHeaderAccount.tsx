@@ -20,13 +20,6 @@ function AppHeaderAccount() {
     setSignInModalIsOpen(false);
   }
 
-  // Re-render the view when the user signs in or out
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      setSession(session);
-    });
-  }, []);
-
   return session?.user ? (
     <div className="app-header-account">
       <label className="app-header-account-label accessibility-only" htmlFor="app-header-account-button">
