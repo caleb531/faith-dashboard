@@ -77,7 +77,7 @@ function AppHeaderAccount() {
     <div className="app-header-account">
       <button
         type="button"
-        className="app-header-account-button"
+        className="app-header-account-button app-header-control-button"
         onClick={() => setSignInModalIsOpen(true)}>
         Sign Up/In
       </button>

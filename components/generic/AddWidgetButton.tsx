@@ -2,16 +2,23 @@ import React from 'react';
 
 type Props = {
   onPressButton: () => void,
-  buttonProps?: object
+  buttonProps?: object,
+  buttonClassNames?: string;
 };
 
 function AddWidget({
   onPressButton,
-  buttonProps = {}
+  buttonProps = {},
+  buttonClassNames = ''
 }: Props) {
 
   return (
-    <button type="button" className="add-widget-button" aria-label="Add Widget" onClick={onPressButton} {...buttonProps}>
+    <button
+      type="button"
+      className={`add-widget-button ${buttonClassNames}`}
+      aria-label="Add Widget"
+      onClick={onPressButton}
+      {...buttonProps}>
       <img
         className="add-widget-button-icon"
         src="icons/add-light.svg"

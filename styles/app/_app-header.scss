@@ -36,9 +36,12 @@
   position: relative;
   margin: 0 15px;
 }
+.app-header-control-button {
+  padding: 4px 12px;
+  font-size: $font-size-xxxs;
+}
 
 .app-header button,
 .app-header a.button {
   font-family: $font-family-sans-serif;
-  font-size: $font-size-xxxs;
 }

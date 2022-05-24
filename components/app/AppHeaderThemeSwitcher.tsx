@@ -26,7 +26,7 @@ function AppHeaderThemeSwitcher({
         Color Theme
       </label>
       <button
-        className="app-header-theme-switcher-button"
+        className="app-header-theme-switcher-button app-header-control-button"
         id="app-header-theme-switcher-button"
         onClick={() => setThemeSwitcherIsOpen((isOpen) => !isOpen)}
         {...stepProps}>
