@@ -7,7 +7,7 @@ Be strengthened every day with Faith Dashboard, a private board for your
 favorite Bible verses, sermons, and anything else you need to be encouraged
 when life happens. Keep it open in a browser tab, and come back to it as needed.
 
-[Live App](https://faithdashboard.com/)
+https://faithdashboard.com/
 
 ## Setup
 
