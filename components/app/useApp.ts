@@ -4,6 +4,7 @@ import useLocalStorage from '../useLocalStorage';
 import { AppState } from './app.d';
 import reducer, { AppAction } from './AppReducer';
 import defaultApp from './appStateDefault';
+import useAppSync from './useAppSync';
 import useThemeForEntirePage from './useThemeForEntirePage';
 
 // The useApp() hook manages the state of the entire application in one place
@@ -23,6 +24,8 @@ function useApp(): [AppState, Dispatch<AppAction>] {
   useEffect(() => {
     saveApp(app);
   }, [app, saveApp]);
+
+  useAppSync(app);
 
   useThemeForEntirePage(app.theme);
 

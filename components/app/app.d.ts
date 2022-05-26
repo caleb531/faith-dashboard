@@ -6,6 +6,7 @@ export type AppTheme = 'brown' | 'green' | 'teal' | 'blue' | 'purple' | 'royal' 
 
 // The state of the application; an instance of
 export interface AppState {
+  id?: string;
   theme: AppTheme;
   shouldShowTutorial?: boolean | undefined;
   widgets: WidgetHead[];
