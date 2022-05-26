@@ -3,6 +3,7 @@ import { Dispatch, useReducer } from 'react';
 import useLocalStorage from '../useLocalStorage';
 import { WidgetHead, WidgetState } from '../widgets/widget.d';
 import widgetTypes from '../widgets/widgetTypes';
+import useWidgetSync from './useWidgetSync';
 import useWidgetUpdater from './useWidgetUpdater';
 
 // Instantiates a new widget object using the given header information about
@@ -91,6 +92,7 @@ export default function useWidgetShell<Action>(
 
   // Save updates to the widget as its state changes
   useWidgetUpdater(state, saveWidget, removeWidget);
+  useWidgetSync(state);
 
   return [state, dispatch];
 
