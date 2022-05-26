@@ -19,6 +19,7 @@ function AppHeaderAccount() {
     }
     const { error } = await supabase.auth.signOut();
     console.log('error', error);
+    window.location.reload();
   }
 
   function onCloseSignInModal() {
