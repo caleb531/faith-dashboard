@@ -20,10 +20,11 @@ async function pushWidgetToDatabase(widget: WidgetState): Promise<void> {
     ]);
 }
 
-// The useWidgetSync() hook
+// The useWidgetSync() hook pushes the state of the given widget to the server
+// whenever it changes
 function useWidgetSync(
   widget: WidgetState
-) {
+): void {
 
   const [widgetHasChanged] = useObjectHasChanged(widget);
 
