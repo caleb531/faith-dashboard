@@ -6,6 +6,7 @@ import reducer, { AppAction } from './AppReducer';
 import defaultApp from './appStateDefault';
 import useThemeForEntirePage from './useThemeForEntirePage';
 
+// The useApp() hook manages the state of the entire application in one place
 function useApp(): [AppState, Dispatch<AppAction>] {
 
   const [restoreApp, saveApp] = useLocalStorage('faith-dashboard-app', defaultApp);
