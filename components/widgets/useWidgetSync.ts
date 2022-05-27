@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
 import { supabase } from '../supabaseClient';
-import useObjectHasChanged from '../useObjectHasChanged';
+import useSyncPush from '../useSyncPush';
 import { WidgetState } from './widget';
 
 // Send the supplied widget data to the widgets table in the database
@@ -26,15 +25,18 @@ function useWidgetSync(
   widget: WidgetState
 ): void {
 
-  const [getWidgetChanges] = useObjectHasChanged(widget);
-
-  useEffect(() => {
-    const changes = getWidgetChanges();
-    if (changes && Object.keys(changes).length > 0) {
-      console.log('widget push', widget);
-      pushWidgetToDatabase(widget);
-    } else {
-      console.log('no widget changes to merge');
+  useSyncPush({
+    state: widget,
+    upsert: async ({ state, user }) => {
+      await supabase
+        .from('widgets')
+        .upsert([
+          {
+            id: state.id,
+            user_id: user.id,
+            raw_data: JSON.stringify(state)
+          }
+        ]);
     }
   });
 
