@@ -27,8 +27,7 @@ function useAppSync(
 
   const [getAppChanges] = useObjectHasChanged(app);
 
-
-  useEffect(() => {
+  function evaluatePush() {
     const changes = getAppChanges();
     // In order for the app to run in SSR, the app is first initialized with
     // the default app state, and then the local app state is asynchronously
@@ -44,6 +43,11 @@ function useAppSync(
     } else {
       console.log('no dashboard changes to merge');
     }
+  }
+
+  // Evaluate if the state has changed on every push
+  useEffect(() => {
+    evaluatePush();
   });
 
   // Subscribe to changes to the app/dashboard itself or to individual widgets
@@ -54,7 +58,7 @@ function useAppSync(
         console.log('dashboard pull', payload);
       })
       .subscribe();
-    console.log('subscribe');
+    console.log('subscribe', subscription);
   }, []);
 
 }
