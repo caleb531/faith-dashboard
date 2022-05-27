@@ -26,11 +26,15 @@ function useWidgetSync(
   widget: WidgetState
 ): void {
 
-  const [widgetHasChanged] = useObjectHasChanged(widget);
+  const [getWidgetChanges] = useObjectHasChanged(widget);
 
   useEffect(() => {
-    if (widgetHasChanged()) {
+    const changes = getWidgetChanges();
+    if (changes && Object.keys(changes).length > 0) {
+      console.log('widget push', widget);
       pushWidgetToDatabase(widget);
+    } else {
+      console.log('no widget changes to merge');
     }
   });
 

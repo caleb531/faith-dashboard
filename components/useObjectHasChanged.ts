@@ -7,16 +7,17 @@ function useObjectHasChanged<T extends object>(obj: T) {
 
   const prevObjRef = useRef(obj);
 
-  function hasChanged() {
-    if (Object.keys(diff(obj, prevObjRef.current)).length > 0) {
+  function getChanges(): Partial<T> | null {
+    const changes = diff(obj, prevObjRef.current);
+    if (Object.keys(changes).length > 0) {
       prevObjRef.current = obj;
-      return true;
+      return changes;
     } else {
-      return false;
+      return null;
     }
   }
 
-  return [hasChanged];
+  return [getChanges];
 
 }
 
