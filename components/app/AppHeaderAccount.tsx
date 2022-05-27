@@ -4,6 +4,16 @@ import AccountAuthFlow from '../account/AccountAuthFlow';
 import { supabase } from '../supabaseClient';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 
+function isSessionExpired(session: Session) {
+  return (
+    session.expires_at
+    &&
+    session.expires_in
+    &&
+    (session.expires_at + session.expires_in) <= (Date.now() / 1000)
+  );
+}
+
 function AppHeaderAccount() {
   const [isShowingMenu, setIsShowingMenu] = useState(false);
   // The session will be loaded asynchronously and isomorphically, via a
@@ -33,7 +43,7 @@ function AppHeaderAccount() {
     setSession(supabase.auth.session());
   }, []);
 
-  return session?.user ? (
+  return session?.user && !isSessionExpired(session) ? (
     <div className="app-header-account">
       <label className="app-header-account-label accessibility-only" htmlFor="app-header-account-button">
          Your Account
