@@ -31,7 +31,7 @@ function useWidgetSync(
   useEffect(() => {
     const changes = getWidgetChanges();
     if (changes && Object.keys(changes).length > 0) {
-      console.log('widget push', widget);
+      console.log('widget push', changes);
       pushWidgetToDatabase(widget);
     } else {
       console.log('no widget changes to merge');
