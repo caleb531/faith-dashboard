@@ -25,13 +25,16 @@ function useAppSync(
 
   // Subscribe to changes to the app/dashboard itself or to individual widgets
   useEffect(() => {
-    supabase
+    const subscription = supabase
       .from('dashboards')
       .on('UPDATE', (payload) => {
         console.log('dashboard pull', payload);
       })
       .subscribe();
     console.log('subscribe');
+    return () => {
+      supabase.removeSubscription(subscription);
+    };
   }, []);
 
 }
