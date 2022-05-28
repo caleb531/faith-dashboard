@@ -13,6 +13,7 @@ function useObjectHasChanged<T extends object>(obj: T) {
   // if the app state has changed (using deep comparison; see below)
   const prevObjRef = useRef(obj);
 
+  // The getChanges() hook is guaranteed to be stable across renders
   const getChanges = useCallback((): (Partial<T> | null) => {
     const changes = diff(currentObjRef.current, prevObjRef.current);
     if (Object.keys(changes).length > 0) {
