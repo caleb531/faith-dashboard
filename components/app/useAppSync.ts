@@ -57,20 +57,20 @@ function useAppSync(
   useSyncPush({
     state: app,
     stateType: 'app',
-    upsertState: async ({ state, user }) => {
+    upsertState: async ({ user }) => {
       await supabase
         .from('dashboards')
         .upsert([
           {
-            id: state.id,
+            id: app.id,
             user_id: user.id,
-            raw_data: JSON.stringify(state)
+            raw_data: JSON.stringify(app)
           }
         ]);
     }
   });
 
-  // Subscribe to changes to the app/dashboard itself or to individual widgets
+  // Subscribe to changes to the app/dashboard itself
   useEffect(() => {
     const subscription = supabase
       .from('dashboards')
@@ -79,6 +79,22 @@ function useAppSync(
       })
       .on('UPDATE', (payload) => {
         applyServerAppToLocalApp(payload.new.raw_data, dispatchToApp);
+      })
+      .subscribe();
+    console.log('subscribe');
+    return () => {
+      console.log('unsubscribe');
+      supabase.removeSubscription(subscription);
+    };
+  }, [dispatchToApp]);
+
+  // Subscribe to changes to individual widgets
+  useEffect(() => {
+    const subscription = supabase
+      .from('widgets')
+      .on('UPDATE', (payload) => {
+        const widget: WidgetState = payload.new.raw_data;
+        widgetSyncService.broadcastPull(widget.id, widget);
       })
       .subscribe();
     console.log('subscribe');

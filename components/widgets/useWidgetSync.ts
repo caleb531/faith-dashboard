@@ -12,17 +12,20 @@ function useWidgetSync(
   dispatchToWidget: Dispatch<WidgetAction>
 ): void {
 
-  useSyncPush({
+  useSyncPush<WidgetState>({
     state: widget,
     stateType: 'widget',
-    upsertState: async ({ state, user }) => {
+    upsertState: async ({ user }) => {
+      if (widget.isSettingsOpen || widget.isLoading) {
+        return;
+      }
       await supabase
         .from('widgets')
         .upsert([
           {
-            id: state.id,
+            id: widget.id,
             user_id: user.id,
-            raw_data: JSON.stringify(state)
+            raw_data: JSON.stringify(widget)
           }
         ]);
     }
