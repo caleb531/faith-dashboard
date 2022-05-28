@@ -11,7 +11,7 @@ const widgetSyncEmitter = new TinyEmitter();
 // Broadcast the widget state from the server to the local component for that
 // widget
 export function broadcastPull(widgetId: string, widget: WidgetState) {
-  widgetSyncEmitter.emit(widgetId, widget);
+  widgetSyncEmitter.emit(`pull:${widgetId}`, widget);
 }
 
 // Listen for broadcasts that this particular widget had its state recently
