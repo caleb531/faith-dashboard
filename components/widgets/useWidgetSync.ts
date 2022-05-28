@@ -10,7 +10,7 @@ function useWidgetSync(
 
   useSyncPush({
     state: widget,
-    upsert: async ({ state, user }) => {
+    upsertState: async ({ state, user }) => {
       await supabase
         .from('widgets')
         .upsert([

@@ -10,7 +10,7 @@ function useAppSync(
 
   useSyncPush({
     state: app,
-    upsert: async ({ state, user }) => {
+    upsertState: async ({ state, user }) => {
       await supabase
         .from('dashboards')
         .upsert([

@@ -12,16 +12,16 @@ type UpsertCallback = <T extends AcceptableSyncStateTypes>({ state, user }: { st
   // Send the supplied state data to the relevant table in the database
 async function pushStateToDatabase<T extends AcceptableSyncStateTypes>({
   state,
-  upsert
+  upsertState
 }: {
   state: T,
-  upsert: UpsertCallback
+  upsertState: UpsertCallback
 }): Promise<void> {
   const user = supabase.auth.user();
   if (!user) {
     return;
   }
-  upsert({ state, user });
+  upsertState({ state, user });
 }
 
 // The useSyncPush() hook is a utility hook (used by both the useAppSync() and
@@ -29,16 +29,16 @@ async function pushStateToDatabase<T extends AcceptableSyncStateTypes>({
 // of the application to the database when changes are made locally
 function useSyncPush<T extends AcceptableSyncStateTypes>({
   state,
-  upsert
+  upsertState
 }: {
   state: T,
-  upsert: UpsertCallback
+  upsertState: UpsertCallback
 }) {
 
   const [getStateChanges] = useObjectHasChanged(state);
 
   const evaluatePushDebounced = useMemo(() => {
-    return debounce(({ state, upsert }) => {
+    return debounce(({ state, upsertState }) => {
       const changes = getStateChanges();
       // In order for the app to run in SSR, the app is first initialized with
       // the default app state, and then the local app state is asynchronously
@@ -50,7 +50,7 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
       // non-empty by the time the user begins interacting with the app
       if (changes && Object.keys(changes).length > 0 && (!('id' in changes) || changes.id !== undefined)) {
         console.log('push', state);
-        pushStateToDatabase({ state, upsert });
+        pushStateToDatabase({ state, upsertState });
       } else {
         console.log('no changes to merge');
       }
@@ -60,8 +60,8 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
 
   // Evaluate if the state has changed on every push
   useEffect(() => {
-    evaluatePushDebounced({ state, upsert });
-  }, [state, evaluatePushDebounced, upsert]);
+    evaluatePushDebounced({ state, upsertState });
+  }, [state, evaluatePushDebounced, upsertState]);
 
 }
 
