@@ -10,6 +10,7 @@ function useAppSync(
 
   useSyncPush({
     state: app,
+    stateType: 'app',
     upsertState: async ({ state, user }) => {
       await supabase
         .from('dashboards')

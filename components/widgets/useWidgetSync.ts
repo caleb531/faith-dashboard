@@ -12,6 +12,7 @@ function useWidgetSync(
 
   useSyncPush({
     state: widget,
+    stateType: 'widget',
     upsertState: async ({ state, user }) => {
       await supabase
         .from('widgets')

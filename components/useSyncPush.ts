@@ -29,9 +29,11 @@ async function pushStateToDatabase<T extends AcceptableSyncStateTypes>({
 // of the application to the database when changes are made locally
 function useSyncPush<T extends AcceptableSyncStateTypes>({
   state,
+  stateType,
   upsertState
 }: {
   state: T,
+  stateType: string,
   upsertState: UpsertCallback
 }) {
 
@@ -49,14 +51,14 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
       // app state has a non-empty 'id' property, which is guaranteed to be
       // non-empty by the time the user begins interacting with the app
       if (changes && Object.keys(changes).length > 0 && (!('id' in changes) || changes.id !== undefined)) {
-        console.log('push', state);
+        console.log(`${stateType} push`, state);
         pushStateToDatabase({ state, upsertState });
       } else {
-        console.log('no changes to merge');
+        console.log(`${stateType} no changes to merge`);
       }
     }, 1000);
     // getStateChanges() is stable, so it will never cause this useMemo()
-  }, [getStateChanges]);
+  }, [stateType, getStateChanges]);
 
   // Evaluate if the state has changed on every push
   useEffect(() => {
