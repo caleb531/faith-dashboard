@@ -25,7 +25,7 @@ function useApp(): [AppState, Dispatch<AppAction>] {
     saveApp(app);
   }, [app, saveApp]);
 
-  useAppSync(app);
+  useAppSync(app, dispatchToApp);
 
   useThemeForEntirePage(app.theme);
 

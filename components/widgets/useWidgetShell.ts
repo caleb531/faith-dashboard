@@ -27,7 +27,8 @@ export type WidgetAction =
   { type: 'showContent' } |
   { type: 'setFetchError', payload: string } |
   { type: 'markWidgetAsAdded' } |
-  { type: 'markWidgetForRemoval' };
+  { type: 'markWidgetForRemoval' } |
+  { type: 'replaceWidget', payload: WidgetState };
 
 // The useWidgetShell() hook which must be called in any component which
 // implements a particular widget type; it manages several important
@@ -72,6 +73,8 @@ export default function useWidgetShell<Action>(
           return omit(state, ['isAdding']);
       case 'markWidgetForRemoval':
           return { ...state, isRemoving: true };
+      case 'replaceWidget':
+        return action.payload;
       default:
         // As mentioned above, the sub-reducer is optional, and if you wish to
         // omit it, simply pass `null` as the first argument to
@@ -92,7 +95,7 @@ export default function useWidgetShell<Action>(
 
   // Save updates to the widget as its state changes
   useWidgetUpdater(state, saveWidget, removeWidget);
-  useWidgetSync(state);
+  useWidgetSync(state, dispatch);
 
   return [state, dispatch];
 
