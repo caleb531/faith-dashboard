@@ -10,7 +10,7 @@ const widgetSyncEmitter = new TinyEmitter();
 
 // Broadcast the widget state from the server to the local component for that
 // widget
-export function broadcastToWidget(widgetId: string, widget: WidgetState) {
+export function broadcastPull(widgetId: string, widget: WidgetState) {
   widgetSyncEmitter.emit(widgetId, widget);
 }
 
@@ -25,4 +25,4 @@ export function offPull(widgetId: string, callback?: WidgetSyncCallback) {
   return widgetSyncEmitter.off(`pull:${widgetId}`, callback);
 }
 
-export default { onPull, offPull };
+export default { broadcastPull, onPull, offPull };
