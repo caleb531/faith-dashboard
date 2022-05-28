@@ -74,6 +74,9 @@ function useAppSync(
   useEffect(() => {
     const subscription = supabase
       .from('dashboards')
+      .on('INSERT', (payload) => {
+        applyServerAppToLocalApp(payload.new.raw_data, dispatchToApp);
+      })
       .on('UPDATE', (payload) => {
         applyServerAppToLocalApp(payload.new.raw_data, dispatchToApp);
       })
