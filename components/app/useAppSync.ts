@@ -38,6 +38,9 @@ async function applyServerAppToLocalApp(
   });
 }
 
+// Replace the local application state with the latest application state from
+// the server; if there is no app state on the server, then push the local app
+// state to the server
 async function pullLatestAppFromServer(
   dispatchToApp: Dispatch<AppAction>
 ): Promise<void> {
@@ -55,6 +58,8 @@ async function pullLatestAppFromServer(
   applyServerAppToLocalApp(newApp, dispatchToApp);
 }
 
+// Push the local application state to the server; this function runs when the
+// app changes, but also once when there is no app state on the server
 async function pushLocalAppToServer({ state, user }: { state: AppState, user: User }) {
   await supabase
     .from('dashboards')
@@ -67,12 +72,15 @@ async function pushLocalAppToServer({ state, user }: { state: AppState, user: Us
     ]);
 }
 
-// The useAppSync() hook
+// The useAppSync() hook mangages the sychronization of the app state between
+// the client and server, pushing and pulling data as appropriate
 function useAppSync(
   app: AppState,
   dispatchToApp: Dispatch<AppAction>
 ): void {
 
+  // Push the local app state to the server every time the app state changes
+  // locally; please note that this push operation is debounced
   useSyncPush({
     state: app,
     stateType: 'app',
