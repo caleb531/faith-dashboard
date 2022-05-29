@@ -70,24 +70,6 @@ function useAppSync(
     }
   });
 
-  // Subscribe to changes to the app/dashboard itself
-  useEffect(() => {
-    const subscription = supabase
-      .from('dashboards')
-      .on('INSERT', (payload) => {
-        applyServerAppToLocalApp(payload.new.raw_data, dispatchToApp);
-      })
-      .on('UPDATE', (payload) => {
-        applyServerAppToLocalApp(payload.new.raw_data, dispatchToApp);
-      })
-      .subscribe();
-    console.log('subscribe');
-    return () => {
-      console.log('unsubscribe');
-      supabase.removeSubscription(subscription);
-    };
-  }, [dispatchToApp]);
-
   // Pull latest data from server on initial app load
   useEffect(() => {
     pullLatestAppFromServer(dispatchToApp);
