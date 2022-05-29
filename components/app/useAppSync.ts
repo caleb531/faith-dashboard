@@ -1,3 +1,4 @@
+import { User } from '@supabase/supabase-js';
 import { Dispatch, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import useSyncPush from '../useSyncPush';
@@ -54,6 +55,18 @@ async function pullLatestAppFromServer(
   applyServerAppToLocalApp(newApp, dispatchToApp);
 }
 
+async function pushLocalAppToServer({ state, user }: { state: AppState, user: User }) {
+  await supabase
+    .from('dashboards')
+    .upsert([
+      {
+        id: state.id,
+        user_id: user.id,
+        raw_data: JSON.stringify(state)
+      }
+    ]);
+}
+
 // The useAppSync() hook
 function useAppSync(
   app: AppState,
@@ -63,17 +76,7 @@ function useAppSync(
   useSyncPush({
     state: app,
     stateType: 'app',
-    upsertState: async ({ user }) => {
-      await supabase
-        .from('dashboards')
-        .upsert([
-          {
-            id: app.id,
-            user_id: user.id,
-            raw_data: JSON.stringify(app)
-          }
-        ]);
-    }
+    upsertState: pushLocalAppToServer
   });
 
   // Pull latest data from server on initial app load

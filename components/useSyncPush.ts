@@ -7,19 +7,20 @@ import useObjectHasChanged from './useObjectHasChanged';
 import { WidgetState } from './widgets/widget';
 
 type AcceptableSyncStateTypes = AppState | WidgetState;
-type UpsertCallback = <T extends AcceptableSyncStateTypes>({ user }: { user: User }) => Promise<void>
 
   // Send the supplied state data to the relevant table in the database
 function pushStateToDatabase<T extends AcceptableSyncStateTypes>({
+  state,
   upsertState
 }: {
-  upsertState: UpsertCallback
+  state: T,
+  upsertState: ({ state, user }: { state: T, user: User }) => Promise<void>
 }): void {
   const user = supabase.auth.user();
   if (!user) {
     return;
   }
-  upsertState({ user });
+  upsertState({ state, user });
 }
 
 // The useSyncPush() hook is a utility hook (used by both the useAppSync() and
@@ -32,7 +33,7 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
 }: {
   state: T,
   stateType: string,
-  upsertState: UpsertCallback
+  upsertState: ({ state, user }: { state: T, user: User }) => Promise<void>
 }) {
 
   const [getStateChanges] = useObjectHasChanged(state);
@@ -53,7 +54,7 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
       // non-empty by the time the user begins interacting with the app
       if (changes && Object.keys(changes).length > 0 && (!('id' in changes) || changes.id !== undefined)) {
         console.log(`${stateType} push`, state);
-        pushStateToDatabase({ upsertState });
+        pushStateToDatabase({ state, upsertState });
       } else {
         console.log(`${stateType} no changes to merge`);
       }
