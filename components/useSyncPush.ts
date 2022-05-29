@@ -6,6 +6,11 @@ import { supabase } from './supabaseClient';
 import useObjectHasChanged from './useObjectHasChanged';
 import { WidgetState } from './widgets/widget';
 
+// The number of milliseconds to wait since the last state change before
+// pushing the state to the server
+const pushDebounceDelay = 3000;
+
+// The object types that can be synced between client and server
 type AcceptableSyncStateTypes = AppState | WidgetState;
 
   // Send the supplied state data to the relevant table in the database
@@ -58,7 +63,7 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
       } else {
         console.log(`${stateType} no changes to merge`);
       }
-    }, 1000);
+    }, pushDebounceDelay);
     // getStateChanges() is stable, so it will never cause this useMemo()
   }, [stateType, getStateChanges]);
 
