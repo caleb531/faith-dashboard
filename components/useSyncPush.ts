@@ -39,6 +39,9 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
 
   const evaluatePushDebounced = useMemo(() => {
     return debounce(({ state, upsertState }) => {
+      if (!supabase.auth.session()) {
+        return;
+      }
       const changes = getStateChanges();
       // In order for the app to run in SSR, the app is first initialized with
       // the default app state, and then the local app state is asynchronously

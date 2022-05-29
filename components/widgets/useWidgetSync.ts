@@ -32,6 +32,9 @@ function useWidgetSync(
   });
 
   useEffect(() => {
+    if (!supabase.auth.session()) {
+      return;
+    }
     console.log('listening for widget pull', widget.id);
     widgetSyncService.onPull(widget.id, (newWidget) => {
       console.log('apply widget from server', newWidget);

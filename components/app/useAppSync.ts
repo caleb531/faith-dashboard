@@ -12,6 +12,9 @@ async function applyServerAppToLocalApp(
   newApp: AppState,
   dispatchToApp: Dispatch<AppAction>
 ): Promise<void> {
+  if (!supabase.auth.session()) {
+    return;
+  }
   console.log('app on server', newApp);
   dispatchToApp({
     type: 'replaceApp',
@@ -37,6 +40,9 @@ async function applyServerAppToLocalApp(
 async function pullLatestAppFromServer(
   dispatchToApp: Dispatch<AppAction>
 ): Promise<void> {
+  if (!supabase.auth.session()) {
+    return;
+  }
   const { data, error } = await supabase
       .from('dashboards')
       .select('raw_data');
