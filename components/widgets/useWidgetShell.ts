@@ -1,3 +1,4 @@
+import { diff } from 'deep-object-diff';
 import { omit } from 'lodash-es';
 import { Dispatch, useReducer } from 'react';
 import useLocalStorage from '../useLocalStorage';
@@ -74,10 +75,10 @@ export default function useWidgetShell<Action>(
       case 'markWidgetForRemoval':
           return { ...state, isRemoving: true };
       case 'replaceWidget':
-        return {
+        return Object.keys(diff(action.payload, state)).length > 0 ? {
           isLoading: false,
           ...action.payload
-        };
+        } : state;
       default:
         // As mentioned above, the sub-reducer is optional, and if you wish to
         // omit it, simply pass `null` as the first argument to

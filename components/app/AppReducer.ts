@@ -1,3 +1,4 @@
+import { diff } from 'deep-object-diff';
 import { sortBy } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
 import { WidgetHead, WidgetMoveParameters } from '../widgets/widget';
@@ -64,13 +65,13 @@ export default function reducer(
       // will not alter the user order of widgets within the same column)
       return { ...state, widgets: sortBy(newWidgets, 'column') };
     case 'replaceApp':
-      return {
+      return Object.keys(diff(action.payload, state)).length > 0 ? {
         // To manage the identity of the user's dashboard on the server-side,
         // an unique ID must be generated for the dashboard if has not already
         // been assigned one
         id: action.payload.id || uuidv4(),
         ...action.payload
-      };
+      } : state;
     default:
       return state;
   }
