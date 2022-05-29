@@ -88,22 +88,6 @@ function useAppSync(
     };
   }, [dispatchToApp]);
 
-  // Subscribe to changes to individual widgets
-  useEffect(() => {
-    const subscription = supabase
-      .from('widgets')
-      .on('UPDATE', (payload) => {
-        const widget: WidgetState = payload.new.raw_data;
-        widgetSyncService.broadcastPull(widget.id, widget);
-      })
-      .subscribe();
-    console.log('subscribe');
-    return () => {
-      console.log('unsubscribe');
-      supabase.removeSubscription(subscription);
-    };
-  }, [dispatchToApp]);
-
   // Pull latest data from server on initial app load
   useEffect(() => {
     pullLatestAppFromServer(dispatchToApp);
