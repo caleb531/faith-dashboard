@@ -33,7 +33,6 @@ async function applyServerAppToLocalApp(
     return JSON.parse(widgetRow.raw_data);
   });
   newWidgets.forEach((widget) => {
-    console.log('broadcast widget pull', widget);
     widgetSyncService.broadcastPull(widget.id, widget);
   });
 }
