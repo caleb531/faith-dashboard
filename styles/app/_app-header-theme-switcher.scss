@@ -15,7 +15,7 @@
   vertical-align: middle;
 }
 .app-header-theme-switcher-button-icon {
-  $icon-size: 18px;
+  $icon-size: 16px;
   width: $icon-size;
   height: $icon-size;
   @include layout(tablet) {
