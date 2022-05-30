@@ -55,7 +55,7 @@ function AppHeaderAccount() {
         <img
         className="app-header-account-button-icon"
         src="icons/account-light.svg"
-        alt=""
+        alt="Your Account"
         draggable="false" />
       </button>
       {isShowingMenu ? (
