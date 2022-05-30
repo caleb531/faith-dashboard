@@ -8,7 +8,7 @@ import { WidgetState } from './widgets/widget';
 
 // The number of milliseconds to wait since the last state change before
 // pushing the state to the server
-const pushDebounceDelay = 3000;
+const pushDebounceDelay = 1000;
 
 // The object types that can be synced between client and server
 type AcceptableSyncStateTypes = AppState | WidgetState;
