@@ -29,13 +29,6 @@ async function applyServerAppToLocalApp(
     console.log('no widgets to pull');
     return;
   }
-  // Use a unique page_session_id parameter which is exchanged between the
-  // client and server in order to prevent a pull/apply to trigger a subsequent
-  // push on the same device
-  if (data[0].page_session_id === pageSessionId) {
-    console.log('discarding pulled widgets; page session is the same');
-    return;
-  }
   console.log('widget data', data);
   const newWidgets: WidgetState[] = data.map((widgetRow) => {
     return JSON.parse(widgetRow.raw_data);
@@ -59,13 +52,6 @@ async function pullLatestAppFromServer(
       .select('*');
   if (!(data && data.length > 0)) {
     console.log('no app to pull');
-    return;
-  }
-  // Use a unique page_session_id parameter which is exchanged between the
-  // client and server in order to prevent a pull/apply to trigger a subsequent
-  // push on the same device
-  if (data[0].page_session_id === pageSessionId) {
-    console.log('discarding pulled app; page session is the same');
     return;
   }
   const newApp: AppState = JSON.parse(data[0].raw_data);
