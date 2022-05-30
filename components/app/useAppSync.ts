@@ -1,6 +1,7 @@
 import { User } from '@supabase/supabase-js';
 import { Dispatch, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
+import { pageSessionId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
 import { WidgetState } from '../widgets/widget';
 import widgetSyncService from '../widgets/widgetSyncService';
@@ -23,9 +24,16 @@ async function applyServerAppToLocalApp(
   });
   const { data, error } = await supabase
     .from('widgets')
-    .select('raw_data');
+    .select('*');
   if (!(data && data.length > 0)) {
     console.log('no widgets to pull');
+    return;
+  }
+  // Use a unique page_session_id parameter which is exchanged between the
+  // client and server in order to prevent a pull/apply to trigger a subsequent
+  // push on the same device
+  if (data[0].page_session_id === pageSessionId) {
+    console.log('discarding pulled widgets; page session is the same');
     return;
   }
   console.log('widget data', data);
@@ -48,9 +56,16 @@ async function pullLatestAppFromServer(
   }
   const { data, error } = await supabase
       .from('dashboards')
-      .select('raw_data');
+      .select('*');
   if (!(data && data.length > 0)) {
     console.log('no app to pull');
+    return;
+  }
+  // Use a unique page_session_id parameter which is exchanged between the
+  // client and server in order to prevent a pull/apply to trigger a subsequent
+  // push on the same device
+  if (data[0].page_session_id === pageSessionId) {
+    console.log('discarding pulled app; page session is the same');
     return;
   }
   const newApp: AppState = JSON.parse(data[0].raw_data);
@@ -66,6 +81,7 @@ async function pushLocalAppToServer({ state, user }: { state: AppState, user: Us
       {
         id: state.id,
         user_id: user.id,
+        page_session_id: pageSessionId,
         raw_data: JSON.stringify(state)
       }
     ]);
