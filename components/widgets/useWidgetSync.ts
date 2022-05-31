@@ -10,7 +10,7 @@ import widgetSyncService from './widgetSyncService';
 // Push the local widget state to the server; this function runs when the
 // widget changes, but also once when there is no widget state on the server
 async function pushLocalWidgetToServer({ state, user }: { state: WidgetState, user: User }) {
-  if (state.isSettingsOpen || state.isLoading) {
+  if (state.isLoading) {
     return;
   }
   await supabase
