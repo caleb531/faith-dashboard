@@ -1,5 +1,5 @@
 import { User } from '@supabase/supabase-js';
-import { Dispatch, useEffect } from 'react';
+import { Dispatch, useEffect, useRef } from 'react';
 import { supabase } from '../supabaseClient';
 import { pageSessionId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
@@ -13,6 +13,7 @@ async function pushLocalWidgetToServer({ state, user }: { state: WidgetState, us
   if (state.isLoading) {
     return;
   }
+  console.log(`widget push`, state);
   await supabase
     .from('widgets')
     .upsert([
@@ -40,13 +41,39 @@ function useWidgetSync(
     upsertState: pushLocalWidgetToServer
   });
 
-  // When useAppSync() detects that there is widget data to pull in from the
-  // server (for this particular widget), detect that change and replace the
-  // local widget state with the new widget state from the server
+  // Use a ref to keep track of the current state of the widget without
+  // requiring us to add `widget` to the dependency array of the `onPush`
+  // useEffect() below
+  const widgetRef = useRef(widget);
+  useEffect(() => {
+    widgetRef.current = widget;
+  }, [widget]);
+
+  // Listen for broadcasts to push the state of the widget to the server (this
+  // is typically only done if the widget state doesn't already exist on the
+  // server, otherwise we only push based on changes to the widget state)
   useEffect(() => {
     if (!supabase.auth.session()) {
       return;
     }
+    widgetSyncService.onPush(widget.id, () => {
+      const user = supabase.auth.user();
+      if (user) {
+        pushLocalWidgetToServer({
+          state: widgetRef.current,
+          user
+        });
+      }
+    });
+    return () => {
+      widgetSyncService.offPush(widget.id);
+    };
+  }, [widget.id]);
+
+  // When useAppSync() detects that there is widget data to pull in from the
+  // server (for this particular widget), detect that change and replace the
+  // local widget state with the new widget state from the server
+  useEffect(() => {
     widgetSyncService.onPull(widget.id, (newWidget) => {
       console.log('apply widget from server', newWidget);
       dispatchToWidget({ type: 'replaceWidget', payload: newWidget });

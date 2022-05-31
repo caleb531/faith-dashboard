@@ -3,7 +3,7 @@ import { Dispatch, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { pageSessionId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
-import { WidgetState } from '../widgets/widget';
+import { WidgetHead, WidgetState } from '../widgets/widget';
 import widgetSyncService from '../widgets/widgetSyncService';
 import { AppState } from './app.d';
 import { AppAction } from './AppReducer';
@@ -42,6 +42,7 @@ async function applyServerAppToLocalApp(
 // the server; if there is no app state on the server, then push the local app
 // state to the server
 async function pullLatestAppFromServer(
+  app: AppState,
   dispatchToApp: Dispatch<AppAction>
 ): Promise<void> {
   if (!supabase.auth.session()) {
@@ -52,6 +53,11 @@ async function pullLatestAppFromServer(
       .select('*');
   if (!(data && data.length > 0)) {
     console.log('no app to pull');
+    const user = supabase.auth.user();
+    if (user) {
+      pushLocalAppToServer({ state: app, user });
+      pushLocalWidgetsToServer({ app, user });
+    }
     return;
   }
   const newApp: AppState = JSON.parse(data[0].raw_data);
@@ -60,7 +66,17 @@ async function pullLatestAppFromServer(
 
 // Push the local application state to the server; this function runs when the
 // app changes, but also once when there is no app state on the server
-async function pushLocalAppToServer({ state, user }: { state: AppState, user: User }) {
+async function pushLocalAppToServer({
+  state,
+  user
+}: {
+  state: AppState,
+  user: User
+}) {
+  if (!state.id) {
+    return;
+  }
+  console.log(`app push`, state);
   await supabase
     .from('dashboards')
     .upsert([
@@ -71,6 +87,20 @@ async function pushLocalAppToServer({ state, user }: { state: AppState, user: Us
         raw_data: JSON.stringify(state)
       }
     ]);
+}
+
+// Push all local widgets to the server (this is only necessary as a one-time
+// operation)
+function pushLocalWidgetsToServer({
+  app,
+  user
+}: {
+  app: AppState,
+  user: User
+}): void {
+  app.widgets.forEach((widgetHead: WidgetHead) => {
+    widgetSyncService.broadcastPush(widgetHead.id);
+  });
 }
 
 // The useAppSync() hook mangages the sychronization of the app state between
@@ -90,7 +120,7 @@ function useAppSync(
 
   // Pull latest data from server on initial app load
   useEffect(() => {
-    pullLatestAppFromServer(dispatchToApp);
+    pullLatestAppFromServer(app, dispatchToApp);
   // We only want to pull the latest app data when initially loading the app
   /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);

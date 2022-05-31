@@ -58,7 +58,6 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
       // app state has a non-empty 'id' property, which is guaranteed to be
       // non-empty by the time the user begins interacting with the app
       if (changes && Object.keys(changes).length > 0 && (!('id' in changes) || changes.id !== undefined)) {
-        console.log(`${stateType} push`, state);
         pushStateToDatabase({ state, upsertState });
       } else {
         console.log(`${stateType} no changes to merge`);
