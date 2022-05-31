@@ -1,5 +1,4 @@
-import { debounce } from 'lodash-es';
-import React, { useMemo } from 'react';
+import React from 'react';
 import useWidgetShell from '../useWidgetShell';
 import { WidgetParameters } from '../widget.d';
 import WidgetShell from '../WidgetShell';
@@ -12,24 +11,10 @@ const NoteWidget = React.memo(function NoteWidget({ widgetHead, provided }: Widg
   const { fontSize, text } = state as NoteWidgetState;
   // The amount of time (in milliseconds) after the user's last keystroke
   // before assuming that the user has stopped typing
-  const saveDelay = 300;
   const defaultFontSize = 14;
   const textStyles = {
     fontSize: fontSize || defaultFontSize
   };
-
-  // Cache the debounced function so that its internal debounce timer
-  // transcends across render passes (otherwise, the debounce timer would
-  // effectively be reset on every render); useMemo will also provide us access
-  // to the original (cancelable) return value of debounce(); for more
-  // information, see:
-  // <https://github.com/facebook/react/issues/19240#issuecomment-652945246>
-  // <https://github.com/facebook/react/issues/19240#issuecomment-867885511>
-  const queueChangeWhenTypingStops = useMemo(() => {
-    return debounce((text) => {
-      dispatch({ type: 'updateText', payload: text });
-    }, saveDelay);
-  }, [dispatch]);
 
   // Register a change of the user's preferred font size for this note
   function changeFontSize(event: React.FormEvent): void {
@@ -40,7 +25,7 @@ const NoteWidget = React.memo(function NoteWidget({ widgetHead, provided }: Widg
   // Register a change of the user-entered text for this note
   function changeText(event: React.FormEvent): void {
     const textarea = (event.target as HTMLTextAreaElement);
-    queueChangeWhenTypingStops(textarea.value);
+    dispatch({ type: 'updateText', payload: textarea.value });
   }
 
   // Return a truncated excerpt of the entered text for display as the Font
@@ -91,7 +76,7 @@ const NoteWidget = React.memo(function NoteWidget({ widgetHead, provided }: Widg
             className="note-text-box"
             onInput={changeText}
             placeholder="Type your note here..."
-            defaultValue={text}
+            value={text}
             style={textStyles}></textarea>
         )}
       </section>
