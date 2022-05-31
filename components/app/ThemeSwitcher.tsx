@@ -8,7 +8,7 @@ import ThemeSwitcherList from './ThemeSwitcherList';
 
 // The number of milliseconds that the Theme Switcher modal will stay open
 // after choosing a theme (to give the user time to react to the change)
-const themeChangeDelay = 250;
+const themeChangeDelay = 350;
 
 type Props = {
   currentTheme: AppTheme,
