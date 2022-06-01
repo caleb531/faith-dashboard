@@ -29,7 +29,7 @@ function useAudioTime(
     // the times in second-precision in the UI, we can reduce excessive
     // rendering by checking if the Audio element's current time is at least
     // one second difference from the state's current time
-    if (Math.floor(audioElement.currentTime) !== Math.floor(currentTimeRef.current)) {
+    if (Math.floor(audioElement.currentTime) !== Math.floor(currentTimeRef.current) && !audioElement.paused) {
       setCurrentTime(audioElement.currentTime);
     }
   }, [audioElement, currentTimeRef, setCurrentTime]);
