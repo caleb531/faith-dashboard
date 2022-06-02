@@ -28,7 +28,10 @@ const PodcastWidget = React.memo(function PodcastWidget({ widgetHead, provided }
     listeningMetadata
   } = state as PodcastWidgetState;
   const nowPlayingMetadata = nowPlaying ? listeningMetadata[nowPlaying.guid] : null;
-  const [podcastList, setPodcastList, removePodcastList] = useCachedState(`podcast-list-${state.id}`, () => [] as PodcastInfo[]);
+  const [podcastList, setPodcastList, removePodcastList] = useCachedState(
+    `podcast-list-${state.id}`,
+    () => [] as PodcastInfo[]
+  );
 
   const [audioElement, removeAudioElement] = useCachedAudio(state.id);
 
