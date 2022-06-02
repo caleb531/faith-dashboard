@@ -16,7 +16,6 @@ async function pushLocalWidgetToServer(widget: WidgetState) {
   if (!user) {
     return;
   }
-  console.log(`widget push`, widget);
   await supabase
     .from('widgets')
     .upsert([
@@ -35,7 +34,6 @@ async function deleteLocalWidgetFromServer(widget: WidgetState) {
   if (!user) {
     return;
   }
-  console.log(`widget delete`, widget);
   await supabase
     .from('widgets')
     .delete()
@@ -92,7 +90,6 @@ function useWidgetSync(
   // local widget state with the new widget state from the server
   useEffect(() => {
     widgetSyncService.onPull(widget.id, (newWidget) => {
-      console.log('apply widget from server', newWidget);
       dispatchToWidget({ type: 'replaceWidget', payload: newWidget });
     });
     return () => {

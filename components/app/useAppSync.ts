@@ -17,7 +17,6 @@ async function applyServerAppToLocalApp(
   if (!supabase.auth.session()) {
     return;
   }
-  console.log('app on server', newApp);
   dispatchToApp({
     type: 'replaceApp',
     payload: newApp
@@ -26,10 +25,8 @@ async function applyServerAppToLocalApp(
     .from('widgets')
     .select('*');
   if (!(data && data.length > 0)) {
-    console.log('no widgets to pull');
     return;
   }
-  console.log('widget data', data);
   const newWidgets: WidgetState[] = data.map((widgetRow) => {
     return JSON.parse(widgetRow.raw_data);
   });
@@ -52,7 +49,6 @@ async function pullLatestAppFromServer(
       .from('dashboards')
       .select('*');
   if (!(data && data.length > 0)) {
-    console.log('no app to pull');
     const user = supabase.auth.user();
     if (user) {
       pushLocalAppToServer(app);
@@ -74,7 +70,6 @@ async function pushLocalAppToServer(app: AppState) {
   if (!user) {
     return;
   }
-  console.log(`app push`, app);
   await supabase
     .from('dashboards')
     .upsert([

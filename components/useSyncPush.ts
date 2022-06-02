@@ -58,12 +58,10 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
       // non-empty by the time the user begins interacting with the app
       if (changes && Object.keys(changes).length > 0 && (!('id' in changes) || changes.id !== undefined)) {
         pushStateToDatabase({ state, upsertState });
-      } else {
-        console.log(`${stateType} no changes to merge`);
       }
     }, pushDebounceDelay);
     // getStateChanges() is stable, so it will never cause this useMemo()
-  }, [stateType, getStateChanges]);
+  }, [getStateChanges]);
 
   // Evaluate if the state has changed on every push
   useEffect(() => {
