@@ -29,9 +29,11 @@ function AppHeaderAccount() {
     }
     const { error } = await supabase.auth.signOut();
     console.log('error', error);
-    // Revert to the default dashboard state when signing out
-    localStorage.clear();
-    window.location.reload();
+    if (!error) {
+      // Revert to the default dashboard state when signing out
+      localStorage.clear();
+      window.location.reload();
+    }
   }
 
   function onCloseSignInModal() {
