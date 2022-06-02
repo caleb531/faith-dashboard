@@ -101,13 +101,14 @@ export default function useWidgetDataFetcher({
 
   const isLoading = false;
   const { fetchError } = widget;
-  const abortController = new AbortController();
-
-  async function fetchWidgetData(newRequestQuery: string): Promise<void> {
+  async function fetchWidgetData(
+    newRequestQuery: string,
+    { abortSignal }: { abortSignal?: AbortSignal } = {}
+  ): Promise<void> {
     dispatch({ type: 'showLoading' });
     try {
       const rawResponse = await fetch(getApiUrl(newRequestQuery), {
-        signal: abortController.signal
+        signal: abortSignal
       });
       const response = await rawResponse.json();
       const data = parseResponse(response);
@@ -122,7 +123,7 @@ export default function useWidgetDataFetcher({
       // Do not attempt to update the component state if the fetch was aborted
       // (meaning the component is now unmounted and therefore can't be
       // updated)
-      if (!abortController.signal.aborted) {
+      if (!abortSignal?.aborted) {
         dispatch({ type: 'setFetchError', payload: getErrorMessage(error) });
       }
     }
@@ -152,8 +153,11 @@ export default function useWidgetDataFetcher({
     // trigger this effect to run, and if there was a fetch error, cause an
     // infinite loop; to fix this, we stop fetching if the previous fetch
     // resulted in an error
+    const abortController = new AbortController();
     if ((shouldFetchInitially() || (fetchFrequency && !isDateToday(widget.lastFetchDateTime))) && !isLoading && !fetchError && isOnline()) {
-      fetchWidgetData(requestQuery);
+      fetchWidgetData(requestQuery, {
+        abortSignal: abortController.signal
+      });
     }
     // Abort the fetch when the component unmounts so as to eliminate the
     // "Can't perform a React state update on an unmounted component" warning
