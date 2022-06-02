@@ -2,7 +2,7 @@ create table public.dashboards (
   id uuid not null,
   raw_data json not null,
   user_id uuid references auth.users not null,
-  page_session_id uuid,
+  client_id uuid,
   primary key(id, user_id)
 );
 
