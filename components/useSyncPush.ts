@@ -1,4 +1,3 @@
-import { User } from '@supabase/supabase-js';
 import { debounce } from 'lodash-es';
 import { useEffect, useMemo } from 'react';
 import { AppState } from './app/app.d';
@@ -19,13 +18,13 @@ function pushStateToDatabase<T extends AcceptableSyncStateTypes>({
   upsertState
 }: {
   state: T,
-  upsertState: ({ state, user }: { state: T, user: User }) => Promise<void>
+  upsertState: (state: T) => Promise<void>
 }): void {
   const user = supabase.auth.user();
   if (!user) {
     return;
   }
-  upsertState({ state, user });
+  upsertState(state);
 }
 
 // The useSyncPush() hook is a utility hook (used by both the useAppSync() and
@@ -38,7 +37,7 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
 }: {
   state: T,
   stateType: string,
-  upsertState: ({ state, user }: { state: T, user: User }) => Promise<void>
+  upsertState: (state: T) => Promise<void>
 }) {
 
   const [getStateChanges] = useObjectHasChanged(state);

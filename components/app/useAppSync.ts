@@ -55,7 +55,7 @@ async function pullLatestAppFromServer(
     console.log('no app to pull');
     const user = supabase.auth.user();
     if (user) {
-      pushLocalAppToServer({ state: app, user });
+      pushLocalAppToServer(app);
       pushLocalWidgetsToServer({ app, user });
     }
     return;
@@ -66,25 +66,23 @@ async function pullLatestAppFromServer(
 
 // Push the local application state to the server; this function runs when the
 // app changes, but also once when there is no app state on the server
-async function pushLocalAppToServer({
-  state,
-  user
-}: {
-  state: AppState,
-  user: User
-}) {
-  if (!state.id) {
+async function pushLocalAppToServer(app: AppState) {
+  if (!app.id) {
     return;
   }
-  console.log(`app push`, state);
+  const user = supabase.auth.user();
+  if (!user) {
+    return;
+  }
+  console.log(`app push`, app);
   await supabase
     .from('dashboards')
     .upsert([
       {
-        id: state.id,
+        id: app.id,
         user_id: user.id,
         page_session_id: pageSessionId,
-        raw_data: JSON.stringify(state)
+        raw_data: JSON.stringify(app)
       }
     ]);
 }
