@@ -101,11 +101,14 @@ export default function useWidgetDataFetcher({
 
   const isLoading = false;
   const { fetchError } = widget;
+  const abortController = new AbortController();
 
   async function fetchWidgetData(newRequestQuery: string): Promise<void> {
     dispatch({ type: 'showLoading' });
     try {
-      const rawResponse = await fetch(getApiUrl(newRequestQuery));
+      const rawResponse = await fetch(getApiUrl(newRequestQuery), {
+        signal: abortController.signal
+      });
       const response = await rawResponse.json();
       const data = parseResponse(response);
       if (hasResults(data)) {
@@ -116,7 +119,12 @@ export default function useWidgetDataFetcher({
       }
     } catch (error) {
       console.log('error', error);
-      dispatch({ type: 'setFetchError', payload: getErrorMessage(error) });
+      // Do not attempt to update the component state if the fetch was aborted
+      // (meaning the component is now unmounted and therefore can't be
+      // updated)
+      if (!abortController.signal.aborted) {
+        dispatch({ type: 'setFetchError', payload: getErrorMessage(error) });
+      }
     }
   }
 
@@ -147,6 +155,13 @@ export default function useWidgetDataFetcher({
     if ((shouldFetchInitially() || (fetchFrequency && !isDateToday(widget.lastFetchDateTime))) && !isLoading && !fetchError && isOnline()) {
       fetchWidgetData(requestQuery);
     }
+    // Abort the fetch when the component unmounts so as to eliminate the
+    // "Can't perform a React state update on an unmounted component" warning
+    // (which could otherwise occur in the event that dashboard is replaced by
+    // a sync operation while the fetch is still in transit)
+    return () => {
+      abortController.abort();
+    };
     // The React Docs suggest using an empty array when we only want a hook to
     // run exactly one time, which is the case here because we only want to
     // fetch data when the widget is initially loaded; any subsequent fetches
