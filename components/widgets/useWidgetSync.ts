@@ -10,7 +10,7 @@ import widgetSyncService from './widgetSyncService';
 // Push the local widget state to the server; this function runs when the
 // widget changes, but also once when there is no widget state on the server
 async function pushLocalWidgetToServer({ state, user }: { state: WidgetState, user: User }) {
-  if (state.isLoading) {
+  if (state.isLoading || state.isRemoving) {
     return;
   }
   console.log(`widget push`, state);
@@ -24,6 +24,18 @@ async function pushLocalWidgetToServer({ state, user }: { state: WidgetState, us
         raw_data: JSON.stringify(state)
       }
     ]);
+}
+
+// Delete the widget from the server if it's removed from the local dashboard
+async function deleteLocalWidgetFromServer({ state, user }: { state: WidgetState, user: User }) {
+  console.log(`widget delete`, state);
+  await supabase
+    .from('widgets')
+    .delete()
+    .match({
+      id: state.id,
+      user_id: user.id
+    });
 }
 
 // The useWidgetSync() hook mangages the sychronization of the widget state
@@ -58,12 +70,13 @@ function useWidgetSync(
     }
     widgetSyncService.onPush(widget.id, () => {
       const user = supabase.auth.user();
-      if (user) {
-        pushLocalWidgetToServer({
-          state: widgetRef.current,
-          user
-        });
+      if (!user) {
+        return;
       }
+      pushLocalWidgetToServer({
+        state: widgetRef.current,
+        user
+      });
     });
     return () => {
       widgetSyncService.offPush(widget.id);
@@ -82,6 +95,18 @@ function useWidgetSync(
       widgetSyncService.offPull(widget.id);
     };
   }, [widget.id, dispatchToWidget]);
+
+  // Delete widget from database when the widget is removed from the local
+  // dashboard
+  useEffect(() => {
+    const user = supabase.auth.user();
+    if (widget.isRemoving && user) {
+      deleteLocalWidgetFromServer({
+        state: widget,
+        user
+      });
+    }
+  }, [widget]);
 
 }
 
