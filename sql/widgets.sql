@@ -19,3 +19,7 @@ create policy "Users can insert their own widget."
 create policy "Users can update their own widget."
   on public.widgets for update
   using (auth.uid() = user_id);
+
+create policy "Users can delete their own widget."
+  on public.widgets for delete
+  using (auth.uid() = user_id);

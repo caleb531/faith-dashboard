@@ -19,3 +19,7 @@ create policy "Users can insert their own dashboard."
 create policy "Users can update their own dashboard."
   on public.dashboards for update
   using (auth.uid() = user_id);
+
+create policy "Users can delete their own dashboard."
+  on public.dashboards for delete
+  using (auth.uid() = user_id);
