@@ -25,7 +25,7 @@ async function applyServerAppToLocalApp(
   });
   const { data, error } = await supabase
     .from('widgets')
-    .select('*');
+    .select('raw_data');
   if (!(data && data.length > 0)) {
     return;
   }
@@ -49,7 +49,7 @@ async function pullLatestAppFromServer(
   }
   const { data, error } = await supabase
       .from('dashboards')
-      .select('*');
+      .select('raw_data');
   if (!(data && data.length > 0)) {
     const user = supabase.auth.user();
     if (user) {
