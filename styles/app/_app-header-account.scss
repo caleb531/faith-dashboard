@@ -66,6 +66,10 @@
     color: $light-100;
     cursor: pointer;
   }
+  a {
+    font-weight: bold;
+    color: var(--current-theme-color);
+  }
 }
 li.app-header-account-menu-list-item-user-info {
   padding-bottom: 10px;

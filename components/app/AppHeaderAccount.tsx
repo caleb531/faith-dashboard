@@ -1,5 +1,6 @@
 import { Session } from '@supabase/supabase-js';
-import React, { useState } from 'react';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
 import { isSessionActive } from '../accountUtils';
 import { supabase } from '../supabaseClient';
@@ -7,6 +8,10 @@ import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 
 function AppHeaderAccount() {
   const [isShowingMenu, setIsShowingMenu] = useState(false);
+  const [isExpiryMessageHidden, setIsExpiryMessageHidden] = useState(false);
+  // The number of milliseconds the "Session expired" message should show
+  // before it is automatically hidden
+  const expiryMessageDuration = 2000;
   // The session will be loaded asynchronously and isomorphically, via a
   // useEffect() call later in this function; this is done to avoid SSR
   // mismatches (please see the hook below)
@@ -37,6 +42,15 @@ function AppHeaderAccount() {
   useIsomorphicLayoutEffect(() => {
     setSession(supabase.auth.session());
   }, []);
+
+  // If the user's session has expired, a "Session expired" message should
+  // show, but in order to avoid frustrating the UX, hide this message after a
+  // few seconds
+  useEffect(() => {
+    setTimeout(() => {
+      setIsExpiryMessageHidden(true);
+    }, expiryMessageDuration);
+  });
 
   return session?.user && isSessionActive(session) ? (
     <div className="app-header-account">
@@ -87,6 +101,15 @@ function AppHeaderAccount() {
         onClick={() => setSignInModalIsOpen(true)}>
         Sign Up/In
       </button>
+      {session && !isSessionActive(session) && window.location.pathname === '/' && !isExpiryMessageHidden ? (
+        <div className="app-header-account-menu">
+          <menu className="app-header-account-menu-list">
+            <li className="app-header-account-menu-list-item app-header-account-menu-list-expiry-message" data-disabled>
+              Session expired. Please <Link href="/sign-in">sign in</Link> again.
+            </li>
+          </menu>
+        </div>
+      ) : null}
       {authModalIsOpen ? (
         <AccountAuthFlow onCloseModal={onCloseSignInModal} />
       ) : null}
