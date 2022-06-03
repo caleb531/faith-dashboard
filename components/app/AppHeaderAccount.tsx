@@ -1,18 +1,9 @@
 import { Session } from '@supabase/supabase-js';
 import React, { useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
+import { isSessionActive } from '../accountUtils';
 import { supabase } from '../supabaseClient';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
-
-function isSessionExpired(session: Session) {
-  return (
-    session.expires_at
-    &&
-    session.expires_in
-    &&
-    (session.expires_at + session.expires_in) <= (Date.now() / 1000)
-  );
-}
 
 function AppHeaderAccount() {
   const [isShowingMenu, setIsShowingMenu] = useState(false);
@@ -47,7 +38,7 @@ function AppHeaderAccount() {
     setSession(supabase.auth.session());
   }, []);
 
-  return session?.user && !isSessionExpired(session) ? (
+  return session?.user && isSessionActive(session) ? (
     <div className="app-header-account">
       <label className="app-header-account-label accessibility-only" htmlFor="app-header-account-button">
          Your Account

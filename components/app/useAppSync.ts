@@ -1,5 +1,6 @@
 import { User } from '@supabase/supabase-js';
 import { Dispatch, useEffect } from 'react';
+import { isSessionActive } from '../accountUtils';
 import { supabase } from '../supabaseClient';
 import { clientId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
@@ -8,13 +9,14 @@ import widgetSyncService from '../widgets/widgetSyncService';
 import { AppState } from './app.d';
 import { AppAction } from './AppReducer';
 
+
 // Take the new app/dashboard state from the server and apply it to the local
 // application
 async function applyServerAppToLocalApp(
   newApp: AppState,
   dispatchToApp: Dispatch<AppAction>
 ): Promise<void> {
-  if (!supabase.auth.session()) {
+  if (!isSessionActive()) {
     return;
   }
   dispatchToApp({
@@ -42,7 +44,7 @@ async function pullLatestAppFromServer(
   app: AppState,
   dispatchToApp: Dispatch<AppAction>
 ): Promise<void> {
-  if (!supabase.auth.session()) {
+  if (!isSessionActive()) {
     return;
   }
   const { data, error } = await supabase
