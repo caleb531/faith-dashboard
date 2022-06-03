@@ -15,6 +15,6 @@ export function isSessionActive(session: Session | null = supabase.auth.session(
     &&
     session.expires_in
     &&
-    session.expires_at < (Date.now() / MS_IN_S)
+    session.expires_at > (Date.now() / MS_IN_S)
   );
 }
