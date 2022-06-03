@@ -1,6 +1,6 @@
 import { Dispatch, useEffect, useRef } from 'react';
 import { supabase } from '../supabaseClient';
-import { clientId } from '../syncUtils';
+import { getClientId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
 import { WidgetAction } from './useWidgetShell';
 import { WidgetState } from './widget';
@@ -22,7 +22,7 @@ async function pushLocalWidgetToServer(widget: WidgetState) {
       {
         id: widget.id,
         user_id: user.id,
-        client_id: clientId,
+        client_id: getClientId(),
         raw_data: JSON.stringify(widget)
       }
     ]);

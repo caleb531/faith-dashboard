@@ -2,7 +2,7 @@ import { User } from '@supabase/supabase-js';
 import { Dispatch, useEffect } from 'react';
 import { isSessionActive } from '../accountUtils';
 import { supabase } from '../supabaseClient';
-import { clientId } from '../syncUtils';
+import { getClientId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
 import { WidgetHead, WidgetState } from '../widgets/widget';
 import widgetSyncService from '../widgets/widgetSyncService';
@@ -78,7 +78,7 @@ async function pushLocalAppToServer(app: AppState) {
       {
         id: app.id,
         user_id: user.id,
-        client_id: clientId,
+        client_id: getClientId(),
         raw_data: JSON.stringify(app)
       }
     ]);
