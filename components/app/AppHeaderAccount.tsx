@@ -55,10 +55,14 @@ function AppHeaderAccount() {
   // show, but in order to avoid frustrating the UX, hide this message after a
   // few seconds
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsExpiryMessageHidden(true);
     }, expiryMessageDuration);
-  });
+    // Clear the timeout if the user leaves the page before the timeout elapses
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   return session?.user && isSessionActive(session) ? (
     <div className="app-header-account">
