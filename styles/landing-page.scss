@@ -6,7 +6,8 @@
 @import 'app/app-header';
 
 .landing-page {
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
   padding: 0 10px;
   padding-top: 5px;
   padding-bottom: 10px;
