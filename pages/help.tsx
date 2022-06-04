@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
+import LinkButton from '../components/generic/LinkButton';
 import LandingPage from '../components/LandingPage';
 import addToHomeScreenImage1 from '../public/images/help/ios-add-to-home-screen-ios-1.jpg';
 import addToHomeScreenImage2 from '../public/images/help/ios-add-to-home-screen-ios-2.jpg';
@@ -71,7 +71,7 @@ function Help() {
 
       <p>This app is dedicated to Christ our Lord.</p>
 
-      <p><Link href="/"><a className="button">Return to App</a></Link></p>
+      <p><LinkButton href="/">Return to App</LinkButton></p>
     </LandingPage>
   );
 }

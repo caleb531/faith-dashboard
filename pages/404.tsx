@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
-import Link from 'next/link';
 import React from 'react';
 import useApp from '../components/app/useApp';
+import LinkButton from '../components/generic/LinkButton';
 import LandingPage from '../components/LandingPage';
 
 type Props = {
@@ -17,7 +17,7 @@ function PageNotFound({ pageTitle }: Props) {
 
       <p>Sorry about that! You ended up on a page that doesn't exist.</p>
 
-      <p><Link href="/"><a className="button">Return to App</a></Link></p>
+      <p><LinkButton href="/">Return to App</LinkButton></p>
     </LandingPage>
   );
 

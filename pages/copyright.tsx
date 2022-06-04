@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import React from 'react';
+import LinkButton from '../components/generic/LinkButton';
 import LandingPage from '../components/LandingPage';
 
 function Copyright() {
@@ -10,7 +10,7 @@ function Copyright() {
 
       <p>Photo backgrounds provided by <a href="https://unsplash.com/">Unsplash</a>.</p>
 
-      <p><Link href="/"><a className="button">Return to App</a></Link></p>
+      <p><LinkButton href="/">Return to App</LinkButton></p>
     </LandingPage>
   );
 

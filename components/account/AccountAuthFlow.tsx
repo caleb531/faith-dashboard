@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
-import Link from 'next/link';
 import React from 'react';
+import LinkButton from '../generic/LinkButton';
 import Modal from '../generic/Modal';
 
 type Props = {
@@ -18,18 +18,12 @@ function AccountAuthFlow({
           <p>Create a Faith Dashboard account to sync your dashboard and gain other features!</p>
           <div className="account-auth-flow-cta-container">
             {/* Signing in with a new email address is the same as signing up */}
-            <Link
-              href="/sign-up">
-              <a className="button account-auth-flow-cta">
-                Sign Up
-              </a>
-            </Link>
-            <Link
-              href="/sign-in">
-              <a className="button account-auth-flow-cta">
-                Sign In
-              </a>
-            </Link>
+            <LinkButton href="/sign-up" className="account-auth-flow-cta">
+              Sign Up
+            </LinkButton>
+            <LinkButton href="/sign-in" className="account-auth-flow-cta">
+              Sign In
+            </LinkButton>
           </div>
         </div>
       </section>
