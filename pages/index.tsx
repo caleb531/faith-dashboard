@@ -7,8 +7,6 @@ import WidgetBoard from '../components/widgets/WidgetBoard';
 
 function Home() {
 
-
-
   return (
     <App enableTutorial={true} canAddWidgets={true}>
       {(app) => <>
