@@ -55,24 +55,22 @@
     border-bottom-color: $light-100;
   }
 }
-.app-header-account-menu-list-item {
+.app-header-account-menu-list-item a {
   display: block;
   position: relative;
   border-radius: 5px;
   padding: 5px 10px;
   white-space: nowrap;
+  color: inherit;
+  text-decoration: none;
   &:not([data-disabled]):hover {
     background-color: $blue;
     color: $light-100;
     cursor: pointer;
   }
-  a {
-    font-weight: bold;
-    color: var(--current-theme-color);
-  }
 }
 li.app-header-account-menu-list-item-user-info {
-  padding-bottom: 10px;
+  padding-bottom: 5px;
   border-radius: 0;
   border-bottom: solid 1px $dark-25;
   margin-bottom: 5px;
