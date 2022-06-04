@@ -2,7 +2,7 @@ import { Session } from '@supabase/supabase-js';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
-import { isSessionActive } from '../accountUtils';
+import { isSessionActive, refreshSession, shouldRefreshSession } from '../accountUtils';
 import { supabase } from '../supabaseClient';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 
@@ -42,6 +42,14 @@ function AppHeaderAccount() {
   useIsomorphicLayoutEffect(() => {
     setSession(supabase.auth.session());
   }, []);
+
+  // Refresh the session (using the refresh token) if the session is more than
+  // halfway elapsed
+  useEffect(() => {
+    if (isSessionActive(session) && shouldRefreshSession(session)) {
+      refreshSession(session);
+    }
+  }, [session]);
 
   // If the user's session has expired, a "Session expired" message should
   // show, but in order to avoid frustrating the UX, hide this message after a
