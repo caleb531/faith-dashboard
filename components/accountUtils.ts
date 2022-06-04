@@ -15,6 +15,6 @@ export function isSessionActive(
     &&
     session.expires_at
     &&
-    session.expires_at > (Date.now() / MS_IN_S)
+    (Date.now() / MS_IN_S) < session.expires_at
   );
 }
