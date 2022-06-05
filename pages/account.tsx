@@ -9,4 +9,12 @@ function AccountSettings() {
   );
 }
 
+export async function getStaticProps() {
+  return {
+    props: {
+      pageTitle: 'Account Settings | Faith Dashboard'
+    }
+  };
+}
+
 export default AccountSettings;
