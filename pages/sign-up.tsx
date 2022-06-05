@@ -2,6 +2,7 @@
 import { omit } from 'lodash-es';
 import React, { useRef } from 'react';
 import AuthForm from '../components/account/AuthForm';
+import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
 import useAutoFocus from '../components/account/useAutoFocus';
 import useApp from '../components/app/useApp';
@@ -48,8 +49,7 @@ function SignUpForm({ pageTitle }: Props) {
         submitLabel="Sign Up"
         submittingLabel="Submitting..."
         successLabel="Success! Redirecting...">
-        <label htmlFor="sign-up-form-first-name" className="accessibility-only">First Name</label>
-        <input
+        <AuthFormField
           className="account-auth-form-input"
           type="text"
           id="sign-up-form-first-name"
@@ -58,8 +58,7 @@ function SignUpForm({ pageTitle }: Props) {
           required
           {...firstNameAutoFocus}
           />
-        <label htmlFor="sign-up-form-last-name" className="accessibility-only">Last Name</label>
-        <input
+        <AuthFormField
           className="account-auth-form-input"
           type="text"
           id="sign-up-form-last-name"
@@ -67,8 +66,7 @@ function SignUpForm({ pageTitle }: Props) {
           placeholder="Last Name"
           required
           />
-        <label htmlFor="sign-up-form-first-name" className="accessibility-only">Email</label>
-        <input
+        <AuthFormField
           className="account-auth-form-input"
           type="email"
           id="sign-up-form-email"
@@ -76,8 +74,7 @@ function SignUpForm({ pageTitle }: Props) {
           placeholder="Email"
           required
           />
-        <label htmlFor="sign-in-form-password" className="accessibility-only">Password</label>
-        <input
+        <AuthFormField
           className="account-auth-form-input"
           type="password"
           id="sign-up-form-password"
@@ -86,8 +83,7 @@ function SignUpForm({ pageTitle }: Props) {
           required
           ref={passwordInputRef}
           />
-        <label htmlFor="sign-up-form-confirm-password" className="accessibility-only">Confirm Password</label>
-        <input
+        <AuthFormField
           className="account-auth-form-input"
           type="password"
           id="sign-up-form-confirm-password"

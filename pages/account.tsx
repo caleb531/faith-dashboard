@@ -1,6 +1,7 @@
 import { User } from '@supabase/supabase-js';
 import React, { useEffect, useState } from 'react';
 import AuthForm from '../components/account/AuthForm';
+import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
 import { isSessionActive } from '../components/accountUtils';
 import LandingPage from '../components/LandingPage';
@@ -55,8 +56,7 @@ function AccountSettings({ pageTitle }: Props) {
 
           <h2>Your Details</h2>
 
-          <label htmlFor="account-settings-form-first-name" className="accessibility-only">First Name</label>
-          <input
+          <AuthFormField
             className="account-auth-form-input"
             type="text"
             id="account-settings-form-first-name"
@@ -66,8 +66,7 @@ function AccountSettings({ pageTitle }: Props) {
             required
             />
 
-          <label htmlFor="account-settings-form-last-name" className="accessibility-only">Last Name</label>
-          <input
+          <AuthFormField
             className="account-auth-form-input"
             type="text"
             id="account-settings-form-last-name"
@@ -89,8 +88,7 @@ function AccountSettings({ pageTitle }: Props) {
 
           <p>Your email is currently <span className="landing-page-em">{user.email}</span>.</p>
 
-          <label htmlFor="account-settings-form-email" className="accessibility-only">New Email</label>
-          <input
+          <AuthFormField
             className="account-auth-form-input"
             type="email"
             id="account-settings-form-email"
@@ -98,8 +96,7 @@ function AccountSettings({ pageTitle }: Props) {
             placeholder="New Email"
             required
             />
-          <label htmlFor="account-settings-form-confirm-email" className="accessibility-only">Confirm New Email</label>
-          <input
+          <AuthFormField
             className="account-auth-form-input"
             type="email"
             id="account-settings-form-confirm-email"
@@ -118,8 +115,7 @@ function AccountSettings({ pageTitle }: Props) {
 
           <h2>Change Password</h2>
 
-          <label htmlFor="account-settings-form-password" className="accessibility-only">Old Password</label>
-          <input
+          <AuthFormField
             className="account-auth-form-input"
             type="password"
             id="account-settings-form-old-password"
@@ -127,8 +123,7 @@ function AccountSettings({ pageTitle }: Props) {
             placeholder="Old Password"
             required
             />
-          <label htmlFor="account-settings-form-password" className="accessibility-only">New Password</label>
-          <input
+          <AuthFormField
             className="account-auth-form-input"
             type="password"
             id="account-settings-form-password"
@@ -136,8 +131,7 @@ function AccountSettings({ pageTitle }: Props) {
             placeholder="New Password"
             required
             />
-          <label htmlFor="account-settings-form-confirm-password" className="accessibility-only">Confirm New Password</label>
-          <input
+          <AuthFormField
             className="account-auth-form-input"
             type="password"
             id="account-settings-form-confirm-password"

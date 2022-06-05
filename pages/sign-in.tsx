@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import AuthForm from '../components/account/AuthForm';
+import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
 import useAutoFocus from '../components/account/useAutoFocus';
 import useApp from '../components/app/useApp';
@@ -34,8 +35,7 @@ function SignUpForm({ pageTitle }: Props) {
         submitLabel="Sign In"
         submittingLabel="Submitting..."
         successLabel="Success! Redirecting...">
-        <label htmlFor="sign-in-form-email" className="accessibility-only">Email</label>
-        <input
+        <AuthFormField
           className="account-auth-form-input"
           type="email"
           id="sign-in-form-email"
@@ -44,8 +44,7 @@ function SignUpForm({ pageTitle }: Props) {
           required
           {...emailAutoFocus}
           />
-        <label htmlFor="sign-in-form-password" className="accessibility-only">Password</label>
-        <input
+        <AuthFormField
           className="account-auth-form-input"
           type="password"
           id="sign-in-form-password"
