@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { omit } from 'lodash-es';
-import React, { useRef } from 'react';
+import React from 'react';
 import AuthForm from '../components/account/AuthForm';
 import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
@@ -8,6 +8,7 @@ import useAutoFocus from '../components/account/useAutoFocus';
 import useApp from '../components/app/useApp';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
+import useFormFieldMatcher from '../components/useFormFieldMatcher';
 
 type Props = {
   pageTitle: string
@@ -17,7 +18,9 @@ function SignUpForm({ pageTitle }: Props) {
 
   useApp();
 
-  const passwordInputRef = useRef<HTMLInputElement>(null);
+  const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
+    mismatchMessage: 'Passwords must match'
+  });
   const firstNameAutoFocus = useAutoFocus<HTMLInputElement>();
 
   function signUp(event: React.FormEvent<HTMLFormElement>) {
@@ -29,16 +32,6 @@ function SignUpForm({ pageTitle }: Props) {
     }, {
       data: omit(fields, ['email', 'password', 'confirm_password'])
     });
-  }
-
-  function checkIfPasswordsMatch(event: React.FormEvent<HTMLInputElement>) {
-    const confirmPasswordInput = event.currentTarget as HTMLInputElement;
-    const firstPasswordInput = passwordInputRef.current;
-    if (confirmPasswordInput.value !== firstPasswordInput?.value) {
-      confirmPasswordInput.setCustomValidity('Passwords must match');
-    } else {
-      confirmPasswordInput.setCustomValidity('');
-    }
   }
 
   return (
@@ -81,7 +74,7 @@ function SignUpForm({ pageTitle }: Props) {
           name="password"
           placeholder="Password"
           required
-          ref={passwordInputRef}
+          {...passwordFieldProps}
           />
         <AuthFormField
           className="account-auth-form-input"
@@ -90,7 +83,7 @@ function SignUpForm({ pageTitle }: Props) {
           name="confirm_password"
           placeholder="Confirm Password"
           required
-          onChange={checkIfPasswordsMatch}
+          {...confirmPasswordFieldProps}
           />
       </AuthForm>
     </LandingPage>
