@@ -80,6 +80,8 @@ function AccountSettings({ pageTitle }: Props) {
 
           <h2>Change Email</h2>
 
+          <p>Your email is currently <span className="landing-page-em">{user.email}</span>.</p>
+
           <label htmlFor="account-settings-form-email" className="accessibility-only">New Email</label>
           <input
             className="account-auth-form-input"
