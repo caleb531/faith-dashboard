@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 type Props = {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<{
     user: User | null,
-    session: Session | null,
+    session?: Session | null,
     error: ApiError | null
   }>,
   submitLabel: string,
