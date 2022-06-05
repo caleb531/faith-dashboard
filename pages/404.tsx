@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
-import useApp from '../components/app/useApp';
 import LinkButton from '../components/generic/LinkButton';
 import LandingPage from '../components/LandingPage';
 
@@ -9,8 +8,6 @@ type Props = {
 };
 
 function PageNotFound({ pageTitle }: Props) {
-
-  const app = useApp();
 
   return (
     <LandingPage heading={pageTitle}>
