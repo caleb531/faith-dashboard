@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TutorialFlow from '../tutorial/TutorialFlow';
 import useTouchDeviceDetection from '../useTouchDeviceDetection';
 import { AppState } from './app.d';
@@ -32,6 +32,12 @@ function App({
 }: Props) {
 
   const [app, dispatchToApp] = useApp();
+  const [isTurorialStarted, setIsTutorialStarted] = useState(false);
+
+  // Defer the starting of the tutorial so the app's loading state isn't blurry
+  useEffect(() => {
+    setIsTutorialStarted(true);
+  }, [setIsTutorialStarted]);
 
   useTouchDeviceDetection();
 
@@ -41,7 +47,7 @@ function App({
         {shouldLoadServiceWorker() ? (
           <UpdateNotification />
         ) : null}
-        <TutorialFlow inProgress={Boolean(app.shouldShowTutorial && enableTutorial)}>
+        <TutorialFlow inProgress={Boolean(app.shouldShowTutorial && enableTutorial && isTurorialStarted)}>
           <AppHeader currentTheme={app.theme} canAddWidgets={canAddWidgets} />
           <div className="app-contents">
             {children(app)}
