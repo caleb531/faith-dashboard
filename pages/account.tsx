@@ -1,9 +1,13 @@
 import React from 'react';
 import LandingPage from '../components/LandingPage';
 
-function AccountSettings() {
+type Props = {
+  pageTitle: string
+};
+
+function AccountSettings({ pageTitle }: Props) {
   return (
-    <LandingPage heading="Account Settings | Faith Dashboard">
+    <LandingPage heading={pageTitle}>
       <p>Coming Soon</p>
     </LandingPage>
   );
