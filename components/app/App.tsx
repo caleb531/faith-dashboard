@@ -1,6 +1,5 @@
 import React from 'react';
 import TutorialFlow from '../tutorial/TutorialFlow';
-import useMountListener from '../useMountListener';
 import useTouchDeviceDetection from '../useTouchDeviceDetection';
 import { AppState } from './app.d';
 import AppContext from './AppContext';
@@ -36,7 +35,6 @@ function App({
 
   useTouchDeviceDetection();
 
-  const isMounted = useMountListener();
   return (
     <AppContext.Provider value={dispatchToApp}>
       <div className="app">
@@ -45,9 +43,9 @@ function App({
         ) : null}
         <TutorialFlow inProgress={Boolean(app.shouldShowTutorial && enableTutorial)}>
           <AppHeader currentTheme={app.theme} canAddWidgets={canAddWidgets} />
-          {isMounted ? <div className="app-contents">
+          <div className="app-contents">
             {children(app)}
-          </div> : null}
+          </div>
           <AppFooter />
         </TutorialFlow>
       </div>

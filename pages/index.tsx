@@ -3,19 +3,22 @@ import App from '../components/app/App';
 import AppCompletedTutorial from '../components/app/AppCompletedTutorial';
 import AppWelcome from '../components/app/AppWelcome';
 import LoadingIndicator from '../components/generic/LoadingIndicator';
+import useMountListener from '../components/useMountListener';
 import WidgetBoard from '../components/widgets/WidgetBoard';
 
 function Home() {
 
+  const isMounted = useMountListener();
+
   return (
     <App enableTutorial={true} canAddWidgets={true}>
-      {(app) => <>
+      {(app) => isMounted ? <>
         <AppWelcome />
         <AppCompletedTutorial />
         <Suspense fallback={<LoadingIndicator />}>
           <WidgetBoard widgets={app.widgets} />
         </Suspense>
-      </>}
+      </> : <LoadingIndicator />}
     </App>
   );
 }
