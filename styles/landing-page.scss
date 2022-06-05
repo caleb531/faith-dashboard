@@ -57,6 +57,10 @@
   button[type] {
     margin: 0;
   }
+  a.button {
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
 }
 .landing-page-control {
   @extend .sheet-control;
