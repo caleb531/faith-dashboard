@@ -27,6 +27,14 @@ function AccountSettings({ pageTitle }: Props) {
     }
   }
 
+  // TODO
+  function deleteAccount() {
+    return Promise.resolve({
+      user: null,
+      error: null
+    });
+  }
+
   // Load the user data asynchronously and isomorphically
   useEffect(() => {
     if (isSessionActive()) {
@@ -140,6 +148,18 @@ function AccountSettings({ pageTitle }: Props) {
             />
 
         </AuthForm>
+
+        <h2>Delete Account</h2>
+
+        <p><span className="landing-page-em">Please note:</span> this will delete your account, dashboards, and all of your widget data.<br />This cannot be undone.</p>
+
+        <AuthForm
+          onSubmit={deleteAccount}
+          submitLabel="Delete Account"
+          submittingLabel="Deleting..."
+          successLabel="Account Deleted">
+        </AuthForm>
+
       </> : <>
         <p>You are not signed in. Redirecting you to the Sign In page...</p>
       </>}
