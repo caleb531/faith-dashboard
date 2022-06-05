@@ -6,6 +6,7 @@ import serializeForm from '../components/account/serializeForm';
 import { isSessionActive } from '../components/accountUtils';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
+import useFormFieldMatcher from '../components/useFormFieldMatcher';
 
 type Props = {
   pageTitle: string
@@ -14,6 +15,12 @@ type Props = {
 function AccountSettings({ pageTitle }: Props) {
 
   const [user, setUser] = useState<User | null>(null);
+  const [emailFieldProps, confirmEmailFieldProps] = useFormFieldMatcher({
+    mismatchMessage: 'Emails must match'
+  });
+  const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
+    mismatchMessage: 'Passwords must match'
+  });
 
   function updateUserData(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -95,6 +102,7 @@ function AccountSettings({ pageTitle }: Props) {
             name="email"
             placeholder="New Email"
             required
+            {...emailFieldProps}
             />
           <AuthFormField
             className="account-auth-form-input"
@@ -103,6 +111,7 @@ function AccountSettings({ pageTitle }: Props) {
             name="confirm_email"
             placeholder="Confirm New Email"
             required
+            {...confirmEmailFieldProps}
             />
 
         </AuthForm>
@@ -130,6 +139,7 @@ function AccountSettings({ pageTitle }: Props) {
             name="password"
             placeholder="New Password"
             required
+            {...passwordFieldProps}
             />
           <AuthFormField
             className="account-auth-form-input"
@@ -138,6 +148,7 @@ function AccountSettings({ pageTitle }: Props) {
             name="confirm_password"
             placeholder="Confirm New Password"
             required
+            {...confirmPasswordFieldProps}
             />
 
         </AuthForm>
