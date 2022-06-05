@@ -12,7 +12,8 @@ function AccountSettings() {
 export async function getStaticProps() {
   return {
     props: {
-      pageTitle: 'Account Settings | Faith Dashboard'
+      pageTitle: 'Account Settings | Faith Dashboard',
+      pageDescription: 'Account settings for Faith Dashboard, your one place for anything and everything that inspires your faith.'
     }
   };
 }
