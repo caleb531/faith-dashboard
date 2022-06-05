@@ -21,7 +21,7 @@ function AddWidget({
       {...buttonProps}>
       <img
         className="add-widget-button-icon"
-        src="icons/add-light.svg"
+        src="/icons/add-light.svg"
         alt=""
         draggable="false" />
       <span className="add-widget-button-label">Add Widget</span>

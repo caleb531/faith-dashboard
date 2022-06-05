@@ -22,7 +22,7 @@ function LandingPage({ heading, altLink, children }: Props) {
               <a href="/" className="landing-page-control landing-page-home-control">
                 <img
                   className="landing-page-control-icon landing-page-home-control-icon"
-                  src="icons/home-dark.svg"
+                  src="/icons/home-dark.svg"
                   alt="Go to Dashboard"
                   draggable="false" />
               </a>

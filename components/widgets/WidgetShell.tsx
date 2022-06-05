@@ -76,7 +76,7 @@ function WidgetShell({
       <div className="widget-controls widget-controls-left">
         <div className="widget-drag-handle widget-control" {...provided.dragHandleProps} {...dragStepData.stepProps}>
           <img
-            src="icons/drag-handle-light.svg"
+            src="/icons/drag-handle-light.svg"
             alt="Drag Widget"
             draggable="false"
             className="widget-drag-handle-icon widget-control-icon" />
@@ -85,14 +85,14 @@ function WidgetShell({
       <div className="widget-controls widget-controls-right">
         <button type="button" className="widget-remove-control widget-control" onClick={() => removeWidget()} {...removeStepData.stepProps}>
           <img
-            src="icons/remove-circle-light.svg"
+            src="/icons/remove-circle-light.svg"
             alt="Remove Widget"
             className="widget-remove-control-icon widget-control-icon"
             draggable="false" />
         </button>
         <button type="button" className="widget-settings-toggle widget-control" onClick={(event) => dispatch({ type: 'toggleSettings' })} {...settingsStepData.stepProps}>
           <img
-            src="icons/settings-light.svg"
+            src="/icons/settings-light.svg"
             alt="Toggle Settings"
             draggable="false"
             className="widget-settings-toggle-icon widget-control-icon" />

@@ -75,7 +75,7 @@ function AppHeaderAccount() {
         onClick={() => setIsShowingMenu(!isShowingMenu)}>
         <img
         className="app-header-account-button-icon"
-        src="icons/account-light.svg"
+        src="/icons/account-light.svg"
         alt="Your Account"
         draggable="false" />
       </button>

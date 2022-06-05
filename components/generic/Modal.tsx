@@ -19,7 +19,7 @@ function Modal({
         <button type="button" className="modal-control modal-close-control" onClick={onCloseModal}>
           <img
             className="modal-control-icon modal-close-control-icon"
-            src="icons/close-dark.svg"
+            src="/icons/close-dark.svg"
             alt="Close Modal"
             draggable="false" />
         </button>

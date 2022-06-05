@@ -54,7 +54,7 @@ function PodcastEpisodeList({
         <button type="button" className="podcast-episodes-refresh-control widget-control" onClick={() => fetchPodcastFeed(podcastFeedUrl)}>
           <img
             className="podcast-episodes-refresh-control-icon"
-            src="icons/refresh.svg"
+            src="/icons/refresh.svg"
             alt="Check for New Episodes"
             draggable="false" />
         </button>

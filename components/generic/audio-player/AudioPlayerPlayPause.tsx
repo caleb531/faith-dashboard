@@ -33,13 +33,13 @@ function AudioPlayerPlayPause({
       ) : (audioElement.paused) ? (
         <img
           className="audio-player-playpause-icon"
-          src="icons/play-light.svg"
+          src="/icons/play-light.svg"
           alt="Play"
           draggable="false" />
       ) : (
         <img
           className="audio-player-playpause-icon"
-          src="icons/pause-light.svg"
+          src="/icons/pause-light.svg"
           alt="Pause"
           draggable="false" />
       )}

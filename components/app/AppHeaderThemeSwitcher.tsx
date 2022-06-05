@@ -32,7 +32,7 @@ function AppHeaderThemeSwitcher({
         {...stepProps}>
         <img
           className="app-header-theme-switcher-button-icon"
-          src="icons/paintbrush-light.svg"
+          src="/icons/paintbrush-light.svg"
           alt=""
           draggable="false" />
         <span className="app-header-theme-switcher-button-label">
