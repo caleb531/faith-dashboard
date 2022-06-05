@@ -1,7 +1,7 @@
 import { User } from '@supabase/supabase-js';
 import React, { useEffect, useState } from 'react';
 import AuthForm from '../components/account/AuthForm';
-import useFormSerializer from '../components/account/useFormSerializer';
+import serializeForm from '../components/account/serializeForm';
 import { isSessionActive } from '../components/accountUtils';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
@@ -13,7 +13,6 @@ type Props = {
 function AccountSettings({ pageTitle }: Props) {
 
   const [user, setUser] = useState<User | null>(null);
-  const [serializeForm] = useFormSerializer();
 
   function updateUserData(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

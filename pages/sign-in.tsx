@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import AuthForm from '../components/account/AuthForm';
+import serializeForm from '../components/account/serializeForm';
 import useAutoFocus from '../components/account/useAutoFocus';
-import useFormSerializer from '../components/account/useFormSerializer';
 import useApp from '../components/app/useApp';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
@@ -15,7 +15,6 @@ function SignUpForm({ pageTitle }: Props) {
 
   useApp();
 
-  const [serializeForm] = useFormSerializer();
   const emailAutoFocus = useAutoFocus<HTMLInputElement>();
 
   function signIn(event: React.FormEvent<HTMLFormElement>) {
