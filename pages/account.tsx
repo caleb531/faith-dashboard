@@ -22,6 +22,8 @@ function AccountSettings({ pageTitle }: Props) {
     mismatchMessage: 'Passwords must match'
   });
 
+  console.log(supabase.rpc);
+
   function updateUserData(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const fields = serializeForm(event.currentTarget);
@@ -80,7 +82,7 @@ function AccountSettings({ pageTitle }: Props) {
         <AuthForm
           onSubmit={updateUserData}
           submitLabel="Change Email"
-          submittingLabel="Changing..."
+          submittingLabel="Submitting..."
           successLabel="Almost done! Check your email to confirm the change">
 
           <h2>Change Email</h2>
