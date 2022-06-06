@@ -89,7 +89,7 @@ function AccountSettings({ pageTitle }: Props) {
           onSubmit={updateUserData}
           submitLabel="Change Email"
           submittingLabel="Changing..."
-          successLabel="Email Changed!">
+          successLabel="Almost done! Check your email to confirm the change">
 
           <h2>Change Email</h2>
 

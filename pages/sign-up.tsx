@@ -34,11 +34,22 @@ function SignUpForm({ pageTitle }: Props) {
     });
   }
 
+  function redirectToHome() {
+    // Redirect to the main app if the user has been properly authenticated
+    // with a session; the "Submitting..." button label will continue showing
+    // while the browser is in the process of redirecting
+    window.location.assign('/');
+    // By returning false, we can disable the resetting of the Submit button
+    // label
+    return false;
+  }
+
   return (
     <LandingPage heading={pageTitle} altLink={{ title: 'Sign In', href: 'sign-in' }}>
       <p>By signing up with Faith Dashboard, you'll be able to sync your settings and widgets across all your devices.</p>
       <AuthForm
         onSubmit={signUp}
+        onSuccess={redirectToHome}
         submitLabel="Sign Up"
         submittingLabel="Submitting..."
         successLabel="Success! Redirecting...">
