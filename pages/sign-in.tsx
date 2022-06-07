@@ -19,7 +19,6 @@ function SignUpForm({ pageTitle }: Props) {
   const emailAutoFocus = useAutoFocus<HTMLInputElement>();
 
   function signIn(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
     const fields = serializeForm(event.currentTarget);
     return supabase.auth.signIn({
       email: fields.email,
