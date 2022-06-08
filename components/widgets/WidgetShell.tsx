@@ -3,7 +3,7 @@ import React, { Dispatch, useCallback, useContext } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import AppContext from '../app/AppContext';
 import LoadingIndicator from '../generic/LoadingIndicator';
-import TutorialStepMessage from '../tutorial/TutorialStepMessage';
+import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import { WidgetAction } from './useWidgetShell';
 import useWidgetTransitioner from './useWidgetTransitioner';
@@ -72,7 +72,7 @@ function WidgetShell({
       {...dragStepData.stepProps}
       {...removeStepData.stepProps}
       {...settingsStepData.stepProps}>
-      {isCurrentStep ? <TutorialStepMessage /> : null}
+      {isCurrentStep ? <TutorialStepTooltip /> : null}
       <div className="widget-controls widget-controls-left">
         <div className="widget-drag-handle widget-control" {...provided.dragHandleProps} {...dragStepData.stepProps}>
           <img

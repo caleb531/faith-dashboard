@@ -2,8 +2,8 @@ import { debounce } from 'lodash-es';
 import { RefObject, useLayoutEffect, useMemo, useState } from 'react';
 import useEventListener from '../useEventListener';
 import {
-  TutorialStep,
-  TutorialStepPosition as Position
+    TutorialStep,
+    TutorialStepPosition as Position
 } from './tutorial.d';
 
 // If the position of a tutorial step is set to 'auto', then this module will
@@ -63,7 +63,7 @@ function recalculatePosition(
 
 type Params = { currentStep: TutorialStep, ref: RefObject<HTMLElement> }
 
-function useTutorialStepMessagePositioner({
+function useTutorialStepTooltipPositioner({
   currentStep,
   ref
 }: Params): Position | undefined {
@@ -88,4 +88,4 @@ function useTutorialStepMessagePositioner({
 
 }
 
-export default useTutorialStepMessagePositioner;
+export default useTutorialStepTooltipPositioner;

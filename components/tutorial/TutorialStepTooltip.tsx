@@ -3,12 +3,12 @@ import React, { useContext, useRef } from 'react';
 import useScrollIntoView from '../useScrollIntoView';
 import TutorialContext from './TutorialContext';
 import tutorialSteps from './tutorialSteps';
-import useTutorialStepMessagePositioner from './useTutorialStepMessagePositioner';
+import useTutorialStepTooltipPositioner from './useTutorialStepTooltipPositioner';
 
-// When using the <TutorialStepMessage /> component, the component should be
+// When using the <TutorialStepTooltip /> component, the component should be
 // wrapped inside of an isCurrentStep check (from the useTutorialStep()
-// hook), so that only one instance of TutorialStepMessage is active at a time
-function TutorialStepMessage() {
+// hook), so that only one instance of TutorialStepTooltip is active at a time
+function TutorialStepTooltip() {
 
   const { currentStep, currentStepIndex, moveToNextStep, skipTutorial } = useContext(TutorialContext);
   const messageRef = useRef<HTMLDivElement>(null);
@@ -21,7 +21,7 @@ function TutorialStepMessage() {
     ref: messageRef
   });
 
-  const calculatedPosition = useTutorialStepMessagePositioner({
+  const calculatedPosition = useTutorialStepTooltipPositioner({
     currentStep,
     ref: messageRef
   }) || currentStep.position;
@@ -29,17 +29,17 @@ function TutorialStepMessage() {
   return (
     <div
         className={classNames(
-        'tutorial-step-message',
+        'tutorial-step-tooltip',
         `position-${calculatedPosition}`,
         `alignment-${currentStep.alignment}`
       )}
       style={{ width: currentStep.width || 'auto' }}
       ref={messageRef}>
-      <span className="tutorial-step-message-text">{currentStep.message}</span>
-      <div className="tutorial-step-message-controls">
+      <span className="tutorial-step-tooltip-text">{currentStep.message}</span>
+      <div className="tutorial-step-tooltip-controls">
         <button
           type="submit"
-          className="tutorial-step-message-control"
+          className="tutorial-step-tooltip-control"
           onClick={moveToNextStep}>
           {
             currentStep.primaryButtonLabel ||
@@ -48,7 +48,7 @@ function TutorialStepMessage() {
         </button>
         {isLastStep === false ? <button
           type="button"
-          className="tutorial-step-message-control warning"
+          className="tutorial-step-tooltip-control warning"
           onClick={skipTutorial}>
           Skip Tutorial
         </button> : null}
@@ -57,4 +57,4 @@ function TutorialStepMessage() {
   );
 }
 
-export default TutorialStepMessage;
+export default TutorialStepTooltip;
