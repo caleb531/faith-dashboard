@@ -5,6 +5,7 @@ import { AppState } from './app.d';
 import AppContext from './AppContext';
 import AppFooter from './AppFooter';
 import AppHeader from './AppHeader';
+import AppNotification from './AppNotification';
 import UpdateNotification from './UpdateNotification';
 import useApp from './useApp';
 
@@ -49,6 +50,7 @@ function App({
         ) : null}
         <TutorialFlow inProgress={Boolean(app.shouldShowTutorial && enableTutorial && isTurorialStarted)}>
           <AppHeader currentTheme={app.theme} canAddWidgets={canAddWidgets} />
+          <AppNotification />
           <div className="app-contents">
             {children(app)}
           </div>
