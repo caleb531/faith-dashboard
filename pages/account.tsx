@@ -22,8 +22,6 @@ function AccountSettings({ pageTitle }: Props) {
     mismatchMessage: 'Passwords must match'
   });
 
-  console.log(supabase.rpc);
-
   function updateUserData(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const fields = serializeForm(event.currentTarget);
@@ -88,6 +86,10 @@ function AccountSettings({ pageTitle }: Props) {
           <h2>Change Email</h2>
 
           <p>Your email is currently <span className="landing-page-em">{user.email}</span>.</p>
+
+          {user.new_email ? (
+            <p>You have an invite currently pending for <span className="landing-page-em">{user.new_email}</span>.</p>
+          ) : null}
 
           <AuthFormField
             className="account-auth-form-input"
