@@ -27,11 +27,25 @@ function AccountSettings({ pageTitle }: Props) {
     const fields = serializeForm(event.currentTarget);
     if (fields.email) {
       return supabase.auth.update({ email: fields.email });
-    } else if (fields.password) {
-      return supabase.auth.update({ password: fields.password });
     } else {
       return supabase.auth.update({ data: fields });
     }
+  }
+
+  async function changeUserPassword(event: React.FormEvent<HTMLFormElement>) {
+    const fields = serializeForm(event.currentTarget);
+    const { error } = await supabase.rpc('change_user_password', {
+      current_password: fields.current_password,
+      new_password: fields.new_password
+    });
+    return {
+      user: supabase.auth.user(),
+      // Convert PostgrestError type to Supabase ApiError
+      error: error ? {
+        message: error.message,
+        status: 400
+      } : null
+    };
   }
 
   // Load the user data asynchronously and isomorphically
@@ -113,7 +127,7 @@ function AccountSettings({ pageTitle }: Props) {
         </AuthForm>
 
         <AuthForm
-          onSubmit={updateUserData}
+          onSubmit={changeUserPassword}
           submitLabel="Change Password"
           submittingLabel="Changing..."
           successLabel="Password Changed!">
@@ -124,15 +138,15 @@ function AccountSettings({ pageTitle }: Props) {
             className="account-auth-form-input"
             type="password"
             id="account-settings-form-old-password"
-            name="old_password"
-            placeholder="Old Password"
+            name="current_password"
+            placeholder="Current Password"
             required
             />
           <AuthFormField
             className="account-auth-form-input"
             type="password"
-            id="account-settings-form-password"
-            name="password"
+            id="account-settings-form-new-password"
+            name="new_password"
             placeholder="New Password"
             required
             {...passwordFieldProps}
@@ -140,8 +154,8 @@ function AccountSettings({ pageTitle }: Props) {
           <AuthFormField
             className="account-auth-form-input"
             type="password"
-            id="account-settings-form-confirm-password"
-            name="confirm_password"
+            id="account-settings-form-confirm-new-password"
+            name="confirm_new_password"
             placeholder="Confirm New Password"
             required
             {...confirmPasswordFieldProps}
