@@ -20,7 +20,6 @@ function AppNotification() {
   useEffect(() => {
     const urlParams = new URLSearchParams(`?${window.location.hash.slice(1)}`);
     const newNotificationMessage = urlParams.get('message') || urlParams.get('error_description');
-    console.log(newNotificationMessage);
     if (newNotificationMessage) {
       setNotificationMessage(newNotificationMessage);
       setIsNotificationShowing(true);
