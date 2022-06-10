@@ -165,7 +165,7 @@ function AccountSettings({ pageTitle }: Props) {
 
         <h2>Delete Account</h2>
 
-        <p>Please contact <a href="mailto:admin@faithdashboard.com?subject=Delete%20My%20Account">admin@faithdashboard.com</a> to permanently delete your account.</p>
+        <p>Please contact <a href="mailto:support@faithdashboard.com?subject=Delete%20My%20Account">support@faithdashboard.com</a> to permanently delete your account.</p>
 
       </> : <>
         <p>You are not signed in. Redirecting you to the Sign In page...</p>
