@@ -1,5 +1,5 @@
 import { User } from '@supabase/supabase-js';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import AuthForm from '../components/account/AuthForm';
 import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
@@ -7,6 +7,7 @@ import { isSessionActive } from '../components/accountUtils';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
 import useFormFieldMatcher from '../components/useFormFieldMatcher';
+import useIsomorphicLayoutEffect from '../components/useIsomorphicLayoutEffect';
 
 type Props = {
   pageTitle: string
@@ -47,8 +48,8 @@ function AccountSettings({ pageTitle }: Props) {
     };
   }
 
-  // Load the user data asynchronously and isomorphically
-  useEffect(() => {
+  // Load the user data synchronously and isomorphically
+  useIsomorphicLayoutEffect(() => {
     if (isSessionActive()) {
       setUser(supabase.auth.user());
     } else {
