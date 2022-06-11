@@ -1,4 +1,5 @@
 import { ApiError, Session, User } from '@supabase/supabase-js';
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 // The number of milliseconds to show the success label of the Submit button
@@ -7,17 +8,21 @@ const successLabelDuration = 2000;
 
 type Props = {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<{
-    user: User | null,
+    user?: User | null,
     session?: Session | null,
     error: ApiError | null
   }>,
   onSuccess?: ({ user, session }: {
-    user: User | null,
+    user?: User | null,
     session?: Session | null
   }) => boolean | void,
   submitLabel: string,
   submittingLabel: string,
   successLabel: string,
+  altLink?: {
+    title: string,
+    href: string
+  }
   children: JSX.Element | (JSX.Element | null)[] | null
 };
 
@@ -70,16 +75,21 @@ function AuthForm(props: Props) {
         </div>
       ) : null}
 
-      <button
-        type="submit"
-        className="account-auth-form-submit"
-        disabled={isFormSubmitting || isFormSuccess}>
-        {isFormSubmitting && props.submittingLabel ?
-          props.submittingLabel :
-          isFormSuccess && props.successLabel ?
-            props.successLabel :
-            props.submitLabel}
-      </button>
+      <div className="account-auth-form-submit-container">
+        <button
+          type="submit"
+          className="account-auth-form-submit"
+          disabled={isFormSubmitting || isFormSuccess}>
+          {isFormSubmitting && props.submittingLabel ?
+            props.submittingLabel :
+            isFormSuccess && props.successLabel ?
+              props.successLabel :
+              props.submitLabel}
+        </button>
+        {props.altLink ? (
+          <Link href="/forgot-password"><a className="account-auth-form-alt-link">Forgot Password?</a></Link>
+        ) : null}
+      </div>
 
     </form>
   );

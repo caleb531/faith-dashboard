@@ -1,6 +1,7 @@
 import { Dispatch, useEffect, useReducer } from 'react';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 import useLocalStorage from '../useLocalStorage';
+import usePasswordRecoveryRedirect from '../usePasswordRecoveryRedirect';
 import { AppState } from './app.d';
 import reducer, { AppAction } from './AppReducer';
 import defaultApp from './appStateDefault';
@@ -28,6 +29,8 @@ function useApp(): [AppState, Dispatch<AppAction>] {
   useAppSync(app, dispatchToApp);
 
   useThemeForEntirePage(app.theme);
+
+  usePasswordRecoveryRedirect();
 
   return [app, dispatchToApp];
 

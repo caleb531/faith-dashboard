@@ -3,27 +3,23 @@ import React from 'react';
 import AuthForm from '../components/account/AuthForm';
 import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
-import useAutoFocus from '../components/account/useAutoFocus';
-import useApp from '../components/app/useApp';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
+import useFormFieldMatcher from '../components/useFormFieldMatcher';
 
 type Props = {
   pageTitle: string
 };
 
-function SignUpForm({ pageTitle }: Props) {
+function ResetPassword({ pageTitle }: Props) {
 
-  useApp();
+  const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
+    mismatchMessage: 'Passwords must match'
+  });
 
-  const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
-
-  function signIn(event: React.FormEvent<HTMLFormElement>) {
+  function resetPassword(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
-    return supabase.auth.signIn({
-      email: fields.email,
-      password: fields.password
-    });
+    return supabase.auth.update({ password: fields.new_password });
   }
 
   function redirectToHome() {
@@ -37,31 +33,30 @@ function SignUpForm({ pageTitle }: Props) {
   }
 
   return (
-    <LandingPage heading={pageTitle} altLink={{ title: 'Sign Up', href: '/sign-up' }}>
-      <p>Sign in below to sync your settings and widgets across all your devices.</p>
+    <LandingPage heading={pageTitle} altLink={{ title: 'Sign In', href: '/sign-in' }}>
       <AuthForm
-        onSubmit={signIn}
+        onSubmit={resetPassword}
         onSuccess={redirectToHome}
-        submitLabel="Sign In"
-        submittingLabel="Submitting..."
-        successLabel="Success! Redirecting..."
-        altLink={{ title: 'Forgot Password?', href: 'sign-up' }}>
+        submitLabel="Reset Password"
+        submittingLabel="Resetting..."
+        successLabel="Success! Redirecting...">
         <AuthFormField
           className="account-auth-form-input"
-          type="email"
-          id="sign-in-form-email"
-          name="email"
-          placeholder="Email"
+          type="password"
+          id="reset-password-form-new-password"
+          name="new_password"
+          placeholder="New Password"
           required
-          {...emailAutoFocusProps}
+          {...passwordFieldProps}
           />
         <AuthFormField
           className="account-auth-form-input"
           type="password"
-          id="sign-in-form-password"
-          name="password"
-          placeholder="Password"
+          id="reset-password-form-confirm-new-password"
+          name="confirm_new_password"
+          placeholder="Confirm New Password"
           required
+          {...confirmPasswordFieldProps}
           />
       </AuthForm>
     </LandingPage>
@@ -71,11 +66,11 @@ function SignUpForm({ pageTitle }: Props) {
 export async function getStaticProps() {
   return {
     props: {
-      pagePath: '/sign-in',
-      pageTitle: 'Sign In | Faith Dashboard',
-      pageDescription: 'Sign into Faith Dashboard, your one place for anything and everything that inspires your faith.'
+      pagePath: '/reset-password',
+      pageTitle: 'Reset Password | Faith Dashboard',
+      pageDescription: 'Reset your account password for Faith Dashboard, your one place for anything and everything that inspires your faith.'
     }
   };
 }
 
-export default SignUpForm;
+export default ResetPassword;
