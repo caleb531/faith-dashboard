@@ -37,7 +37,11 @@ function App({
 
   // Defer the starting of the tutorial so the app's loading state isn't blurry
   useEffect(() => {
-    setIsTutorialStarted(true);
+    const urlParams = new URLSearchParams(`?${window.location.hash.slice(1)}`);
+    const notificationMessage = urlParams.get('message') || urlParams.get('error_description');
+    if (!notificationMessage) {
+      setIsTutorialStarted(true);
+    }
   }, [setIsTutorialStarted]);
 
   useTouchDeviceDetection();
