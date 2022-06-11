@@ -47,7 +47,6 @@ function SignUpForm({ pageTitle }: Props) {
         successLabel="Success! Redirecting..."
         altLink={{ title: 'Forgot Password?', href: 'sign-up' }}>
         <AuthFormField
-          className="account-auth-form-input"
           type="email"
           id="sign-in-form-email"
           name="email"
@@ -56,7 +55,6 @@ function SignUpForm({ pageTitle }: Props) {
           {...emailAutoFocusProps}
           />
         <AuthFormField
-          className="account-auth-form-input"
           type="password"
           id="sign-in-form-password"
           name="password"

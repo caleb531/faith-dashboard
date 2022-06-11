@@ -13,7 +13,7 @@ const AuthFormField = React.forwardRef(function AuthFormField(
         className="accessibility-only">
         {props.placeholder}
       </label>
-      <input {...props} ref={ref} />
+      <input className="account-auth-form-input" {...props} ref={ref} />
     </>
   );
 });

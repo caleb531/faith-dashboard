@@ -70,7 +70,6 @@ function AccountSettings({ pageTitle }: Props) {
           <h2>Your Details</h2>
 
           <AuthFormField
-            className="account-auth-form-input"
             type="text"
             id="account-settings-form-first-name"
             name="first_name"
@@ -80,7 +79,6 @@ function AccountSettings({ pageTitle }: Props) {
             />
 
           <AuthFormField
-            className="account-auth-form-input"
             type="text"
             id="account-settings-form-last-name"
             name="last_name"
@@ -106,7 +104,6 @@ function AccountSettings({ pageTitle }: Props) {
           ) : null}
 
           <AuthFormField
-            className="account-auth-form-input"
             type="email"
             id="account-settings-form-email"
             name="email"
@@ -115,7 +112,6 @@ function AccountSettings({ pageTitle }: Props) {
             {...emailFieldProps}
             />
           <AuthFormField
-            className="account-auth-form-input"
             type="email"
             id="account-settings-form-confirm-email"
             name="confirm_email"
@@ -135,7 +131,6 @@ function AccountSettings({ pageTitle }: Props) {
           <h2>Change Password</h2>
 
           <AuthFormField
-            className="account-auth-form-input"
             type="password"
             id="account-settings-form-old-password"
             name="current_password"
@@ -143,7 +138,6 @@ function AccountSettings({ pageTitle }: Props) {
             required
             />
           <AuthFormField
-            className="account-auth-form-input"
             type="password"
             id="account-settings-form-new-password"
             name="new_password"
@@ -152,7 +146,6 @@ function AccountSettings({ pageTitle }: Props) {
             {...passwordFieldProps}
             />
           <AuthFormField
-            className="account-auth-form-input"
             type="password"
             id="account-settings-form-confirm-new-password"
             name="confirm_new_password"

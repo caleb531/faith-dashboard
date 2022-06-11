@@ -56,7 +56,6 @@ function SignUpForm({ pageTitle }: Props) {
         submittingLabel="Submitting..."
         successLabel="Success! Redirecting...">
         <AuthFormField
-          className="account-auth-form-input"
           type="text"
           id="sign-up-form-first-name"
           name="first_name"
@@ -65,7 +64,6 @@ function SignUpForm({ pageTitle }: Props) {
           {...firstNameAutoFocusProps}
           />
         <AuthFormField
-          className="account-auth-form-input"
           type="text"
           id="sign-up-form-last-name"
           name="last_name"
@@ -73,7 +71,6 @@ function SignUpForm({ pageTitle }: Props) {
           required
           />
         <AuthFormField
-          className="account-auth-form-input"
           type="email"
           id="sign-up-form-email"
           name="email"
@@ -82,7 +79,6 @@ function SignUpForm({ pageTitle }: Props) {
           {...emailFieldProps}
           />
         <AuthFormField
-          className="account-auth-form-input"
           type="email"
           id="sign-up-form-confirm-email"
           name="confirm_email"
@@ -91,7 +87,6 @@ function SignUpForm({ pageTitle }: Props) {
           {...confirmEmailFieldProps}
           />
         <AuthFormField
-          className="account-auth-form-input"
           type="password"
           id="sign-up-form-password"
           name="password"
@@ -100,7 +95,6 @@ function SignUpForm({ pageTitle }: Props) {
           {...passwordFieldProps}
           />
         <AuthFormField
-          className="account-auth-form-input"
           type="password"
           id="sign-up-form-confirm-password"
           name="confirm_password"

@@ -41,7 +41,6 @@ function ResetPassword({ pageTitle }: Props) {
         submittingLabel="Resetting..."
         successLabel="Success! Redirecting...">
         <AuthFormField
-          className="account-auth-form-input"
           type="password"
           id="reset-password-form-new-password"
           name="new_password"
@@ -50,7 +49,6 @@ function ResetPassword({ pageTitle }: Props) {
           {...passwordFieldProps}
           />
         <AuthFormField
-          className="account-auth-form-input"
           type="password"
           id="reset-password-form-confirm-new-password"
           name="confirm_new_password"

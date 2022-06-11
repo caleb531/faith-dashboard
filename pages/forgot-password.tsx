@@ -28,7 +28,6 @@ function ResetPassword({ pageTitle }: Props) {
         submittingLabel="Sending..."
         successLabel="Almost done! Check your email to finish resetting">
         <AuthFormField
-          className="account-auth-form-input"
           type="email"
           id="forgot-password-form-email"
           name="email"
