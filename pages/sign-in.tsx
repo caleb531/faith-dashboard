@@ -37,7 +37,7 @@ function SignUpForm({ pageTitle }: Props) {
   }
 
   return (
-    <LandingPage heading={pageTitle} altLink={{ title: 'Sign Up', href: 'sign-up' }}>
+    <LandingPage heading={pageTitle} altLink={{ title: 'Sign Up', href: '/sign-up' }}>
       <p>Sign in below to sync your settings and widgets across all your devices.</p>
       <AuthForm
         onSubmit={signIn}
