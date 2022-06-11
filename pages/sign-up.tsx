@@ -24,7 +24,7 @@ function SignUpForm({ pageTitle }: Props) {
   const [emailFieldProps, confirmEmailFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Emails must match'
   });
-  const firstNameAutoFocus = useAutoFocus<HTMLInputElement>();
+  const firstNameAutoFocusProps = useAutoFocus<HTMLInputElement>();
 
   function signUp(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
@@ -62,7 +62,7 @@ function SignUpForm({ pageTitle }: Props) {
           name="first_name"
           placeholder="First Name"
           required
-          {...firstNameAutoFocus}
+          {...firstNameAutoFocusProps}
           />
         <AuthFormField
           className="account-auth-form-input"

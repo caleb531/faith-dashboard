@@ -16,7 +16,7 @@ function SignUpForm({ pageTitle }: Props) {
 
   useApp();
 
-  const emailAutoFocus = useAutoFocus<HTMLInputElement>();
+  const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
 
   function signIn(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
@@ -52,7 +52,7 @@ function SignUpForm({ pageTitle }: Props) {
           name="email"
           placeholder="Email"
           required
-          {...emailAutoFocus}
+          {...emailAutoFocusProps}
           />
         <AuthFormField
           className="account-auth-form-input"
