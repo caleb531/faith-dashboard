@@ -23,7 +23,6 @@ function AccountSettings({ pageTitle }: Props) {
   });
 
   function updateUserData(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
     const fields = serializeForm(event.currentTarget);
     if (fields.email) {
       return supabase.auth.update({ email: fields.email });
