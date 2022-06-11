@@ -115,10 +115,12 @@ function useAppSync(
 
   // Pull latest data from server on initial app load
   useEffect(() => {
-    pullLatestAppFromServer(app, dispatchToApp);
-  // We only want to pull the latest app data when initially loading the app
+    if (app.id) {
+      pullLatestAppFromServer(app, dispatchToApp);
+    }
+  // We only want to pull the latest app data when the app ID changes
   /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, []);
+  }, [app.id]);
 
 }
 
