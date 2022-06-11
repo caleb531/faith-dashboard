@@ -21,6 +21,9 @@ function SignUpForm({ pageTitle }: Props) {
   const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Passwords must match'
   });
+  const [emailFieldProps, confirmEmailFieldProps] = useFormFieldMatcher({
+    mismatchMessage: 'Emails must match'
+  });
   const firstNameAutoFocus = useAutoFocus<HTMLInputElement>();
 
   function signUp(event: React.FormEvent<HTMLFormElement>) {
@@ -76,6 +79,16 @@ function SignUpForm({ pageTitle }: Props) {
           name="email"
           placeholder="Email"
           required
+          {...emailFieldProps}
+          />
+        <AuthFormField
+          className="account-auth-form-input"
+          type="email"
+          id="sign-up-form-confirm-email"
+          name="confirm_email"
+          placeholder="Confirm Email"
+          required
+          {...confirmEmailFieldProps}
           />
         <AuthFormField
           className="account-auth-form-input"
