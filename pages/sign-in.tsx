@@ -5,8 +5,10 @@ import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
 import useAutoFocus from '../components/account/useAutoFocus';
 import useApp from '../components/app/useApp';
+import Captcha from '../components/Captcha';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
+import useVerifyCaptcha from '../components/useVerifyCaptcha';
 
 type Props = {
   pageTitle: string
@@ -17,12 +19,15 @@ function SignUpForm({ pageTitle }: Props) {
   useApp();
 
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
+  const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
 
   function signIn(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
     return supabase.auth.signIn({
       email: fields.email,
       password: fields.password
+    }, {
+      captchaToken: getCaptchaToken()
     });
   }
 
@@ -61,6 +66,7 @@ function SignUpForm({ pageTitle }: Props) {
           placeholder="Password"
           required
           />
+        <Captcha setCaptchaToken={setCaptchaToken} />
       </AuthForm>
     </LandingPage>
   );

@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unescaped-entities */
-import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { omit } from 'lodash-es';
 import React from 'react';
 import AuthForm from '../components/account/AuthForm';
@@ -7,6 +6,7 @@ import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
 import useAutoFocus from '../components/account/useAutoFocus';
 import useApp from '../components/app/useApp';
+import Captcha from '../components/Captcha';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
 import useFormFieldMatcher from '../components/useFormFieldMatcher';
@@ -27,7 +27,6 @@ function SignUpForm({ pageTitle }: Props) {
     mismatchMessage: 'Emails must match'
   });
   const firstNameAutoFocusProps = useAutoFocus<HTMLInputElement>();
-
   const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
 
   function signUp(event: React.FormEvent<HTMLFormElement>) {
@@ -107,12 +106,7 @@ function SignUpForm({ pageTitle }: Props) {
           required
           {...confirmPasswordFieldProps}
           />
-          {process.env.NEXT_PUBLIC_GOTRUE_SECURITY_CAPTCHA_SITEKEY ? (
-            <HCaptcha
-              sitekey={process.env.NEXT_PUBLIC_GOTRUE_SECURITY_CAPTCHA_SITEKEY}
-              onVerify={(token) => setCaptchaToken(token)}
-              />
-          ) : null}
+          <Captcha setCaptchaToken={setCaptchaToken} />
       </AuthForm>
     </LandingPage>
   );
