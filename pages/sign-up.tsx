@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { omit } from 'lodash-es';
 import React from 'react';
 import AuthForm from '../components/account/AuthForm';
@@ -9,6 +10,7 @@ import useApp from '../components/app/useApp';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
 import useFormFieldMatcher from '../components/useFormFieldMatcher';
+import useVerifyCaptcha from '../components/useVerifyCaptcha';
 
 type Props = {
   pageTitle: string
@@ -26,12 +28,15 @@ function SignUpForm({ pageTitle }: Props) {
   });
   const firstNameAutoFocusProps = useAutoFocus<HTMLInputElement>();
 
+  const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
+
   function signUp(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
     return supabase.auth.signUp({
       email: fields.email,
       password: fields.password
     }, {
+      captchaToken: getCaptchaToken(),
       data: omit(fields, ['email', 'password', 'confirm_password'])
     });
   }
@@ -102,6 +107,12 @@ function SignUpForm({ pageTitle }: Props) {
           required
           {...confirmPasswordFieldProps}
           />
+          {process.env.NEXT_PUBLIC_GOTRUE_SECURITY_CAPTCHA_SITEKEY ? (
+            <HCaptcha
+              sitekey={process.env.NEXT_PUBLIC_GOTRUE_SECURITY_CAPTCHA_SITEKEY}
+              onVerify={(token) => setCaptchaToken(token)}
+              />
+          ) : null}
       </AuthForm>
     </LandingPage>
   );

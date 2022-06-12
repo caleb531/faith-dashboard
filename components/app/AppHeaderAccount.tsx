@@ -1,6 +1,6 @@
 import { Session } from '@supabase/supabase-js';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
 import { isSessionActive, refreshSession, shouldRefreshSession } from '../accountUtils';
 import { supabase } from '../supabaseClient';
