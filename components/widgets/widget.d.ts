@@ -31,6 +31,9 @@ export interface WidgetHead {
   // The base-1 index of the dashboard column where the widget will display in
   // the UI
   column: number;
+  // The ID of the tutorial step associated with this widget (only used for the
+  // default widgets, never new widgets)
+  tutorialStepId?: string;
 }
 
 // The schema for a widget object

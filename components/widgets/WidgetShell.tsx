@@ -24,10 +24,11 @@ function WidgetShell({
 }: Props) {
 
   const dispatchToApp = useContext(AppContext);
-  const widgetStepData = useTutorialStep(`widget-${widget.id}`);
-  const dragStepData = useTutorialStep(`drag-widget-${widget.id}`);
-  const removeStepData = useTutorialStep(`remove-widget-${widget.id}`);
-  const settingsStepData = useTutorialStep(`configure-widget-${widget.id}`);
+
+  const widgetStepData = useTutorialStep(`widget-${widget.tutorialStepId}`);
+  const dragStepData = useTutorialStep(`drag-widget-${widget.tutorialStepId}`);
+  const removeStepData = useTutorialStep(`remove-widget-${widget.tutorialStepId}`);
+  const settingsStepData = useTutorialStep(`configure-widget-${widget.tutorialStepId}`);
   const isCurrentStep = widgetStepData.isCurrentStep || dragStepData.isCurrentStep || removeStepData.isCurrentStep || settingsStepData.isCurrentStep;
 
   // Signal to the global application that we want to remove the widget

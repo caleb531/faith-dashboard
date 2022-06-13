@@ -1,5 +1,5 @@
 import { fromPairs, times } from 'lodash-es';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import AppContext from '../app/AppContext';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
@@ -24,7 +24,7 @@ function WidgetBoard({
   const dispatchToApp = useContext(AppContext);
   const columnCount = 3;
 
-  const { isCurrentStep, stepProps } = useTutorialStep('widget-board');
+  const { isCurrentStep, stepProps } = useTutorialStep('dashboard');
 
   // Because the widgets are stored in a one-dimensional array, yet we are
   // iterating over the widgets column-wise, we need to pre-compute the
