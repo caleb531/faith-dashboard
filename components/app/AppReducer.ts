@@ -1,13 +1,13 @@
 import { diff } from 'deep-object-diff';
 import { sortBy } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
-import { WidgetHead, WidgetMoveParameters } from '../widgets/widget';
+import { WidgetHead, WidgetMoveParameters, WidgetState } from '../widgets/widget';
 import { AppState, AppTheme } from './app.d';
 
 export type AppAction =
   { type: 'changeTheme', payload: AppTheme } |
   { type: 'skipTutorial' } |
-  { type: 'addWidget', payload: WidgetHead } |
+  { type: 'addWidget', payload: WidgetState } |
   { type: 'removeWidget', payload: Omit<WidgetHead, 'type' | 'column'> } |
   { type: 'moveWidget', payload: WidgetMoveParameters } |
   { type: 'replaceApp', payload: AppState };

@@ -31,16 +31,13 @@ export interface WidgetHead {
   // The base-1 index of the dashboard column where the widget will display in
   // the UI
   column: number;
-  // A flag that is set when the widget is being added (allowing us to
-  // transition the widget into place on the dashboard)
-  isAdding?: boolean;
 }
 
 // The schema for a widget object
 export interface WidgetState extends WidgetHead {
   // A boolean representing whether or not the widget's Settings screen is
   // currently visible
-  isSettingsOpen: boolean;
+  isSettingsOpen?: boolean;
   // The pixel height of the widget; this is not necessarily the widget's
   // current height at any point in time, and it may be adjustable by the user
   // via the widget's resize handle (which is only available for certain widget
@@ -57,6 +54,9 @@ export interface WidgetState extends WidgetHead {
   // transition the widget off the dashboard; it also allows us to run some
   // arbitrary cleanup code, depending on the widget type)
   isRemoving?: boolean;
+  // A flag that is set when the widget is being added (allowing us to
+  // transition the widget into place on the dashboard)
+  isAdding?: boolean;
 }
 
 // The function parameters to a widget component, useful when creating a new
