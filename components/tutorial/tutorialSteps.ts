@@ -66,8 +66,8 @@ const tutorialSteps: TutorialStep[] = [
     id: 'drag-widget-bible-verse-2',
     message: 'And, you can rearrange your widgets with the drag-handle icon on any widget.',
     position: 'auto',
-    alignment: 'left',
-    positionPrecedence: ['left', 'right', 'top', 'bottom']
+    positionPrecedence: ['left', 'right', 'top', 'bottom'],
+    alignment: 'left'
   },
   {
     id: 'help',
