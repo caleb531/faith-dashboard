@@ -1,5 +1,4 @@
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-import React from 'react';
 
 type Props = {
   setCaptchaToken: (token: string) => void
