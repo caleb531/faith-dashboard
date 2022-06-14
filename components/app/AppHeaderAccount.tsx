@@ -4,9 +4,14 @@ import { useEffect, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
 import { isSessionActive, refreshSession, shouldRefreshSession } from '../accountUtils';
 import { supabase } from '../supabaseClient';
+import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
+import useTutorialStep from '../tutorial/useTutorialStep';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 
 function AppHeaderAccount() {
+
+  const { isCurrentStep, stepProps } = useTutorialStep('sign-up');
+
   const [isShowingMenu, setIsShowingMenu] = useState(false);
   const [isExpiryMessageHidden, setIsExpiryMessageHidden] = useState(false);
   // The number of milliseconds the "Session expired" message should show
@@ -112,10 +117,12 @@ function AppHeaderAccount() {
     </div>
   ) : (
     <div className="app-header-account">
+      {isCurrentStep ? <TutorialStepTooltip /> : null}
       <button
         type="button"
         className="app-header-account-button app-header-control-button"
-        onClick={() => setSignInModalIsOpen(true)}>
+        onClick={() => setSignInModalIsOpen(true)}
+        {...stepProps}>
         Sign Up/In
       </button>
       {session && !isSessionActive(session) && window.location.pathname === '/' && !isExpiryMessageHidden ? (
