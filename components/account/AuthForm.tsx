@@ -1,6 +1,6 @@
 import { ApiError, Session, User } from '@supabase/supabase-js';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // The number of milliseconds to show the success label of the Submit button
 // before reverting to the initial Submit button label
@@ -31,6 +31,7 @@ function AuthForm(props: Props) {
   const [formError, setFormError] = useState<ApiError | null>();
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [isFormSuccess, setIsFormSuccess] = useState(false);
+  let submitLabelTimer: ReturnType<typeof setTimeout>;
 
   async function onSubmitWrapper(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -58,11 +59,18 @@ function AuthForm(props: Props) {
       setIsFormSuccess(true);
       // Reset the Submit button to its initial label after a few seconds of
       // showing the success label
-      setTimeout(() => {
+      submitLabelTimer = setTimeout(() => {
         setIsFormSuccess(false);
       }, successLabelDuration);
     }
   }
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(submitLabelTimer);
+    };
+  /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  }, []);
 
   return (
     <form className="account-auth-form" onSubmit={onSubmitWrapper}>
