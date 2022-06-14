@@ -65,6 +65,8 @@ function AuthForm(props: Props) {
     }
   }
 
+  // Clear the timeout when the AuthForm component unmounts to prevent the
+  // "unmounted component" error from React
   useEffect(() => {
     return () => {
       clearTimeout(submitLabelTimer);
