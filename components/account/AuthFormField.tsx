@@ -8,9 +8,7 @@ const AuthFormField = React.forwardRef(function AuthFormField(
 ) {
   return (
     <>
-      <label
-        htmlFor={props.id}
-        className="accessibility-only">
+      <label htmlFor={props.id}>
         {props.placeholder}
       </label>
       <input className="account-auth-form-input" {...props} ref={ref} />

@@ -15,10 +15,10 @@
 
 label {
   display: block;
-  margin-bottom: 5px;
   font-family: $font-family-sans-serif;
+  font-weight: 400;
   font-size: $font-size-s;
-  text-align: center;
+  text-align: left;
 }
 
 // Hide some labels from the UI but still be readable by screen readers
