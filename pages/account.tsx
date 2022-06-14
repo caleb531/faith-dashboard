@@ -22,6 +22,9 @@ function AccountSettings({ pageTitle }: Props) {
   const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Passwords must match'
   });
+  // The delay (in milliseconds) to wait after a sucessful form submission
+  // before reloading the page (only applies to certain forms)
+  const reloadDelay = 1000;
 
   function updateUserData(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
@@ -30,6 +33,30 @@ function AccountSettings({ pageTitle }: Props) {
     } else {
       return supabase.auth.update({ data: fields });
     }
+  }
+
+  async function cancelEmailChange() {
+    const { error } = await supabase.rpc('cancel_email_change');
+    if (error) {
+      return {
+        user: supabase.auth.user(),
+        // Convert PostgrestError type to Supabase ApiError
+        error: error ? {
+          message: error.message,
+          status: 400
+        } : null
+      };
+    } else {
+      // If the RPC call completed successfully, we still need to force the
+      // front end to fetch the latest state from the database
+      return supabase.auth.update({});
+    }
+  }
+
+  function reloadPage() {
+    setTimeout(() => {
+      window.location.reload();
+    }, reloadDelay);
   }
 
   async function changeUserPassword(event: React.FormEvent<HTMLFormElement>) {
@@ -89,38 +116,58 @@ function AccountSettings({ pageTitle }: Props) {
 
         </AuthForm>
 
-        <AuthForm
-          onSubmit={updateUserData}
-          submitLabel="Change Email"
-          submittingLabel="Submitting..."
-          successLabel="Almost done! Check your email to confirm the change">
+        {user.new_email ? (
 
-          <h2>Change Email</h2>
+          <AuthForm
+            onSubmit={cancelEmailChange}
+            onSuccess={reloadPage}
+            submitLabel="Cancel Email Change"
+            submittingLabel="Submitting..."
+            successLabel="Email Change Canceled!">
 
-          <p>Your email is currently <span className="landing-page-em">{user.email}</span>.</p>
+            <h2>Change Email</h2>
 
-          {user.new_email ? (
-            <p>You have an invite currently pending for <span className="landing-page-em">{user.new_email}</span>.</p>
-          ) : null}
+            <p>Your email is currently <span className="landing-page-em">{user.email}</span>.</p>
 
-          <AuthFormField
-            type="email"
-            id="account-settings-form-email"
-            name="email"
-            placeholder="New Email"
-            required
-            {...emailFieldProps}
-            />
-          <AuthFormField
-            type="email"
-            id="account-settings-form-confirm-email"
-            name="confirm_email"
-            placeholder="Confirm New Email"
-            required
-            {...confirmEmailFieldProps}
-            />
+            {user.new_email ? (
+              <p>You have an invite currently pending for <span className="landing-page-em">{user.new_email}</span>. Please check your email.</p>
+            ) : null}
 
-        </AuthForm>
+          </AuthForm>
+
+        ) : (
+
+          <AuthForm
+            onSubmit={updateUserData}
+            onSuccess={reloadPage}
+            submitLabel="Change Email"
+            submittingLabel="Submitting..."
+            successLabel="Almost done! Check your email to confirm the change">
+
+            <h2>Change Email</h2>
+
+            <p>Your email is currently <span className="landing-page-em">{user.email}</span>.</p>
+
+            <AuthFormField
+              type="email"
+              id="account-settings-form-email"
+              name="email"
+              placeholder="New Email"
+              required
+              {...emailFieldProps}
+              />
+            <AuthFormField
+              type="email"
+              id="account-settings-form-confirm-email"
+              name="confirm_email"
+              placeholder="Confirm New Email"
+              required
+              {...confirmEmailFieldProps}
+              />
+
+          </AuthForm>
+
+        )}
 
         <AuthForm
           onSubmit={changeUserPassword}
