@@ -23,7 +23,8 @@ async function pushLocalWidgetToServer(widget: WidgetState) {
         id: widget.id,
         user_id: user.id,
         client_id: getClientId(),
-        raw_data: JSON.stringify(widget)
+        raw_data: JSON.stringify(widget),
+        updated_at: new Date().toISOString()
       }
     ]);
 }

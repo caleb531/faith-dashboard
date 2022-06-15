@@ -79,7 +79,8 @@ async function pushLocalAppToServer(app: AppState) {
         id: app.id,
         user_id: user.id,
         client_id: getClientId(),
-        raw_data: JSON.stringify(app)
+        raw_data: JSON.stringify(app),
+        updated_at: new Date().toISOString()
       }
     ]);
 }
