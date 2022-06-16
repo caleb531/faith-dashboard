@@ -8,6 +8,7 @@ $theme-photos: (
   'mountain': $slate,
   'shore': $teal,
   'stars': $royal,
+  'evening': $royal,
   'forest': $forest
 );
 
@@ -54,4 +55,7 @@ $theme-photos: (
 // Theme-specific adjustments
 .theme-mountain {
   background-position: center center;
+}
+.theme-evening:before {
+  background-position: bottom 0 center;
 }

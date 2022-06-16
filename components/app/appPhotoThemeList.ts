@@ -18,6 +18,10 @@ const photoThemeList: AppThemeListItem[] = [
     value: 'mountain'
   },
   {
+    label: 'Evening',
+    value: 'evening'
+  },
+  {
     label: 'Word',
     value: 'word'
   },
