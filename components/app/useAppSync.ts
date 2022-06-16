@@ -1,4 +1,3 @@
-import { User } from '@supabase/supabase-js';
 import { Dispatch, useEffect } from 'react';
 import { isSessionActive } from '../accountUtils';
 import { supabase } from '../supabaseClient';
@@ -54,7 +53,7 @@ async function pullLatestAppFromServer(
     const user = supabase.auth.user();
     if (user) {
       pushLocalAppToServer(app);
-      pushLocalWidgetsToServer({ app, user });
+      pushLocalWidgetsToServer(app);
     }
     return;
   }
@@ -87,13 +86,7 @@ async function pushLocalAppToServer(app: AppState) {
 
 // Push all local widgets to the server (this is only necessary as a one-time
 // operation)
-function pushLocalWidgetsToServer({
-  app,
-  user
-}: {
-  app: AppState,
-  user: User
-}): void {
+function pushLocalWidgetsToServer(app: AppState): void {
   app.widgets.forEach((widgetHead: WidgetHead) => {
     widgetSyncService.broadcastPush(widgetHead.id);
   });
