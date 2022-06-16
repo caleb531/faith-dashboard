@@ -13,7 +13,7 @@ const widgetPullQueue: WidgetPullQueue = {};
 
 // Broadcast to the widget with the given ID that it should push its state to
 // the server
-export function broadcastPush(widgetId: string) {
+export function broadcastPush(widgetId: string): void {
   if (widgetPushQueue[widgetId]) {
     widgetPushQueue[widgetId].resolve();
   } else {
@@ -23,7 +23,7 @@ export function broadcastPush(widgetId: string) {
 
 // Broadcast the widget state from the server to the local component for that
 // widget
-export function broadcastPull(widgetId: string, widget: WidgetState) {
+export function broadcastPull(widgetId: string, widget: WidgetState): void {
   if (widgetPullQueue[widgetId]) {
     widgetPullQueue[widgetId].resolve(widget);
   } else {
@@ -33,7 +33,7 @@ export function broadcastPull(widgetId: string, widget: WidgetState) {
 
 // Listen for broadcasts that this particular widget should push its state to
 // the server
-export function onPush(widgetId: string) {
+export function onPush(widgetId: string): Promise<void> {
   if (!widgetPushQueue[widgetId]) {
     widgetPushQueue[widgetId] = new Deferred();
   }
@@ -42,17 +42,17 @@ export function onPush(widgetId: string) {
 
 // Listen for broadcasts that this particular widget had its state recently
 // pulled from the server
-export function onPull(widgetId: string) {
+export function onPull(widgetId: string): Promise<WidgetState> {
   return widgetPullQueue[widgetId].promise;
 }
 
 // Remove all listeners bound with onPull() for this widget
-export function offPush(widgetId: string) {
+export function offPush(widgetId: string): void {
   delete widgetPushQueue[widgetId];
 }
 
 // Remove all listeners bound with onPull() for this widget
-export function offPull(widgetId: string) {
+export function offPull(widgetId: string): void {
   delete widgetPullQueue[widgetId];
 }
 
