@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import TutorialFlow from '../tutorial/TutorialFlow';
+import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
+import useLocalStorage from '../useLocalStorage';
+import usePasswordRecoveryRedirect from '../usePasswordRecoveryRedirect';
 import useTouchDeviceDetection from '../useTouchDeviceDetection';
 import { AppState } from './app.d';
 import AppContext from './AppContext';
 import AppFooter from './AppFooter';
 import AppHeader from './AppHeader';
 import AppNotification from './AppNotification';
+import reducer from './AppReducer';
+import defaultApp from './appStateDefault';
 import UpdateNotification from './UpdateNotification';
-import useApp from './useApp';
+import useAppSync from './useAppSync';
+import useThemeForEntirePage from './useThemeForEntirePage';
 
 const WidgetBoard = React.lazy(() => import('../widgets/WidgetBoard'));
 
@@ -32,8 +38,25 @@ function App({
   children
 }: Props) {
 
-  const [app, dispatchToApp] = useApp();
+  const [restoreApp, saveApp] = useLocalStorage('faith-dashboard-app', defaultApp);
+  const [app, dispatchToApp] = useReducer(reducer, defaultApp);
   const [isTurorialStarted, setIsTutorialStarted] = useState(false);
+
+  // Update app state asynchronously and isomorphically (so as to avoid any SSR
+  // mismatch with the rendered page HTML); we use useIsomorphicLayoutEffect()
+  // instead of useEffect() directly to minimize any possible page flicker
+  useIsomorphicLayoutEffect(() => {
+    dispatchToApp({ type: 'replaceApp', payload: restoreApp() });
+  }, [restoreApp]);
+
+  // Serialize the app to localStorage whenever the app's state changes
+  useEffect(() => {
+    saveApp(app);
+  }, [app, saveApp]);
+
+  useAppSync(app, dispatchToApp);
+  useThemeForEntirePage(app.theme);
+  usePasswordRecoveryRedirect();
 
   // Defer the starting of the tutorial so the app's loading state isn't blurry
   useEffect(() => {

@@ -4,7 +4,6 @@ import AuthForm from '../components/account/AuthForm';
 import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
 import useAutoFocus from '../components/account/useAutoFocus';
-import useApp from '../components/app/useApp';
 import Captcha from '../components/Captcha';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
@@ -15,8 +14,6 @@ type Props = {
 };
 
 function SignUpForm({ pageTitle }: Props) {
-
-  useApp();
 
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
   const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
