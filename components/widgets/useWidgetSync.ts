@@ -74,7 +74,7 @@ function useWidgetSync(
     if (!supabase.auth.session()) {
       return;
     }
-    widgetSyncService.onPush(widget.id, () => {
+    widgetSyncService.onPush(widget.id).then(() => {
       const user = supabase.auth.user();
       if (!user) {
         return;
@@ -90,7 +90,7 @@ function useWidgetSync(
   // server (for this particular widget), detect that change and replace the
   // local widget state with the new widget state from the server
   useEffect(() => {
-    widgetSyncService.onPull(widget.id, (newWidget) => {
+    widgetSyncService.onPull(widget.id).then((newWidget) => {
       dispatchToWidget({ type: 'replaceWidget', payload: newWidget });
     });
     return () => {
