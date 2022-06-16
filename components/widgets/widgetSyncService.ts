@@ -43,6 +43,9 @@ export function onPush(widgetId: string): Promise<void> {
 // Listen for broadcasts that this particular widget had its state recently
 // pulled from the server
 export function onPull(widgetId: string): Promise<WidgetState> {
+  if (!widgetPullQueue[widgetId]) {
+    widgetPullQueue[widgetId] = new Deferred();
+  }
   return widgetPullQueue[widgetId].promise;
 }
 
