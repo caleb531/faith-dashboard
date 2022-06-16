@@ -4,7 +4,8 @@ import AppCompletedTutorial from '../components/app/AppCompletedTutorial';
 import AppWelcome from '../components/app/AppWelcome';
 import LoadingIndicator from '../components/generic/LoadingIndicator';
 import useMountListener from '../components/useMountListener';
-import WidgetBoard from '../components/widgets/WidgetBoard';
+
+const WidgetBoard = React.lazy(() => import('../components/widgets/WidgetBoard'));
 
 function Home() {
 

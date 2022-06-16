@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import TutorialFlow from '../tutorial/TutorialFlow';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 import useLocalStorage from '../useLocalStorage';
@@ -14,8 +14,6 @@ import defaultApp from './appStateDefault';
 import UpdateNotification from './UpdateNotification';
 import useAppSync from './useAppSync';
 import useThemeForEntirePage from './useThemeForEntirePage';
-
-const WidgetBoard = React.lazy(() => import('../widgets/WidgetBoard'));
 
 // Return a truthy value if the app's service worker should be loaded; the
 // service worker always loads in a Production environment; however, by
