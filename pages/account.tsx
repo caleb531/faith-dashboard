@@ -27,7 +27,7 @@ function AccountSettings({ pageTitle }: Props) {
   const reloadDelay = 1000;
 
   function updateUserData(event: React.FormEvent<HTMLFormElement>) {
-    const fields = serializeForm(event.currentTarget);
+    const fields = serializeForm(event.target as HTMLFormElement);
     if (fields.email) {
       return supabase.auth.update({ email: fields.email });
     } else {
@@ -60,7 +60,7 @@ function AccountSettings({ pageTitle }: Props) {
   }
 
   async function changeUserPassword(event: React.FormEvent<HTMLFormElement>) {
-    const fields = serializeForm(event.currentTarget);
+    const fields = serializeForm(event.target as HTMLFormElement);
     const { error } = await supabase.rpc('change_user_password', {
       current_password: fields.current_password,
       new_password: fields.new_password

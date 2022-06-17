@@ -1,13 +1,15 @@
 import { ApiError, Session, User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import Captcha from '../Captcha';
+import useCaptcha from '../useCaptcha';
 
 // The number of milliseconds to show the success label of the Submit button
 // before reverting to the initial Submit button label
 const successLabelDuration = 2000;
 
 type Props = {
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<{
+  onSubmit: (event: React.FormEvent<HTMLFormElement>, captchaToken?: string) => Promise<{
     user?: User | null,
     session?: Session | null,
     error: ApiError | null
@@ -22,7 +24,8 @@ type Props = {
   altLink?: {
     title: string,
     href: string
-  }
+  },
+  captchaEnabled?: boolean,
   children: JSX.Element | (JSX.Element | null)[] | null
 };
 
@@ -31,13 +34,27 @@ function AuthForm(props: Props) {
   const [formError, setFormError] = useState<ApiError | null>();
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [isFormSuccess, setIsFormSuccess] = useState(false);
+  const [captchaRef, executeCaptcha] = useCaptcha();
   let submitLabelTimer: ReturnType<typeof setTimeout>;
+
+  async function getCaptchaToken(): Promise<string> {
+    let captchaToken;
+    if (props.captchaEnabled) {
+      captchaToken = (await executeCaptcha())?.response;
+    } else {
+      captchaToken = '';
+    }
+    return captchaToken;
+  }
 
   async function onSubmitWrapper(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsFormSubmitting(true);
     setFormError(null);
-    const { user, session, error } = await props.onSubmit(event);
+    const { user, session, error } = await props.onSubmit(
+      event,
+      await getCaptchaToken()
+    );
     console.log('user', user);
     console.log('session', session);
     console.log('error', error);
@@ -78,6 +95,10 @@ function AuthForm(props: Props) {
     <form className="account-auth-form" onSubmit={onSubmitWrapper}>
 
       {props.children}
+
+      {props.captchaEnabled ? (
+        <Captcha ref={captchaRef} />
+      ) : null}
 
       {formError?.message ? (
         <div className="account-auth-form-validation-area">

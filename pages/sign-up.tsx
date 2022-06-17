@@ -5,11 +5,9 @@ import AuthForm from '../components/account/AuthForm';
 import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
 import useAutoFocus from '../components/account/useAutoFocus';
-import Captcha from '../components/Captcha';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
 import useFormFieldMatcher from '../components/useFormFieldMatcher';
-import useVerifyCaptcha from '../components/useVerifyCaptcha';
 
 type Props = {
   pageTitle: string
@@ -24,15 +22,14 @@ function SignUpForm({ pageTitle }: Props) {
     mismatchMessage: 'Emails must match'
   });
   const firstNameAutoFocusProps = useAutoFocus<HTMLInputElement>();
-  const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
 
-  function signUp(event: React.FormEvent<HTMLFormElement>) {
-    const fields = serializeForm(event.currentTarget);
+  function signUp(event: React.FormEvent<HTMLFormElement>, captchaToken: string) {
+    const fields = serializeForm(event.target as HTMLFormElement);
     return supabase.auth.signUp({
       email: fields.email,
       password: fields.password
     }, {
-      captchaToken: getCaptchaToken(),
+      captchaToken,
       data: omit(fields, ['email', 'password', 'confirm_password'])
     });
   }
@@ -55,7 +52,8 @@ function SignUpForm({ pageTitle }: Props) {
         onSuccess={redirectToHome}
         submitLabel="Sign Up"
         submittingLabel="Submitting..."
-        successLabel="Success! Redirecting...">
+        successLabel="Success! Redirecting..."
+        captchaEnabled={true}>
         <AuthFormField
           type="text"
           id="sign-up-form-first-name"
@@ -103,7 +101,6 @@ function SignUpForm({ pageTitle }: Props) {
           required
           {...confirmPasswordFieldProps}
           />
-          <Captcha setCaptchaToken={setCaptchaToken} />
       </AuthForm>
     </LandingPage>
   );

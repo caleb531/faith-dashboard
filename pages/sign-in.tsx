@@ -4,10 +4,8 @@ import AuthForm from '../components/account/AuthForm';
 import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
 import useAutoFocus from '../components/account/useAutoFocus';
-import Captcha from '../components/Captcha';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
-import useVerifyCaptcha from '../components/useVerifyCaptcha';
 
 type Props = {
   pageTitle: string
@@ -16,15 +14,14 @@ type Props = {
 function SignUpForm({ pageTitle }: Props) {
 
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
-  const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
 
-  function signIn(event: React.FormEvent<HTMLFormElement>) {
+  function signIn(event: React.FormEvent<HTMLFormElement>, captchaToken: string) {
     const fields = serializeForm(event.currentTarget);
     return supabase.auth.signIn({
       email: fields.email,
       password: fields.password
     }, {
-      captchaToken: getCaptchaToken()
+      captchaToken
     });
   }
 
@@ -47,7 +44,8 @@ function SignUpForm({ pageTitle }: Props) {
         submitLabel="Sign In"
         submittingLabel="Submitting..."
         successLabel="Success! Redirecting..."
-        altLink={{ title: 'Forgot Password?', href: 'sign-up' }}>
+        altLink={{ title: 'Forgot Password?', href: 'sign-up' }}
+        captchaEnabled={true}>
         <AuthFormField
           type="email"
           id="sign-in-form-email"
@@ -63,7 +61,6 @@ function SignUpForm({ pageTitle }: Props) {
           placeholder="Password"
           required
           />
-        <Captcha setCaptchaToken={setCaptchaToken} />
       </AuthForm>
     </LandingPage>
   );
