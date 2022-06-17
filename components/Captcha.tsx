@@ -1,20 +1,19 @@
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-import React from 'react';
 
-type Props = {};
+type Props = {
+  setCaptchaToken: (token: string) => void
+}
 
-const Captcha = React.forwardRef(function Captcha({}: Props, ref: any) {
+function Captcha({ setCaptchaToken }: Props) {
 
   const sitekey = process.env.NEXT_PUBLIC_GOTRUE_SECURITY_CAPTCHA_SITEKEY;
 
   return sitekey ? (
     <HCaptcha
-      size="invisible"
       sitekey={sitekey}
-      onVerify={() => {/* noop */}}
-      ref={ref}
+      onVerify={setCaptchaToken}
       />
   ) : null;
-});
+}
 
 export default Captcha;
