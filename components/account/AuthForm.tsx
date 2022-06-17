@@ -28,21 +28,18 @@ type Props = {
 
 function AuthForm(props: Props) {
 
-  const [formError, setFormError] = useState<ApiError | null>();
+  const [formErrorMessage, setFormErrorMessage] = useState<string | null>();
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [isFormSuccess, setIsFormSuccess] = useState(false);
   let submitLabelTimer: ReturnType<typeof setTimeout>;
 
-  async function onSubmitWrapper(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setIsFormSubmitting(true);
-    setFormError(null);
+  async function attemptSubmit(event: React.FormEvent<HTMLFormElement>) {
     const { user, session, error } = await props.onSubmit(event);
     console.log('user', user);
     console.log('session', session);
     console.log('error', error);
     // If there is no error, the value is conveniently null
-    setFormError(error);
+    setFormErrorMessage(error?.message);
     if (error) {
       // Only stop showing "Submitting..." message if the authentication failed
       // somehow
@@ -65,6 +62,22 @@ function AuthForm(props: Props) {
     }
   }
 
+  async function onSubmitWrapper(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsFormSubmitting(true);
+    setFormErrorMessage(null);
+    try {
+      // Even though we are not capturing the return value, we must await the
+      // attemptSubmit() call to properly catch any errors, because
+      // attemptSubmit() is an async function and would otherwise run
+      // asynchronously outside of the try..catch statement's control
+      await attemptSubmit(event);
+    } catch (error: any) {
+      setFormErrorMessage(error?.toString());
+      setIsFormSubmitting(false);
+    }
+  }
+
   // Clear the timeout when the AuthForm component unmounts to prevent the
   // "unmounted component" error from React
   useEffect(() => {
@@ -79,9 +92,11 @@ function AuthForm(props: Props) {
 
       {props.children}
 
-      {formError?.message ? (
+      {formErrorMessage ? (
         <div className="account-auth-form-validation-area">
-          <div className="account-auth-form-validation-message">{formError.message}</div>
+          <div className="account-auth-form-validation-message">
+            {formErrorMessage}
+          </div>
         </div>
       ) : null}
 

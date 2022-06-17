@@ -28,11 +28,15 @@ function SignUpForm({ pageTitle }: Props) {
 
   function signUp(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
+    const captchaToken = getCaptchaToken();
+    if (!captchaToken) {
+      throw new Error('Please complete the CAPTCHA');
+    }
     return supabase.auth.signUp({
       email: fields.email,
       password: fields.password
     }, {
-      captchaToken: getCaptchaToken(),
+      captchaToken,
       data: omit(fields, ['email', 'password', 'confirm_password'])
     });
   }
