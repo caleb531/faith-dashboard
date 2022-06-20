@@ -27,6 +27,24 @@ $widget-transition-duration: 250ms;
   }
   input[type=search] {
     width: 160px;
+    border-radius: 4px;
+    @include layout(tablet) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+  button[type=submit] {
+    display: block;
+    margin: 0 auto;
+    margin-top: 5px;
+    border-radius: 20px;
+    font-size: $font-size-xxs;
+    @include layout(tablet) {
+      display: inline-block;
+      margin-top: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   }
   // Ensure that widget settings are never clipped by a manually-set height
   &.widget-settings-open .widget-contents {
