@@ -1,3 +1,12 @@
+@keyframes menu-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .app-header-account {
   display: flex;
   align-items: stretch;
@@ -13,6 +22,12 @@
   $icon-size: 16px;
   width: $icon-size;
   height: $icon-size;
+}
+
+.app-header-account-menu {
+  position: relative;
+  z-index: 1;
+  animation: menu-fade-in 100ms ease-in-out both;
 }
 
 .app-header-account-menu-overlay {
