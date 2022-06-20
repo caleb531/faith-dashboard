@@ -22,7 +22,7 @@ function SignUpForm({ pageTitle }: Props) {
     const fields = serializeForm(event.currentTarget);
     const captchaToken = getCaptchaToken();
     if (!captchaToken) {
-      throw new Error('CAPTCHA has not been successful');
+      throw new Error('Please complete the CAPTCHA');
     }
     return supabase.auth.signIn({
       email: fields.email,
