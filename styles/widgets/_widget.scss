@@ -33,7 +33,7 @@ $widget-transition-duration: 250ms;
       border-bottom-right-radius: 0;
     }
   }
-  button[type=submit] {
+  input[type=search] + button[type=submit] {
     display: block;
     margin: 0 auto;
     margin-top: 5px;
