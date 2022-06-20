@@ -37,9 +37,10 @@ const NoteWidget = React.memo(function NoteWidget({ widgetHead, provided }: Widg
     const words = text.trim().split(' ');
     const originalWordCount = words.length;
     const currentFontSize = fontSize || defaultFontSize;
-    // Use a linear equation of the form (ax + b) to represent the number of
-    // words we want to show given a particular font size; the below constants
-    // can be adjusted to change
+    // Use a linear equation of the form (y = ax + b) to represent the number
+    // of words we want to show given a particular font size; the below
+    // constants can be adjusted to change; in our equation, y is the desired
+    // word count, and b is the font size at a given instant
     const a = (-4 / 19); // When font size is 12, word count should be 10
     const b = (238 / 19); // When font size is 50, word count should be 2
     const maxExcerptWordCount = (a * currentFontSize) + b;
