@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import Image from 'next/image';
-import React from 'react';
 import LinkButton from '../components/generic/LinkButton';
 import LandingPage from '../components/LandingPage';
 import addToHomeScreenImage1 from '../public/images/help/ios-add-to-home-screen-ios-1.jpg';
@@ -104,7 +103,7 @@ function Help({ pageTitle }: Props) {
       <p>
         If you are using an iPhone or iPad, you can visit{' '}
         <a href="https://faithdashboard.com">
-          <strong>faithdashboard.com</strong>
+          <span className="landing-page-em">faithdashboard.com</span>
         </a>{' '}
         and add it to your home screen like so:
       </p>
@@ -116,10 +115,11 @@ function Help({ pageTitle }: Props) {
         </li>
         <li>
           Scroll down the Share sheet and tap the{' '}
-          <strong>Add to Home Screen</strong> button
+          <span className="landing-page-em">Add to Home Screen</span> button
         </li>
         <li>
-          On the next screen, tap the <strong>Add</strong> button
+          On the next screen, tap the{' '}
+          <span className="landing-page-em">Add</span> button
         </li>
       </ol>
 
