@@ -55,6 +55,10 @@
       border-radius: 5px;
     }
   }
+  // Make instructional button on Help page fully opaque to be more readable
+  p > button {
+    opacity: 1;
+  }
   // If image is used directly within a paragraph, it's probably one of the
   // light (white) icons, and therefore needs to have a background added for
   // contrast
