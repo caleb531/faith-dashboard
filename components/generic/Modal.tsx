@@ -1,7 +1,7 @@
-import React from 'react';
+import { JSXContents } from '../global';
 
 type Props = {
-  children: JSX.Element | (JSX.Element | null)[] | null,
+  children: JSXContents,
   onCloseModal: () => void,
   onBackButton?: (() => void) | null
 };

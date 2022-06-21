@@ -3,6 +3,7 @@ import React, { Dispatch, useCallback, useContext } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import AppContext from '../app/AppContext';
 import LoadingIndicator from '../generic/LoadingIndicator';
+import { JSXContents } from '../global';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import { WidgetAction } from './useWidgetShell';
@@ -13,7 +14,7 @@ type Props = {
   widget: WidgetState,
   dispatch: Dispatch<WidgetAction>,
   provided: DraggableProvided,
-  children: JSX.Element | JSX.Element[]
+  children: JSXContents
 };
 
 function WidgetShell({

@@ -1,5 +1,5 @@
-import React from 'react';
 import App from './app/App';
+import { JSXContents } from './global';
 
 type Props = {
   heading: string,
@@ -7,7 +7,7 @@ type Props = {
     title: string,
     href: string
   }
-  children: JSX.Element | (JSX.Element | null)[] | null,
+  children: JSXContents,
 };
 
 function LandingPage({ heading, altLink, children }: Props) {

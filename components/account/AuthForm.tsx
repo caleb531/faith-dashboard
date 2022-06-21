@@ -1,6 +1,7 @@
 import { ApiError, Session, User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { JSXContents } from '../global';
 
 // The number of milliseconds to show the success label of the Submit button
 // before reverting to the initial Submit button label
@@ -23,7 +24,7 @@ type Props = {
     title: string,
     href: string
   }
-  children: JSX.Element | (JSX.Element | null)[] | null
+  children: JSXContents
 };
 
 function AuthForm(props: Props) {
