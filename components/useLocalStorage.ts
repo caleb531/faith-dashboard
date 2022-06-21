@@ -15,12 +15,7 @@ function isLocalStorageSupported(): boolean {
 export default function useLocalStorage<T>(
   key: string,
   defaultValue: T
-): [
-  () => T,
-  (newValue: T) => void,
-  () => void
-] {
-
+): [() => T, (newValue: T) => void, () => void] {
   // The getLocalStorage() function is guaranteed to be stable for the lifetime
   // of the component
   const getLocalStorage = useCallback((): T => {
@@ -37,12 +32,15 @@ export default function useLocalStorage<T>(
 
   // The setLocalStorage() function is guaranteed to be stable for the lifetime
   // of the component
-  const setLocalStorage = useCallback((myValue: T): void => {
-    if (!isLocalStorageSupported()) {
-      return;
-    }
-    localStorage.setItem(key, JSON.stringify(myValue));
-  }, [key]);
+  const setLocalStorage = useCallback(
+    (myValue: T): void => {
+      if (!isLocalStorageSupported()) {
+        return;
+      }
+      localStorage.setItem(key, JSON.stringify(myValue));
+    },
+    [key]
+  );
 
   const removeLocalStorage = useCallback((): void => {
     if (!isLocalStorageSupported()) {
@@ -52,5 +50,4 @@ export default function useLocalStorage<T>(
   }, [key]);
 
   return [getLocalStorage, setLocalStorage, removeLocalStorage];
-
 }

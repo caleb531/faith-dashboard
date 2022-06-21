@@ -10,11 +10,10 @@ import { supabase } from '../components/supabaseClient';
 import useVerifyCaptcha from '../components/useVerifyCaptcha';
 
 type Props = {
-  pageTitle: string
+  pageTitle: string;
 };
 
 function SignUpForm({ pageTitle }: Props) {
-
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
   const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
 
@@ -24,12 +23,15 @@ function SignUpForm({ pageTitle }: Props) {
     if (!captchaToken) {
       throw new Error('Please complete the CAPTCHA');
     }
-    return supabase.auth.signIn({
-      email: fields.email,
-      password: fields.password
-    }, {
-      captchaToken
-    });
+    return supabase.auth.signIn(
+      {
+        email: fields.email,
+        password: fields.password
+      },
+      {
+        captchaToken
+      }
+    );
   }
 
   function redirectToHome() {
@@ -43,15 +45,21 @@ function SignUpForm({ pageTitle }: Props) {
   }
 
   return (
-    <LandingPage heading={pageTitle} altLink={{ title: 'Sign Up', href: '/sign-up' }}>
-      <p>Sign in below to sync your settings and widgets across all your devices.</p>
+    <LandingPage
+      heading={pageTitle}
+      altLink={{ title: 'Sign Up', href: '/sign-up' }}
+    >
+      <p>
+        Sign in below to sync your settings and widgets across all your devices.
+      </p>
       <AuthForm
         onSubmit={signIn}
         onSuccess={redirectToHome}
         submitLabel="Sign In"
         submittingLabel="Submitting..."
         successLabel="Success! Redirecting..."
-        altLink={{ title: 'Forgot Password?', href: 'sign-up' }}>
+        altLink={{ title: 'Forgot Password?', href: 'sign-up' }}
+      >
         <AuthFormField
           type="email"
           id="sign-in-form-email"
@@ -59,14 +67,14 @@ function SignUpForm({ pageTitle }: Props) {
           placeholder="Email"
           required
           {...emailAutoFocusProps}
-          />
+        />
         <AuthFormField
           type="password"
           id="sign-in-form-password"
           name="password"
           placeholder="Password"
           required
-          />
+        />
         <Captcha setCaptchaToken={setCaptchaToken} />
       </AuthForm>
     </LandingPage>
@@ -78,7 +86,8 @@ export async function getStaticProps() {
     props: {
       pagePath: '/sign-in',
       pageTitle: 'Sign In | Faith Dashboard',
-      pageDescription: 'Sign into Faith Dashboard, your one place for anything and everything that inspires your faith.'
+      pageDescription:
+        'Sign into Faith Dashboard, your one place for anything and everything that inspires your faith.'
     }
   };
 }

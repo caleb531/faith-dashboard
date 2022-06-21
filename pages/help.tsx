@@ -8,20 +8,25 @@ import addToHomeScreenImage2 from '../public/images/help/ios-add-to-home-screen-
 import addToHomeScreenImage3 from '../public/images/help/ios-add-to-home-screen-ios-3.jpg';
 
 type Props = {
-  pageTitle: string
+  pageTitle: string;
 };
 
 function Help({ pageTitle }: Props) {
-
   return (
     <LandingPage heading={pageTitle}>
-
-      <p>Be strengthened every day with Faith Dashboard, a private board for your favorite Bible verses, sermons, and anything else you need to be encouraged when life happens.</p>
+      <p>
+        Be strengthened every day with Faith Dashboard, a private board for your
+        favorite Bible verses, sermons, and anything else you need to be
+        encouraged when life happens.
+      </p>
 
       <h2>What can I do?</h2>
 
-      <p>When you load the app for the first time, you'll see a three-column
-      view with a few "widgets" for you to try. These widgets let you do things like:</p>
+      <p>
+        When you load the app for the first time, you'll see a three-column view
+        with a few "widgets" for you to try. These widgets let you do things
+        like:
+      </p>
 
       <ul>
         <li>Display your favorite Bible verses</li>
@@ -33,49 +38,127 @@ function Help({ pageTitle }: Props) {
 
       <h3>Add new widget</h3>
 
-      <p>You can add a new widget by clicking the <button type="button" disabled className="add-widget-button"><img src="/icons/add-light.svg" alt="" /> Add Widget</button> button at the top edge of the app. A panel will appear, allowing you to browse for a widget to add.</p>
+      <p>
+        You can add a new widget by clicking the{' '}
+        <button type="button" disabled className="add-widget-button">
+          <img src="/icons/add-light.svg" alt="" /> Add Widget
+        </button>{' '}
+        button at the top edge of the app. A panel will appear, allowing you to
+        browse for a widget to add.
+      </p>
 
-      <p>When you've found your desired widget, click the <button type="button" disabled className="add-widget-button"><img src="/icons/add-light.svg" alt="" /> Add Widget</button> next to the widget listing. It will then automatically appear in the first column on your dashboard.</p>
+      <p>
+        When you've found your desired widget, click the{' '}
+        <button type="button" disabled className="add-widget-button">
+          <img src="/icons/add-light.svg" alt="" /> Add Widget
+        </button>{' '}
+        next to the widget listing. It will then automatically appear in the
+        first column on your dashboard.
+      </p>
 
       <h3>Rearranging widgets</h3>
 
-      <p>You can move a widget to a different position or column with the <img src="/icons/drag-handle-light.svg" alt="Drag" /> icon in the top-left corner of any widget.</p>
+      <p>
+        You can move a widget to a different position or column with the{' '}
+        <img src="/icons/drag-handle-light.svg" alt="Drag" /> icon in the
+        top-left corner of any widget.
+      </p>
 
       <h3>Deleting a widget</h3>
 
-      <p>You can delete a widget from your dashboard via the <img src="/icons/remove-light.svg" alt="Remove" /> icon in the top-right corner of any widget. This will permanently delete the widget and its contents from your dashboard.</p>
+      <p>
+        You can delete a widget from your dashboard via the{' '}
+        <img src="/icons/remove-light.svg" alt="Remove" /> icon in the top-right
+        corner of any widget. This will permanently delete the widget and its
+        contents from your dashboard.
+      </p>
 
       <h3>Changing settings</h3>
 
-      <p>If you want to change which Bible verse you are displaying or which Podcast you are listening to, click the <img src="/icons/settings-light.svg" alt="Settings" /> icon in the top-right corner of any widget.</p>
+      <p>
+        If you want to change which Bible verse you are displaying or which
+        Podcast you are listening to, click the{' '}
+        <img src="/icons/settings-light.svg" alt="Settings" /> icon in the
+        top-right corner of any widget.
+      </p>
 
       <h3>Changing themes</h3>
 
-      <p>There are several background themes you can choose from for your dashboard. Some are photos, other are solid colors. To pick one, click the <button type="button" disabled className="app-header-theme-switcher-button">Shore</button> icon ("Shore" is the name of whatever current theme). You'll see a gallery of themes to choose from. Click one to use it.</p>
+      <p>
+        There are several background themes you can choose from for your
+        dashboard. Some are photos, other are solid colors. To pick one, click
+        the{' '}
+        <button
+          type="button"
+          disabled
+          className="app-header-theme-switcher-button"
+        >
+          Shore
+        </button>{' '}
+        icon ("Shore" is the name of whatever current theme). You'll see a
+        gallery of themes to choose from. Click one to use it.
+      </p>
 
       <h2>Add Faith Dashboard to your home screen (iOS)</h2>
 
-      <p>If you are using an iPhone or iPad, you can visit <a href="https://faithdashboard.com"><strong>faithdashboard.com</strong></a> and add it to your home screen like so:</p>
+      <p>
+        If you are using an iPhone or iPad, you can visit{' '}
+        <a href="https://faithdashboard.com">
+          <strong>faithdashboard.com</strong>
+        </a>{' '}
+        and add it to your home screen like so:
+      </p>
 
       <ol>
-        <li>In the Safari app, tap the Share icon at the bottom of the screen (it looks like a square with an up-arrow coming out of it)</li>
-        <li>Scroll down the Share sheet and tap the <strong>Add to Home Screen</strong> button</li>
-        <li>On the next screen, tap the <strong>Add</strong> button</li>
+        <li>
+          In the Safari app, tap the Share icon at the bottom of the screen (it
+          looks like a square with an up-arrow coming out of it)
+        </li>
+        <li>
+          Scroll down the Share sheet and tap the{' '}
+          <strong>Add to Home Screen</strong> button
+        </li>
+        <li>
+          On the next screen, tap the <strong>Add</strong> button
+        </li>
       </ol>
 
-      <Image src={addToHomeScreenImage1} alt="Share Icon" className="block-image" layout="responsive" />
-      <Image src={addToHomeScreenImage2} alt="Share Sheet" className="block-image" layout="responsive" />
-      <Image src={addToHomeScreenImage3} alt="Add to Home Screen" className="block-image" layout="responsive" />
+      <Image
+        src={addToHomeScreenImage1}
+        alt="Share Icon"
+        className="block-image"
+        layout="responsive"
+      />
+      <Image
+        src={addToHomeScreenImage2}
+        alt="Share Sheet"
+        className="block-image"
+        layout="responsive"
+      />
+      <Image
+        src={addToHomeScreenImage3}
+        alt="Add to Home Screen"
+        className="block-image"
+        layout="responsive"
+      />
 
       <br />
 
       <h2>Contact</h2>
 
-      <p>If you need any help, please reach out to me (Caleb) at <a href="https://calebevans.me/contact/" rel="noopener">my personal website</a>.</p>
+      <p>
+        If you need any help, please reach out to me (Caleb) at{' '}
+        <a href="https://calebevans.me/contact/" rel="noopener">
+          my personal website
+        </a>
+        .
+      </p>
 
       <p>This app is dedicated to Christ our Lord.</p>
 
-      <p><LinkButton href="/">Return to App</LinkButton></p>
+      <p>
+        <LinkButton href="/">Return to App</LinkButton>
+      </p>
     </LandingPage>
   );
 }
@@ -85,7 +168,8 @@ export async function getStaticProps() {
     props: {
       pagePath: '/help',
       pageTitle: 'Help | Faith Dashboard',
-      pageDescription: 'Documentation on how to get started with Faith Dashboard, your one place for anything and everything that inspires your faith.'
+      pageDescription:
+        'Documentation on how to get started with Faith Dashboard, your one place for anything and everything that inspires your faith.'
     }
   };
 }

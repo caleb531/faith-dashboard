@@ -9,26 +9,28 @@ const successLabelDuration = 2000;
 
 type Props = {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<{
-    user?: User | null,
-    session?: Session | null,
-    error: ApiError | null
-  }>,
-  onSuccess?: ({ user, session }: {
-    user?: User | null,
-    session?: Session | null
-  }) => boolean | void,
-  submitLabel: string,
-  submittingLabel: string,
-  successLabel: string,
+    user?: User | null;
+    session?: Session | null;
+    error: ApiError | null;
+  }>;
+  onSuccess?: ({
+    user,
+    session
+  }: {
+    user?: User | null;
+    session?: Session | null;
+  }) => boolean | void;
+  submitLabel: string;
+  submittingLabel: string;
+  successLabel: string;
   altLink?: {
-    title: string,
-    href: string
-  }
-  children: JSXContents
+    title: string;
+    href: string;
+  };
+  children: JSXContents;
 };
 
 function AuthForm(props: Props) {
-
   const [formErrorMessage, setFormErrorMessage] = useState<string | null>();
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [isFormSuccess, setIsFormSuccess] = useState(false);
@@ -47,9 +49,9 @@ function AuthForm(props: Props) {
       setIsFormSubmitting(false);
       return;
     }
-    const successCallbackResult = props.onSuccess ?
-      props.onSuccess({ user, session }) :
-      null;
+    const successCallbackResult = props.onSuccess
+      ? props.onSuccess({ user, session })
+      : null;
     // If the onSuccess() callback returns false, the Submit button should not
     // revert to its initial label, but rather, remain in a "Submitting" state
     if (successCallbackResult !== false) {
@@ -85,12 +87,11 @@ function AuthForm(props: Props) {
     return () => {
       clearTimeout(submitLabelTimer);
     };
-  /* eslint-disable-next-line react-hooks/exhaustive-deps */
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
 
   return (
     <form className="account-auth-form" onSubmit={onSubmitWrapper}>
-
       {props.children}
 
       {formErrorMessage ? (
@@ -105,18 +106,20 @@ function AuthForm(props: Props) {
         <button
           type="submit"
           className="account-auth-form-submit"
-          disabled={isFormSubmitting || isFormSuccess}>
-          {isFormSubmitting && props.submittingLabel ?
-            props.submittingLabel :
-            isFormSuccess && props.successLabel ?
-              props.successLabel :
-              props.submitLabel}
+          disabled={isFormSubmitting || isFormSuccess}
+        >
+          {isFormSubmitting && props.submittingLabel
+            ? props.submittingLabel
+            : isFormSuccess && props.successLabel
+            ? props.successLabel
+            : props.submitLabel}
         </button>
         {props.altLink ? (
-          <Link href="/forgot-password"><a className="account-auth-form-alt-link">Forgot Password?</a></Link>
+          <Link href="/forgot-password">
+            <a className="account-auth-form-alt-link">Forgot Password?</a>
+          </Link>
         ) : null}
       </div>
-
     </form>
   );
 }

@@ -4,7 +4,6 @@ import fetch from 'node-fetch';
 const API_BASE_URL = 'https://api.esv.org/v3/passage/html/';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-
   if (!process.env.ESV_API_KEY) {
     res.status(500);
     res.json({ error: 'Missing API key' });
@@ -18,7 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const params = new URLSearchParams({
-    'q': String(req.query.q),
+    q: String(req.query.q),
     // The ESV API requires that all of these values are strings (either
     // 'true' or 'false')
     'include-footnotes': 'false',
@@ -31,11 +30,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     'include-audio-link': 'false'
   });
   const response = await fetch(`${API_BASE_URL}?${params}`, {
-    headers: { 'Authorization': `Token ${process.env.ESV_API_KEY}` }
+    headers: { Authorization: `Token ${process.env.ESV_API_KEY}` }
   });
   const data = await response.json();
 
   res.status(response.status);
   res.json(data);
-
 };

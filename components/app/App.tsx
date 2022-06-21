@@ -22,22 +22,29 @@ import useThemeForEntirePage from './useThemeForEntirePage';
 // other projects use localhost; this can be overridden via a single
 // sessionStorage entry
 function shouldLoadServiceWorker() {
-  return typeof navigator !== 'undefined' && navigator.serviceWorker && (!window.location.hostname.includes('localhost') || sessionStorage.getItem('sw'));
+  return (
+    typeof navigator !== 'undefined' &&
+    navigator.serviceWorker &&
+    (!window.location.hostname.includes('localhost') ||
+      sessionStorage.getItem('sw'))
+  );
 }
 
 type Props = {
-  enableTutorial?: boolean,
-  canAddWidgets?: boolean,
-  children: (app: AppState) => JSXContents
-}
+  enableTutorial?: boolean;
+  canAddWidgets?: boolean;
+  children: (app: AppState) => JSXContents;
+};
 
 function App({
   enableTutorial = false,
   canAddWidgets = false,
   children
 }: Props) {
-
-  const [restoreApp, saveApp] = useLocalStorage('faith-dashboard-app', defaultApp);
+  const [restoreApp, saveApp] = useLocalStorage(
+    'faith-dashboard-app',
+    defaultApp
+  );
   const [app, dispatchToApp] = useReducer(reducer, defaultApp);
   const [isTurorialStarted, setIsTutorialStarted] = useState(false);
 
@@ -60,7 +67,8 @@ function App({
   // Defer the starting of the tutorial so the app's loading state isn't blurry
   useEffect(() => {
     const urlParams = new URLSearchParams(`?${window.location.hash.slice(1)}`);
-    const notificationMessage = urlParams.get('message') || urlParams.get('error_description');
+    const notificationMessage =
+      urlParams.get('message') || urlParams.get('error_description');
     if (!notificationMessage) {
       setIsTutorialStarted(true);
     }
@@ -71,21 +79,20 @@ function App({
   return (
     <AppContext.Provider value={dispatchToApp}>
       <div className="app">
-        {shouldLoadServiceWorker() ? (
-          <UpdateNotification />
-        ) : null}
-        <TutorialFlow inProgress={Boolean(app.shouldShowTutorial && enableTutorial && isTurorialStarted)}>
+        {shouldLoadServiceWorker() ? <UpdateNotification /> : null}
+        <TutorialFlow
+          inProgress={Boolean(
+            app.shouldShowTutorial && enableTutorial && isTurorialStarted
+          )}
+        >
           <AppHeader currentTheme={app.theme} canAddWidgets={canAddWidgets} />
           <AppNotification />
-          <div className="app-contents">
-            {children(app)}
-          </div>
+          <div className="app-contents">{children(app)}</div>
           <AppFooter />
         </TutorialFlow>
       </div>
     </AppContext.Provider>
   );
-
 }
 
 export default App;

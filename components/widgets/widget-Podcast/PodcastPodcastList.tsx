@@ -7,10 +7,10 @@ import { PodcastInfo, PodcastWidgetState } from './podcast.d';
 import { PodcastAction } from './PodcastReducer';
 
 type Props = {
-  widget: WidgetState,
-  podcastList: PodcastInfo[],
-  fetchPodcastFeed: (url: string) => Promise<void>,
-  dispatch: Dispatch<PodcastAction | WidgetAction>
+  widget: WidgetState;
+  podcastList: PodcastInfo[];
+  fetchPodcastFeed: (url: string) => Promise<void>;
+  dispatch: Dispatch<PodcastAction | WidgetAction>;
 };
 
 function PodcastPodcastList({
@@ -19,11 +19,10 @@ function PodcastPodcastList({
   fetchPodcastFeed,
   dispatch
 }: Props) {
-
   const { podcastFeedUrl, podcastFeedData } = widget as PodcastWidgetState;
 
   function choosePodcast(result: Result) {
-    const data = result.data as { feedUrl: string, image: string };
+    const data = result.data as { feedUrl: string; image: string };
     dispatch({ type: 'setPodcastFeedUrl', payload: data.feedUrl });
     dispatch({ type: 'setPodcastImage', payload: data.image });
     fetchPodcastFeed(data.feedUrl);
@@ -47,15 +46,19 @@ function PodcastPodcastList({
 
   return (
     <div className="podcast-result-list-container">
-        {podcastList && podcastList.length ? (
-          <div className="podcast-podcast-count">{podcastList.length === 1 ? `${podcastList.length} podcast` : `${podcastList.length} podcasts`}</div>
-        ) : null}
+      {podcastList && podcastList.length ? (
+        <div className="podcast-podcast-count">
+          {podcastList.length === 1
+            ? `${podcastList.length} podcast`
+            : `${podcastList.length} podcasts`}
+        </div>
+      ) : null}
       <ResultList
         results={getPodcastResultList()}
-        onChooseResult={choosePodcast} />
+        onChooseResult={choosePodcast}
+      />
     </div>
   );
-
 }
 
 export default PodcastPodcastList;

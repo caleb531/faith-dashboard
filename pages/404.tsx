@@ -4,20 +4,19 @@ import LinkButton from '../components/generic/LinkButton';
 import LandingPage from '../components/LandingPage';
 
 type Props = {
-  pageTitle: string
+  pageTitle: string;
 };
 
 function PageNotFound({ pageTitle }: Props) {
-
   return (
     <LandingPage heading={pageTitle}>
-
       <p>Sorry about that! You ended up on a page that doesn't exist.</p>
 
-      <p><LinkButton href="/">Return to App</LinkButton></p>
+      <p>
+        <LinkButton href="/">Return to App</LinkButton>
+      </p>
     </LandingPage>
   );
-
 }
 
 export async function getStaticProps() {

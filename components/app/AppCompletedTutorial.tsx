@@ -4,9 +4,7 @@ import useTutorialStep from '../tutorial/useTutorialStep';
 
 function AppCompletedTutorial() {
   const { isCurrentStep } = useTutorialStep('completed');
-  return (
-    isCurrentStep ? <TutorialStepTooltip /> : null
-  );
+  return isCurrentStep ? <TutorialStepTooltip /> : null;
 }
 
 export default AppCompletedTutorial;

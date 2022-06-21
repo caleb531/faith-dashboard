@@ -8,7 +8,6 @@ import widgetSyncService from '../widgets/widgetSyncService';
 import { AppState } from './app.d';
 import { AppAction } from './AppReducer';
 
-
 // Take the new app/dashboard state from the server and apply it to the local
 // application
 async function applyServerAppToLocalApp(
@@ -22,9 +21,7 @@ async function applyServerAppToLocalApp(
     type: 'replaceApp',
     payload: newApp
   });
-  const { data, error } = await supabase
-    .from('widgets')
-    .select('raw_data');
+  const { data, error } = await supabase.from('widgets').select('raw_data');
   if (!(data && data.length > 0)) {
     return;
   }
@@ -46,9 +43,7 @@ async function pullLatestAppFromServer(
   if (!isSessionActive()) {
     return;
   }
-  const { data, error } = await supabase
-      .from('dashboards')
-      .select('raw_data');
+  const { data, error } = await supabase.from('dashboards').select('raw_data');
   if (!(data && data.length > 0)) {
     const user = supabase.auth.user();
     if (user) {
@@ -71,17 +66,15 @@ async function pushLocalAppToServer(app: AppState) {
   if (!user) {
     return;
   }
-  await supabase
-    .from('dashboards')
-    .upsert([
-      {
-        id: app.id,
-        user_id: user.id,
-        client_id: getClientId(),
-        raw_data: JSON.stringify(app),
-        updated_at: new Date().toISOString()
-      }
-    ]);
+  await supabase.from('dashboards').upsert([
+    {
+      id: app.id,
+      user_id: user.id,
+      client_id: getClientId(),
+      raw_data: JSON.stringify(app),
+      updated_at: new Date().toISOString()
+    }
+  ]);
 }
 
 // Push all local widgets to the server (this is only necessary as a one-time
@@ -94,11 +87,7 @@ function pushLocalWidgetsToServer(app: AppState): void {
 
 // The useAppSync() hook mangages the sychronization of the app state between
 // the client and server, pushing and pulling data as appropriate
-function useAppSync(
-  app: AppState,
-  dispatchToApp: Dispatch<AppAction>
-): void {
-
+function useAppSync(app: AppState, dispatchToApp: Dispatch<AppAction>): void {
   // Push the local app state to the server every time the app state changes
   // locally; please note that this push operation is debounced
   useSyncPush({
@@ -112,10 +101,9 @@ function useAppSync(
     if (app.id) {
       pullLatestAppFromServer(app, dispatchToApp);
     }
-  // We only want to pull the latest app data when the app ID changes
-  /* eslint-disable-next-line react-hooks/exhaustive-deps */
+    // We only want to pull the latest app data when the app ID changes
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [app.id]);
-
 }
 
 export default useAppSync;

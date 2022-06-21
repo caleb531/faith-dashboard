@@ -16,17 +16,15 @@ async function pushLocalWidgetToServer(widget: WidgetState) {
   if (!user) {
     return;
   }
-  await supabase
-    .from('widgets')
-    .upsert([
-      {
-        id: widget.id,
-        user_id: user.id,
-        client_id: getClientId(),
-        raw_data: JSON.stringify(widget),
-        updated_at: new Date().toISOString()
-      }
-    ]);
+  await supabase.from('widgets').upsert([
+    {
+      id: widget.id,
+      user_id: user.id,
+      client_id: getClientId(),
+      raw_data: JSON.stringify(widget),
+      updated_at: new Date().toISOString()
+    }
+  ]);
 }
 
 // Delete the widget from the server if it's removed from the local dashboard
@@ -35,13 +33,10 @@ async function deleteLocalWidgetFromServer(widget: WidgetState) {
   if (!user) {
     return;
   }
-  await supabase
-    .from('widgets')
-    .delete()
-    .match({
-      id: widget.id,
-      user_id: user.id
-    });
+  await supabase.from('widgets').delete().match({
+    id: widget.id,
+    user_id: user.id
+  });
 }
 
 // The useWidgetSync() hook mangages the sychronization of the widget state
@@ -50,7 +45,6 @@ function useWidgetSync(
   widget: WidgetState,
   dispatchToWidget: Dispatch<WidgetAction>
 ): void {
-
   // Push the local widget state to the server every time the widget state
   // changes locally; please note that this push operation is debounced
   useSyncPush<WidgetState>({
@@ -105,7 +99,6 @@ function useWidgetSync(
       deleteLocalWidgetFromServer(widget);
     }
   }, [widget]);
-
 }
 
 export default useWidgetSync;

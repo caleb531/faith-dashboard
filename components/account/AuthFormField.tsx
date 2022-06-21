@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes, RefObject } from 'react';
 
-type Props = InputHTMLAttributes<HTMLInputElement>
+type Props = InputHTMLAttributes<HTMLInputElement>;
 
 const AuthFormField = React.forwardRef(function AuthFormField(
   props: Props,
@@ -8,9 +8,7 @@ const AuthFormField = React.forwardRef(function AuthFormField(
 ) {
   return (
     <>
-      <label htmlFor={props.id}>
-        {props.placeholder}
-      </label>
+      <label htmlFor={props.id}>{props.placeholder}</label>
       <input className="account-auth-form-input" {...props} ref={ref} />
     </>
   );

@@ -22,9 +22,6 @@ coverage/
 api-credentials.*
 *.secret.*
 
-# VS Code settings
-.vscode/
-
 # NextJS
 
 # next.js

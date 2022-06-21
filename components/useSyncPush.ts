@@ -12,13 +12,13 @@ const pushDebounceDelay = 1000;
 // The object types that can be synced between client and server
 type AcceptableSyncStateTypes = AppState | WidgetState;
 
-  // Send the supplied state data to the relevant table in the database
+// Send the supplied state data to the relevant table in the database
 function pushStateToDatabase<T extends AcceptableSyncStateTypes>({
   state,
   upsertState
 }: {
-  state: T,
-  upsertState: (state: T) => Promise<void>
+  state: T;
+  upsertState: (state: T) => Promise<void>;
 }): void {
   const user = supabase.auth.user();
   if (!user) {
@@ -35,11 +35,10 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
   stateType,
   upsertState
 }: {
-  state: T,
-  stateType: string,
-  upsertState: (state: T) => Promise<void>
+  state: T;
+  stateType: string;
+  upsertState: (state: T) => Promise<void>;
 }) {
-
   const [getStateChanges] = useObjectHasChanged(state);
 
   const evaluatePushDebounced = useMemo(() => {
@@ -56,7 +55,11 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
       // skip over this initial "change" event, we check to see if the previous
       // app state has a non-empty 'id' property, which is guaranteed to be
       // non-empty by the time the user begins interacting with the app
-      if (changes && Object.keys(changes).length > 0 && (!('id' in changes) || changes.id !== undefined)) {
+      if (
+        changes &&
+        Object.keys(changes).length > 0 &&
+        (!('id' in changes) || changes.id !== undefined)
+      ) {
         pushStateToDatabase({ state, upsertState });
       }
     }, pushDebounceDelay);
@@ -67,7 +70,6 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
   useEffect(() => {
     evaluatePushDebounced({ state, upsertState });
   }, [state, evaluatePushDebounced, upsertState]);
-
 }
 
 export default useSyncPush;

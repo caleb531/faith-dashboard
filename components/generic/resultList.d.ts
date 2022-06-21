@@ -5,6 +5,6 @@ export interface Result {
   title: string;
   subtitle: string | null;
   data?: {
-    [key: string]: JSONSerializable
+    [key: string]: JSONSerializable;
   };
 }

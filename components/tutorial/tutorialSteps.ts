@@ -3,7 +3,8 @@ import { TutorialStep } from './tutorial.d';
 const tutorialSteps: TutorialStep[] = [
   {
     id: 'welcome',
-    message: 'Welcome to Faith Dashboard, your personalized home for strength and encouragement every day.',
+    message:
+      'Welcome to Faith Dashboard, your personalized home for strength and encouragement every day.',
     position: 'center',
     alignment: 'center',
     width: 280,
@@ -11,28 +12,32 @@ const tutorialSteps: TutorialStep[] = [
   },
   {
     id: 'dashboard',
-    message: 'This is your dashboard. It has different types of "widgets" that help inspire your faith.',
+    message:
+      'This is your dashboard. It has different types of "widgets" that help inspire your faith.',
     position: 'center',
     alignment: 'center',
     width: 320
   },
   {
     id: 'widget-bible-verse-1',
-    message: 'Search for a verse to post to your dashboard with the Bible Verse widget.',
+    message:
+      'Search for a verse to post to your dashboard with the Bible Verse widget.',
     position: 'auto',
     alignment: 'left',
     width: '100%'
   },
   {
     id: 'widget-note-1',
-    message: 'Type something encouraging or whatever you want with the Note widget.',
+    message:
+      'Type something encouraging or whatever you want with the Note widget.',
     position: 'auto',
     alignment: 'left',
     width: '100%'
   },
   {
     id: 'widget-podcast-1',
-    message: 'Listen to your favorite sermons or other podcasts with the Podcast widget.',
+    message:
+      'Listen to your favorite sermons or other podcasts with the Podcast widget.',
     position: 'auto',
     alignment: 'left',
     width: '100%'
@@ -46,7 +51,7 @@ const tutorialSteps: TutorialStep[] = [
   },
   {
     id: 'change-theme',
-    message: 'Change your board\'s theme to personalize it!',
+    message: "Change your board's theme to personalize it!",
     position: 'bottom',
     alignment: 'right'
   },
@@ -58,7 +63,7 @@ const tutorialSteps: TutorialStep[] = [
   },
   {
     id: 'remove-widget-bible-verse-2',
-    message: 'Remove any widget you don\'t want with the minus (-) icon.',
+    message: "Remove any widget you don't want with the minus (-) icon.",
     position: 'auto',
     alignment: 'right'
   },
@@ -70,20 +75,22 @@ const tutorialSteps: TutorialStep[] = [
   },
   {
     id: 'drag-widget-bible-verse-2',
-    message: 'And, you can rearrange your widgets with the drag-handle icon on any widget.',
+    message:
+      'And, you can rearrange your widgets with the drag-handle icon on any widget.',
     position: 'auto',
     positionPrecedence: ['left', 'right', 'top', 'bottom'],
     alignment: 'left'
   },
   {
     id: 'help',
-    message: 'Finally, if you ever need help, click the Help link at the bottom of the page.',
+    message:
+      'Finally, if you ever need help, click the Help link at the bottom of the page.',
     position: 'top',
     alignment: 'center'
   },
   {
     id: 'completed',
-    message: 'And that\'s it! May this dashboard help you grow closer to Jesus.',
+    message: "And that's it! May this dashboard help you grow closer to Jesus.",
     position: 'center',
     alignment: 'center',
     width: 260

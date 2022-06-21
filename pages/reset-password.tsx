@@ -8,11 +8,10 @@ import { supabase } from '../components/supabaseClient';
 import useFormFieldMatcher from '../components/useFormFieldMatcher';
 
 type Props = {
-  pageTitle: string
+  pageTitle: string;
 };
 
 function ResetPassword({ pageTitle }: Props) {
-
   const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Passwords must match'
   });
@@ -33,13 +32,17 @@ function ResetPassword({ pageTitle }: Props) {
   }
 
   return (
-    <LandingPage heading={pageTitle} altLink={{ title: 'Sign In', href: '/sign-in' }}>
+    <LandingPage
+      heading={pageTitle}
+      altLink={{ title: 'Sign In', href: '/sign-in' }}
+    >
       <AuthForm
         onSubmit={resetPassword}
         onSuccess={redirectToHome}
         submitLabel="Reset Password"
         submittingLabel="Resetting..."
-        successLabel="Success! Redirecting...">
+        successLabel="Success! Redirecting..."
+      >
         <AuthFormField
           type="password"
           id="reset-password-form-new-password"
@@ -47,7 +50,7 @@ function ResetPassword({ pageTitle }: Props) {
           placeholder="New Password"
           required
           {...passwordFieldProps}
-          />
+        />
         <AuthFormField
           type="password"
           id="reset-password-form-confirm-new-password"
@@ -55,7 +58,7 @@ function ResetPassword({ pageTitle }: Props) {
           placeholder="Confirm New Password"
           required
           {...confirmPasswordFieldProps}
-          />
+        />
       </AuthForm>
     </LandingPage>
   );
@@ -66,7 +69,8 @@ export async function getStaticProps() {
     props: {
       pagePath: '/reset-password',
       pageTitle: 'Reset Password | Faith Dashboard',
-      pageDescription: 'Reset your account password for Faith Dashboard, your one place for anything and everything that inspires your faith.'
+      pageDescription:
+        'Reset your account password for Faith Dashboard, your one place for anything and everything that inspires your faith.'
     }
   };
 }

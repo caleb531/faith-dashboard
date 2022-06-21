@@ -8,11 +8,10 @@ import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
 
 type Props = {
-  pageTitle: string
+  pageTitle: string;
 };
 
 function ResetPassword({ pageTitle }: Props) {
-
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
 
   function sendPasswordRecoveryEmail(event: React.FormEvent<HTMLFormElement>) {
@@ -21,12 +20,16 @@ function ResetPassword({ pageTitle }: Props) {
   }
 
   return (
-    <LandingPage heading={pageTitle} altLink={{ title: 'Sign In', href: '/sign-in' }}>
+    <LandingPage
+      heading={pageTitle}
+      altLink={{ title: 'Sign In', href: '/sign-in' }}
+    >
       <AuthForm
         onSubmit={sendPasswordRecoveryEmail}
         submitLabel="Send Email"
         submittingLabel="Sending..."
-        successLabel="Almost done! Check your email to finish resetting">
+        successLabel="Almost done! Check your email to finish resetting"
+      >
         <AuthFormField
           type="email"
           id="forgot-password-form-email"
@@ -34,7 +37,7 @@ function ResetPassword({ pageTitle }: Props) {
           placeholder="Email"
           required
           {...emailAutoFocusProps}
-          />
+        />
       </AuthForm>
     </LandingPage>
   );
@@ -45,7 +48,8 @@ export async function getStaticProps() {
     props: {
       pagePath: '/forgot-password',
       pageTitle: 'Forgot Password | Faith Dashboard',
-      pageDescription: 'Start the process to reset your account password for Faith Dashboard, your one place for anything and everything that inspires your faith.'
+      pageDescription:
+        'Start the process to reset your account password for Faith Dashboard, your one place for anything and everything that inspires your faith.'
     }
   };
 }

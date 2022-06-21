@@ -3,10 +3,10 @@ import LoadingIndicator from '../LoadingIndicator';
 import useAudioPlayPause from './useAudioPlayPause';
 
 type Props = {
-  audioElement: HTMLAudioElement,
-  audioUrl: string,
-  isPlaying: boolean,
-  setIsPlaying: (newIsPlaying: boolean) => void
+  audioElement: HTMLAudioElement;
+  audioUrl: string;
+  isPlaying: boolean;
+  setIsPlaying: (newIsPlaying: boolean) => void;
 };
 
 function AudioPlayerPlayPause({
@@ -15,7 +15,6 @@ function AudioPlayerPlayPause({
   isPlaying,
   setIsPlaying
 }: Props) {
-
   function toggleAudioElementPlayback() {
     if (audioElement.paused) {
       audioElement.play();
@@ -27,25 +26,31 @@ function AudioPlayerPlayPause({
   useAudioPlayPause(audioElement, isPlaying, setIsPlaying);
 
   return (
-    <button type="button" className="audio-player-playpause" onClick={() => toggleAudioElementPlayback()} disabled={!audioElement.duration}>
+    <button
+      type="button"
+      className="audio-player-playpause"
+      onClick={() => toggleAudioElementPlayback()}
+      disabled={!audioElement.duration}
+    >
       {!audioElement.duration || audioElement.src !== audioUrl ? (
         <LoadingIndicator />
-      ) : (audioElement.paused) ? (
+      ) : audioElement.paused ? (
         <img
           className="audio-player-playpause-icon"
           src="/icons/play-light.svg"
           alt="Play"
-          draggable="false" />
+          draggable="false"
+        />
       ) : (
         <img
           className="audio-player-playpause-icon"
           src="/icons/pause-light.svg"
           alt="Pause"
-          draggable="false" />
+          draggable="false"
+        />
       )}
     </button>
   );
-
 }
 
 export default AudioPlayerPlayPause;

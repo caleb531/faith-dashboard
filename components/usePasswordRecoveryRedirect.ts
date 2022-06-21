@@ -6,7 +6,6 @@ import { supabase } from './supabaseClient';
 
 // this is a Supabase Password Recovery URL)
 function usePasswordRecoveryRedirect() {
-
   useEffect(() => {
     supabase.auth.onAuthStateChange((event) => {
       if (event === 'PASSWORD_RECOVERY') {
@@ -14,6 +13,5 @@ function usePasswordRecoveryRedirect() {
       }
     });
   });
-
 }
 export default usePasswordRecoveryRedirect;

@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { AppState } from './app.d';
 
-
 export default {
   theme: 'shore',
   shouldShowTutorial: true,

@@ -9,10 +9,10 @@ import useTutorialStepTooltipPositioner from './useTutorialStepTooltipPositioner
 // wrapped inside of an isCurrentStep check (from the useTutorialStep()
 // hook), so that only one instance of TutorialStepTooltip is active at a time
 function TutorialStepTooltip() {
-
-  const { currentStep, currentStepIndex, moveToNextStep, skipTutorial } = useContext(TutorialContext);
+  const { currentStep, currentStepIndex, moveToNextStep, skipTutorial } =
+    useContext(TutorialContext);
   const messageRef = useRef<HTMLDivElement>(null);
-  const isLastStep = (currentStepIndex === (tutorialSteps.length - 1));
+  const isLastStep = currentStepIndex === tutorialSteps.length - 1;
 
   // Scroll the highlighted element into view when that respective Getting
   // Started step is active
@@ -21,37 +21,42 @@ function TutorialStepTooltip() {
     ref: messageRef
   });
 
-  const calculatedPosition = useTutorialStepTooltipPositioner({
-    currentStep,
-    ref: messageRef
-  }) || currentStep.position;
+  const calculatedPosition =
+    useTutorialStepTooltipPositioner({
+      currentStep,
+      ref: messageRef
+    }) || currentStep.position;
 
   return (
     <div
-        className={classNames(
+      className={classNames(
         'tutorial-step-tooltip',
         `position-${calculatedPosition}`,
         `alignment-${currentStep.alignment}`
       )}
       style={{ width: currentStep.width || 'auto' }}
-      ref={messageRef}>
-      <span className="tutorial-step-tooltip-message">{currentStep.message}</span>
+      ref={messageRef}
+    >
+      <span className="tutorial-step-tooltip-message">
+        {currentStep.message}
+      </span>
       <div className="tutorial-step-tooltip-controls">
         <button
           type="submit"
           className="tutorial-step-tooltip-control"
-          onClick={moveToNextStep}>
-          {
-            currentStep.primaryButtonLabel ||
-            (isLastStep ? 'Done' : 'Next')
-          }
+          onClick={moveToNextStep}
+        >
+          {currentStep.primaryButtonLabel || (isLastStep ? 'Done' : 'Next')}
         </button>
-        {isLastStep === false ? <button
-          type="button"
-          className="tutorial-step-tooltip-control warning"
-          onClick={skipTutorial}>
-          Skip Tutorial
-        </button> : null}
+        {isLastStep === false ? (
+          <button
+            type="button"
+            className="tutorial-step-tooltip-control warning"
+            onClick={skipTutorial}
+          >
+            Skip Tutorial
+          </button>
+        ) : null}
       </div>
     </div>
   );

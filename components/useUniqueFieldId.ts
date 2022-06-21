@@ -5,9 +5,7 @@ import { useState } from 'react';
 // allows it to be reused for a companion <label> element; this ID is
 // guaranteed to be unique across the entire application
 export default function useUniqueFieldId(key: string): string {
-
   const [fieldId, setFieldId] = useState(() => uniqueId(`${key}-`));
 
   return fieldId;
-
 }

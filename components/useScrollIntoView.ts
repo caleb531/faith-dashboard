@@ -7,10 +7,9 @@ function useScrollIntoView({
   shouldScrollIntoView,
   ref
 }: {
-  shouldScrollIntoView: boolean,
-  ref: RefObject<HTMLElement>
+  shouldScrollIntoView: boolean;
+  ref: RefObject<HTMLElement>;
 }) {
-
   useEffect(() => {
     if (shouldScrollIntoView && ref.current) {
       ref.current.scrollIntoView({
@@ -21,7 +20,6 @@ function useScrollIntoView({
       });
     }
   }, [shouldScrollIntoView, ref]);
-
 }
 
 export default useScrollIntoView;

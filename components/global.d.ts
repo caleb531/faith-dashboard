@@ -2,4 +2,11 @@
 export type JSXContents = JSX.Element | (JSX.Element | null)[] | null;
 
 // A type that represents any JSON-serializable value or structure
-export type JSONSerializable = string | number | boolean | Array<JSONSerializable> | object | { [key: string]: JSONSerializable } | null;
+export type JSONSerializable =
+  | string
+  | number
+  | boolean
+  | Array<JSONSerializable>
+  | object
+  | { [key: string]: JSONSerializable }
+  | null;

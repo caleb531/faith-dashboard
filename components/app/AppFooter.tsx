@@ -4,12 +4,14 @@ import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 
 function AppFooter() {
-
   const { isCurrentStep, stepProps } = useTutorialStep('help');
 
   return (
     <footer className="app-footer">
-      <small className="app-footer-dedication">By <a href="https://calebevans.me/">Caleb Evans</a>. Dedicated to Christ our Lord.</small>
+      <small className="app-footer-dedication">
+        By <a href="https://calebevans.me/">Caleb Evans</a>. Dedicated to Christ
+        our Lord.
+      </small>
       <ul className="app-footer-links">
         <li className="app-footer-link">
           <a href="https://twitter.com/faithdashboard">@faithdashboard</a>
@@ -27,7 +29,6 @@ function AppFooter() {
       </ul>
     </footer>
   );
-
 }
 
 export default AppFooter;

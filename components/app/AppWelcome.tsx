@@ -4,9 +4,7 @@ import useTutorialStep from '../tutorial/useTutorialStep';
 
 function AppWelcome() {
   const { isCurrentStep } = useTutorialStep('welcome');
-  return (
-    isCurrentStep ? <TutorialStepTooltip /> : null
-  );
+  return isCurrentStep ? <TutorialStepTooltip /> : null;
 }
 
 export default AppWelcome;

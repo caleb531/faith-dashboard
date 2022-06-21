@@ -4,7 +4,6 @@ import Modal from '../generic/Modal';
 // Show a message to the user if the result of clicking a magic link provides
 // any feedback (e.g. "Token has expired")
 function AppNotification() {
-
   const [isNotificationShowing, setIsNotificationShowing] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState<string>();
 
@@ -19,7 +18,8 @@ function AppNotification() {
   // originate from Supabase)
   useEffect(() => {
     const urlParams = new URLSearchParams(`?${window.location.hash.slice(1)}`);
-    const newNotificationMessage = urlParams.get('message') || urlParams.get('error_description');
+    const newNotificationMessage =
+      urlParams.get('message') || urlParams.get('error_description');
     if (newNotificationMessage) {
       setNotificationMessage(newNotificationMessage);
       setIsNotificationShowing(true);

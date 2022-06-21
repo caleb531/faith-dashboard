@@ -14,13 +14,10 @@ function getColumnFromDroppableId(droppableId: string): number {
 }
 
 type Props = {
-  widgets: WidgetHead[]
+  widgets: WidgetHead[];
 };
 
-function WidgetBoard({
-  widgets
-}: Props) {
-
+function WidgetBoard({ widgets }: Props) {
   const dispatchToApp = useContext(AppContext);
   const columnCount = 3;
 
@@ -32,12 +29,13 @@ function WidgetBoard({
   // later to handle drag-and-drop (pre-computing these values will allow us to
   // perform an O(1) lookup when rendering each widget, rather than an O(n)
   // indexOf at the time each widget is rendered)
-  const widgetIdsToIndices = fromPairs(widgets.map((widget, w) => {
-    return [widget.id, w];
-  }));
+  const widgetIdsToIndices = fromPairs(
+    widgets.map((widget, w) => {
+      return [widget.id, w];
+    })
+  );
 
   function onDragEnd({ source, destination }: DropResult): void {
-
     // Do nothing if the destination is invalid (this happens if the user drags
     // a widget outside of one of the columns)
     if (!destination) {
@@ -45,7 +43,10 @@ function WidgetBoard({
     }
 
     // Do nothing if the item is dragged to the same place
-    if (source.droppableId === destination.droppableId && destination.index === source.index) {
+    if (
+      source.droppableId === destination.droppableId &&
+      destination.index === source.index
+    ) {
       return;
     }
 
@@ -62,7 +63,6 @@ function WidgetBoard({
         destinationColumn
       }
     });
-
   }
 
   return (
@@ -75,13 +75,13 @@ function WidgetBoard({
               widgets={widgets}
               widgetIdsToIndices={widgetIdsToIndices}
               columnIndex={columnIndex}
-              key={columnIndex} />
+              key={columnIndex}
+            />
           );
         })}
       </div>
     </DragDropContext>
   );
-
 }
 
 export default WidgetBoard;

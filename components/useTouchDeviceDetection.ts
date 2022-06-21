@@ -8,7 +8,6 @@ function isTouchDevice(): boolean {
 // The useTouchDeviceDetection() hook takes the given color theme and applies it
 // to the <body> element of the page
 export default function useTouchDeviceDetection() {
-
   useIsomorphicLayoutEffect(() => {
     if (isTouchDevice()) {
       document.body.classList.add('is-touch-device');
@@ -20,5 +19,4 @@ export default function useTouchDeviceDetection() {
       document.body.classList.remove('is-not-touch-device');
     };
   }, []);
-
 }

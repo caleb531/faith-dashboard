@@ -2,15 +2,15 @@ import { WidgetAction } from '../useWidgetShell';
 import { PodcastFeedData, PodcastWidgetState } from './podcast.d';
 
 export type PodcastAction =
-  WidgetAction |
-  { type: 'setPodcastFeedData', payload: PodcastFeedData | null } |
-  { type: 'setPodcastQuery', payload: string } |
-  { type: 'setPodcastFeedUrl', payload: string | null } |
-  { type: 'setPodcastImage', payload: string } |
-  { type: 'setNowPlaying', payload: string } |
-  { type: 'setIsPlaying', payload: boolean } |
-  { type: 'setViewingNowPlaying', payload: boolean } |
-  { type: 'updateNowPlayingMetadata', payload: { currentTime: number } };
+  | WidgetAction
+  | { type: 'setPodcastFeedData'; payload: PodcastFeedData | null }
+  | { type: 'setPodcastQuery'; payload: string }
+  | { type: 'setPodcastFeedUrl'; payload: string | null }
+  | { type: 'setPodcastImage'; payload: string }
+  | { type: 'setNowPlaying'; payload: string }
+  | { type: 'setIsPlaying'; payload: boolean }
+  | { type: 'setViewingNowPlaying'; payload: boolean }
+  | { type: 'updateNowPlayingMetadata'; payload: { currentTime: number } };
 
 export default function reducer(
   state: PodcastWidgetState,
@@ -21,31 +21,35 @@ export default function reducer(
       const podcastFeedData = action.payload;
       return {
         ...state,
-        podcastFeedData: podcastFeedData ? {
-          ...podcastFeedData,
-          item: podcastFeedData?.item
-            // Some podcasts have bad data episode details without any media
-            // information attached to them; filter these out
-            .filter((episode) => episode.enclosure)
-            .map((episode) => {
-              return {
-                ...episode,
-                // For most podcasts the GUID for each episode will be unique
-                // and safe to use throughout this application; however, some
-                // podcasts use the same @static object for each and every one
-                // of their episode GUIDs; this will cause React to throw a
-                // "two children with the same key" error, since we use the
-                // GUID to uniquely identify an episode in many areas of the
-                // Podcast widget code; to solve this, we need to assign some
-                // other value from the episode schemat can't be something we
-                // generate ourselves because the GUID cannot change across
-                // feed refreshes, lest we lose listening history, etc.)
-                guid: typeof episode.guid !== 'string' ?
-                  (episode.enclosure.url || episode.title) :
-                  episode.guid
-              };
-            }) || []
-        } : null
+        podcastFeedData: podcastFeedData
+          ? {
+              ...podcastFeedData,
+              item:
+                podcastFeedData?.item
+                  // Some podcasts have bad data episode details without any media
+                  // information attached to them; filter these out
+                  .filter((episode) => episode.enclosure)
+                  .map((episode) => {
+                    return {
+                      ...episode,
+                      // For most podcasts the GUID for each episode will be unique
+                      // and safe to use throughout this application; however, some
+                      // podcasts use the same @static object for each and every one
+                      // of their episode GUIDs; this will cause React to throw a
+                      // "two children with the same key" error, since we use the
+                      // GUID to uniquely identify an episode in many areas of the
+                      // Podcast widget code; to solve this, we need to assign some
+                      // other value from the episode schemat can't be something we
+                      // generate ourselves because the GUID cannot change across
+                      // feed refreshes, lest we lose listening history, etc.)
+                      guid:
+                        typeof episode.guid !== 'string'
+                          ? episode.enclosure.url || episode.title
+                          : episode.guid
+                    };
+                  }) || []
+            }
+          : null
       };
     case 'setPodcastQuery':
       const podcastQuery = action.payload;
@@ -62,13 +66,15 @@ export default function reducer(
         podcastFeedData: null,
         // Reset the transient metadata about the currently playing episode and
         // listening history whenever the podcast feed changes
-        nowPlaying: state.podcastFeedUrl !== podcastFeedUrl ?
-          null :
-          state.nowPlaying || null,
+        nowPlaying:
+          state.podcastFeedUrl !== podcastFeedUrl
+            ? null
+            : state.nowPlaying || null,
         viewingNowPlaying: false,
-        listeningMetadata: state.podcastFeedUrl !== podcastFeedUrl ?
-          {} :
-          state.listeningMetadata || {}
+        listeningMetadata:
+          state.podcastFeedUrl !== podcastFeedUrl
+            ? {}
+            : state.listeningMetadata || {}
       };
     case 'setPodcastImage':
       const podcastImage = action.payload;
@@ -77,7 +83,9 @@ export default function reducer(
       const nowPlayingEpisodeGuid = action.payload;
       return {
         ...state,
-        nowPlaying: state.podcastFeedData?.item.find((episode) => episode.guid === nowPlayingEpisodeGuid),
+        nowPlaying: state.podcastFeedData?.item.find(
+          (episode) => episode.guid === nowPlayingEpisodeGuid
+        ),
         isPlaying: false,
         viewingNowPlaying: true
       };
@@ -91,12 +99,15 @@ export default function reducer(
       const metadataEntry = action.payload;
       return {
         ...state,
-        listeningMetadata: state.nowPlaying ?
-          {
-            ...state.listeningMetadata,
-            [state.nowPlaying.guid]: { ...state.listeningMetadata[state.nowPlaying.guid], ...metadataEntry }
-          } :
-          state.listeningMetadata
+        listeningMetadata: state.nowPlaying
+          ? {
+              ...state.listeningMetadata,
+              [state.nowPlaying.guid]: {
+                ...state.listeningMetadata[state.nowPlaying.guid],
+                ...metadataEntry
+              }
+            }
+          : state.listeningMetadata
       };
     default:
       return state;

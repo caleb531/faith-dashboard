@@ -6,19 +6,17 @@ import AppHeaderAddWidgetButton from './AppHeaderAddWidgetButton';
 import AppHeaderThemeSwitcher from './AppHeaderThemeSwitcher';
 
 type Props = {
-  currentTheme: AppTheme,
-  canAddWidgets?: boolean
+  currentTheme: AppTheme;
+  canAddWidgets?: boolean;
 };
 
-function AppHeader({
-  currentTheme,
-  canAddWidgets
-}: Props) {
-
+function AppHeader({ currentTheme, canAddWidgets }: Props) {
   return (
     <header className="app-header" role="banner">
       <h1 className="app-header-title">
-        <Link href="/"><a className="app-header-title-link">Faith Dashboard</a></Link>
+        <Link href="/">
+          <a className="app-header-title-link">Faith Dashboard</a>
+        </Link>
       </h1>
       <div className="app-header-controls">
         {canAddWidgets ? <AppHeaderAddWidgetButton /> : null}
@@ -27,7 +25,6 @@ function AppHeader({
       </div>
     </header>
   );
-
 }
 
 export default AppHeader;

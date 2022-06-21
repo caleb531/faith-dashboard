@@ -10,11 +10,10 @@ import useFormFieldMatcher from '../components/useFormFieldMatcher';
 import useIsomorphicLayoutEffect from '../components/useIsomorphicLayoutEffect';
 
 type Props = {
-  pageTitle: string
+  pageTitle: string;
 };
 
 function AccountSettings({ pageTitle }: Props) {
-
   const [user, setUser] = useState<User | null>(null);
   const [emailFieldProps, confirmEmailFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Emails must match'
@@ -41,10 +40,12 @@ function AccountSettings({ pageTitle }: Props) {
       return {
         user: supabase.auth.user(),
         // Convert PostgrestError type to Supabase ApiError
-        error: error ? {
-          message: error.message,
-          status: 400
-        } : null
+        error: error
+          ? {
+              message: error.message,
+              status: 400
+            }
+          : null
       };
     } else {
       // If the RPC call completed successfully, we still need to force the
@@ -68,10 +69,12 @@ function AccountSettings({ pageTitle }: Props) {
     return {
       user: supabase.auth.user(),
       // Convert PostgrestError type to Supabase ApiError
-      error: error ? {
-        message: error.message,
-        status: 400
-      } : null
+      error: error
+        ? {
+            message: error.message,
+            status: 400
+          }
+        : null
     };
   }
 
@@ -86,130 +89,140 @@ function AccountSettings({ pageTitle }: Props) {
 
   return (
     <LandingPage heading={pageTitle}>
-      {user ?
-      <>
-        <AuthForm
-          onSubmit={updateUserData}
-          submitLabel="Save Details"
-          submittingLabel="Saving..."
-          successLabel="Saved!">
-
-          <h2>Your Details</h2>
-
-          <AuthFormField
-            type="text"
-            id="account-settings-form-first-name"
-            name="first_name"
-            placeholder="First Name"
-            defaultValue={user.user_metadata.first_name}
-            required
-            />
-
-          <AuthFormField
-            type="text"
-            id="account-settings-form-last-name"
-            name="last_name"
-            placeholder="Last Name"
-            defaultValue={user.user_metadata.last_name}
-            required
-            />
-
-        </AuthForm>
-
-        {user.new_email ? (
-
-          <AuthForm
-            onSubmit={cancelEmailChange}
-            onSuccess={reloadPage}
-            submitLabel="Cancel Email Change"
-            submittingLabel="Submitting..."
-            successLabel="Email Change Canceled!">
-
-            <h2>Change Email</h2>
-
-            <p>Your email is currently <span className="landing-page-em">{user.email}</span>.</p>
-
-            {user.new_email ? (
-              <p>You have an invite currently pending for <span className="landing-page-em">{user.new_email}</span>. Please check your email.</p>
-            ) : null}
-
-          </AuthForm>
-
-        ) : (
-
+      {user ? (
+        <>
           <AuthForm
             onSubmit={updateUserData}
-            onSuccess={reloadPage}
-            submitLabel="Change Email"
-            submittingLabel="Submitting..."
-            successLabel="Almost done! Check your email to confirm the change">
-
-            <h2>Change Email</h2>
-
-            <p>Your email is currently <span className="landing-page-em">{user.email}</span>.</p>
+            submitLabel="Save Details"
+            submittingLabel="Saving..."
+            successLabel="Saved!"
+          >
+            <h2>Your Details</h2>
 
             <AuthFormField
-              type="email"
-              id="account-settings-form-email"
-              name="email"
-              placeholder="New Email"
+              type="text"
+              id="account-settings-form-first-name"
+              name="first_name"
+              placeholder="First Name"
+              defaultValue={user.user_metadata.first_name}
               required
-              {...emailFieldProps}
-              />
-            <AuthFormField
-              type="email"
-              id="account-settings-form-confirm-email"
-              name="confirm_email"
-              placeholder="Confirm New Email"
-              required
-              {...confirmEmailFieldProps}
-              />
+            />
 
+            <AuthFormField
+              type="text"
+              id="account-settings-form-last-name"
+              name="last_name"
+              placeholder="Last Name"
+              defaultValue={user.user_metadata.last_name}
+              required
+            />
           </AuthForm>
 
-        )}
+          {user.new_email ? (
+            <AuthForm
+              onSubmit={cancelEmailChange}
+              onSuccess={reloadPage}
+              submitLabel="Cancel Email Change"
+              submittingLabel="Submitting..."
+              successLabel="Email Change Canceled!"
+            >
+              <h2>Change Email</h2>
 
-        <AuthForm
-          onSubmit={changeUserPassword}
-          submitLabel="Change Password"
-          submittingLabel="Changing..."
-          successLabel="Password Changed!">
+              <p>
+                Your email is currently{' '}
+                <span className="landing-page-em">{user.email}</span>.
+              </p>
 
-          <h2>Change Password</h2>
+              {user.new_email ? (
+                <p>
+                  You have an invite currently pending for{' '}
+                  <span className="landing-page-em">{user.new_email}</span>.
+                  Please check your email.
+                </p>
+              ) : null}
+            </AuthForm>
+          ) : (
+            <AuthForm
+              onSubmit={updateUserData}
+              onSuccess={reloadPage}
+              submitLabel="Change Email"
+              submittingLabel="Submitting..."
+              successLabel="Almost done! Check your email to confirm the change"
+            >
+              <h2>Change Email</h2>
 
-          <AuthFormField
-            type="password"
-            id="account-settings-form-old-password"
-            name="current_password"
-            placeholder="Current Password"
-            required
+              <p>
+                Your email is currently{' '}
+                <span className="landing-page-em">{user.email}</span>.
+              </p>
+
+              <AuthFormField
+                type="email"
+                id="account-settings-form-email"
+                name="email"
+                placeholder="New Email"
+                required
+                {...emailFieldProps}
+              />
+              <AuthFormField
+                type="email"
+                id="account-settings-form-confirm-email"
+                name="confirm_email"
+                placeholder="Confirm New Email"
+                required
+                {...confirmEmailFieldProps}
+              />
+            </AuthForm>
+          )}
+
+          <AuthForm
+            onSubmit={changeUserPassword}
+            submitLabel="Change Password"
+            submittingLabel="Changing..."
+            successLabel="Password Changed!"
+          >
+            <h2>Change Password</h2>
+
+            <AuthFormField
+              type="password"
+              id="account-settings-form-old-password"
+              name="current_password"
+              placeholder="Current Password"
+              required
             />
-          <AuthFormField
-            type="password"
-            id="account-settings-form-new-password"
-            name="new_password"
-            placeholder="New Password"
-            required
-            {...passwordFieldProps}
+            <AuthFormField
+              type="password"
+              id="account-settings-form-new-password"
+              name="new_password"
+              placeholder="New Password"
+              required
+              {...passwordFieldProps}
             />
-          <AuthFormField
-            type="password"
-            id="account-settings-form-confirm-new-password"
-            name="confirm_new_password"
-            placeholder="Confirm New Password"
-            required
-            {...confirmPasswordFieldProps}
+            <AuthFormField
+              type="password"
+              id="account-settings-form-confirm-new-password"
+              name="confirm_new_password"
+              placeholder="Confirm New Password"
+              required
+              {...confirmPasswordFieldProps}
             />
+          </AuthForm>
 
-        </AuthForm>
+          <h2>Delete Account</h2>
 
-        <h2>Delete Account</h2>
-
-        <p>Please contact <a href="mailto:support@faithdashboard.com?subject=Delete%20My%20Account">support@faithdashboard.com</a> to permanently delete your account.</p>
-
-      </> : <>
-        <p>You are not signed in. Redirecting you to the Sign In page...</p>
-      </>}
+          <p>
+            Please contact{' '}
+            <a href="mailto:support@faithdashboard.com?subject=Delete%20My%20Account">
+              support@faithdashboard.com
+            </a>{' '}
+            to permanently delete your account.
+          </p>
+        </>
+      ) : (
+        <>
+          <p>You are not signed in. Redirecting you to the Sign In page...</p>
+        </>
+      )}
     </LandingPage>
   );
 }
@@ -218,7 +231,8 @@ export async function getStaticProps() {
   return {
     props: {
       pageTitle: 'Account Settings | Faith Dashboard',
-      pageDescription: 'Account settings for Faith Dashboard, your one place for anything and everything that inspires your faith.'
+      pageDescription:
+        'Account settings for Faith Dashboard, your one place for anything and everything that inspires your faith.'
     }
   };
 }

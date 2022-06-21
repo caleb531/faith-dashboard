@@ -10,32 +10,21 @@ const MS_IN_S = 1000;
 export function isSessionActive(
   session: Session | null = supabase.auth.session()
 ) {
-  const currentEpoch = (Date.now() / MS_IN_S);
-  return (
-    session
-    &&
-    session.expires_at
-    &&
-    currentEpoch < session.expires_at
-  );
+  const currentEpoch = Date.now() / MS_IN_S;
+  return session && session.expires_at && currentEpoch < session.expires_at;
 }
-
 
 // Return true if we are close enough to the expiry of the current session for
 // it to be refreshed
 export function shouldRefreshSession(
   session: Session | null = supabase.auth.session()
 ) {
-  const currentEpoch = (Date.now() / MS_IN_S);
+  const currentEpoch = Date.now() / MS_IN_S;
   return (
-    session
-    &&
-    session.expires_at
-    &&
-    session.expires_in
-    &&
-    currentEpoch > (session.expires_at - (session.expires_in / 2))
-    &&
+    session &&
+    session.expires_at &&
+    session.expires_in &&
+    currentEpoch > session.expires_at - session.expires_in / 2 &&
     currentEpoch < session.expires_at
   );
 }

@@ -14,7 +14,10 @@ function isOnline() {
 // Date.now()) matches today's date
 const dateFormat = 'yyyy-MM-dd';
 function isDateToday(dateTime: number | undefined): boolean {
-  return format(dateTime || Date.now(), dateFormat) === format(Date.now(), dateFormat);
+  return (
+    format(dateTime || Date.now(), dateFormat) ===
+    format(Date.now(), dateFormat)
+  );
 }
 
 // The useWidgetDataFetcher() hook is a powerful hook that allows you to fetch
@@ -36,69 +39,68 @@ export default function useWidgetDataFetcher({
   getErrorMessage
 }: {
   // The current state of the widget from the useWidgetShell() call
-  widget: WidgetState,
+  widget: WidgetState;
   // The dispatch function from the useWidgetShell() call
-  dispatch: Dispatch<WidgetAction>,
+  dispatch: Dispatch<WidgetAction>;
   // A boolean function that should return true if the widget should fetch on
   // the initial render, and false otherwise; normally, this condition should
   // evaluate if the request data is populated, and if there is no cached
   // content
-  shouldFetchInitially: () => any,
+  shouldFetchInitially: () => any;
   // Optional; a rough amount of time that must pass before the widget attempts
   // to fetch the latest widget data
-  fetchFrequency?: 'daily',
+  fetchFrequency?: 'daily';
   // The user-entered query string to be used in building the API request
-  requestQuery: string,
+  requestQuery: string;
   // Receives the user-entered query as its only argument, and
   // should set query on the widget state (e.g. call the dispatch() function
   // returned by useWidgetShell(), or even a setter function from useState(),
   // and provide the user-entered query string as the payload); this callback
   // receives the user-entered query as its only argument
-  setRequestQuery: (requestQuery: string) => void,
+  setRequestQuery: (requestQuery: string) => void;
   // Receives the request data as input, and returns a string representing the
   // full URL of the API endpoint to call; this
-  getApiUrl: (requestQuery: string) => string,
+  getApiUrl: (requestQuery: string) => string;
   // Parses the response from the designated API (which is assumed to be a JSON
   // response) by performing any property access to get at the objects or data
   // you actually want to store (or to simplify the object structure for later
   // use)
-  parseResponse: (response: JSONSerializable) => JSONSerializable,
+  parseResponse: (response: JSONSerializable) => JSONSerializable;
   // A boolean function that should return true if the result of
   // parseResponse() has content to display, or false if (in which case the No
   // Results message is triggered)
-  hasResults: (data: JSONSerializable) => any,
+  hasResults: (data: JSONSerializable) => any;
   // If hasResults() returns true, this callback runs with the return value of
   // parseResponse() as its only argument; you will probably want to call a
   // dispatch() function or useState() setter within this callback to persist
   // the response data to the widget state
-  onSuccess: (data: JSONSerializable) => void,
+  onSuccess: (data: JSONSerializable) => void;
   // Accepts the return value of parseResponse() as its only argument, and
   // should return a string representing the message to show if hasResults()
   // returns false
-  getNoResultsMessage: (data: JSONSerializable) => string,
+  getNoResultsMessage: (data: JSONSerializable) => string;
   // Accepts an Error object as its only argument, and should return a string
   // representing the message to show if the API returned an error response, or
   // if some other runtime error occurred during the fetch
-  getErrorMessage: (error: any) => string,
+  getErrorMessage: (error: any) => string;
 }): {
   // Either the return value of getNoResultsMessage(), the return value of
   // getErrorMessage(), or null, depending on the outcome of the fetch
-  fetchError?: string | null,
+  fetchError?: string | null;
   // A reference to an HTML <input> element to which the request query should
   // be bound; this ref should be attached to whatever <input> you are
   // rendering into your widget's settings UI that represents the request query
-  requestQueryInputRef: RefObject<HTMLInputElement>,
+  requestQueryInputRef: RefObject<HTMLInputElement>;
   // The submit handler; you should attach this to the <form> element in your
   // widget settings so that the request query can be set on the widget state
   // when the form is submitted
-  submitRequestQuery: (event: React.FormEvent) => void,
+  submitRequestQuery: (event: React.FormEvent) => void;
   // This hook will also expose the low-level fetchWidgetData() function,
   // allowing you to fetch widget data manually (perhaps based on some action
   // other than the user submitting a form, therefore making
   // submitRequestQuery() a non-ideal solution)
-  fetchWidgetData: (newRequestQuery: string) => Promise<void>
+  fetchWidgetData: (newRequestQuery: string) => Promise<void>;
 } {
-
   const isLoading = false;
   const { fetchError } = widget;
   async function fetchWidgetData(
@@ -154,7 +156,13 @@ export default function useWidgetDataFetcher({
     // infinite loop; to fix this, we stop fetching if the previous fetch
     // resulted in an error
     const abortController = new AbortController();
-    if ((shouldFetchInitially() || (fetchFrequency && !isDateToday(widget.lastFetchDateTime))) && !isLoading && !fetchError && isOnline()) {
+    if (
+      (shouldFetchInitially() ||
+        (fetchFrequency && !isDateToday(widget.lastFetchDateTime))) &&
+      !isLoading &&
+      !fetchError &&
+      isOnline()
+    ) {
       fetchWidgetData(requestQuery, {
         abortSignal: abortController.signal
       });
@@ -183,5 +191,4 @@ export default function useWidgetDataFetcher({
     fetchWidgetData,
     requestQueryInputRef
   };
-
 }

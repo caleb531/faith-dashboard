@@ -12,11 +12,10 @@ import useFormFieldMatcher from '../components/useFormFieldMatcher';
 import useVerifyCaptcha from '../components/useVerifyCaptcha';
 
 type Props = {
-  pageTitle: string
+  pageTitle: string;
 };
 
 function SignUpForm({ pageTitle }: Props) {
-
   const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Passwords must match'
   });
@@ -32,13 +31,16 @@ function SignUpForm({ pageTitle }: Props) {
     if (!captchaToken) {
       throw new Error('Please complete the CAPTCHA');
     }
-    return supabase.auth.signUp({
-      email: fields.email,
-      password: fields.password
-    }, {
-      captchaToken,
-      data: omit(fields, ['email', 'password', 'confirm_password'])
-    });
+    return supabase.auth.signUp(
+      {
+        email: fields.email,
+        password: fields.password
+      },
+      {
+        captchaToken,
+        data: omit(fields, ['email', 'password', 'confirm_password'])
+      }
+    );
   }
 
   function redirectToHome() {
@@ -52,14 +54,21 @@ function SignUpForm({ pageTitle }: Props) {
   }
 
   return (
-    <LandingPage heading={pageTitle} altLink={{ title: 'Sign In', href: '/sign-in' }}>
-      <p>By signing up with Faith Dashboard, you'll be able to sync your settings and widgets across all your devices.</p>
+    <LandingPage
+      heading={pageTitle}
+      altLink={{ title: 'Sign In', href: '/sign-in' }}
+    >
+      <p>
+        By signing up with Faith Dashboard, you'll be able to sync your settings
+        and widgets across all your devices.
+      </p>
       <AuthForm
         onSubmit={signUp}
         onSuccess={redirectToHome}
         submitLabel="Sign Up"
         submittingLabel="Submitting..."
-        successLabel="Success! Redirecting...">
+        successLabel="Success! Redirecting..."
+      >
         <AuthFormField
           type="text"
           id="sign-up-form-first-name"
@@ -67,14 +76,14 @@ function SignUpForm({ pageTitle }: Props) {
           placeholder="First Name"
           required
           {...firstNameAutoFocusProps}
-          />
+        />
         <AuthFormField
           type="text"
           id="sign-up-form-last-name"
           name="last_name"
           placeholder="Last Name"
           required
-          />
+        />
         <AuthFormField
           type="email"
           id="sign-up-form-email"
@@ -82,7 +91,7 @@ function SignUpForm({ pageTitle }: Props) {
           placeholder="Email"
           required
           {...emailFieldProps}
-          />
+        />
         <AuthFormField
           type="email"
           id="sign-up-form-confirm-email"
@@ -90,7 +99,7 @@ function SignUpForm({ pageTitle }: Props) {
           placeholder="Confirm Email"
           required
           {...confirmEmailFieldProps}
-          />
+        />
         <AuthFormField
           type="password"
           id="sign-up-form-password"
@@ -98,7 +107,7 @@ function SignUpForm({ pageTitle }: Props) {
           placeholder="Password"
           required
           {...passwordFieldProps}
-          />
+        />
         <AuthFormField
           type="password"
           id="sign-up-form-confirm-password"
@@ -106,8 +115,8 @@ function SignUpForm({ pageTitle }: Props) {
           placeholder="Confirm Password"
           required
           {...confirmPasswordFieldProps}
-          />
-          <Captcha setCaptchaToken={setCaptchaToken} />
+        />
+        <Captcha setCaptchaToken={setCaptchaToken} />
       </AuthForm>
     </LandingPage>
   );
@@ -118,7 +127,8 @@ export async function getStaticProps() {
     props: {
       pagePath: '/sign-up',
       pageTitle: 'Sign Up | Faith Dashboard',
-      pageDescription: 'Sign up for Faith Dashboard, your one place for anything and everything that inspires your faith.'
+      pageDescription:
+        'Sign up for Faith Dashboard, your one place for anything and everything that inspires your faith.'
     }
   };
 }

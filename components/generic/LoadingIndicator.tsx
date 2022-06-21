@@ -1,7 +1,6 @@
 import React from 'react';
 
 function LoadingIndicator() {
-
   return (
     <div className="loading-indicator">
       <svg viewBox="0 0 32 32" className="loading-indicator-icon">
@@ -9,7 +8,6 @@ function LoadingIndicator() {
       </svg>
     </div>
   );
-
 }
 
 export default LoadingIndicator;

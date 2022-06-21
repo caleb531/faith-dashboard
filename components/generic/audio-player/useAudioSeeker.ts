@@ -7,18 +7,20 @@ function useAudioSeeker(
   audioElement: HTMLAudioElement,
   currentTime: number,
   setCurrentTime: (newCurrentTime: number) => void
-): { seekerProvided: {
-  ref: (input: HTMLInputElement) => void,
-  onInput: (event: React.FormEvent<HTMLInputElement>) => void,
-  onChange: (event: React.FormEvent<HTMLInputElement>) => void,
-  onMouseUp: () => void
-} } {
-
+): {
+  seekerProvided: {
+    ref: (input: HTMLInputElement) => void;
+    onInput: (event: React.FormEvent<HTMLInputElement>) => void;
+    onChange: (event: React.FormEvent<HTMLInputElement>) => void;
+    onMouseUp: () => void;
+  };
+} {
   // Apply a "fill" to the seeker slider in a cross-browser manner using a CSS
   // gradient
   function updateSeekerFill(input: HTMLInputElement) {
     if (input && audioElement.currentTime && audioElement.duration) {
-      const fillPercentage = audioElement.currentTime / audioElement.duration * 100;
+      const fillPercentage =
+        (audioElement.currentTime / audioElement.duration) * 100;
       const fillColor = '#fff';
       const trackColor = 'rgba(0, 0, 0, 0.25)';
       input.style.backgroundColor = 'transparent';
@@ -52,7 +54,6 @@ function useAudioSeeker(
       onMouseUp: () => setCurrentTime(audioElement.currentTime)
     }
   };
-
 }
 
 export default useAudioSeeker;

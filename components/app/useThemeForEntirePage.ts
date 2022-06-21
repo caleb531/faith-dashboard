@@ -12,12 +12,8 @@ const photoThemesById = groupBy(photoThemeList, 'value');
 // The useThemeForEntirePage() hook takes the given color theme and applies it
 // to the <body> element of the page
 export default function useThemeForEntirePage(theme: AppTheme) {
-
   useIsomorphicLayoutEffect(() => {
-    document.body.classList.add(
-      'theme',
-      `theme-${theme}`
-    );
+    document.body.classList.add('theme', `theme-${theme}`);
     if (colorThemesById[theme]) {
       document.body.classList.add('color-theme');
     } else if (photoThemesById[theme]) {
@@ -32,5 +28,4 @@ export default function useThemeForEntirePage(theme: AppTheme) {
       });
     };
   }, [theme]);
-
 }

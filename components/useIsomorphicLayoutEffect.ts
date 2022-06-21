@@ -8,8 +8,7 @@ import { useEffect, useLayoutEffect } from 'react';
 // avoid this, useLayoutEffect should only be used in components that render
 // exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr
 // for common fixes."
-const useIsomorphicLayoutEffect = typeof window !== 'undefined' ?
-  useLayoutEffect :
-  useEffect;
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 export default useIsomorphicLayoutEffect;

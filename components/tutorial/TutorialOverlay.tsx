@@ -2,17 +2,14 @@ import classNames from 'classnames';
 import React from 'react';
 
 type Props = {
-  isVisible: boolean
+  isVisible: boolean;
 };
 
-function TutorialOverlay({
-  isVisible
-}: Props) {
+function TutorialOverlay({ isVisible }: Props) {
   return (
-    <div className={classNames(
-      'tutorial-overlay',
-      { 'is-visible': isVisible }
-    )} />
+    <div
+      className={classNames('tutorial-overlay', { 'is-visible': isVisible })}
+    />
   );
 }
 

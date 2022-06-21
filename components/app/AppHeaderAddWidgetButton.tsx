@@ -12,10 +12,13 @@ function AppHeaderAddWidgetButton() {
       <AddWidgetButton
         onPressButton={() => setWidgetPickerIsOpen((isOpen) => !isOpen)}
         buttonProps={stepProps}
-        buttonClassNames="app-header-control-button" />
+        buttonClassNames="app-header-control-button"
+      />
       {isCurrentStep ? <TutorialStepTooltip /> : null}
       {widgetPickerIsOpen ? (
-        <WidgetPicker onCloseWidgetPicker={() => setWidgetPickerIsOpen(false)} />
+        <WidgetPicker
+          onCloseWidgetPicker={() => setWidgetPickerIsOpen(false)}
+        />
       ) : null}
     </div>
   );

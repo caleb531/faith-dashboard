@@ -8,15 +8,11 @@ import TutorialOverlay from './TutorialOverlay';
 import tutorialSteps from './tutorialSteps';
 
 type Props = {
-  inProgress: boolean,
-  children: JSXContents
+  inProgress: boolean;
+  children: JSXContents;
 };
 
-function TutorialFlow({
-  inProgress,
-  children
-}: Props) {
-
+function TutorialFlow({ inProgress, children }: Props) {
   const dispatchToApp = useContext(AppContext);
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -26,12 +22,12 @@ function TutorialFlow({
   }, [dispatchToApp]);
 
   const moveToNextStep = useCallback(() => {
-    if ((currentStepIndex + 1) === tutorialSteps.length) {
+    if (currentStepIndex + 1 === tutorialSteps.length) {
       // Close Tutorial UI when all steps are completed
       skipTutorial();
     } else {
       // Otherwise, just advance to the next step in the flow
-      setCurrentStepIndex((newIndex) => (newIndex + 1));
+      setCurrentStepIndex((newIndex) => newIndex + 1);
     }
   }, [currentStepIndex, skipTutorial, setCurrentStepIndex]);
 
@@ -52,10 +48,12 @@ function TutorialFlow({
 
   return (
     <TutorialContext.Provider value={contextValue}>
-      <div className={classNames([
-        'tutorial-flow-wrapper',
-        { 'tutorial-in-progress': inProgress }
-      ])}>
+      <div
+        className={classNames([
+          'tutorial-flow-wrapper',
+          { 'tutorial-in-progress': inProgress }
+        ])}
+      >
         <TutorialOverlay isVisible={inProgress} />
         {children}
       </div>

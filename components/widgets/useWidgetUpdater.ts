@@ -9,7 +9,6 @@ export default function useWidgetUpdater(
   saveWidget: (widget: WidgetState) => void,
   removeWidget: () => void
 ): void {
-
   // Update widget when changes are made
   useEffect(() => {
     // The saveWidget() function is guaranteed to be stable per the
@@ -24,5 +23,4 @@ export default function useWidgetUpdater(
       removeWidget();
     }
   }, [widget.isRemoving, removeWidget]);
-
 }
