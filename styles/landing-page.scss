@@ -55,6 +55,12 @@
       border-radius: 5px;
     }
   }
+  // If image is used directly within a paragraph, it's probably one of the
+  // light (white) icons, and therefore needs to have a background added for
+  // contrast
+  p > img {
+    background-color: var(--current-theme-color);
+  }
   button[type] {
     margin: 0;
   }
