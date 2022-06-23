@@ -1,6 +1,8 @@
 html,
 body {
   min-height: 100%;
+}
+html {
   height: 100%;
 }
 
@@ -8,7 +10,8 @@ body,
 main,
 #__next,
 .app,
-.tutorial-wrapper {
+.tutorial-flow-wrapper,
+.app-contents {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -20,9 +23,12 @@ main,
 
 body {
   margin: 0;
-  padding: 0;
+  padding: 0 10px;
   background-color: $grey;
   font-family: $font-family-serif;
   color: $light-100;
   text-align: center;
+  @include layout(desktop) {
+    padding: 0 20px;
+  }
 }

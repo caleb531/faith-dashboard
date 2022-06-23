@@ -9,7 +9,10 @@ import LoadingIndicator from '../generic/LoadingIndicator';
 
 // Update mechanism code borrowed from
 // <https://developers.google.com/web/tools/workbox/guides/advanced-recipes#offer_a_page_reload_for_users>
-export function initialize(wb: Workbox, setAvailableUpdate: (e: WaitingEvent) => void): void {
+export function initialize(
+  wb: Workbox,
+  setAvailableUpdate: (e: WaitingEvent) => void
+): void {
   function showSkipWaitingPrompt(waitingEvent: WaitingEvent) {
     // `waitingEvent.wasWaitingBeforeRegister` will be false if this is
     // the first time the updated service worker is waiting.
@@ -44,7 +47,6 @@ export function update(wb: Workbox, availableUpdate: WaitingEvent): void {
 }
 
 function UpdateNotification() {
-
   const [availableUpdate, setAvailableUpdate] = useState<WaitingEvent>();
   const [isUpdating, setIsUpdating] = useState(false);
   const [wb] = useState(() => new Workbox('service-worker.js'));
@@ -63,14 +65,22 @@ function UpdateNotification() {
   }, [wb, isUpdating, availableUpdate]);
 
   return availableUpdate ? (
-    <div className={classNames(
+    <div
+      className={classNames(
         'update-notification',
         { 'update-available': availableUpdate },
         { 'is-updating': isUpdating }
       )}
-      onClick={() => setIsUpdating(true)}>
-      {isUpdating ? <div className="update-loading-container"><LoadingIndicator /></div> : null}
-      <span className="update-notification-message">Update available! Click here to update.</span>
+      onClick={() => setIsUpdating(true)}
+    >
+      {isUpdating ? (
+        <div className="update-loading-container">
+          <LoadingIndicator />
+        </div>
+      ) : null}
+      <span className="update-notification-message">
+        Update available! Click here to update.
+      </span>
     </div>
   ) : null;
 }

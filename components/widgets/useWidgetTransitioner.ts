@@ -11,70 +11,80 @@ const widgetTransitionDuration = 250;
 // running arbitrary code when a transition completes
 function useWidgetTransitioner({
   widget,
-  onAddTransitionEnd = () => {/* noop */},
-  onRemoveTransitionEnd = () => {/* noop */}
+  onAddTransitionEnd = () => {
+    /* noop */
+  },
+  onRemoveTransitionEnd = () => {
+    /* noop */
+  }
 }: {
-  widget: WidgetState,
-  onAddTransitionEnd?: (widget: WidgetState) => void
-  onRemoveTransitionEnd?: (widget: WidgetState) => void
+  widget: WidgetState;
+  onAddTransitionEnd?: (widget: WidgetState) => void;
+  onRemoveTransitionEnd?: (widget: WidgetState) => void;
 }): {
-  handleWidgetTransition: (widgetContentsElement: HTMLElement | null) => void
+  handleWidgetTransition: (widgetContentsElement: HTMLElement | null) => void;
 } {
-
   // Retrieve the verical space (in pixels) occupied by the widget onscreen
   function getWidgetVerticalSpace(widgetElement: HTMLElement): number {
     return (
-      widgetElement.offsetHeight
-      +
+      widgetElement.offsetHeight +
       parseFloat(window.getComputedStyle(widgetElement)?.marginBottom)
     );
   }
 
-  const transitionWidgetAddition = useCallback((widget: WidgetState, widgetElement: HTMLElement) => {
-    const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
-    widgetElement.style.opacity = '0';
-    widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
-    requestAnimationFrame(() => {
-      widgetElement.classList.add('adding-widget');
-      setTimeout(() => {
-        widgetElement.style.opacity = '';
-        widgetElement.style.marginBottom = '';
-        widgetElement.classList.remove('adding-widget');
-        onAddTransitionEnd(widget);
-      }, widgetTransitionDuration);
-    });
-  }, [onAddTransitionEnd]);
+  const transitionWidgetAddition = useCallback(
+    (widget: WidgetState, widgetElement: HTMLElement) => {
+      const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
+      widgetElement.style.opacity = '0';
+      widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
+      requestAnimationFrame(() => {
+        widgetElement.classList.add('adding-widget');
+        setTimeout(() => {
+          widgetElement.style.opacity = '';
+          widgetElement.style.marginBottom = '';
+          widgetElement.classList.remove('adding-widget');
+          onAddTransitionEnd(widget);
+        }, widgetTransitionDuration);
+      });
+    },
+    [onAddTransitionEnd]
+  );
 
-  const transitionWidgetRemoval = useCallback((widget: WidgetState, widgetElement: HTMLElement) => {
-    const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
-    widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
-    widgetElement.classList.add('removing-widget');
-    // Wait for the widget to transition out of view before removing the
-    // widget from the array (which will cause an immediate re-render)
-    setTimeout(() => {
-      widgetElement.classList.remove('removing-widget');
-      onRemoveTransitionEnd(widget);
-    }, widgetTransitionDuration);
-  }, [onRemoveTransitionEnd]);
+  const transitionWidgetRemoval = useCallback(
+    (widget: WidgetState, widgetElement: HTMLElement) => {
+      const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
+      widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
+      widgetElement.classList.add('removing-widget');
+      // Wait for the widget to transition out of view before removing the
+      // widget from the array (which will cause an immediate re-render)
+      setTimeout(() => {
+        widgetElement.classList.remove('removing-widget');
+        onRemoveTransitionEnd(widget);
+      }, widgetTransitionDuration);
+    },
+    [onRemoveTransitionEnd]
+  );
 
   // Handle widget transitions (such as when adding or removing a widget)
-  const handleWidgetTransition = useCallback((widgetContentsElement: HTMLElement | null) => {
-    if (!widgetContentsElement) {
-      return;
-    }
-    const widgetElement = widgetContentsElement.parentElement;
-    if (!widgetElement) {
-      return;
-    }
-    if (widget.isAdding) {
-      transitionWidgetAddition(widget, widgetElement);
-    }
-    if (widget.isRemoving) {
-      transitionWidgetRemoval(widget, widgetElement);
-    }
-  }, [widget, transitionWidgetAddition, transitionWidgetRemoval]);
+  const handleWidgetTransition = useCallback(
+    (widgetContentsElement: HTMLElement | null) => {
+      if (!widgetContentsElement) {
+        return;
+      }
+      const widgetElement = widgetContentsElement.parentElement;
+      if (!widgetElement) {
+        return;
+      }
+      if (widget.isAdding) {
+        transitionWidgetAddition(widget, widgetElement);
+      }
+      if (widget.isRemoving) {
+        transitionWidgetRemoval(widget, widgetElement);
+      }
+    },
+    [widget, transitionWidgetAddition, transitionWidgetRemoval]
+  );
 
   return { handleWidgetTransition };
-
 }
 export default useWidgetTransitioner;

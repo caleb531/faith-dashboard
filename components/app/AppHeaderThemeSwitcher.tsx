@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TutorialStepMessage from '../tutorial/TutorialStepMessage';
+import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import { AppTheme } from './app.d';
 import colorThemeList from './appColorThemeList';
@@ -9,44 +9,50 @@ import ThemeSwitcher from './ThemeSwitcher';
 const allThemes = [...photoThemeList, ...colorThemeList];
 
 type Props = {
-  currentTheme: AppTheme
+  currentTheme: AppTheme;
 };
 
-function AppHeaderThemeSwitcher({
-  currentTheme
-}: Props) {
-
+function AppHeaderThemeSwitcher({ currentTheme }: Props) {
   const { isCurrentStep, stepProps } = useTutorialStep('change-theme');
   const [themeSwitcherIsOpen, setThemeSwitcherIsOpen] = useState(false);
 
   return (
     <div className="app-header-theme-switcher">
-      {isCurrentStep ? <TutorialStepMessage /> : null}
-      <label className="theme-switcher-label accessibility-only" htmlFor="app-header-theme-switcher-button">
+      {isCurrentStep ? <TutorialStepTooltip /> : null}
+      <label
+        className="theme-switcher-label accessibility-only"
+        htmlFor="app-header-theme-switcher-button"
+      >
         Color Theme
       </label>
       <button
-        className="app-header-theme-switcher-button"
+        className="app-header-theme-switcher-button app-header-control-button"
         id="app-header-theme-switcher-button"
         onClick={() => setThemeSwitcherIsOpen((isOpen) => !isOpen)}
-        {...stepProps}>
+        {...stepProps}
+      >
         <img
           className="app-header-theme-switcher-button-icon"
-          src="icons/paintbrush-light.svg"
+          src="/icons/paintbrush-light.svg"
           alt=""
-          draggable="false" />
+          draggable="false"
+        />
         <span className="app-header-theme-switcher-button-label">
-          {allThemes.find((themeListItem) => {
-            return themeListItem.value === currentTheme;
-          })?.label}
+          {
+            allThemes.find((themeListItem) => {
+              return themeListItem.value === currentTheme;
+            })?.label
+          }
         </span>
       </button>
       {themeSwitcherIsOpen ? (
-        <ThemeSwitcher currentTheme={currentTheme} onCloseThemeSwitcher={() => setThemeSwitcherIsOpen(false)} />
+        <ThemeSwitcher
+          currentTheme={currentTheme}
+          onCloseThemeSwitcher={() => setThemeSwitcherIsOpen(false)}
+        />
       ) : null}
     </div>
   );
-
 }
 
 export default AppHeaderThemeSwitcher;

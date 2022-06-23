@@ -1,12 +1,30 @@
+@import 'base/colors';
+@import 'base/fonts';
+@import 'base/responsive';
+@import 'base/theme';
+@import 'generic/sheet';
+@import 'app/app-header';
+
 .landing-page {
+  display: flex;
+  justify-content: center;
+  padding: 0 10px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+.landing-page-section {
+  @extend .sheet;
+  position: relative;
   max-width: 800px;
-  margin: 0 auto;
-  padding: 0 20px;
+  margin-top: 0;
+  border-radius: 20px;
+  padding: 10px 30px 30px;
   font-weight: 300;
   text-align: left;
   line-height: 1.7;
-  font-family: 'Merriweather Sans';
-  -webkit-font-smoothing: antialiased;
+  color: $dark-100;
+  box-shadow: 0 2px 5px $dark-50;
   h1 {
     margin-top: 30px;
     margin-bottom: 10px;
@@ -19,6 +37,7 @@
     border-bottom-width: 6px;
   }
   h2 {
+    margin-top: 20px;
     border-bottom-width: 4px;
   }
   h3 {
@@ -36,8 +55,43 @@
       border-radius: 5px;
     }
   }
-
-  button[type] {
-    margin: 0 5px;
+  // Make instructional button on Help page fully opaque to be more readable
+  p > button {
+    opacity: 1;
   }
+  // If image is used directly within a paragraph, it's probably one of the
+  // light (white) icons, and therefore needs to have a background added for
+  // contrast
+  p > img {
+    background-color: var(--current-theme-color);
+  }
+  button[type] {
+    margin: 0;
+  }
+  a.button {
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+}
+.landing-page-control {
+  @extend .sheet-control;
+}
+.landing-page-home-control {
+  @extend .sheet-control-left;
+}
+.landing-page-alt-control {
+  @extend .sheet-control-right;
+  padding: 15px 15px;
+  text-decoration: none;
+  font-size: $font-size-xs;
+  font-weight: 400;
+}
+.landing-page-control-icon {
+  @extend .sheet-control-icon;
+  $control-size: 20px;
+  width: $control-size;
+  height: $control-size;
+}
+.landing-page-em {
+  font-weight: 400;
 }

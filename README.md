@@ -7,7 +7,7 @@ Be strengthened every day with Faith Dashboard, a private board for your
 favorite Bible verses, sermons, and anything else you need to be encouraged
 when life happens. Keep it open in a browser tab, and come back to it as needed.
 
-[Live App](https://faithdashboard.com/)
+https://faithdashboard.com/
 
 ## Setup
 
@@ -25,6 +25,33 @@ for the [ESV API](https://api.esv.org/). Once you have it, create a file called
 
 ```
 ESV_API_KEY=PASTE_YOUR_API_TOKEN_HERE
+```
+
+### Set up Supabase
+
+First, you need to install Supabase and its dependencies, which you can do
+through Homebrew.
+
+```sh
+brew install --cask docker
+brew install supabase/tap/supabase
+open /Applications/Docker.app
+```
+
+Then, you need to initialize Supabase and start the Supabase services.
+
+```sh
+supabase init
+supabase start
+```
+
+The `supabase start` command above will output a series of URLs and keys
+specific to your local instance of Supabase. Make sure you add the `API URL`
+and `anon key` values to your `.env.local` like so:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=http://localhost:12345
+NEXT_PUBLIC_SUPABASE_ANON_KEY=abcdefghijklmnopqrstuvwxyz.1234567890zyxwvutsrqponmlkjihgfedcba
 ```
 
 ### Run app

@@ -5,15 +5,11 @@ import AddWidgetButton from '../generic/AddWidgetButton';
 import { WidgetType } from '../widgets/widget.d';
 
 type Props = {
-  widgetType: WidgetType,
-  onAddWidget: () => void
+  widgetType: WidgetType;
+  onAddWidget: () => void;
 };
 
-function WidgetPickerEntry({
-  widgetType,
-  onAddWidget
-}: Props) {
-
+function WidgetPickerEntry({ widgetType, onAddWidget }: Props) {
   const dispatchToApp = useContext(AppContext);
 
   function addWidget() {
@@ -34,15 +30,20 @@ function WidgetPickerEntry({
     <div className="widget-picker-entry">
       <header className="widget-picker-entry-header">
         <h2 className="widget-picker-entry-heading">
-          <img src={`icons/${widgetType.icon}.svg`} alt="" className="widget-picker-entry-icon" />
+          <img
+            src={`icons/${widgetType.icon}.svg`}
+            alt=""
+            className="widget-picker-entry-icon"
+          />
           {widgetType.name}
         </h2>
         <AddWidgetButton onPressButton={addWidget} />
       </header>
-      <p className="widget-picker-entry-description">{widgetType.description}</p>
+      <p className="widget-picker-entry-description">
+        {widgetType.description}
+      </p>
     </div>
   );
-
 }
 
 export default WidgetPickerEntry;

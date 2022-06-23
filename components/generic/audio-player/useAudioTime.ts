@@ -10,7 +10,6 @@ function useAudioTime(
   currentTime: number,
   setCurrentTime: (newCurrentTime: number) => void
 ): void {
-
   // Store the latest value from currentTime in a ref so that
   // hasCurrentTimeChanged() always has access to the latest value of
   // currentTime; this is important because, for performance, we only bind the
@@ -23,16 +22,25 @@ function useAudioTime(
   }, [currentTime]);
 
   // Update the listening history as the audio is playing
-  useEventListener(audioElement, 'timeupdate', () => {
-    // The timeupdate() event appears to run several times every second, at
-    // least in Chromium-based browsers; however, since we are only displaying
-    // the times in second-precision in the UI, we can reduce excessive
-    // rendering by checking if the Audio element's current time is at least
-    // one second difference from the state's current time
-    if (Math.floor(audioElement.currentTime) !== Math.floor(currentTimeRef.current)) {
-      setCurrentTime(audioElement.currentTime);
-    }
-  }, [audioElement, currentTimeRef, setCurrentTime]);
+  useEventListener(
+    audioElement,
+    'timeupdate',
+    () => {
+      // The timeupdate() event appears to run several times every second, at
+      // least in Chromium-based browsers; however, since we are only displaying
+      // the times in second-precision in the UI, we can reduce excessive
+      // rendering by checking if the Audio element's current time is at least
+      // one second difference from the state's current time
+      if (
+        Math.floor(audioElement.currentTime) !==
+          Math.floor(currentTimeRef.current) &&
+        !audioElement.paused
+      ) {
+        setCurrentTime(audioElement.currentTime);
+      }
+    },
+    [audioElement, currentTimeRef, setCurrentTime]
+  );
 
   // Synchronize the audio stream with widget state changes, such that if the
   // audio source URL changes higher up, then the audio will reset here
@@ -46,7 +54,6 @@ function useAudioTime(
     audioElement.src = audioUrl;
     audioElement.currentTime = currentTime;
   }, [audioUrl, audioElement, currentTime]);
-
 }
 
 export default useAudioTime;

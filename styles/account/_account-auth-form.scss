@@ -1,0 +1,36 @@
+input.account-auth-form-input {
+  width: 400px;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border-color: $dark-40;
+  font-weight: 300;
+  font-size: $font-size-xxl;
+}
+button.account-auth-form-submit {
+  font-size: $font-size-xxl;
+}
+
+
+.account-auth-form-submit {
+  margin: 0 auto;
+  border-radius: 40px;
+}
+
+.account-auth-form-validation-message {
+  display: inline-block;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  background-color: $error;
+  font-weight: bold;
+  font-size: $font-size-xs;
+  color: $light-100;
+}
+
+.account-auth-form-alt-link {
+  margin-left: 15px;
+  font-weight: 400;
+  color: var(--current-theme-color);
+  text-decoration: none;
+}

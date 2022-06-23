@@ -8,7 +8,7 @@ export interface PodcastWidgetState extends WidgetState {
   nowPlaying?: PodcastEpisode | null;
   viewingNowPlaying: boolean;
   isPlaying: boolean;
-  listeningMetadata: PodcastListeningMetadata
+  listeningMetadata: PodcastListeningMetadata;
 }
 
 export interface PodcastEpisodeMedia {
@@ -51,7 +51,7 @@ export interface PodcastFeedData {
 
 export interface PodcastSearchResponse {
   resultCount: number;
-  results: PodcastInfo[]
+  results: PodcastInfo[];
 }
 
 export interface PodcastInfo {

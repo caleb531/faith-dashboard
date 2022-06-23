@@ -1,19 +1,22 @@
 /* eslint-disable react/no-unescaped-entities */
-import Link from 'next/link';
 import React from 'react';
+import LinkButton from '../components/generic/LinkButton';
+import LandingPage from '../components/LandingPage';
 
-function PageNotFound() {
+type Props = {
+  pageTitle: string;
+};
 
+function PageNotFound({ pageTitle }: Props) {
   return (
-    <article className="landing-page">
-      <h1>Page Not Found | Faith Dashboard</h1>
-
+    <LandingPage heading={pageTitle}>
       <p>Sorry about that! You ended up on a page that doesn't exist.</p>
 
-      <p><Link href="/">Return to App</Link></p>
-    </article>
+      <p>
+        <LinkButton href="/">Return to App</LinkButton>
+      </p>
+    </LandingPage>
   );
-
 }
 
 export async function getStaticProps() {

@@ -5,12 +5,10 @@ const stateCache: { [key: string]: any } = {};
 
 // The useCachedState() hook caches a particular value across component
 // mount/unmounts, using a unique key to identify the state along the way
-function useCachedState<T>(cacheKey: string, init: () => T): [
-  T,
-  (newState: T) => void,
-  () => void
-] {
-
+function useCachedState<T>(
+  cacheKey: string,
+  init: () => T
+): [T, (newState: T) => void, () => void] {
   function getState() {
     if (stateCache[cacheKey]) {
       return stateCache[cacheKey];
@@ -22,9 +20,12 @@ function useCachedState<T>(cacheKey: string, init: () => T): [
 
   // The setState() function is guaranteed to be stable for the lifetime of the
   // component
-  const setState = useCallback((newState: T): void => {
-    stateCache[cacheKey] = newState;
-  }, [cacheKey]);
+  const setState = useCallback(
+    (newState: T): void => {
+      stateCache[cacheKey] = newState;
+    },
+    [cacheKey]
+  );
 
   // The removeState() function is guaranteed to be stable for the lifetime of
   // the component
@@ -33,7 +34,6 @@ function useCachedState<T>(cacheKey: string, init: () => T): [
   }, [cacheKey]);
 
   return [getState(), setState, removeState];
-
 }
 
 export default useCachedState;

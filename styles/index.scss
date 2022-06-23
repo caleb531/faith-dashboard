@@ -9,19 +9,25 @@
 
 @import 'generic/loading-indicator';
 @import 'generic/add-widget-button';
+@import 'generic/sheet';
 @import 'generic/modal';
 @import 'generic/result-list';
 @import 'generic/audio-player';
 
 @import 'app/app';
 @import 'app/app-header';
+@import 'app/app-header-theme-switcher';
+@import 'app/app-header-account';
 @import 'app/theme-switcher';
 @import 'app/update-notification';
 @import 'app/app-footer';
 
+@import 'account/account-auth-form';
+@import 'account/account-auth-flow';
+
 @import 'tutorial/tutorial-overlay';
 @import 'tutorial/tutorial-step';
-@import 'tutorial/tutorial-step-message';
+@import 'tutorial/tutorial-step-tooltip';
 
 @import 'widget-picker/widget-picker';
 @import 'widget-picker/widget-picker-entry';

@@ -5,20 +5,28 @@ import useEventListener from '../../useEventListener';
 // track (represented by the given Audio element) has loaded at different
 // stages
 function useAudioLoader(audioElement: HTMLAudioElement): [boolean, boolean] {
-
   const [isAudioMetadataLoaded, setIsAudioMetadataLoaded] = useState(false);
   const [isFullAudioLoaded, setIsFullAudioLoaded] = useState(false);
 
-  useEventListener(audioElement, 'loadeddata', () => {
-    setIsFullAudioLoaded(true);
-  }, [setIsFullAudioLoaded]);
+  useEventListener(
+    audioElement,
+    'loadeddata',
+    () => {
+      setIsFullAudioLoaded(true);
+    },
+    [setIsFullAudioLoaded]
+  );
 
-  useEventListener(audioElement, 'loadedmetadata', () => {
-    setIsAudioMetadataLoaded(true);
-  }, [setIsAudioMetadataLoaded]);
+  useEventListener(
+    audioElement,
+    'loadedmetadata',
+    () => {
+      setIsAudioMetadataLoaded(true);
+    },
+    [setIsAudioMetadataLoaded]
+  );
 
   return [isAudioMetadataLoaded, isFullAudioLoaded];
-
 }
 
 export default useAudioLoader;

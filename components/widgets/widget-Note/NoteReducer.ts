@@ -2,9 +2,9 @@ import { WidgetAction } from '../useWidgetShell';
 import { NoteWidgetState } from './note.d';
 
 export type NoteAction =
-  WidgetAction |
-  { type: 'updateText', payload: string } |
-  { type: 'updateFontSize', payload: number };
+  | WidgetAction
+  | { type: 'updateText'; payload: string }
+  | { type: 'updateFontSize'; payload: number };
 
 export default function reducer(
   state: NoteWidgetState,

@@ -30,7 +30,7 @@ $color-theme-column-count: 5;
   position: relative;
   margin: 0;
   padding: 5px;
-  border-width: 0;
+  border-width: 0 !important;
   border-radius: 0;
   background: none !important;
 }
@@ -73,6 +73,7 @@ $color-theme-column-count: 5;
 }
 .theme-switcher-photo-theme-photo {
   border-radius: 10px;
+  background-color: rgba(#000, 0.25);
 }
 .theme-switcher-photo-theme .theme-switcher-theme-selected-icon {
   $icon-size: 70px;
@@ -93,6 +94,7 @@ $color-theme-column-count: 5;
   width: $swatch-size;
   height: $swatch-size;
   border-radius: 50%;
+  background-color: var(--current-theme-color);
 }
 .theme-switcher-color-theme .theme-switcher-theme-selected-icon {
   $icon-size: 28px;

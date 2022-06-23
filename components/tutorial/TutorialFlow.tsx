@@ -1,38 +1,33 @@
 import classNames from 'classnames';
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 import AppContext from '../app/AppContext';
+import { JSXContents } from '../global';
 import { TutorialContextValue } from './tutorial';
 import TutorialContext from './TutorialContext';
 import TutorialOverlay from './TutorialOverlay';
 import tutorialSteps from './tutorialSteps';
 
 type Props = {
-  shouldShow: boolean,
-  children: JSX.Element | (JSX.Element | null)[] | null
+  inProgress: boolean;
+  children: JSXContents;
 };
 
-function TutorialWrapper({
-  shouldShow,
-  children
-}: Props) {
-
+function TutorialFlow({ inProgress, children }: Props) {
   const dispatchToApp = useContext(AppContext);
 
-  const [inProgress, setInProgress] = useState(shouldShow);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   const skipTutorial = useCallback(() => {
-    setInProgress(false);
     dispatchToApp({ type: 'skipTutorial' });
-  }, [setInProgress, dispatchToApp]);
+  }, [dispatchToApp]);
 
   const moveToNextStep = useCallback(() => {
-    if ((currentStepIndex + 1) === tutorialSteps.length) {
+    if (currentStepIndex + 1 === tutorialSteps.length) {
       // Close Tutorial UI when all steps are completed
       skipTutorial();
     } else {
       // Otherwise, just advance to the next step in the flow
-      setCurrentStepIndex((newIndex) => (newIndex + 1));
+      setCurrentStepIndex((newIndex) => newIndex + 1);
     }
   }, [currentStepIndex, skipTutorial, setCurrentStepIndex]);
 
@@ -53,10 +48,12 @@ function TutorialWrapper({
 
   return (
     <TutorialContext.Provider value={contextValue}>
-      <div className={classNames([
-        'tutorial-wrapper',
-        { 'tutorial-in-progress': inProgress }
-      ])}>
+      <div
+        className={classNames([
+          'tutorial-flow-wrapper',
+          { 'tutorial-in-progress': inProgress }
+        ])}
+      >
         <TutorialOverlay isVisible={inProgress} />
         {children}
       </div>
@@ -64,4 +61,4 @@ function TutorialWrapper({
   );
 }
 
-export default TutorialWrapper;
+export default TutorialFlow;

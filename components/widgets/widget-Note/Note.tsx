@@ -1,46 +1,33 @@
-import { debounce } from 'lodash-es';
-import React, { useMemo } from 'react';
+import React from 'react';
 import useWidgetShell from '../useWidgetShell';
 import { WidgetParameters } from '../widget.d';
 import WidgetShell from '../WidgetShell';
 import { NoteWidgetState } from './note.d';
 import reducer from './NoteReducer';
 
-const NoteWidget = React.memo(function NoteWidget({ widgetHead, provided }: WidgetParameters) {
-
+const NoteWidget = React.memo(function NoteWidget({
+  widgetHead,
+  provided
+}: WidgetParameters) {
   const [state, dispatch] = useWidgetShell(reducer, widgetHead);
   const { fontSize, text } = state as NoteWidgetState;
   // The amount of time (in milliseconds) after the user's last keystroke
   // before assuming that the user has stopped typing
-  const saveDelay = 300;
   const defaultFontSize = 14;
   const textStyles = {
     fontSize: fontSize || defaultFontSize
   };
 
-  // Cache the debounced function so that its internal debounce timer
-  // transcends across render passes (otherwise, the debounce timer would
-  // effectively be reset on every render); useMemo will also provide us access
-  // to the original (cancelable) return value of debounce(); for more
-  // information, see:
-  // <https://github.com/facebook/react/issues/19240#issuecomment-652945246>
-  // <https://github.com/facebook/react/issues/19240#issuecomment-867885511>
-  const queueChangeWhenTypingStops = useMemo(() => {
-    return debounce((text) => {
-      dispatch({ type: 'updateText', payload: text });
-    }, saveDelay);
-  }, [dispatch]);
-
   // Register a change of the user's preferred font size for this note
   function changeFontSize(event: React.FormEvent): void {
-    const input = (event.target as HTMLInputElement);
+    const input = event.target as HTMLInputElement;
     dispatch({ type: 'updateFontSize', payload: Number(input.value) });
   }
 
   // Register a change of the user-entered text for this note
   function changeText(event: React.FormEvent): void {
-    const textarea = (event.target as HTMLTextAreaElement);
-    queueChangeWhenTypingStops(textarea.value);
+    const textarea = event.target as HTMLTextAreaElement;
+    dispatch({ type: 'updateText', payload: textarea.value });
   }
 
   // Return a truncated excerpt of the entered text for display as the Font
@@ -52,16 +39,16 @@ const NoteWidget = React.memo(function NoteWidget({ widgetHead, provided }: Widg
     const words = text.trim().split(' ');
     const originalWordCount = words.length;
     const currentFontSize = fontSize || defaultFontSize;
-    // Use a linear equation of the form (ax + b) to represent the number of
-    // words we want to show given a particular font size; the below constants
-    // can be adjusted to change
-    const a = (-4 / 19); // When font size is 12, word count should be 10
-    const b = (238 / 19); // When font size is 50, word count should be 2
-    const maxExcerptWordCount = (a * currentFontSize) + b;
+    // Use a linear equation of the form (y = ax + b) to represent the number
+    // of words we want to show given a particular font size; the below
+    // constants can be adjusted to change; in our equation, y is the desired
+    // word count, and b is the font size at a given instant
+    const a = -4 / 19; // When font size is 12, word count should be 10
+    const b = 238 / 19; // When font size is 50, word count should be 2
+    const maxExcerptWordCount = a * currentFontSize + b;
     return (
-      words.slice(0, maxExcerptWordCount).join(' ')
-      +
-      ((originalWordCount > maxExcerptWordCount) ? '...' : '')
+      words.slice(0, maxExcerptWordCount).join(' ') +
+      (originalWordCount > maxExcerptWordCount ? '...' : '')
     );
   }
 
@@ -72,7 +59,10 @@ const NoteWidget = React.memo(function NoteWidget({ widgetHead, provided }: Widg
           <>
             <h2 className="note-heading">Note</h2>
             <form className="note-formatting">
-              <label htmlFor={`note-formatting-font-size-${state.id}`} className="bible-verse-search">
+              <label
+                htmlFor={`note-formatting-font-size-${state.id}`}
+                className="bible-verse-search"
+              >
                 Font Size
               </label>
               <input
@@ -82,8 +72,11 @@ const NoteWidget = React.memo(function NoteWidget({ widgetHead, provided }: Widg
                 onInput={(event) => changeFontSize(event)}
                 min="12"
                 max="50"
-                value={fontSize || defaultFontSize} />
-              <div className="note-formatting-preview" style={textStyles}>{getTextPreview(text)}</div>
+                value={fontSize || defaultFontSize}
+              />
+              <div className="note-formatting-preview" style={textStyles}>
+                {getTextPreview(text)}
+              </div>
             </form>
           </>
         ) : (
@@ -91,13 +84,13 @@ const NoteWidget = React.memo(function NoteWidget({ widgetHead, provided }: Widg
             className="note-text-box"
             onInput={changeText}
             placeholder="Type your note here..."
-            defaultValue={text}
-            style={textStyles}></textarea>
+            value={text}
+            style={textStyles}
+          ></textarea>
         )}
       </section>
     </WidgetShell>
   );
-
 });
 
 export default NoteWidget;

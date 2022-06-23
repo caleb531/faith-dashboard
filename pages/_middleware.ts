@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // Force-redirect every HTTP request to HTTPS
 function forceHTTPS(req: NextRequest) {
-  if (process.env.NODE_ENV === 'production' &&
-    req.headers.get('x-forwarded-proto') !== 'https'
-    &&
+  if (
+    process.env.NODE_ENV === 'production' &&
+    req.headers.get('x-forwarded-proto') !== 'https' &&
     // This check prevents us from getting trapped in HTTPS localhost if we are
     // testing a production build locally via `next build && next start`; we
     // can use `req.headers.get('host')` to get the true host (e.g.
@@ -25,13 +25,19 @@ function redirectWwwToNonWww(req: NextRequest) {
   const wwwRegex = /^www\./;
   if (wwwRegex.test(host) && !req.headers.get('host')?.includes('localhost')) {
     const newHost = host.replace(wwwRegex, '');
-    return NextResponse.redirect(`https://${newHost}${req.nextUrl.pathname}`, 301);
+    return NextResponse.redirect(
+      `https://${newHost}${req.nextUrl.pathname}`,
+      301
+    );
   }
 }
 
 // Sequentially process an array of middleware functions (this function is to
 // avoid repetition and produce cleaner code)
-function processMiddlewareFunctions(req: NextRequest, middlewareFns: Function[]) {
+function processMiddlewareFunctions(
+  req: NextRequest,
+  middlewareFns: Function[]
+) {
   for (const middlewareFn of middlewareFns) {
     const fnResponse = middlewareFn(req);
     if (fnResponse) {
@@ -42,8 +48,5 @@ function processMiddlewareFunctions(req: NextRequest, middlewareFns: Function[])
 }
 
 export function middleware(req: NextRequest) {
-  return processMiddlewareFunctions(req, [
-    forceHTTPS,
-    redirectWwwToNonWww
-  ]);
+  return processMiddlewareFunctions(req, [forceHTTPS, redirectWwwToNonWww]);
 }

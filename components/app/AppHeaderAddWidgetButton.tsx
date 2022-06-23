@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AddWidgetButton from '../generic/AddWidgetButton';
-import TutorialStepMessage from '../tutorial/TutorialStepMessage';
+import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import WidgetPicker from '../widget-picker/WidgetPicker';
 
@@ -11,10 +11,14 @@ function AppHeaderAddWidgetButton() {
     <div className="app-header-add-widget-wrapper">
       <AddWidgetButton
         onPressButton={() => setWidgetPickerIsOpen((isOpen) => !isOpen)}
-        buttonProps={stepProps} />
-      {isCurrentStep ? <TutorialStepMessage /> : null}
+        buttonProps={stepProps}
+        buttonClassNames="app-header-control-button"
+      />
+      {isCurrentStep ? <TutorialStepTooltip /> : null}
       {widgetPickerIsOpen ? (
-        <WidgetPicker onCloseWidgetPicker={() => setWidgetPickerIsOpen(false)} />
+        <WidgetPicker
+          onCloseWidgetPicker={() => setWidgetPickerIsOpen(false)}
+        />
       ) : null}
     </div>
   );

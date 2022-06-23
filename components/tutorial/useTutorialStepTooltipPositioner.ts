@@ -1,16 +1,18 @@
 import { debounce } from 'lodash-es';
 import { RefObject, useLayoutEffect, useMemo, useState } from 'react';
 import useEventListener from '../useEventListener';
-import {
-  TutorialStep,
-  TutorialStepPosition as Position
-} from './tutorial.d';
+import { TutorialStep, TutorialStepPosition as Position } from './tutorial.d';
 
 // If the position of a tutorial step is set to 'auto', then this module will
 // do its best to position the message by enumerating the following array until
 // a message position is found that does not result in it being obscured by the
 // viewport; this array can be overridden on any message step object
-const defaultPositionPrecedence: Position[] = ['right', 'left', 'bottom', 'top'];
+const defaultPositionPrecedence: Position[] = [
+  'right',
+  'left',
+  'bottom',
+  'top'
+];
 
 // Return a boolean indicating whether or not there is enough space onscreen ig
 // the message were placed on a particular side of the message element
@@ -21,10 +23,10 @@ function isSpaceAvailableForPosition(
   position: Position
 ) {
   const formulas = {
-    right: (targetBounds.right + messageBounds.width) < bodyBounds.right,
-    left: (targetBounds.left - messageBounds.width) > bodyBounds.left,
-    bottom: (targetBounds.bottom + messageBounds.height) < bodyBounds.bottom,
-    top: (targetBounds.top - messageBounds.height) > bodyBounds.top,
+    right: targetBounds.right + messageBounds.width < bodyBounds.right,
+    left: targetBounds.left - messageBounds.width > bodyBounds.left,
+    bottom: targetBounds.bottom + messageBounds.height < bodyBounds.bottom,
+    top: targetBounds.top - messageBounds.height > bodyBounds.top,
     center: true,
     auto: true
   };
@@ -49,25 +51,26 @@ function recalculatePosition(
   const targetBounds = ref.current.parentElement.getBoundingClientRect();
   const bodyBounds = document.body.getBoundingClientRect();
 
-  const positionPrecedence = currentStep.positionPrecedence || defaultPositionPrecedence;
-  const calculatedPosition = positionPrecedence.find((position) => {
-    return isSpaceAvailableForPosition(
+  const positionPrecedence =
+    currentStep.positionPrecedence || defaultPositionPrecedence;
+  const calculatedPosition =
+    positionPrecedence.find((position) => {
+      return isSpaceAvailableForPosition(
         messageBounds,
         targetBounds,
         bodyBounds,
         position
       );
-  }) || 'center';
+    }) || 'center';
   setPosition(calculatedPosition);
 }
 
-type Params = { currentStep: TutorialStep, ref: RefObject<HTMLElement> }
+type Params = { currentStep: TutorialStep; ref: RefObject<HTMLElement> };
 
-function useTutorialStepMessagePositioner({
+function useTutorialStepTooltipPositioner({
   currentStep,
   ref
 }: Params): Position | undefined {
-
   const [position, setPosition] = useState<Position>();
   // Keep track of a dummy state variable so that we can trigger a re-render
   // for every (debounced) resize event
@@ -85,7 +88,6 @@ function useTutorialStepMessagePositioner({
   }, [currentStep, ref, resizeCount]);
 
   return position;
-
 }
 
-export default useTutorialStepMessagePositioner;
+export default useTutorialStepTooltipPositioner;

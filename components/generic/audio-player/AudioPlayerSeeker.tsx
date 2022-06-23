@@ -5,10 +5,10 @@ import useAudioSeeker from './useAudioSeeker';
 import useAudioTime from './useAudioTime';
 
 type Props = {
-  audioElement: HTMLAudioElement,
-  audioUrl: string,
-  currentTime: number,
-  setCurrentTime: (newCurrentTime: number) => void
+  audioElement: HTMLAudioElement;
+  audioUrl: string;
+  currentTime: number;
+  setCurrentTime: (newCurrentTime: number) => void;
 };
 
 function AudioPlayerSeeker({
@@ -17,14 +17,17 @@ function AudioPlayerSeeker({
   currentTime,
   setCurrentTime
 }: Props) {
-
-  const { seekerProvided } = useAudioSeeker(audioElement, currentTime, setCurrentTime);
+  const { seekerProvided } = useAudioSeeker(
+    audioElement,
+    currentTime,
+    setCurrentTime
+  );
   useAudioTime(audioElement, audioUrl, currentTime, setCurrentTime);
 
   // Zero-pad the given number if it's a single-digit; used for computing
   // hh:mm:ss timestamps in the below formatSecondsAsTimestamp() function
   function padWithZero(value: number): string {
-    return (value < 10) ? `0${value}` : String(value);
+    return value < 10 ? `0${value}` : String(value);
   }
 
   // Format the given number of seconds
@@ -57,25 +60,28 @@ function AudioPlayerSeeker({
         max={audioElement.duration || 0}
         step="1"
         disabled={!audioElement.duration}
-        {...seekerProvided} />
+        {...seekerProvided}
+      />
       <div className="audio-player-time-info">
         <span className="audio-player-current-time">
-          {!audioElement.duration || audioElement.src !== audioUrl ?
-            'Loading...' :
-            audioElement.currentTime >= 1 ?
-            formatSecondsAsTimestamp(Math.floor(audioElement.currentTime)) :
-            '0:00'
-          }
+          {!audioElement.duration || audioElement.src !== audioUrl
+            ? 'Loading...'
+            : audioElement.currentTime >= 1
+            ? formatSecondsAsTimestamp(Math.floor(audioElement.currentTime))
+            : '0:00'}
         </span>
-        <span className="audio-player-time-remaining">{audioElement.duration && audioElement.src === audioUrl ?
-          Math.round(audioElement.duration - audioElement.currentTime) > 0 ?
-          `-${formatSecondsAsTimestamp(audioElement.duration - audioElement.currentTime)}`
-          : '0:00'
-          : null}</span>
+        <span className="audio-player-time-remaining">
+          {audioElement.duration && audioElement.src === audioUrl
+            ? Math.round(audioElement.duration - audioElement.currentTime) > 0
+              ? `-${formatSecondsAsTimestamp(
+                  audioElement.duration - audioElement.currentTime
+                )}`
+              : '0:00'
+            : null}
+        </span>
       </div>
     </div>
   );
-
 }
 
 export default AudioPlayerSeeker;

@@ -5,10 +5,12 @@ import { useEffect, useRef } from 'react';
 // The useMediaSession() hook should receive the same input parameters as the
 // MediaMetadata() constructor, along with an additional parameter representing
 // the audio element
-type UseMediaSessionParameters = ConstructorParameters<typeof MediaMetadata>[0] & {
-  audioElement: HTMLAudioElement,
-  defaultSeekBackwardOffset?: number,
-  defaultSeekForwardOffset?: number
+type UseMediaSessionParameters = ConstructorParameters<
+  typeof MediaMetadata
+>[0] & {
+  audioElement: HTMLAudioElement;
+  defaultSeekBackwardOffset?: number;
+  defaultSeekForwardOffset?: number;
 };
 
 // Clear the current media session for the entire app
@@ -21,7 +23,9 @@ function clearMediaSession(): void {
 // A helper function for attaching behavior to Media Session UI actions; not
 // all browsers support every action specified by the API, so we wrap each
 // handler in a try..catch to prevent client-side errors
-function setActionHandler(...args: Parameters<typeof navigator.mediaSession.setActionHandler>) {
+function setActionHandler(
+  ...args: Parameters<typeof navigator.mediaSession.setActionHandler>
+) {
   try {
     navigator.mediaSession.setActionHandler(...args);
   } catch (error) {
@@ -54,7 +58,6 @@ export default function useMediaSession({
   // updated, based on changes to the audio's source URL
   const audioSrcRef = useRef(audioElement.src);
   useEffect(() => {
-
     // Do nothing if the user's browser does not support the Media Session API
     if (!navigator.mediaSession) {
       return;
@@ -70,7 +73,12 @@ export default function useMediaSession({
     }
 
     const { mediaSession } = navigator;
-    mediaSession.metadata = new MediaMetadata({ title, artist, album, artwork });
+    mediaSession.metadata = new MediaMetadata({
+      title,
+      artist,
+      album,
+      artwork
+    });
     audioSrcRef.current = audioElement.src;
 
     setActionHandler('play', () => {
@@ -105,10 +113,16 @@ export default function useMediaSession({
       );
       updatePositionState(audioElement);
     });
-
-  }, [title, artist, album, artwork, defaultSeekBackwardOffset, defaultSeekForwardOffset, audioElement]);
+  }, [
+    title,
+    artist,
+    album,
+    artwork,
+    defaultSeekBackwardOffset,
+    defaultSeekForwardOffset,
+    audioElement
+  ]);
   // The clearMediaSession() function is guaranteed to be stable for the
   // lifetime of the component
   return [clearMediaSession];
 }
-

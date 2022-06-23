@@ -1,43 +1,42 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import React from 'react';
-import App from '../app/App';
+import Home from '../../pages/index';
 import { AppState } from '../app/app.d';
 import reducer from '../app/AppReducer';
 import { createWidget } from './__utils__/test-utils';
 
 describe('App Component', function () {
-
   it('should render', function () {
-    const { getByText } = render(<App />);
+    const { getByText } = render(<Home />);
     expect(getByText('Faith Dashboard')).toBeInTheDocument();
   });
 
   it('should change theme', function () {
     const app: AppState = { widgets: [], theme: 'teal' };
-    expect(reducer(
-      app,
-      { type: 'changeTheme', payload: 'rose' }
-    )).toEqual({ widgets: [], theme: 'rose' });
+    expect(reducer(app, { type: 'changeTheme', payload: 'rose' })).toEqual({
+      widgets: [],
+      theme: 'rose'
+    });
   });
 
   it('should add widget as only widget', function () {
     const app: AppState = { theme: 'teal', widgets: [] };
     const newWidget = createWidget({ column: 1 });
-    expect(reducer(
-      app,
-      { type: 'addWidget', payload: newWidget }
-    )).toEqual({ theme: 'teal', widgets: [newWidget] });
+    expect(reducer(app, { type: 'addWidget', payload: newWidget })).toEqual({
+      theme: 'teal',
+      widgets: [newWidget]
+    });
   });
 
   it('should add widget to front of array', function () {
     const widgets = [createWidget({ column: 2 })];
     const app: AppState = { theme: 'teal', widgets: widgets };
     const newWidget = createWidget({ column: 1 });
-    expect(reducer(
-      app,
-      { type: 'addWidget', payload: newWidget }
-    )).toEqual({ theme: 'teal', widgets: [newWidget].concat(widgets) });
+    expect(reducer(app, { type: 'addWidget', payload: newWidget })).toEqual({
+      theme: 'teal',
+      widgets: [newWidget].concat(widgets)
+    });
   });
 
   it('should remove widget', function () {
@@ -47,15 +46,14 @@ describe('App Component', function () {
       createWidget({ column: 3 })
     ];
     const app: AppState = { theme: 'teal', widgets };
-    expect(reducer(
-      app,
-      {
+    expect(
+      reducer(app, {
         type: 'removeWidget',
         payload: {
           id: widgets[1].id
         }
-      }
-    )).toEqual({ theme: 'teal', widgets: [widgets[0], widgets[2]] });
+      })
+    ).toEqual({ theme: 'teal', widgets: [widgets[0], widgets[2]] });
   });
 
   it('should move widget from column 1 to column 2', function () {
@@ -66,9 +64,8 @@ describe('App Component', function () {
       createWidget({ column: 3 })
     ];
     const app: AppState = { theme: 'teal', widgets };
-    expect(reducer(
-      app,
-      {
+    expect(
+      reducer(app, {
         type: 'moveWidget',
         payload: {
           widgetToMove: widgets[0],
@@ -77,8 +74,16 @@ describe('App Component', function () {
           destinationIndex: 2,
           destinationColumn: 2
         }
-      }
-    )).toEqual({ theme: 'teal', widgets: [widgets[1], { ...widgets[0], column: 2 }, widgets[2], widgets[3]] });
+      })
+    ).toEqual({
+      theme: 'teal',
+      widgets: [
+        widgets[1],
+        { ...widgets[0], column: 2 },
+        widgets[2],
+        widgets[3]
+      ]
+    });
   });
 
   it('should move widget from column 2 to column 1', function () {
@@ -89,9 +94,8 @@ describe('App Component', function () {
       createWidget({ column: 3 })
     ];
     const app: AppState = { theme: 'teal', widgets };
-    expect(reducer(
-      app,
-      {
+    expect(
+      reducer(app, {
         type: 'moveWidget',
         payload: {
           widgetToMove: widgets[2],
@@ -100,8 +104,16 @@ describe('App Component', function () {
           destinationIndex: 1,
           destinationColumn: 1
         }
-      }
-    )).toEqual({ theme: 'teal', widgets: [widgets[0], { ...widgets[2], column: 1 }, widgets[1], widgets[3]] });
+      })
+    ).toEqual({
+      theme: 'teal',
+      widgets: [
+        widgets[0],
+        { ...widgets[2], column: 1 },
+        widgets[1],
+        widgets[3]
+      ]
+    });
   });
 
   it('should keep widgets array in column order after move', function () {
@@ -112,9 +124,8 @@ describe('App Component', function () {
       createWidget({ column: 3 })
     ];
     const app: AppState = { theme: 'teal', widgets };
-    expect(reducer(
-      app,
-      {
+    expect(
+      reducer(app, {
         type: 'moveWidget',
         payload: {
           widgetToMove: widgets[3],
@@ -123,8 +134,15 @@ describe('App Component', function () {
           destinationIndex: 0,
           destinationColumn: 2
         }
-      }
-    )).toEqual({ theme: 'teal', widgets: [widgets[0], widgets[1], widgets[2], { ...widgets[3], column: 2 }] });
+      })
+    ).toEqual({
+      theme: 'teal',
+      widgets: [
+        widgets[0],
+        widgets[1],
+        widgets[2],
+        { ...widgets[3], column: 2 }
+      ]
+    });
   });
-
 });

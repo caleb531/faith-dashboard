@@ -35,6 +35,7 @@
 }
 
 .modal {
+  @extend .sheet;
   position: relative;
   width: 100%;
   max-width: 640px;
@@ -42,33 +43,20 @@
   border-radius: 10px;
   padding: 30px;
   background-color: $light-100;
-  font-family: $font-family-serif;
   color: $dark-75;
-  box-shadow: 0 1px 3px $dark-25;
+  box-shadow: 0 5px 10px 1px $dark-25;
   overflow: hidden;
-  h1 {
-    font-family: $font-family-sans-serif;
-  }
 }
 
-.modal-close-control {
-  position: absolute;
-  top: 0;
-  right: 0;
-  $close-button-size: 50px;
-  width: $close-button-size;
-  height: $close-button-size;
-  border-radius: 0;
-  border-bottom-left-radius: 10px;
-  padding: 10px;
-  background: none;
-  &:hover {
-    background-color: $dark-10;
-  }
-  &:not([disabled]):hover:active {
-    background-color: $dark-20;
-  }
+.modal-control {
+  @extend .sheet-control;
 }
-.modal-close-control-icon {
-  width: 100%;
+.modal-back-control {
+  @extend .sheet-control-left;
+}
+.modal-close-control {
+  @extend .sheet-control-right;
+}
+.modal-control-icon {
+  @extend .sheet-control-icon;
 }

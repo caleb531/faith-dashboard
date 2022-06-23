@@ -1,18 +1,35 @@
 .app-header {
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 10px;
+  @include layout(desktop) {
+    padding: 10px 20px;
+  }
 }
 
 .app-header-title {
   flex-grow: 1;
   margin: 0;
   text-align: left;
-  font-size: $font-size-xxs;
+  font-size: 0;
+}
+.app-header-title-link {
   color: $light-100;
   mix-blend-mode: soft-light;
+  text-decoration: none;
+  .theme-forest & {
+    mix-blend-mode: normal;
+    color: $dark-50;
+  }
+  &:before {
+    content: 'FD';
+    font-size: $font-size-m;
+  }
   @include layout(tablet) {
     font-size: $font-size-m;
+    &:before {
+      content: '';
+    }
   }
 }
 
@@ -21,43 +38,21 @@
   align-items: stretch;
 }
 .app-header-add-widget-wrapper {
-  position: relative;
-  margin: 0 15px;
-}
-
-.app-header-theme-switcher {
   display: flex;
   align-items: stretch;
   position: relative;
+  margin: 0 15px;
 }
-.app-header-theme-switcher-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border-width: 0;
-  border-radius: 20px;
-  padding: 3px 12px;
-  background-color: $dark-30;
-  line-height: 1;
-  font-family: $font-family-sans-serif;
+.app-header-control-button {
+  // Make all header buttons the same height on all pages, even if the Add
+  // Widget button (which is slightly taller than the natural height of the
+  // other buttons) isn't present
+  min-height: 28px;
+  padding: 4px 12px;
   font-size: $font-size-xxxs;
-  color: $light-100;
-  vertical-align: middle;
 }
-.app-header-theme-switcher-button-icon {
-  $icon-size: 18px;
-  width: $icon-size;
-  height: $icon-size;
-  @include layout(tablet) {
-    margin-right: 4px;
-  }
-}
-.app-header-theme-switcher-button-icon,
-.app-header-theme-switcher-button-label {
-  vertical-align: middle;
-}
-.app-header-theme-switcher-button-label {
-  display: none;
-  @include layout(tablet) {
-    display: inline;
-  }
+
+.app-header button,
+.app-header a.button {
+  font-family: $font-family-sans-serif;
 }

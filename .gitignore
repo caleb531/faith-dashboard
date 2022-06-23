@@ -22,9 +22,6 @@ coverage/
 api-credentials.*
 *.secret.*
 
-# VS Code settings
-.vscode/
-
 # NextJS
 
 # next.js
@@ -47,3 +44,7 @@ public/*.map
 
 # Local Netlify folder
 .netlify
+
+# Supabase
+**/supabase/.branches
+**/supabase/.temp

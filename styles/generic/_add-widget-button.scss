@@ -1,5 +1,6 @@
 .add-widget-button {
-  padding: 3px 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   // Because the plus icon SVG contains some intrinsic whitespace around the
   // icon, we can subtract off that spacing to make the button feel more
   // equally padded
@@ -10,8 +11,8 @@
 .add-widget-button-label {
   vertical-align: middle;
 }
-.add-widget-button-icon {
-  $icon-size: 20px;
+.add-widget-button img {
+  $icon-size: 18px;
   width: $icon-size;
   height: $icon-size;
   @include layout(tablet) {

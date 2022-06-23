@@ -8,11 +8,9 @@ function useAudioPlayPause(
   isPlaying: boolean,
   setIsPlaying: (isPlaying: boolean) => void
 ): void {
-
   // Synchronize the play/pause state of the audio with the widget state
   useEventListener(audioElement, 'play', () => setIsPlaying(true));
   useEventListener(audioElement, 'pause', () => setIsPlaying(false));
-
 }
 
 export default useAudioPlayPause;

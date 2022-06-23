@@ -1,18 +1,22 @@
+import { diff } from 'deep-object-diff';
 import { sortBy } from 'lodash-es';
-import { WidgetHead, WidgetMoveParameters } from '../widgets/widget';
+import { v4 as uuidv4 } from 'uuid';
+import {
+  WidgetHead,
+  WidgetMoveParameters,
+  WidgetState
+} from '../widgets/widget';
 import { AppState, AppTheme } from './app.d';
 
 export type AppAction =
-  { type: 'changeTheme', payload: AppTheme } |
-  { type: 'skipTutorial' } |
-  { type: 'addWidget', payload: WidgetHead } |
-  { type: 'removeWidget', payload: Omit<WidgetHead, 'type' | 'column'> } |
-  { type: 'moveWidget', payload: WidgetMoveParameters };
+  | { type: 'changeTheme'; payload: AppTheme }
+  | { type: 'skipTutorial' }
+  | { type: 'addWidget'; payload: WidgetState }
+  | { type: 'removeWidget'; payload: Omit<WidgetHead, 'type' | 'column'> }
+  | { type: 'moveWidget'; payload: WidgetMoveParameters }
+  | { type: 'replaceApp'; payload: AppState };
 
-export default function reducer(
-  state: AppState,
-  action: AppAction
-): AppState {
+export default function reducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
     case 'changeTheme':
       const newTheme = action.payload;
@@ -26,22 +30,32 @@ export default function reducer(
       const widgetToRemove = action.payload;
       return {
         ...state,
-        widgets: state.widgets.filter((widget) => widget.id !== widgetToRemove.id)
+        widgets: state.widgets.filter(
+          (widget) => widget.id !== widgetToRemove.id
+        )
       };
     case 'moveWidget':
-      const { widgetToMove, sourceIndex, sourceColumn, destinationIndex, destinationColumn } = action.payload;
+      const {
+        widgetToMove,
+        sourceIndex,
+        sourceColumn,
+        destinationIndex,
+        destinationColumn
+      } = action.payload;
       // The destination index from react-beautiful-dnd assumes that the
       // widget-to-move is still at the source index; however, because the
       // widget is about to be removed from its original position (via the
       // filter), we must adjust the destination index for when we reinsert the
       // widget
-      const newDestinationIndex = (destinationColumn !== sourceColumn && destinationIndex > sourceIndex)
-        ? (destinationIndex - 1)
-        : destinationIndex;
+      const newDestinationIndex =
+        destinationColumn !== sourceColumn && destinationIndex > sourceIndex
+          ? destinationIndex - 1
+          : destinationIndex;
       // Remove the widget from its original position (the source index) in the
       // widgets array
       const newWidgets = state.widgets.filter(
-        (widget) => widget.id !== widgetToMove.id);
+        (widget) => widget.id !== widgetToMove.id
+      );
       // Insert the widget at its new position; also update the column field on
       // the widget itself
       newWidgets.splice(newDestinationIndex, 0, {
@@ -61,6 +75,16 @@ export default function reducer(
       // of every drag (sidenote: Lodash's sortBy is a stable sort, so this
       // will not alter the user order of widgets within the same column)
       return { ...state, widgets: sortBy(newWidgets, 'column') };
+    case 'replaceApp':
+      return Object.keys(diff(action.payload, state)).length > 0
+        ? {
+            // To manage the identity of the user's dashboard on the server-side,
+            // an unique ID must be generated for the dashboard if has not already
+            // been assigned one
+            id: action.payload.id || uuidv4(),
+            ...action.payload
+          }
+        : state;
     default:
       return state;
   }

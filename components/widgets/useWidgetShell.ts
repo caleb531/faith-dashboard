@@ -1,14 +1,18 @@
+import { diff } from 'deep-object-diff';
 import { omit } from 'lodash-es';
 import { Dispatch, useReducer } from 'react';
 import useLocalStorage from '../useLocalStorage';
 import { WidgetHead, WidgetState } from '../widgets/widget.d';
 import widgetTypes from '../widgets/widgetTypes';
+import useWidgetSync from './useWidgetSync';
 import useWidgetUpdater from './useWidgetUpdater';
 
 // Instantiates a new widget object using the given header information about
 // the widget (namely, id and type)
 export function createNewWidget(widgetHead: WidgetHead): WidgetState {
-  const widgetType = widgetTypes.find((widgetType) => widgetType.type === widgetHead.type);
+  const widgetType = widgetTypes.find(
+    (widgetType) => widgetType.type === widgetHead.type
+  );
   const isSettingsOpen = widgetType ? widgetType.requiresConfiguration : false;
   // In order to preserve backwards-compatibility, assume the widget head may
   // contain any and all other widget properties from the previous architecture
@@ -18,15 +22,16 @@ export function createNewWidget(widgetHead: WidgetHead): WidgetState {
 }
 
 export type WidgetAction =
-  { type: 'toggleSettings' } |
-  { type: 'openSettings' } |
-  { type: 'closeSettings' } |
-  { type: 'resizeWidget', payload: number } |
-  { type: 'showLoading' } |
-  { type: 'showContent' } |
-  { type: 'setFetchError', payload: string } |
-  { type: 'markWidgetAsAdded' } |
-  { type: 'markWidgetForRemoval' };
+  | { type: 'toggleSettings' }
+  | { type: 'openSettings' }
+  | { type: 'closeSettings' }
+  | { type: 'resizeWidget'; payload: number }
+  | { type: 'showLoading' }
+  | { type: 'showContent' }
+  | { type: 'setFetchError'; payload: string }
+  | { type: 'markWidgetAsAdded' }
+  | { type: 'markWidgetForRemoval' }
+  | { type: 'replaceWidget'; payload: WidgetState };
 
 // The useWidgetShell() hook which must be called in any component which
 // implements a particular widget type; it manages several important
@@ -36,11 +41,7 @@ export type WidgetAction =
 export default function useWidgetShell<Action>(
   subReducer: (state: WidgetState, action: Action) => WidgetState,
   widgetHead: WidgetHead
-): [
-  WidgetState,
-  Dispatch<Action | WidgetAction>
-] {
-
+): [WidgetState, Dispatch<Action | WidgetAction>] {
   // The reducer below contains general widget actions, and the widget
   // type-specific "sub-reducer" supplied above is merged into this larger
   // reducer; this allows the compoment for each widget type implementation to
@@ -68,9 +69,16 @@ export default function useWidgetShell<Action>(
       case 'setFetchError':
         return { ...state, isLoading: false, fetchError: action.payload };
       case 'markWidgetAsAdded':
-          return omit(state, ['isAdding']);
+        return omit(state, ['isAdding']);
       case 'markWidgetForRemoval':
-          return { ...state, isRemoving: true };
+        return { ...state, isRemoving: true };
+      case 'replaceWidget':
+        return Object.keys(diff(action.payload, state)).length > 0
+          ? {
+              isLoading: false,
+              ...action.payload
+            }
+          : state;
       default:
         // As mentioned above, the sub-reducer is optional, and if you wish to
         // omit it, simply pass `null` as the first argument to
@@ -91,7 +99,7 @@ export default function useWidgetShell<Action>(
 
   // Save updates to the widget as its state changes
   useWidgetUpdater(state, saveWidget, removeWidget);
+  useWidgetSync(state, dispatch);
 
   return [state, dispatch];
-
 }

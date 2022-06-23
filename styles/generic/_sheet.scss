@@ -1,0 +1,49 @@
+.sheet {
+  position: relative;
+  width: 100%;
+  background-color: $light-100;
+  font-family: $font-family-sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  button,
+  a.button {
+    background-color: var(--current-theme-color);
+    &:not([disabled]):hover:active {
+      background-color: var(--current-theme-color-dark);
+    }
+  }
+}
+
+.sheet-control {
+  position: absolute;
+  top: 0;
+  border-radius: 0;
+  margin: 0;
+  padding: 10px;
+  box-sizing: content-box;
+  // Fixed the vertical centering of the control icon if the control happens to
+  // be an <a> tag
+  line-height: 1;
+  // Need to override the theme-specific styling on modal buttons
+  background: none !important;
+  &:hover {
+    background-color: $dark-10 !important;
+  }
+  &:not([disabled]):hover:active {
+    background-color: $dark-20 !important;
+  }
+}
+
+.sheet-control-left {
+  left: 0;
+  border-bottom-right-radius: 10px;
+}
+.sheet-control-right {
+  right: 0;
+  border-bottom-left-radius: 10px;
+}
+.sheet-control-icon {
+  $control-size: 30px;
+  width: $control-size;
+  height: $control-size;
+}
