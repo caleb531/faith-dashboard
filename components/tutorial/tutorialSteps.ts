@@ -59,7 +59,8 @@ const tutorialSteps: TutorialStep[] = [
     id: 'sign-up',
     message: 'Create an account to sync your board across your devices!',
     position: 'bottom',
-    alignment: 'right'
+    alignment: 'right',
+    width: 240
   },
   {
     id: 'remove-widget-bible-verse-2',
