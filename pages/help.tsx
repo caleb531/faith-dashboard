@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import Image from 'next/image';
+import Link from 'next/link';
 import LinkButton from '../components/generic/LinkButton';
 import LandingPage from '../components/LandingPage';
 import addToHomeScreenImage1 from '../public/images/help/ios-add-to-home-screen-ios-1.jpg';
@@ -142,7 +143,21 @@ function Help({ pageTitle }: Props) {
         layout="responsive"
       />
 
-      <br />
+      <h2>Syncing</h2>
+
+      <p>
+        If you want to sync your dashboard across all your devices, you'll need
+        to <Link href="/sign-up">create an account</Link>. If you already have
+        an account, you can click the "Sign Up/In" link in the top-right corner
+        of the page, then click the "Sign In" button.
+      </p>
+
+      <p>
+        All syncing happens in the background as you make changes to your
+        dashboard. When you sign out, the app reverts to the out-of-the-box
+        dashboard, but don't be alarmed—your dashboard will be waiting for you
+        when you sign back in.
+      </p>
 
       <h2>Contact</h2>
 
