@@ -61,6 +61,16 @@ function AppHeaderAccount() {
     }
   }, [session]);
 
+  // Detect session change and reload app to ensure new session is captured
+  // everywhere
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN') {
+        window.location.reload();
+      }
+    });
+  }, []);
+
   // If the user's session has expired, a "Session expired" message should
   // show, but in order to avoid frustrating the UX, hide this message after a
   // few seconds
