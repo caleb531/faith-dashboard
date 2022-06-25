@@ -162,9 +162,9 @@ function Help({ pageTitle }: Props) {
       <h2>Contact</h2>
 
       <p>
-        If you need any help, please reach out to me (Caleb) at{' '}
-        <a href="https://calebevans.me/contact/" rel="noopener">
-          my personal website
+        If you need any help, please email{' '}
+        <a href="mailto:support@faithdashboard.com">
+          support@faithdashboard.com
         </a>
         .
       </p>
