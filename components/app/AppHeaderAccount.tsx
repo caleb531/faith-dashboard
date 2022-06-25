@@ -61,12 +61,11 @@ function AppHeaderAccount() {
     }
   }, [session]);
 
-  // Detect session change and reload app to ensure new session is captured
-  // everywhere
+  // Detect session change and re-render account header accordingly
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN') {
-        window.location.reload();
+        setSession(session);
       }
     });
   }, []);
