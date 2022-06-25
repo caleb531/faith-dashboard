@@ -10,7 +10,7 @@ type Props = {
 
 function ResultList({ results, onChooseResult }: Props) {
   // Use event delegation to determine which result was clicked
-  function clickResult(event: React.MouseEvent): void {
+  function actionResult<T extends React.UIEvent>(event: T): void {
     const clickedElement = event.target as HTMLElement;
     const resultElement = clickedElement.closest('.result');
     if (!resultElement) {
@@ -25,10 +25,19 @@ function ResultList({ results, onChooseResult }: Props) {
   }
 
   return (
-    <ol className="result-list" onClick={clickResult}>
+    <ol
+      className="result-list"
+      onClick={(event) => actionResult<React.MouseEvent>(event)}
+      onKeyPress={(event) => actionResult<React.KeyboardEvent>(event)}
+    >
       {results.map((result: Result) => {
         return (
-          <li className="result" key={result.id} data-result-id={result.id}>
+          <li
+            className="result"
+            key={result.id}
+            data-result-id={result.id}
+            tabIndex={0}
+          >
             <h3 className="result-title">{result.title}</h3>
             <span className="result-subtitle">{result.subtitle}</span>
           </li>
