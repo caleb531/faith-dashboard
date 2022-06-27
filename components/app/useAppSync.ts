@@ -1,7 +1,7 @@
 import { Dispatch, useEffect } from 'react';
 import { isSessionActive } from '../accountUtils';
+import databaseService from '../databaseService';
 import { supabase } from '../supabaseClient';
-import { getClientId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
 import { WidgetHead, WidgetState } from '../widgets/widget';
 import widgetSyncService from '../widgets/widgetSyncService';
@@ -21,10 +21,7 @@ async function applyServerAppToLocalApp(
     type: 'replaceApp',
     payload: newApp
   });
-  const { data, error } = await supabase.from('widgets').select('raw_data');
-  if (!(data && data.length > 0)) {
-    return;
-  }
+  const { data, error } = await databaseService.selectRows('dashboards');
   const newWidgets: WidgetState[] = data.map((widgetRow) => {
     return JSON.parse(widgetRow.raw_data);
   });
@@ -43,13 +40,11 @@ async function pullLatestAppFromServer(
   if (!isSessionActive()) {
     return;
   }
-  const { data, error } = await supabase.from('dashboards').select('raw_data');
-  if (!(data && data.length > 0)) {
-    const user = supabase.auth.user();
-    if (user) {
-      pushLocalAppToServer(app);
-      pushLocalWidgetsToServer(app);
-    }
+  const { data, error } = await databaseService.selectRows('dashboards');
+  const user = supabase.auth.user();
+  if (!data.length && user) {
+    pushLocalAppToServer(app);
+    pushLocalWidgetsToServer(app);
     return;
   }
   const newApp: AppState = JSON.parse(data[0].raw_data);
@@ -66,15 +61,7 @@ async function pushLocalAppToServer(app: AppState) {
   if (!user) {
     return;
   }
-  await supabase.from('dashboards').upsert([
-    {
-      id: app.id,
-      user_id: user.id,
-      client_id: getClientId(),
-      raw_data: JSON.stringify(app),
-      updated_at: new Date().toISOString()
-    }
-  ]);
+  await databaseService.upsertState(app);
 }
 
 // Push all local widgets to the server (this is only necessary as a one-time

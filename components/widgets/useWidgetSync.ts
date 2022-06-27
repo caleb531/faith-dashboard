@@ -1,6 +1,6 @@
 import { Dispatch, useEffect, useRef } from 'react';
+import databaseService from '../databaseService';
 import { supabase } from '../supabaseClient';
-import { getClientId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
 import { WidgetAction } from './useWidgetShell';
 import { WidgetState } from './widget';
@@ -12,31 +12,7 @@ async function pushLocalWidgetToServer(widget: WidgetState) {
   if (widget.isLoading || widget.isRemoving) {
     return;
   }
-  const user = supabase.auth.user();
-  if (!user) {
-    return;
-  }
-  await supabase.from('widgets').upsert([
-    {
-      id: widget.id,
-      user_id: user.id,
-      client_id: getClientId(),
-      raw_data: JSON.stringify(widget),
-      updated_at: new Date().toISOString()
-    }
-  ]);
-}
-
-// Delete the widget from the server if it's removed from the local dashboard
-async function deleteLocalWidgetFromServer(widget: WidgetState) {
-  const user = supabase.auth.user();
-  if (!user) {
-    return;
-  }
-  await supabase.from('widgets').delete().match({
-    id: widget.id,
-    user_id: user.id
-  });
+  await databaseService.upsertState(widget);
 }
 
 // The useWidgetSync() hook mangages the sychronization of the widget state
@@ -96,7 +72,7 @@ function useWidgetSync(
   // dashboard
   useEffect(() => {
     if (widget.isRemoving) {
-      deleteLocalWidgetFromServer(widget);
+      databaseService.deleteState('widgets', widget.id);
     }
   }, [widget]);
 }
