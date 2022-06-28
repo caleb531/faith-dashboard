@@ -37,7 +37,6 @@
 .audio-player-time-info {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 5px;
   font-weight: 300;
   font-size: $font-size-xxxs;
   font-family: $font-family-sans-serif;
@@ -47,7 +46,8 @@ input[type=range].audio-player-seeker-slider {
   $slider-track-height: 4px;
   $slider-thumb-size: $slider-track-height;
   width: 100%;
-  padding-top: 10px;
+  margin-top: 0;
+  padding-top: 5px;
   padding-bottom: 5px;
   @include slider-track() {
     opacity: 0;

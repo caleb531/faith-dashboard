@@ -103,6 +103,11 @@ a {
   }
 }
 
+input:focus-visible {
+  outline-width: 0;
+  box-shadow: 0 0 0 1px $blue, 0 0 0 2px $light-100;
+}
+
 .form-error-message {
   font-size: $font-size-m;
 }
