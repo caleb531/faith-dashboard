@@ -9,6 +9,11 @@ type Props = {
 function PrivacyPolicy({ pageTitle }: Props) {
   return (
     <LandingPage heading={pageTitle}>
+      <p>
+        This privacy policy serves as a straightforward explanation of how Faith
+        Dashboard collects and handles your personal information.
+      </p>
+
       <p>This privacy policy was last updated on June 27th, 2022.</p>
 
       <h3>Secure Connection</h3>
