@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import React from 'react';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 
@@ -22,6 +21,9 @@ function AppFooter() {
             {isCurrentStep ? <TutorialStepTooltip /> : null}
             <Link href="/help">Help</Link>
           </span>
+        </li>
+        <li className="app-footer-link">
+          <Link href="/privacy-policy">Privacy</Link>
         </li>
         <li className="app-footer-link">
           <Link href="/copyright">Copyright</Link>
