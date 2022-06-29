@@ -1,33 +1,25 @@
-import { Dispatch, useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import AudioPlayer from '../../generic/audio-player/AudioPlayer';
-import { WidgetAction } from '../useWidgetShell';
-import { WidgetState } from '../widget.d';
-import {
-  PodcastEpisode,
-  PodcastFeedData,
-  PodcastListeningMetadataEntry
-} from './podcast.d';
-import { PodcastAction } from './PodcastReducer';
+import { PodcastEpisode, PodcastWidgetState } from './podcast.d';
+import PodcastContext from './PodcastContext';
 
 type Props = {
-  widget: WidgetState;
-  podcastFeedData: PodcastFeedData;
-  podcastImage: string;
+  widget: PodcastWidgetState;
   nowPlaying: PodcastEpisode;
-  nowPlayingMetadata: PodcastListeningMetadataEntry | null;
   isPlaying: boolean;
-  dispatchToWidget: Dispatch<PodcastAction | WidgetAction>;
 };
 
 function PodcastNowPlaying({
-  widget,
-  podcastFeedData,
-  podcastImage,
+  widget: { id, podcastImage, podcastFeedData, listeningMetadata },
   nowPlaying,
-  nowPlayingMetadata,
-  isPlaying,
-  dispatchToWidget
+  isPlaying
 }: Props) {
+  const dispatchToWidget = useContext(PodcastContext);
+
+  const nowPlayingMetadata = nowPlaying
+    ? listeningMetadata[nowPlaying.guid]
+    : null;
+
   const audioUrl = nowPlaying.enclosure.url;
   const currentTime = nowPlayingMetadata ? nowPlayingMetadata.currentTime : 0;
 
@@ -57,10 +49,10 @@ function PodcastNowPlaying({
   return (
     <section className="podcast-view-now-playing">
       <header className="podcast-now-playing-header">
-        {podcastImage || podcastFeedData['itunes:image'] ? (
+        {podcastImage || podcastFeedData?.['itunes:image'] ? (
           <img
             className="podcast-now-playing-image"
-            src={podcastImage || podcastFeedData['itunes:image'].href}
+            src={podcastImage || podcastFeedData!['itunes:image'].href}
             alt=""
           />
         ) : (
@@ -76,7 +68,7 @@ function PodcastNowPlaying({
       </header>
       <div className="podcast-now-playing-audio-player-container">
         <AudioPlayer
-          audioElementKey={widget.id}
+          audioElementKey={id}
           audioUrl={audioUrl}
           currentTime={currentTime}
           setCurrentTime={setCurrentTime}

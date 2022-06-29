@@ -1,21 +1,17 @@
-import { Dispatch } from 'react';
+import { useContext } from 'react';
 import ResultList from '../../generic/ResultList';
 import { Result } from '../../generic/resultList.d';
-import { WidgetAction } from '../useWidgetShell';
 import { PodcastInfo } from './podcast.d';
-import { PodcastAction } from './PodcastReducer';
+import PodcastContext from './PodcastContext';
 
 type Props = {
   podcastList: PodcastInfo[];
   fetchPodcastFeed: (url: string) => Promise<void>;
-  dispatchToWidget: Dispatch<PodcastAction | WidgetAction>;
 };
 
-function PodcastPodcastList({
-  podcastList,
-  fetchPodcastFeed,
-  dispatchToWidget
-}: Props) {
+function PodcastPodcastList({ podcastList, fetchPodcastFeed }: Props) {
+  const dispatchToWidget = useContext(PodcastContext);
+
   function choosePodcast(result: Result) {
     const data = result.data as { feedUrl: string; image: string };
     dispatchToWidget({ type: 'setPodcastFeedUrl', payload: data.feedUrl });

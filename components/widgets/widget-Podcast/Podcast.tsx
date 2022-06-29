@@ -14,6 +14,7 @@ import {
   PodcastSearchResponse,
   PodcastWidgetState
 } from './podcast.d';
+import PodcastContext from './PodcastContext';
 import PodcastEpisodeList from './PodcastEpisodeList';
 import PodcastNowPlaying from './PodcastNowPlaying';
 import PodcastPodcastList from './PodcastPodcastList';
@@ -27,16 +28,12 @@ const PodcastWidget = React.memo(function PodcastWidget({
   const {
     podcastQuery,
     podcastFeedUrl,
-    podcastImage,
     podcastFeedData,
     nowPlaying,
     isPlaying,
-    viewingNowPlaying,
-    listeningMetadata
+    viewingNowPlaying
   } = widget as PodcastWidgetState;
-  const nowPlayingMetadata = nowPlaying
-    ? listeningMetadata[nowPlaying.guid]
-    : null;
+
   const [podcastList, setPodcastList, removePodcastList] = useCachedState(
     `podcast-list-${widget.id}`,
     () => [] as PodcastInfo[]
@@ -130,69 +127,64 @@ const PodcastWidget = React.memo(function PodcastWidget({
       dispatchToWidget={dispatchToWidget}
       provided={provided}
     >
-      <section className="podcast">
-        {widget.isSettingsOpen ||
-        !podcastFeedUrl ||
-        !podcastFeedData ||
-        fetchError ? (
-          <div className="podcast-search">
-            <form
-              className="podcast-settings"
-              onSubmit={(event) => submitRequestQuery(event)}
-            >
-              <h2 className="podcast-settings-heading">Podcast</h2>
-              <label
-                htmlFor={searchFieldId}
-                className="podcast-search accessibility-only"
+      <PodcastContext.Provider value={dispatchToWidget}>
+        <section className="podcast">
+          {widget.isSettingsOpen ||
+          !podcastFeedUrl ||
+          !podcastFeedData ||
+          fetchError ? (
+            <div className="podcast-search">
+              <form
+                className="podcast-settings"
+                onSubmit={(event) => submitRequestQuery(event)}
               >
-                Search Query
-              </label>
-              <input
-                type="search"
-                id={searchFieldId}
-                className="podcast-search"
-                name="search"
-                defaultValue={podcastQuery}
-                placeholder="Search for podcasts"
-                required
-                ref={requestQueryInputRef}
+                <h2 className="podcast-settings-heading">Podcast</h2>
+                <label
+                  htmlFor={searchFieldId}
+                  className="podcast-search accessibility-only"
+                >
+                  Search Query
+                </label>
+                <input
+                  type="search"
+                  id={searchFieldId}
+                  className="podcast-search"
+                  name="search"
+                  defaultValue={podcastQuery}
+                  placeholder="Search for podcasts"
+                  required
+                  ref={requestQueryInputRef}
+                />
+                <button type="submit" className="podcast-url-submit">
+                  Search
+                </button>
+                {fetchError ? (
+                  <p className="podcast-error">{fetchError}</p>
+                ) : null}
+              </form>
+              <PodcastPodcastList
+                podcastList={podcastList}
+                fetchPodcastFeed={feedFetcher.fetchWidgetData}
               />
-              <button type="submit" className="podcast-url-submit">
-                Search
-              </button>
-              {fetchError ? (
-                <p className="podcast-error">{fetchError}</p>
-              ) : null}
-            </form>
-            <PodcastPodcastList
-              podcastList={podcastList}
-              fetchPodcastFeed={feedFetcher.fetchWidgetData}
-              dispatchToWidget={dispatchToWidget}
+            </div>
+          ) : podcastFeedUrl &&
+            podcastFeedData &&
+            nowPlaying &&
+            viewingNowPlaying ? (
+            <PodcastNowPlaying
+              widget={widget as PodcastWidgetState}
+              nowPlaying={nowPlaying}
+              isPlaying={isPlaying}
             />
-          </div>
-        ) : podcastFeedUrl &&
-          podcastFeedData &&
-          nowPlaying &&
-          viewingNowPlaying ? (
-          <PodcastNowPlaying
-            widget={widget}
-            podcastFeedData={podcastFeedData}
-            podcastImage={podcastImage}
-            nowPlaying={nowPlaying}
-            nowPlayingMetadata={nowPlayingMetadata}
-            isPlaying={isPlaying}
-            dispatchToWidget={dispatchToWidget}
-          />
-        ) : podcastFeedUrl && podcastFeedData && !viewingNowPlaying ? (
-          <PodcastEpisodeList
-            podcastFeedUrl={podcastFeedUrl}
-            podcastFeedData={podcastFeedData}
-            nowPlaying={nowPlaying}
-            fetchPodcastFeed={feedFetcher.fetchWidgetData}
-            dispatchToWidget={dispatchToWidget}
-          />
-        ) : null}
-      </section>
+          ) : podcastFeedUrl && podcastFeedData && !viewingNowPlaying ? (
+            <PodcastEpisodeList
+              widget={widget as PodcastWidgetState}
+              nowPlaying={nowPlaying}
+              fetchPodcastFeed={feedFetcher.fetchWidgetData}
+            />
+          ) : null}
+        </section>
+      </PodcastContext.Provider>
     </WidgetShell>
   );
 });

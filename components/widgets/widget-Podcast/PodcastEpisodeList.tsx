@@ -1,25 +1,23 @@
 import { formatDistanceToNow } from 'date-fns';
-import { Dispatch } from 'react';
+import { useContext } from 'react';
 import ResultList from '../../generic/ResultList';
 import { Result } from '../../generic/resultList.d';
-import { PodcastEpisode, PodcastFeedData } from './podcast.d';
-import { PodcastAction } from './PodcastReducer';
+import { PodcastEpisode, PodcastWidgetState } from './podcast.d';
+import PodcastContext from './PodcastContext';
 
 type Props = {
-  podcastFeedUrl: string;
-  podcastFeedData?: PodcastFeedData;
+  widget: PodcastWidgetState;
   nowPlaying?: PodcastEpisode | null;
   fetchPodcastFeed: (url: string) => Promise<void>;
-  dispatchToWidget: Dispatch<PodcastAction>;
 };
 
 function PodcastEpisodeList({
-  podcastFeedUrl,
-  podcastFeedData,
+  widget: { podcastFeedUrl, podcastFeedData },
   nowPlaying,
-  fetchPodcastFeed,
-  dispatchToWidget
+  fetchPodcastFeed
 }: Props) {
+  const dispatchToWidget = useContext(PodcastContext);
+
   // Use event delegation to determine which episode entry was clicked
   function chooseEpisode(result: Result) {
     dispatchToWidget({ type: 'setNowPlaying', payload: result.id });
@@ -64,18 +62,20 @@ function PodcastEpisodeList({
             ? `${podcastFeedData.item.length} episode`
             : `${podcastFeedData?.item.length} episodes`}
         </span>
-        <button
-          type="button"
-          className="podcast-episodes-refresh-control widget-control"
-          onClick={() => fetchPodcastFeed(podcastFeedUrl)}
-        >
-          <img
-            className="podcast-episodes-refresh-control-icon"
-            src="/icons/refresh.svg"
-            alt="Check for New Episodes"
-            draggable="false"
-          />
-        </button>
+        {podcastFeedUrl ? (
+          <button
+            type="button"
+            className="podcast-episodes-refresh-control widget-control"
+            onClick={() => fetchPodcastFeed(podcastFeedUrl)}
+          >
+            <img
+              className="podcast-episodes-refresh-control-icon"
+              src="/icons/refresh.svg"
+              alt="Check for New Episodes"
+              draggable="false"
+            />
+          </button>
+        ) : null}
       </div>
       <ResultList
         results={getEpisodeResultList()}
