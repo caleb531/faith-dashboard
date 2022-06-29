@@ -26,22 +26,23 @@ export default function reducer(
               ...podcastFeedData,
               item:
                 podcastFeedData?.item
-                  // Some podcasts have bad data episode details without any media
-                  // information attached to them; filter these out
+                  // Some podcasts have bad data episode details without any
+                  // media information attached to them; filter these out
                   .filter((episode) => episode.enclosure)
                   .map((episode) => {
                     return {
                       ...episode,
-                      // For most podcasts the GUID for each episode will be unique
-                      // and safe to use throughout this application; however, some
-                      // podcasts use the same @static object for each and every one
-                      // of their episode GUIDs; this will cause React to throw a
-                      // "two children with the same key" error, since we use the
-                      // GUID to uniquely identify an episode in many areas of the
-                      // Podcast widget code; to solve this, we need to assign some
-                      // other value from the episode schemat can't be something we
-                      // generate ourselves because the GUID cannot change across
-                      // feed refreshes, lest we lose listening history, etc.)
+                      // For most podcasts the GUID for each episode will be
+                      // unique and safe to use throughout this application;
+                      // however, some podcasts use the same @static object for
+                      // each and every one of their episode GUIDs; this will
+                      // cause React to throw a "two children with the same
+                      // key" error, since we use the GUID to uniquely identify
+                      // an episode in many areas of the Podcast widget code;
+                      // to solve this, we need to assign some other value from
+                      // the episode schemat can't be something we generate
+                      // ourselves because the GUID cannot change across feed
+                      // refreshes, lest we lose listening history, etc.)
                       guid:
                         typeof episode.guid !== 'string'
                           ? episode.enclosure.url || episode.title
