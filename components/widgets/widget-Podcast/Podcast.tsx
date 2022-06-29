@@ -64,8 +64,8 @@ const PodcastWidget = React.memo(function PodcastWidget({
         audioElement.pause();
         setPodcastList(results);
       },
-      getNoResultsMessage: (results: typeof podcastList) => 'No Podcasts Found',
-      getErrorMessage: (error: Error) => 'Error Searching for Podcasts'
+      getNoResultsMessage: () => 'No Podcasts Found',
+      getErrorMessage: () => 'Error Searching for Podcasts'
     });
 
   const feedFetcher = useWidgetDataFetcher({
