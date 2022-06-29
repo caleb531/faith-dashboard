@@ -15,7 +15,6 @@ const screenshotFormat = 'jpeg';
 const screenshotQuality: number = 85;
 
 async function main(): Promise<void> {
-
   console.log('launching browser...');
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -32,7 +31,9 @@ async function main(): Promise<void> {
 
   console.log('configuring dashboard...');
   await page.evaluate(async () => {
-    const socialPreviewAppState = await (await fetch('./social-preview-app-state.json')).json();
+    const socialPreviewAppState = await (
+      await fetch('./social-preview-app-state.json')
+    ).json();
     localStorage.setItem(
       'faith-dashboard-app',
       JSON.stringify(socialPreviewAppState)
@@ -52,6 +53,5 @@ async function main(): Promise<void> {
 
   console.log('closing browser...');
   await browser.close();
-
 }
 main();
