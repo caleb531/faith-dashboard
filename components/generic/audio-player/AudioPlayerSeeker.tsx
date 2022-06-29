@@ -1,5 +1,4 @@
 import { intervalToDuration } from 'date-fns';
-import React from 'react';
 import useUniqueFieldId from '../../useUniqueFieldId';
 import useAudioSeeker from './useAudioSeeker';
 import useAudioTime from './useAudioTime';
@@ -38,8 +37,8 @@ function AudioPlayerSeeker({
     });
     if (hours && minutes && seconds) {
       return [hours, padWithZero(minutes), padWithZero(seconds)].join(':');
-    } else if (minutes && seconds) {
-      return [minutes, padWithZero(seconds)].join(':');
+    } else if (minutes || seconds) {
+      return [minutes || 0, padWithZero(seconds || 0)].join(':');
     } else {
       return '';
     }
