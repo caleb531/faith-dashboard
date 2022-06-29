@@ -12,12 +12,12 @@ import { WidgetState } from './widget.d';
 
 type Props = {
   widget: WidgetState;
-  dispatch: Dispatch<WidgetAction>;
+  dispatchToWidget: Dispatch<WidgetAction>;
   provided: DraggableProvided;
   children: JSXContents;
 };
 
-function WidgetShell({ widget, dispatch, provided, children }: Props) {
+function WidgetShell({ widget, dispatchToWidget, provided, children }: Props) {
   const dispatchToApp = useContext(AppContext);
 
   const widgetStepData = useTutorialStep(`widget-${widget.tutorialStepId}`);
@@ -40,7 +40,7 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
       'Are you sure you want to permanently delete this widget?'
     );
     if (confirmation) {
-      dispatch({ type: 'markWidgetForRemoval' });
+      dispatchToWidget({ type: 'markWidgetForRemoval' });
     }
   }
 
@@ -50,7 +50,7 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
     // (this is to prevent the action from firing whenever mouseUp is called,
     // which could be all the time)
     if (newHeight && newHeight !== widget.height) {
-      dispatch({ type: 'resizeWidget', payload: newHeight });
+      dispatchToWidget({ type: 'resizeWidget', payload: newHeight });
     }
   }
 
@@ -58,9 +58,9 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
     widget,
     onAddTransitionEnd: useCallback(
       (widget) => {
-        dispatch({ type: 'markWidgetAsAdded' });
+        dispatchToWidget({ type: 'markWidgetAsAdded' });
       },
-      [dispatch]
+      [dispatchToWidget]
     ),
     onRemoveTransitionEnd: useCallback(
       (widget) => {
@@ -114,7 +114,7 @@ function WidgetShell({ widget, dispatch, provided, children }: Props) {
         <button
           type="button"
           className="widget-settings-toggle widget-control"
-          onClick={(event) => dispatch({ type: 'toggleSettings' })}
+          onClick={(event) => dispatchToWidget({ type: 'toggleSettings' })}
           {...settingsStepData.stepProps}
         >
           <img

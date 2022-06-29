@@ -95,11 +95,13 @@ export default function useWidgetShell<Action>(
     `faith-dashboard-widget-${widgetHead.type}:${widgetHead.id}`,
     createNewWidget(widgetHead)
   );
-  const [state, dispatch] = useReducer(reducer, null, () => restoreWidget());
+  const [widget, dispatchToWidget] = useReducer(reducer, null, () =>
+    restoreWidget()
+  );
 
   // Save updates to the widget as its state changes
-  useWidgetUpdater(state, saveWidget, removeWidget);
-  useWidgetSync(state, dispatch);
+  useWidgetUpdater(widget, saveWidget, removeWidget);
+  useWidgetSync(widget, dispatchToWidget);
 
-  return [state, dispatch];
+  return [widget, dispatchToWidget];
 }

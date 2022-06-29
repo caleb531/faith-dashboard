@@ -15,17 +15,17 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({
   // If the user refreshes the page while a verse is loading, it will still be
   // persisted to localStorage by the time we load the page again, so we must
   // reset the flag to prevent the widget from loading infinitely
-  const [state, dispatch] = useWidgetShell(reducer, widgetHead);
-  const { verseQuery, verseContent } = state as BibleVerseWidgetState;
+  const [widget, dispatchToWidget] = useWidgetShell(reducer, widgetHead);
+  const { verseQuery, verseContent } = widget as BibleVerseWidgetState;
 
   const { fetchError, submitRequestQuery, requestQueryInputRef } =
     useWidgetDataFetcher({
-      widget: state,
-      dispatch,
+      widget,
+      dispatchToWidget,
       shouldFetchInitially: () => verseQuery && !verseContent,
       requestQuery: verseQuery,
       setRequestQuery: (newQuery: typeof verseQuery) => {
-        return dispatch({ type: 'setVerseQuery', payload: newQuery });
+        return dispatchToWidget({ type: 'setVerseQuery', payload: newQuery });
       },
       getApiUrl: (query: typeof verseQuery) => {
         return `/api/widgets/bible-verse?q=${encodeURIComponent(query)}`;
@@ -33,7 +33,7 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({
       parseResponse: (response: BibleVerseData) => response.passages.join(''),
       hasResults: (data: typeof verseContent) => data !== '',
       onSuccess: (data: typeof verseContent) => {
-        dispatch({
+        dispatchToWidget({
           type: 'setVerseContent',
           payload: data
         });
@@ -45,9 +45,13 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({
   const searchFieldId = useUniqueFieldId('bible-verse-search');
 
   return (
-    <WidgetShell widget={state} dispatch={dispatch} provided={provided}>
+    <WidgetShell
+      widget={widget}
+      dispatchToWidget={dispatchToWidget}
+      provided={provided}
+    >
       <section className="bible-verse">
-        {state.isSettingsOpen || !verseQuery || !verseContent || fetchError ? (
+        {widget.isSettingsOpen || !verseQuery || !verseContent || fetchError ? (
           <form
             className="bible-verse-settings"
             onSubmit={(event) => submitRequestQuery(event)}

@@ -1,5 +1,5 @@
 import { formatDistanceToNow } from 'date-fns';
-import React, { Dispatch } from 'react';
+import { Dispatch } from 'react';
 import ResultList from '../../generic/ResultList';
 import { Result } from '../../generic/resultList.d';
 import { PodcastEpisode, PodcastFeedData } from './podcast.d';
@@ -10,7 +10,7 @@ type Props = {
   podcastFeedData?: PodcastFeedData;
   nowPlaying?: PodcastEpisode | null;
   fetchPodcastFeed: (url: string) => Promise<void>;
-  dispatch: Dispatch<PodcastAction>;
+  dispatchToWidget: Dispatch<PodcastAction>;
 };
 
 function PodcastEpisodeList({
@@ -18,15 +18,15 @@ function PodcastEpisodeList({
   podcastFeedData,
   nowPlaying,
   fetchPodcastFeed,
-  dispatch
+  dispatchToWidget
 }: Props) {
   // Use event delegation to determine which episode entry was clicked
   function chooseEpisode(result: Result) {
-    dispatch({ type: 'setNowPlaying', payload: result.id });
+    dispatchToWidget({ type: 'setNowPlaying', payload: result.id });
   }
 
   function viewNowPlaying() {
-    dispatch({ type: 'setViewingNowPlaying', payload: true });
+    dispatchToWidget({ type: 'setViewingNowPlaying', payload: true });
   }
 
   // Convert the current episode list to a proper ResultList structure

@@ -23,7 +23,7 @@ const PodcastWidget = React.memo(function PodcastWidget({
   widgetHead,
   provided
 }: WidgetParameters) {
-  const [state, dispatch] = useWidgetShell(reducer, widgetHead);
+  const [widget, dispatchToWidget] = useWidgetShell(reducer, widgetHead);
   const {
     podcastQuery,
     podcastFeedUrl,
@@ -33,25 +33,25 @@ const PodcastWidget = React.memo(function PodcastWidget({
     isPlaying,
     viewingNowPlaying,
     listeningMetadata
-  } = state as PodcastWidgetState;
+  } = widget as PodcastWidgetState;
   const nowPlayingMetadata = nowPlaying
     ? listeningMetadata[nowPlaying.guid]
     : null;
   const [podcastList, setPodcastList, removePodcastList] = useCachedState(
-    `podcast-list-${state.id}`,
+    `podcast-list-${widget.id}`,
     () => [] as PodcastInfo[]
   );
 
-  const [audioElement, removeAudioElement] = useCachedAudio(state.id);
+  const [audioElement, removeAudioElement] = useCachedAudio(widget.id);
 
   const { fetchError, submitRequestQuery, requestQueryInputRef } =
     useWidgetDataFetcher({
-      widget: state,
-      dispatch,
+      widget,
+      dispatchToWidget,
       shouldFetchInitially: () => podcastQuery && !podcastFeedData,
       requestQuery: podcastQuery,
       setRequestQuery: (newPodcastQuery: typeof podcastQuery) => {
-        dispatch({ type: 'setPodcastQuery', payload: newPodcastQuery });
+        dispatchToWidget({ type: 'setPodcastQuery', payload: newPodcastQuery });
       },
       getApiUrl: (query: typeof podcastQuery) => {
         return `/api/widgets/podcast?q=${encodeURIComponent(query)}`;
@@ -72,13 +72,16 @@ const PodcastWidget = React.memo(function PodcastWidget({
     });
 
   const feedFetcher = useWidgetDataFetcher({
-    widget: state,
-    dispatch,
+    widget,
+    dispatchToWidget,
     shouldFetchInitially: () => podcastFeedUrl && !podcastFeedData,
     fetchFrequency: 'daily',
     requestQuery: podcastFeedUrl || '',
     setRequestQuery: (newPodcastFeedUrl: typeof podcastFeedUrl) => {
-      dispatch({ type: 'setPodcastFeedUrl', payload: newPodcastFeedUrl });
+      dispatchToWidget({
+        type: 'setPodcastFeedUrl',
+        payload: newPodcastFeedUrl
+      });
     },
     getApiUrl: (feedUrl: typeof podcastFeedUrl) => {
       return `/api/widgets/podcast/feed?url=${encodeURIComponent(
@@ -89,7 +92,7 @@ const PodcastWidget = React.memo(function PodcastWidget({
     hasResults: (data: typeof podcastFeedData) =>
       data && data.item && data.item.length,
     onSuccess: (data: typeof podcastFeedData) => {
-      dispatch({
+      dispatchToWidget({
         type: 'setPodcastFeedData',
         payload: data
       });
@@ -112,7 +115,7 @@ const PodcastWidget = React.memo(function PodcastWidget({
 
   // Pause the audio in case it's still playing when the user removes the
   // widget from their dashboard
-  useWidgetCleanupOnRemove(state, () => {
+  useWidgetCleanupOnRemove(widget, () => {
     audioElement.pause();
     clearMediaSession();
     removeAudioElement();
@@ -122,9 +125,13 @@ const PodcastWidget = React.memo(function PodcastWidget({
   const searchFieldId = useUniqueFieldId('podcast-search');
 
   return (
-    <WidgetShell widget={state} dispatch={dispatch} provided={provided}>
+    <WidgetShell
+      widget={widget}
+      dispatchToWidget={dispatchToWidget}
+      provided={provided}
+    >
       <section className="podcast">
-        {state.isSettingsOpen ||
+        {widget.isSettingsOpen ||
         !podcastFeedUrl ||
         !podcastFeedData ||
         fetchError ? (
@@ -158,10 +165,10 @@ const PodcastWidget = React.memo(function PodcastWidget({
               ) : null}
             </form>
             <PodcastPodcastList
-              widget={state}
+              widget={widget}
               podcastList={podcastList}
               fetchPodcastFeed={feedFetcher.fetchWidgetData}
-              dispatch={dispatch}
+              dispatchToWidget={dispatchToWidget}
             />
           </div>
         ) : podcastFeedUrl &&
@@ -169,13 +176,13 @@ const PodcastWidget = React.memo(function PodcastWidget({
           nowPlaying &&
           viewingNowPlaying ? (
           <PodcastNowPlaying
-            widget={state}
+            widget={widget}
             podcastFeedData={podcastFeedData}
             podcastImage={podcastImage}
             nowPlaying={nowPlaying}
             nowPlayingMetadata={nowPlayingMetadata}
             isPlaying={isPlaying}
-            dispatch={dispatch}
+            dispatchToWidget={dispatchToWidget}
           />
         ) : podcastFeedUrl && podcastFeedData && !viewingNowPlaying ? (
           <PodcastEpisodeList
@@ -183,7 +190,7 @@ const PodcastWidget = React.memo(function PodcastWidget({
             podcastFeedData={podcastFeedData}
             nowPlaying={nowPlaying}
             fetchPodcastFeed={feedFetcher.fetchWidgetData}
-            dispatch={dispatch}
+            dispatchToWidget={dispatchToWidget}
           />
         ) : null}
       </section>

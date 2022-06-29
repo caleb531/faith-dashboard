@@ -9,8 +9,8 @@ const NoteWidget = React.memo(function NoteWidget({
   widgetHead,
   provided
 }: WidgetParameters) {
-  const [state, dispatch] = useWidgetShell(reducer, widgetHead);
-  const { fontSize, text } = state as NoteWidgetState;
+  const [widget, dispatch] = useWidgetShell(reducer, widgetHead);
+  const { fontSize, text } = widget as NoteWidgetState;
   // The amount of time (in milliseconds) after the user's last keystroke
   // before assuming that the user has stopped typing
   const defaultFontSize = 14;
@@ -53,21 +53,25 @@ const NoteWidget = React.memo(function NoteWidget({
   }
 
   return (
-    <WidgetShell widget={state} dispatch={dispatch} provided={provided}>
+    <WidgetShell
+      widget={widget}
+      dispatchToWidget={dispatch}
+      provided={provided}
+    >
       <section className="note">
-        {state.isSettingsOpen ? (
+        {widget.isSettingsOpen ? (
           <>
             <h2 className="note-heading">Note</h2>
             <form className="note-formatting">
               <label
-                htmlFor={`note-formatting-font-size-${state.id}`}
+                htmlFor={`note-formatting-font-size-${widget.id}`}
                 className="bible-verse-search"
               >
                 Font Size
               </label>
               <input
                 type="range"
-                id={`note-formatting-font-size-${state.id}`}
+                id={`note-formatting-font-size-${widget.id}`}
                 className="note-formatting-font-size"
                 onInput={(event) => changeFontSize(event)}
                 min="12"

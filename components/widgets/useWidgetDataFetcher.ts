@@ -26,7 +26,7 @@ function isDateToday(dateTime: number | undefined): boolean {
 // Podcast for examples on how this hook is used
 export default function useWidgetDataFetcher({
   widget,
-  dispatch,
+  dispatchToWidget,
   shouldFetchInitially,
   fetchFrequency,
   requestQuery,
@@ -41,7 +41,7 @@ export default function useWidgetDataFetcher({
   // The current state of the widget from the useWidgetShell() call
   widget: WidgetState;
   // The dispatch function from the useWidgetShell() call
-  dispatch: Dispatch<WidgetAction>;
+  dispatchToWidget: Dispatch<WidgetAction>;
   // A boolean function that should return true if the widget should fetch on
   // the initial render, and false otherwise; normally, this condition should
   // evaluate if the request data is populated, and if there is no cached
@@ -107,7 +107,7 @@ export default function useWidgetDataFetcher({
     newRequestQuery: string,
     { abortSignal }: { abortSignal?: AbortSignal } = {}
   ): Promise<void> {
-    dispatch({ type: 'showLoading' });
+    dispatchToWidget({ type: 'showLoading' });
     try {
       const rawResponse = await fetch(getApiUrl(newRequestQuery), {
         signal: abortSignal
@@ -116,9 +116,12 @@ export default function useWidgetDataFetcher({
       const data = parseResponse(response);
       if (hasResults(data)) {
         onSuccess(data);
-        dispatch({ type: 'showContent' });
+        dispatchToWidget({ type: 'showContent' });
       } else {
-        dispatch({ type: 'setFetchError', payload: getNoResultsMessage(data) });
+        dispatchToWidget({
+          type: 'setFetchError',
+          payload: getNoResultsMessage(data)
+        });
       }
     } catch (error) {
       console.log('error', error);
@@ -126,7 +129,10 @@ export default function useWidgetDataFetcher({
       // (meaning the component is now unmounted and therefore can't be
       // updated)
       if (!abortSignal?.aborted) {
-        dispatch({ type: 'setFetchError', payload: getErrorMessage(error) });
+        dispatchToWidget({
+          type: 'setFetchError',
+          payload: getErrorMessage(error)
+        });
       }
     }
   }

@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import { Dispatch } from 'react';
 import ResultList from '../../generic/ResultList';
 import { Result } from '../../generic/resultList.d';
 import { WidgetAction } from '../useWidgetShell';
@@ -10,21 +10,21 @@ type Props = {
   widget: WidgetState;
   podcastList: PodcastInfo[];
   fetchPodcastFeed: (url: string) => Promise<void>;
-  dispatch: Dispatch<PodcastAction | WidgetAction>;
+  dispatchToWidget: Dispatch<PodcastAction | WidgetAction>;
 };
 
 function PodcastPodcastList({
   widget,
   podcastList,
   fetchPodcastFeed,
-  dispatch
+  dispatchToWidget
 }: Props) {
   const { podcastFeedUrl, podcastFeedData } = widget as PodcastWidgetState;
 
   function choosePodcast(result: Result) {
     const data = result.data as { feedUrl: string; image: string };
-    dispatch({ type: 'setPodcastFeedUrl', payload: data.feedUrl });
-    dispatch({ type: 'setPodcastImage', payload: data.image });
+    dispatchToWidget({ type: 'setPodcastFeedUrl', payload: data.feedUrl });
+    dispatchToWidget({ type: 'setPodcastImage', payload: data.image });
     fetchPodcastFeed(data.feedUrl);
   }
 

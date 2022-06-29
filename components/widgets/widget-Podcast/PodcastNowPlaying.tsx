@@ -1,4 +1,4 @@
-import React, { Dispatch, useCallback } from 'react';
+import { Dispatch, useCallback } from 'react';
 import AudioPlayer from '../../generic/audio-player/AudioPlayer';
 import { WidgetAction } from '../useWidgetShell';
 import { WidgetState } from '../widget.d';
@@ -16,7 +16,7 @@ type Props = {
   nowPlaying: PodcastEpisode;
   nowPlayingMetadata: PodcastListeningMetadataEntry | null;
   isPlaying: boolean;
-  dispatch: Dispatch<PodcastAction | WidgetAction>;
+  dispatchToWidget: Dispatch<PodcastAction | WidgetAction>;
 };
 
 function PodcastNowPlaying({
@@ -26,32 +26,32 @@ function PodcastNowPlaying({
   nowPlaying,
   nowPlayingMetadata,
   isPlaying,
-  dispatch
+  dispatchToWidget
 }: Props) {
   const audioUrl = nowPlaying.enclosure.url;
   const currentTime = nowPlayingMetadata ? nowPlayingMetadata.currentTime : 0;
 
   const setCurrentTime = useCallback(
     (newCurrentTime: number) => {
-      dispatch({
+      dispatchToWidget({
         type: 'updateNowPlayingMetadata',
         payload: { currentTime: newCurrentTime }
       });
     },
-    [dispatch]
+    [dispatchToWidget]
   );
 
   // Control the play/pause state of the podcast widget when the appropriate
   // player controls are clicked
   const setIsPlaying = useCallback(
     (newIsPlaying: boolean) => {
-      dispatch({ type: 'setIsPlaying', payload: newIsPlaying });
+      dispatchToWidget({ type: 'setIsPlaying', payload: newIsPlaying });
     },
-    [dispatch]
+    [dispatchToWidget]
   );
 
   function returnToEpisodeList() {
-    dispatch({ type: 'setViewingNowPlaying', payload: false });
+    dispatchToWidget({ type: 'setViewingNowPlaying', payload: false });
   }
 
   return (
