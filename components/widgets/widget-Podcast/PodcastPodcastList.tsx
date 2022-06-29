@@ -2,19 +2,16 @@ import { Dispatch } from 'react';
 import ResultList from '../../generic/ResultList';
 import { Result } from '../../generic/resultList.d';
 import { WidgetAction } from '../useWidgetShell';
-import { WidgetState } from '../widget.d';
 import { PodcastInfo } from './podcast.d';
 import { PodcastAction } from './PodcastReducer';
 
 type Props = {
-  widget: WidgetState;
   podcastList: PodcastInfo[];
   fetchPodcastFeed: (url: string) => Promise<void>;
   dispatchToWidget: Dispatch<PodcastAction | WidgetAction>;
 };
 
 function PodcastPodcastList({
-  widget,
   podcastList,
   fetchPodcastFeed,
   dispatchToWidget

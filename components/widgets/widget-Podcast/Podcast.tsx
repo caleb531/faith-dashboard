@@ -165,7 +165,6 @@ const PodcastWidget = React.memo(function PodcastWidget({
               ) : null}
             </form>
             <PodcastPodcastList
-              widget={widget}
               podcastList={podcastList}
               fetchPodcastFeed={feedFetcher.fetchWidgetData}
               dispatchToWidget={dispatchToWidget}
