@@ -2,7 +2,6 @@ import React from 'react';
 import useWidgetShell from '../useWidgetShell';
 import { WidgetParameters } from '../widget.d';
 import WidgetShell from '../WidgetShell';
-import { NoteWidgetState } from './note.d';
 import reducer from './NoteReducer';
 
 const NoteWidget = React.memo(function NoteWidget({
@@ -10,7 +9,7 @@ const NoteWidget = React.memo(function NoteWidget({
   provided
 }: WidgetParameters) {
   const [widget, dispatch] = useWidgetShell(reducer, widgetHead);
-  const { fontSize, text } = widget as NoteWidgetState;
+  const { fontSize, text } = widget;
   // The amount of time (in milliseconds) after the user's last keystroke
   // before assuming that the user has stopped typing
   const defaultFontSize = 14;

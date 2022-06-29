@@ -32,7 +32,7 @@ const PodcastWidget = React.memo(function PodcastWidget({
     nowPlaying,
     isPlaying,
     viewingNowPlaying
-  } = widget as PodcastWidgetState;
+  } = widget;
 
   const [podcastList, setPodcastList, removePodcastList] = useCachedState(
     `podcast-list-${widget.id}`,

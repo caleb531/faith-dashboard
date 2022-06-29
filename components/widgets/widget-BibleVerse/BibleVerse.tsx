@@ -5,7 +5,7 @@ import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useWidgetShell from '../useWidgetShell';
 import { WidgetParameters } from '../widget.d';
 import WidgetShell from '../WidgetShell';
-import { BibleVerseData, BibleVerseWidgetState } from './bibleVerse.d';
+import { BibleVerseData } from './bibleVerse.d';
 import reducer from './BibleVerseReducer';
 
 const BibleVerseWidget = React.memo(function BibleVerseWidget({
@@ -16,7 +16,7 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({
   // persisted to localStorage by the time we load the page again, so we must
   // reset the flag to prevent the widget from loading infinitely
   const [widget, dispatchToWidget] = useWidgetShell(reducer, widgetHead);
-  const { verseQuery, verseContent } = widget as BibleVerseWidgetState;
+  const { verseQuery, verseContent } = widget;
 
   const { fetchError, submitRequestQuery, requestQueryInputRef } =
     useWidgetDataFetcher({
