@@ -3,7 +3,7 @@ import ResultList from '../../generic/ResultList';
 import { Result } from '../../generic/resultList.d';
 import { WidgetAction } from '../useWidgetShell';
 import { WidgetState } from '../widget.d';
-import { PodcastInfo, PodcastWidgetState } from './podcast.d';
+import { PodcastInfo } from './podcast.d';
 import { PodcastAction } from './PodcastReducer';
 
 type Props = {
@@ -19,8 +19,6 @@ function PodcastPodcastList({
   fetchPodcastFeed,
   dispatchToWidget
 }: Props) {
-  const { podcastFeedUrl, podcastFeedData } = widget as PodcastWidgetState;
-
   function choosePodcast(result: Result) {
     const data = result.data as { feedUrl: string; image: string };
     dispatchToWidget({ type: 'setPodcastFeedUrl', payload: data.feedUrl });
