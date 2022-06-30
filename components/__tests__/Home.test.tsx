@@ -5,6 +5,8 @@ import Home from '../../pages/index';
 describe('Homepage', function () {
   it('should render', function () {
     render(<Home />);
-    expect(screen.getByText('Faith Dashboard')).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Faith Dashboard' })
+    ).toBeInTheDocument();
   });
 });

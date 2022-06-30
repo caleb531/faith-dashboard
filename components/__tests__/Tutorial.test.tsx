@@ -14,21 +14,23 @@ describe('Tutorial', function () {
 
   it('should skip', function () {
     render(<Home />);
-    const skipButton = screen.getByText('Skip Tutorial');
+    const skipButton = screen.getByRole('button', { name: 'Skip Tutorial' });
     expect(skipButton).toBeInTheDocument();
     fireEvent.click(skipButton);
     expect(
       // getByText() throws an error if the element does not exist in the DOM,
       // so we need to use queryByText() instead
-      screen.queryByText('Skip Tutorial')
+      screen.queryByRole('button', { name: 'Skip Tutorial' })
     ).not.toBeInTheDocument();
   });
 
   it('should advance tutorial', function () {
     render(<Home />);
-    expect(screen.getByText('Get Started')).toBeInTheDocument();
-    fireEvent.click(screen.getByText('Get Started'));
-    expect(screen.getByText('Next')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Get Started' })
+    ).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Get Started' }));
+    expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
     expect(screen.getByText(/This is your dashboard/)).toBeInTheDocument();
   });
 });
