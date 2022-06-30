@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import Home from '../../pages/index';
+import tutorialSteps from '../tutorial/tutorialSteps';
 
 describe('Tutorial', function () {
   beforeEach(() => {
@@ -32,5 +33,17 @@ describe('Tutorial', function () {
     fireEvent.click(screen.getByRole('button', { name: 'Get Started' }));
     expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
     expect(screen.getByText(/This is your dashboard/)).toBeInTheDocument();
+  });
+  it('should complete all defined steps', function () {
+    render(<Home />);
+    const advanceButtonLabelPattern = /Get Started|Next|Done/;
+    tutorialSteps.forEach(() => {
+      fireEvent.click(
+        screen.getByRole('button', { name: advanceButtonLabelPattern })
+      );
+    });
+    expect(
+      screen.queryByRole('button', { name: advanceButtonLabelPattern })
+    ).not.toBeInTheDocument();
   });
 });
