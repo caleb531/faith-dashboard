@@ -13,13 +13,16 @@ describe('Tutorial', function () {
   });
 
   it('should skip', function () {
-    const { getByTestId, getByText } = render(<Home />);
+    const { getByTestId, queryByTestId, getByText } = render(<Home />);
     expect(getByTestId('tutorial-step-tooltip')).toBeInTheDocument();
     const skipButton = getByText('Skip Tutorial');
     expect(skipButton).toBeInTheDocument();
     fireEvent.click(skipButton);
-    // TODO: get this assertion passing
-    expect(getByTestId('tutorial-step-tooltip')).not.toBeInTheDocument();
+    expect(
+      // getByTestId() throws an error if the element does not exist in the
+      // DOM, so we need to use queryByTestId() instead
+      queryByTestId('tutorial-step-tooltip')
+    ).not.toBeInTheDocument();
   });
 
   it('should advance tutorial', function () {
