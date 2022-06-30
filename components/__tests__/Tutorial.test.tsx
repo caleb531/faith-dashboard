@@ -24,7 +24,7 @@ describe('Tutorial', function () {
     ).not.toBeInTheDocument();
   });
 
-  it('should advance tutorial', function () {
+  it('should advance', function () {
     render(<Home />);
     expect(
       screen.getByRole('button', { name: 'Get Started' })
