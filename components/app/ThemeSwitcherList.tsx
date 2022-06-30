@@ -53,6 +53,7 @@ function ThemeSwitcherList({
               type="button"
               className="theme-switcher-theme-button"
               data-action="change-theme"
+              id={`theme-${themeListItem.value}`}
             >
               {themeListItem.value === currentTheme ? (
                 <div className="theme-switcher-theme-selected-icon"></div>
@@ -79,13 +80,13 @@ function ThemeSwitcherList({
                 />
               ) : null}
             </button>
-            <span
+            <label
               className="theme-switcher-label"
               data-action="change-theme"
-              id={`theme-${themeListItem.value}`}
+              htmlFor={`theme-${themeListItem.value}`}
             >
               {themeListItem.label}
-            </span>
+            </label>
           </li>
         );
       })}

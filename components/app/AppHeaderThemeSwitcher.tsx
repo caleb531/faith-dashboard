@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import { AppTheme } from './app.d';
@@ -23,7 +23,7 @@ function AppHeaderThemeSwitcher({ currentTheme }: Props) {
         className="theme-switcher-label accessibility-only"
         htmlFor="app-header-theme-switcher-button"
       >
-        Color Theme
+        Background Theme
       </label>
       <button
         className="app-header-theme-switcher-button app-header-control-button"
