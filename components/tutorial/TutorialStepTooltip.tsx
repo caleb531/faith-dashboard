@@ -34,7 +34,6 @@ function TutorialStepTooltip() {
         `position-${calculatedPosition}`,
         `alignment-${currentStep.alignment}`
       )}
-      data-testid="tutorial-step-tooltip"
       style={{ width: currentStep.width || 'auto' }}
       ref={messageRef}
     >

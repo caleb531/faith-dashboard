@@ -9,31 +9,26 @@ describe('Tutorial', function () {
 
   it('should render', function () {
     render(<Home />);
-    expect(screen.getByTestId('tutorial-step-tooltip')).toContainHTML(
-      'Welcome'
-    );
+    expect(screen.getByText(/Welcome/)).toBeInTheDocument();
   });
 
   it('should skip', function () {
     render(<Home />);
-    expect(screen.getByTestId('tutorial-step-tooltip')).toBeInTheDocument();
     const skipButton = screen.getByText('Skip Tutorial');
     expect(skipButton).toBeInTheDocument();
     fireEvent.click(skipButton);
     expect(
-      // getByTestId() throws an error if the element does not exist in the
-      // DOM, so we need to use queryByTestId() instead
-      screen.queryByTestId('tutorial-step-tooltip')
+      // getByText() throws an error if the element does not exist in the DOM,
+      // so we need to use queryByText() instead
+      screen.queryByText('Skip Tutorial')
     ).not.toBeInTheDocument();
   });
 
   it('should advance tutorial', function () {
     render(<Home />);
-    expect(screen.getByTestId('tutorial-step-tooltip')).toBeInTheDocument();
+    expect(screen.getByText('Get Started')).toBeInTheDocument();
     fireEvent.click(screen.getByText('Get Started'));
     expect(screen.getByText('Next')).toBeInTheDocument();
-    expect(screen.getByTestId('tutorial-step-tooltip')).toContainHTML(
-      'This is your dashboard'
-    );
+    expect(screen.getByText(/This is your dashboard/)).toBeInTheDocument();
   });
 });
