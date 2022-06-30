@@ -45,8 +45,10 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/dom": "^8.14.0",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^14.2.1",
     "@types/jest": "^27.0.3",
     "@types/lodash-es": "^4.17.5",
     "@types/node-fetch": "^2.5.12",
