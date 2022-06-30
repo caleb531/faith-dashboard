@@ -64,7 +64,6 @@ function ThemeSwitcherList({
                     className="theme-switcher-theme-visual theme-switcher-photo-theme-photo"
                     src={`/images/background-photos/${themeListItem.value}.jpg`}
                     alt=""
-                    aria-labelledby={`theme-${themeListItem.value}`}
                     width="200"
                     height="100"
                     draggable="false"
