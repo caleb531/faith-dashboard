@@ -37,9 +37,7 @@ function TutorialStepTooltip() {
       style={{ width: currentStep.width || 'auto' }}
       ref={messageRef}
     >
-      <span className="tutorial-step-tooltip-message">
-        {currentStep.message}
-      </span>
+      <p className="tutorial-step-tooltip-message">{currentStep.message}</p>
       <div className="tutorial-step-tooltip-controls">
         <button
           type="submit"

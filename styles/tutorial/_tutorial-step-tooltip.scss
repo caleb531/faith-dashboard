@@ -100,6 +100,9 @@ $tutorial-step-tooltip-color: $dark-100;
     }
   }
 }
+.tutorial-step-tooltip-message {
+  margin: 0;
+}
 .tutorial-step-tooltip-controls {
   margin-top: 10px;
   white-space: nowrap;
