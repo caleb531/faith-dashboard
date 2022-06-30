@@ -15,6 +15,8 @@ const config: Config.InitialOptions = {
   // Babel instead of the much-faster SVC for building the project)
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }]
-  }
+  },
+  // Display coverage summary below file-by-file coverage breakdown
+  coverageReporters: ['clover', 'json', 'lcov', 'text', 'text-summary']
 };
 export default config;

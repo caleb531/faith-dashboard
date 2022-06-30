@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "cacheDirectories": [
     ".next/cache"
