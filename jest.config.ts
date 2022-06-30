@@ -4,6 +4,7 @@ const config: Config.InitialOptions = {
   testEnvironment: 'jsdom',
   // File to automatically import for each test suite
   globalSetup: '<rootDir>/components/__tests__/__utils__/setupEnv.ts',
+  setupFiles: ['<rootDir>/components/__tests__/__utils__/setupJest.ts'],
   // Do not attempt to test utility functions, since they themselves aren't
   // tests
   testPathIgnorePatterns: ['/__utils__/'],
