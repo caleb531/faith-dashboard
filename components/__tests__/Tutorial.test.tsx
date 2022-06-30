@@ -3,17 +3,17 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import Home from '../../pages/index';
 import tutorialSteps from '../tutorial/tutorialSteps';
 
-describe('Tutorial', function () {
+describe('Tutorial', () => {
   beforeEach(() => {
     localStorage.clear();
   });
 
-  it('should render', function () {
+  it('should render', () => {
     render(<Home />);
     expect(screen.getByText(/Welcome/)).toBeInTheDocument();
   });
 
-  it('should skip', function () {
+  it('should skip', () => {
     render(<Home />);
     const skipButton = screen.getByRole('button', { name: 'Skip Tutorial' });
     expect(skipButton).toBeInTheDocument();
@@ -25,7 +25,7 @@ describe('Tutorial', function () {
     ).not.toBeInTheDocument();
   });
 
-  it('should advance', function () {
+  it('should advance', () => {
     render(<Home />);
     expect(
       screen.getByRole('button', { name: 'Get Started' })
@@ -34,7 +34,7 @@ describe('Tutorial', function () {
     expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
     expect(screen.getByText(/This is your dashboard/)).toBeInTheDocument();
   });
-  it('should complete all defined steps', function () {
+  it('should complete all defined steps', () => {
     render(<Home />);
     const advanceButtonLabelPattern = /Get Started|Next|Done/;
     tutorialSteps.forEach(() => {

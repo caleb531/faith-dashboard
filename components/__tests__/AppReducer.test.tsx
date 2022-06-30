@@ -3,8 +3,8 @@ import { AppState } from '../app/app.d';
 import reducer from '../app/AppReducer';
 import { createWidget } from './__utils__/test-utils';
 
-describe('app reducer', function () {
-  it('should change theme', function () {
+describe('app reducer', () => {
+  it('should change theme', () => {
     const app: AppState = { widgets: [], theme: 'teal' };
     expect(reducer(app, { type: 'changeTheme', payload: 'rose' })).toEqual({
       widgets: [],
@@ -12,7 +12,7 @@ describe('app reducer', function () {
     });
   });
 
-  it('should add widget as only widget', function () {
+  it('should add widget as only widget', () => {
     const app: AppState = { theme: 'teal', widgets: [] };
     const newWidget = createWidget({ column: 1 });
     expect(reducer(app, { type: 'addWidget', payload: newWidget })).toEqual({
@@ -21,7 +21,7 @@ describe('app reducer', function () {
     });
   });
 
-  it('should add widget to front of array', function () {
+  it('should add widget to front of array', () => {
     const widgets = [createWidget({ column: 2 })];
     const app: AppState = { theme: 'teal', widgets: widgets };
     const newWidget = createWidget({ column: 1 });
@@ -31,7 +31,7 @@ describe('app reducer', function () {
     });
   });
 
-  it('should remove widget', function () {
+  it('should remove widget', () => {
     const widgets = [
       createWidget({ column: 2 }),
       createWidget({ column: 1 }),
@@ -48,7 +48,7 @@ describe('app reducer', function () {
     ).toEqual({ theme: 'teal', widgets: [widgets[0], widgets[2]] });
   });
 
-  it('should move widget from column 1 to column 2', function () {
+  it('should move widget from column 1 to column 2', () => {
     const widgets = [
       createWidget({ column: 1 }),
       createWidget({ column: 1 }),
@@ -78,7 +78,7 @@ describe('app reducer', function () {
     });
   });
 
-  it('should move widget from column 2 to column 1', function () {
+  it('should move widget from column 2 to column 1', () => {
     const widgets = [
       createWidget({ column: 1 }),
       createWidget({ column: 1 }),
@@ -108,7 +108,7 @@ describe('app reducer', function () {
     });
   });
 
-  it('should keep widgets array in column order after move', function () {
+  it('should keep widgets array in column order after move', () => {
     const widgets = [
       createWidget({ column: 1 }),
       createWidget({ column: 1 }),
