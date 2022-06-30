@@ -3,7 +3,7 @@ import { AppState } from '../app/app.d';
 import reducer from '../app/AppReducer';
 import { createWidget } from './__utils__/test-utils';
 
-describe('App Component', function () {
+describe('App Reducer', function () {
   it('should change theme', function () {
     const app: AppState = { widgets: [], theme: 'teal' };
     expect(reducer(app, { type: 'changeTheme', payload: 'rose' })).toEqual({
