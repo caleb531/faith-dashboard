@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useContext, useRef } from 'react';
+import { useContext, useRef } from 'react';
 import useScrollIntoView from '../useScrollIntoView';
 import TutorialContext from './TutorialContext';
 import tutorialSteps from './tutorialSteps';
@@ -34,6 +34,7 @@ function TutorialStepTooltip() {
         `position-${calculatedPosition}`,
         `alignment-${currentStep.alignment}`
       )}
+      data-testid="tutorial-step-tooltip"
       style={{ width: currentStep.width || 'auto' }}
       ref={messageRef}
     >
