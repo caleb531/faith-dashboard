@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Home from '../../pages/index';
 
 describe('Tutorial', function () {
@@ -8,29 +8,31 @@ describe('Tutorial', function () {
   });
 
   it('should render', function () {
-    const { getByTestId } = render(<Home />);
-    expect(getByTestId('tutorial-step-tooltip')).toContainHTML('Welcome');
+    render(<Home />);
+    expect(screen.getByTestId('tutorial-step-tooltip')).toContainHTML(
+      'Welcome'
+    );
   });
 
   it('should skip', function () {
-    const { getByTestId, queryByTestId, getByText } = render(<Home />);
-    expect(getByTestId('tutorial-step-tooltip')).toBeInTheDocument();
-    const skipButton = getByText('Skip Tutorial');
+    render(<Home />);
+    expect(screen.getByTestId('tutorial-step-tooltip')).toBeInTheDocument();
+    const skipButton = screen.getByText('Skip Tutorial');
     expect(skipButton).toBeInTheDocument();
     fireEvent.click(skipButton);
     expect(
       // getByTestId() throws an error if the element does not exist in the
       // DOM, so we need to use queryByTestId() instead
-      queryByTestId('tutorial-step-tooltip')
+      screen.queryByTestId('tutorial-step-tooltip')
     ).not.toBeInTheDocument();
   });
 
   it('should advance tutorial', function () {
-    const { getByTestId, getByText } = render(<Home />);
-    expect(getByTestId('tutorial-step-tooltip')).toBeInTheDocument();
-    fireEvent.click(getByText('Get Started'));
-    expect(getByText('Next')).toBeInTheDocument();
-    expect(getByTestId('tutorial-step-tooltip')).toContainHTML(
+    render(<Home />);
+    expect(screen.getByTestId('tutorial-step-tooltip')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Get Started'));
+    expect(screen.getByText('Next')).toBeInTheDocument();
+    expect(screen.getByTestId('tutorial-step-tooltip')).toContainHTML(
       'This is your dashboard'
     );
   });
