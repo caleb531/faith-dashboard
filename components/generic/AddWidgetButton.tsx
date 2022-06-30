@@ -1,5 +1,3 @@
-import React from 'react';
-
 type Props = {
   onPressButton: () => void;
   buttonProps?: object;
@@ -15,7 +13,6 @@ function AddWidget({
     <button
       type="button"
       className={`add-widget-button ${buttonClassNames}`}
-      aria-label="Add Widget"
       onClick={onPressButton}
       {...buttonProps}
     >
