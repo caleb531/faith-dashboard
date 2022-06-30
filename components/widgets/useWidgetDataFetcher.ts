@@ -10,6 +10,18 @@ function isOnline() {
   return typeof navigator !== 'undefined' && navigator.onLine;
 }
 
+// Return a normalized form of the given URL by making it absolute (if it's
+// relative)
+function normalizeUrl(url: string): string {
+  if (/^https?:/.test(url)) {
+    return url;
+  } else if (/^\//.test(url)) {
+    return `${window.location.origin}${url}`;
+  } else {
+    return `${window.location.origin}/${url}`;
+  }
+}
+
 // Returns true if the given UNIX timestamp (in milliseconds; generated from
 // Date.now()) matches today's date
 const dateFormat = 'yyyy-MM-dd';
@@ -109,9 +121,12 @@ export default function useWidgetDataFetcher({
   ): Promise<void> {
     dispatchToWidget({ type: 'showLoading' });
     try {
-      const rawResponse = await fetch(getApiUrl(newRequestQuery), {
-        signal: abortSignal
-      });
+      const rawResponse = await fetch(
+        normalizeUrl(getApiUrl(newRequestQuery)),
+        {
+          signal: abortSignal
+        }
+      );
       const response = await rawResponse.json();
       const data = parseResponse(response);
       if (hasResults(data)) {
@@ -124,11 +139,11 @@ export default function useWidgetDataFetcher({
         });
       }
     } catch (error) {
-      console.log('error', error);
       // Do not attempt to update the component state if the fetch was aborted
       // (meaning the component is now unmounted and therefore can't be
       // updated)
       if (!abortSignal?.aborted) {
+        console.log('error', error);
         dispatchToWidget({
           type: 'setFetchError',
           payload: getErrorMessage(error)
