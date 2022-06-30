@@ -11,7 +11,7 @@ function useScrollIntoView({
   ref: RefObject<HTMLElement>;
 }) {
   useEffect(() => {
-    if (shouldScrollIntoView && ref.current) {
+    if (shouldScrollIntoView && ref.current && ref.current.scrollIntoView) {
       ref.current.scrollIntoView({
         // Animate the scrolling
         behavior: 'smooth',
