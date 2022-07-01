@@ -11,12 +11,14 @@ import { supabase } from '../supabaseClient';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
+import useTimeout from '../useTimeout';
 
 function AppHeaderAccount() {
   const { isCurrentStep, stepProps } = useTutorialStep('sign-up');
 
   const [isShowingMenu, setIsShowingMenu] = useState(false);
   const [isExpiryMessageHidden, setIsExpiryMessageHidden] = useState(false);
+  const setExpiryMessageTimeout = useTimeout();
   // The number of milliseconds the "Session expired" message should show
   // before it is automatically hidden
   const expiryMessageDuration = 2000;
@@ -74,13 +76,10 @@ function AppHeaderAccount() {
   // show, but in order to avoid frustrating the UX, hide this message after a
   // few seconds
   useEffect(() => {
-    const timer = setTimeout(() => {
+    setExpiryMessageTimeout(() => {
       setIsExpiryMessageHidden(true);
     }, expiryMessageDuration);
-    // Clear the timeout if the user leaves the page before the timeout elapses
-    return () => {
-      clearTimeout(timer);
-    };
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
 
   return session?.user && isSessionActive(session) ? (

@@ -1,7 +1,8 @@
 import { ApiError, Session, User } from '@supabase/supabase-js';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { JSXContents } from '../global';
+import useTimeout from '../useTimeout';
 
 // The number of milliseconds to show the success label of the Submit button
 // before reverting to the initial Submit button label
@@ -34,7 +35,7 @@ function AuthForm(props: Props) {
   const [formErrorMessage, setFormErrorMessage] = useState<string | null>();
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [isFormSuccess, setIsFormSuccess] = useState(false);
-  let submitLabelTimer: ReturnType<typeof setTimeout>;
+  const setSubmitLabelTimeout = useTimeout();
 
   async function attemptSubmit(event: React.FormEvent<HTMLFormElement>) {
     const { user, session, error } = await props.onSubmit(event);
@@ -59,7 +60,7 @@ function AuthForm(props: Props) {
       setIsFormSuccess(true);
       // Reset the Submit button to its initial label after a few seconds of
       // showing the success label
-      submitLabelTimer = setTimeout(() => {
+      setSubmitLabelTimeout(() => {
         setIsFormSuccess(false);
       }, successLabelDuration);
     }
@@ -80,15 +81,6 @@ function AuthForm(props: Props) {
       setIsFormSubmitting(false);
     }
   }
-
-  // Clear the timeout when the AuthForm component unmounts to prevent the
-  // "unmounted component" error from React
-  useEffect(() => {
-    return () => {
-      clearTimeout(submitLabelTimer);
-    };
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, []);
 
   return (
     <form className="account-auth-form" onSubmit={onSubmitWrapper}>

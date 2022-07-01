@@ -1,5 +1,6 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import Modal from '../reusable/Modal';
+import useTimeout from '../useTimeout';
 import { AppTheme } from './app.d';
 import colorThemeList from './appColorThemeList';
 import AppContext from './AppContext';
@@ -17,26 +18,17 @@ type Props = {
 
 function ThemeSwitcher({ currentTheme, onCloseThemeSwitcher }: Props) {
   const dispatchToApp = useContext(AppContext);
-  let themeSwitchTimer: ReturnType<typeof setTimeout>;
+  const setThemeSwitchTimeout = useTimeout();
 
   function onChooseTheme(newTheme: AppTheme): void {
     dispatchToApp({ type: 'changeTheme', payload: newTheme });
     // Close modal after short delay to give user time to see that the selected
     // theme has been changed (since the 'selected' checkmark will now show up
     // over the theme they just clicked)
-    themeSwitchTimer = setTimeout(() => {
+    setThemeSwitchTimeout(() => {
       onCloseThemeSwitcher();
     }, themeChangeDelay);
   }
-
-  // Clear the timeout when the ThemeSwitcher component unmounts to prevent the
-  // "unmounted component" error from React
-  useEffect(() => {
-    return () => {
-      clearTimeout(themeSwitchTimer);
-    };
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, []);
 
   return (
     <Modal onCloseModal={onCloseThemeSwitcher}>
