@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 // The useTimeout() hook exposes a wrapper around setTimeout() which
 // automatically cancels the timeout when the component unmounts, thus avoiding
@@ -6,22 +6,24 @@ import { useEffect } from 'react';
 // as such, this wrapper function can only be called once per component (since
 // multiple calls would otherwise share the same timer)
 function useTimeout() {
-  let timer: ReturnType<typeof setTimeout>;
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
-  function setTimeoutWrapper(
-    callback: () => void,
-    timeout: number | undefined
-  ) {
-    timer = setTimeout(() => {
-      callback();
-    }, timeout);
-  }
+  const setTimeoutWrapper = useCallback(
+    (callback: () => void, timeout: number | undefined) => {
+      timerRef.current = setTimeout(() => {
+        callback();
+      }, timeout);
+    },
+    []
+  );
 
   // Clear the timeout when the ThemeSwitcher component unmounts to prevent the
   // "unmounted component" error from React
   useEffect(() => {
     return () => {
-      clearTimeout(timer);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
     };
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
