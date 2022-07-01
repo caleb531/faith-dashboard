@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import Home from '../../pages/index';
 
-describe('Theme', () => {
+describe('Home', () => {
   beforeEach(() => {
     localStorage.clear();
     fetch.resetMocks();
