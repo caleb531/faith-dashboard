@@ -7,12 +7,12 @@
 @import 'base/form';
 @import 'base/slider';
 
-@import 'generic/loading-indicator';
-@import 'generic/add-widget-button';
-@import 'generic/sheet';
-@import 'generic/modal';
-@import 'generic/result-list';
-@import 'generic/audio-player';
+@import 'reusable/loading-indicator';
+@import 'reusable/add-widget-button';
+@import 'reusable/sheet';
+@import 'reusable/modal';
+@import 'reusable/result-list';
+@import 'reusable/audio-player';
 
 @import 'app/app';
 @import 'app/app-header';

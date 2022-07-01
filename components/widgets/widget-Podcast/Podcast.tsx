@@ -1,5 +1,5 @@
 import React from 'react';
-import useCachedAudio from '../../generic/audio-player/useCachedAudio';
+import useCachedAudio from '../../reusable/audio-player/useCachedAudio';
 import useCachedState from '../../useCachedState';
 import useMediaSession from '../../useMediaSession';
 import useUniqueFieldId from '../../useUniqueFieldId';

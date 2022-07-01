@@ -1,5 +1,4 @@
-import React from 'react';
-import Modal from '../generic/Modal';
+import Modal from '../reusable/Modal';
 import { WidgetType } from '../widgets/widget.d';
 import widgetTypes from '../widgets/widgetTypes';
 import WidgetPickerEntry from './WidgetPickerEntry';

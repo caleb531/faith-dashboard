@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import AppContext from '../app/AppContext';
-import AddWidgetButton from '../generic/AddWidgetButton';
+import AddWidgetButton from '../reusable/AddWidgetButton';
 import { WidgetType } from '../widgets/widget.d';
 
 type Props = {

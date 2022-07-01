@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import Modal from '../generic/Modal';
+import { useEffect, useState } from 'react';
+import Modal from '../reusable/Modal';
 
 // Show a message to the user if the result of clicking a magic link provides
 // any feedback (e.g. "Token has expired")

@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from 'react';
-import LinkButton from '../components/generic/LinkButton';
 import LandingPage from '../components/LandingPage';
+import LinkButton from '../components/reusable/LinkButton';
 
 type Props = {
   pageTitle: string;

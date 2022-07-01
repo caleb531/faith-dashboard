@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from 'react';
-import LinkButton from '../generic/LinkButton';
-import Modal from '../generic/Modal';
+import LinkButton from '../reusable/LinkButton';
+import Modal from '../reusable/Modal';
 
 type Props = {
   onCloseModal: () => void;

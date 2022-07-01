@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import App from '../components/app/App';
 import AppCompletedTutorial from '../components/app/AppCompletedTutorial';
 import AppWelcome from '../components/app/AppWelcome';
-import LoadingIndicator from '../components/generic/LoadingIndicator';
+import LoadingIndicator from '../components/reusable/LoadingIndicator';
 import useMountListener from '../components/useMountListener';
 
 const WidgetBoard = React.lazy(

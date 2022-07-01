@@ -1,11 +1,11 @@
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   messageSW,
   Workbox,
   WorkboxLifecycleWaitingEvent as WaitingEvent
 } from 'workbox-window';
-import LoadingIndicator from '../generic/LoadingIndicator';
+import LoadingIndicator from '../reusable/LoadingIndicator';
 
 // Update mechanism code borrowed from
 // <https://developers.google.com/web/tools/workbox/guides/advanced-recipes#offer_a_page_reload_for_users>

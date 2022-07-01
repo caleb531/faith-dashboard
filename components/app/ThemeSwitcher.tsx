@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import Modal from '../generic/Modal';
+import Modal from '../reusable/Modal';
 import { AppTheme } from './app.d';
 import colorThemeList from './appColorThemeList';
 import AppContext from './AppContext';

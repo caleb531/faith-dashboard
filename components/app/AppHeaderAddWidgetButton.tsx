@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import AddWidgetButton from '../generic/AddWidgetButton';
+import { useState } from 'react';
+import AddWidgetButton from '../reusable/AddWidgetButton';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import WidgetPicker from '../widget-picker/WidgetPicker';

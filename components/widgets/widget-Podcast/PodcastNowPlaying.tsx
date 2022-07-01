@@ -1,5 +1,5 @@
 import { useCallback, useContext } from 'react';
-import AudioPlayer from '../../generic/audio-player/AudioPlayer';
+import AudioPlayer from '../../reusable/audio-player/AudioPlayer';
 import { PodcastEpisode, PodcastWidgetState } from './podcast.d';
 import PodcastContext from './PodcastContext';
 

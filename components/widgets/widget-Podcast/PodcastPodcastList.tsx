@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import ResultList from '../../generic/ResultList';
-import { Result } from '../../generic/resultList.d';
+import ResultList from '../../reusable/ResultList';
+import { Result } from '../../reusable/resultList.d';
 import { PodcastInfo } from './podcast.d';
 import PodcastContext from './PodcastContext';
 
