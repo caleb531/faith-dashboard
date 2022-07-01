@@ -39,9 +39,6 @@ function AuthForm(props: Props) {
 
   async function attemptSubmit(event: React.FormEvent<HTMLFormElement>) {
     const { user, session, error } = await props.onSubmit(event);
-    console.log('user', user);
-    console.log('session', session);
-    console.log('error', error);
     // If there is no error, the value is conveniently null
     setFormErrorMessage(error?.message);
     if (error) {
