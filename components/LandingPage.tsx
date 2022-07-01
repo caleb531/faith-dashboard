@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import App from './app/App';
 import { JSXContents } from './global';
 
@@ -18,24 +19,22 @@ function LandingPage({ heading, altLink, children }: Props) {
           <section className="landing-page-section">
             <header>
               <h1>{heading}</h1>
-              <a
-                href="/"
-                className="landing-page-control landing-page-home-control"
-              >
-                <img
-                  className="landing-page-control-icon landing-page-home-control-icon"
-                  src="/icons/home-dark.svg"
-                  alt="Go to Dashboard"
-                  draggable="false"
-                />
-              </a>
-              {altLink ? (
-                <a
-                  href={altLink.href}
-                  className="landing-page-control landing-page-alt-control"
-                >
-                  {altLink.title}
+              <Link href="/">
+                <a className="landing-page-control landing-page-home-control">
+                  <img
+                    className="landing-page-control-icon landing-page-home-control-icon"
+                    src="/icons/home-dark.svg"
+                    alt="Go to Dashboard"
+                    draggable="false"
+                  />
                 </a>
+              </Link>
+              {altLink ? (
+                <Link href={altLink.href}>
+                  <a className="landing-page-control landing-page-alt-control">
+                    {altLink.title}
+                  </a>
+                </Link>
               ) : null}
             </header>
             {children}
