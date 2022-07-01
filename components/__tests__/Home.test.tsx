@@ -26,7 +26,6 @@ describe('Home', () => {
       screen.getByRole('button', { name: 'Background Theme' })
     );
     await userEvent.click(screen.getByRole('button', { name: 'Worship' }));
-    // Assert theme has changed
     expect(document.body).toHaveClass('theme-worship');
   });
   it('should change theme to color theme', async () => {
@@ -37,7 +36,17 @@ describe('Home', () => {
       screen.getByRole('button', { name: 'Background Theme' })
     );
     await userEvent.click(screen.getByRole('button', { name: 'Teal' }));
-    // Assert theme has changed
     expect(document.body).toHaveClass('theme-teal');
+  });
+  it('should persist theme', async () => {
+    render(<Home />);
+    expect(document.body).toHaveClass('theme-shore');
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Background Theme' })
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Evening' }));
+    expect(
+      JSON.parse(localStorage.getItem('faith-dashboard-app') || '{}')
+    ).toHaveProperty('theme', 'evening');
   });
 });
