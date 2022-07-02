@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../../pages/index';
 import tutorialSteps from '../tutorial/tutorialSteps';
+import { getAppData } from './__utils__/test-utils';
 
 describe('Tutorial', () => {
   it('should render', () => {
@@ -12,6 +13,7 @@ describe('Tutorial', () => {
 
   it('should skip', async () => {
     render(<Home />);
+    expect(getAppData()).toHaveProperty('shouldShowTutorial', true);
     const skipButton = screen.getByRole('button', { name: 'Skip Tutorial' });
     expect(skipButton).toBeInTheDocument();
     await userEvent.click(skipButton);
@@ -20,6 +22,7 @@ describe('Tutorial', () => {
       // so we need to use queryByText() instead
       screen.queryByRole('button', { name: 'Skip Tutorial' })
     ).not.toBeInTheDocument();
+    expect(getAppData()).toHaveProperty('shouldShowTutorial', false);
   });
 
   it('should advance', async () => {
