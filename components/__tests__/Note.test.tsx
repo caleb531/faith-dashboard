@@ -40,6 +40,17 @@ describe('Note widget', () => {
     await fireEvent.input(input, { target: { value: '30' } });
     await fireEvent.change(input, { target: { value: '30' } });
     expect(input).toHaveProperty('value', '30');
+    expect(screen.getByText('Example Text')).toHaveProperty(
+      'style.fontSize',
+      '30px'
+    );
+    await userEvent.click(
+      screen.getAllByRole('button', { name: 'Toggle Settings' })[1]
+    );
+    expect(screen.getByRole('textbox', { name: 'Note Text' })).toHaveProperty(
+      'style.fontSize',
+      '30px'
+    );
     const widgetId = screen.getAllByRole('article')[1].dataset
       .widgetId as string;
     expect(getWidgetData('Note', widgetId)).toHaveProperty('fontSize', 30);
