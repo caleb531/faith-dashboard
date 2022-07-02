@@ -8,22 +8,26 @@ import bibleVerseRangeJson from './__json__/bibleVerseRange.json';
 import bibleVerseSingleJson from './__json__/bibleVerseSingle.json';
 import { getWidgetData } from './__utils__/test-utils';
 
+async function searchBibleVerses(verseQuery: string) {
+  render(<Home />);
+  await waitFor(async () => {
+    expect(screen.getAllByRole('article')[0]).toHaveProperty(
+      'dataset.widgetType',
+      'BibleVerse'
+    );
+  });
+  await userEvent.type(
+    screen.getAllByRole('searchbox', { name: 'Bible Verse Search Query' })[0],
+    verseQuery
+  );
+  await userEvent.click(screen.getAllByRole('button', { name: 'Search' })[0]);
+}
+
 describe('Bible Verse widget', () => {
   it('should search for verse', async () => {
     fetch.mockResponseOnce(JSON.stringify(bibleVerseSingleJson));
 
-    render(<Home />);
-    await waitFor(async () => {
-      expect(screen.getAllByRole('article')[0]).toHaveProperty(
-        'dataset.widgetType',
-        'BibleVerse'
-      );
-    });
-    await userEvent.type(
-      screen.getAllByRole('searchbox', { name: 'Bible Verse Search Query' })[0],
-      'rom8.28'
-    );
-    await userEvent.click(screen.getAllByRole('button', { name: 'Search' })[0]);
+    await searchBibleVerses('rom8.28');
     expect(screen.getByText(/And we know/)).toHaveTextContent(
       'And we know that for those who love God all things work together for good, for those who are called according to his purpose.'
     );
@@ -38,18 +42,7 @@ describe('Bible Verse widget', () => {
   it('should search for verse range', async () => {
     fetch.mockResponseOnce(JSON.stringify(bibleVerseRangeJson));
 
-    render(<Home />);
-    await waitFor(async () => {
-      expect(screen.getAllByRole('article')[0]).toHaveProperty(
-        'dataset.widgetType',
-        'BibleVerse'
-      );
-    });
-    await userEvent.type(
-      screen.getAllByRole('searchbox', { name: 'Bible Verse Search Query' })[0],
-      'mat11.28'
-    );
-    await userEvent.click(screen.getAllByRole('button', { name: 'Search' })[0]);
+    await searchBibleVerses('mat11.28');
     expect(screen.getByText(/Come to me/)).toHaveTextContent(
       'Come to me, all who labor and are heavy laden, and I will give you rest.'
     );
@@ -64,18 +57,7 @@ describe('Bible Verse widget', () => {
   it('should search for multiple verses', async () => {
     fetch.mockResponseOnce(JSON.stringify(bibleVerseMultipleJson));
 
-    render(<Home />);
-    await waitFor(async () => {
-      expect(screen.getAllByRole('article')[0]).toHaveProperty(
-        'dataset.widgetType',
-        'BibleVerse'
-      );
-    });
-    await userEvent.type(
-      screen.getAllByRole('searchbox', { name: 'Bible Verse Search Query' })[0],
-      'hos6.6, mat9.13'
-    );
-    await userEvent.click(screen.getAllByRole('button', { name: 'Search' })[0]);
+    await searchBibleVerses('hos6.6, mat9.13');
     expect(screen.getByText(/For I desire steadfast/)).toHaveTextContent(
       'For I desire steadfast love and not sacrifice,'
     );
