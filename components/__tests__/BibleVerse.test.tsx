@@ -11,7 +11,7 @@ import { getWidgetData } from './__utils__/test-utils';
 
 async function searchBibleVerses(verseQuery: string) {
   render(<Home />);
-  await waitFor(async () => {
+  await waitFor(() => {
     expect(screen.getAllByRole('article')[0]).toHaveProperty(
       'dataset.widgetType',
       'BibleVerse'

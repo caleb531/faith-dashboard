@@ -9,7 +9,7 @@ import podcastSearchJson from './__json__/podcastSearch.json';
 
 async function searchPodcasts(podcastQuery: string) {
   render(<Home />);
-  await waitFor(async () => {
+  await waitFor(() => {
     expect(screen.getAllByRole('article')[3]).toHaveProperty(
       'dataset.widgetType',
       'Podcast'

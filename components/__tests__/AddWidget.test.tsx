@@ -13,7 +13,7 @@ async function addWidget(widgetTypeId: WidgetTypeId) {
     throw new Error(`Invalid widget type: ${widgetTypeId}`);
   }
   render(<Home />);
-  await waitFor(async () => {
+  await waitFor(() => {
     expect(screen.getAllByRole('article')).toHaveLength(4);
   });
   await userEvent.click(screen.getByRole('button', { name: 'Add Widget' }));
