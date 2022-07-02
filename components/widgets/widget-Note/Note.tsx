@@ -1,4 +1,5 @@
 import React from 'react';
+import useUniqueFieldId from '../../useUniqueFieldId';
 import useWidgetShell from '../useWidgetShell';
 import { WidgetParameters } from '../widget.d';
 import WidgetShell from '../WidgetShell';
@@ -51,6 +52,8 @@ const NoteWidget = React.memo(function NoteWidget({
     );
   }
 
+  const textBoxId = useUniqueFieldId('note-text');
+
   return (
     <WidgetShell
       widget={widget}
@@ -83,13 +86,19 @@ const NoteWidget = React.memo(function NoteWidget({
             </form>
           </>
         ) : (
-          <textarea
-            className="note-text-box"
-            onInput={changeText}
-            placeholder="Type your note here..."
-            value={text}
-            style={textStyles}
-          ></textarea>
+          <>
+            <label htmlFor={textBoxId} className="accessibility-only">
+              Note Text
+            </label>
+            <textarea
+              className="note-text-box"
+              id={textBoxId}
+              onInput={changeText}
+              placeholder="Type your note here..."
+              value={text}
+              style={textStyles}
+            ></textarea>
+          </>
         )}
       </section>
     </WidgetShell>
