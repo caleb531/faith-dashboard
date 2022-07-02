@@ -86,4 +86,30 @@ describe('Bible Verse widget', () => {
       'the knowledge of God rather than burnt offerings.'
     );
   });
+
+  it('should persist data', async () => {
+    fetch.resetMocks();
+    fetch
+      .mockResponseOnce(JSON.stringify(podcastSearchJson))
+      .mockResponseOnce(JSON.stringify(bibleVerseSingleJson));
+
+    render(<Home />);
+    await waitFor(async () => {
+      expect(screen.getAllByRole('article')[0].dataset).toHaveProperty(
+        'widgetType',
+        'BibleVerse'
+      );
+    });
+    await userEvent.type(
+      screen.getAllByRole('searchbox', { name: 'Bible Verse Search Query' })[0],
+      'rom8.28'
+    );
+    await userEvent.click(screen.getAllByRole('button', { name: 'Search' })[0]);
+    const widgetId = screen.getAllByRole('article')[0].dataset.widgetId;
+    const persistedWidget = JSON.parse(
+      localStorage.getItem(`faith-dashboard-widget-BibleVerse:${widgetId}`) ||
+        '{}'
+    );
+    expect(persistedWidget).toHaveProperty('verseQuery', 'rom8.28');
+  });
 });
