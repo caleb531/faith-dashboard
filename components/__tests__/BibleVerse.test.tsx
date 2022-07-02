@@ -27,6 +27,12 @@ describe('Bible Verse widget', () => {
     expect(screen.getByText(/And we know/)).toHaveTextContent(
       'And we know that for those who love God all things work together for good, for those who are called according to his purpose.'
     );
+    const widgetId = screen.getAllByRole('article')[0].dataset
+      .widgetId as string;
+    expect(getWidgetData('BibleVerse', widgetId)).toHaveProperty(
+      'verseQuery',
+      'rom8.28'
+    );
   });
 
   it('should search for verse range', async () => {
@@ -75,29 +81,6 @@ describe('Bible Verse widget', () => {
     );
     expect(screen.getByText(/the knowledge of/)).toHaveTextContent(
       'the knowledge of God rather than burnt offerings.'
-    );
-  });
-
-  it('should persist data', async () => {
-    fetch.mockResponseOnce(JSON.stringify(bibleVerseSingleJson));
-
-    render(<Home />);
-    await waitFor(async () => {
-      expect(screen.getAllByRole('article')[0].dataset).toHaveProperty(
-        'widgetType',
-        'BibleVerse'
-      );
-    });
-    await userEvent.type(
-      screen.getAllByRole('searchbox', { name: 'Bible Verse Search Query' })[0],
-      'rom8.28'
-    );
-    await userEvent.click(screen.getAllByRole('button', { name: 'Search' })[0]);
-    const widgetId = screen.getAllByRole('article')[0].dataset
-      .widgetId as string;
-    expect(getWidgetData('BibleVerse', widgetId)).toHaveProperty(
-      'verseQuery',
-      'rom8.28'
     );
   });
 });

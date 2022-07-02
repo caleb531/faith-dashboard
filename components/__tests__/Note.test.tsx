@@ -5,7 +5,7 @@ import Home from '../../pages/index';
 import { getWidgetData } from './__utils__/test-utils';
 
 describe('Note widget', () => {
-  it('should persist note text', async () => {
+  it('should change note text', async () => {
     render(<Home />);
     await waitFor(async () => {
       expect(screen.getAllByRole('article')[1].dataset).toHaveProperty(
@@ -13,10 +13,9 @@ describe('Note widget', () => {
         'Note'
       );
     });
-    await userEvent.type(
-      screen.getAllByRole('textbox', { name: 'Note Text' })[0],
-      'God is good'
-    );
+    const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
+    await userEvent.type(textBox, 'God is good');
+    expect(textBox).toHaveProperty('value', 'God is good');
     const widgetId = screen.getAllByRole('article')[1].dataset
       .widgetId as string;
     expect(getWidgetData('Note', widgetId)).toHaveProperty(
@@ -24,7 +23,7 @@ describe('Note widget', () => {
       'God is good'
     );
   });
-  it('should persist text font size', async () => {
+  it('should change text font size', async () => {
     render(<Home />);
     await waitFor(async () => {
       expect(screen.getAllByRole('article')[1].dataset).toHaveProperty(
@@ -40,6 +39,7 @@ describe('Note widget', () => {
     })[0] as HTMLInputElement;
     await fireEvent.input(input, { target: { value: '30' } });
     await fireEvent.change(input, { target: { value: '30' } });
+    expect(input).toHaveProperty('value', '30');
     const widgetId = screen.getAllByRole('article')[1].dataset
       .widgetId as string;
     expect(getWidgetData('Note', widgetId)).toHaveProperty('fontSize', 30);
