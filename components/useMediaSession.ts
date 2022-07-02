@@ -15,7 +15,7 @@ type UseMediaSessionParameters = ConstructorParameters<
 
 // Clear the current media session for the entire app
 function clearMediaSession(): void {
-  if (navigator.mediaSession.metadata) {
+  if (navigator.mediaSession?.metadata) {
     navigator.mediaSession.metadata = null;
   }
 }

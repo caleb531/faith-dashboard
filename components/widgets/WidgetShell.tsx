@@ -35,7 +35,7 @@ function WidgetShell({ widget, dispatchToWidget, provided, children }: Props) {
     settingsStepData.isCurrentStep;
 
   // Signal to the global application that we want to remove the widget
-  function removeWidget() {
+  function requestRemoveWidget() {
     const confirmation = confirm(
       'Are you sure you want to permanently delete this widget?'
     );
@@ -103,7 +103,7 @@ function WidgetShell({ widget, dispatchToWidget, provided, children }: Props) {
         <button
           type="button"
           className="widget-remove-control widget-control"
-          onClick={() => removeWidget()}
+          onClick={() => requestRemoveWidget()}
           {...removeStepData.stepProps}
         >
           <img
