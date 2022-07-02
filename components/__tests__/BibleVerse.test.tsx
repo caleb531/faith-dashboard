@@ -6,15 +6,11 @@ import Home from '../../pages/index';
 import bibleVerseMultipleJson from './__json__/bibleVerseMultiple.json';
 import bibleVerseRangeJson from './__json__/bibleVerseRange.json';
 import bibleVerseSingleJson from './__json__/bibleVerseSingle.json';
-import podcastSearchJson from './__json__/podcastSearch.json';
 import { getWidgetData } from './__utils__/test-utils';
 
 describe('Bible Verse widget', () => {
   it('should search for verse', async () => {
-    fetch.resetMocks();
-    fetch
-      .mockResponseOnce(JSON.stringify(podcastSearchJson))
-      .mockResponseOnce(JSON.stringify(bibleVerseSingleJson));
+    fetch.mockResponseOnce(JSON.stringify(bibleVerseSingleJson));
 
     render(<Home />);
     await waitFor(async () => {
@@ -34,10 +30,7 @@ describe('Bible Verse widget', () => {
   });
 
   it('should search for verse range', async () => {
-    fetch.resetMocks();
-    fetch
-      .mockResponseOnce(JSON.stringify(podcastSearchJson))
-      .mockResponseOnce(JSON.stringify(bibleVerseRangeJson));
+    fetch.mockResponseOnce(JSON.stringify(bibleVerseRangeJson));
 
     render(<Home />);
     await waitFor(async () => {
@@ -63,10 +56,7 @@ describe('Bible Verse widget', () => {
   });
 
   it('should search for multiple verses', async () => {
-    fetch.resetMocks();
-    fetch
-      .mockResponseOnce(JSON.stringify(podcastSearchJson))
-      .mockResponseOnce(JSON.stringify(bibleVerseMultipleJson));
+    fetch.mockResponseOnce(JSON.stringify(bibleVerseMultipleJson));
 
     render(<Home />);
     await waitFor(async () => {
@@ -89,10 +79,7 @@ describe('Bible Verse widget', () => {
   });
 
   it('should persist data', async () => {
-    fetch.resetMocks();
-    fetch
-      .mockResponseOnce(JSON.stringify(podcastSearchJson))
-      .mockResponseOnce(JSON.stringify(bibleVerseSingleJson));
+    fetch.mockResponseOnce(JSON.stringify(bibleVerseSingleJson));
 
     render(<Home />);
     await waitFor(async () => {
