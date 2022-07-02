@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import Home from '../../pages/index';
 import bibleVerseMultipleJson from './__json__/bibleVerseMultiple.json';
+import bibleVerseNoResultsJson from './__json__/bibleVerseNoResults.json';
 import bibleVerseRangeJson from './__json__/bibleVerseRange.json';
 import bibleVerseSingleJson from './__json__/bibleVerseSingle.json';
 import { getWidgetData } from './__utils__/test-utils';
@@ -64,5 +65,23 @@ describe('Bible Verse widget', () => {
     expect(screen.getByText(/the knowledge of/)).toHaveTextContent(
       'the knowledge of God rather than burnt offerings.'
     );
+  });
+
+  it('should handle no results', async () => {
+    fetch.mockResponseOnce(JSON.stringify(bibleVerseNoResultsJson));
+
+    await searchBibleVerses('abc123');
+    expect(screen.getByText('No Verses Found')).toBeInTheDocument();
+  });
+
+  it('should handle bad data from server', async () => {
+    fetch.mockResponseOnce('notjson');
+
+    const log = jest.spyOn(console, 'log').mockImplementation(() => {
+      /* noop */
+    });
+    await searchBibleVerses('john3.16');
+    log.mockReset();
+    expect(screen.getByText('Error Fetching Verse')).toBeInTheDocument();
   });
 });
