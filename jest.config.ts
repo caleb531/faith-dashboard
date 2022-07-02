@@ -17,6 +17,6 @@ const config: Config.InitialOptions = {
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }]
   },
   // Display coverage summary below file-by-file coverage breakdown
-  coverageReporters: ['clover', 'json', 'lcov', 'text', 'text-summary']
+  coverageReporters: ['clover', 'json', 'lcov', 'html', 'text', 'text-summary']
 };
 export default config;
