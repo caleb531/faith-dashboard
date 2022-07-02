@@ -143,7 +143,7 @@ const PodcastWidget = React.memo(function PodcastWidget({
                   htmlFor={searchFieldId}
                   className="podcast-search accessibility-only"
                 >
-                  Search Query
+                  Podcast Search Query
                 </label>
                 <input
                   type="search"

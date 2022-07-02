@@ -1,4 +1,3 @@
-import React from 'react';
 import LoadingIndicator from '../LoadingIndicator';
 import useAudioPlayPause from './useAudioPlayPause';
 

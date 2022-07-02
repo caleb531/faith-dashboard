@@ -1,0 +1,36 @@
+{
+  "query": "Matthew 11:28–30",
+  "canonical": "Matthew 11:28–30",
+  "parsed": [
+    [
+      40011028,
+      40011030
+    ]
+  ],
+  "passage_meta": [
+    {
+      "canonical": "Matthew 11:28–30",
+      "chapter_start": [
+        40011001,
+        40011030
+      ],
+      "chapter_end": [
+        40011001,
+        40011030
+      ],
+      "prev_verse": 40011027,
+      "next_verse": 40012001,
+      "prev_chapter": [
+        40010001,
+        40010042
+      ],
+      "next_chapter": [
+        40012001,
+        40012050
+      ]
+    }
+  ],
+  "passages": [
+    "<h2 class=\"extra_text\">Matthew 11:28–30</h2>\n<p id=\"p40011028_01-1\" class=\"virtual\"><span class=\"woc\">Come to me, all who labor and are heavy laden, and I will give you rest.</span> <span class=\"woc\">Take my yoke upon you, and learn from me, for I am gentle and lowly in heart, and you will find rest for your souls.</span> <span class=\"woc\">For my yoke is easy, and my burden is light.”</span></p>\n<p>(<a href=\"http://www.esv.org\" class=\"copyright\">ESV</a>)</p>"
+  ]
+}

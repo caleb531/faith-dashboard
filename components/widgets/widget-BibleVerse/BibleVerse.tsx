@@ -61,7 +61,7 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({
               htmlFor={searchFieldId}
               className="bible-verse-search accessibility-only"
             >
-              Search Query
+              Bible Verse Search Query
             </label>
             <input
               type="search"
