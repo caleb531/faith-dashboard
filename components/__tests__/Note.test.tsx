@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../../pages/index';
+import { getWidgetData } from './__utils__/test-utils';
 
 describe('Note widget', () => {
   it('should persist note text', async () => {
@@ -16,13 +17,14 @@ describe('Note widget', () => {
       screen.getAllByRole('textbox', { name: 'Note Text' })[0],
       'God is good'
     );
-    const widgetId = screen.getAllByRole('article')[1].dataset.widgetId;
-    const persistedWidget = JSON.parse(
-      localStorage.getItem(`faith-dashboard-widget-Note:${widgetId}`) || '{}'
+    const widgetId = screen.getAllByRole('article')[1].dataset
+      .widgetId as string;
+    expect(getWidgetData('Note', widgetId)).toHaveProperty(
+      'text',
+      'God is good'
     );
-    expect(persistedWidget).toHaveProperty('text', 'God is good');
   });
-  it('should change text font size', async () => {
+  it('should persist text font size', async () => {
     render(<Home />);
     await waitFor(async () => {
       expect(screen.getAllByRole('article')[1].dataset).toHaveProperty(
@@ -38,10 +40,8 @@ describe('Note widget', () => {
     })[0] as HTMLInputElement;
     await fireEvent.input(input, { target: { value: '30' } });
     await fireEvent.change(input, { target: { value: '30' } });
-    const widgetId = screen.getAllByRole('article')[1].dataset.widgetId;
-    const persistedWidget = JSON.parse(
-      localStorage.getItem(`faith-dashboard-widget-Note:${widgetId}`) || '{}'
-    );
-    expect(persistedWidget).toHaveProperty('fontSize', 30);
+    const widgetId = screen.getAllByRole('article')[1].dataset
+      .widgetId as string;
+    expect(getWidgetData('Note', widgetId)).toHaveProperty('fontSize', 30);
   });
 });

@@ -7,6 +7,7 @@ import bibleVerseMultipleJson from './__json__/bibleVerseMultiple.json';
 import bibleVerseRangeJson from './__json__/bibleVerseRange.json';
 import bibleVerseSingleJson from './__json__/bibleVerseSingle.json';
 import podcastSearchJson from './__json__/podcastSearch.json';
+import { getWidgetData } from './__utils__/test-utils';
 
 describe('Bible Verse widget', () => {
   it('should search for verse', async () => {
@@ -105,11 +106,11 @@ describe('Bible Verse widget', () => {
       'rom8.28'
     );
     await userEvent.click(screen.getAllByRole('button', { name: 'Search' })[0]);
-    const widgetId = screen.getAllByRole('article')[0].dataset.widgetId;
-    const persistedWidget = JSON.parse(
-      localStorage.getItem(`faith-dashboard-widget-BibleVerse:${widgetId}`) ||
-        '{}'
+    const widgetId = screen.getAllByRole('article')[0].dataset
+      .widgetId as string;
+    expect(getWidgetData('BibleVerse', widgetId)).toHaveProperty(
+      'verseQuery',
+      'rom8.28'
     );
-    expect(persistedWidget).toHaveProperty('verseQuery', 'rom8.28');
   });
 });

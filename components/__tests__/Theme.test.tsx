@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../../pages/index';
+import { getAppData } from './__utils__/test-utils';
 
 describe('Theme', () => {
   it('should change to photo theme', async () => {
@@ -31,8 +32,6 @@ describe('Theme', () => {
       screen.getByRole('button', { name: 'Background Theme' })
     );
     await userEvent.click(screen.getByRole('button', { name: 'Evening' }));
-    expect(
-      JSON.parse(localStorage.getItem('faith-dashboard-app') || '{}')
-    ).toHaveProperty('theme', 'evening');
+    expect(getAppData()).toHaveProperty('theme', 'evening');
   });
 });
