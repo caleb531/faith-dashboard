@@ -22,21 +22,59 @@ async function searchPodcasts(podcastQuery: string) {
   await userEvent.click(screen.getAllByRole('button', { name: 'Search' })[2]);
 }
 
+async function choosePodcast(podcastTitle: string) {
+  const firstPodcastResult = screen.getByRole('heading', {
+    name: podcastTitle
+  });
+  expect(firstPodcastResult).toBeInTheDocument();
+  await userEvent.click(firstPodcastResult);
+}
+
+async function chooseEpisode(episodeTitle: string) {
+  await userEvent.click(
+    screen.getByRole('heading', {
+      name: episodeTitle
+    })
+  );
+}
+
 describe('Podcast widget', () => {
-  it('should search for and select podcast', async () => {
+  it('should search for podcast and select episode', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
 
     await searchPodcasts('sermon of the day');
-    const firstPodcastResult = screen.getByRole('heading', {
-      name: 'Sermon of the Day'
-    });
-    expect(firstPodcastResult).toBeInTheDocument();
-    await userEvent.click(firstPodcastResult);
-    const latestEpisodeResult = screen.getByRole('heading', {
-      name: 'The Beautiful Faith of Fearless Submission'
-    });
-    expect(latestEpisodeResult).toBeInTheDocument();
+    expect(screen.getByText('26 podcasts')).toBeInTheDocument();
+
+    await choosePodcast('Sermon of the Day');
+    expect(screen.getByText('50 episodes')).toBeInTheDocument();
+
+    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    expect(
+      screen.getByRole('heading', {
+        name: 'The Beautiful Faith of Fearless Submission'
+      })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Return to List' })
+    ).toBeInTheDocument();
+  });
+
+  it('should return to list from Now Playing screen', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+
+    await searchPodcasts('sermon of the day');
+    expect(screen.getByText('26 podcasts')).toBeInTheDocument();
+
+    await choosePodcast('Sermon of the Day');
+    expect(screen.getByText('50 episodes')).toBeInTheDocument();
+
+    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Return to List' })
+    );
+    expect(screen.getByText('50 episodes')).toBeInTheDocument();
   });
 
   it('should handle no results', async () => {
