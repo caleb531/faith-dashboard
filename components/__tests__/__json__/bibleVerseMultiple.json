@@ -1,62 +1,62 @@
 {
-    "query": "Hosea 6:6; Matthew 9:13",
-    "canonical": "Hosea 6:6; Matthew 9:13",
-    "parsed": [
-        [
-            28006006,
-            28006006
-        ],
-        [
-            40009013,
-            40009013
-        ]
+  "query": "Hosea 6:6; Matthew 9:13",
+  "canonical": "Hosea 6:6; Matthew 9:13",
+  "parsed": [
+    [
+      28006006,
+      28006006
     ],
-    "passage_meta": [
-        {
-            "canonical": "Hosea 6:6",
-            "chapter_start": [
-                28006001,
-                28006011
-            ],
-            "chapter_end": [
-                28006001,
-                28006011
-            ],
-            "prev_verse": 28006005,
-            "next_verse": 28006007,
-            "prev_chapter": [
-                28005001,
-                28005015
-            ],
-            "next_chapter": [
-                28007001,
-                28007016
-            ]
-        },
-        {
-            "canonical": "Matthew 9:13",
-            "chapter_start": [
-                40009001,
-                40009038
-            ],
-            "chapter_end": [
-                40009001,
-                40009038
-            ],
-            "prev_verse": 40009012,
-            "next_verse": 40009014,
-            "prev_chapter": [
-                40008001,
-                40008034
-            ],
-            "next_chapter": [
-                40010001,
-                40010042
-            ]
-        }
-    ],
-    "passages": [
-        "<h2 class=\"extra_text\">Hosea 6:6</h2>\n<p class=\"block-indent\"><span class=\"begin-line-group\"></span>\n<span id=\"p28006006_01-1\" class=\"line\">&nbsp;&nbsp;For I desire steadfast love and not sacrifice,</span><br /><span id=\"p28006006_01-1\" class=\"indent line\">&nbsp;&nbsp;&nbsp;&nbsp;the knowledge of God rather than burnt offerings.</span><br /></p><span class=\"end-line-group\"></span>\n<p>(<a href=\"http://www.esv.org\" class=\"copyright\">ESV</a>)</p>",
-        "<h2 class=\"extra_text\">Matthew 9:13</h2>\n<p id=\"p40009013_01-2\" class=\"virtual\"><span class=\"woc\">Go and learn what this means: ‘I desire mercy, and not sacrifice.’ For I came not to call the righteous, but sinners.”</span></p>\n<p>(<a href=\"http://www.esv.org\" class=\"copyright\">ESV</a>)</p>"
+    [
+      40009013,
+      40009013
     ]
+  ],
+  "passage_meta": [
+    {
+      "canonical": "Hosea 6:6",
+      "chapter_start": [
+        28006001,
+        28006011
+      ],
+      "chapter_end": [
+        28006001,
+        28006011
+      ],
+      "prev_verse": 28006005,
+      "next_verse": 28006007,
+      "prev_chapter": [
+        28005001,
+        28005015
+      ],
+      "next_chapter": [
+        28007001,
+        28007016
+      ]
+    },
+    {
+      "canonical": "Matthew 9:13",
+      "chapter_start": [
+        40009001,
+        40009038
+      ],
+      "chapter_end": [
+        40009001,
+        40009038
+      ],
+      "prev_verse": 40009012,
+      "next_verse": 40009014,
+      "prev_chapter": [
+        40008001,
+        40008034
+      ],
+      "next_chapter": [
+        40010001,
+        40010042
+      ]
+    }
+  ],
+  "passages": [
+    "<h2 class=\"extra_text\">Hosea 6:6</h2>\n<p class=\"block-indent\"><span class=\"begin-line-group\"></span>\n<span id=\"p28006006_01-1\" class=\"line\">&nbsp;&nbsp;For I desire steadfast love and not sacrifice,</span><br /><span id=\"p28006006_01-1\" class=\"indent line\">&nbsp;&nbsp;&nbsp;&nbsp;the knowledge of God rather than burnt offerings.</span><br /></p><span class=\"end-line-group\"></span>\n<p>(<a href=\"http://www.esv.org\" class=\"copyright\">ESV</a>)</p>",
+    "<h2 class=\"extra_text\">Matthew 9:13</h2>\n<p id=\"p40009013_01-2\" class=\"virtual\"><span class=\"woc\">Go and learn what this means: ‘I desire mercy, and not sacrifice.’ For I came not to call the righteous, but sinners.”</span></p>\n<p>(<a href=\"http://www.esv.org\" class=\"copyright\">ESV</a>)</p>"
+  ]
 }
