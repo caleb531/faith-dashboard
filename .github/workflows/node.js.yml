@@ -25,5 +25,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm ci
-      - run: npm test
+
+      - name: Run Test Suite
+        run: |
+          npm ci
+          npm test
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
