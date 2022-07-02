@@ -14,8 +14,8 @@ describe('Add Widget UI', () => {
       screen.getByRole('button', { name: 'Add Bible Verse Widget' })
     );
     expect(screen.getAllByRole('article')).toHaveLength(5);
-    expect(screen.getAllByRole('article')[0].dataset).toHaveProperty(
-      'widgetType',
+    expect(screen.getAllByRole('article')[0]).toHaveProperty(
+      'dataset.widgetType',
       'BibleVerse'
     );
   });
@@ -30,8 +30,8 @@ describe('Add Widget UI', () => {
       screen.getByRole('button', { name: 'Add Note Widget' })
     );
     expect(screen.getAllByRole('article')).toHaveLength(5);
-    expect(screen.getAllByRole('article')[0].dataset).toHaveProperty(
-      'widgetType',
+    expect(screen.getAllByRole('article')[0]).toHaveProperty(
+      'dataset.widgetType',
       'Note'
     );
   });
@@ -46,8 +46,8 @@ describe('Add Widget UI', () => {
       screen.getByRole('button', { name: 'Add Podcast Widget' })
     );
     expect(screen.getAllByRole('article')).toHaveLength(5);
-    expect(screen.getAllByRole('article')[0].dataset).toHaveProperty(
-      'widgetType',
+    expect(screen.getAllByRole('article')[0]).toHaveProperty(
+      'dataset.widgetType',
       'Podcast'
     );
   });

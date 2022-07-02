@@ -14,8 +14,8 @@ describe('Bible Verse widget', () => {
 
     render(<Home />);
     await waitFor(async () => {
-      expect(screen.getAllByRole('article')[0].dataset).toHaveProperty(
-        'widgetType',
+      expect(screen.getAllByRole('article')[0]).toHaveProperty(
+        'dataset.widgetType',
         'BibleVerse'
       );
     });
@@ -40,8 +40,8 @@ describe('Bible Verse widget', () => {
 
     render(<Home />);
     await waitFor(async () => {
-      expect(screen.getAllByRole('article')[0].dataset).toHaveProperty(
-        'widgetType',
+      expect(screen.getAllByRole('article')[0]).toHaveProperty(
+        'dataset.widgetType',
         'BibleVerse'
       );
     });
@@ -66,8 +66,8 @@ describe('Bible Verse widget', () => {
 
     render(<Home />);
     await waitFor(async () => {
-      expect(screen.getAllByRole('article')[0].dataset).toHaveProperty(
-        'widgetType',
+      expect(screen.getAllByRole('article')[0]).toHaveProperty(
+        'dataset.widgetType',
         'BibleVerse'
       );
     });

@@ -13,8 +13,8 @@ describe('Podcast widget', () => {
 
     render(<Home />);
     await waitFor(async () => {
-      expect(screen.getAllByRole('article')[3].dataset).toHaveProperty(
-        'widgetType',
+      expect(screen.getAllByRole('article')[3]).toHaveProperty(
+        'dataset.widgetType',
         'Podcast'
       );
     });

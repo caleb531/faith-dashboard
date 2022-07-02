@@ -8,8 +8,8 @@ describe('Note widget', () => {
   it('should change note text', async () => {
     render(<Home />);
     await waitFor(async () => {
-      expect(screen.getAllByRole('article')[1].dataset).toHaveProperty(
-        'widgetType',
+      expect(screen.getAllByRole('article')[1]).toHaveProperty(
+        'dataset.widgetType',
         'Note'
       );
     });
@@ -26,8 +26,8 @@ describe('Note widget', () => {
   it('should change text font size', async () => {
     render(<Home />);
     await waitFor(async () => {
-      expect(screen.getAllByRole('article')[1].dataset).toHaveProperty(
-        'widgetType',
+      expect(screen.getAllByRole('article')[1]).toHaveProperty(
+        'dataset.widgetType',
         'Note'
       );
     });
