@@ -72,6 +72,8 @@ function WidgetShell({ widget, dispatchToWidget, provided, children }: Props) {
 
   return (
     <article
+      data-widget-id={widget.id}
+      data-widget-type={widget.type}
       className={classNames('widget', `widget-type-${widget.type}`, {
         'widget-settings-open': widget.isSettingsOpen
       })}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { WidgetHead } from './widget.d';
 import widgetTypeMap from './widgetTypeMap';

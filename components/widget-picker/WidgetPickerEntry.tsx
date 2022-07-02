@@ -37,7 +37,12 @@ function WidgetPickerEntry({ widgetType, onAddWidget }: Props) {
           />
           {widgetType.name}
         </h2>
-        <AddWidgetButton onPressButton={addWidget} />
+        <AddWidgetButton
+          buttonProps={{
+            'aria-label': `Add ${widgetType.name} Widget`
+          }}
+          onPressButton={addWidget}
+        />
       </header>
       <p className="widget-picker-entry-description">
         {widgetType.description}

@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import useTimeout from '../useTimeout';
 import { WidgetState } from './widget.d';
 
 // The duration (in ms) of a widget transitioning onto / off of the dashboard
@@ -24,6 +25,9 @@ function useWidgetTransitioner({
 }): {
   handleWidgetTransition: (widgetContentsElement: HTMLElement | null) => void;
 } {
+  const setWidgetAdditionTimeout = useTimeout();
+  const setWidgetRemovalTimeout = useTimeout();
+
   // Retrieve the verical space (in pixels) occupied by the widget onscreen
   function getWidgetVerticalSpace(widgetElement: HTMLElement): number {
     return (
@@ -37,9 +41,9 @@ function useWidgetTransitioner({
       const widgetVerticalSpace = getWidgetVerticalSpace(widgetElement);
       widgetElement.style.opacity = '0';
       widgetElement.style.marginBottom = `-${widgetVerticalSpace}px`;
-      requestAnimationFrame(() => {
+      setWidgetAdditionTimeout(() => {
         widgetElement.classList.add('adding-widget');
-        setTimeout(() => {
+        setWidgetAdditionTimeout(() => {
           widgetElement.style.opacity = '';
           widgetElement.style.marginBottom = '';
           widgetElement.classList.remove('adding-widget');
@@ -47,7 +51,7 @@ function useWidgetTransitioner({
         }, widgetTransitionDuration);
       });
     },
-    [onAddTransitionEnd]
+    [onAddTransitionEnd, setWidgetAdditionTimeout]
   );
 
   const transitionWidgetRemoval = useCallback(
@@ -57,12 +61,12 @@ function useWidgetTransitioner({
       widgetElement.classList.add('removing-widget');
       // Wait for the widget to transition out of view before removing the
       // widget from the array (which will cause an immediate re-render)
-      setTimeout(() => {
+      setWidgetRemovalTimeout(() => {
         widgetElement.classList.remove('removing-widget');
         onRemoveTransitionEnd(widget);
       }, widgetTransitionDuration);
     },
-    [onRemoveTransitionEnd]
+    [onRemoveTransitionEnd, setWidgetRemovalTimeout]
   );
 
   // Handle widget transitions (such as when adding or removing a widget)
