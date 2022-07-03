@@ -101,4 +101,23 @@ describe('Auth flow', () => {
       );
     });
   });
+
+  it('should require valid email addresses on Sign Up page', async () => {
+    render(<SignUp />);
+    const emailField = screen.getByRole('textbox', { name: 'Email' });
+    const confirmEmailField = screen.getByRole('textbox', {
+      name: 'Confirm Email'
+    });
+    await userEvent.type(emailField, 'notanemail');
+    await userEvent.type(confirmEmailField, 'notanemail');
+    expect(emailField).toHaveProperty('validity.typeMismatch', true);
+    expect(confirmEmailField).toHaveProperty('validity.typeMismatch', true);
+  });
+
+  it('should require valid email address on Sign In page', async () => {
+    render(<SignIn />);
+    const emailField = screen.getByRole('textbox', { name: 'Email' });
+    await userEvent.type(emailField, 'notanemail');
+    expect(emailField).toHaveProperty('validity.typeMismatch', true);
+  });
 });
