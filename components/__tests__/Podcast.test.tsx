@@ -77,6 +77,31 @@ describe('Podcast widget', () => {
     expect(screen.getByText('50 episodes')).toBeInTheDocument();
   });
 
+  it('should access Now Playing screen from episode list', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+
+    await searchPodcasts('sermon of the day');
+    expect(screen.getByText('26 podcasts')).toBeInTheDocument();
+
+    await choosePodcast('Sermon of the Day');
+    expect(screen.getByText('50 episodes')).toBeInTheDocument();
+
+    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Return to List' })
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Now Playing' }));
+    expect(
+      screen.getByRole('heading', {
+        name: 'The Beautiful Faith of Fearless Submission'
+      })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Return to List' })
+    ).toBeInTheDocument();
+  });
+
   it('should handle no results', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastNoResultsJson));
 
