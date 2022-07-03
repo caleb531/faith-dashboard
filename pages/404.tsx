@@ -2,13 +2,9 @@
 import LandingPage from '../components/LandingPage';
 import LinkButton from '../components/reusable/LinkButton';
 
-type Props = {
-  pageTitle: string;
-};
-
-function PageNotFound({ pageTitle }: Props) {
+function PageNotFound() {
   return (
-    <LandingPage heading={pageTitle}>
+    <LandingPage heading="Page Not Found | Faith Dashboard">
       <p>Sorry about that! You ended up on a page that doesn't exist.</p>
 
       <p>

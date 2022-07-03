@@ -7,11 +7,7 @@ import useAutoFocus from '../components/account/useAutoFocus';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
 
-type Props = {
-  pageTitle: string;
-};
-
-function ResetPassword({ pageTitle }: Props) {
+function ResetPassword() {
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
 
   function sendPasswordRecoveryEmail(event: React.FormEvent<HTMLFormElement>) {
@@ -21,7 +17,7 @@ function ResetPassword({ pageTitle }: Props) {
 
   return (
     <LandingPage
-      heading={pageTitle}
+      heading="Forgot Password | Faith Dashboard"
       altLink={{ title: 'Sign In', href: '/sign-in' }}
     >
       <AuthForm

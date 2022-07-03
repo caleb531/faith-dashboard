@@ -7,11 +7,7 @@ import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
 import useFormFieldMatcher from '../components/useFormFieldMatcher';
 
-type Props = {
-  pageTitle: string;
-};
-
-function ResetPassword({ pageTitle }: Props) {
+function ResetPassword() {
   const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Passwords must match'
   });
@@ -33,7 +29,7 @@ function ResetPassword({ pageTitle }: Props) {
 
   return (
     <LandingPage
-      heading={pageTitle}
+      heading="Reset Password | Faith Dashboard"
       altLink={{ title: 'Sign In', href: '/sign-in' }}
     >
       <AuthForm

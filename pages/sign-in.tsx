@@ -9,11 +9,7 @@ import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
 import useVerifyCaptcha from '../components/useVerifyCaptcha';
 
-type Props = {
-  pageTitle: string;
-};
-
-function SignUpForm({ pageTitle }: Props) {
+function SignUpForm() {
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
   const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
 
@@ -46,7 +42,7 @@ function SignUpForm({ pageTitle }: Props) {
 
   return (
     <LandingPage
-      heading={pageTitle}
+      heading="Sign In | Faith Dashboard"
       altLink={{ title: 'Sign Up', href: '/sign-up' }}
     >
       <p>

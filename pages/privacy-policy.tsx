@@ -2,13 +2,9 @@
 import LandingPage from '../components/LandingPage';
 import LinkButton from '../components/reusable/LinkButton';
 
-type Props = {
-  pageTitle: string;
-};
-
-function PrivacyPolicy({ pageTitle }: Props) {
+function PrivacyPolicy() {
   return (
-    <LandingPage heading={pageTitle}>
+    <LandingPage heading="Privacy Policy | Faith Dashboard">
       <p>
         This privacy policy serves as a straightforward explanation of how Faith
         Dashboard collects and handles your personal information.

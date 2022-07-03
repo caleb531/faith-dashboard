@@ -1,13 +1,9 @@
 import LandingPage from '../components/LandingPage';
 import LinkButton from '../components/reusable/LinkButton';
 
-type Props = {
-  pageTitle: string;
-};
-
-function Copyright({ pageTitle }: Props) {
+function Copyright() {
   return (
-    <LandingPage heading={pageTitle}>
+    <LandingPage heading="Copyright | Faith Dashboard">
       <p>
         Scripture quotations marked “ESV” are from the ESV® Bible (The Holy
         Bible, English Standard Version®), copyright © 2001 by Crossway, a

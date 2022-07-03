@@ -13,7 +13,7 @@ describe('Auth flow', () => {
   });
 
   it('should validate that new account email addresses are matching', async () => {
-    render(<SignUp pageTitle="Sign Up | Faith Dashboard" />);
+    render(<SignUp />);
     await userEvent.type(screen.getByLabelText('Email'), 'john@example.com');
     await userEvent.type(
       screen.getByLabelText('Confirm Email'),
@@ -26,7 +26,7 @@ describe('Auth flow', () => {
   });
 
   it('should validate that new account email addresses are not matching', async () => {
-    render(<SignUp pageTitle="Sign Up | Faith Dashboard" />);
+    render(<SignUp />);
     await userEvent.type(screen.getByLabelText('Email'), 'john@example.com');
     await userEvent.type(
       screen.getByLabelText('Confirm Email'),
@@ -39,7 +39,7 @@ describe('Auth flow', () => {
   });
 
   it('should validate that new account passwords are matching', async () => {
-    render(<SignUp pageTitle="Sign Up | Faith Dashboard" />);
+    render(<SignUp />);
     await userEvent.type(
       screen.getByLabelText('Password'),
       'CorrectHorseBatteryStaple'
@@ -55,7 +55,7 @@ describe('Auth flow', () => {
   });
 
   it('should validate that new account passwords are not matching', async () => {
-    render(<SignUp pageTitle="Sign Up | Faith Dashboard" />);
+    render(<SignUp />);
     await userEvent.type(
       screen.getByLabelText('Password'),
       'CorrectHorseBatteryStaple'

@@ -9,11 +9,7 @@ import { supabase } from '../components/supabaseClient';
 import useFormFieldMatcher from '../components/useFormFieldMatcher';
 import useIsomorphicLayoutEffect from '../components/useIsomorphicLayoutEffect';
 
-type Props = {
-  pageTitle: string;
-};
-
-function AccountSettings({ pageTitle }: Props) {
+function AccountSettings() {
   const [user, setUser] = useState<User | null>(null);
   const [emailFieldProps, confirmEmailFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Emails must match'
@@ -88,7 +84,7 @@ function AccountSettings({ pageTitle }: Props) {
   }, [user]);
 
   return (
-    <LandingPage heading={pageTitle}>
+    <LandingPage heading="Account Settings | Faith Dashboard">
       {user ? (
         <>
           <AuthForm

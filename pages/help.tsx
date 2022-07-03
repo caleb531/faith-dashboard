@@ -7,13 +7,9 @@ import addToHomeScreenImage1 from '../public/images/help/ios-add-to-home-screen-
 import addToHomeScreenImage2 from '../public/images/help/ios-add-to-home-screen-ios-2.jpg';
 import addToHomeScreenImage3 from '../public/images/help/ios-add-to-home-screen-ios-3.jpg';
 
-type Props = {
-  pageTitle: string;
-};
-
-function Help({ pageTitle }: Props) {
+function Help() {
   return (
-    <LandingPage heading={pageTitle}>
+    <LandingPage heading="Help | Faith Dashboard">
       <p>
         Be strengthened every day with Faith Dashboard, a private board for your
         favorite Bible verses, sermons, and anything else you need to be

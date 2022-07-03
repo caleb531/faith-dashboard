@@ -11,11 +11,7 @@ import { supabase } from '../components/supabaseClient';
 import useFormFieldMatcher from '../components/useFormFieldMatcher';
 import useVerifyCaptcha from '../components/useVerifyCaptcha';
 
-type Props = {
-  pageTitle: string;
-};
-
-function SignUpForm({ pageTitle }: Props) {
+function SignUpForm() {
   const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Passwords must match'
   });
@@ -55,7 +51,7 @@ function SignUpForm({ pageTitle }: Props) {
 
   return (
     <LandingPage
-      heading={pageTitle}
+      heading="Sign Up | Faith Dashboard"
       altLink={{ title: 'Sign In', href: '/sign-in' }}
     >
       <p>
