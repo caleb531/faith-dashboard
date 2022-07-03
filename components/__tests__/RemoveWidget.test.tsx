@@ -1,5 +1,10 @@
 import '@testing-library/jest-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../../pages/index';
 import { WidgetTypeId } from '../widgets/widget';
@@ -18,15 +23,14 @@ async function removeWidgetElem({
   confirmRemove: boolean;
 }) {
   const confirm = mockConfirm(() => confirmRemove);
-  expect(screen.getAllByRole('article')[widgetIndex]).toHaveProperty(
-    'dataset.widgetType',
-    widgetTypeId
-  );
+  const widgetElem = screen.getAllByRole('article')[widgetIndex];
+  expect(widgetElem).toHaveProperty('dataset.widgetType', widgetTypeId);
   await userEvent.click(
     screen.getAllByRole('button', { name: 'Remove Widget' })[widgetIndex]
   );
   expect(confirm).toHaveBeenCalled();
   confirm.mockReset();
+  return widgetElem;
 }
 
 describe('Remove Widget UI', () => {
@@ -35,14 +39,13 @@ describe('Remove Widget UI', () => {
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
-    await removeWidgetElem({
+    const widgetElem = await removeWidgetElem({
       widgetTypeId: 'BibleVerse',
       widgetIndex: 0,
       confirmRemove: true
     });
-    await waitFor(() => {
-      expect(screen.getAllByRole('article')).toHaveLength(3);
-    });
+    await waitForElementToBeRemoved(widgetElem);
+    expect(screen.getAllByRole('article')).toHaveLength(3);
   });
 
   it('should remove Note widget', async () => {
@@ -50,14 +53,13 @@ describe('Remove Widget UI', () => {
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
-    await removeWidgetElem({
+    const widgetElem = await removeWidgetElem({
       widgetTypeId: 'Note',
       widgetIndex: 1,
       confirmRemove: true
     });
-    await waitFor(() => {
-      expect(screen.getAllByRole('article')).toHaveLength(3);
-    });
+    await waitForElementToBeRemoved(widgetElem);
+    expect(screen.getAllByRole('article')).toHaveLength(3);
   });
 
   it('should remove Podcast widget', async () => {
@@ -65,14 +67,13 @@ describe('Remove Widget UI', () => {
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
-    await removeWidgetElem({
+    const widgetElem = await removeWidgetElem({
       widgetTypeId: 'Podcast',
       widgetIndex: 3,
       confirmRemove: true
     });
-    await waitFor(() => {
-      expect(screen.getAllByRole('article')).toHaveLength(3);
-    });
+    await waitForElementToBeRemoved(widgetElem);
+    expect(screen.getAllByRole('article')).toHaveLength(3);
   });
 
   it('should cancel removing widget', async () => {
