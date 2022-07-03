@@ -119,4 +119,32 @@ describe('Auth flow', () => {
       true
     );
   });
+
+  it('should require CAPTCHA to be completed on Sign Up page', async () => {
+    render(<SignUp />);
+    await populateFormFields({
+      'First Name': 'John',
+      'Last Name': 'Doe',
+      Email: 'notanemail',
+      'Confirm Email': 'notanemail',
+      Password: 'CorrectHorseBatteryStaple',
+      'Confirm Password': 'CorrectHorseBatteryStaple'
+    });
+    await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
+    expect(
+      screen.getByText('Error: Please complete the CAPTCHA')
+    ).toBeInTheDocument();
+  });
+
+  it('should require CAPTCHA to be completed on Sign In page', async () => {
+    render(<SignIn />);
+    await populateFormFields({
+      Email: 'notanemail',
+      Password: 'CorrectHorseBatteryStaple'
+    });
+    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
+    expect(
+      screen.getByText('Error: Please complete the CAPTCHA')
+    ).toBeInTheDocument();
+  });
 });
