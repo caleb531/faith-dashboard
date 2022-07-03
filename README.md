@@ -1,7 +1,10 @@
 # Faith Dashboard
 
-*Copyright 2021-2022, Caleb Evans*  
-*Released under the MIT License*
+_Copyright 2021-2022, Caleb Evans_  
+_Released under the MIT License_
+
+[![tests](https://github.com/caleb531/faith-dashboard/actions/workflows/tests.yml/badge.svg)](https://github.com/caleb531/faith-dashboard/actions/workflows/tests.yml)
+[![Coverage Status](https://coveralls.io/repos/github/caleb531/faith-dashboard/badge.svg?branch=develop)](https://coveralls.io/github/caleb531/faith-dashboard?branch=develop)
 
 Be strengthened every day with Faith Dashboard, a private board for your
 favorite Bible verses, sermons, and anything else you need to be encouraged
