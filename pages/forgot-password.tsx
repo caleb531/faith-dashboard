@@ -7,7 +7,7 @@ import useAutoFocus from '../components/account/useAutoFocus';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
 
-function ResetPassword() {
+function ForgotPassword() {
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
 
   function sendPasswordRecoveryEmail(event: React.FormEvent<HTMLFormElement>) {
@@ -50,4 +50,4 @@ export async function getStaticProps() {
   };
 }
 
-export default ResetPassword;
+export default ForgotPassword;

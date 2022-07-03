@@ -9,7 +9,7 @@ import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
 import useVerifyCaptcha from '../components/useVerifyCaptcha';
 
-function SignUpForm() {
+function SignInForm() {
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
   const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
 
@@ -88,4 +88,4 @@ export async function getStaticProps() {
   };
 }
 
-export default SignUpForm;
+export default SignInForm;
