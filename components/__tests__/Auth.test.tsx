@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../../pages/index';
+import SignIn from '../../pages/sign-in';
 import SignUp from '../../pages/sign-up';
 
 describe('Auth flow', () => {
@@ -68,5 +69,36 @@ describe('Auth flow', () => {
       'validationMessage',
       'Passwords must match'
     );
+  });
+
+  it('should require all fields to be populated on Sign Up page', async () => {
+    render(<SignUp />);
+    const requiredFields = [
+      'First Name',
+      'Last Name',
+      'Email',
+      'Confirm Email',
+      'Password',
+      'Confirm Password'
+    ];
+    await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
+    requiredFields.forEach((labelText) => {
+      expect(screen.getByLabelText(labelText)).toHaveProperty(
+        'validity.valueMissing',
+        true
+      );
+    });
+  });
+
+  it('should require all fields to be populated on Sign In page', async () => {
+    render(<SignIn />);
+    const requiredFields = ['Email', 'Password'];
+    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
+    requiredFields.forEach((labelText) => {
+      expect(screen.getByLabelText(labelText)).toHaveProperty(
+        'validity.valueMissing',
+        true
+      );
+    });
   });
 });
