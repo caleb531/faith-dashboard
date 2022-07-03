@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import Home from '../../pages/index';
 import SignIn from '../../pages/sign-in';
 import SignUp from '../../pages/sign-up';
+import { populateFormFields } from './__utils__/test-utils';
 
 describe('Auth flow', () => {
   it('should access Sign Up page from button', async () => {
@@ -15,11 +16,10 @@ describe('Auth flow', () => {
 
   it('should validate that new account email addresses are matching', async () => {
     render(<SignUp />);
-    await userEvent.type(screen.getByLabelText('Email'), 'john@example.com');
-    await userEvent.type(
-      screen.getByLabelText('Confirm Email'),
-      'john@example.com'
-    );
+    await populateFormFields({
+      Email: 'john@example.com',
+      'Confirm Email': 'john@example.com'
+    });
     expect(screen.getByLabelText('Confirm Email')).toHaveProperty(
       'validationMessage',
       ''
@@ -28,11 +28,10 @@ describe('Auth flow', () => {
 
   it('should validate that new account email addresses are not matching', async () => {
     render(<SignUp />);
-    await userEvent.type(screen.getByLabelText('Email'), 'john@example.com');
-    await userEvent.type(
-      screen.getByLabelText('Confirm Email'),
-      'john@example.con'
-    );
+    await populateFormFields({
+      Email: 'john@example.com',
+      'Confirm Email': 'john@example.con'
+    });
     expect(screen.getByLabelText('Confirm Email')).toHaveProperty(
       'validationMessage',
       'Emails must match'
@@ -41,14 +40,10 @@ describe('Auth flow', () => {
 
   it('should validate that new account passwords are matching', async () => {
     render(<SignUp />);
-    await userEvent.type(
-      screen.getByLabelText('Password'),
-      'CorrectHorseBatteryStaple'
-    );
-    await userEvent.type(
-      screen.getByLabelText('Confirm Password'),
-      'CorrectHorseBatteryStaple'
-    );
+    await populateFormFields({
+      Password: 'CorrectHorseBatteryStaple',
+      'Confirm Password': 'CorrectHorseBatteryStaple'
+    });
     expect(screen.getByLabelText('Confirm Password')).toHaveProperty(
       'validationMessage',
       ''
@@ -57,14 +52,10 @@ describe('Auth flow', () => {
 
   it('should validate that new account passwords are not matching', async () => {
     render(<SignUp />);
-    await userEvent.type(
-      screen.getByLabelText('Password'),
-      'CorrectHorseBatteryStaple'
-    );
-    await userEvent.type(
-      screen.getByLabelText('Confirm Password'),
-      'CorrectHorseBatteryStale'
-    );
+    await populateFormFields({
+      Password: 'CorrectHorseBatteryStaple',
+      'Confirm Password': 'CorrectHorseBatteryStale'
+    });
     expect(screen.getByLabelText('Confirm Password')).toHaveProperty(
       'validationMessage',
       'Passwords must match'
@@ -104,20 +95,28 @@ describe('Auth flow', () => {
 
   it('should require valid email addresses on Sign Up page', async () => {
     render(<SignUp />);
-    const emailField = screen.getByRole('textbox', { name: 'Email' });
-    const confirmEmailField = screen.getByRole('textbox', {
-      name: 'Confirm Email'
+    await populateFormFields({
+      Email: 'notanemail',
+      'Confirm Email': 'notanemail'
     });
-    await userEvent.type(emailField, 'notanemail');
-    await userEvent.type(confirmEmailField, 'notanemail');
-    expect(emailField).toHaveProperty('validity.typeMismatch', true);
-    expect(confirmEmailField).toHaveProperty('validity.typeMismatch', true);
+    expect(screen.getByLabelText('Email')).toHaveProperty(
+      'validity.typeMismatch',
+      true
+    );
+    expect(screen.getByLabelText('Confirm Email')).toHaveProperty(
+      'validity.typeMismatch',
+      true
+    );
   });
 
   it('should require valid email address on Sign In page', async () => {
     render(<SignIn />);
-    const emailField = screen.getByRole('textbox', { name: 'Email' });
-    await userEvent.type(emailField, 'notanemail');
-    expect(emailField).toHaveProperty('validity.typeMismatch', true);
+    await populateFormFields({
+      Email: 'notanemail'
+    });
+    expect(screen.getByLabelText('Email')).toHaveProperty(
+      'validity.typeMismatch',
+      true
+    );
   });
 });
