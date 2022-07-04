@@ -2,19 +2,17 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../../pages/index';
-import SignIn from '../../pages/sign-in';
 import SignUp from '../../pages/sign-up';
 import { populateFormFields } from './__utils__/test-utils';
 
-describe('Auth flow', () => {
-  it('should access Sign Up page from button', async () => {
+describe('Sign Up page', () => {
+  it('should be accessible from app header', async () => {
     render(<Home />);
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up/In' }));
     expect(screen.getByRole('link', { name: 'Sign Up' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Sign In' })).toBeInTheDocument();
   });
 
-  it('should validate that new account email addresses are matching', async () => {
+  it('should validate that email addresses are matching', async () => {
     render(<SignUp />);
     await populateFormFields({
       Email: 'john@example.com',
@@ -26,7 +24,7 @@ describe('Auth flow', () => {
     );
   });
 
-  it('should validate that new account email addresses are not matching', async () => {
+  it('should validate that email addresses are not matching', async () => {
     render(<SignUp />);
     await populateFormFields({
       Email: 'john@example.com',
@@ -38,7 +36,7 @@ describe('Auth flow', () => {
     );
   });
 
-  it('should validate that new account passwords are matching', async () => {
+  it('should validate that passwords are matching', async () => {
     render(<SignUp />);
     await populateFormFields({
       Password: 'CorrectHorseBatteryStaple',
@@ -50,7 +48,7 @@ describe('Auth flow', () => {
     );
   });
 
-  it('should validate that new account passwords are not matching', async () => {
+  it('should validate that passwords are not matching', async () => {
     render(<SignUp />);
     await populateFormFields({
       Password: 'CorrectHorseBatteryStaple',
@@ -62,7 +60,7 @@ describe('Auth flow', () => {
     );
   });
 
-  it('should require all fields to be populated on Sign Up page', async () => {
+  it('should require all form fields to be populated', async () => {
     render(<SignUp />);
     const requiredFields = [
       'First Name',
@@ -81,19 +79,7 @@ describe('Auth flow', () => {
     });
   });
 
-  it('should require all fields to be populated on Sign In page', async () => {
-    render(<SignIn />);
-    const requiredFields = ['Email', 'Password'];
-    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
-    requiredFields.forEach((labelText) => {
-      expect(screen.getByLabelText(labelText)).toHaveProperty(
-        'validity.valueMissing',
-        true
-      );
-    });
-  });
-
-  it('should require valid email addresses on Sign Up page', async () => {
+  it('should require valid email addresses', async () => {
     render(<SignUp />);
     await populateFormFields({
       Email: 'notanemail',
@@ -109,18 +95,7 @@ describe('Auth flow', () => {
     );
   });
 
-  it('should require valid email address on Sign In page', async () => {
-    render(<SignIn />);
-    await populateFormFields({
-      Email: 'notanemail'
-    });
-    expect(screen.getByLabelText('Email')).toHaveProperty(
-      'validity.typeMismatch',
-      true
-    );
-  });
-
-  it('should require CAPTCHA to be completed on Sign Up page', async () => {
+  it('should require CAPTCHA to be completed', async () => {
     render(<SignUp />);
     await populateFormFields({
       'First Name': 'John',
@@ -131,18 +106,6 @@ describe('Auth flow', () => {
       'Confirm Password': 'CorrectHorseBatteryStaple'
     });
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
-    expect(
-      screen.getByText('Error: Please complete the CAPTCHA')
-    ).toBeInTheDocument();
-  });
-
-  it('should require CAPTCHA to be completed on Sign In page', async () => {
-    render(<SignIn />);
-    await populateFormFields({
-      Email: 'notanemail',
-      Password: 'CorrectHorseBatteryStaple'
-    });
-    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
     expect(
       screen.getByText('Error: Please complete the CAPTCHA')
     ).toBeInTheDocument();
