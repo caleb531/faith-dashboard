@@ -24,11 +24,17 @@ export function getWidgetData({
 }): WidgetState {
   const widgetId = screen.getAllByRole('article')[widgetIndex].dataset
     .widgetId as string;
-  return JSON.parse(
+  const widgetData = JSON.parse(
     localStorage.getItem(
       `faith-dashboard-widget-${widgetTypeId}:${widgetId}`
-    ) || '{}'
+    ) || 'null'
   );
+  if (!widgetData) {
+    throw new Error(
+      `No widget found at index ${widgetIndex} of type ${widgetTypeId}`
+    );
+  }
+  return widgetData;
 }
 
 export async function populateFormFields(fields: object) {

@@ -6,6 +6,7 @@ import Home from '../../pages/index';
 import podcastFeedJson from './__json__/podcastFeed.json';
 import podcastNoResultsJson from './__json__/podcastNoResults.json';
 import podcastSearchJson from './__json__/podcastSearch.json';
+import { getWidgetData } from './__utils__/test-utils';
 
 async function searchPodcasts(podcastQuery: string) {
   render(<Home />);
@@ -15,10 +16,11 @@ async function searchPodcasts(podcastQuery: string) {
       'Podcast'
     );
   });
-  await userEvent.type(
-    screen.getAllByRole('searchbox', { name: 'Podcast Search Query' })[0],
-    podcastQuery
-  );
+  const searchInput = screen.getAllByRole('searchbox', {
+    name: 'Podcast Search Query'
+  })[0] as HTMLInputElement;
+  searchInput.value = '';
+  await userEvent.type(searchInput, podcastQuery);
   await userEvent.click(screen.getAllByRole('button', { name: 'Search' })[2]);
 }
 
@@ -45,9 +47,21 @@ describe('Podcast widget', () => {
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();
+    expect(
+      getWidgetData({
+        widgetTypeId: 'Podcast',
+        widgetIndex: 3
+      })
+    ).toHaveProperty('podcastQuery', 'sermon of the day');
 
     await choosePodcast('Sermon of the Day');
     expect(screen.getByText('50 episodes')).toBeInTheDocument();
+    expect(
+      getWidgetData({
+        widgetTypeId: 'Podcast',
+        widgetIndex: 3
+      })
+    ).toHaveProperty('podcastFeedData.title', podcastFeedJson.channel.title);
 
     await chooseEpisode('The Beautiful Faith of Fearless Submission');
     expect(
