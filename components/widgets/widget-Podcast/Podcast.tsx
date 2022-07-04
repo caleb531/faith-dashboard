@@ -48,6 +48,7 @@ const PodcastWidget = React.memo(function PodcastWidget({
       shouldFetchInitially: () => podcastQuery && !podcastFeedData,
       requestQuery: podcastQuery,
       setRequestQuery: (newPodcastQuery: typeof podcastQuery) => {
+        removePodcastList();
         dispatchToWidget({ type: 'setPodcastQuery', payload: newPodcastQuery });
       },
       getApiUrl: (query: typeof podcastQuery) => {

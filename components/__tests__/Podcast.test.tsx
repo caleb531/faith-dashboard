@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
+import preview from 'jest-preview';
 import Home from '../../pages/index';
 import podcastFeedJson from './__json__/podcastFeed.json';
 import podcastNoResultsJson from './__json__/podcastNoResults.json';
@@ -9,7 +10,6 @@ import podcastSearchJson from './__json__/podcastSearch.json';
 import { getWidgetData } from './__utils__/test-utils';
 
 async function searchPodcasts(podcastQuery: string) {
-  render(<Home />);
   await waitFor(() => {
     expect(screen.getAllByRole('article')[3]).toHaveProperty(
       'dataset.widgetType',
@@ -44,6 +44,7 @@ describe('Podcast widget', () => {
   it('should search for podcast and select episode', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    render(<Home />);
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();
@@ -77,6 +78,7 @@ describe('Podcast widget', () => {
   it('should return to list from Now Playing screen', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    render(<Home />);
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();
@@ -94,6 +96,7 @@ describe('Podcast widget', () => {
   it('should access Now Playing screen from episode list', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    render(<Home />);
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();
@@ -118,13 +121,28 @@ describe('Podcast widget', () => {
 
   it('should handle no results', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastNoResultsJson));
+    render(<Home />);
 
     await searchPodcasts('abc123xyz');
     expect(screen.getByText('No Podcasts Found')).toBeInTheDocument();
   });
 
+  it('should clear last search results after changing query', async () => {
+    render(<Home />);
+
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    await searchPodcasts('sermon of the day');
+    expect(screen.getByText('26 podcasts')).toBeInTheDocument();
+
+    fetch.mockResponseOnce(JSON.stringify(podcastNoResultsJson));
+    await searchPodcasts('abc123xyz');
+    preview.debug();
+    expect(screen.queryByText('26 podcasts')).not.toBeInTheDocument();
+  });
+
   it('should handle bad data from server', async () => {
     fetch.mockResponseOnce('notjson');
+    render(<Home />);
 
     // Suppress the error that's logged when fetch() tries to parse invalid
     // JSON in the useWidgetDataFetcher() hook
