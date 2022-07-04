@@ -16,12 +16,12 @@ describe('Note widget', () => {
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
     await userEvent.type(textBox, 'God is good');
     expect(textBox).toHaveProperty('value', 'God is good');
-    const widgetId = screen.getAllByRole('article')[1].dataset
-      .widgetId as string;
-    expect(getWidgetData('Note', widgetId)).toHaveProperty(
-      'text',
-      'God is good'
-    );
+    expect(
+      getWidgetData({
+        widgetTypeId: 'Note',
+        widgetIndex: 1
+      })
+    ).toHaveProperty('text', 'God is good');
   });
   it('should change text font size', async () => {
     render(<Home />);
@@ -51,8 +51,11 @@ describe('Note widget', () => {
       'style.fontSize',
       '30px'
     );
-    const widgetId = screen.getAllByRole('article')[1].dataset
-      .widgetId as string;
-    expect(getWidgetData('Note', widgetId)).toHaveProperty('fontSize', 30);
+    expect(
+      getWidgetData({
+        widgetTypeId: 'Note',
+        widgetIndex: 1
+      })
+    ).toHaveProperty('fontSize', 30);
   });
 });

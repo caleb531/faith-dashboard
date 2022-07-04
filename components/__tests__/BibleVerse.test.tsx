@@ -32,12 +32,12 @@ describe('Bible Verse widget', () => {
     expect(screen.getByText(/And we know/)).toHaveTextContent(
       'And we know that for those who love God all things work together for good, for those who are called according to his purpose.'
     );
-    const widgetId = screen.getAllByRole('article')[0].dataset
-      .widgetId as string;
-    expect(getWidgetData('BibleVerse', widgetId)).toHaveProperty(
-      'verseQuery',
-      'rom8.28'
-    );
+    expect(
+      getWidgetData({
+        widgetTypeId: 'BibleVerse',
+        widgetIndex: 0
+      })
+    ).toHaveProperty('verseQuery', 'rom8.28');
   });
 
   it('should search for verse range', async () => {

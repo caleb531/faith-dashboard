@@ -15,13 +15,19 @@ export function getAppData(): AppState {
   return JSON.parse(localStorage.getItem('faith-dashboard-app') || '{}');
 }
 
-export function getWidgetData(
-  widgetType: WidgetTypeId,
-  widgetId: string
-): WidgetState {
+export function getWidgetData({
+  widgetTypeId,
+  widgetIndex
+}: {
+  widgetTypeId: WidgetTypeId;
+  widgetIndex: number;
+}): WidgetState {
+  const widgetId = screen.getAllByRole('article')[widgetIndex].dataset
+    .widgetId as string;
   return JSON.parse(
-    localStorage.getItem(`faith-dashboard-widget-${widgetType}:${widgetId}`) ||
-      '{}'
+    localStorage.getItem(
+      `faith-dashboard-widget-${widgetTypeId}:${widgetId}`
+    ) || '{}'
   );
 }
 
