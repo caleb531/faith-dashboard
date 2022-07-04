@@ -4,8 +4,8 @@ import userEvent from '@testing-library/user-event';
 import Home from '../../pages/index';
 import { getAppData } from './__utils__/test-utils';
 
-describe('Theme', () => {
-  it('should change to photo theme', async () => {
+describe('Theme Switcher', () => {
+  it('should change theme to photo theme', async () => {
     render(<Home />);
     // Assert default theme
     expect(document.body).toHaveClass('theme-shore');
@@ -16,7 +16,7 @@ describe('Theme', () => {
     expect(document.body).toHaveClass('theme-worship');
     expect(getAppData()).toHaveProperty('theme', 'worship');
   });
-  it('should change to color theme', async () => {
+  it('should change theme to color theme', async () => {
     render(<Home />);
     // Assert default theme
     expect(document.body).toHaveClass('theme-shore');
