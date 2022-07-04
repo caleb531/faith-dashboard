@@ -2,7 +2,6 @@ import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
-import preview from 'jest-preview';
 import Home from '../../pages/index';
 import podcastFeedJson from './__json__/podcastFeed.json';
 import podcastNoResultsJson from './__json__/podcastNoResults.json';
@@ -136,7 +135,6 @@ describe('Podcast widget', () => {
 
     fetch.mockResponseOnce(JSON.stringify(podcastNoResultsJson));
     await searchPodcasts('abc123xyz');
-    preview.debug();
     expect(screen.queryByText('26 podcasts')).not.toBeInTheDocument();
   });
 
