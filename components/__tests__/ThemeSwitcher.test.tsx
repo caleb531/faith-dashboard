@@ -5,6 +5,19 @@ import Home from '../../pages/index';
 import { getAppData } from './__utils__/test-utils';
 
 describe('Theme Switcher', () => {
+  it('should close', async () => {
+    render(<Home />);
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Background Theme' })
+    );
+    expect(
+      screen.getByRole('heading', { name: 'Change Theme' })
+    ).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Close Modal' }));
+    expect(
+      screen.queryByRole('heading', { name: 'Change Theme' })
+    ).not.toBeInTheDocument();
+  });
   it('should change theme to photo theme', async () => {
     render(<Home />);
     // Assert default theme
