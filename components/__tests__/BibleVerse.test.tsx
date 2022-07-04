@@ -10,7 +10,6 @@ import bibleVerseSingleJson from './__json__/bibleVerseSingle.json';
 import { getWidgetData } from './__utils__/test-utils';
 
 async function searchBibleVerses(verseQuery: string) {
-  render(<Home />);
   await waitFor(() => {
     expect(screen.getAllByRole('article')[0]).toHaveProperty(
       'dataset.widgetType',
@@ -27,6 +26,7 @@ async function searchBibleVerses(verseQuery: string) {
 describe('Bible Verse widget', () => {
   it('should search for verse', async () => {
     fetch.mockResponseOnce(JSON.stringify(bibleVerseSingleJson));
+    render(<Home />);
 
     await searchBibleVerses('rom8.28');
     expect(screen.getByText(/And we know/)).toHaveTextContent(
@@ -42,6 +42,7 @@ describe('Bible Verse widget', () => {
 
   it('should search for verse range', async () => {
     fetch.mockResponseOnce(JSON.stringify(bibleVerseRangeJson));
+    render(<Home />);
 
     await searchBibleVerses('mat11.28');
     expect(screen.getByText(/Come to me/)).toHaveTextContent(
@@ -57,6 +58,7 @@ describe('Bible Verse widget', () => {
 
   it('should search for multiple verses', async () => {
     fetch.mockResponseOnce(JSON.stringify(bibleVerseMultipleJson));
+    render(<Home />);
 
     await searchBibleVerses('hos6.6, mat9.13');
     expect(screen.getByText(/For I desire steadfast/)).toHaveTextContent(
@@ -69,6 +71,7 @@ describe('Bible Verse widget', () => {
 
   it('should handle no results', async () => {
     fetch.mockResponseOnce(JSON.stringify(bibleVerseNoResultsJson));
+    render(<Home />);
 
     await searchBibleVerses('abc123');
     expect(screen.getByText('No Verses Found')).toBeInTheDocument();
@@ -76,6 +79,7 @@ describe('Bible Verse widget', () => {
 
   it('should handle bad data from server', async () => {
     fetch.mockResponseOnce('notjson');
+    render(<Home />);
 
     const log = jest.spyOn(console, 'log').mockImplementation(() => {
       /* noop */
