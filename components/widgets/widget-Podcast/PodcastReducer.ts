@@ -40,8 +40,8 @@ export default function reducer(
                       // key" error, since we use the GUID to uniquely identify
                       // an episode in many areas of the Podcast widget code;
                       // to solve this, we need to assign some other value from
-                      // the episode schemat can't be something we generate
-                      // ourselves because the GUID cannot change across feed
+                      // the episode schema that can't be something we generate
+                      // ourselves, because the GUID cannot change across feed
                       // refreshes, lest we lose listening history, etc.)
                       guid:
                         typeof episode.guid !== 'string'
