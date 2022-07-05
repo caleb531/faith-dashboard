@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { AppState } from '../app/app.d';
 import reducer from '../app/AppReducer';
-import { createWidget } from './__utils__/test-utils';
+import { createWidget } from './__utils__/testUtils';
 
 describe('app reducer', () => {
   it('should change theme', () => {

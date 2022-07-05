@@ -7,7 +7,7 @@ import bibleVerseMultipleJson from './__json__/bibleVerseMultiple.json';
 import bibleVerseNoResultsJson from './__json__/bibleVerseNoResults.json';
 import bibleVerseRangeJson from './__json__/bibleVerseRange.json';
 import bibleVerseSingleJson from './__json__/bibleVerseSingle.json';
-import { getWidgetData, waitForWidget } from './__utils__/test-utils';
+import { getWidgetData, waitForWidget } from './__utils__/testUtils';
 
 async function searchBibleVerses(verseQuery: string) {
   await waitForWidget({ type: 'BibleVerse', index: 0 });

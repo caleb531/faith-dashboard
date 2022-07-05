@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ForgotPassword from '../../pages/forgot-password';
 import SignIn from '../../pages/sign-in';
-import { populateFormFields } from './__utils__/test-utils';
+import { populateFormFields } from './__utils__/testUtils';
 
 describe('Forgot Password page', () => {
   it('should be accessible from Sign In page', async () => {

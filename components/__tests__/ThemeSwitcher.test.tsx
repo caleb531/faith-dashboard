@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../../pages/index';
-import { getAppData } from './__utils__/test-utils';
+import { getAppData } from './__utils__/testUtils';
 
 describe('Theme Switcher', () => {
   it('should close', async () => {

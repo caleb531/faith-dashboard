@@ -10,7 +10,7 @@ import {
   mockCaptchaSuccessOnce
 } from './__mocks__/CaptchaMock';
 import { mockSupabaseApiResponse } from './__mocks__/supabaseMockUtils';
-import { populateFormFields } from './__utils__/test-utils';
+import { populateFormFields } from './__utils__/testUtils';
 
 describe('Sign In page', () => {
   it('should be accessible from app header', async () => {

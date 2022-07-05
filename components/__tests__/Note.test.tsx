@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../../pages/index';
-import { getWidgetData, waitForWidget } from './__utils__/test-utils';
+import { getWidgetData, waitForWidget } from './__utils__/testUtils';
 
 describe('Note widget', () => {
   it('should change note text', async () => {

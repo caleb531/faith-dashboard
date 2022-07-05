@@ -7,7 +7,7 @@ import podcastFeedJson from './__json__/podcastFeed.json';
 import podcastNoResultsJson from './__json__/podcastNoResults.json';
 import podcastSearchJson from './__json__/podcastSearch.json';
 import AudioMock from './__mocks__/AudioMock';
-import { getWidgetData, waitForWidget } from './__utils__/test-utils';
+import { getWidgetData, waitForWidget } from './__utils__/testUtils';
 
 async function searchPodcasts(podcastQuery: string) {
   await waitForWidget({ type: 'Podcast', index: 3 });
