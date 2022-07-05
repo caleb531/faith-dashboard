@@ -8,6 +8,7 @@ import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
 import useFormFieldMatcher from '../components/useFormFieldMatcher';
 import useIsomorphicLayoutEffect from '../components/useIsomorphicLayoutEffect';
+import useTimeout from '../components/useTimeout';
 
 function AccountSettings() {
   const [user, setUser] = useState<User | null>(null);
@@ -17,6 +18,7 @@ function AccountSettings() {
   const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Passwords must match'
   });
+  const setPageReloadTimeout = useTimeout();
   // The delay (in milliseconds) to wait after a sucessful form submission
   // before reloading the page (only applies to certain forms)
   const reloadDelay = 1000;
@@ -51,7 +53,7 @@ function AccountSettings() {
   }
 
   function reloadPage() {
-    setTimeout(() => {
+    setPageReloadTimeout(() => {
       window.location.reload();
     }, reloadDelay);
   }
