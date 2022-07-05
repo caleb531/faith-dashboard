@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import preview from 'jest-preview';
 import Home from '../../pages';
 import SignIn from '../../pages/sign-in';
 import { supabase } from '../supabaseClient';
@@ -8,6 +9,7 @@ import {
   mockCaptchaFailOnce,
   mockCaptchaSuccessOnce
 } from './__mocks__/CaptchaMock';
+import { mockSupabaseApiResponse } from './__mocks__/supabaseMockUtils';
 import { populateFormFields } from './__utils__/test-utils';
 
 describe('Sign In page', () => {
@@ -53,9 +55,16 @@ describe('Sign In page', () => {
     ).toBeInTheDocument();
   });
 
-  it('should attempt to sign in', async () => {
+  it('should sign in successfully', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    const signInStub = jest.spyOn(supabase.auth, 'signIn');
+    const signInStub = mockSupabaseApiResponse(supabase.auth, 'signIn', {
+      user: {
+        email: 'caleb@example.com',
+        user_metadata: { first_name: 'Caleb', last_name: 'Evans' }
+      },
+      session: {},
+      error: null
+    });
     render(<SignIn />);
     await populateFormFields({
       Email: 'caleb@example.com',
@@ -71,6 +80,27 @@ describe('Sign In page', () => {
         captchaToken: 'mytoken'
       }
     );
+    preview.debug();
+    signInStub.mockRestore();
+  });
+
+  it('should handle errors from server', async () => {
+    mockCaptchaSuccessOnce('mytoken');
+    const signInStub = mockSupabaseApiResponse(supabase.auth, 'signIn', {
+      user: null,
+      session: null,
+      error: {
+        message: 'Invalid login credentials'
+      }
+    });
+    render(<SignIn />);
+    await populateFormFields({
+      Email: 'kaleb@example.com',
+      Password: 'CorrectHorseBatteryStaple'
+    });
+    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
+    expect(supabase.auth.signIn).toHaveBeenCalled();
+    expect(screen.getByText('Invalid login credentials')).toBeInTheDocument();
     signInStub.mockRestore();
   });
 });

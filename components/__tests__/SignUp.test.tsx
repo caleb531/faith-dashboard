@@ -8,6 +8,7 @@ import {
   mockCaptchaFailOnce,
   mockCaptchaSuccessOnce
 } from './__mocks__/CaptchaMock';
+import { mockSupabaseApiResponse } from './__mocks__/supabaseMockUtils';
 import { populateFormFields } from './__utils__/test-utils';
 
 describe('Sign Up page', () => {
@@ -117,9 +118,16 @@ describe('Sign Up page', () => {
     ).toBeInTheDocument();
   });
 
-  it('should attempt to create account', async () => {
+  it('should create account successfully', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    const signUpStub = jest.spyOn(supabase.auth, 'signUp');
+    const signUpStub = mockSupabaseApiResponse(supabase.auth, 'signUp', {
+      user: {
+        email: 'john@example.com',
+        user_metadata: { first_name: 'John', last_name: 'Doe' }
+      },
+      session: {},
+      error: null
+    });
     render(<SignUp />);
     await populateFormFields({
       'First Name': 'John',
@@ -143,6 +151,29 @@ describe('Sign Up page', () => {
         }
       }
     );
+    signUpStub.mockRestore();
+  });
+
+  it('should handle errors from server', async () => {
+    mockCaptchaSuccessOnce('mytoken');
+    const signUpStub = mockSupabaseApiResponse(supabase.auth, 'signUp', {
+      user: null,
+      session: null,
+      error: {
+        message: 'User already exists'
+      }
+    });
+    render(<SignUp />);
+    await populateFormFields({
+      'First Name': 'John',
+      'Last Name': 'Doe',
+      Email: 'john@example.com',
+      'Confirm Email': 'john@example.com',
+      Password: 'CorrectHorseBatteryStaple',
+      'Confirm Password': 'CorrectHorseBatteryStaple'
+    });
+    await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
+    expect(screen.getByText('User already exists')).toBeInTheDocument();
     signUpStub.mockRestore();
   });
 });
