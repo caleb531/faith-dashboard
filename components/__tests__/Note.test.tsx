@@ -58,4 +58,56 @@ describe('Note widget', () => {
       })
     ).toHaveProperty('fontSize', 30);
   });
+  it('should truncate preview text to no fewer than 2 words', async () => {
+    render(<Home />);
+    await waitFor(() => {
+      expect(screen.getAllByRole('article')[1]).toHaveProperty(
+        'dataset.widgetType',
+        'Note'
+      );
+    });
+    const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
+    await userEvent.type(
+      textBox,
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tincidunt in purus venenatis facilisis.'
+    );
+    await userEvent.click(
+      screen.getAllByRole('button', { name: 'Toggle Settings' })[1]
+    );
+    const input = screen.getAllByRole('slider', {
+      name: 'Font Size'
+    })[0] as HTMLInputElement;
+    await fireEvent.input(input, { target: { value: '12' } });
+    await fireEvent.change(input, { target: { value: '12' } });
+    expect(input).toHaveProperty('value', '12');
+    expect(
+      screen.getByText(
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tincidunt...'
+      )
+    ).toBeInTheDocument();
+  });
+  it('should truncate preview text to no more than 10 words', async () => {
+    render(<Home />);
+    await waitFor(() => {
+      expect(screen.getAllByRole('article')[1]).toHaveProperty(
+        'dataset.widgetType',
+        'Note'
+      );
+    });
+    const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
+    await userEvent.type(
+      textBox,
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tincidunt in purus venenatis facilisis.'
+    );
+    await userEvent.click(
+      screen.getAllByRole('button', { name: 'Toggle Settings' })[1]
+    );
+    const input = screen.getAllByRole('slider', {
+      name: 'Font Size'
+    })[0] as HTMLInputElement;
+    await fireEvent.input(input, { target: { value: '50' } });
+    await fireEvent.change(input, { target: { value: '50' } });
+    expect(input).toHaveProperty('value', '50');
+    expect(screen.getByText('Lorem ipsum...')).toBeInTheDocument();
+  });
 });
