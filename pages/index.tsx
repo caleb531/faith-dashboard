@@ -32,6 +32,7 @@ function Home() {
 }
 
 export async function getStaticProps() {
+  /* istanbul ignore next */
   return {
     props: {
       pagePath: '/',
