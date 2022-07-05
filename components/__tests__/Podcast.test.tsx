@@ -6,6 +6,7 @@ import Home from '../../pages/index';
 import podcastFeedJson from './__json__/podcastFeed.json';
 import podcastNoResultsJson from './__json__/podcastNoResults.json';
 import podcastSearchJson from './__json__/podcastSearch.json';
+import AudioMock from './__mocks__/Audio';
 import { getWidgetData } from './__utils__/test-utils';
 
 async function searchPodcasts(podcastQuery: string) {
@@ -116,6 +117,30 @@ describe('Podcast widget', () => {
     expect(
       screen.getByRole('button', { name: 'Return to List' })
     ).toBeInTheDocument();
+  });
+
+  it('should toggle audio', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    const playStub = jest.spyOn(AudioMock.prototype, 'play');
+    const pauseStub = jest.spyOn(AudioMock.prototype, 'pause');
+    render(<Home />);
+
+    await searchPodcasts('sermon of the day');
+    await choosePodcast('Sermon of the Day');
+    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+
+    expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
+    expect(playStub).not.toHaveBeenCalled();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Play' }));
+    expect(playStub).toHaveBeenCalled();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Pause' }));
+    expect(pauseStub).toHaveBeenCalled();
+
+    playStub.mockReset();
+    pauseStub.mockReset();
   });
 
   it('should handle no results', async () => {

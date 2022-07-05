@@ -11,16 +11,16 @@ jest.setTimeout(10000);
 
 enableFetchMocks();
 
-let pauseStub: jest.SpyInstance;
+let audioStub: jest.SpyInstance;
 
 beforeEach(() => {
   fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
-  pauseStub = jest.spyOn(window, 'Audio').mockImplementation(() => {
-    return new AudioMock();
+  audioStub = jest.spyOn(window, 'Audio').mockImplementation(() => {
+    return new AudioMock() as any;
   });
 });
 afterEach(() => {
   fetch.resetMocks();
-  pauseStub.mockRestore();
+  audioStub.mockRestore();
   localStorage.clear();
 });
