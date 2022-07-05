@@ -119,7 +119,7 @@ describe('Podcast widget', () => {
     ).toBeInTheDocument();
   });
 
-  it('should toggle audio', async () => {
+  it('should play/pause audio', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     const playStub = jest.spyOn(AudioMock.prototype, 'play');
