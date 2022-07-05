@@ -1,7 +1,7 @@
 import { configure } from '@testing-library/dom';
 import fetch, { enableFetchMocks } from 'jest-fetch-mock';
 import podcastSearchJson from '../__json__/podcastSearch.json';
-import AudioMock from '../__mocks__/Audio';
+import AudioMock from '../__mocks__/AudioMock';
 
 // Increase timeout of React Testing Library's waitFor() function, as well as
 // Jest's global max timeout; this is an attempt to resolve the 'Unable to find
