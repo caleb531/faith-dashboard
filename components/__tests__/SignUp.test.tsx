@@ -7,7 +7,7 @@ import { supabase } from '../supabaseClient';
 import {
   mockCaptchaFailOnce,
   mockCaptchaSuccessOnce
-} from './__mocks__/CaptchaMock';
+} from './__mocks__/captchaMockUtils';
 import { mockSupabaseApiResponse } from './__mocks__/supabaseMockUtils';
 import { populateFormFields } from './__utils__/testUtils';
 
