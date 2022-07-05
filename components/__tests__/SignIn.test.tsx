@@ -4,7 +4,10 @@ import userEvent from '@testing-library/user-event';
 import Home from '../../pages';
 import SignIn from '../../pages/sign-in';
 import { supabase } from '../supabaseClient';
-import useVerifyCaptcha from '../useVerifyCaptcha';
+import {
+  mockCaptchaFailOnce,
+  mockCaptchaSuccessOnce
+} from './__mocks__/CaptchaMock';
 import { populateFormFields } from './__utils__/test-utils';
 
 describe('Sign In page', () => {
@@ -38,6 +41,7 @@ describe('Sign In page', () => {
   });
 
   it('should require CAPTCHA to be completed', async () => {
+    mockCaptchaFailOnce();
     render(<SignIn />);
     await populateFormFields({
       Email: 'notanemail',
@@ -50,21 +54,23 @@ describe('Sign In page', () => {
   });
 
   it('should attempt to sign in', async () => {
-    (useVerifyCaptcha as jest.Mock).mockImplementationOnce(() => {
-      return [
-        () => 'token',
-        () => {
-          // noop
-        }
-      ];
-    });
-    jest.spyOn(supabase.auth, 'signIn');
+    mockCaptchaSuccessOnce('mytoken');
+    const signInStub = jest.spyOn(supabase.auth, 'signIn');
     render(<SignIn />);
     await populateFormFields({
       Email: 'caleb@example.com',
       Password: 'CorrectHorseBatteryStaple'
     });
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
-    expect(supabase.auth.signIn).toHaveBeenCalled();
+    expect(supabase.auth.signIn).toHaveBeenCalledWith(
+      {
+        email: 'caleb@example.com',
+        password: 'CorrectHorseBatteryStaple'
+      },
+      {
+        captchaToken: 'mytoken'
+      }
+    );
+    signInStub.mockRestore();
   });
 });

@@ -34,7 +34,12 @@ function SignUpForm() {
       },
       {
         captchaToken,
-        data: omit(fields, ['email', 'password', 'confirm_password'])
+        data: omit(fields, [
+          'email',
+          'confirm_email',
+          'password',
+          'confirm_password'
+        ])
       }
     );
   }

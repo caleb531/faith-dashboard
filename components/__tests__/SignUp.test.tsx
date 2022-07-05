@@ -3,6 +3,11 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../../pages/index';
 import SignUp from '../../pages/sign-up';
+import { supabase } from '../supabaseClient';
+import {
+  mockCaptchaFailOnce,
+  mockCaptchaSuccessOnce
+} from './__mocks__/CaptchaMock';
 import { populateFormFields } from './__utils__/test-utils';
 
 describe('Sign Up page', () => {
@@ -96,12 +101,13 @@ describe('Sign Up page', () => {
   });
 
   it('should require CAPTCHA to be completed', async () => {
+    mockCaptchaFailOnce();
     render(<SignUp />);
     await populateFormFields({
       'First Name': 'John',
       'Last Name': 'Doe',
-      Email: 'notanemail',
-      'Confirm Email': 'notanemail',
+      Email: 'john@example.com',
+      'Confirm Email': 'john@example.com',
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStaple'
     });
@@ -109,5 +115,34 @@ describe('Sign Up page', () => {
     expect(
       screen.getByText('Error: Please complete the CAPTCHA')
     ).toBeInTheDocument();
+  });
+
+  it('should attempt to create account', async () => {
+    mockCaptchaSuccessOnce('mytoken');
+    const signUpStub = jest.spyOn(supabase.auth, 'signUp');
+    render(<SignUp />);
+    await populateFormFields({
+      'First Name': 'John',
+      'Last Name': 'Doe',
+      Email: 'john@example.com',
+      'Confirm Email': 'john@example.com',
+      Password: 'CorrectHorseBatteryStaple',
+      'Confirm Password': 'CorrectHorseBatteryStaple'
+    });
+    await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
+    expect(supabase.auth.signUp).toHaveBeenCalledWith(
+      {
+        email: 'john@example.com',
+        password: 'CorrectHorseBatteryStaple'
+      },
+      {
+        captchaToken: 'mytoken',
+        data: {
+          first_name: 'John',
+          last_name: 'Doe'
+        }
+      }
+    );
+    signUpStub.mockRestore();
   });
 });

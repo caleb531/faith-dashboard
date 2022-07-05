@@ -15,7 +15,9 @@ jest.mock('../../supabaseClient');
 jest.mock('../../useVerifyCaptcha', () => {
   return jest.fn().mockImplementation(() => {
     return [
-      () => '',
+      () => {
+        // noop
+      },
       () => {
         // noop
       }
