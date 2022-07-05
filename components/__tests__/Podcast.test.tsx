@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import Home from '../../pages/index';
@@ -7,15 +7,10 @@ import podcastFeedJson from './__json__/podcastFeed.json';
 import podcastNoResultsJson from './__json__/podcastNoResults.json';
 import podcastSearchJson from './__json__/podcastSearch.json';
 import AudioMock from './__mocks__/AudioMock';
-import { getWidgetData } from './__utils__/test-utils';
+import { getWidgetData, waitForWidget } from './__utils__/test-utils';
 
 async function searchPodcasts(podcastQuery: string) {
-  await waitFor(() => {
-    expect(screen.getAllByRole('article')[3]).toHaveProperty(
-      'dataset.widgetType',
-      'Podcast'
-    );
-  });
+  await waitForWidget({ type: 'Podcast', index: 3 });
   const searchInput = screen.getAllByRole('searchbox', {
     name: 'Podcast Search Query'
   })[0] as HTMLInputElement;
@@ -48,21 +43,17 @@ describe('Podcast widget', () => {
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();
-    expect(
-      getWidgetData({
-        widgetTypeId: 'Podcast',
-        widgetIndex: 3
-      })
-    ).toHaveProperty('podcastQuery', 'sermon of the day');
+    expect(getWidgetData({ type: 'Podcast', index: 3 })).toHaveProperty(
+      'podcastQuery',
+      'sermon of the day'
+    );
 
     await choosePodcast('Sermon of the Day');
     expect(screen.getByText('50 episodes')).toBeInTheDocument();
-    expect(
-      getWidgetData({
-        widgetTypeId: 'Podcast',
-        widgetIndex: 3
-      })
-    ).toHaveProperty('podcastFeedData.title', podcastFeedJson.channel.title);
+    expect(getWidgetData({ type: 'Podcast', index: 3 })).toHaveProperty(
+      'podcastFeedData.title',
+      podcastFeedJson.channel.title
+    );
 
     await chooseEpisode('The Beautiful Faith of Fearless Submission');
     expect(

@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import Home from '../../pages/index';
@@ -7,15 +7,10 @@ import bibleVerseMultipleJson from './__json__/bibleVerseMultiple.json';
 import bibleVerseNoResultsJson from './__json__/bibleVerseNoResults.json';
 import bibleVerseRangeJson from './__json__/bibleVerseRange.json';
 import bibleVerseSingleJson from './__json__/bibleVerseSingle.json';
-import { getWidgetData } from './__utils__/test-utils';
+import { getWidgetData, waitForWidget } from './__utils__/test-utils';
 
 async function searchBibleVerses(verseQuery: string) {
-  await waitFor(() => {
-    expect(screen.getAllByRole('article')[0]).toHaveProperty(
-      'dataset.widgetType',
-      'BibleVerse'
-    );
-  });
+  await waitForWidget({ type: 'BibleVerse', index: 0 });
   await userEvent.type(
     screen.getAllByRole('searchbox', { name: 'Bible Verse Search Query' })[0],
     verseQuery
@@ -32,12 +27,10 @@ describe('Bible Verse widget', () => {
     expect(screen.getByText(/And we know/)).toHaveTextContent(
       'And we know that for those who love God all things work together for good, for those who are called according to his purpose.'
     );
-    expect(
-      getWidgetData({
-        widgetTypeId: 'BibleVerse',
-        widgetIndex: 0
-      })
-    ).toHaveProperty('verseQuery', 'rom8.28');
+    expect(getWidgetData({ type: 'BibleVerse', index: 0 })).toHaveProperty(
+      'verseQuery',
+      'rom8.28'
+    );
   });
 
   it('should search for verse range', async () => {

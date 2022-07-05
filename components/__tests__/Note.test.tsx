@@ -1,36 +1,24 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../../pages/index';
-import { getWidgetData } from './__utils__/test-utils';
+import { getWidgetData, waitForWidget } from './__utils__/test-utils';
 
 describe('Note widget', () => {
   it('should change note text', async () => {
     render(<Home />);
-    await waitFor(() => {
-      expect(screen.getAllByRole('article')[1]).toHaveProperty(
-        'dataset.widgetType',
-        'Note'
-      );
-    });
+    await waitForWidget({ type: 'Note', index: 1 });
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
     await userEvent.type(textBox, 'God is good');
     expect(textBox).toHaveProperty('value', 'God is good');
-    expect(
-      getWidgetData({
-        widgetTypeId: 'Note',
-        widgetIndex: 1
-      })
-    ).toHaveProperty('text', 'God is good');
+    expect(getWidgetData({ type: 'Note', index: 1 })).toHaveProperty(
+      'text',
+      'God is good'
+    );
   });
   it('should change text font size', async () => {
     render(<Home />);
-    await waitFor(() => {
-      expect(screen.getAllByRole('article')[1]).toHaveProperty(
-        'dataset.widgetType',
-        'Note'
-      );
-    });
+    await waitForWidget({ type: 'Note', index: 1 });
     await userEvent.click(
       screen.getAllByRole('button', { name: 'Toggle Settings' })[1]
     );
@@ -51,21 +39,14 @@ describe('Note widget', () => {
       'style.fontSize',
       '30px'
     );
-    expect(
-      getWidgetData({
-        widgetTypeId: 'Note',
-        widgetIndex: 1
-      })
-    ).toHaveProperty('fontSize', 30);
+    expect(getWidgetData({ type: 'Note', index: 1 })).toHaveProperty(
+      'fontSize',
+      30
+    );
   });
   it('should truncate preview text to no fewer than 2 words', async () => {
     render(<Home />);
-    await waitFor(() => {
-      expect(screen.getAllByRole('article')[1]).toHaveProperty(
-        'dataset.widgetType',
-        'Note'
-      );
-    });
+    await waitForWidget({ type: 'Note', index: 1 });
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
     await userEvent.type(
       textBox,
@@ -88,12 +69,7 @@ describe('Note widget', () => {
   });
   it('should truncate preview text to no more than 10 words', async () => {
     render(<Home />);
-    await waitFor(() => {
-      expect(screen.getAllByRole('article')[1]).toHaveProperty(
-        'dataset.widgetType',
-        'Note'
-      );
-    });
+    await waitForWidget({ type: 'Note', index: 1 });
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
     await userEvent.type(
       textBox,
