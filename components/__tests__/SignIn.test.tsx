@@ -3,6 +3,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../../pages';
 import SignIn from '../../pages/sign-in';
+import { supabase } from '../supabaseClient';
+import useVerifyCaptcha from '../useVerifyCaptcha';
 import { populateFormFields } from './__utils__/test-utils';
 
 describe('Sign In page', () => {
@@ -45,5 +47,24 @@ describe('Sign In page', () => {
     expect(
       screen.getByText('Error: Please complete the CAPTCHA')
     ).toBeInTheDocument();
+  });
+
+  it('should attempt to sign in', async () => {
+    (useVerifyCaptcha as jest.Mock).mockImplementationOnce(() => {
+      return [
+        () => 'token',
+        () => {
+          // noop
+        }
+      ];
+    });
+    jest.spyOn(supabase.auth, 'signIn');
+    render(<SignIn />);
+    await populateFormFields({
+      Email: 'caleb@example.com',
+      Password: 'CorrectHorseBatteryStaple'
+    });
+    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
+    expect(supabase.auth.signIn).toHaveBeenCalled();
   });
 });

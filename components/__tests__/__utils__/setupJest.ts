@@ -10,6 +10,18 @@ configure({ asyncUtilTimeout: 5000 });
 jest.setTimeout(10000);
 
 enableFetchMocks();
+jest.mock('../../supabaseClient');
+
+jest.mock('../../useVerifyCaptcha', () => {
+  return jest.fn().mockImplementation(() => {
+    return [
+      () => '',
+      () => {
+        // noop
+      }
+    ];
+  });
+});
 
 let audioStub: jest.SpyInstance;
 
