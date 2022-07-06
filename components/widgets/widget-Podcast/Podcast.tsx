@@ -45,7 +45,7 @@ const PodcastWidget = React.memo(function PodcastWidget({
     useWidgetDataFetcher({
       widget,
       dispatchToWidget,
-      shouldFetchInitially: () => podcastQuery && !podcastFeedData,
+      shouldFetchInitially: () => false,
       requestQuery: podcastQuery,
       setRequestQuery: (newPodcastQuery: typeof podcastQuery) => {
         removePodcastList();
