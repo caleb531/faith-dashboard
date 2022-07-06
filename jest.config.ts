@@ -8,6 +8,7 @@ const config: Config.InitialOptions = {
   // Do not attempt to test utility functions, since they themselves aren't
   // tests
   testPathIgnorePatterns: ['/__utils__/', '/__mocks__/'],
+  coveragePathIgnorePatterns: ['/__utils__/', '/__mocks__/'],
   // Do not attempt to transform lodash-es, since it uses native ES6 modules
   transformIgnorePatterns: ['<rootDir>/node_modules/(?!lodash-es)'],
   // Enable Jest to compile TypeScript/JSX using Next's built-in Babel preset
