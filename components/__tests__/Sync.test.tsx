@@ -112,4 +112,31 @@ describe('Sync functionality', () => {
     sessionStub.mockRestore();
     userStub.mockRestore();
   });
+
+  it('should not pull latest dashboard if not logged in', async () => {
+    const userStub = mockSupabaseUser(null);
+    const sessionStub = mockSupabaseSession(null);
+    const supabaseDbStub = mockSupabaseFrom();
+    supabaseFromMocks.dashboards.select.mockImplementation(() => {
+      return { data: [] } as any;
+    });
+    supabaseFromMocks.widgets.select.mockImplementation(() => {
+      return { data: [] } as any;
+    });
+    assignIdToLocalApp();
+    render(<Home />);
+    expect(
+      screen.getByRole('button', { name: 'Sign Up/In' })
+    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(supabase.from).not.toHaveBeenCalled();
+      expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(0);
+      expect(supabaseFromMocks.widgets.select).toHaveBeenCalledTimes(0);
+    });
+    supabaseFromMocks.dashboards.select.mockRestore();
+    supabaseFromMocks.widgets.select.mockRestore();
+    supabaseDbStub.mockRestore();
+    sessionStub.mockRestore();
+    userStub.mockRestore();
+  });
 });
