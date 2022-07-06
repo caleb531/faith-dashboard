@@ -113,7 +113,6 @@ export default function useWidgetDataFetcher({
   // submitRequestQuery() a non-ideal solution)
   fetchWidgetData: (newRequestQuery: string) => Promise<void>;
 } {
-  const isLoading = false;
   const { fetchError } = widget;
   async function fetchWidgetData(
     newRequestQuery: string,
@@ -180,7 +179,6 @@ export default function useWidgetDataFetcher({
     if (
       (shouldFetchInitially() ||
         (fetchFrequency && !isDateToday(widget.lastFetchDateTime))) &&
-      !isLoading &&
       !fetchError &&
       isOnline()
     ) {
