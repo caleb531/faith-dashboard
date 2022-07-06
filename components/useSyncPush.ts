@@ -1,7 +1,6 @@
 import { debounce } from 'lodash-es';
 import { useEffect, useMemo } from 'react';
 import { AppState } from './app/app.d';
-import { supabase } from './supabaseClient';
 import useObjectHasChanged from './useObjectHasChanged';
 import { WidgetState } from './widgets/widget';
 
@@ -20,10 +19,9 @@ function pushStateToDatabase<T extends AcceptableSyncStateTypes>({
   state: T;
   upsertState: (state: T) => Promise<void>;
 }): void {
-  const user = supabase.auth.user();
-  if (!user) {
-    return;
-  }
+  // There is no need to first check for an authenticated user here, as the
+  // defined upsertState() method is responsible for retrieving and checking
+  // the current user data (out of necessity, anyway)
   upsertState(state);
 }
 
@@ -43,9 +41,6 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
 
   const evaluatePushDebounced = useMemo(() => {
     return debounce(({ state, upsertState }) => {
-      if (!supabase.auth.session()) {
-        return;
-      }
       const changes = getStateChanges();
       // In order for the app to run in SSR, the app is first initialized with
       // the default app state, and then the local app state is asynchronously
