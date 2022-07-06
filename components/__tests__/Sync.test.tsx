@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { v4 as uuidv4 } from 'uuid';
 import Home from '../../pages';
 import appStateDefault from '../app/appStateDefault';
@@ -12,15 +13,16 @@ import {
   mockSupabaseUser,
   supabaseFromMocks
 } from './__mocks__/supabaseMockUtils';
+import { waitForWidget } from './__utils__/testUtils';
 
-function assignIdToLocalApp() {
+function assignIdToLocalApp(appId: string) {
   const app =
     JSON.parse(localStorage.getItem('faith-dashboard-app') || 'null') ||
     appStateDefault;
   localStorage.setItem(
     'faith-dashboard-app',
     JSON.stringify({
-      id: uuidv4(),
+      id: appId,
       ...app
     })
   );
@@ -49,7 +51,7 @@ describe('Sync functionality', () => {
         data: [{ raw_data: JSON.stringify(widgetToPullJson) }]
       } as any;
     });
-    assignIdToLocalApp();
+    assignIdToLocalApp(uuidv4());
     render(<Home />);
     expect(
       screen.getByRole('button', { name: 'Your Account' })
@@ -92,7 +94,7 @@ describe('Sync functionality', () => {
         error: null
       };
     });
-    assignIdToLocalApp();
+    assignIdToLocalApp(uuidv4());
     render(<Home />);
     expect(
       screen.getByRole('button', { name: 'Your Account' })
@@ -113,6 +115,68 @@ describe('Sync functionality', () => {
     userStub.mockRestore();
   });
 
+  it('should push when widget changes', async () => {
+    const userStub = mockSupabaseUser();
+    const sessionStub = mockSupabaseSession();
+    const supabaseDbStub = mockSupabaseFrom();
+    const appId = uuidv4();
+    supabaseFromMocks.dashboards.select.mockImplementation(() => {
+      return {
+        data: [
+          {
+            raw_data: JSON.stringify({
+              ...appStateDefault,
+              id: appId
+            })
+          }
+        ]
+      } as any;
+    });
+    supabaseFromMocks.widgets.select.mockImplementation(() => {
+      return { data: [] } as any;
+    });
+    supabaseFromMocks.dashboards.upsert.mockImplementation(() => {
+      return {
+        user: supabase.auth.user(),
+        session: supabase.auth.session(),
+        error: null
+      };
+    });
+    supabaseFromMocks.widgets.upsert.mockImplementation(() => {
+      return {
+        user: supabase.auth.user(),
+        session: supabase.auth.session(),
+        error: null
+      };
+    });
+    assignIdToLocalApp(appId);
+    render(<Home />);
+    expect(
+      screen.getByRole('button', { name: 'Your Account' })
+    ).toBeInTheDocument();
+    await waitForWidget({ type: 'Note', index: 1 });
+    const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
+    expect(textBox).toBeInTheDocument();
+    await userEvent.type(textBox, 'God is good', {
+      // Because we are using fake timers, we must advance the time mannally
+      // via the optional advanceTimers() callback to userEvent methods
+      advanceTimers: (delay) => {
+        jest.advanceTimersByTime(delay);
+      }
+    });
+    await waitFor(() => {
+      expect(supabase.from).toHaveBeenNthCalledWith(1, 'widgets');
+      expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(1);
+    });
+    supabaseFromMocks.dashboards.select.mockRestore();
+    supabaseFromMocks.widgets.select.mockRestore();
+    supabaseFromMocks.dashboards.upsert.mockRestore();
+    supabaseFromMocks.widgets.upsert.mockRestore();
+    supabaseDbStub.mockRestore();
+    sessionStub.mockRestore();
+    userStub.mockRestore();
+  });
+
   it('should not pull latest dashboard if not signed in', async () => {
     const userStub = mockSupabaseUser(null);
     const sessionStub = mockSupabaseSession(null);
@@ -123,7 +187,7 @@ describe('Sync functionality', () => {
     supabaseFromMocks.widgets.select.mockImplementation(() => {
       return { data: [] } as any;
     });
-    assignIdToLocalApp();
+    assignIdToLocalApp(uuidv4());
     render(<Home />);
     expect(
       screen.getByRole('button', { name: 'Sign Up/In' })
