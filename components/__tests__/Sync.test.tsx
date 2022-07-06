@@ -99,7 +99,7 @@ describe('Sync functionality', () => {
     await waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('dashboards');
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
-      expect(supabaseFromMocks.widgets.select).toHaveBeenCalledTimes(0);
+      expect(supabaseFromMocks.widgets.select).not.toHaveBeenCalled();
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
       expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(4);
     });
@@ -184,8 +184,8 @@ describe('Sync functionality', () => {
     ).toBeInTheDocument();
     await waitFor(() => {
       expect(supabase.from).not.toHaveBeenCalled();
-      expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(0);
-      expect(supabaseFromMocks.widgets.select).toHaveBeenCalledTimes(0);
+      expect(supabaseFromMocks.dashboards.select).not.toHaveBeenCalled();
+      expect(supabaseFromMocks.widgets.select).not.toHaveBeenCalled();
     });
     supabaseFromMocks.dashboards.select.mockRestore();
     supabaseFromMocks.widgets.select.mockRestore();
