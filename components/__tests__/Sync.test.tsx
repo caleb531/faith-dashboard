@@ -113,7 +113,7 @@ describe('Sync functionality', () => {
     userStub.mockRestore();
   });
 
-  it('should not pull latest dashboard if not logged in', async () => {
+  it('should not pull latest dashboard if not signed in', async () => {
     const userStub = mockSupabaseUser(null);
     const sessionStub = mockSupabaseSession(null);
     const supabaseDbStub = mockSupabaseFrom();
