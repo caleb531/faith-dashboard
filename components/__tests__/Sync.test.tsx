@@ -97,7 +97,7 @@ describe('Sync functionality', () => {
       screen.getByRole('button', { name: 'Your Account' })
     ).toBeInTheDocument();
     await waitFor(() => {
-      expect(supabase.from).toHaveBeenNthCalledWith(1, 'dashboards');
+      expect(supabase.from).toHaveBeenCalledWith('dashboards');
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
       expect(supabaseFromMocks.widgets.select).toHaveBeenCalledTimes(0);
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
