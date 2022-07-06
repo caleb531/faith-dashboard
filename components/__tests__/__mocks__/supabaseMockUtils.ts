@@ -1,27 +1,29 @@
+import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '../../supabaseClient';
 
 // This must always be called BEFORE mockSupabaseSession()
 export function mockSupabaseUser(
-  user = {
+  user: Partial<User> | null = {
     id: 'b9fa0901-c3d7-4e59-88e6-e483d69e49c4',
     email: 'caleb@example.com',
     user_metadata: { first_name: 'Caleb', last_name: 'Evans' }
   }
 ) {
   return jest.spyOn(supabase.auth, 'user').mockImplementation(() => {
-    return user as any;
+    return user as User | null;
   });
 }
 
 // This must always be called AFTER mockSupabaseUser()
-export function mockSupabaseSession() {
+export function mockSupabaseSession(
+  session: Partial<Session> | null = {
+    expires_in: 3600,
+    expires_at: Date.now() / 1000 + 3600,
+    user: supabase.auth.user()
+  }
+) {
   return jest.spyOn(supabase.auth, 'session').mockImplementation(() => {
-    const user = supabase.auth.user();
-    return {
-      expires_in: 3600,
-      expires_at: Date.now() / 1000 + 3600,
-      user
-    } as any;
+    return session as Session | null;
   });
 }
 
