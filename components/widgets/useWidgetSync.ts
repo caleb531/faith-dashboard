@@ -69,10 +69,6 @@ function useWidgetSync(
       return;
     }
     widgetSyncService.onPush(widget.id).then(() => {
-      const user = supabase.auth.user();
-      if (!user) {
-        return;
-      }
       pushLocalWidgetToServer(widgetRef.current);
     });
     return () => {
