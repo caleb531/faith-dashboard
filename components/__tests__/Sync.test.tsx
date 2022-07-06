@@ -167,6 +167,59 @@ describe('Sync functionality', () => {
     userStub.mockRestore();
   });
 
+  it('should not push on widget change if not signed in', async () => {
+    const userStub = mockSupabaseUser(null);
+    const sessionStub = mockSupabaseSession(null);
+    const supabaseDbStub = mockSupabaseFrom();
+    const appId = uuidv4();
+    supabaseFromMocks.dashboards.select.mockImplementation(() => {
+      return {
+        data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
+      } as any;
+    });
+    supabaseFromMocks.widgets.select.mockImplementation(() => {
+      return { data: [] } as any;
+    });
+    supabaseFromMocks.dashboards.upsert.mockImplementation(() => {
+      return {
+        user: supabase.auth.user(),
+        session: supabase.auth.session(),
+        error: null
+      };
+    });
+    supabaseFromMocks.widgets.upsert.mockImplementation(() => {
+      return {
+        user: supabase.auth.user(),
+        session: supabase.auth.session(),
+        error: null
+      };
+    });
+    assignIdToLocalApp(appId);
+    render(<Home />);
+    expect(
+      screen.getByRole('button', { name: 'Sign Up/In' })
+    ).toBeInTheDocument();
+    await waitForWidget({ type: 'Note', index: 1 });
+    const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
+    expect(textBox).toBeInTheDocument();
+    await userEvent.type(textBox, 'God is good', {
+      advanceTimers: (delay) => {
+        jest.advanceTimersByTime(delay);
+      }
+    });
+    await waitFor(() => {
+      expect(supabase.from).not.toHaveBeenCalledWith('widgets');
+      expect(supabaseFromMocks.widgets.upsert).not.toHaveBeenCalled();
+    });
+    supabaseFromMocks.dashboards.select.mockRestore();
+    supabaseFromMocks.widgets.select.mockRestore();
+    supabaseFromMocks.dashboards.upsert.mockRestore();
+    supabaseFromMocks.widgets.upsert.mockRestore();
+    supabaseDbStub.mockRestore();
+    sessionStub.mockRestore();
+    userStub.mockRestore();
+  });
+
   it('should not pull latest dashboard if not signed in', async () => {
     const userStub = mockSupabaseUser(null);
     const sessionStub = mockSupabaseSession(null);
