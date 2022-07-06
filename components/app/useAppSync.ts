@@ -1,3 +1,4 @@
+import { throttle } from 'lodash-es';
 import { Dispatch, useEffect } from 'react';
 import { isSessionActive } from '../accountUtils';
 import { supabase } from '../supabaseClient';
@@ -36,25 +37,24 @@ async function applyServerAppToLocalApp(
 // Replace the local application state with the latest application state from
 // the server; if there is no app state on the server, then push the local app
 // state to the server
-async function pullLatestAppFromServer(
-  app: AppState,
-  dispatchToApp: Dispatch<AppAction>
-): Promise<void> {
-  if (!isSessionActive()) {
-    return;
-  }
-  const { data, error } = await supabase.from('dashboards').select('raw_data');
-  if (!(data && data.length > 0)) {
-    const user = supabase.auth.user();
-    if (user) {
+const pullLatestAppFromServer = throttle(
+  async (app: AppState, dispatchToApp: Dispatch<AppAction>): Promise<void> => {
+    if (!isSessionActive()) {
+      return;
+    }
+    const { data, error } = await supabase
+      .from('dashboards')
+      .select('raw_data');
+    if (!(data && data.length > 0)) {
       pushLocalAppToServer(app);
       pushLocalWidgetsToServer(app);
+      return;
     }
-    return;
-  }
-  const newApp: AppState = JSON.parse(data[0].raw_data);
-  applyServerAppToLocalApp(newApp, dispatchToApp);
-}
+    const newApp: AppState = JSON.parse(data[0].raw_data);
+    applyServerAppToLocalApp(newApp, dispatchToApp);
+  },
+  1000
+);
 
 // Push the local application state to the server; this function runs when the
 // app changes, but also once when there is no app state on the server
