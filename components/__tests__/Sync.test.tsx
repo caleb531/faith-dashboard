@@ -21,10 +21,7 @@ function assignIdToLocalApp(appId: string) {
     appStateDefault;
   localStorage.setItem(
     'faith-dashboard-app',
-    JSON.stringify({
-      id: appId,
-      ...app
-    })
+    JSON.stringify({ id: appId, ...app })
   );
 }
 
@@ -122,14 +119,7 @@ describe('Sync functionality', () => {
     const appId = uuidv4();
     supabaseFromMocks.dashboards.select.mockImplementation(() => {
       return {
-        data: [
-          {
-            raw_data: JSON.stringify({
-              ...appStateDefault,
-              id: appId
-            })
-          }
-        ]
+        data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
       } as any;
     });
     supabaseFromMocks.widgets.select.mockImplementation(() => {
