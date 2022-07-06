@@ -80,6 +80,7 @@ export const supabaseFromMocks: {
 export function mockSupabaseFrom() {
   return jest
     .spyOn(supabase, 'from')
+    .mockName('supabase from')
     .mockImplementation((tableName: string) => {
       return supabaseFromMocks[tableName] as any;
     }) as any;
