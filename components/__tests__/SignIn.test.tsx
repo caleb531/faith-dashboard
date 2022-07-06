@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import preview from 'jest-preview';
 import Home from '../../pages';
 import SignIn from '../../pages/sign-in';
 import { supabase } from '../supabaseClient';
@@ -80,7 +79,6 @@ describe('Sign In page', () => {
         captchaToken: 'mytoken'
       }
     );
-    preview.debug();
     signInStub.mockRestore();
   });
 
