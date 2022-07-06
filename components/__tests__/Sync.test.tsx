@@ -27,8 +27,15 @@ function assignIdToLocalApp() {
 }
 
 describe('Sync functionality', () => {
-  it('should pull latest dashboard on page load (when signed in)', async () => {
+  beforeEach(() => {
     jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('should pull latest dashboard on page load (when signed in)', async () => {
     const userStub = mockSupabaseUser();
     const sessionStub = mockSupabaseSession();
     const supabaseDbStub = mockSupabaseFrom();
@@ -59,10 +66,9 @@ describe('Sync functionality', () => {
     supabaseDbStub.mockRestore();
     sessionStub.mockRestore();
     userStub.mockRestore();
-    jest.useRealTimers();
   });
+
   it('should push local dashboard if nothing to pull', async () => {
-    jest.useFakeTimers();
     const userStub = mockSupabaseUser();
     const sessionStub = mockSupabaseSession();
     const supabaseDbStub = mockSupabaseFrom();
@@ -73,10 +79,18 @@ describe('Sync functionality', () => {
       return { data: [] } as any;
     });
     supabaseFromMocks.dashboards.upsert.mockImplementation(() => {
-      return { data: [] } as any;
+      return {
+        user: supabase.auth.user(),
+        session: supabase.auth.session(),
+        error: null
+      };
     });
     supabaseFromMocks.widgets.upsert.mockImplementation(() => {
-      return { data: [] } as any;
+      return {
+        user: supabase.auth.user(),
+        session: supabase.auth.session(),
+        error: null
+      };
     });
     assignIdToLocalApp();
     render(<Home />);
@@ -88,19 +102,14 @@ describe('Sync functionality', () => {
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
       expect(supabaseFromMocks.widgets.select).toHaveBeenCalledTimes(0);
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
-      // TODO: the upsert() call referenced below should actually be called 4
-      // times instead of 3; the issue is due to the fact that the Podcast
-      // widget sets isLoading:true immediately by default, yet
-      // pushLocalWidgetToServer() in the useWidgetSync() hook is designed to
-      // skip the push if isLoading is true (so that we don't always push the
-      // widget on initial page load, even if it hasn't changed otherwise)
-      expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(3);
+      expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(4);
     });
     supabaseFromMocks.dashboards.select.mockRestore();
     supabaseFromMocks.widgets.select.mockRestore();
+    supabaseFromMocks.dashboards.upsert.mockRestore();
+    supabaseFromMocks.widgets.upsert.mockRestore();
     supabaseDbStub.mockRestore();
     sessionStub.mockRestore();
     userStub.mockRestore();
-    jest.useRealTimers();
   });
 });
