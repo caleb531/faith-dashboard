@@ -59,11 +59,11 @@ export function mockSupabaseApiResponse(
 // us to independently manage select() mocks
 function generateSupabaseFromMocks(tableName: string) {
   return {
-    select: jest.fn(),
-    insert: jest.fn(),
-    update: jest.fn(),
-    upsert: jest.fn(),
-    delete: jest.fn()
+    select: jest.fn().mockName(`${tableName} select`),
+    insert: jest.fn().mockName(`${tableName} insert`),
+    update: jest.fn().mockName(`${tableName} update`),
+    upsert: jest.fn().mockName(`${tableName} upsert`),
+    delete: jest.fn().mockName(`${tableName} delete`)
   };
 }
 
