@@ -77,7 +77,7 @@ describe('Sync functionality', () => {
   it('should pull latest dashboard on page load (when signed in)', async () => {
     const userStub = mockSupabaseUser();
     const sessionStub = mockSupabaseSession();
-    const supabaseDbStub = mockSupabaseFrom();
+    const supabaseFromStub = mockSupabaseFrom();
     const dashboardSelectMock = mockSelect('dashboards', {
       data: [{ raw_data: JSON.stringify(dashboardToPullJson) }]
     });
@@ -101,7 +101,7 @@ describe('Sync functionality', () => {
     ).toHaveProperty('value', 'God is always with you');
     dashboardSelectMock.mockRestore();
     widgetSelectMock.mockRestore();
-    supabaseDbStub.mockRestore();
+    supabaseFromStub.mockRestore();
     sessionStub.mockRestore();
     userStub.mockRestore();
   });
@@ -109,7 +109,7 @@ describe('Sync functionality', () => {
   it('should push local dashboard if nothing to pull', async () => {
     const userStub = mockSupabaseUser();
     const sessionStub = mockSupabaseSession();
-    const supabaseDbStub = mockSupabaseFrom();
+    const supabaseFromStub = mockSupabaseFrom();
     const dashboardSelectMock = mockSelect('dashboards', {
       data: []
     });
@@ -132,7 +132,7 @@ describe('Sync functionality', () => {
     widgetSelectMock.mockRestore();
     dashboardUpsertMock.mockRestore();
     widgetUpsertMock.mockRestore();
-    supabaseDbStub.mockRestore();
+    supabaseFromStub.mockRestore();
     sessionStub.mockRestore();
     userStub.mockRestore();
   });
@@ -140,7 +140,7 @@ describe('Sync functionality', () => {
   it('should push when widget changes', async () => {
     const userStub = mockSupabaseUser();
     const sessionStub = mockSupabaseSession();
-    const supabaseDbStub = mockSupabaseFrom();
+    const supabaseFromStub = mockSupabaseFrom();
     const appId = uuidv4();
     const dashboardSelectMock = mockSelect('dashboards', {
       data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
@@ -171,7 +171,7 @@ describe('Sync functionality', () => {
     widgetSelectMock.mockRestore();
     dashboardUpsertMock.mockRestore();
     widgetUpsertMock.mockRestore();
-    supabaseDbStub.mockRestore();
+    supabaseFromStub.mockRestore();
     sessionStub.mockRestore();
     userStub.mockRestore();
   });
@@ -179,7 +179,7 @@ describe('Sync functionality', () => {
   it('should delete widget from server when deleted locally', async () => {
     const userStub = mockSupabaseUser();
     const sessionStub = mockSupabaseSession();
-    const supabaseDbStub = mockSupabaseFrom();
+    const supabaseFromStub = mockSupabaseFrom();
     const appId = uuidv4();
     const dashboardSelectMock = mockSelect('dashboards', {
       data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
@@ -207,7 +207,7 @@ describe('Sync functionality', () => {
     dashboardSelectMock.mockRestore();
     widgetSelectMock.mockRestore();
     widgetDeleteMock.mockRestore();
-    supabaseDbStub.mockRestore();
+    supabaseFromStub.mockRestore();
     sessionStub.mockRestore();
     userStub.mockRestore();
   });
@@ -215,7 +215,7 @@ describe('Sync functionality', () => {
   it('should not push on widget change if not signed in', async () => {
     const userStub = mockSupabaseUser(null);
     const sessionStub = mockSupabaseSession(null);
-    const supabaseDbStub = mockSupabaseFrom();
+    const supabaseFromStub = mockSupabaseFrom();
     const appId = uuidv4();
     const dashboardSelectMock = mockSelect('dashboards', {
       data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
@@ -244,7 +244,7 @@ describe('Sync functionality', () => {
     widgetSelectMock.mockRestore();
     dashboardUpsertMock.mockRestore();
     widgetUpsertMock.mockRestore();
-    supabaseDbStub.mockRestore();
+    supabaseFromStub.mockRestore();
     sessionStub.mockRestore();
     userStub.mockRestore();
   });
@@ -252,7 +252,7 @@ describe('Sync functionality', () => {
   it('should not pull latest dashboard if not signed in', async () => {
     const userStub = mockSupabaseUser(null);
     const sessionStub = mockSupabaseSession(null);
-    const supabaseDbStub = mockSupabaseFrom();
+    const supabaseFromStub = mockSupabaseFrom();
     const dashboardSelectMock = mockSelect('dashboards', { data: [] });
     const widgetSelectMock = mockSelect('widgets', { data: [] });
     assignIdToLocalApp(uuidv4());
@@ -267,7 +267,7 @@ describe('Sync functionality', () => {
     });
     dashboardSelectMock.mockRestore();
     widgetSelectMock.mockRestore();
-    supabaseDbStub.mockRestore();
+    supabaseFromStub.mockRestore();
     sessionStub.mockRestore();
     userStub.mockRestore();
   });
