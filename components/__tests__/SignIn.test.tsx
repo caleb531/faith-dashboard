@@ -11,6 +11,10 @@ import { mockSupabaseApiResponse } from './__mocks__/supabaseMockUtils';
 import { populateFormFields } from './__utils__/testUtils';
 
 describe('Sign In page', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('should require all form fields to be populated', async () => {
     render(<SignIn />);
     const requiredFields = ['Email', 'Password'];
@@ -49,7 +53,7 @@ describe('Sign In page', () => {
 
   it('should sign in successfully', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    const signInStub = mockSupabaseApiResponse(supabase.auth, 'signIn', {
+    mockSupabaseApiResponse(supabase.auth, 'signIn', {
       user: {
         email: 'caleb@example.com',
         user_metadata: { first_name: 'Caleb', last_name: 'Evans' }
@@ -72,12 +76,11 @@ describe('Sign In page', () => {
         captchaToken: 'mytoken'
       }
     );
-    signInStub.mockRestore();
   });
 
   it('should handle errors from server', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    const signInStub = mockSupabaseApiResponse(supabase.auth, 'signIn', {
+    mockSupabaseApiResponse(supabase.auth, 'signIn', {
       user: null,
       session: null,
       error: {
@@ -92,6 +95,5 @@ describe('Sign In page', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
     expect(supabase.auth.signIn).toHaveBeenCalled();
     expect(screen.getByText('Invalid login credentials')).toBeInTheDocument();
-    signInStub.mockRestore();
   });
 });

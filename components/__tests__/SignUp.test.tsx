@@ -11,6 +11,10 @@ import { mockSupabaseApiResponse } from './__mocks__/supabaseMockUtils';
 import { populateFormFields } from './__utils__/testUtils';
 
 describe('Sign Up page', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('should validate that email addresses are matching', async () => {
     render(<SignUp />);
     await populateFormFields({
@@ -144,7 +148,6 @@ describe('Sign Up page', () => {
         }
       }
     );
-    signUpStub.mockRestore();
   });
 
   it('should handle errors from server', async () => {
@@ -167,6 +170,5 @@ describe('Sign Up page', () => {
     });
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
     expect(screen.getByText('User already exists')).toBeInTheDocument();
-    signUpStub.mockRestore();
   });
 });

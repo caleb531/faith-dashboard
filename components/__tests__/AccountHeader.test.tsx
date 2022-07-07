@@ -22,6 +22,7 @@ describe('Account Header', () => {
   });
 
   afterEach(() => {
+    jest.restoreAllMocks();
     window.location = originalLocationObject;
   });
 
@@ -48,13 +49,11 @@ describe('Account Header', () => {
     mockSupabaseUser();
     mockSupabaseSession();
     mockConfirm(() => true);
-    const signOutMock = jest
-      .spyOn(supabase.auth, 'signOut')
-      .mockImplementation(() => {
-        return {
-          error: null
-        } as any;
-      });
+    jest.spyOn(supabase.auth, 'signOut').mockImplementation(() => {
+      return {
+        error: null
+      } as any;
+    });
     render(<Home />);
     await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
     localStorage.setItem('faith-dashboard-whatever', 'true');
@@ -64,25 +63,21 @@ describe('Account Header', () => {
     await userEvent.click(screen.getByText('Sign Out'));
     log.mockReset();
     expect(localStorage.getItem('faith-dashboard-whatever')).toEqual(null);
-    signOutMock.mockRestore();
   });
 
   it('should cancel signing out', async () => {
     mockSupabaseUser();
     mockSupabaseSession();
     mockConfirm(() => false);
-    const signOutMock = jest
-      .spyOn(supabase.auth, 'signOut')
-      .mockImplementation(() => {
-        return {
-          error: null
-        } as any;
-      });
+    jest.spyOn(supabase.auth, 'signOut').mockImplementation(() => {
+      return {
+        error: null
+      } as any;
+    });
     render(<Home />);
     await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
     localStorage.setItem('faith-dashboard-whatever', 'true');
     await userEvent.click(screen.getByText('Sign Out'));
     expect(localStorage.getItem('faith-dashboard-whatever')).toEqual('true');
-    signOutMock.mockRestore();
   });
 });
