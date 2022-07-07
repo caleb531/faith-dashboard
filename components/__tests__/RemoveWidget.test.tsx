@@ -14,19 +14,19 @@ function mockConfirm(mockImpl: (message?: string) => boolean) {
 }
 
 async function removeWidgetElem({
-  widgetTypeId,
-  widgetIndex,
+  type,
+  index,
   confirmRemove
 }: {
-  widgetTypeId: WidgetTypeId;
-  widgetIndex: number;
+  type: WidgetTypeId;
+  index: number;
   confirmRemove: boolean;
 }) {
   const confirm = mockConfirm(() => confirmRemove);
-  const widgetElem = screen.getAllByRole('article')[widgetIndex];
-  expect(widgetElem).toHaveProperty('dataset.widgetType', widgetTypeId);
+  const widgetElem = screen.getAllByRole('article')[index];
+  expect(widgetElem).toHaveProperty('dataset.widgetType', type);
   await userEvent.click(
-    screen.getAllByRole('button', { name: 'Remove Widget' })[widgetIndex]
+    screen.getAllByRole('button', { name: 'Remove Widget' })[index]
   );
   expect(confirm).toHaveBeenCalled();
   confirm.mockReset();
@@ -40,8 +40,8 @@ describe('Remove Widget UI', () => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
     const widgetElem = await removeWidgetElem({
-      widgetTypeId: 'BibleVerse',
-      widgetIndex: 0,
+      type: 'BibleVerse',
+      index: 0,
       confirmRemove: true
     });
     await waitForElementToBeRemoved(widgetElem);
@@ -54,8 +54,8 @@ describe('Remove Widget UI', () => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
     const widgetElem = await removeWidgetElem({
-      widgetTypeId: 'Note',
-      widgetIndex: 1,
+      type: 'Note',
+      index: 1,
       confirmRemove: true
     });
     await waitForElementToBeRemoved(widgetElem);
@@ -68,8 +68,8 @@ describe('Remove Widget UI', () => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
     const widgetElem = await removeWidgetElem({
-      widgetTypeId: 'Podcast',
-      widgetIndex: 3,
+      type: 'Podcast',
+      index: 3,
       confirmRemove: true
     });
     await waitForElementToBeRemoved(widgetElem);
@@ -82,8 +82,8 @@ describe('Remove Widget UI', () => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
     await removeWidgetElem({
-      widgetTypeId: 'Note',
-      widgetIndex: 1,
+      type: 'Note',
+      index: 1,
       confirmRemove: false
     });
     await waitFor(() => {
