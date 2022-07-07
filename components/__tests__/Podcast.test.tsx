@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import Home from '../../pages/index';
@@ -135,6 +135,24 @@ describe('Podcast widget', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Pause' }));
     expect(pauseStub).toHaveBeenCalled();
     AudioMock.instances[0].paused = true;
+  });
+
+  it('should interact with audio seeker', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    render(<Home />);
+
+    await searchPodcasts('sermon of the day');
+    await choosePodcast('Sermon of the Day');
+    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+
+    const audioProgressSlider = screen.getByRole('slider', {
+      name: 'Audio Progress'
+    }) as HTMLInputElement;
+    expect(audioProgressSlider).toBeInTheDocument();
+    await fireEvent.input(audioProgressSlider, { target: { value: '10' } });
+    await fireEvent.change(audioProgressSlider, { target: { value: '10' } });
+    await userEvent.click(audioProgressSlider);
   });
 
   it('should handle no results', async () => {
