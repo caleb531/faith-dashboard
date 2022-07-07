@@ -71,17 +71,18 @@ describe('Sync functionality', () => {
   });
 
   afterEach(() => {
+    jest.clearAllMocks();
     jest.useRealTimers();
   });
 
   it('should pull latest dashboard on page load (when signed in)', async () => {
-    const userStub = mockSupabaseUser();
-    const sessionStub = mockSupabaseSession();
-    const supabaseFromStub = mockSupabaseFrom();
-    const dashboardSelectMock = mockSelect('dashboards', {
+    mockSupabaseUser();
+    mockSupabaseSession();
+    mockSupabaseFrom();
+    mockSelect('dashboards', {
       data: [{ raw_data: JSON.stringify(dashboardToPullJson) }]
     });
-    const widgetSelectMock = mockSelect('widgets', {
+    mockSelect('widgets', {
       data: [{ raw_data: JSON.stringify(widgetToPullJson) }]
     });
     assignIdToLocalApp(uuidv4());
@@ -90,32 +91,26 @@ describe('Sync functionality', () => {
       screen.getByRole('button', { name: 'Your Account' })
     ).toBeInTheDocument();
     await waitFor(() => {
-      expect(supabase.from).toHaveBeenNthCalledWith(1, 'dashboards');
-      expect(supabase.from).toHaveBeenNthCalledWith(2, 'widgets');
-      expect(supabase.from).toHaveBeenNthCalledWith(3, 'dashboards');
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(2);
       expect(supabaseFromMocks.widgets.select).toHaveBeenCalledTimes(1);
     });
+    expect(screen.getByText('Evening')).toBeInTheDocument();
+    expect(screen.queryByText('Shore')).not.toBeInTheDocument();
     expect(
       screen.getAllByRole('textbox', { name: 'Note Text' })[0]
     ).toHaveProperty('value', 'God is always with you');
-    dashboardSelectMock.mockRestore();
-    widgetSelectMock.mockRestore();
-    supabaseFromStub.mockRestore();
-    sessionStub.mockRestore();
-    userStub.mockRestore();
   });
 
   it('should push local dashboard if nothing to pull', async () => {
-    const userStub = mockSupabaseUser();
-    const sessionStub = mockSupabaseSession();
-    const supabaseFromStub = mockSupabaseFrom();
-    const dashboardSelectMock = mockSelect('dashboards', {
+    mockSupabaseUser();
+    mockSupabaseSession();
+    mockSupabaseFrom();
+    mockSelect('dashboards', {
       data: []
     });
-    const widgetSelectMock = mockSelect('widgets', { data: [] });
-    const dashboardUpsertMock = mockUpsert('dashboards');
-    const widgetUpsertMock = mockUpsert('widgets');
+    mockSelect('widgets', { data: [] });
+    mockUpsert('dashboards');
+    mockUpsert('widgets');
     assignIdToLocalApp(uuidv4());
     render(<Home />);
     expect(
@@ -128,26 +123,19 @@ describe('Sync functionality', () => {
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
       expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(4);
     });
-    dashboardSelectMock.mockRestore();
-    widgetSelectMock.mockRestore();
-    dashboardUpsertMock.mockRestore();
-    widgetUpsertMock.mockRestore();
-    supabaseFromStub.mockRestore();
-    sessionStub.mockRestore();
-    userStub.mockRestore();
   });
 
   it('should push when widget changes', async () => {
-    const userStub = mockSupabaseUser();
-    const sessionStub = mockSupabaseSession();
-    const supabaseFromStub = mockSupabaseFrom();
+    mockSupabaseUser();
+    mockSupabaseSession();
+    mockSupabaseFrom();
     const appId = uuidv4();
-    const dashboardSelectMock = mockSelect('dashboards', {
+    mockSelect('dashboards', {
       data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
     });
-    const widgetSelectMock = mockSelect('widgets', { data: [] });
-    const dashboardUpsertMock = mockUpsert('dashboards');
-    const widgetUpsertMock = mockUpsert('widgets');
+    mockSelect('widgets', { data: [] });
+    mockUpsert('dashboards');
+    mockUpsert('widgets');
     assignIdToLocalApp(appId);
     render(<Home />);
     expect(
@@ -167,25 +155,18 @@ describe('Sync functionality', () => {
       expect(supabase.from).toHaveBeenNthCalledWith(1, 'widgets');
       expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(1);
     });
-    dashboardSelectMock.mockRestore();
-    widgetSelectMock.mockRestore();
-    dashboardUpsertMock.mockRestore();
-    widgetUpsertMock.mockRestore();
-    supabaseFromStub.mockRestore();
-    sessionStub.mockRestore();
-    userStub.mockRestore();
   });
 
   it('should delete widget from server when deleted locally', async () => {
-    const userStub = mockSupabaseUser();
-    const sessionStub = mockSupabaseSession();
-    const supabaseFromStub = mockSupabaseFrom();
+    mockSupabaseUser();
+    mockSupabaseSession();
+    mockSupabaseFrom();
     const appId = uuidv4();
-    const dashboardSelectMock = mockSelect('dashboards', {
+    mockSelect('dashboards', {
       data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
     });
-    const widgetSelectMock = mockSelect('widgets', { data: [] });
-    const widgetDeleteMock = mockDelete('widgets');
+    mockSelect('widgets', { data: [] });
+    mockDelete('widgets');
     assignIdToLocalApp(appId);
     render(<Home />);
     expect(
@@ -204,25 +185,19 @@ describe('Sync functionality', () => {
       expect(supabase.from).toHaveBeenNthCalledWith(1, 'widgets');
       expect(supabaseFromMocks.widgets.delete).toHaveBeenCalled();
     });
-    dashboardSelectMock.mockRestore();
-    widgetSelectMock.mockRestore();
-    widgetDeleteMock.mockRestore();
-    supabaseFromStub.mockRestore();
-    sessionStub.mockRestore();
-    userStub.mockRestore();
   });
 
   it('should not push on widget change if not signed in', async () => {
-    const userStub = mockSupabaseUser(null);
-    const sessionStub = mockSupabaseSession(null);
-    const supabaseFromStub = mockSupabaseFrom();
+    mockSupabaseUser(null);
+    mockSupabaseSession(null);
+    mockSupabaseFrom();
     const appId = uuidv4();
-    const dashboardSelectMock = mockSelect('dashboards', {
+    mockSelect('dashboards', {
       data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
     });
-    const widgetSelectMock = mockSelect('widgets', { data: [] });
-    const dashboardUpsertMock = mockUpsert('dashboards');
-    const widgetUpsertMock = mockUpsert('widgets');
+    mockSelect('widgets', { data: [] });
+    mockUpsert('dashboards');
+    mockUpsert('widgets');
     assignIdToLocalApp(appId);
     render(<Home />);
     expect(
@@ -240,21 +215,14 @@ describe('Sync functionality', () => {
       expect(supabase.from).not.toHaveBeenCalledWith('widgets');
       expect(supabaseFromMocks.widgets.upsert).not.toHaveBeenCalled();
     });
-    dashboardSelectMock.mockRestore();
-    widgetSelectMock.mockRestore();
-    dashboardUpsertMock.mockRestore();
-    widgetUpsertMock.mockRestore();
-    supabaseFromStub.mockRestore();
-    sessionStub.mockRestore();
-    userStub.mockRestore();
   });
 
   it('should not pull latest dashboard if not signed in', async () => {
-    const userStub = mockSupabaseUser(null);
-    const sessionStub = mockSupabaseSession(null);
-    const supabaseFromStub = mockSupabaseFrom();
-    const dashboardSelectMock = mockSelect('dashboards', { data: [] });
-    const widgetSelectMock = mockSelect('widgets', { data: [] });
+    mockSupabaseUser(null);
+    mockSupabaseSession(null);
+    mockSupabaseFrom();
+    mockSelect('dashboards', { data: [] });
+    mockSelect('widgets', { data: [] });
     assignIdToLocalApp(uuidv4());
     render(<Home />);
     expect(
@@ -265,10 +233,5 @@ describe('Sync functionality', () => {
       expect(supabaseFromMocks.dashboards.select).not.toHaveBeenCalled();
       expect(supabaseFromMocks.widgets.select).not.toHaveBeenCalled();
     });
-    dashboardSelectMock.mockRestore();
-    widgetSelectMock.mockRestore();
-    supabaseFromStub.mockRestore();
-    sessionStub.mockRestore();
-    userStub.mockRestore();
   });
 });
