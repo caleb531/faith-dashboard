@@ -1,20 +1,17 @@
 type Props = {
   onPressButton: () => void;
-  buttonProps?: object;
-  buttonClassNames?: string;
+  [key: string]: any;
 };
 
-function AddWidget({
-  onPressButton,
-  buttonProps = {},
-  buttonClassNames = ''
-}: Props) {
+function AddWidget({ onPressButton, ...buttonProps }: Props) {
   return (
     <button
       type="button"
-      className={`add-widget-button ${buttonClassNames}`}
       onClick={onPressButton}
       {...buttonProps}
+      className={`add-widget-button ${
+        buttonProps.className ? buttonProps.className : ''
+      }`}
     >
       <img
         className="add-widget-button-icon"

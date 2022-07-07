@@ -11,8 +11,8 @@ function AppHeaderAddWidgetButton() {
     <div className="app-header-add-widget-wrapper">
       <AddWidgetButton
         onPressButton={() => setWidgetPickerIsOpen((isOpen) => !isOpen)}
-        buttonProps={stepProps}
-        buttonClassNames="app-header-control-button"
+        className="app-header-control-button"
+        {...stepProps}
       />
       {isCurrentStep ? <TutorialStepTooltip /> : null}
       {widgetPickerIsOpen ? (
