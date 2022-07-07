@@ -12,6 +12,6 @@ function usePasswordRecoveryRedirect() {
         window.location.assign('/reset-password' + window.location.hash);
       }
     });
-  });
+  }, []);
 }
 export default usePasswordRecoveryRedirect;
