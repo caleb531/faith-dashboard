@@ -99,9 +99,9 @@ function Help() {
 
       <p>
         If you are using an iPhone or iPad, you can visit{' '}
-        <a href="https://faithdashboard.com">
-          <span className="landing-page-em">faithdashboard.com</span>
-        </a>{' '}
+        <span className="landing-page-em">
+          <Link href="/">faithdashboard.com</Link>
+        </span>{' '}
         and add it to your home screen like so:
       </p>
 
