@@ -5,33 +5,8 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import Home from '../../pages/index';
-import { WidgetTypeId } from '../widgets/widget';
-
-function mockConfirm(mockImpl: (message?: string) => boolean) {
-  return jest.spyOn(window, 'confirm').mockImplementation(mockImpl);
-}
-
-async function removeWidgetElem({
-  type,
-  index,
-  confirmRemove
-}: {
-  type: WidgetTypeId;
-  index: number;
-  confirmRemove: boolean;
-}) {
-  const confirm = mockConfirm(() => confirmRemove);
-  const widgetElem = screen.getAllByRole('article')[index];
-  expect(widgetElem).toHaveProperty('dataset.widgetType', type);
-  await userEvent.click(
-    screen.getAllByRole('button', { name: 'Remove Widget' })[index]
-  );
-  expect(confirm).toHaveBeenCalled();
-  confirm.mockReset();
-  return widgetElem;
-}
+import { removeWidget } from './__utils__/testUtils';
 
 describe('Remove Widget UI', () => {
   it('should remove BibleVerse widget', async () => {
@@ -39,7 +14,7 @@ describe('Remove Widget UI', () => {
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
-    const widgetElem = await removeWidgetElem({
+    const widgetElem = await removeWidget({
       type: 'BibleVerse',
       index: 0,
       confirmRemove: true
@@ -53,7 +28,7 @@ describe('Remove Widget UI', () => {
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
-    const widgetElem = await removeWidgetElem({
+    const widgetElem = await removeWidget({
       type: 'Note',
       index: 1,
       confirmRemove: true
@@ -67,7 +42,7 @@ describe('Remove Widget UI', () => {
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
-    const widgetElem = await removeWidgetElem({
+    const widgetElem = await removeWidget({
       type: 'Podcast',
       index: 3,
       confirmRemove: true
@@ -81,7 +56,7 @@ describe('Remove Widget UI', () => {
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
-    await removeWidgetElem({
+    await removeWidget({
       type: 'Note',
       index: 1,
       confirmRemove: false

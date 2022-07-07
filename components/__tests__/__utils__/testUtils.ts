@@ -48,6 +48,30 @@ export function getWidgetData({
   return widgetData;
 }
 
+export function mockConfirm(mockImpl: (message?: string) => boolean) {
+  return jest.spyOn(window, 'confirm').mockImplementation(mockImpl);
+}
+
+export async function removeWidget({
+  type,
+  index,
+  confirmRemove
+}: {
+  type: WidgetTypeId;
+  index: number;
+  confirmRemove: boolean;
+}) {
+  const confirm = mockConfirm(() => confirmRemove);
+  const widgetElem = screen.getAllByRole('article')[index];
+  expect(widgetElem).toHaveProperty('dataset.widgetType', type);
+  await userEvent.click(
+    screen.getAllByRole('button', { name: 'Remove Widget' })[index]
+  );
+  expect(confirm).toHaveBeenCalled();
+  confirm.mockReset();
+  return widgetElem;
+}
+
 export async function populateFormFields(fields: object) {
   for (const [name, value] of Object.entries(fields)) {
     await userEvent.type(screen.getByLabelText(name), value);
