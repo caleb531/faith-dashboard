@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Home from '../../pages';
 import SignIn from '../../pages/sign-in';
 import { supabase } from '../supabaseClient';
 import {
@@ -12,12 +11,6 @@ import { mockSupabaseApiResponse } from './__mocks__/supabaseMockUtils';
 import { populateFormFields } from './__utils__/testUtils';
 
 describe('Sign In page', () => {
-  it('should be accessible from app header', async () => {
-    render(<Home />);
-    await userEvent.click(screen.getByRole('button', { name: 'Sign Up/In' }));
-    expect(screen.getByRole('link', { name: 'Sign In' })).toBeInTheDocument();
-  });
-
   it('should require all form fields to be populated', async () => {
     render(<SignIn />);
     const requiredFields = ['Email', 'Password'];

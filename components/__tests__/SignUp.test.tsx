@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Home from '../../pages/index';
 import SignUp from '../../pages/sign-up';
 import { supabase } from '../supabaseClient';
 import {
@@ -12,12 +11,6 @@ import { mockSupabaseApiResponse } from './__mocks__/supabaseMockUtils';
 import { populateFormFields } from './__utils__/testUtils';
 
 describe('Sign Up page', () => {
-  it('should be accessible from app header', async () => {
-    render(<Home />);
-    await userEvent.click(screen.getByRole('button', { name: 'Sign Up/In' }));
-    expect(screen.getByRole('link', { name: 'Sign Up' })).toBeInTheDocument();
-  });
-
   it('should validate that email addresses are matching', async () => {
     render(<SignUp />);
     await populateFormFields({
