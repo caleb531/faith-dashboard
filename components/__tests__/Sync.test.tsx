@@ -96,6 +96,9 @@ describe('Sync functionality', () => {
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(2);
       expect(supabaseFromMocks.widgets.select).toHaveBeenCalledTimes(1);
     });
+    expect(
+      screen.getAllByRole('textbox', { name: 'Note Text' })[0]
+    ).toHaveProperty('value', 'God is always with you');
     dashboardSelectMock.mockRestore();
     widgetSelectMock.mockRestore();
     supabaseDbStub.mockRestore();
