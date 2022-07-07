@@ -9,6 +9,7 @@ const clientIdStorageKey = 'faith-dashboard-clientid';
 
 // Generate and store the client ID if has not already been generated
 export function getClientId() {
+  /* istanbul ignore else */
   if (clientId) {
     return clientId;
   } else if (typeof localStorage !== 'undefined') {
@@ -19,6 +20,11 @@ export function getClientId() {
     }
     return clientId;
   } else {
+    // This 'else' clause is only for completeness, since localStorage does not
+    // exist in an SSR context where the app can be run; however, in practice,
+    // the getClientId() function only runs if the user is signed in, which
+    // will never occur in an SSR context; so technically, the below statement
+    // will never actually run, in our case
     clientId = uuidv4();
     return clientId;
   }
