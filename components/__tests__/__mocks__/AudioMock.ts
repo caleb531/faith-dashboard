@@ -5,12 +5,14 @@ class AudioMock {
   duration: number;
   paused: boolean;
   callbackMap: { [key: string]: (() => void)[] };
+  static instances: AudioMock[];
 
   constructor() {
     this.currentTime = 0;
     this.duration = 60;
     this.paused = true;
     this.callbackMap = {};
+    AudioMock.instances.push(this);
   }
 
   play() {
@@ -48,5 +50,7 @@ class AudioMock {
     }
   }
 }
+// Keep track of all instances
+AudioMock.instances = [];
 
 export default AudioMock;

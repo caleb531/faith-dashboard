@@ -126,12 +126,15 @@ describe('Podcast widget', () => {
 
     expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
     expect(playStub).not.toHaveBeenCalled();
+    expect(AudioMock.instances[0]).not.toBeUndefined();
 
     await userEvent.click(screen.getByRole('button', { name: 'Play' }));
     expect(playStub).toHaveBeenCalled();
+    AudioMock.instances[0].paused = false;
 
     await userEvent.click(screen.getByRole('button', { name: 'Pause' }));
     expect(pauseStub).toHaveBeenCalled();
+    AudioMock.instances[0].paused = true;
   });
 
   it('should handle no results', async () => {
