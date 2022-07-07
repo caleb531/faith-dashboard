@@ -16,9 +16,9 @@ function PodcastNowPlaying({
 }: Props) {
   const dispatchToWidget = useContext(PodcastContext);
 
-  const nowPlayingMetadata = nowPlaying
-    ? listeningMetadata[nowPlaying.guid]
-    : null;
+  // The nowPlaying object is guaranteed to exist, given how we use this
+  // component in Podcast.tsx
+  const nowPlayingMetadata = listeningMetadata[nowPlaying.guid];
 
   const audioUrl = nowPlaying.enclosure.url;
   const currentTime = nowPlayingMetadata ? nowPlayingMetadata.currentTime : 0;
