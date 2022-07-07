@@ -32,7 +32,7 @@ function assignIdToLocalApp(appId: string) {
 
 // The default response of any Supabase call that writes to the database (i.e.
 // upsert and delete)
-const writeResponse = {
+const defaultWriteResponse = {
   user: supabase.auth.user(),
   session: supabase.auth.session(),
   error: null
@@ -41,19 +41,25 @@ const writeResponse = {
 type TableName = 'dashboards' | 'widgets';
 
 function mockSelect(tableName: TableName, response: any) {
-  supabaseFromMocks[tableName].select.mockImplementation(() => response);
+  supabaseFromMocks[tableName].select.mockImplementation(async () => {
+    return response;
+  });
   return supabaseFromMocks[tableName].select;
 }
 
 function mockUpsert(tableName: TableName) {
-  supabaseFromMocks[tableName].upsert.mockImplementation(() => writeResponse);
+  supabaseFromMocks[tableName].upsert.mockImplementation(async () => {
+    return defaultWriteResponse;
+  });
   return supabaseFromMocks[tableName].upsert;
 }
 
 function mockDelete(tableName: TableName) {
   supabaseFromMocks[tableName].delete.mockImplementation(() => {
     return {
-      match: jest.fn().mockImplementation(() => writeResponse)
+      match: jest.fn().mockImplementation(async () => {
+        return defaultWriteResponse;
+      })
     };
   });
   return supabaseFromMocks[tableName].delete;
