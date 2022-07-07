@@ -36,6 +36,9 @@ async function chooseEpisode(episodeTitle: string) {
 }
 
 describe('Podcast widget', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   it('should search for podcast and select episode', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
@@ -129,9 +132,6 @@ describe('Podcast widget', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'Pause' }));
     expect(pauseStub).toHaveBeenCalled();
-
-    playStub.mockReset();
-    pauseStub.mockReset();
   });
 
   it('should handle no results', async () => {
