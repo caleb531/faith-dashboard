@@ -1,5 +1,10 @@
 import '@testing-library/jest-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { v4 as uuidv4 } from 'uuid';
 import Home from '../../pages';
@@ -13,7 +18,7 @@ import {
   mockSupabaseUser,
   supabaseFromMocks
 } from './__mocks__/supabaseMockUtils';
-import { waitForWidget } from './__utils__/testUtils';
+import { removeWidget, waitForWidget } from './__utils__/testUtils';
 
 function assignIdToLocalApp(appId: string) {
   const app =
@@ -162,6 +167,64 @@ describe('Sync functionality', () => {
     supabaseFromMocks.widgets.select.mockRestore();
     supabaseFromMocks.dashboards.upsert.mockRestore();
     supabaseFromMocks.widgets.upsert.mockRestore();
+    supabaseDbStub.mockRestore();
+    sessionStub.mockRestore();
+    userStub.mockRestore();
+  });
+
+  it('should delete widget from server when deleted locally', async () => {
+    const userStub = mockSupabaseUser();
+    const sessionStub = mockSupabaseSession();
+    const supabaseDbStub = mockSupabaseFrom();
+    const appId = uuidv4();
+    supabaseFromMocks.dashboards.select.mockImplementation(() => {
+      return {
+        data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
+      } as any;
+    });
+    supabaseFromMocks.widgets.select.mockImplementation(() => {
+      return { data: [] } as any;
+    });
+    supabaseFromMocks.dashboards.delete.mockImplementation(() => {
+      return {
+        user: supabase.auth.user(),
+        session: supabase.auth.session(),
+        error: null
+      };
+    });
+    supabaseFromMocks.widgets.delete.mockImplementation(() => {
+      return {
+        match: jest.fn().mockImplementation(() => {
+          return {
+            user: supabase.auth.user(),
+            session: supabase.auth.session(),
+            error: null
+          };
+        })
+      };
+    });
+    assignIdToLocalApp(appId);
+    render(<Home />);
+    expect(
+      screen.getByRole('button', { name: 'Your Account' })
+    ).toBeInTheDocument();
+    jest.useRealTimers();
+    await waitForWidget({ type: 'Note', index: 1 });
+    const widgetElem = await removeWidget({
+      type: 'Note',
+      index: 1,
+      confirmRemove: true
+    });
+    await waitForElementToBeRemoved(widgetElem);
+    jest.useFakeTimers();
+    await waitFor(() => {
+      expect(supabase.from).toHaveBeenNthCalledWith(1, 'widgets');
+      expect(supabaseFromMocks.widgets.delete).toHaveBeenCalled();
+    });
+    supabaseFromMocks.dashboards.select.mockRestore();
+    supabaseFromMocks.widgets.select.mockRestore();
+    supabaseFromMocks.dashboards.delete.mockRestore();
+    supabaseFromMocks.widgets.delete.mockRestore();
     supabaseDbStub.mockRestore();
     sessionStub.mockRestore();
     userStub.mockRestore();
