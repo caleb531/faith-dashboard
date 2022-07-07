@@ -1,11 +1,5 @@
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 
-if (!process.env.NEXT_PUBLIC_GOTRUE_SECURITY_CAPTCHA_SITEKEY) {
-  throw new Error(
-    'NEXT_PUBLIC_GOTRUE_SECURITY_CAPTCHA_SITEKEY environment variable missing'
-  );
-}
-
 type Props = {
   setCaptchaToken: (token: string) => void;
 };
