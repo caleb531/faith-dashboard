@@ -8,8 +8,6 @@ import useWidgetUpdater from './useWidgetUpdater';
 
 export type WidgetAction =
   | { type: 'toggleSettings' }
-  | { type: 'openSettings' }
-  | { type: 'closeSettings' }
   | { type: 'resizeWidget'; payload: number }
   | { type: 'showLoading' }
   | { type: 'showContent' }
@@ -52,10 +50,6 @@ export default function useWidgetShell<State extends WidgetState, Action>(
     switch (action.type) {
       case 'toggleSettings':
         return { ...state, isSettingsOpen: !state.isSettingsOpen };
-      case 'openSettings':
-        return { ...state, isSettingsOpen: true };
-      case 'closeSettings':
-        return { ...state, isSettingsOpen: false };
       case 'resizeWidget':
         return { ...state, height: action.payload };
       case 'showLoading':
