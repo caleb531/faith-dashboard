@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import useCachedState from '../../useCachedState';
 
 // The useCachedAudio() hook stores one or more HTML5 Audio elements for
@@ -12,6 +13,20 @@ function useCachedAudio(cacheKey: string): [HTMLAudioElement, () => void] {
       return new Audio();
     }
   );
+
+  // Due to the way useCachedState() works, the audio element persists across
+  // component unmounts/remounts; however, my tests will frequently need to
+  // remove all audio instances between each test; therefore, we provide my
+  // tests with a mechanism to properly remove these internal audio elements
+  // from the cache if, on component unmount, we see that the audio element is
+  // actually a mock
+  useEffect(() => {
+    return () => {
+      if ('_isAudioMock' in audioElement) {
+        removeAudioElement();
+      }
+    };
+  }, [audioElement, removeAudioElement]);
 
   // We don't expose the above setter function because losing references to an
   // Audio element means we can no longer control it

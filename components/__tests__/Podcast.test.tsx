@@ -67,6 +67,7 @@ describe('Podcast widget', () => {
     expect(
       screen.getByRole('button', { name: 'Return to List' })
     ).toBeInTheDocument();
+    expect(AudioMock.instances).toHaveLength(1);
   });
 
   it('should return to list from Now Playing screen', async () => {
@@ -155,6 +156,22 @@ describe('Podcast widget', () => {
     await fireEvent.change(audioProgressSlider, { target: { value: '10' } });
     await userEvent.click(audioProgressSlider);
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 10);
+  });
+
+  it('should maintain separate audio stream per Podcast widget', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    render(<Home />);
+
+    await searchPodcasts('sermon of the day');
+    await choosePodcast('Sermon of the Day');
+    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Add Widget' }));
+    await userEvent.click(
+      screen.getByRole('button', { name: `Add Podcast Widget` })
+    );
+    expect(AudioMock.instances).toHaveLength(2);
   });
 
   it('should handle no results', async () => {

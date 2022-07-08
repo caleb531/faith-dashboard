@@ -34,5 +34,6 @@ beforeEach(() => {
 afterEach(() => {
   fetch.resetMocks();
   audioStub.mockRestore();
+  AudioMock.instances.length = 0;
   localStorage.clear();
 });
