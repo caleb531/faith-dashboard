@@ -80,4 +80,23 @@ describe('Account Header', () => {
     await userEvent.click(screen.getByText('Sign Out'));
     expect(localStorage.getItem('faith-dashboard-whatever')).toEqual('true');
   });
+
+  it('should refresh session when halfway or less to expiry', async () => {
+    mockSupabaseUser();
+    mockSupabaseSession({
+      expires_in: 3600,
+      expires_at: Date.now() / 1000 + 1800,
+      refresh_token: 'abc',
+      user: supabase.auth.user()
+    });
+    jest.spyOn(supabase.auth, 'signIn').mockImplementation(() => {
+      return {
+        error: null
+      } as any;
+    });
+    render(<Home />);
+    expect(supabase.auth.signIn).toHaveBeenCalledWith({
+      refreshToken: 'abc'
+    });
+  });
 });
