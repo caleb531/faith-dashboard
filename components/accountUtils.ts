@@ -16,9 +16,7 @@ export function isSessionActive(
 
 // Return true if we are close enough to the expiry of the current session for
 // it to be refreshed
-export function shouldRefreshSession(
-  session: Session | null = supabase.auth.session()
-) {
+export function shouldRefreshSession(session: Session | null) {
   const currentEpoch = Date.now() / MS_IN_S;
   return (
     session &&
@@ -29,9 +27,7 @@ export function shouldRefreshSession(
   );
 }
 
-export async function refreshSession(
-  session: Session | null = supabase.auth.session()
-) {
+export async function refreshSession(session: Session | null) {
   if (session) {
     await supabase.auth.signIn({
       refreshToken: session.refresh_token
