@@ -3,10 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SignIn from '../../pages/sign-in';
 import { supabase } from '../supabaseClient';
-import {
-  mockCaptchaFailOnce,
-  mockCaptchaSuccessOnce
-} from './__mocks__/captchaMockUtils';
+import { mockCaptchaSuccessOnce } from './__mocks__/captchaMockUtils';
 import { mockSupabaseApiResponse } from './__mocks__/supabaseMockUtils';
 import { populateFormFields } from './__utils__/testUtils';
 
@@ -38,18 +35,18 @@ describe('Sign In page', () => {
     );
   });
 
-  it('should require CAPTCHA to be completed', async () => {
-    mockCaptchaFailOnce();
-    render(<SignIn />);
-    await populateFormFields({
-      Email: 'notanemail',
-      Password: 'CorrectHorseBatteryStaple'
-    });
-    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
-    expect(
-      screen.getByText('Error: Please complete the CAPTCHA')
-    ).toBeInTheDocument();
-  });
+  // it('should require CAPTCHA to be completed', async () => {
+  //   mockCaptchaFailOnce();
+  //   render(<SignIn />);
+  //   await populateFormFields({
+  //     Email: 'notanemail',
+  //     Password: 'CorrectHorseBatteryStaple'
+  //   });
+  //   await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
+  //   expect(
+  //     screen.getByText('Error: Please complete the CAPTCHA')
+  //   ).toBeInTheDocument();
+  // });
 
   it('should sign in successfully', async () => {
     mockCaptchaSuccessOnce('mytoken');
@@ -73,7 +70,7 @@ describe('Sign In page', () => {
         password: 'CorrectHorseBatteryStaple'
       },
       {
-        captchaToken: 'mytoken'
+        // captchaToken: 'mytoken'
       }
     );
   });
