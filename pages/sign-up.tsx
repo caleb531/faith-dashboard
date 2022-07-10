@@ -5,9 +5,11 @@ import AuthForm from '../components/account/AuthForm';
 import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
 import useAutoFocus from '../components/account/useAutoFocus';
+import Captcha from '../components/Captcha';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
 import useFormFieldMatcher from '../components/useFormFieldMatcher';
+import useVerifyCaptcha from '../components/useVerifyCaptcha';
 
 function SignUpForm() {
   const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
@@ -17,15 +19,21 @@ function SignUpForm() {
     mismatchMessage: 'Emails must match'
   });
   const firstNameAutoFocusProps = useAutoFocus<HTMLInputElement>();
+  const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
 
   function signUp(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
+    const captchaToken = getCaptchaToken();
+    if (!captchaToken) {
+      throw new Error('Please complete the CAPTCHA');
+    }
     return supabase.auth.signUp(
       {
         email: fields.email,
         password: fields.password
       },
       {
+        captchaToken,
         data: omit(fields, [
           'email',
           'confirm_email',
@@ -109,6 +117,7 @@ function SignUpForm() {
           required
           {...confirmPasswordFieldProps}
         />
+        <Captcha setCaptchaToken={setCaptchaToken} />
       </AuthForm>
     </LandingPage>
   );
