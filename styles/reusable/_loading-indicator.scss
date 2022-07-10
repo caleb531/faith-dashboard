@@ -21,4 +21,7 @@
   stroke: $light-50;
   stroke-width: 3;
   animation: spin 1000ms linear infinite forwards;
+  .landing-page & {
+    stroke: $dark-20;
+  }
 }
