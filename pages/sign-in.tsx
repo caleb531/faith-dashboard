@@ -42,7 +42,7 @@ function SignInForm() {
         submitLabel="Sign In"
         submittingLabel="Submitting..."
         successLabel="Success! Redirecting..."
-        altLink={{ title: 'Forgot Password?', href: 'sign-up' }}
+        altLink={{ title: 'Forgot Password?', href: '/forgot-password' }}
       >
         <AuthFormField
           type="email"
