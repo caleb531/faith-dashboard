@@ -7,6 +7,12 @@ input.account-auth-form-input {
   font-weight: 300;
   font-size: $font-size-xxl;
 }
+// Hide the "honey pot" field from the UI to avoid accessibility issues
+#verification-check,
+[for="verification-check"] {
+  display: none;
+}
+
 button.account-auth-form-submit {
   font-size: $font-size-xxl;
 }

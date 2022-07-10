@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { JSXContents } from '../global';
 import useTimeout from '../useTimeout';
+import AuthFormField from './AuthFormField';
 
 // The number of milliseconds to show the success label of the Submit button
 // before reverting to the initial Submit button label
@@ -36,6 +37,7 @@ function AuthForm(props: Props) {
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [isFormSuccess, setIsFormSuccess] = useState(false);
   const setSubmitLabelTimeout = useTimeout();
+  const [honeyPotValue, setHoneyPotValue] = useState('');
 
   async function attemptSubmit(event: React.FormEvent<HTMLFormElement>) {
     const { user, session, error } = await props.onSubmit(event);
@@ -68,6 +70,9 @@ function AuthForm(props: Props) {
     setIsFormSubmitting(true);
     setFormErrorMessage(null);
     try {
+      if (honeyPotValue) {
+        setFormErrorMessage('Cannot submit form; please try again');
+      }
       // Even though we are not capturing the return value, we must await the
       // attemptSubmit() call to properly catch any errors, because
       // attemptSubmit() is an async function and would otherwise run
@@ -82,6 +87,14 @@ function AuthForm(props: Props) {
   return (
     <form className="account-auth-form" onSubmit={onSubmitWrapper}>
       {props.children}
+      {/* A "honey pot" field which must remain blank to prove the user is human */}
+      <AuthFormField
+        type="text"
+        id="verification-check"
+        name="verification_check"
+        placeholder="Please leave this field blank"
+        onChange={(event) => setHoneyPotValue(event.target.value)}
+      />
 
       {formErrorMessage ? (
         <div className="account-auth-form-validation-area">
