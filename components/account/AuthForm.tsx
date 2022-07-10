@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { JSXContents } from '../global';
 import useTimeout from '../useTimeout';
+import useUniqueFieldId from '../useUniqueFieldId';
 import AuthFormField from './AuthFormField';
 
 // The number of milliseconds to show the success label of the Submit button
@@ -84,13 +85,14 @@ function AuthForm(props: Props) {
     }
   }
 
+  const honeyPotFieldId = useUniqueFieldId('verification-check');
   return (
     <form className="account-auth-form" onSubmit={onSubmitWrapper}>
       {props.children}
       {/* A "honey pot" field which must remain blank to prove the user is human */}
       <AuthFormField
         type="text"
-        id="verification-check"
+        id={honeyPotFieldId}
         name="verification_check"
         placeholder="Please leave this field blank"
         onChange={(event) => setHoneyPotValue(event.target.value)}
