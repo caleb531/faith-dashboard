@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
 // A helper hook for browser-only components; it re-renders the component in
 // which it is placed as soon as that component is mounted; this helps solve
@@ -7,7 +8,7 @@ import { useEffect, useState } from 'react';
 function useMountListener() {
   const [isMounted, setIsMounted] = useState(false);
   // Re-render component when view is mounted
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setIsMounted(true);
   }, []);
   return isMounted;

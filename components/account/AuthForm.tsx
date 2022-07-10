@@ -2,6 +2,8 @@ import { ApiError, Session, User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { JSXContents } from '../global';
+import LoadingIndicator from '../reusable/LoadingIndicator';
+import useMountListener from '../useMountListener';
 import useTimeout from '../useTimeout';
 import useUniqueFieldId from '../useUniqueFieldId';
 import AuthFormField from './AuthFormField';
@@ -86,7 +88,8 @@ function AuthForm(props: Props) {
   }
 
   const honeyPotFieldId = useUniqueFieldId('verification-check');
-  return (
+  const isMounted = useMountListener();
+  return isMounted ? (
     <form className="account-auth-form" onSubmit={onSubmitWrapper}>
       {props.children}
       {/* A "honey pot" field which must remain blank to prove the user is human */}
@@ -125,6 +128,8 @@ function AuthForm(props: Props) {
         ) : null}
       </div>
     </form>
+  ) : (
+    <LoadingIndicator />
   );
 }
 
