@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { omit } from 'lodash-es';
+import { pick } from 'lodash-es';
 import React from 'react';
 import AuthForm from '../components/account/AuthForm';
 import AuthFormField from '../components/account/AuthFormField';
@@ -34,12 +34,7 @@ function SignUpForm() {
       },
       {
         captchaToken,
-        data: omit(fields, [
-          'email',
-          'confirm_email',
-          'password',
-          'confirm_password'
-        ])
+        data: pick(fields, ['first_name', 'last_name'])
       }
     );
   }
