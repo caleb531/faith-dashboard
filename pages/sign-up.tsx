@@ -17,21 +17,15 @@ function SignUpForm() {
     mismatchMessage: 'Emails must match'
   });
   const firstNameAutoFocusProps = useAutoFocus<HTMLInputElement>();
-  // const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
 
   function signUp(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
-    // const captchaToken = getCaptchaToken();
-    // if (!captchaToken) {
-    //   throw new Error('Please complete the CAPTCHA');
-    // }
     return supabase.auth.signUp(
       {
         email: fields.email,
         password: fields.password
       },
       {
-        // captchaToken,
         data: omit(fields, [
           'email',
           'confirm_email',
@@ -115,7 +109,6 @@ function SignUpForm() {
           required
           {...confirmPasswordFieldProps}
         />
-        {/* <Captcha setCaptchaToken={setCaptchaToken} /> */}
       </AuthForm>
     </LandingPage>
   );
