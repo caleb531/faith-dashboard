@@ -4,30 +4,18 @@ import AuthForm from '../components/account/AuthForm';
 import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
 import useAutoFocus from '../components/account/useAutoFocus';
-import Captcha from '../components/Captcha';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
-import useVerifyCaptcha from '../components/useVerifyCaptcha';
 
 function SignInForm() {
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
-  const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
 
   function signIn(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
-    const captchaToken = getCaptchaToken();
-    if (!captchaToken) {
-      throw new Error('Please complete the CAPTCHA');
-    }
-    return supabase.auth.signIn(
-      {
-        email: fields.email,
-        password: fields.password
-      },
-      {
-        captchaToken
-      }
-    );
+    return supabase.auth.signIn({
+      email: fields.email,
+      password: fields.password
+    });
   }
 
   function redirectToHome() {
@@ -71,7 +59,6 @@ function SignInForm() {
           placeholder="Password"
           required
         />
-        <Captcha setCaptchaToken={setCaptchaToken} />
       </AuthForm>
     </LandingPage>
   );
