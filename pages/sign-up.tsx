@@ -15,9 +15,6 @@ function SignUpForm() {
   const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Passwords must match'
   });
-  const [emailFieldProps, confirmEmailFieldProps] = useFormFieldMatcher({
-    mismatchMessage: 'Emails must match'
-  });
   const firstNameAutoFocusProps = useAutoFocus<HTMLInputElement>();
   const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
 
@@ -86,15 +83,6 @@ function SignUpForm() {
           name="email"
           placeholder="Email"
           required
-          {...emailFieldProps}
-        />
-        <AuthFormField
-          type="email"
-          id="sign-up-form-confirm-email"
-          name="confirm_email"
-          placeholder="Confirm Email"
-          required
-          {...confirmEmailFieldProps}
         />
         <AuthFormField
           type="password"
