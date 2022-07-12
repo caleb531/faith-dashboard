@@ -15,30 +15,6 @@ describe('Sign Up page', () => {
     jest.restoreAllMocks();
   });
 
-  it('should validate that email addresses are matching', async () => {
-    render(<SignUp />);
-    await populateFormFields({
-      Email: 'john@example.com',
-      'Confirm Email': 'john@example.com'
-    });
-    expect(screen.getByLabelText('Confirm Email')).toHaveProperty(
-      'validationMessage',
-      ''
-    );
-  });
-
-  it('should validate that email addresses are not matching', async () => {
-    render(<SignUp />);
-    await populateFormFields({
-      Email: 'john@example.com',
-      'Confirm Email': 'john@example.con'
-    });
-    expect(screen.getByLabelText('Confirm Email')).toHaveProperty(
-      'validationMessage',
-      'Emails must match'
-    );
-  });
-
   it('should validate that passwords are matching', async () => {
     render(<SignUp />);
     await populateFormFields({
@@ -69,7 +45,6 @@ describe('Sign Up page', () => {
       'First Name',
       'Last Name',
       'Email',
-      'Confirm Email',
       'Password',
       'Confirm Password'
     ];
@@ -85,14 +60,9 @@ describe('Sign Up page', () => {
   it('should require valid email addresses', async () => {
     render(<SignUp />);
     await populateFormFields({
-      Email: 'notanemail',
-      'Confirm Email': 'notanemail'
+      Email: 'notanemail'
     });
     expect(screen.getByLabelText('Email')).toHaveProperty(
-      'validity.typeMismatch',
-      true
-    );
-    expect(screen.getByLabelText('Confirm Email')).toHaveProperty(
       'validity.typeMismatch',
       true
     );
@@ -105,7 +75,6 @@ describe('Sign Up page', () => {
       'First Name': 'John',
       'Last Name': 'Doe',
       Email: 'john@example.com',
-      'Confirm Email': 'john@example.com',
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStaple'
     });
@@ -130,7 +99,6 @@ describe('Sign Up page', () => {
       'First Name': 'John',
       'Last Name': 'Doe',
       Email: 'john@example.com',
-      'Confirm Email': 'john@example.com',
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStaple'
     });
@@ -164,7 +132,6 @@ describe('Sign Up page', () => {
       'First Name': 'John',
       'Last Name': 'Doe',
       Email: 'john@example.com',
-      'Confirm Email': 'john@example.com',
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStaple'
     });
