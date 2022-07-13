@@ -71,7 +71,7 @@ export async function getStaticProps() {
       pagePath: '/sign-in',
       pageTitle: 'Sign In | Faith Dashboard',
       pageDescription:
-        'Sign into Faith Dashboard, your one place for anything and everything that inspires your faith.'
+        'Sign into Faith Dashboard, your home for strength and encouragement every day.'
     }
   };
 }

@@ -113,7 +113,7 @@ export async function getStaticProps() {
       pagePath: '/sign-up',
       pageTitle: 'Sign Up | Faith Dashboard',
       pageDescription:
-        'Sign up for Faith Dashboard, your one place for anything and everything that inspires your faith.'
+        'Sign up for Faith Dashboard, your home for strength and encouragement every day.'
     }
   };
 }

@@ -31,7 +31,7 @@ export async function getStaticProps() {
       pagePath: '/copyright',
       pageTitle: 'Copyright | Faith Dashboard',
       pageDescription:
-        'Copyright information for Faith Dashboard, your one place for anything and everything that inspires your faith.'
+        'Copyright information for Faith Dashboard, your home for strength and encouragement every day.'
     }
   };
 }

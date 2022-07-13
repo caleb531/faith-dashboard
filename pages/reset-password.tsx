@@ -67,7 +67,7 @@ export async function getStaticProps() {
       pagePath: '/reset-password',
       pageTitle: 'Reset Password | Faith Dashboard',
       pageDescription:
-        'Reset your account password for Faith Dashboard, your one place for anything and everything that inspires your faith.'
+        'Reset your account password for Faith Dashboard, your home for strength and encouragement every day.'
     }
   };
 }

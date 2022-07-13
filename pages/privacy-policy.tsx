@@ -97,7 +97,7 @@ export async function getStaticProps() {
       pagePath: '/privacy-policy',
       pageTitle: 'Privacy Policy | Faith Dashboard',
       pageDescription:
-        'Privacy policy for Faith Dashboard, your one place for anything and everything that inspires your faith.'
+        'Privacy policy for Faith Dashboard, your home for strength and encouragement every day.'
     }
   };
 }

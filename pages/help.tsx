@@ -180,7 +180,7 @@ export async function getStaticProps() {
       pagePath: '/help',
       pageTitle: 'Help | Faith Dashboard',
       pageDescription:
-        'Documentation on how to get started with Faith Dashboard, your one place for anything and everything that inspires your faith.'
+        'Documentation on how to get started with Faith Dashboard, your home for strength and encouragement every day.'
     }
   };
 }
