@@ -1,5 +1,5 @@
 import { Session, User } from '@supabase/supabase-js';
-import { supabase } from '../../supabaseClient';
+import { supabase } from '../../components/supabaseClient';
 
 // This must always be called BEFORE mockSupabaseSession()
 export function mockSupabaseUser(

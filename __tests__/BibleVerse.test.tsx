@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
-import Home from '../../pages/index';
+import Home from '../pages/index';
 import bibleVerseMultipleJson from './__json__/bibleVerseMultiple.json';
 import bibleVerseNoResultsJson from './__json__/bibleVerseNoResults.json';
 import bibleVerseRangeJson from './__json__/bibleVerseRange.json';

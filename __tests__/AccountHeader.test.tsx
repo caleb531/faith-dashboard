@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Home from '../../pages/index';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../components/supabaseClient';
+import Home from '../pages/index';
 import {
   mockSupabaseSession,
   mockSupabaseUser

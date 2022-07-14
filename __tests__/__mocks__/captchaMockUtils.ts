@@ -1,4 +1,4 @@
-import useVerifyCaptcha from '../../useVerifyCaptcha';
+import useVerifyCaptcha from '../../components/useVerifyCaptcha';
 
 export function mockCaptchaSuccessOnce(token: string) {
   (useVerifyCaptcha as jest.Mock).mockImplementationOnce(() => {

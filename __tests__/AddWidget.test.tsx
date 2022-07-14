@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Home from '../../pages/index';
-import { WidgetTypeId } from '../widgets/widget';
-import widgetTypes from '../widgets/widgetTypes';
+import { WidgetTypeId } from '../components/widgets/widget';
+import widgetTypes from '../components/widgets/widgetTypes';
+import Home from '../pages/index';
 
 async function addWidget(widgetTypeId: WidgetTypeId) {
   const widgetType = widgetTypes.find((widgetType) => {

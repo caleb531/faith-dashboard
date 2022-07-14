@@ -7,9 +7,9 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { v4 as uuidv4 } from 'uuid';
-import Home from '../../pages';
-import appStateDefault from '../app/appStateDefault';
-import { supabase } from '../supabaseClient';
+import appStateDefault from '../components/app/appStateDefault';
+import { supabase } from '../components/supabaseClient';
+import Home from '../pages';
 import dashboardToPullJson from './__json__/dashboardToPull.json';
 import widgetToPullJson from './__json__/widgetToPull.json';
 import {

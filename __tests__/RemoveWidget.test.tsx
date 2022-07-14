@@ -5,7 +5,7 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import Home from '../../pages/index';
+import Home from '../pages/index';
 import { removeWidget } from './__utils__/testUtils';
 
 describe('Remove Widget UI', () => {
