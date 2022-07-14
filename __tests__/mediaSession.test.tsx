@@ -27,6 +27,20 @@ describe('media session', () => {
     expect(navigator.mediaSession.metadata).not.toEqual(null);
   });
 
+  it('should not error if client does not support Media Session API', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    Object.defineProperty(navigator, 'mediaSession', {
+      value: undefined
+    });
+    render(<Home />);
+    expect(navigator.mediaSession).toEqual(undefined);
+    await searchPodcasts('sermon of the day');
+    await choosePodcast('Sermon of the Day');
+    await chooseEpisode('Perfect Love Casts Out Fear');
+    expect(navigator.mediaSession).toEqual(undefined);
+  });
+
   it('should play', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
