@@ -38,6 +38,7 @@ beforeEach(() => {
   });
   if (typeof navigator !== 'undefined') {
     originalMediaSession = navigator.mediaSession;
+    originalMediaMetadata = window.MediaMetadata;
     Object.defineProperty(navigator, 'mediaSession', {
       configurable: true,
       writable: false,
@@ -54,4 +55,5 @@ afterEach(() => {
   Object.defineProperty(navigator, 'mediaSession', {
     value: originalMediaSession
   });
+  window.MediaMetadata = originalMediaMetadata;
 });
