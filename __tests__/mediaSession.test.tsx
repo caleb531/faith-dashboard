@@ -59,6 +59,38 @@ describe('media session', () => {
     expect(AudioMock.instances[0]).toHaveProperty('paused', true);
   });
 
+  it('should seek to specified position', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    render(<Home />);
+    expect(navigator.mediaSession.metadata).toEqual(null);
+    await searchPodcasts('sermon of the day');
+    await choosePodcast('Sermon of the Day');
+    await chooseEpisode('Perfect Love Casts Out Fear');
+    act(() => {
+      mediaSessionMock._triggerAction('seekto', { seekTime: 123 });
+    });
+    expect(AudioMock.instances[0]).toHaveProperty('currentTime', 123);
+  });
+
+  it('should fast seek to specified position', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    render(<Home />);
+    expect(navigator.mediaSession.metadata).toEqual(null);
+    await searchPodcasts('sermon of the day');
+    await choosePodcast('Sermon of the Day');
+    await chooseEpisode('Perfect Love Casts Out Fear');
+    jest.spyOn(AudioMock.instances[0], 'fastSeek');
+    act(() => {
+      mediaSessionMock._triggerAction('seekto', {
+        seekTime: 123,
+        fastSeek: true
+      });
+    });
+    expect(AudioMock.instances[0].fastSeek).toHaveBeenCalled();
+  });
+
   it('should seek forward by default offset', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));

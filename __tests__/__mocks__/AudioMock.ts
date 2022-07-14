@@ -27,6 +27,10 @@ class AudioMock {
     this.paused = true;
   }
 
+  fastSeek() {
+    // noop
+  }
+
   trigger(eventName: string) {
     if (this.callbackMap[eventName]) {
       this.callbackMap[eventName].forEach((callback) => {
