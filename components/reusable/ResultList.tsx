@@ -10,9 +10,9 @@ type Props = {
 
 function ResultList({ results, onChooseResult }: Props) {
   // Use event delegation to determine which result was clicked
-  function actionResult<T extends React.UIEvent>(event: T): void {
-    const clickedElement = event.target as HTMLElement;
-    const resultElement = clickedElement.closest('.result');
+  function actionResult(event: React.UIEvent): void {
+    const actionedElement = event.target as HTMLElement;
+    const resultElement = actionedElement.closest('.result');
     if (!resultElement) {
       return;
     }
@@ -24,12 +24,18 @@ function ResultList({ results, onChooseResult }: Props) {
     onChooseResult(result);
   }
 
+  function clickResult(event: React.MouseEvent) {
+    actionResult(event);
+  }
+
+  function keydownResult(event: React.KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      actionResult(event);
+    }
+  }
+
   return (
-    <ol
-      className="result-list"
-      onClick={(event) => actionResult<React.MouseEvent>(event)}
-      onKeyPress={(event) => actionResult<React.KeyboardEvent>(event)}
-    >
+    <ol className="result-list" onClick={clickResult} onKeyDown={keydownResult}>
       {results.map((result: Result) => {
         return (
           <li
