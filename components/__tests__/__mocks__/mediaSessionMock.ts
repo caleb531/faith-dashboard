@@ -16,13 +16,16 @@ export const mediaSessionMock = {
       });
     }
   },
-  setActionHandler(action: string, handler: (args?: object) => void) {
+  setActionHandler(action: string, handler: (details?: object) => void) {
     this._eventCallbacks[action] = handler;
   },
-  _triggerAction(action: string) {
+  _triggerAction(action: string, details: object = {}) {
     if (this._eventCallbacks[action]) {
-      this._eventCallbacks[action]();
+      this._eventCallbacks[action](details);
     }
+  },
+  setPositionState: () => {
+    // noop
   }
 };
 
