@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import Home from '../pages/index';
@@ -7,34 +7,12 @@ import podcastFeedJson from './__json__/podcastFeed.json';
 import podcastNoResultsJson from './__json__/podcastNoResults.json';
 import podcastSearchJson from './__json__/podcastSearch.json';
 import AudioMock from './__mocks__/AudioMock';
-import { mediaSessionMock } from './__mocks__/mediaSessionMock';
-import { getWidgetData, waitForWidget } from './__utils__/testUtils';
-
-async function searchPodcasts(podcastQuery: string) {
-  await waitForWidget({ type: 'Podcast', index: 3 });
-  const searchInput = screen.getAllByRole('searchbox', {
-    name: 'Podcast Search Query'
-  })[0] as HTMLInputElement;
-  searchInput.value = '';
-  await userEvent.type(searchInput, podcastQuery);
-  await userEvent.click(screen.getAllByRole('button', { name: 'Search' })[2]);
-}
-
-async function choosePodcast(podcastTitle: string) {
-  const firstPodcastResult = screen.getByRole('heading', {
-    name: podcastTitle
-  });
-  expect(firstPodcastResult).toBeInTheDocument();
-  await userEvent.click(firstPodcastResult);
-}
-
-async function chooseEpisode(episodeTitle: string) {
-  await userEvent.click(
-    screen.getByRole('heading', {
-      name: episodeTitle
-    })
-  );
-}
+import {
+  chooseEpisode,
+  choosePodcast,
+  searchPodcasts
+} from './__utils__/podcastTestUtils';
+import { getWidgetData } from './__utils__/testUtils';
 
 describe('Podcast widget', () => {
   afterEach(() => {
@@ -209,108 +187,5 @@ describe('Podcast widget', () => {
     expect(
       screen.getByText('Error Searching for Podcasts')
     ).toBeInTheDocument();
-  });
-
-  it('should populate media session', async () => {
-    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
-    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
-    expect(navigator.mediaSession.metadata).toEqual(null);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
-    expect(navigator.mediaSession.metadata).not.toEqual(null);
-  });
-
-  it('should play via media session', async () => {
-    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
-    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
-    expect(navigator.mediaSession.metadata).toEqual(null);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
-    expect(AudioMock.instances[0]).toHaveProperty('paused', true);
-    act(() => {
-      mediaSessionMock._triggerAction('play');
-    });
-    expect(AudioMock.instances[0]).toHaveProperty('paused', false);
-  });
-
-  it('should pause via media session', async () => {
-    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
-    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
-    expect(navigator.mediaSession.metadata).toEqual(null);
-    jest.spyOn(AudioMock.instances[0], 'pause');
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
-    expect(AudioMock.instances[0]).toHaveProperty('paused', true);
-    act(() => {
-      mediaSessionMock._triggerAction('pause');
-    });
-    expect(AudioMock.instances[0].pause).toHaveBeenCalled();
-    expect(AudioMock.instances[0]).toHaveProperty('paused', true);
-  });
-
-  it('should seek forward via media session by default offset', async () => {
-    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
-    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
-    expect(navigator.mediaSession.metadata).toEqual(null);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
-    expect(AudioMock.instances[0]).toHaveProperty('currentTime', 0);
-    act(() => {
-      mediaSessionMock._triggerAction('seekforward');
-    });
-    expect(AudioMock.instances[0]).toHaveProperty('currentTime', 15);
-  });
-
-  it('should seek forward via media session by provided offset', async () => {
-    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
-    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
-    expect(navigator.mediaSession.metadata).toEqual(null);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
-    expect(AudioMock.instances[0]).toHaveProperty('currentTime', 0);
-    act(() => {
-      mediaSessionMock._triggerAction('seekforward', { seekOffset: 10 });
-    });
-    expect(AudioMock.instances[0]).toHaveProperty('currentTime', 10);
-  });
-
-  it('should seek backward via media session by default offset', async () => {
-    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
-    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
-    expect(navigator.mediaSession.metadata).toEqual(null);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
-    AudioMock.instances[0].currentTime = 60;
-    act(() => {
-      mediaSessionMock._triggerAction('seekbackward');
-    });
-    expect(AudioMock.instances[0]).toHaveProperty('currentTime', 45);
-  });
-
-  it('should seek backward via media session by provided offset', async () => {
-    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
-    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
-    expect(navigator.mediaSession.metadata).toEqual(null);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
-    AudioMock.instances[0].currentTime = 60;
-    act(() => {
-      mediaSessionMock._triggerAction('seekbackward', { seekOffset: 10 });
-    });
-    expect(AudioMock.instances[0]).toHaveProperty('currentTime', 50);
   });
 });
