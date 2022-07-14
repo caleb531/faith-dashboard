@@ -59,10 +59,10 @@ describe('Podcast widget', () => {
       podcastFeedJson.channel.title
     );
 
-    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await chooseEpisode('Perfect Love Casts Out Fear');
     expect(
       screen.getByRole('heading', {
-        name: 'The Beautiful Faith of Fearless Submission'
+        name: 'Perfect Love Casts Out Fear'
       })
     ).toBeInTheDocument();
     expect(
@@ -82,7 +82,7 @@ describe('Podcast widget', () => {
     await choosePodcast('Sermon of the Day');
     expect(screen.getByText('50 episodes')).toBeInTheDocument();
 
-    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await chooseEpisode('Perfect Love Casts Out Fear');
     await userEvent.click(
       screen.getByRole('button', { name: 'Return to List' })
     );
@@ -100,14 +100,14 @@ describe('Podcast widget', () => {
     await choosePodcast('Sermon of the Day');
     expect(screen.getByText('50 episodes')).toBeInTheDocument();
 
-    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await chooseEpisode('Perfect Love Casts Out Fear');
     await userEvent.click(
       screen.getByRole('button', { name: 'Return to List' })
     );
     await userEvent.click(screen.getByRole('button', { name: 'Now Playing' }));
     expect(
       screen.getByRole('heading', {
-        name: 'The Beautiful Faith of Fearless Submission'
+        name: 'Perfect Love Casts Out Fear'
       })
     ).toBeInTheDocument();
     expect(
@@ -124,7 +124,7 @@ describe('Podcast widget', () => {
 
     await searchPodcasts('sermon of the day');
     await choosePodcast('Sermon of the Day');
-    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await chooseEpisode('Perfect Love Casts Out Fear');
 
     expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
     expect(playStub).not.toHaveBeenCalled();
@@ -146,7 +146,7 @@ describe('Podcast widget', () => {
 
     await searchPodcasts('sermon of the day');
     await choosePodcast('Sermon of the Day');
-    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await chooseEpisode('Perfect Love Casts Out Fear');
 
     const audioProgressSlider = screen.getByRole('slider', {
       name: 'Audio Progress'
@@ -166,7 +166,7 @@ describe('Podcast widget', () => {
 
     await searchPodcasts('sermon of the day');
     await choosePodcast('Sermon of the Day');
-    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await chooseEpisode('Perfect Love Casts Out Fear');
 
     await userEvent.click(screen.getByRole('button', { name: 'Add Widget' }));
     await userEvent.click(
@@ -218,7 +218,7 @@ describe('Podcast widget', () => {
     expect(navigator.mediaSession.metadata).toEqual(null);
     await searchPodcasts('sermon of the day');
     await choosePodcast('Sermon of the Day');
-    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await chooseEpisode('Perfect Love Casts Out Fear');
     expect(navigator.mediaSession.metadata).not.toEqual(null);
   });
 
@@ -229,7 +229,7 @@ describe('Podcast widget', () => {
     expect(navigator.mediaSession.metadata).toEqual(null);
     await searchPodcasts('sermon of the day');
     await choosePodcast('Sermon of the Day');
-    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await chooseEpisode('Perfect Love Casts Out Fear');
     expect(AudioMock.instances[0]).toHaveProperty('paused', true);
     act(() => {
       mediaSessionMock._triggerAction('play');
@@ -245,7 +245,7 @@ describe('Podcast widget', () => {
     jest.spyOn(AudioMock.instances[0], 'pause');
     await searchPodcasts('sermon of the day');
     await choosePodcast('Sermon of the Day');
-    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await chooseEpisode('Perfect Love Casts Out Fear');
     expect(AudioMock.instances[0]).toHaveProperty('paused', true);
     act(() => {
       mediaSessionMock._triggerAction('pause');
@@ -261,7 +261,7 @@ describe('Podcast widget', () => {
     expect(navigator.mediaSession.metadata).toEqual(null);
     await searchPodcasts('sermon of the day');
     await choosePodcast('Sermon of the Day');
-    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await chooseEpisode('Perfect Love Casts Out Fear');
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 0);
     act(() => {
       mediaSessionMock._triggerAction('seekforward');
@@ -276,7 +276,7 @@ describe('Podcast widget', () => {
     expect(navigator.mediaSession.metadata).toEqual(null);
     await searchPodcasts('sermon of the day');
     await choosePodcast('Sermon of the Day');
-    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await chooseEpisode('Perfect Love Casts Out Fear');
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 0);
     act(() => {
       mediaSessionMock._triggerAction('seekforward', { seekOffset: 10 });
@@ -291,7 +291,7 @@ describe('Podcast widget', () => {
     expect(navigator.mediaSession.metadata).toEqual(null);
     await searchPodcasts('sermon of the day');
     await choosePodcast('Sermon of the Day');
-    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await chooseEpisode('Perfect Love Casts Out Fear');
     AudioMock.instances[0].currentTime = 60;
     act(() => {
       mediaSessionMock._triggerAction('seekbackward');
@@ -306,7 +306,7 @@ describe('Podcast widget', () => {
     expect(navigator.mediaSession.metadata).toEqual(null);
     await searchPodcasts('sermon of the day');
     await choosePodcast('Sermon of the Day');
-    await chooseEpisode('The Beautiful Faith of Fearless Submission');
+    await chooseEpisode('Perfect Love Casts Out Fear');
     AudioMock.instances[0].currentTime = 60;
     act(() => {
       mediaSessionMock._triggerAction('seekbackward', { seekOffset: 10 });
