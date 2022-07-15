@@ -23,8 +23,8 @@ class AudioMock {
   }
 
   pause() {
-    this.trigger('pause');
     this.paused = true;
+    this.trigger('pause');
   }
 
   fastSeek() {
@@ -40,13 +40,14 @@ class AudioMock {
   }
 
   addEventListener(eventType: string, eventCallback: (event?: any) => void) {
+    if (!this.callbackMap[eventType]) {
+      this.callbackMap[eventType] = [];
+    }
+    this.callbackMap[eventType].push(eventCallback);
     if (eventType === 'loadeddata' || eventType === 'loadedmetadata') {
-      eventCallback();
-    } else {
-      if (!this.callbackMap[eventType]) {
-        this.callbackMap[eventType] = [];
-      }
-      this.callbackMap[eventType].push(eventCallback);
+      setTimeout(() => {
+        this.trigger(eventType);
+      });
     }
   }
 
