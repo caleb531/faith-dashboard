@@ -51,10 +51,15 @@ class AudioMock {
     }
   }
 
-  removeEventListener(eventName: string) {
-    if (this.callbackMap[eventName]) {
-      this.callbackMap[eventName].length = 0;
+  removeEventListener(eventName: string, eventCallback: (event?: any) => void) {
+    if (!this.callbackMap[eventName]) {
+      return;
     }
+    const callbackIndex = this.callbackMap[eventName].indexOf(eventCallback);
+    if (callbackIndex === -1) {
+      return;
+    }
+    this.callbackMap[eventName].splice(callbackIndex, 1);
   }
 }
 // Keep track of all instances
