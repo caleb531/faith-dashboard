@@ -77,6 +77,9 @@ input[type=range].audio-player-seeker-slider {
   }
   @include slider-thumb() {
     opacity: 0;
+    // Ensure that cursor coordinates are in sync with slider fill
+    width: 0;
+    height: 0;
   }
   // On WebKit, the slider thumb is not vertically centered by default, but on
   // Firefox, it is, so we need to target WebKit specifically to accommodate
