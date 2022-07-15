@@ -69,6 +69,15 @@ function useAudioSeeker(
     }
   });
 
+  // Re-render component when seeker input initially mounts; this is to ensure
+  // there is no discontinuity in the audio timestamps when dragging the widget
+  // to a new column
+  useEffect(() => {
+    if (seekerInputRef.current) {
+      setPendingCurrentTime(Number(seekerInputRef.current.value));
+    }
+  }, [seekerInputRef]);
+
   const currentTimeForTimestamp =
     isCurrentlySeeking && seekerInputRef.current
       ? Number(seekerInputRef.current.value)
