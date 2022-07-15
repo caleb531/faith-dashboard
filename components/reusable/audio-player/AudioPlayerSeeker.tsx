@@ -86,15 +86,25 @@ function AudioPlayerSeeker({
           <span className="audio-player-current-time">
             {!audioElement.duration || audioElement.src !== audioUrl
               ? 'Loading...'
-              : audioElement.currentTime >= 1
-              ? formatSecondsAsTimestamp(Math.floor(audioElement.currentTime))
+              : seekerProvided.ref.current &&
+                Number(seekerProvided.ref.current.value) >= 1
+              ? seekerProvided.ref.current &&
+                formatSecondsAsTimestamp(
+                  Math.floor(Number(seekerProvided.ref.current.value))
+                )
               : '0:00'}
           </span>
           <span className="audio-player-time-remaining">
-            {audioElement.duration && audioElement.src === audioUrl
-              ? Math.round(audioElement.duration - audioElement.currentTime) > 0
+            {audioElement.duration &&
+            audioElement.src === audioUrl &&
+            seekerProvided.ref.current
+              ? Math.round(
+                  audioElement.duration -
+                    Number(seekerProvided.ref.current.value)
+                ) > 0
                 ? `-${formatSecondsAsTimestamp(
-                    audioElement.duration - audioElement.currentTime
+                    audioElement.duration -
+                      Number(seekerProvided.ref.current.value)
                   )}`
                 : '0:00'
               : null}
