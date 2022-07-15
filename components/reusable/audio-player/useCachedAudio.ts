@@ -10,7 +10,12 @@ function useCachedAudio(cacheKey: string): [HTMLAudioElement, () => void] {
   const [audioElement, setAudioElement, removeAudioElement] = useCachedState(
     `podcast-audio-${cacheKey}`,
     () => {
-      return new Audio();
+      const audioElement = document.createElement('audio');
+      // Setting preload=metadata on the initial audio element fixes a nasty
+      // iOS bug where setting currentTime would be ineffective; the audio
+      // would always start from the beginning when played
+      audioElement.preload = 'metadata';
+      return audioElement;
     }
   );
 

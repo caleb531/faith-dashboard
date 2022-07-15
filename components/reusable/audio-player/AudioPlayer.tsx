@@ -1,4 +1,3 @@
-import React from 'react';
 import AudioPlayerPlayPause from './AudioPlayerPlayPause';
 import AudioPlayerSeeker from './AudioPlayerSeeker';
 import useAudioLoader from './useAudioLoader';

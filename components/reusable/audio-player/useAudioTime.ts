@@ -52,8 +52,16 @@ function useAudioTime(
       return;
     }
     audioElement.src = audioUrl;
-    audioElement.currentTime = currentTime;
   }, [audioUrl, audioElement, currentTime]);
+
+  // When the audio is initially loaded, set the currentTime to the restored
+  // value from state
+  useEventListener(audioElement, 'loadedmetadata', () => {
+    if (audioElement.duration) {
+      audioElement.currentTime = currentTime;
+      setCurrentTime(audioElement.currentTime);
+    }
+  });
 }
 
 export default useAudioTime;
