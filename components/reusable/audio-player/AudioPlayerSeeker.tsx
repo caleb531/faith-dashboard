@@ -28,8 +28,15 @@ function AudioPlayerSeeker({
   const skipForwardOffset = 30;
 
   function adjustTime(offset: number) {
-    setCurrentTime(audioElement.currentTime + offset);
     audioElement.currentTime += offset;
+    // Make sure the audio timestamps (which, to achieve the desired UX, are
+    // based on the current slider value) reflect the new audio time
+    // immediately (i.e. don't wait for the next tick of the audio to update
+    // the timestamps)
+    if (seekerProvided.ref.current) {
+      seekerProvided.ref.current.value = String(audioElement.currentTime);
+    }
+    setCurrentTime(audioElement.currentTime);
   }
 
   // Zero-pad the given number if it's a single-digit; used for computing
