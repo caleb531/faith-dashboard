@@ -3,6 +3,9 @@ $widget-min-height: 100px;
 $widget-margin-x: 0;
 $widget-margin-y: 10px;
 
+$widget-board-column-padding-x: 20px;
+$widget-board-column-padding-y: 10px;
+
 .widget-board {
   flex-grow: 1;
   display: flex;
@@ -15,12 +18,12 @@ $widget-margin-y: 10px;
 .widget-board-column {
   flex-grow: 1;
   flex-basis: 0;
-  min-width: $widget-min-width;
+  min-width: $widget-min-width + ($widget-board-column-padding-x * 2);
   display: flex;
   flex-direction: column;
   margin: 0 10px;
   margin-bottom: 20px;
   border-radius: 20px;
-  padding: 10px 20px;
+  padding: $widget-board-column-padding-y $widget-board-column-padding-x;
   background-color: $dark-10;
 }
