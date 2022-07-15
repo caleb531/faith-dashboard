@@ -6,7 +6,13 @@
   align-items: center;
 }
 
-.audio-player-playpause {
+.audio-player-seeker-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.audio-player-control {
   padding: 6px;
   margin-right: 10px;
   border-width: 0;
@@ -28,7 +34,24 @@
   height: $icon-size;
 }
 
-.audio-player-seeker-container {
+.audio-player-skip-back,
+.audio-player-skip-forward {
+  padding: 3px;
+}
+
+.audio-player-skip-forward {
+  margin-left: 10px;
+  margin-right: 0;
+}
+
+.audio-player-skip-back-icon,
+.audio-player-skip-forward-icon {
+  $icon-size: 18px;
+  width: $icon-size;
+  height: $icon-size;
+}
+
+.audio-player-seeker-slider-container {
   flex-grow: 1;
   display: flex;
   flex-direction: column;

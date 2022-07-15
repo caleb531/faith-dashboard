@@ -27,7 +27,7 @@ function AudioPlayerPlayPause({
   return (
     <button
       type="button"
-      className="audio-player-playpause"
+      className="audio-player-control audio-player-playpause"
       onClick={() => toggleAudioElementPlayback()}
       disabled={!audioElement.duration}
     >
