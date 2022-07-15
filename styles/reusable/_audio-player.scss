@@ -74,6 +74,13 @@ input[type=range].audio-player-seeker-slider {
   padding-bottom: 5px;
   @include slider-track() {
     opacity: 0;
+    // If we don't specify an explicit height, the height will be inherited
+    // from the slider thumb, whose height is currently zeroed-out for proper
+    // interactivity; therefore, specify a height that's large enough for the
+    // user to interact with easily on a mobile device; and fortunately, the
+    // height does not cause layout shift; it simply overlaps surrounding
+    // elements if large enough
+    height: 30px;
   }
   @include slider-thumb() {
     opacity: 0;
