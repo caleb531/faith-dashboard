@@ -44,8 +44,8 @@ function AudioPlayerSeeker({
       start: 0,
       end: Math.floor(totalSeconds) * 1000
     });
-    if (hours && minutes && seconds) {
-      return [hours, padWithZero(minutes), padWithZero(seconds)].join(':');
+    if (hours) {
+      return [hours, padWithZero(minutes!), padWithZero(seconds!)].join(':');
     } else if (minutes || seconds) {
       return [minutes || 0, padWithZero(seconds || 0)].join(':');
     } else {
