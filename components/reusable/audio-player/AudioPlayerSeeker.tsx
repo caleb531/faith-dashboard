@@ -1,4 +1,3 @@
-import { intervalToDuration } from 'date-fns';
 import useUniqueFieldId from '../../useUniqueFieldId';
 import useAudioSeeker from './useAudioSeeker';
 import useAudioTime from './useAudioTime';
@@ -16,11 +15,8 @@ function AudioPlayerSeeker({
   currentTime,
   setCurrentTime
 }: Props) {
-  const { seekerProvided } = useAudioSeeker(
-    audioElement,
-    currentTime,
-    setCurrentTime
-  );
+  const { seekerProvided, currentTimestamp, remainingTimestamp } =
+    useAudioSeeker(audioElement, audioUrl, currentTime, setCurrentTime);
   useAudioTime(audioElement, audioUrl, currentTime, setCurrentTime);
 
   // The number of seconds of audio to either skip back or skip forward
@@ -37,27 +33,6 @@ function AudioPlayerSeeker({
       seekerProvided.ref.current.value = String(audioElement.currentTime);
     }
     setCurrentTime(audioElement.currentTime);
-  }
-
-  // Zero-pad the given number if it's a single-digit; used for computing
-  // hh:mm:ss timestamps in the below formatSecondsAsTimestamp() function
-  function padWithZero(value: number): string {
-    return value < 10 ? `0${value}` : String(value);
-  }
-
-  // Format the given number of seconds
-  function formatSecondsAsTimestamp(totalSeconds: number): string {
-    const { hours, minutes, seconds } = intervalToDuration({
-      start: 0,
-      end: Math.floor(totalSeconds) * 1000
-    });
-    if (hours) {
-      return [hours, padWithZero(minutes!), padWithZero(seconds!)].join(':');
-    } else if (minutes || seconds) {
-      return [minutes || 0, padWithZero(seconds || 0)].join(':');
-    } else {
-      return '';
-    }
   }
 
   const seekerFieldId = useUniqueFieldId('audio-player-seeker-slider');
@@ -87,34 +62,13 @@ function AudioPlayerSeeker({
           max={audioElement.duration || 0}
           step="1"
           disabled={!audioElement.duration}
+          defaultValue={audioElement.currentTime}
           {...seekerProvided}
         />
         <div className="audio-player-time-info">
-          <span className="audio-player-current-time">
-            {!audioElement.duration || audioElement.src !== audioUrl
-              ? 'Loading...'
-              : seekerProvided.ref.current &&
-                Number(seekerProvided.ref.current.value) >= 1
-              ? seekerProvided.ref.current &&
-                formatSecondsAsTimestamp(
-                  Math.floor(Number(seekerProvided.ref.current.value))
-                )
-              : '0:00'}
-          </span>
+          <span className="audio-player-current-time">{currentTimestamp}</span>
           <span className="audio-player-time-remaining">
-            {audioElement.duration &&
-            audioElement.src === audioUrl &&
-            seekerProvided.ref.current
-              ? Math.round(
-                  audioElement.duration -
-                    Number(seekerProvided.ref.current.value)
-                ) > 0
-                ? `-${formatSecondsAsTimestamp(
-                    audioElement.duration -
-                      Number(seekerProvided.ref.current.value)
-                  )}`
-                : '0:00'
-              : null}
+            {remainingTimestamp}
           </span>
         </div>
       </div>
