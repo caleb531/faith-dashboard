@@ -117,6 +117,37 @@ describe('Podcast widget', () => {
     AudioMock.instances[0].paused = true;
   });
 
+  it('should skip back in audio', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    render(<Home />);
+
+    await searchPodcasts('sermon of the day');
+    await choosePodcast('Sermon of the Day');
+    await chooseEpisode('Perfect Love Casts Out Fear');
+
+    AudioMock.instances[0].currentTime = 123;
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Skip Back 30 Seconds' })
+    );
+    AudioMock.instances[0].currentTime = 93;
+  });
+  it('should skip forward in audio', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    render(<Home />);
+
+    await searchPodcasts('sermon of the day');
+    await choosePodcast('Sermon of the Day');
+    await chooseEpisode('Perfect Love Casts Out Fear');
+
+    AudioMock.instances[0].currentTime = 123;
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Skip Forward 30 Seconds' })
+    );
+    AudioMock.instances[0].currentTime = 153;
+  });
+
   it('should interact with audio seeker', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
