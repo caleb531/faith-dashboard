@@ -84,7 +84,7 @@ a.button {
   font-weight: 400;
   text-decoration: none;
   &[disabled] {
-    opacity: 0.75;
+    opacity: 0.5;
   }
   &:not([disabled]):hover:active {
     background-color: $dark-50;
