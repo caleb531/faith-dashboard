@@ -1,9 +1,10 @@
 @use 'sass:math';
 
-.audio-player {
+.audio-player-main-controls {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .audio-player-seeker-container {
@@ -14,41 +15,30 @@
 
 .audio-player-control {
   padding: 6px;
-  margin-right: 10px;
   border-width: 0;
   border-radius: 50px;
   font-size: 0;
-  .loading-indicator {
-    $icon-size: 24px;
-    width: $icon-size;
-    height: $icon-size;
-  }
   .loading-indicator-icon {
     stroke-width: 6;
   }
+  img,
+  .loading-indicator {
+    $icon-size: 30px;
+    width: $icon-size;
+    height: $icon-size;
+    @include layout(desktop) {
+      $icon-size: 24px;
+      width: $icon-size;
+      height: $icon-size;
+    }
+  }
 }
 
-.audio-player-playpause-icon {
-  $icon-size: 24px;
-  width: $icon-size;
-  height: $icon-size;
-}
-
-.audio-player-skip-back,
-.audio-player-skip-forward {
-  padding: 3px;
-}
-
-.audio-player-skip-forward {
-  margin-left: 10px;
-  margin-right: 0;
-}
-
-.audio-player-skip-back-icon,
-.audio-player-skip-forward-icon {
-  $icon-size: 18px;
-  width: $icon-size;
-  height: $icon-size;
+.audio-player-playpause {
+  margin: 0 15px;
+  @include layout(desktop) {
+    margin: 0 10px;
+  }
 }
 
 .audio-player-seeker-slider-container {

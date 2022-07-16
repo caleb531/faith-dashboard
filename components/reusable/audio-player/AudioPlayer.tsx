@@ -1,5 +1,6 @@
 import AudioPlayerPlayPause from './AudioPlayerPlayPause';
 import AudioPlayerSeeker from './AudioPlayerSeeker';
+import AudioPlayerSkip from './AudioPlayerSkip';
 import useAudioLoader from './useAudioLoader';
 import useCachedAudio from './useCachedAudio';
 
@@ -33,12 +34,28 @@ function AudioPlayer({
 
   return (
     <div className="audio-player">
-      <AudioPlayerPlayPause
-        audioElement={audioElement}
-        audioUrl={audioUrl}
-        isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
-      />
+      <div className="audio-player-main-controls">
+        <AudioPlayerSkip
+          audioElement={audioElement}
+          setCurrentTime={setCurrentTime}
+          skipOffset={-30}
+          action="skip-back"
+          label="Skip Back {offset} Seconds"
+        />
+        <AudioPlayerPlayPause
+          audioElement={audioElement}
+          audioUrl={audioUrl}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+        />
+        <AudioPlayerSkip
+          audioElement={audioElement}
+          setCurrentTime={setCurrentTime}
+          skipOffset={30}
+          action="skip-forward"
+          label="Skip Forward {offset} Seconds"
+        />
+      </div>
       <AudioPlayerSeeker
         audioElement={audioElement}
         audioUrl={audioUrl}

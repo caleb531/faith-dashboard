@@ -19,29 +19,9 @@ function AudioPlayerSeeker({
     useAudioSeeker(audioElement, audioUrl, currentTime, setCurrentTime);
   useAudioTime(audioElement, audioUrl, currentTime, setCurrentTime);
 
-  // The number of seconds of audio to either skip back or skip forward
-  const skipBackOffset = 30;
-  const skipForwardOffset = 30;
-
-  function adjustTime(offset: number) {
-    audioElement.currentTime += offset;
-    setCurrentTime(audioElement.currentTime);
-  }
-
   const seekerFieldId = useUniqueFieldId('audio-player-seeker-slider');
   return (
     <div className="audio-player-seeker-container">
-      <button
-        className="audio-player-control audio-player-skip-back"
-        onClick={() => adjustTime(-skipBackOffset)}
-      >
-        <img
-          className="audio-player-skip-back-icon"
-          src="/icons/skip-back-30-light.svg"
-          alt="Skip Back 30 Seconds"
-          draggable="false"
-        />
-      </button>
       <div className="audio-player-seeker-slider-container">
         <label htmlFor={seekerFieldId} className="search accessibility-only">
           Audio Progress
@@ -65,17 +45,6 @@ function AudioPlayerSeeker({
           </span>
         </div>
       </div>
-      <button
-        className="audio-player-control audio-player-skip-forward"
-        onClick={() => adjustTime(skipForwardOffset)}
-      >
-        <img
-          className="audio-player-skip-forward-icon"
-          src="/icons/skip-forward-30-light.svg"
-          alt="Skip Forward 30 Seconds"
-          draggable="false"
-        />
-      </button>
     </div>
   );
 }
