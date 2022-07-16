@@ -14,6 +14,12 @@ import {
 } from './__utils__/podcastTestUtils';
 import { getWidgetData } from './__utils__/testUtils';
 
+async function navigateToNowPlaying() {
+  await searchPodcasts('sermon of the day');
+  await choosePodcast('Sermon of the Day');
+  await chooseEpisode('Perfect Love Casts Out Fear');
+}
+
 describe('Podcast widget', () => {
   afterEach(() => {
     jest.restoreAllMocks();
@@ -99,10 +105,7 @@ describe('Podcast widget', () => {
     const playStub = jest.spyOn(AudioMock.prototype, 'play');
     const pauseStub = jest.spyOn(AudioMock.prototype, 'pause');
     render(<Home />);
-
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
 
     expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
     expect(playStub).not.toHaveBeenCalled();
@@ -121,10 +124,7 @@ describe('Podcast widget', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     render(<Home />);
-
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
 
     AudioMock.instances[0].currentTime = 123;
     await userEvent.click(
@@ -136,10 +136,7 @@ describe('Podcast widget', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     render(<Home />);
-
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
 
     AudioMock.instances[0].currentTime = 123;
     await userEvent.click(
@@ -152,10 +149,7 @@ describe('Podcast widget', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     render(<Home />);
-
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
 
     const audioProgressSlider = screen.getByRole('slider', {
       name: 'Audio Progress'
@@ -172,10 +166,7 @@ describe('Podcast widget', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     render(<Home />);
-
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
 
     await userEvent.click(screen.getByRole('button', { name: 'Add Widget' }));
     await userEvent.click(
