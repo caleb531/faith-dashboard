@@ -83,10 +83,6 @@ a.button {
   font-size: $font-size-xs;
   font-weight: 400;
   text-decoration: none;
-  input + & {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
   &[disabled] {
     opacity: 0.75;
   }

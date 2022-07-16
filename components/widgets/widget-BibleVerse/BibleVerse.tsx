@@ -69,7 +69,7 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({
               className="bible-verse-search"
               name="search"
               defaultValue={verseQuery}
-              placeholder="e.g. gen1.1, psa.23.1-5"
+              placeholder="e.g. romans 8.28, psa23:1-5"
               required
               ref={requestQueryInputRef}
             />
