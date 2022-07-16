@@ -156,9 +156,11 @@ describe('Podcast widget', () => {
     }) as HTMLInputElement;
     expect(audioProgressSlider).toBeInTheDocument();
 
+    // 0:10
+    await fireEvent.mouseDown(audioProgressSlider);
     await fireEvent.input(audioProgressSlider, { target: { value: '10' } });
     await fireEvent.change(audioProgressSlider, { target: { value: '10' } });
-    await userEvent.click(audioProgressSlider);
+    await fireEvent.mouseUp(audioProgressSlider);
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 10);
   });
 
