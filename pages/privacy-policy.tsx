@@ -12,7 +12,7 @@ function PrivacyPolicy() {
 
       <p>This privacy policy was last updated on June 27th, 2022.</p>
 
-      <h3>Secure Connection</h3>
+      <h2>Secure Connection</h2>
 
       <p>
         Your connection to Faith Dashboard is fully encrypted via HTTPS,
@@ -24,7 +24,7 @@ function PrivacyPolicy() {
         .
       </p>
 
-      <h3>Local Storage</h3>
+      <h2>Local Storage</h2>
 
       <p>
         The apps on Faith Dashboard use the HTML5 Local Storage API to store
@@ -34,7 +34,7 @@ function PrivacyPolicy() {
         may enter into the app.
       </p>
 
-      <h3>Account Creation</h3>
+      <h2>Account Creation</h2>
 
       <p>
         When you create an account on Faith Dashboard, Faith Dashboard will
@@ -44,7 +44,7 @@ function PrivacyPolicy() {
         protect your account.
       </p>
 
-      <h3>Account Deletion</h3>
+      <h2>Account Deletion</h2>
 
       <p>
         If you created an account, you can request this data to be deleted by
@@ -55,7 +55,7 @@ function PrivacyPolicy() {
         from the email you signed up with.
       </p>
 
-      <h3>Google Analytics</h3>
+      <h2>Google Analytics</h2>
 
       <p>
         Faith Dashboard uses Google Analytics. I only use this information to
@@ -68,7 +68,7 @@ function PrivacyPolicy() {
         otherwise share this information.
       </p>
 
-      <h3>Email Privacy</h3>
+      <h2>Email Privacy</h2>
 
       <p>
         The only time Faith Dashboard will email you is if you request a
@@ -77,7 +77,7 @@ function PrivacyPolicy() {
         anyone else, nor will you be opted into any marketing emails.
       </p>
 
-      <h3>Changes</h3>
+      <h2>Changes</h2>
 
       <p>
         This privacy policy may change at any time. When changes are made, the
