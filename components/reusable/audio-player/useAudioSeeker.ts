@@ -56,7 +56,7 @@ function useAudioSeeker(
     } else if (minutes || seconds) {
       return [minutes || 0, padWithZero(seconds || 0)].join(':');
     } else {
-      return '';
+      return '0:00';
     }
   }
 
@@ -105,13 +105,11 @@ function useAudioSeeker(
     },
 
     currentTimestamp:
-      !audioElement.duration ||
-      audioElement.src !== audioUrl ||
-      !seekerInputRef.current
-        ? 'Loading...'
-        : seekerInputRef.current && Number(seekerInputRef.current.value) >= 1
+      audioElement.duration &&
+      audioElement.src === audioUrl &&
+      seekerInputRef.current
         ? formatSecondsAsTimestamp(Math.floor(currentTimeForTimestamp))
-        : '0:00',
+        : 'Loading...',
 
     remainingTimestamp:
       audioElement.duration &&
