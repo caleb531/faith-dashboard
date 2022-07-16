@@ -128,9 +128,9 @@ describe('Podcast widget', () => {
 
     AudioMock.instances[0].currentTime = 123;
     await userEvent.click(
-      screen.getByRole('button', { name: 'Skip Back 30 Seconds' })
+      screen.getByRole('button', { name: 'Skip Back 10 Seconds' })
     );
-    AudioMock.instances[0].currentTime = 93;
+    AudioMock.instances[0].currentTime = 113;
   });
   it('should skip forward in audio', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
