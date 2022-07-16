@@ -119,16 +119,12 @@ function useAudioSeeker(
     },
 
     currentTimestamp:
-      audioElement.duration &&
-      audioElement.src === audioUrl &&
-      seekerInputRef.current
+      audioElement.duration && audioElement.src === audioUrl
         ? formatSecondsAsTimestamp(Math.floor(currentTimeForTimestamp))
         : 'Loading...',
 
     remainingTimestamp:
-      audioElement.duration &&
-      audioElement.src === audioUrl &&
-      seekerInputRef.current
+      audioElement.duration && audioElement.src === audioUrl
         ? Math.round(audioElement.duration - currentTimeForTimestamp) > 0
           ? `-${formatSecondsAsTimestamp(
               audioElement.duration - currentTimeForTimestamp
