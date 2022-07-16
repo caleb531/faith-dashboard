@@ -3,10 +3,9 @@ import { JSXContents } from '../global';
 type Props = {
   children: JSXContents;
   onCloseModal: () => void;
-  onBackButton?: (() => void) | null;
 };
 
-function Modal({ children, onCloseModal, onBackButton }: Props) {
+function Modal({ children, onCloseModal }: Props) {
   return (
     <div className="modal-scroll-container">
       <div className="modal-overlay" onClick={onCloseModal}></div>
