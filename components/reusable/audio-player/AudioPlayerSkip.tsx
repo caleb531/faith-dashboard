@@ -2,7 +2,7 @@ type Props = {
   audioElement: HTMLAudioElement;
   setCurrentTime: (newCurrentTime: number) => void;
   action: 'skip-back' | 'skip-forward';
-  skipOffset: number;
+  skipOffset: 10 | 30;
   label: string;
 };
 
@@ -14,7 +14,11 @@ function AudioPlayerSeeker({
   label
 }: Props) {
   function adjustTime() {
-    audioElement.currentTime += skipOffset;
+    if (action === 'skip-forward') {
+      audioElement.currentTime += skipOffset;
+    } else {
+      audioElement.currentTime -= skipOffset;
+    }
     setCurrentTime(audioElement.currentTime);
   }
 
@@ -26,8 +30,8 @@ function AudioPlayerSeeker({
     >
       <img
         className={`audio-player-${action}-icon`}
-        src={`/icons/${action}-${Math.abs(skipOffset)}-light.svg`}
-        alt={label.replace(/{offset}/gi, String(Math.abs(skipOffset)))}
+        src={`/icons/${action}-${skipOffset}-light.svg`}
+        alt={label.replace(/{offset}/gi, String(skipOffset))}
         draggable="false"
       />
     </button>

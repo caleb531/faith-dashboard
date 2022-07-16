@@ -38,7 +38,7 @@ function AudioPlayer({
         <AudioPlayerSkip
           audioElement={audioElement}
           setCurrentTime={setCurrentTime}
-          skipOffset={-10}
+          skipOffset={10}
           action="skip-back"
           label="Skip Back {offset} Seconds"
         />
