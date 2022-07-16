@@ -129,6 +129,7 @@ $widget-transition-duration: 250ms;
   }
   .is-not-touch-device &:active {
     opacity: 1 !important;
+    transition-duration: 0ms;
   }
 }
 .widget-control-icon {
