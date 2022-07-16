@@ -22,6 +22,7 @@ function AudioPlayerSeeker({
     <button
       className={`audio-player-control audio-player-${action}`}
       onClick={() => adjustTime()}
+      disabled={!Boolean(audioElement.duration)}
     >
       <img
         className={`audio-player-${action}-icon`}
