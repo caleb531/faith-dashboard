@@ -162,6 +162,50 @@ describe('Podcast widget', () => {
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 10);
   });
 
+  it('should display audio timestamps correctly when current time is in hours', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    render(<Home />);
+    // 1:18:32
+    AudioMock.instances[0].duration = 4712;
+    await navigateToNowPlaying();
+
+    const audioProgressSlider = screen.getByRole('slider', {
+      name: 'Audio Progress'
+    }) as HTMLInputElement;
+    expect(audioProgressSlider).toBeInTheDocument();
+
+    // 1:04:03
+    await fireEvent.mouseDown(audioProgressSlider);
+    await fireEvent.input(audioProgressSlider, { target: { value: '3843' } });
+    await fireEvent.change(audioProgressSlider, { target: { value: '3843' } });
+    await fireEvent.mouseUp(audioProgressSlider);
+    expect(screen.getByText('1:04:03')).toBeInTheDocument();
+    expect(screen.getByText('-14:29')).toBeInTheDocument();
+  });
+
+  it('should display audio timestamps correctly when current time is in seconds', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    render(<Home />);
+    // 9:30
+    AudioMock.instances[0].duration = 570;
+    await navigateToNowPlaying();
+
+    const audioProgressSlider = screen.getByRole('slider', {
+      name: 'Audio Progress'
+    }) as HTMLInputElement;
+    expect(audioProgressSlider).toBeInTheDocument();
+
+    // 0:03
+    await fireEvent.mouseDown(audioProgressSlider);
+    await fireEvent.input(audioProgressSlider, { target: { value: '3' } });
+    await fireEvent.change(audioProgressSlider, { target: { value: '3' } });
+    await fireEvent.mouseUp(audioProgressSlider);
+    expect(screen.getByText('0:03')).toBeInTheDocument();
+    expect(screen.getByText('-9:27')).toBeInTheDocument();
+  });
+
   it('should maintain separate audio stream per Podcast widget', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
