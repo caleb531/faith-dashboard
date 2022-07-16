@@ -26,7 +26,7 @@ function AudioPlayerSeeker({
     >
       <img
         className={`audio-player-${action}-icon`}
-        src={`/icons/${action}-30-light.svg`}
+        src={`/icons/${action}-${Math.abs(skipOffset)}-light.svg`}
         alt={label.replace(/{offset}/gi, String(Math.abs(skipOffset)))}
         draggable="false"
       />
