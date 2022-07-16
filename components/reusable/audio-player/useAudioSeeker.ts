@@ -13,8 +13,15 @@ function useAudioSeeker(
   seekerProvided: {
     ref: RefObject<HTMLInputElement>;
     onInput: (event: React.FormEvent<HTMLInputElement>) => void;
-    onPointerDown: (event: React.PointerEvent<HTMLInputElement>) => void;
-    onPointerUp: (event: React.PointerEvent<HTMLInputElement>) => void;
+    // We need to use separate mouse/touch events, rather than the unified
+    // pointer events API, to work around a bug on iOS where the pointerUp
+    // event would not run correctly; I suspect there is some necessity to have
+    // a mouseUp event in order for the slider to behave properly on mobile; go
+    // figure...
+    onMouseDown: (event: React.MouseEvent<HTMLInputElement>) => void;
+    onTouchStart: (event: React.TouchEvent<HTMLInputElement>) => void;
+    onMouseUp: (event: React.MouseEvent<HTMLInputElement>) => void;
+    onTouchEnd: (event: React.TouchEvent<HTMLInputElement>) => void;
   };
   currentTimestamp: string;
   remainingTimestamp: string;
@@ -60,6 +67,16 @@ function useAudioSeeker(
     }
   }
 
+  function sliderDown() {
+    setIsCurrentlySeeking(true);
+  }
+
+  function sliderUp(event: React.UIEvent<HTMLInputElement>) {
+    audioElement.currentTime = Number(event.currentTarget.value);
+    setCurrentTime(audioElement.currentTime);
+    setIsCurrentlySeeking(false);
+  }
+
   // Update the position of the audio seeker while the audio is playing (but
   // only if the user is not currently interacting with the seeker slider)
   useEffect(() => {
@@ -95,14 +112,10 @@ function useAudioSeeker(
           setPendingCurrentTime(Number(event.currentTarget.value));
         }
       },
-      onPointerDown: () => {
-        setIsCurrentlySeeking(true);
-      },
-      onPointerUp: (event) => {
-        audioElement.currentTime = Number(event.currentTarget.value);
-        setCurrentTime(audioElement.currentTime);
-        setIsCurrentlySeeking(false);
-      }
+      onMouseDown: sliderDown,
+      onTouchStart: sliderDown,
+      onMouseUp: sliderUp,
+      onTouchEnd: sliderUp
     },
 
     currentTimestamp:
