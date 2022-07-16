@@ -20,6 +20,22 @@ async function navigateToNowPlaying() {
   await chooseEpisode('Perfect Love Casts Out Fear');
 }
 
+async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
+  const audioProgressSlider = screen.getByRole('slider', {
+    name: 'Audio Progress'
+  }) as HTMLInputElement;
+  expect(audioProgressSlider).toBeInTheDocument();
+
+  await fireEvent.mouseDown(audioProgressSlider);
+  await fireEvent.input(audioProgressSlider, {
+    target: { value: String(newCurrentTime) }
+  });
+  await fireEvent.change(audioProgressSlider, {
+    target: { value: String(newCurrentTime) }
+  });
+  await fireEvent.mouseUp(audioProgressSlider);
+}
+
 describe('Podcast widget', () => {
   afterEach(() => {
     jest.restoreAllMocks();
@@ -151,16 +167,8 @@ describe('Podcast widget', () => {
     render(<Home />);
     await navigateToNowPlaying();
 
-    const audioProgressSlider = screen.getByRole('slider', {
-      name: 'Audio Progress'
-    }) as HTMLInputElement;
-    expect(audioProgressSlider).toBeInTheDocument();
-
     // 0:10
-    await fireEvent.mouseDown(audioProgressSlider);
-    await fireEvent.input(audioProgressSlider, { target: { value: '10' } });
-    await fireEvent.change(audioProgressSlider, { target: { value: '10' } });
-    await fireEvent.mouseUp(audioProgressSlider);
+    await seekAudio({ newCurrentTime: 10 });
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 10);
   });
 
@@ -172,16 +180,8 @@ describe('Podcast widget', () => {
     AudioMock.instances[0].duration = 4712;
     await navigateToNowPlaying();
 
-    const audioProgressSlider = screen.getByRole('slider', {
-      name: 'Audio Progress'
-    }) as HTMLInputElement;
-    expect(audioProgressSlider).toBeInTheDocument();
-
     // 1:04:03
-    await fireEvent.mouseDown(audioProgressSlider);
-    await fireEvent.input(audioProgressSlider, { target: { value: '3843' } });
-    await fireEvent.change(audioProgressSlider, { target: { value: '3843' } });
-    await fireEvent.mouseUp(audioProgressSlider);
+    await seekAudio({ newCurrentTime: 3843 });
     expect(screen.getByText('1:04:03')).toBeInTheDocument();
     expect(screen.getByText('-14:29')).toBeInTheDocument();
   });
@@ -194,16 +194,8 @@ describe('Podcast widget', () => {
     AudioMock.instances[0].duration = 570;
     await navigateToNowPlaying();
 
-    const audioProgressSlider = screen.getByRole('slider', {
-      name: 'Audio Progress'
-    }) as HTMLInputElement;
-    expect(audioProgressSlider).toBeInTheDocument();
-
     // 0:03
-    await fireEvent.mouseDown(audioProgressSlider);
-    await fireEvent.input(audioProgressSlider, { target: { value: '3' } });
-    await fireEvent.change(audioProgressSlider, { target: { value: '3' } });
-    await fireEvent.mouseUp(audioProgressSlider);
+    await seekAudio({ newCurrentTime: 3 });
     expect(screen.getByText('0:03')).toBeInTheDocument();
     expect(screen.getByText('-9:27')).toBeInTheDocument();
   });
