@@ -101,9 +101,9 @@ function useAudioSeeker(
       ? Number(seekerInputRef.current.value)
       : audioElement.currentTime;
 
-  // The following object is to be spread (...) into the element used for the
-  // audio seeker
   return {
+    // The following object is to be spread (...) into the element used for the
+    // audio seeker
     seekerProvided: {
       ref: seekerInputRef,
       onInput: (event) => {
