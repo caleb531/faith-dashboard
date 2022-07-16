@@ -13,8 +13,8 @@ function useAudioSeeker(
   seekerProvided: {
     ref: RefObject<HTMLInputElement>;
     onInput: (event: React.FormEvent<HTMLInputElement>) => void;
-    onMouseDown: (event: React.MouseEvent<HTMLInputElement>) => void;
-    onMouseUp: (event: React.MouseEvent<HTMLInputElement>) => void;
+    onPointerDown: (event: React.PointerEvent<HTMLInputElement>) => void;
+    onPointerUp: (event: React.PointerEvent<HTMLInputElement>) => void;
   };
   currentTimestamp: string;
   remainingTimestamp: string;
@@ -60,7 +60,8 @@ function useAudioSeeker(
     }
   }
 
-  // Set the position of the audio seeker when initially loading the player
+  // Update the position of the audio seeker while the audio is playing (but
+  // only if the user is not currently interacting with the seeker slider)
   useEffect(() => {
     const input = seekerInputRef.current;
     if (input && !isCurrentlySeeking) {
@@ -94,10 +95,10 @@ function useAudioSeeker(
           setPendingCurrentTime(Number(event.currentTarget.value));
         }
       },
-      onMouseDown: () => {
+      onPointerDown: () => {
         setIsCurrentlySeeking(true);
       },
-      onMouseUp: (event) => {
+      onPointerUp: (event) => {
         audioElement.currentTime = Number(event.currentTarget.value);
         setCurrentTime(audioElement.currentTime);
         setIsCurrentlySeeking(false);
