@@ -108,6 +108,7 @@ $widget-transition-duration: 250ms;
   box-sizing: content-box;
   background: none !important;
   opacity: 0.5;
+  transition: opacity 250ms ease-in-out;
   &:last-of-type {
     margin-bottom: 0;
   }
