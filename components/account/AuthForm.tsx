@@ -75,6 +75,7 @@ function AuthForm(props: Props) {
     try {
       if (honeyPotValue) {
         setFormErrorMessage('Cannot submit form; please try again');
+        return;
       }
       // Even though we are not capturing the return value, we must await the
       // attemptSubmit() call to properly catch any errors, because
