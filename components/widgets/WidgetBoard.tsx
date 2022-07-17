@@ -7,6 +7,7 @@ import useTutorialStep from '../tutorial/useTutorialStep';
 import { WidgetHead } from './widget.d';
 import WidgetBoardColumn from './WidgetBoardColumn';
 
+/* istanbul ignore next */
 // Convert the ID of a dropzone to a base-1 column index (e.g. "column-3" => 3)
 function getColumnFromDroppableId(droppableId: string): number {
   const matches = droppableId.match(/\d$/);
@@ -35,6 +36,7 @@ function WidgetBoard({ widgets }: Props) {
     })
   );
 
+  /* istanbul ignore next */
   function onDragEnd({ source, destination }: DropResult): void {
     // Do nothing if the destination is invalid (this happens if the user drags
     // a widget outside of one of the columns)
