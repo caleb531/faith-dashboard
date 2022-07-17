@@ -13,11 +13,13 @@ function ResultList({ results, onChooseResult }: Props) {
   function actionResult(event: React.UIEvent): void {
     const actionedElement = event.target as HTMLElement;
     const resultElement = actionedElement.closest('.result');
+    /* istanbul ignore next */
     if (!resultElement) {
       return;
     }
     const resultId = resultElement.getAttribute('data-result-id');
     const result = results.find((result) => result.id === resultId);
+    /* istanbul ignore next */
     if (!result) {
       return;
     }
