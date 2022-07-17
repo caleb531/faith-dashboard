@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import Home from '../pages/index';
 import podcastFeedJson from './__json__/podcastFeed.json';
+import podcastFeedRefreshedJson from './__json__/podcastFeedRefreshed.json';
 import podcastNoResultsJson from './__json__/podcastNoResults.json';
 import podcastSearchJson from './__json__/podcastSearch.json';
 import AudioMock from './__mocks__/AudioMock';
@@ -69,6 +70,30 @@ describe('Podcast widget', () => {
       screen.getByRole('button', { name: 'Return to List' })
     ).toBeInTheDocument();
     expect(AudioMock.instances).toHaveLength(1);
+  });
+
+  it('should refresh feed via manual Refresh control', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedRefreshedJson));
+    render(<Home />);
+
+    await searchPodcasts('sermon of the day');
+    await choosePodcast('Sermon of the Day');
+    expect(
+      screen.getByRole('heading', {
+        name: 'The Beautiful Faith of Fearless Submission'
+      })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', { name: 'Let Marriage Be Held in Honor' })
+    ).not.toBeInTheDocument();
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Check for New Episodes' })
+    );
+    expect(
+      screen.queryByRole('heading', { name: 'Let Marriage Be Held in Honor' })
+    ).toBeInTheDocument();
   });
 
   it('should return to list from Now Playing screen', async () => {
