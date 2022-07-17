@@ -92,7 +92,7 @@ describe('Podcast widget', () => {
       screen.getByRole('button', { name: 'Check for New Episodes' })
     );
     expect(
-      screen.queryByRole('heading', { name: 'Let Marriage Be Held in Honor' })
+      screen.getByRole('heading', { name: 'Let Marriage Be Held in Honor' })
     ).toBeInTheDocument();
   });
 
