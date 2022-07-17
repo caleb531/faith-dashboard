@@ -55,6 +55,11 @@ describe('Podcast widget', () => {
 
     await choosePodcast('Sermon of the Day');
     expect(screen.getByText('50 episodes')).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', {
+        name: 'The Beautiful Faith of Fearless Submission'
+      })
+    ).toBeInTheDocument();
     expect(getWidgetData({ type: 'Podcast', index: 3 })).toHaveProperty(
       'podcastFeedData.title',
       podcastFeedJson.channel.title
@@ -80,11 +85,6 @@ describe('Podcast widget', () => {
 
     await searchPodcasts('sermon of the day');
     await choosePodcast('Sermon of the Day');
-    expect(
-      screen.getByRole('heading', {
-        name: 'The Beautiful Faith of Fearless Submission'
-      })
-    ).toBeInTheDocument();
     expect(
       screen.queryByRole('heading', { name: 'Let Marriage Be Held in Honor' })
     ).not.toBeInTheDocument();
