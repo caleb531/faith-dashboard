@@ -30,7 +30,9 @@ function PodcastEpisodeList({
   // Convert the current episode list to a proper ResultList structure
   function getEpisodeResultList(): Result[] {
     return (
-      podcastFeedData?.item.map((episode: PodcastEpisode) => {
+      // podcastFeedData is guaranteed to exist thanks to the condition in the
+      // Podcast component (around line 178)
+      podcastFeedData!.item.map((episode: PodcastEpisode) => {
         return {
           id: episode.guid,
           title: episode.title,
@@ -40,7 +42,7 @@ function PodcastEpisodeList({
               })
             : null
         };
-      }) || []
+      })
     );
   }
 
@@ -62,20 +64,18 @@ function PodcastEpisodeList({
             ? `${podcastFeedData.item.length} episode`
             : `${podcastFeedData?.item.length} episodes`}
         </span>
-        {podcastFeedUrl ? (
-          <button
-            type="button"
-            className="podcast-episodes-refresh-control widget-control"
-            onClick={() => fetchPodcastFeed(podcastFeedUrl)}
-          >
-            <img
-              className="podcast-episodes-refresh-control-icon"
-              src="/icons/refresh.svg"
-              alt="Check for New Episodes"
-              draggable="false"
-            />
-          </button>
-        ) : null}
+        <button
+          type="button"
+          className="podcast-episodes-refresh-control widget-control"
+          onClick={() => fetchPodcastFeed(podcastFeedUrl!)}
+        >
+          <img
+            className="podcast-episodes-refresh-control-icon"
+            src="/icons/refresh.svg"
+            alt="Check for New Episodes"
+            draggable="false"
+          />
+        </button>
       </div>
       <ResultList
         results={getEpisodeResultList()}

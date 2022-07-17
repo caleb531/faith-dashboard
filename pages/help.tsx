@@ -174,6 +174,7 @@ function Help() {
   );
 }
 
+/* istanbul ignore next */
 export async function getStaticProps() {
   return {
     props: {

@@ -8,17 +8,11 @@ type Props = {
 };
 
 function LinkButton({ href, className = '', children }: Props) {
-  return href && /^https?:/.test(href) ? (
-    // Use a native <a> element for external links
-    <a href={href} className={`button ${className}`}>
-      {children}
-    </a>
-  ) : href ? (
-    // Use the NextJS <Link> component for internal links
+  return (
     <Link href={href}>
       <a className={`button ${className}`}>{children}</a>
     </Link>
-  ) : null;
+  );
 }
 
 export default LinkButton;
