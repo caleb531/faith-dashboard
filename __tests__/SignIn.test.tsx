@@ -6,7 +6,6 @@ import SignIn from '../pages/sign-in';
 import { mockCaptchaSuccessOnce } from './__mocks__/captchaMockUtils';
 import { mockSupabaseApiResponse } from './__mocks__/supabaseMockUtils';
 import { populateFormFields } from './__utils__/testUtils';
-
 describe('Sign In page', () => {
   afterEach(() => {
     jest.restoreAllMocks();
@@ -55,6 +54,18 @@ describe('Sign In page', () => {
       email: 'caleb@example.com',
       password: 'CorrectHorseBatteryStaple'
     });
+  });
+
+  it('should error if honey pot field is populated', async () => {
+    mockCaptchaSuccessOnce('mytoken');
+    render(<SignIn />);
+    await populateFormFields({
+      'Please leave this field blank': 'abc123'
+    });
+    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
+    expect(
+      screen.getByText('Cannot submit form; please try again')
+    ).toBeInTheDocument();
   });
 
   it('should handle errors from server', async () => {

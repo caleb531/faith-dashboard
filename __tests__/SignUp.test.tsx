@@ -118,6 +118,18 @@ describe('Sign Up page', () => {
     );
   });
 
+  it('should error if honey pot field is populated', async () => {
+    mockCaptchaSuccessOnce('mytoken');
+    render(<SignUp />);
+    await populateFormFields({
+      'Please leave this field blank': 'abc123'
+    });
+    await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
+    expect(
+      screen.getByText('Cannot submit form; please try again')
+    ).toBeInTheDocument();
+  });
+
   it('should handle errors from server', async () => {
     mockCaptchaSuccessOnce('mytoken');
     const signUpStub = mockSupabaseApiResponse(supabase.auth, 'signUp', {
