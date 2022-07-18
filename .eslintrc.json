@@ -9,7 +9,8 @@
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
-    }
+    },
+    "project": "tsconfig.json"
   },
   "globals": {
     "JSX": true
@@ -22,6 +23,12 @@
       },
       "globals": {
         "workbox": true
+      }
+    },
+    {
+      "files": ["__tests__/**/*.{ts,tsx}"],
+      "rules": {
+        "@typescript-eslint/no-floating-promises": ["error"]
       }
     }
   ],
