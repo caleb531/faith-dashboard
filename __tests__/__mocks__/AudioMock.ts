@@ -10,7 +10,7 @@ class AudioMock {
 
   constructor() {
     this.currentTime = 0;
-    this.duration = 60;
+    this.duration = NaN;
     this.paused = true;
     this.callbackMap = {};
     this._isAudioMock = true;
@@ -45,7 +45,10 @@ class AudioMock {
     }
     this.callbackMap[eventType].push(eventCallback);
     if (eventType === 'loadeddata' || eventType === 'loadedmetadata') {
+      // Run callback asynchronously just like the real thing
       setTimeout(() => {
+        // Do not override duration if it was already set in a test
+        this.duration = this.duration || 60;
         this.trigger(eventType);
       });
     }
