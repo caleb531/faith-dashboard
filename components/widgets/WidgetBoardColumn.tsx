@@ -23,6 +23,7 @@ function WidgetBoardColumn({
         >
           {widgets
             .filter(
+              /* istanbul ignore next */
               (widgetHead) => (widgetHead.column || 1) === columnIndex + 1
             )
             .map((widgetHead) => {
