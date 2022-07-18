@@ -24,10 +24,13 @@ async function addWidget(widgetTypeId: WidgetTypeId) {
 
 async function validateAddedWidget(widgetTypeId: WidgetTypeId) {
   expect(screen.getAllByRole('article')).toHaveLength(5);
-  expect(screen.getAllByRole('article')[0]).toHaveProperty(
-    'dataset.widgetType',
-    widgetTypeId
-  );
+  const widgetElement = screen.getAllByRole('article')[0];
+  expect(widgetElement).toHaveProperty('dataset.widgetType', widgetTypeId);
+  // Should transition widget
+  expect(widgetElement).toHaveClass('adding-widget');
+  await waitFor(() => {
+    expect(widgetElement).not.toHaveClass('adding-widget');
+  });
 }
 
 describe('Add Widget UI', () => {
