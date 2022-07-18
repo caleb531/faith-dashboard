@@ -12,16 +12,12 @@ const widgetTransitionDuration = 250;
 // running arbitrary code when a transition completes
 function useWidgetTransitioner({
   widget,
-  onAddTransitionEnd = () => {
-    /* noop */
-  },
-  onRemoveTransitionEnd = () => {
-    /* noop */
-  }
+  onAddTransitionEnd,
+  onRemoveTransitionEnd
 }: {
   widget: WidgetState;
-  onAddTransitionEnd?: (widget: WidgetState) => void;
-  onRemoveTransitionEnd?: (widget: WidgetState) => void;
+  onAddTransitionEnd: (widget: WidgetState) => void;
+  onRemoveTransitionEnd: (widget: WidgetState) => void;
 }): {
   handleWidgetTransition: (widgetContentsElement: HTMLElement | null) => void;
 } {
