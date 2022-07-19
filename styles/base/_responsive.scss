@@ -3,7 +3,7 @@
 // There is no $mobile-width-start because the application is designed to be
 // mobile-first
 $min-width-tablet: 480px;
-$min-width-desktop: 768px;
+$min-width-desktop: 640px;
 
 // A mixin to allow for easier application of the above breakpoints
 @mixin layout($layout) {
