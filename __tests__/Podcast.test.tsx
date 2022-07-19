@@ -182,7 +182,9 @@ describe('Podcast widget', () => {
     render(<Home />);
     await navigateToNowPlaying();
 
-    expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
+    });
     expect(playStub).not.toHaveBeenCalled();
     expect(AudioMock.instances[0]).not.toBeUndefined();
 

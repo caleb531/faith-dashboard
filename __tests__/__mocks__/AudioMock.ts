@@ -15,6 +15,13 @@ class AudioMock {
     this.callbackMap = {};
     this._isAudioMock = true;
     AudioMock.instances.push(this);
+    // Run callback asynchronously just like the real thing
+    setTimeout(() => {
+      // Do not override duration if it was already set in a test
+      this.duration = this.duration || 60;
+      this.trigger('loadedmetadata');
+      this.trigger('loadeddata');
+    });
   }
 
   play() {
@@ -44,12 +51,14 @@ class AudioMock {
       this.callbackMap[eventType] = [];
     }
     this.callbackMap[eventType].push(eventCallback);
-    if (eventType === 'loadeddata' || eventType === 'loadedmetadata') {
+    if (
+      (eventType === 'loadedmetadata' || eventType === 'loadeddata') &&
+      this.duration
+    ) {
       // Run callback asynchronously just like the real thing
       setTimeout(() => {
-        // Do not override duration if it was already set in a test
-        this.duration = this.duration || 60;
-        this.trigger(eventType);
+        this.trigger('loadedmetadata');
+        this.trigger('loadeddata');
       });
     }
   }
