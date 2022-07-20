@@ -8,7 +8,9 @@ import {
 import userEvent from '@testing-library/user-event';
 import { v4 as uuidv4 } from 'uuid';
 import appStateDefault from '../components/app/appStateDefault';
+import { Deferred } from '../components/deferred';
 import { supabase } from '../components/supabaseClient';
+import widgetSyncService from '../components/widgets/widgetSyncService';
 import Home from '../pages';
 import dashboardToPullJson from './__json__/dashboardToPull.json';
 import widgetToPullJson from './__json__/widgetToPull.json';
@@ -65,6 +67,11 @@ function mockDelete(tableName: TableName) {
   return supabaseFromMocks[tableName].delete;
 }
 
+const originalOnPush = widgetSyncService.onPush;
+const originalBroadcastPush = widgetSyncService.broadcastPush;
+let onPushStub: jest.SpyInstance = jest.fn();
+let broadcastPushStub: jest.SpyInstance = jest.fn();
+
 describe('Sync functionality', () => {
   beforeEach(() => {
     jest.useFakeTimers();
@@ -72,6 +79,8 @@ describe('Sync functionality', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+    onPushStub.mockRestore();
+    broadcastPushStub.mockRestore();
     jest.useRealTimers();
   });
 
@@ -111,6 +120,56 @@ describe('Sync functionality', () => {
     mockSelect('widgets', { data: [] });
     mockUpsert('dashboards');
     mockUpsert('widgets');
+    assignIdToLocalApp(uuidv4());
+    render(<Home />);
+    expect(
+      screen.getByRole('button', { name: 'Your Account' })
+    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(supabase.from).toHaveBeenCalledWith('dashboards');
+      expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
+      expect(supabaseFromMocks.widgets.select).not.toHaveBeenCalled();
+      expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
+      expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(4);
+    });
+  });
+
+  it('should run push listeners even if event was broadcast before listeners were bound', async () => {
+    mockSupabaseUser();
+    mockSupabaseSession();
+    mockSupabaseFrom();
+    mockSelect('dashboards', {
+      data: []
+    });
+    mockSelect('widgets', { data: [] });
+    mockUpsert('dashboards');
+    mockUpsert('widgets');
+    // Use promises to force the widgetSyncService.onPush listener to be bound
+    // *after* the push event has already been broadcast, as this is the
+    // scenario we are testing for; that is, we want to ensure the widgets are
+    // still pushed even if the push event listeners are bound too late
+    const promiseCache: { [key: string]: Deferred<void> } = {};
+    onPushStub = jest
+      .spyOn(widgetSyncService, 'onPush')
+      .mockImplementation((widgetId: string) => {
+        promiseCache[widgetId] = new Deferred();
+        promiseCache[widgetId].promise
+          .then(() => {
+            return originalOnPush(widgetId);
+          })
+          .catch(() => {
+            // noop
+          });
+        return promiseCache[widgetId].promise;
+      });
+    broadcastPushStub = jest
+      .spyOn(widgetSyncService, 'broadcastPush')
+      .mockImplementation((widgetId: string) => {
+        originalBroadcastPush(widgetId);
+        if (promiseCache[widgetId]) {
+          promiseCache[widgetId].resolve();
+        }
+      });
     assignIdToLocalApp(uuidv4());
     render(<Home />);
     expect(
