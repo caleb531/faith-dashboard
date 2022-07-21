@@ -11,17 +11,11 @@ import { supabase } from '../supabaseClient';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
-import useTimeout from '../useTimeout';
 
 function AppHeaderAccount() {
   const { isCurrentStep, stepProps } = useTutorialStep('sign-up');
 
   const [isShowingMenu, setIsShowingMenu] = useState(false);
-  const [isExpiryMessageHidden, setIsExpiryMessageHidden] = useState(false);
-  const setExpiryMessageTimeout = useTimeout();
-  // The number of milliseconds the "Session expired" message should show
-  // before it is automatically hidden
-  const expiryMessageDuration = 2000;
   // The session will be loaded asynchronously and isomorphically, via a
   // useEffect() call later in this function; this is done to avoid SSR
   // mismatches (please see the hook below)
@@ -73,16 +67,6 @@ function AppHeaderAccount() {
         setSession(session);
       }
     });
-  }, []);
-
-  // If the user's session has expired, a "Session expired" message should
-  // show, but in order to avoid frustrating the UX, hide this message after a
-  // few seconds
-  useEffect(() => {
-    setExpiryMessageTimeout(() => {
-      setIsExpiryMessageHidden(true);
-    }, expiryMessageDuration);
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
 
   return session?.user && isSessionActive(session) ? (
@@ -147,22 +131,6 @@ function AppHeaderAccount() {
       >
         Sign Up/In
       </button>
-      {session &&
-      !isSessionActive(session) &&
-      window.location.pathname === '/' &&
-      !isExpiryMessageHidden ? (
-        <div className="app-header-account-menu">
-          <menu className="app-header-account-menu-list">
-            <li
-              className="app-header-account-menu-list-item app-header-account-menu-list-expiry-message"
-              data-disabled
-            >
-              Session expired. Please <Link href="/sign-in">sign in</Link>{' '}
-              again.
-            </li>
-          </menu>
-        </div>
-      ) : null}
       {authModalIsOpen ? (
         <AccountAuthFlow onCloseModal={onCloseSignInModal} />
       ) : null}
