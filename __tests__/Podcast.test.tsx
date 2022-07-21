@@ -160,6 +160,9 @@ describe('Podcast widget', () => {
     expect(screen.getByText('50 episodes')).toBeInTheDocument();
 
     await chooseEpisode('Perfect Love Casts Out Fear');
+    await waitFor(() => {
+      expect(AudioMock.instances[0]).toHaveProperty('duration', 60);
+    });
     await userEvent.click(
       screen.getByRole('button', { name: 'Return to List' })
     );
