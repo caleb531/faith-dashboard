@@ -52,7 +52,10 @@ function AppHeaderAccount() {
   // mismatch with the rendered page HTML); we use useIsomorphicLayoutEffect()
   // instead of useEffect() directly to minimize any possible page flicker
   useIsomorphicLayoutEffect(() => {
-    setSession(supabase.auth.session());
+    const newSession = supabase.auth.session();
+    if (session !== newSession) {
+      setSession(newSession);
+    }
   }, []);
 
   // Refresh the session (using the refresh token) if the session is more than
