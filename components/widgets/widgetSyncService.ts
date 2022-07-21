@@ -14,11 +14,10 @@ const widgetPullQueue: WidgetPullQueue = {};
 // Broadcast to the widget with the given ID that it should push its state to
 // the server
 export function broadcastPush(widgetId: string): void {
-  if (widgetPushQueue[widgetId]) {
-    widgetPushQueue[widgetId].resolve();
-  } else {
+  if (!widgetPushQueue[widgetId]) {
     widgetPushQueue[widgetId] = new Deferred();
   }
+  widgetPushQueue[widgetId].resolve();
 }
 
 // Broadcast the widget state from the server to the local component for that

@@ -69,8 +69,8 @@ function mockDelete(tableName: TableName) {
 
 const originalOnPush = widgetSyncService.onPush;
 const originalBroadcastPush = widgetSyncService.broadcastPush;
-let onPushStub: jest.SpyInstance = jest.fn();
 let broadcastPushStub: jest.SpyInstance = jest.fn();
+let onPushStub: jest.SpyInstance = jest.fn();
 
 describe('Sync functionality', () => {
   beforeEach(() => {
@@ -79,8 +79,8 @@ describe('Sync functionality', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-    onPushStub.mockRestore();
-    broadcastPushStub.mockRestore();
+    widgetSyncService.onPush = originalOnPush;
+    widgetSyncService.broadcastPush = originalBroadcastPush;
     jest.useRealTimers();
   });
 
@@ -144,31 +144,26 @@ describe('Sync functionality', () => {
     mockSelect('widgets', { data: [] });
     mockUpsert('dashboards');
     mockUpsert('widgets');
-    // Use promises to force the widgetSyncService.onPush listener to be bound
+    // Force the widgetSyncService.onPush listener to be bound
     // *after* the push event has already been broadcast, as this is the
     // scenario we are testing for; that is, we want to ensure the widgets are
     // still pushed even if the push event listeners are bound too late
     const promiseCache: { [key: string]: Deferred<void> } = {};
     onPushStub = jest
       .spyOn(widgetSyncService, 'onPush')
-      .mockImplementation((widgetId: string) => {
-        promiseCache[widgetId] = new Deferred();
-        promiseCache[widgetId].promise
-          .then(() => {
-            return originalOnPush(widgetId);
-          })
-          .catch(() => {
-            // noop
-          });
-        return promiseCache[widgetId].promise;
+      .mockImplementation((widgetId) => {
+        if (!promiseCache[widgetId]) {
+          promiseCache[widgetId] = new Deferred();
+        }
+        return promiseCache[widgetId].promise.then(() => {
+          return originalOnPush(widgetId);
+        });
       });
     broadcastPushStub = jest
       .spyOn(widgetSyncService, 'broadcastPush')
-      .mockImplementation((widgetId: string) => {
+      .mockImplementation((widgetId) => {
         originalBroadcastPush(widgetId);
-        if (promiseCache[widgetId]) {
-          promiseCache[widgetId].resolve();
-        }
+        promiseCache[widgetId]?.resolve();
       });
     assignIdToLocalApp(uuidv4());
     render(<Home />);
