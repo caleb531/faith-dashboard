@@ -24,6 +24,15 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }]
   },
+  // Mock the NextJS <Link> component (next/link) to prevent act() errors when
+  // running some asynchronous tests; this is because next/link will
+  // automatically prefetch the target page when the link is in view, and this
+  // prefetching causes the <Link> component to re-render (which confuses React
+  // Testing Library); to solve this, we mock the <Link> component entirely so
+  // as to eliminate the possibility of re-rendering
+  moduleNameMapper: {
+    'next/link': require.resolve('./__tests__/__mocks__/LinkMock.tsx')
+  },
   // Display coverage summary below file-by-file coverage breakdown
   coverageReporters: ['clover', 'json', 'lcov', 'html', 'text', 'text-summary']
 };
