@@ -5,6 +5,7 @@ class AudioMock {
   duration: number;
   paused: boolean;
   _isAudioMock: true;
+  _loaderPromise: Promise<void>;
   callbackMap: { [key: string]: (() => void)[] };
   static instances: AudioMock[];
 
@@ -16,7 +17,7 @@ class AudioMock {
     this._isAudioMock = true;
     AudioMock.instances.push(this);
     // Run callback asynchronously just like the real thing
-    setTimeout(() => {
+    this._loaderPromise = Promise.resolve().then(() => {
       // Do not override duration if it was already set in a test
       this.duration = this.duration || 60;
       this.trigger('loadedmetadata');
@@ -51,14 +52,14 @@ class AudioMock {
       this.callbackMap[eventType] = [];
     }
     this.callbackMap[eventType].push(eventCallback);
-    if (
-      (eventType === 'loadedmetadata' || eventType === 'loadeddata') &&
-      this.duration
-    ) {
+    if (eventType === 'loadedmetadata' || eventType === 'loadeddata') {
       // Run callback asynchronously just like the real thing
-      setTimeout(() => {
-        this.trigger('loadedmetadata');
-        this.trigger('loadeddata');
+      void this._loaderPromise.then(() => {
+        setTimeout(() => {
+          if (this.callbackMap[eventType].includes(eventCallback)) {
+            eventCallback();
+          }
+        });
       });
     }
   }

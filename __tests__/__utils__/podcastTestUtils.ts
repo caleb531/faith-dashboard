@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { waitForWidget } from './testUtils';
 
@@ -26,4 +26,8 @@ export async function chooseEpisode(episodeTitle: string) {
       name: episodeTitle
     })
   );
+  // Wait for audio to load
+  await waitFor(() => {
+    expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
+  });
 }
