@@ -9,8 +9,8 @@ import {
 // Increase timeout of React Testing Library's waitFor() function, as well as
 // Jest's global max timeout; this is an attempt to resolve the 'Unable to find
 // role' error when running tests on CI (even though all tests pass locally)
-configure({ asyncUtilTimeout: 10000 });
-jest.setTimeout(20000);
+configure({ asyncUtilTimeout: 5000 });
+jest.setTimeout(10000);
 
 enableFetchMocks();
 jest.mock('../../components/supabaseClient');
