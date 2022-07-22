@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { Dispatch, useCallback, useContext } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import AppContext from '../app/AppContext';
-import { JSXContents } from '../global';
+import { JSXChildren } from '../global';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
@@ -14,7 +14,7 @@ type Props = {
   widget: WidgetState;
   dispatchToWidget: Dispatch<WidgetAction>;
   provided: DraggableProvided;
-  children: JSXContents;
+  children: JSXChildren;
 };
 
 function WidgetShell({ widget, dispatchToWidget, provided, children }: Props) {

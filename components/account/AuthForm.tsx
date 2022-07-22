@@ -1,7 +1,7 @@
 import { ApiError, Session, User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { JSXContents } from '../global';
+import { JSXChildren } from '../global';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 import useMountListener from '../useMountListener';
 import useTimeout from '../useTimeout';
@@ -32,7 +32,7 @@ type Props = {
     title: string;
     href: string;
   };
-  children: JSXContents;
+  children: JSXChildren;
 };
 
 function AuthForm(props: Props) {

@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { JSXContents } from '../global';
+import { JSXChildren } from '../global';
 
 type Props = {
   href: string;
   className?: string;
-  children: JSXContents | string;
+  children: JSXChildren | string;
 };
 
 function LinkButton({ href, className = '', children }: Props) {

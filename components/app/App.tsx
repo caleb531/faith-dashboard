@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-import { JSXContents } from '../global';
+import { JSXChildren } from '../global';
 import TutorialFlow from '../tutorial/TutorialFlow';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 import useLocalStorage from '../useLocalStorage';
@@ -33,7 +33,7 @@ function shouldLoadServiceWorker() {
 type Props = {
   enableTutorial?: boolean;
   canAddWidgets?: boolean;
-  children: (app: AppState) => JSXContents;
+  children: (app: AppState) => JSXChildren;
 };
 
 function App({

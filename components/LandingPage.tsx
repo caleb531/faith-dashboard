@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import App from './app/App';
-import { JSXContents } from './global';
+import { JSXChildren } from './global';
 
 type Props = {
   heading: string;
@@ -8,7 +8,7 @@ type Props = {
     title: string;
     href: string;
   };
-  children: JSXContents;
+  children: JSXChildren;
 };
 
 function LandingPage({ heading, altLink, children }: Props) {

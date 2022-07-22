@@ -1,7 +1,7 @@
-import { JSXContents } from '../global';
+import { JSXChildren } from '../global';
 
 type Props = {
-  children: JSXContents;
+  children: JSXChildren;
   onCloseModal: () => void;
 };
 
