@@ -129,7 +129,7 @@ $tutorial-step-tooltip-color: $dark-100;
     }
   }
   &.warning {
-    background-color: darken(saturate($color-red, 15%), 5%);
+    background-color: $color-red;
     &:hover:active {
       background-color: darken($color-red, 10%);
     }
