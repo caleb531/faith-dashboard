@@ -117,9 +117,9 @@ $tutorial-step-tooltip-color: $dark-100;
     background-color: var(--current-theme-color-dark);
   }
   &.warning {
-    background-color: $color-red;
+    background-color: var(--color-red);
     &:not([disabled]):hover:active {
-      background-color: darken($color-red, 10%);
+      background-color: var(--color-red-dark);
     }
   }
 }

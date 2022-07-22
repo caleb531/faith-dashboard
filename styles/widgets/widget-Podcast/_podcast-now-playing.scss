@@ -22,7 +22,7 @@
   height: $image-size;
   margin-right: 15px;
   border-radius: 5px;
-  background-color: $color-grey;
+  background-color: var(--color-grey);
 }
 .podcast-now-playing-image-missing {
   display: flex;

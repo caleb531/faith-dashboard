@@ -1,35 +1,29 @@
 @use 'sass:math';
 
 // Base color palette
-$color-grey: #222;
-$color-brown: #875;
-$color-green: #474;
-$color-forest: #365;
-$color-teal: #177;
-$color-blue: #36a;
-$color-purple: #636;
-$color-royal: #336;
-$color-rose: #957;
-$color-red: #a33;
-$color-orange: #a36036;
-$color-yellow: #a83;
-$color-violet: #838;
-$color-slate: #467;
-
-// Themes
-$theme-colors: (
-  'brown': $color-brown,
-  'green': $color-green,
-  'teal': $color-teal,
-  'blue': $color-blue,
-  'purple': $color-purple,
-  'royal': $color-royal,
-  'rose': $color-rose,
-  'red': $color-red,
-  'orange': $color-orange,
-  'yellow': $color-yellow,
-  'violet': $color-violet
+$colors: (
+  'grey': #222,
+  'brown': #875,
+  'green': #474,
+  'forest': #365,
+  'teal': #177,
+  'blue': #36a,
+  'purple': #636,
+  'royal': #336,
+  'rose': #957,
+  'red': #a33,
+  'orange': #a36036,
+  'yellow': #a83,
+  'violet': #838,
+  'slate': #467
 );
+
+:root {
+  @each $color-name, $color in $colors {
+    --color-#{$color-name}: #{$color};
+    --color-#{$color-name}-dark: #{darken($color, 10%)};
+  }
+}
 
 // Dark
 $dark-100: #000;

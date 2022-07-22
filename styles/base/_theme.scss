@@ -1,23 +1,38 @@
+// Color (non-photo) themes
+$theme-colors: (
+  'brown': 'brown',
+  'green': 'green',
+  'teal': 'teal',
+  'blue': 'blue',
+  'purple': 'purple',
+  'royal': 'royal',
+  'rose': 'rose',
+  'red': 'red',
+  'orange': 'orange',
+  'yellow': 'yellow',
+  'violet': 'violet'
+);
+
 // Store available photo themes in a map, where the key is the ID of the photo
 // theme, and the value is an accent color used for things like buttons,
 // controls, etc.
 $theme-photos: (
-  'word': $color-teal,
-  'worship': $color-orange,
-  'pasture': $color-green,
-  'mountain': $color-slate,
-  'shore': $color-teal,
-  'stars': $color-royal,
-  'evening': $color-violet,
-  'forest': $color-forest
+  'word': 'teal',
+  'worship': 'orange',
+  'pasture': 'green',
+  'mountain': 'slate',
+  'shore': 'teal',
+  'stars': 'royal',
+  'evening': 'violet',
+  'forest': 'forest'
 );
 
 // Dynamically define CSS variables / custom properties using Sass variable
 // interpolation
 @each $theme-name, $theme-color in join($theme-colors, $theme-photos) {
   .theme-#{$theme-name} {
-    --current-theme-color: #{$theme-color};
-    --current-theme-color-dark: #{darken($theme-color, 10%)};
+    --current-theme-color: var(--color-#{$theme-color});
+    --current-theme-color-dark: var(--color-#{$theme-color}-dark);
   }
 }
 
@@ -25,6 +40,19 @@ $theme-photos: (
 .color-theme {
   background-color: var(--current-theme-color);
 }
+
+// There is a bug in Chrome where a CSS variable defined as a background-image
+// will cause the browser to redundantly repaint and request the image multiple
+// times, causing the image to flicker even though it hasn't changed; even
+// though we'd prefer to define the image URL as a CSS variable, we need to
+// hardcode the background-image per every photo theme in order to avoid the
+// flicker / redundant requests
+@each $theme-name, $theme-color in $theme-photos {
+  .photo-theme.theme-#{$theme-name} {
+    --photo-theme-background-url: url('../../public/images/background-photos/#{$theme-name}.jpg');
+  }
+}
+
 // Since iOS does not support background-attachment:fixed, we must add a
 // pseudo-element on the <body> and add the background-image to that
 .photo-theme:before {
@@ -35,21 +63,11 @@ $theme-photos: (
   z-index: -1;
   width: 100%;
   height: 100%;
-  background-color: $color-grey;
+  background-color: var(--color-grey);
+  background-image: var(--photo-theme-background-url);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;
-}
-// There is a bug in Chrome where a CSS variable defined as a background-image
-// will cause the browser to redundantly repaint and request the image multiple
-// times, causing the image to flicker even though it hasn't changed; even
-// though we'd prefer to define the image URL as a CSS variable, we need to
-// hardcode the background-image per every photo theme in order to avoid the
-// flicker / redundant requests
-@each $theme-name, $theme-color in $theme-photos {
-  .photo-theme.theme-#{$theme-name}:before {
-    background-image: url('../../public/images/background-photos/#{$theme-name}.jpg');
-  }
 }
 
 // Theme-specific adjustments
