@@ -3,9 +3,6 @@
   margin-bottom: 10px;
   font-size: var(--font-size-xs);
   color: var(--color-white-50);
-  @include layout(desktop) {
-    font-size: var(--font-size-xs);
-  }
 }
 .app-footer-dedication {
   font-size: inherit;

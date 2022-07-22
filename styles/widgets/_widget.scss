@@ -116,8 +116,6 @@
   }
   @include layout(desktop) {
     --control-size: 20px;
-    width: var(--control-size);
-    height: var(--control-size);
   }
   .is-not-touch-device .widget:not(:hover) & {
     opacity: 0;
