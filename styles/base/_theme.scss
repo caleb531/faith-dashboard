@@ -41,12 +41,6 @@ $theme-photos: (
   background-color: var(--current-theme-color);
 }
 
-// There is a bug in Chrome where a CSS variable defined as a background-image
-// will cause the browser to redundantly repaint and request the image multiple
-// times, causing the image to flicker even though it hasn't changed; even
-// though we'd prefer to define the image URL as a CSS variable, we need to
-// hardcode the background-image per every photo theme in order to avoid the
-// flicker / redundant requests
 @each $theme-name, $theme-color in $theme-photos {
   .photo-theme.theme-#{$theme-name} {
     --photo-theme-background-url: url('../../public/images/background-photos/#{$theme-name}.jpg');
