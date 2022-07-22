@@ -83,6 +83,19 @@ input[type=range]::-ms-track {
   }
 }
 
+@mixin slider-fill() {
+  background-color: transparent;
+  background-image: linear-gradient(
+    to right,
+    var(--slider-fill-color) 0%,
+    var(--slider-fill-color)
+    var(--slider-fill-percentage, 0),
+    var(--slider-track-color)
+    var(--slider-fill-percentage, 0),
+    var(--slider-track-color) 100%);
+  background-clip: content-box;
+}
+
 input[type=range] {
   --slider-track-height: 4px;
   --slider-thumb-size: 14px;
@@ -97,17 +110,7 @@ input[type=range] {
   position: relative;
   width: 100%;
   height: var(--slider-track-height);
-  // border-radius: 10px;
-  background-color: transparent;
-  background-image: linear-gradient(
-    to right,
-    var(--slider-fill-color) 0%,
-    var(--slider-fill-color)
-    var(--slider-fill-percentage, 0),
-    var(--slider-track-color)
-    var(--slider-fill-percentage, 0),
-    var(--slider-track-color) 100%);
-  background-clip: content-box;
+  @include slider-fill();
   box-sizing: content-box;
   @include slider-track() {
     height: var(--slider-track-height);
