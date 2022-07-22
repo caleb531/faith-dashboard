@@ -1,17 +1,28 @@
 @use 'sass:math';
 
-// Font families
-$font-family-serif: 'Merriweather', 'Georgia', serif;
-$font-family-sans-serif: 'Merriweather Sans', 'Open Sans', sans-serif;
+// Return the correct (scaled) rem value given a base font size (in pixels) and
+// the number of
+@function px-to-rem($font-size-base, $n) {
+  @return #{math.div($font-size-base + $n, $font-size-base)}rem;
+}
 
-// Font sizes
-$font-size-base: 15px;
-$font-size-xxxs: #{math.div($font-size-base - 4, $font-size-base)}rem;
-$font-size-xxs: #{math.div($font-size-base - 3, $font-size-base)}rem;
-$font-size-xs: #{math.div($font-size-base - 2, $font-size-base)}rem;
-$font-size-s: #{math.div($font-size-base - 1, $font-size-base)}rem;
-$font-size-m: 1rem;
-$font-size-l: #{math.div($font-size-base + 1, $font-size-base)}rem;
-$font-size-xl: #{math.div($font-size-base + 2, $font-size-base)}rem;
-$font-size-xxl: #{math.div($font-size-base + 3, $font-size-base)}rem;
-$font-size-xxxl: #{math.div($font-size-base + 7, $font-size-base)}rem;
+:root {
+
+  // Font families
+  --font-family-serif: 'Merriweather', 'Georgia', serif;
+  --font-family-sans-serif: 'Merriweather Sans', 'Open Sans', sans-serif;
+
+  // Font sizes
+  $font-size-base: 15px;
+  --font-size-base: #{$font-size-base};
+  --font-size-xxxs: #{px-to-rem($font-size-base, -4)};
+  --font-size-xxs: #{px-to-rem($font-size-base, -3)};
+  --font-size-xs: #{px-to-rem($font-size-base, -2)};
+  --font-size-s: #{px-to-rem($font-size-base, -1)};
+  --font-size-m: 1rem;
+  --font-size-l: #{px-to-rem($font-size-base, 1)};
+  --font-size-xl: #{px-to-rem($font-size-base, 2)};
+  --font-size-xxl: #{px-to-rem($font-size-base, 3)};
+  --font-size-xxxl: #{px-to-rem($font-size-base, 7)};
+
+}

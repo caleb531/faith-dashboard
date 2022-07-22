@@ -3,12 +3,12 @@
 }
 
 .bible-verse-content {
-  font-size: $font-size-s;
+  font-size: var(--font-size-s);
   * {
     font-size: inherit;
   }
   h2 {
-    font-size: $font-size-xl;
+    font-size: var(--font-size-xl);
   }
   *:last-of-type {
     margin-bottom: 0;
@@ -19,7 +19,7 @@
     position: absolute;
     bottom: 10px;
     right: 10px;
-    font-size: $font-size-xxs;
+    font-size: var(--font-size-xxs);
     // If the user fetches multiple verses, then multiple copyright links will
     // be brought in; only show one of them
     &:not(:last-of-type) {

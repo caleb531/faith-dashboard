@@ -5,7 +5,7 @@ input.account-auth-form-input {
   border-radius: 5px;
   border-color: var(--color-black-40);
   font-weight: 300;
-  font-size: $font-size-xxl;
+  font-size: var(--font-size-xxl);
 }
 // Hide the "honey pot" field from the UI to avoid accessibility issues
 [id^="verification-check"],
@@ -14,7 +14,7 @@ input.account-auth-form-input {
 }
 
 button.account-auth-form-submit {
-  font-size: $font-size-xxl;
+  font-size: var(--font-size-xxl);
 }
 
 
@@ -30,7 +30,7 @@ button.account-auth-form-submit {
   padding: 10px 20px;
   background-color: var(--color-red);
   font-weight: bold;
-  font-size: $font-size-xs;
+  font-size: var(--font-size-xs);
   color: var(--color-white-100);
 }
 

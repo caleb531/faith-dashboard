@@ -25,12 +25,12 @@
 .podcast-now-playing-link {
   border-radius: 20px;
   margin-bottom: 10px;
-  font-size: $font-size-xxxs;
+  font-size: var(--font-size-xxxs);
 }
 
 .podcast-podcast-count,
 .podcast-episode-count {
-  font-size: $font-size-xxs;
+  font-size: var(--font-size-xxs);
   color: var(--color-white-50);
   vertical-align: middle;
 }

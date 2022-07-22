@@ -78,7 +78,7 @@
 .sheet-control.landing-page-alt-control {
   padding: 15px 15px;
   text-decoration: none;
-  font-size: $font-size-xs;
+  font-size: var(--font-size-xs);
   font-weight: 400;
 }
 .sheet-control-icon.landing-page-control-icon {

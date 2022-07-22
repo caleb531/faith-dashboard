@@ -41,7 +41,7 @@ $update-animation-timing-function: ease-in-out;
   padding: 15px 15px;
   background-color: var(--color-black-75);
   text-align: center;
-  font-family: $font-family-sans-serif;
+  font-family: var(--font-family-sans-serif);
   color: var(--color-white-100);
   cursor: pointer;
   backdrop-filter: blur(10px);
@@ -54,7 +54,7 @@ $update-animation-timing-function: ease-in-out;
 .update-notification-message {
   // Inline elements cannot be transformed
   display: block;
-  font-size: $font-size-m;
+  font-size: var(--font-size-m);
   font-weight: 400;
   .is-updating & {
     animation: update-element-hide 400ms $update-animation-timing-function both;

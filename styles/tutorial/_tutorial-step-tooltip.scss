@@ -16,8 +16,8 @@ $tutorial-step-tooltip-color: var(--color-black-100);
   border-radius: 10px;
   background-color: $tutorial-step-tooltip-background;
   color: $tutorial-step-tooltip-color;
-  font-family: $font-family-sans-serif;
-  font-size: $font-size-xs;
+  font-family: var(--font-family-sans-serif);
+  font-size: var(--font-size-xs);
   box-shadow: 0 1px 10px 1px var(--color-black-50);
   &:before {
     content: '';

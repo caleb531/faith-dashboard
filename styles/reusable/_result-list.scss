@@ -10,7 +10,7 @@
   flex-grow: 1;
   max-height: 200px;
   border-radius: 5px;
-  font-family: $font-family-sans-serif;
+  font-family: var(--font-family-sans-serif);
   overflow-y: scroll;
 }
 
@@ -31,12 +31,12 @@
 
 h3.result-title {
   margin: 0;
-  font-size: $font-size-xxxs;
+  font-size: var(--font-size-xxxs);
   font-weight: 300;
 }
 
 .result-subtitle {
   font-weight: 300;
-  font-size: $font-size-xxxs;
+  font-size: var(--font-size-xxxs);
   color: var(--color-white-50);
 }

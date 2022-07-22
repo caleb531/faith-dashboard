@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   background-color: var(--color-white-100);
-  font-family: $font-family-sans-serif;
+  font-family: var(--font-family-sans-serif);
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
   button,
