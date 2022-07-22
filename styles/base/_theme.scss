@@ -42,7 +42,7 @@ $theme-photos: (
 }
 
 @each $theme-name, $theme-color in $theme-photos {
-  .photo-theme.theme-#{$theme-name} {
+  .theme-#{$theme-name} {
     --photo-theme-background-url: url('../../public/images/background-photos/#{$theme-name}.jpg');
   }
 }
