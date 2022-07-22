@@ -29,7 +29,9 @@ function AudioPlayerPlayPause({
       type="button"
       className="audio-player-control audio-player-playpause"
       onClick={() => toggleAudioElementPlayback()}
-      disabled={!audioElement.duration}
+      disabled={Boolean(
+        !audioElement.duration || audioElement.src !== audioUrl
+      )}
     >
       {!audioElement.duration || audioElement.src !== audioUrl ? (
         <LoadingIndicator />

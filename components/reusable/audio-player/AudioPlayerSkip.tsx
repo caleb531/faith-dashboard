@@ -1,5 +1,6 @@
 type Props = {
   audioElement: HTMLAudioElement;
+  audioUrl: string;
   setCurrentTime: (newCurrentTime: number) => void;
   action: 'skip-back' | 'skip-forward';
   skipOffset: 10 | 30;
@@ -8,6 +9,7 @@ type Props = {
 
 function AudioPlayerSeeker({
   audioElement,
+  audioUrl,
   setCurrentTime,
   action,
   skipOffset,
@@ -26,7 +28,7 @@ function AudioPlayerSeeker({
     <button
       className={`audio-player-control audio-player-${action}`}
       onClick={() => adjustTime()}
-      disabled={!Boolean(audioElement.duration)}
+      disabled={!audioElement.duration || audioElement.src !== audioUrl}
     >
       <img
         className={`audio-player-${action}-icon`}

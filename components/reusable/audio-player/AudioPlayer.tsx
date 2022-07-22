@@ -37,6 +37,7 @@ function AudioPlayer({
       <div className="audio-player-main-controls">
         <AudioPlayerSkip
           audioElement={audioElement}
+          audioUrl={audioUrl}
           setCurrentTime={setCurrentTime}
           skipOffset={10}
           action="skip-back"
@@ -50,6 +51,7 @@ function AudioPlayer({
         />
         <AudioPlayerSkip
           audioElement={audioElement}
+          audioUrl={audioUrl}
           setCurrentTime={setCurrentTime}
           skipOffset={30}
           action="skip-forward"
