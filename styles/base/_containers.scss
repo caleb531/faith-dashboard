@@ -26,7 +26,7 @@ body {
   padding: 0 10px;
   background-color: var(--color-grey);
   font-family: $font-family-serif;
-  color: $light-100;
+  color: var(--color-white-100);
   text-align: center;
   @include layout(desktop) {
     padding: 0 20px;

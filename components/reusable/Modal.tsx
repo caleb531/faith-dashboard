@@ -9,14 +9,14 @@ function Modal({ children, onCloseModal }: Props) {
   return (
     <div className="modal-scroll-container">
       <div className="modal-overlay" onClick={onCloseModal}></div>
-      <aside className="modal" role="dialog">
+      <aside className="modal sheet" role="dialog">
         <button
           type="button"
-          className="modal-control modal-close-control"
+          className="sheet-control sheet-control-right modal-control modal-close-control"
           onClick={onCloseModal}
         >
           <img
-            className="modal-control-icon modal-close-control-icon"
+            className="sheet-control-icon modal-control-icon modal-close-control-icon"
             src="/icons/close-dark.svg"
             alt="Close Modal"
             draggable="false"

@@ -54,12 +54,12 @@
   transform: translateY(10px);
   border-radius: 5px;
   padding: 5px 5px;
-  background-color: $light-100;
+  background-color: var(--color-white-100);
   text-align: left;
   font-family: $font-family-sans-serif;
   font-size: $font-size-xxs;
-  color: $dark-100;
-  box-shadow: 0 1px 5px $dark-25;
+  color: var(--color-black-100);
+  box-shadow: 0 1px 5px var(--color-black-25);
   // Dropdown arrow attached to top of
   &:before {
     content: '';
@@ -67,7 +67,7 @@
     bottom: 100%;
     right: 16px;
     border: solid 6px transparent;
-    border-bottom-color: $light-100;
+    border-bottom-color: var(--color-white-100);
   }
 }
 .app-header-account-menu-list-item a {
@@ -80,14 +80,14 @@
   text-decoration: none;
   &:not([data-disabled]):hover {
     background-color: var(--color-blue);
-    color: $light-100;
+    color: var(--color-white-100);
     cursor: pointer;
   }
 }
 li.app-header-account-menu-list-item-user-info {
   padding-bottom: 5px;
   border-radius: 0;
-  border-bottom: solid 1px $dark-25;
+  border-bottom: solid 1px var(--color-black-25);
   margin-bottom: 5px;
 }
 .app-header-account-menu-user-email {

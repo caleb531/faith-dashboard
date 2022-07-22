@@ -14,7 +14,6 @@
 }
 
 .landing-page-section {
-  @extend .sheet;
   position: relative;
   max-width: 800px;
   margin-top: 0;
@@ -23,8 +22,8 @@
   font-weight: 300;
   text-align: left;
   line-height: 1.7;
-  color: $dark-100;
-  box-shadow: 0 2px 5px $dark-50;
+  color: var(--color-black-100);
+  box-shadow: 0 2px 5px var(--color-black-50);
   h1 {
     margin-top: 30px;
     margin-bottom: 10px;
@@ -68,26 +67,21 @@
   button[type] {
     margin: 0;
   }
-  a.button {
+  .button {
     padding-top: 3px;
     padding-bottom: 3px;
   }
 }
-.landing-page-control {
-  @extend .sheet-control;
+.sheet-control.landing-page-home-control {
+  padding: 10px;
 }
-.landing-page-home-control {
-  @extend .sheet-control-left;
-}
-.landing-page-alt-control {
-  @extend .sheet-control-right;
+.sheet-control.landing-page-alt-control {
   padding: 15px 15px;
   text-decoration: none;
   font-size: $font-size-xs;
   font-weight: 400;
 }
-.landing-page-control-icon {
-  @extend .sheet-control-icon;
+.sheet-control-icon.landing-page-control-icon {
   $control-size: 20px;
   width: $control-size;
   height: $control-size;

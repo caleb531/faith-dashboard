@@ -1,4 +1,5 @@
-// Color (non-photo) themes
+// Map of each color theme's string ID to its respective color variable name
+// (as a string)
 $theme-colors: (
   'brown': 'brown',
   'green': 'green',
@@ -13,9 +14,8 @@ $theme-colors: (
   'violet': 'violet'
 );
 
-// Store available photo themes in a map, where the key is the ID of the photo
-// theme, and the value is an accent color used for things like buttons,
-// controls, etc.
+// Map of each photo theme's string ID to its respective fallback color name
+// (as a string)
 $theme-photos: (
   'word': 'teal',
   'worship': 'orange',

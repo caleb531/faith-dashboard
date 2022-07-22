@@ -14,12 +14,12 @@
   font-size: 0;
 }
 .app-header-title-link {
-  color: $light-100;
+  color: var(--color-white-100);
   mix-blend-mode: soft-light;
   text-decoration: none;
   .theme-forest & {
     mix-blend-mode: normal;
-    color: $dark-50;
+    color: var(--color-black-50);
   }
   &:before {
     content: 'FD';
@@ -53,6 +53,6 @@
 }
 
 .app-header button,
-.app-header a.button {
+.app-header .button {
   font-family: $font-family-sans-serif;
 }

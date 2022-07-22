@@ -10,13 +10,13 @@ $widget-transition-duration: 250ms;
   width: 100%;
   margin: $widget-margin-y $widget-margin-x;
   border-radius: 10px;
-  background-color: $dark-30;
+  background-color: var(--color-black-30);
   @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-    background-color: $dark-15;
+    background-color: var(--color-black-15);
     backdrop-filter: blur(30px);
   }
-  box-shadow: 0 3px 5px $dark-10;
-  color: $light-100;
+  box-shadow: 0 3px 5px var(--color-black-10);
+  color: var(--color-white-100);
   a {
     color: inherit;
   }

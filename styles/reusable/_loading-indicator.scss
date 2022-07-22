@@ -18,10 +18,10 @@
   width: $icon-size;
   height: $icon-size;
   fill: none;
-  stroke: $light-50;
+  stroke: var(--color-white-50);
   stroke-width: 3;
   animation: spin 1000ms linear infinite forwards;
   .landing-page & {
-    stroke: $dark-20;
+    stroke: var(--color-black-20);
   }
 }

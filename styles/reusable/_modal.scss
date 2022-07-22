@@ -30,33 +30,19 @@
   width: 100%;
   height: 100%;
   z-index: 100;
-  background-color: $dark-50;
+  background-color: var(--color-black-50);
   backdrop-filter: blur(10px);
 }
 
 .modal {
-  @extend .sheet;
   position: relative;
   width: 100%;
   max-width: 640px;
   z-index: 1000;
   border-radius: 10px;
   padding: 30px;
-  background-color: $light-100;
-  color: $dark-75;
-  box-shadow: 0 5px 10px 1px $dark-25;
+  background-color: var(--color-white-100);
+  color: var(--color-black-75);
+  box-shadow: 0 5px 10px 1px var(--color-black-25);
   overflow: hidden;
-}
-
-.modal-control {
-  @extend .sheet-control;
-}
-.modal-back-control {
-  @extend .sheet-control-left;
-}
-.modal-close-control {
-  @extend .sheet-control-right;
-}
-.modal-control-icon {
-  @extend .sheet-control-icon;
 }

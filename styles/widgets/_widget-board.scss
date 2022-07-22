@@ -25,5 +25,5 @@ $widget-board-column-padding-y: 10px;
   margin-bottom: 20px;
   border-radius: 20px;
   padding: $widget-board-column-padding-y $widget-board-column-padding-x;
-  background-color: $dark-10;
+  background-color: var(--color-black-10);
 }

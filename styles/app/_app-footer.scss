@@ -2,7 +2,7 @@
   margin-top: 5px;
   margin-bottom: 10px;
   font-size: $font-size-xs;
-  color: $light-50;
+  color: var(--color-white-50);
   @include layout(desktop) {
     font-size: $font-size-xs;
   }
@@ -40,6 +40,6 @@
 .app-footer-link-help {
   position: relative;
   a {
-    color: $light-100;
+    color: var(--color-white-100);
   }
 }

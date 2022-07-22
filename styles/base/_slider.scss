@@ -96,14 +96,14 @@ input[type=range] {
   width: 100%;
   height: $slider-track-height;
   // border-radius: 10px;
-  background-color: $dark-25;
+  background-color: var(--color-black-25);
   background-clip: content-box;
   box-sizing: content-box;
   @include slider-thumb() {
     width: $slider-thumb-size;
     height: $slider-thumb-size;
     margin: 0;
-    background-color: $light-100;
+    background-color: var(--color-white-100);
     border-width: 0;
     border-radius: 50%;
   }

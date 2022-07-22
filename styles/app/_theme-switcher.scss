@@ -49,12 +49,12 @@ $color-theme-column-count: 5;
   background-repeat: no-repeat;
   background-size: $icon-size;
   background-position: center center;
-  filter: drop-shadow(0 1px 3px $dark-50);
+  filter: drop-shadow(0 1px 3px var(--color-black-50));
 }
 .theme-switcher-label {
   font-size: $font-size-xs;
   font-family: $font-family-sans-serif;
-  color: $dark-75;
+  color: var(--color-black-75);
   cursor: default;
   user-select: none;
 }
@@ -62,7 +62,7 @@ $color-theme-column-count: 5;
 .theme-switcher-theme-visual {
   &:hover:active {
     filter: brightness(60%);
-    color: $dark-100;
+    color: var(--color-black-100);
   }
 }
 

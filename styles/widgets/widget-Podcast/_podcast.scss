@@ -31,7 +31,7 @@
 .podcast-podcast-count,
 .podcast-episode-count {
   font-size: $font-size-xxs;
-  color: $light-50;
+  color: var(--color-white-50);
   vertical-align: middle;
 }
 .podcast-episodes-refresh-control {
