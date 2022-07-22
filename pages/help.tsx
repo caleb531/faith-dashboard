@@ -48,8 +48,8 @@ function Help() {
         <button type="button" disabled className="add-widget-button">
           <img src="/icons/add-light.svg" alt="" /> Add Widget
         </button>{' '}
-        next to the widget listing. It will then automatically appear in the
-        first column on your dashboard.
+        button next to the widget listing. It will then automatically appear in
+        the first column on your dashboard.
       </p>
 
       <h3>Rearranging widgets</h3>
@@ -144,8 +144,9 @@ function Help() {
       <p>
         If you want to sync your dashboard across all your devices, you'll need
         to <Link href="/sign-up">create an account</Link>. If you already have
-        an account, you can click the "Sign Up/In" link in the top-right corner
-        of the page, then click the "Sign In" button.
+        an account, you can click the <button disabled>Sign Up/In</button> link
+        in the top-right corner of the page, then click the{' '}
+        <button disabled>Sign In</button> button.
       </p>
 
       <p>
