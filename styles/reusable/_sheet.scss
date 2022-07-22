@@ -35,8 +35,8 @@
     border-bottom-left-radius: 10px;
   }
   .sheet-control-icon {
-    $control-size: 30px;
-    width: $control-size;
-    height: $control-size;
+    --control-size: 30px;
+    width: var(--control-size);
+    height: var(--control-size);
   }
 }

@@ -11,12 +11,12 @@
   align-items: center;
 }
 .loading-indicator-icon {
-  $icon-max-size: 100px;
-  $icon-size: 50%;
-  max-width: $icon-max-size;
-  max-height: $icon-max-size;
-  width: $icon-size;
-  height: $icon-size;
+  --icon-max-size: 100px;
+  --icon-size: 50%;
+  max-width: var(--icon-max-size);
+  max-height: var(--icon-max-size);
+  width: var(--icon-size);
+  height: var(--icon-size);
   fill: none;
   stroke: var(--color-white-50);
   stroke-width: 3;

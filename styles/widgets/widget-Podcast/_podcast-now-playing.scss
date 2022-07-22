@@ -17,9 +17,9 @@
 
 .podcast-now-playing-image {
   flex-shrink: 0;
-  $image-size: 50px;
-  width: $image-size;
-  height: $image-size;
+  --image-size: 50px;
+  width: var(--image-size);
+  height: var(--image-size);
   margin-right: 15px;
   border-radius: 5px;
   background-color: var(--color-grey);

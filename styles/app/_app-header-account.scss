@@ -19,9 +19,9 @@
   padding-right: 12px;
 }
 .app-header-account-button-icon {
-  $icon-size: 16px;
-  width: $icon-size;
-  height: $icon-size;
+  --icon-size: 16px;
+  width: var(--icon-size);
+  height: var(--icon-size);
 }
 
 .app-header-account-menu {

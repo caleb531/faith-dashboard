@@ -1,6 +1,3 @@
-$update-animation-duration: 200ms;
-$update-animation-timing-function: ease-in-out;
-
 @keyframes update-slide-out {
   0% {
     transform: translateY(-100%);
@@ -33,6 +30,8 @@ $update-animation-timing-function: ease-in-out;
 }
 
 .update-notification {
+  --update-animation-duration: 200ms;
+  --update-animation-timing-function: ease-in-out;
   position: fixed;
   top: 0;
   left: 0;
@@ -45,7 +44,7 @@ $update-animation-timing-function: ease-in-out;
   color: var(--color-white-100);
   cursor: pointer;
   backdrop-filter: blur(10px);
-  animation: update-slide-out 400ms $update-animation-timing-function both;
+  animation: update-slide-out 400ms var(--update-animation-timing-function) both;
   &.is-updating {
     cursor: default;
   }
@@ -57,7 +56,7 @@ $update-animation-timing-function: ease-in-out;
   font-size: var(--font-size-m);
   font-weight: 400;
   .is-updating & {
-    animation: update-element-hide 400ms $update-animation-timing-function both;
+    animation: update-element-hide 400ms var(--update-animation-timing-function) both;
   }
 }
 
@@ -69,13 +68,14 @@ $update-animation-timing-function: ease-in-out;
 }
 
 .update-notification .loading-indicator {
-  animation: update-element-show $update-animation-duration $update-animation-timing-function both;
-  animation-delay: $update-animation-duration;
+  animation: update-element-show var(--update-animation-duration)
+    var(--update-animation-timing-function) both;
+  animation-delay: var(--update-animation-duration);
 }
 
 .update-notification .loading-indicator-icon {
-  $icon-max-size: 42px;
-  max-width: $icon-max-size;
-  max-height: $icon-max-size;
+  --icon-max-size: 42px;
+  max-width: var(--icon-max-size);
+  max-height: var(--icon-max-size);
   stroke: var(--color-white-100);
 }

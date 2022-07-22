@@ -36,9 +36,9 @@
 }
 .podcast-episodes-refresh-control {
   opacity: 0.5;
-  $icon-size: 16px;
-  width: $icon-size;
-  height: $icon-size;
+  --icon-size: 16px;
+  width: var(--icon-size);
+  height: var(--icon-size);
   margin-left: 5px;
   vertical-align: middle;
   .is-not-touch-device .widget:not(:hover) & {

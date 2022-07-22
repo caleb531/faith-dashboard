@@ -23,13 +23,11 @@
   }
   img,
   .loading-indicator {
-    $icon-size: 30px;
-    width: $icon-size;
-    height: $icon-size;
+    --icon-size: 30px;
+    width: var(--icon-size);
+    height: var(--icon-size);
     @include layout(desktop) {
-      $icon-size: 24px;
-      width: $icon-size;
-      height: $icon-size;
+      --icon-size: 24px;
     }
   }
 }

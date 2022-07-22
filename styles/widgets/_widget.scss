@@ -1,14 +1,13 @@
-// The below transition duration MUST match the setTimeout() value in the
-// WidgetShell component
-$widget-transition-duration: 250ms;
-
 .widget {
+  // The below transition duration MUST match the setTimeout() value in the
+  // WidgetShell component
+  --widget-transition-duration: 250ms;
   display: inline-block;
   position: relative;
-  min-width: $widget-min-width;
-  min-height: $widget-min-height;
+  min-width: var(--widget-min-width);
+  min-height: var(--widget-min-height);
   width: 100%;
-  margin: $widget-margin-y $widget-margin-x;
+  margin: var(--widget-margin-y) var(--widget-margin-x);
   border-radius: 10px;
   background-color: var(--color-black-30);
   @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
@@ -47,12 +46,12 @@ $widget-transition-duration: 250ms;
   &.adding-widget,
   &.removing-widget {
     transition-property: opacity, margin-bottom;
-    transition-duration: $widget-transition-duration;
+    transition-duration: var(--widget-transition-duration);
     transition-timing-function: ease-in-out;
   }
   &.adding-widget {
     opacity: 1 !important;
-    margin-bottom: $widget-margin-y !important;
+    margin-bottom: var(--widget-margin-y) !important;
     // In addition to the above style declarations, additional inline styles
     // are added to the widget when it's being added to achieve the desired
     // effect (i.e. the widget slides into view, while the widget below moves
@@ -61,7 +60,7 @@ $widget-transition-duration: 250ms;
   }
   &.removing-widget {
     transition-property: opacity, margin-bottom;
-    transition-duration: $widget-transition-duration;
+    transition-duration: var(--widget-transition-duration);
     transition-timing-function: ease-in-out;
     opacity: 0;
     // In addition to the above style declarations, additional inline styles
@@ -82,26 +81,26 @@ $widget-transition-duration: 250ms;
 
 .widget-controls {
   position: absolute;
-  $control-spacing-x: 4px;
-  $control-spacing-y: $control-spacing-x;
-  top: $control-spacing-y;
+  --control-spacing-x: 4px;
+  --control-spacing-y: var(--control-spacing-x);
+  top: var(--control-spacing-y);
   z-index: 100;
   display: flex;
   flex-direction: column;
   &-left {
-    left: $control-spacing-x;
+    left: var(--control-spacing-x);
   }
   &-right {
-    right: $control-spacing-x;
+    right: var(--control-spacing-x);
   }
 }
 
 .widget-control {
   // Disable text selection of these controls
   user-select: none;
-  $control-size: 24px;
-  width: $control-size;
-  height: $control-size;
+  --control-size: 24px;
+  width: var(--control-size);
+  height: var(--control-size);
   padding: 0;
   margin-bottom: 10px;
   border-width: 0;
@@ -116,9 +115,9 @@ $widget-transition-duration: 250ms;
     margin-bottom: 5px;
   }
   @include layout(desktop) {
-    $control-size: 20px;
-    width: $control-size;
-    height: $control-size;
+    --control-size: 20px;
+    width: var(--control-size);
+    height: var(--control-size);
   }
   .is-not-touch-device .widget:not(:hover) & {
     opacity: 0;
@@ -138,9 +137,9 @@ $widget-transition-duration: 250ms;
 }
 
 .widget-drag-handle {
-  $control-size: 24px;
-  width: $control-size;
-  height: $control-size;
+  --control-size: 24px;
+  width: var(--control-size);
+  height: var(--control-size);
   position: relative;
   margin-bottom: 0;
   cursor: grab;
@@ -151,11 +150,14 @@ $widget-transition-duration: 250ms;
 
 // Increase click area of drag control (for easier dragging)
 .widget-controls-left {
-  $drag-control-padding: 5px;
-  transform: translate(-$drag-control-padding, -$drag-control-padding);
+  --drag-control-padding: 5px;
+  transform: translate(
+    calc(var(--drag-control-padding) * -1),
+    calc(var(--drag-control-padding) * -1)
+  );
   .widget-drag-handle {
-    padding-top: $drag-control-padding;
-    padding-left: $drag-control-padding;
+    padding-top: var(--drag-control-padding);
+    padding-left: var(--drag-control-padding);
   }
 }
 
