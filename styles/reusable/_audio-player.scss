@@ -57,32 +57,14 @@
 }
 
 input[type=range].audio-player-seeker-slider {
-  $slider-track-height: 4px;
-  $slider-thumb-size: 12px;
+  --slider-track-height: 4px;
+  --slider-thumb-size: 12px;
   width: 100%;
   margin-top: 0;
   padding-top: 5px;
   padding-bottom: 5px;
-  @include slider-track() {
-    // If we don't specify an explicit height, the height will be inherited
-    // from the slider thumb, whose height is currently zeroed-out for proper
-    // interactivity; therefore, specify a height that's large enough for the
-    // user to interact with easily on a mobile device; and fortunately, the
-    // height does not cause layout shift; it simply overlaps surrounding
-    // elements if large enough
-    height: $slider-track-height;
-  }
   @include slider-thumb() {
     position: relative;
     left: 1px;
-    // Ensure that cursor coordinates are in sync with slider fill
-    width: $slider-thumb-size;
-    height: $slider-thumb-size;
-  }
-  // On WebKit, the slider thumb is not vertically centered by default, but on
-  // Firefox, it is, so we need to target WebKit specifically to accommodate
-  // this
-  @include webkit-slider-thumb {
-    transform: translateY(-50%) translateY(math.div($slider-track-height, 2));
   }
 }

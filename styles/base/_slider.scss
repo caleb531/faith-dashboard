@@ -84,8 +84,10 @@ input[type=range]::-ms-track {
 }
 
 input[type=range] {
-  $slider-track-height: 4px;
-  $slider-thumb-size: 14px;
+  --slider-track-height: 4px;
+  --slider-thumb-size: 14px;
+  --slider-track-color: var(--color-black-25);
+  --slider-fill-color: var(--color-white-100);
   width: 100%;
   margin: 0;
   margin-top: 10px;
@@ -94,17 +96,36 @@ input[type=range] {
   -webkit-appearance: none;
   position: relative;
   width: 100%;
-  height: $slider-track-height;
+  height: var(--slider-track-height);
   // border-radius: 10px;
-  background-color: var(--color-black-25);
+  background-color: transparent;
+  background-image: linear-gradient(
+    to right,
+    var(--slider-fill-color) 0%,
+    var(--slider-fill-color)
+    var(--slider-fill-percentage, 0),
+    var(--slider-track-color)
+    var(--slider-fill-percentage, 0),
+    var(--slider-track-color) 100%);
   background-clip: content-box;
   box-sizing: content-box;
+  @include slider-track() {
+    height: var(--slider-track-height);
+  }
   @include slider-thumb() {
-    width: $slider-thumb-size;
-    height: $slider-thumb-size;
+    width: var(--slider-thumb-size);
+    height: var(--slider-thumb-size);
     margin: 0;
     background-color: var(--color-white-100);
     border-width: 0;
     border-radius: 50%;
+  }
+    // On WebKit, the slider thumb is not vertically centered by default, but on
+  // Firefox, it is, so we need to target WebKit specifically to accommodate
+  // this
+  @include webkit-slider-thumb() {
+    transform:
+      translateY(-50%)
+      translateY(calc(var(--slider-track-height) / 2));
   }
 }

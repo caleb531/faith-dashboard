@@ -18,9 +18,22 @@ const NoteWidget = React.memo(function NoteWidget({
     fontSize: fontSize || defaultFontSize
   };
 
+  // Set the percentage fill of the slider
+  function setSliderFill(input: HTMLInputElement) {
+    if (!input) {
+      return;
+    }
+    const fillPercentage =
+      ((Number(input.value) - Number(input.min)) /
+        (Number(input.max) - Number(input.min))) *
+      100;
+    input.style.setProperty('--slider-fill-percentage', `${fillPercentage}%`);
+  }
+
   // Register a change of the user's preferred font size for this note
   function changeFontSize(event: React.FormEvent): void {
     const input = event.target as HTMLInputElement;
+    setSliderFill(input);
     dispatch({ type: 'updateFontSize', payload: Number(input.value) });
   }
 
@@ -79,6 +92,7 @@ const NoteWidget = React.memo(function NoteWidget({
                 min="12"
                 max="50"
                 value={fontSize || defaultFontSize}
+                ref={setSliderFill}
               />
               <div className="note-formatting-preview" style={textStyles}>
                 {getTextPreview(text)}

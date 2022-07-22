@@ -38,11 +38,10 @@ function useAudioSeeker(
   function updateSeekerFill(input: HTMLInputElement) {
     if (input && audioElement.duration) {
       const fillPercentage =
-        (Number(input.value) / audioElement.duration) * 100;
-      const fillColor = '#fff';
-      const trackColor = 'rgba(0, 0, 0, 0.25)';
-      input.style.backgroundColor = 'transparent';
-      input.style.backgroundImage = `linear-gradient(to right, ${fillColor} 0%, ${fillColor} ${fillPercentage}%, ${trackColor} ${fillPercentage}%, ${trackColor} 100%)`;
+        ((Number(input.value) - Number(input.min)) /
+          (Number(input.max) - Number(input.min))) *
+        100;
+      input.style.setProperty('--slider-fill-percentage', `${fillPercentage}%`);
     }
   }
 
