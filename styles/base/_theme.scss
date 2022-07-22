@@ -2,14 +2,14 @@
 // theme, and the value is an accent color used for things like buttons,
 // controls, etc.
 $theme-photos: (
-  'word': $teal,
-  'worship': $orange,
-  'pasture': $green,
-  'mountain': $slate,
-  'shore': $teal,
-  'stars': $royal,
-  'evening': $violet,
-  'forest': $forest
+  'word': $color-teal,
+  'worship': $color-orange,
+  'pasture': $color-green,
+  'mountain': $color-slate,
+  'shore': $color-teal,
+  'stars': $color-royal,
+  'evening': $color-violet,
+  'forest': $color-forest
 );
 
 // Dynamically define CSS variables / custom properties using Sass variable
@@ -35,7 +35,7 @@ $theme-photos: (
   z-index: -1;
   width: 100%;
   height: 100%;
-  background-color: $grey;
+  background-color: $color-grey;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;

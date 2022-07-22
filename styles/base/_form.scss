@@ -95,13 +95,13 @@ button,
 a {
   &:focus-visible {
     outline-width: 0;
-    box-shadow: 0 0 0 2px $light-100, 0 0 0 4px $blue;
+    box-shadow: 0 0 0 2px $light-100, 0 0 0 4px $color-blue;
   }
 }
 
 input:focus-visible {
   outline-width: 0;
-  box-shadow: 0 0 0 1px $blue, 0 0 0 2px $light-100;
+  box-shadow: 0 0 0 1px $color-blue, 0 0 0 2px $light-100;
 }
 
 .form-error-message {

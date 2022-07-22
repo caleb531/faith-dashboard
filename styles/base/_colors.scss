@@ -1,36 +1,36 @@
 @use 'sass:math';
 
 // Base color palette
-$grey: #222;
-$brown: #875;
-$green: #474;
-$forest: #365;
-$teal: #177;
-$blue: #36a;
-$purple: #636;
-$royal: #336;
-$rose: #957;
-$red: #a44;
-$orange: #a36036;
-$yellow: #a83;
-$violet: #838;
-$slate: #467;
+$color-grey: #222;
+$color-brown: #875;
+$color-green: #474;
+$color-forest: #365;
+$color-teal: #177;
+$color-blue: #36a;
+$color-purple: #636;
+$color-royal: #336;
+$color-rose: #957;
+$color-red: #a44;
+$color-orange: #a36036;
+$color-yellow: #a83;
+$color-violet: #838;
+$color-slate: #467;
 
 $error: #c44;
 
 // Themes
 $theme-colors: (
-  'brown': $brown,
-  'green': $green,
-  'teal': $teal,
-  'blue': $blue,
-  'purple': $purple,
-  'royal': $royal,
-  'rose': $rose,
-  'red': $red,
-  'orange': $orange,
-  'yellow': $yellow,
-  'violet': $violet
+  'brown': $color-brown,
+  'green': $color-green,
+  'teal': $color-teal,
+  'blue': $color-blue,
+  'purple': $color-purple,
+  'royal': $color-royal,
+  'rose': $color-rose,
+  'red': $color-red,
+  'orange': $color-orange,
+  'yellow': $color-yellow,
+  'violet': $color-violet
 );
 
 // Dark
