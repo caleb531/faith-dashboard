@@ -46,6 +46,9 @@ $update-animation-timing-function: ease-in-out;
   cursor: pointer;
   backdrop-filter: blur(10px);
   animation: update-slide-out 400ms $update-animation-timing-function both;
+  &.is-updating {
+    cursor: default;
+  }
 }
 
 .update-notification-message {
