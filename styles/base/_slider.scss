@@ -3,21 +3,21 @@
 // Slider reset styles from
 // <https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/>
 
-input[type=range] {
+input[type='range'] {
   -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
   width: 100%; /* Specific width is required for Firefox. */
   background: transparent; /* Otherwise white in Chrome */
 }
 
-input[type=range]::-webkit-slider-thumb {
+input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
 }
 
-input[type=range]:focus {
+input[type='range']:focus {
   outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
 }
 
-input[type=range]::-ms-track {
+input[type='range']::-ms-track {
   width: 100%;
   cursor: pointer;
 
@@ -88,15 +88,14 @@ input[type=range]::-ms-track {
   background-image: linear-gradient(
     to right,
     var(--slider-fill-color) 0%,
-    var(--slider-fill-color)
-    var(--slider-fill-percentage, 0),
-    var(--slider-track-color)
-    var(--slider-fill-percentage, 0),
-    var(--slider-track-color) 100%);
+    var(--slider-fill-color) var(--slider-fill-percentage, 0),
+    var(--slider-track-color) var(--slider-fill-percentage, 0),
+    var(--slider-track-color) 100%
+  );
   background-clip: content-box;
 }
 
-input[type=range] {
+input[type='range'] {
   --slider-track-height: 4px;
   --slider-thumb-size: 14px;
   --slider-track-color: var(--color-black-25);
@@ -123,12 +122,10 @@ input[type=range] {
     border-width: 0;
     border-radius: 50%;
   }
-    // On WebKit, the slider thumb is not vertically centered by default, but on
+  // On WebKit, the slider thumb is not vertically centered by default, but on
   // Firefox, it is, so we need to target WebKit specifically to accommodate
   // this
   @include webkit-slider-thumb() {
-    transform:
-      translateY(-50%)
-      translateY(calc(var(--slider-track-height) / 2));
+    transform: translateY(-50%) translateY(calc(var(--slider-track-height) / 2));
   }
 }

@@ -7,7 +7,6 @@
 }
 
 :root {
-
   // Font families
   --font-family-serif: 'Merriweather', 'Georgia', serif;
   --font-family-sans-serif: 'Merriweather Sans', 'Open Sans', sans-serif;
@@ -24,5 +23,4 @@
   --font-size-xl: #{px-to-rem($font-size-base, 2)};
   --font-size-xxl: #{px-to-rem($font-size-base, 3)};
   --font-size-xxxl: #{px-to-rem($font-size-base, 7)};
-
 }

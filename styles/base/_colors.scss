@@ -19,7 +19,6 @@ $colors: (
 );
 
 :root {
-
   // Expose the above Sass color variables as CSS custom properties
   @each $color-name, $color in $colors {
     --color-#{$color-name}: #{$color};
@@ -29,21 +28,20 @@ $colors: (
   --color-black: rgb(0, 0, 0);
   --color-black-100: var(--color-black);
   --color-black-75: rgba(0, 0, 0, 0.75);
-  --color-black-50: rgba(0, 0, 0, 0.50);
-  --color-black-40: rgba(0, 0, 0, 0.40);
-  --color-black-30: rgba(0, 0, 0, 0.30);
+  --color-black-50: rgba(0, 0, 0, 0.5);
+  --color-black-40: rgba(0, 0, 0, 0.4);
+  --color-black-30: rgba(0, 0, 0, 0.3);
   --color-black-25: rgba(0, 0, 0, 0.25);
-  --color-black-20: rgba(0, 0, 0, 0.20);
+  --color-black-20: rgba(0, 0, 0, 0.2);
   --color-black-15: rgba(0, 0, 0, 0.15);
-  --color-black-10: rgba(0, 0, 0, 0.10);
+  --color-black-10: rgba(0, 0, 0, 0.1);
 
   --color-white: #fff;
   --color-white-100: var(--color-white);
   --color-white-75: rgba(255, 255, 255, 0.75);
-  --color-white-50: rgba(255, 255, 255, 0.50);
-  --color-white-40: rgba(255, 255, 255, 0.40);
-  --color-white-30: rgba(255, 255, 255, 0.30);
+  --color-white-50: rgba(255, 255, 255, 0.5);
+  --color-white-40: rgba(255, 255, 255, 0.4);
+  --color-white-30: rgba(255, 255, 255, 0.3);
   --color-white-25: rgba(255, 255, 255, 0.25);
-  --color-white-10: rgba(255, 255, 255, 0.10);
-
+  --color-white-10: rgba(255, 255, 255, 0.1);
 }

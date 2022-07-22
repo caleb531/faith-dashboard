@@ -8,15 +8,14 @@ input.account-auth-form-input {
   font-size: var(--font-size-xxl);
 }
 // Hide the "honey pot" field from the UI to avoid accessibility issues
-[id^="verification-check"],
-[for^="verification-check"] {
+[id^='verification-check'],
+[for^='verification-check'] {
   display: none;
 }
 
 button.account-auth-form-submit {
   font-size: var(--font-size-xxl);
 }
-
 
 .account-auth-form-submit {
   margin: 0 auto;

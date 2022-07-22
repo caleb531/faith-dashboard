@@ -28,13 +28,13 @@ label {
   left: -10000px;
 }
 
-input[type=text],
-input[type=search],
-input[type=number],
-input[type=password],
-input[type=email],
-input[type=tel],
-input[type=url],
+input[type='text'],
+input[type='search'],
+input[type='number'],
+input[type='password'],
+input[type='email'],
+input[type='tel'],
+input[type='url'],
 button {
   -webkit-appearance: none;
   padding-top: 5px;
@@ -44,13 +44,13 @@ button {
   line-height: 1.3;
 }
 
-input[type=text],
-input[type=search],
-input[type=number],
-input[type=password],
-input[type=email],
-input[type=tel],
-input[type=url],
+input[type='text'],
+input[type='search'],
+input[type='number'],
+input[type='password'],
+input[type='email'],
+input[type='tel'],
+input[type='url'],
 textarea {
   max-width: 100%;
   width: 100%;
@@ -67,7 +67,7 @@ textarea {
   }
 }
 // Hide Cancel (X) button on search fields
-input[type=search]::-webkit-search-cancel-button {
+input[type='search']::-webkit-search-cancel-button {
   display: none;
 }
 button,

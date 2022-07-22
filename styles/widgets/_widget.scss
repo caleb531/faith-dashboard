@@ -24,12 +24,12 @@
     text-align: center;
     font-size: var(--font-size-xxxs);
   }
-  input[type=search] {
+  input[type='search'] {
     min-width: 160px;
     width: 75%;
     border-radius: 4px;
   }
-  input[type=search] + button[type=submit] {
+  input[type='search'] + button[type='submit'] {
     display: block;
     margin: 0 auto;
     margin-top: 6px;
