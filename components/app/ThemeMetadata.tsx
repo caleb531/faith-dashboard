@@ -8,7 +8,7 @@ function getThemeHexCode() {
       .getPropertyValue('--current-theme-color')
       ?.trim();
   } else {
-    return '';
+    return '#222222';
   }
 }
 
