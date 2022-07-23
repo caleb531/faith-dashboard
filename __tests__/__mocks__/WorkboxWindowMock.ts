@@ -1,28 +1,31 @@
 class WorkboxMock {
-  _callbackMap: { [key: string]: (() => void)[] };
+  _callbackMap: { [key: string]: ((...args: any[]) => void)[] };
   static instances: WorkboxMock[];
 
   constructor() {
-    console.log('init Workbox!!!');
     this._callbackMap = {};
     WorkboxMock.instances.push(this);
   }
 
-  addEventListener(eventType: string, eventCallback: (event?: any) => void) {
+  addEventListener(eventType: string, eventCallback: (...args: any[]) => void) {
     if (!this._callbackMap[eventType]) {
       this._callbackMap[eventType] = [];
     }
     this._callbackMap[eventType].push(eventCallback);
   }
-  trigger(eventName: string) {
+  trigger(eventName: string, ...args: any[]) {
     if (this._callbackMap[eventName]) {
       this._callbackMap[eventName].forEach((callback) => {
-        callback();
+        setTimeout(() => {
+          callback(...args);
+        });
       });
     }
   }
   register() {
-    this.trigger('waiting');
+    this.trigger('waiting', {
+      wasWaitingBeforeRegister: false
+    });
   }
 }
 WorkboxMock.instances = [];
@@ -31,8 +34,8 @@ export const Workbox = WorkboxMock;
 
 export function messageSW(sw: object, data: { type: string }) {
   Workbox.instances.forEach((wb) => {
-    setTimeout(() => {
-      wb.trigger('controlling');
-    }, 1000);
+    // setTimeout(() => {
+    //   wb.trigger('controlling');
+    // });
   });
 }

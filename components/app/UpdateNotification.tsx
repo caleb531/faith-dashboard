@@ -66,6 +66,8 @@ function UpdateNotification() {
 
   return availableUpdate ? (
     <div
+      role="region"
+      aria-label="Update available! Click here to update."
       className={classNames(
         'update-notification',
         { 'update-available': availableUpdate },
