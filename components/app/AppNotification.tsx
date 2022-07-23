@@ -11,13 +11,15 @@ function AppNotification() {
     setIsNotificationShowing(false);
     // If the user reloads the page after dismissing the notification modal, do
     // not show them the same modal again
-    window.location.hash = '';
+    window.location.assign('/');
   }
 
   // Parse possible notification message from URL parameters (which often
   // originate from Supabase)
   useEffect(() => {
-    const urlParams = new URLSearchParams(`?${window.location.hash.slice(1)}`);
+    const urlParams = new URLSearchParams(
+      `?${window.location.search.slice(1)}${window.location.hash.slice(1)}`
+    );
     const newNotificationMessage =
       urlParams.get('message') || urlParams.get('error_description');
     if (newNotificationMessage) {

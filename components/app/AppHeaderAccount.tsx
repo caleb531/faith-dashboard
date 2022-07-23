@@ -34,7 +34,10 @@ function AppHeaderAccount() {
     if (!error) {
       // Revert to the default dashboard state when signing out
       localStorage.clear();
-      window.location.reload();
+      const queryStr = new URLSearchParams({
+        message: 'You have been signed out.'
+      }).toString();
+      window.location.assign(`/?${queryStr}`);
     }
   }
 

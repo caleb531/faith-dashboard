@@ -17,7 +17,8 @@ describe('Account Header', () => {
     delete window.location;
     window.location = {
       ...originalLocationObject,
-      reload: jest.fn()
+      reload: jest.fn(),
+      assign: jest.fn()
     };
   });
 
