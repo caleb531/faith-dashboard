@@ -8,14 +8,7 @@ const config: Config.InitialOptions = {
   // Do not attempt to test utility functions, since they themselves aren't
   // tests
   testPathIgnorePatterns: ['/__utils__/', '/__mocks__/'],
-  coveragePathIgnorePatterns: [
-    '/__utils__/',
-    '/__mocks__/',
-    // The Update Notification component is difficult to test due to the use of
-    // service workers and the Workbox library, so we exclude it from coverage
-    // reporting
-    'UpdateNotification'
-  ],
+  coveragePathIgnorePatterns: ['/__utils__/', '/__mocks__/'],
   // Do not attempt to transform lodash-es, since it uses native ES6 modules
   transformIgnorePatterns: ['<rootDir>/node_modules/(?!lodash-es)'],
   // Enable Jest to compile TypeScript/JSX using Next's built-in Babel preset
@@ -31,7 +24,10 @@ const config: Config.InitialOptions = {
   // Testing Library); to solve this, we mock the <Link> component entirely so
   // as to eliminate the possibility of re-rendering
   moduleNameMapper: {
-    'next/link': require.resolve('./__tests__/__mocks__/LinkMock.tsx')
+    'next/link': require.resolve('./__tests__/__mocks__/LinkMock.tsx'),
+    'workbox-window': require.resolve(
+      './__tests__/__mocks__/WorkboxWindowMock.ts'
+    )
   },
   // Display coverage summary below file-by-file coverage breakdown
   coverageReporters: ['clover', 'json', 'lcov', 'html', 'text', 'text-summary']
