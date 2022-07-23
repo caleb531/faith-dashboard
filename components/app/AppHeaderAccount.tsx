@@ -38,7 +38,8 @@ function AppHeaderAccount() {
       const queryStr = new URLSearchParams({
         message: 'You have been signed out.'
       }).toString();
-      window.location.assign(`/?${queryStr}`);
+      window.location.hash = `#${queryStr}`;
+      window.location.reload();
     }
   }
 
