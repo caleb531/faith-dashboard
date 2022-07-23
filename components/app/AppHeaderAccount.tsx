@@ -65,11 +65,16 @@ function AppHeaderAccount() {
 
   // Detect session change and re-render account header accordingly
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN') {
-        setSession(session);
+    const { data, error } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (event === 'SIGNED_IN') {
+          setSession(session);
+        }
       }
-    });
+    );
+    return () => {
+      data?.unsubscribe();
+    };
   }, []);
 
   return session?.user && isSessionActive(session) ? (

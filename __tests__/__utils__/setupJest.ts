@@ -1,5 +1,6 @@
 import { configure } from '@testing-library/dom';
 import fetch, { enableFetchMocks } from 'jest-fetch-mock';
+import { supabase } from '../../components/supabaseClient';
 import AudioMock from '../__mocks__/AudioMock';
 import {
   MediaMetadataMock,
@@ -35,6 +36,9 @@ let originalMediaSession: typeof navigator.mediaSession;
 beforeEach(() => {
   audioStub = jest.spyOn(window, 'Audio').mockImplementation(() => {
     return new AudioMock() as any;
+  });
+  jest.spyOn(supabase.auth, 'onAuthStateChange').mockImplementation(() => {
+    return { data: null, error: null };
   });
   if (typeof navigator !== 'undefined') {
     originalMediaSession = navigator.mediaSession;
