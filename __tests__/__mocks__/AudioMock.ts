@@ -6,14 +6,14 @@ class AudioMock {
   paused: boolean;
   _isAudioMock: true;
   _loaderPromise: Promise<void>;
-  callbackMap: { [key: string]: (() => void)[] };
+  _callbackMap: { [key: string]: (() => void)[] };
   static instances: AudioMock[];
 
   constructor() {
     this.currentTime = 0;
     this.duration = NaN;
     this.paused = true;
-    this.callbackMap = {};
+    this._callbackMap = {};
     this._isAudioMock = true;
     AudioMock.instances.push(this);
     // Run callback asynchronously just like the real thing
@@ -40,23 +40,23 @@ class AudioMock {
   }
 
   trigger(eventName: string) {
-    if (this.callbackMap[eventName]) {
-      this.callbackMap[eventName].forEach((callback) => {
+    if (this._callbackMap[eventName]) {
+      this._callbackMap[eventName].forEach((callback) => {
         callback();
       });
     }
   }
 
   addEventListener(eventType: string, eventCallback: (event?: any) => void) {
-    if (!this.callbackMap[eventType]) {
-      this.callbackMap[eventType] = [];
+    if (!this._callbackMap[eventType]) {
+      this._callbackMap[eventType] = [];
     }
-    this.callbackMap[eventType].push(eventCallback);
+    this._callbackMap[eventType].push(eventCallback);
     if (eventType === 'loadedmetadata' || eventType === 'loadeddata') {
       // Run callback asynchronously just like the real thing
       void this._loaderPromise.then(() => {
         setTimeout(() => {
-          if (this.callbackMap[eventType].includes(eventCallback)) {
+          if (this._callbackMap[eventType].includes(eventCallback)) {
             eventCallback();
           }
         });
@@ -65,14 +65,14 @@ class AudioMock {
   }
 
   removeEventListener(eventName: string, eventCallback: (event?: any) => void) {
-    if (!this.callbackMap[eventName]) {
+    if (!this._callbackMap[eventName]) {
       return;
     }
-    const callbackIndex = this.callbackMap[eventName].indexOf(eventCallback);
+    const callbackIndex = this._callbackMap[eventName].indexOf(eventCallback);
     if (callbackIndex === -1) {
       return;
     }
-    this.callbackMap[eventName].splice(callbackIndex, 1);
+    this._callbackMap[eventName].splice(callbackIndex, 1);
   }
 }
 // Keep track of all instances
