@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import Modal from '../reusable/Modal';
+import getAppNotificationMessage from './getAppNotificationMessage';
 
 // Show a message to the user if the result of clicking a magic link provides
 // any feedback (e.g. "Token has expired")
 function AppNotification() {
-  const [isNotificationShowing, setIsNotificationShowing] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState<string>();
 
   function onDismissNotification() {
-    setIsNotificationShowing(false);
     // If the user reloads the page after dismissing the notification modal, do
     // not show them the same modal again
     window.location.assign('/');
@@ -17,18 +16,13 @@ function AppNotification() {
   // Parse possible notification message from URL parameters (which often
   // originate from Supabase)
   useEffect(() => {
-    const urlParams = new URLSearchParams(
-      `?${window.location.search.slice(1)}${window.location.hash.slice(1)}`
-    );
-    const newNotificationMessage =
-      urlParams.get('message') || urlParams.get('error_description');
+    const newNotificationMessage = getAppNotificationMessage();
     if (newNotificationMessage) {
       setNotificationMessage(newNotificationMessage);
-      setIsNotificationShowing(true);
     }
   }, []);
 
-  return isNotificationShowing ? (
+  return notificationMessage ? (
     <Modal onCloseModal={onDismissNotification}>
       <p>{notificationMessage}</p>
     </Modal>

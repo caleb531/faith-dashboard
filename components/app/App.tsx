@@ -12,6 +12,7 @@ import AppHeader from './AppHeader';
 import AppNotification from './AppNotification';
 import reducer from './AppReducer';
 import defaultApp from './appStateDefault';
+import getAppNotificationMessage from './getAppNotificationMessage';
 import ThemeMetadata from './ThemeMetadata';
 import UpdateNotification from './UpdateNotification';
 import useAppSync from './useAppSync';
@@ -67,12 +68,7 @@ function App({
 
   // Defer the starting of the tutorial so the app's loading state isn't blurry
   useEffect(() => {
-    const urlParams = new URLSearchParams(
-      `?${window.location.search.slice(1)}${window.location.hash.slice(1)}`
-    );
-    const notificationMessage =
-      urlParams.get('message') || urlParams.get('error_description');
-    if (!notificationMessage) {
+    if (!getAppNotificationMessage()) {
       setIsTutorialStarted(true);
     }
   }, [setIsTutorialStarted]);
