@@ -11,6 +11,7 @@ import { supabase } from '../supabaseClient';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
+import appStateDefault from './appStateDefault';
 
 function AppHeaderAccount() {
   const { isCurrentStep, stepProps } = useTutorialStep('sign-up');
@@ -35,6 +36,11 @@ function AppHeaderAccount() {
     } else {
       // Revert to the default dashboard state when signing out
       localStorage.clear();
+      // Do not show tutorial again
+      localStorage.setItem(
+        'faith-dashboard-app',
+        JSON.stringify({ ...appStateDefault, shouldShowTutorial: false })
+      );
       const queryStr = new URLSearchParams({
         message: 'You have been signed out.'
       }).toString();
