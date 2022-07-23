@@ -48,7 +48,6 @@ beforeEach(() => {
     originalMediaMetadata = window.MediaMetadata;
     Object.defineProperty(navigator, 'mediaSession', {
       configurable: true,
-      writable: false,
       value: mediaSessionMock
     });
     window.MediaMetadata = MediaMetadataMock;
