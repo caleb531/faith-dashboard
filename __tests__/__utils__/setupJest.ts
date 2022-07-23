@@ -30,6 +30,7 @@ jest.mock('../../components/useVerifyCaptcha', () => {
 });
 
 let audioStub: jest.SpyInstance;
+let onAuthStateChangeStub: jest.SpyInstance;
 let originalMediaMetadata: typeof window.MediaMetadata;
 let originalMediaSession: typeof navigator.mediaSession;
 
@@ -37,9 +38,11 @@ beforeEach(() => {
   audioStub = jest.spyOn(window, 'Audio').mockImplementation(() => {
     return new AudioMock() as any;
   });
-  jest.spyOn(supabase.auth, 'onAuthStateChange').mockImplementation(() => {
-    return { data: null, error: null };
-  });
+  onAuthStateChangeStub = jest
+    .spyOn(supabase.auth, 'onAuthStateChange')
+    .mockImplementation(() => {
+      return { data: null, error: null };
+    });
   if (typeof navigator !== 'undefined') {
     originalMediaSession = navigator.mediaSession;
     originalMediaMetadata = window.MediaMetadata;
@@ -55,6 +58,7 @@ afterEach(() => {
   fetch.resetMocks();
   audioStub.mockRestore();
   AudioMock.instances.length = 0;
+  onAuthStateChangeStub.mockRestore();
   localStorage.clear();
   Object.defineProperty(navigator, 'mediaSession', {
     value: originalMediaSession
