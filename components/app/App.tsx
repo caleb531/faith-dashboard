@@ -12,6 +12,7 @@ import AppHeader from './AppHeader';
 import AppNotification from './AppNotification';
 import reducer from './AppReducer';
 import defaultApp from './appStateDefault';
+import ThemeMetadata from './ThemeMetadata';
 import UpdateNotification from './UpdateNotification';
 import useAppSync from './useAppSync';
 import useThemeForEntirePage from './useThemeForEntirePage';
@@ -79,6 +80,7 @@ function App({
   return (
     <AppContext.Provider value={dispatchToApp}>
       <div className="app">
+        <ThemeMetadata />
         {shouldLoadServiceWorker() ? <UpdateNotification /> : null}
         <TutorialFlow
           inProgress={Boolean(
