@@ -30,8 +30,9 @@ function AppHeaderAccount() {
       return;
     }
     const { error } = await supabase.auth.signOut();
-    console.log('error', error);
-    if (!error) {
+    if (error) {
+      console.log('error', error);
+    } else {
       // Revert to the default dashboard state when signing out
       localStorage.clear();
       const queryStr = new URLSearchParams({
