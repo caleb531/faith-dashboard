@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import Home from '../pages/index';
 
 class ServiceWorkerMock {}
@@ -48,7 +48,9 @@ describe('Update Notification', () => {
       name: 'Update available! Click here to update.'
     });
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    // TODO: fix the below causing a Jest timeout
-    // await userEvent.click(updateNotification);
+    // For some reason, using userEvent.click() for the below causes Jest to
+    // timeout; so we are using fireEvent instead
+    await fireEvent.click(updateNotification);
+    expect(screen.queryByText('Loading...')).toBeInTheDocument();
   });
 });
