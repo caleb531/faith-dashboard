@@ -24,7 +24,8 @@ class WorkboxMock {
   }
   register() {
     this.trigger('waiting', {
-      wasWaitingBeforeRegister: false
+      wasWaitingBeforeRegister: false,
+      sw: { _isServiceWorkerMock: true }
     });
   }
 }
@@ -34,8 +35,8 @@ export const Workbox = WorkboxMock;
 
 export function messageSW(sw: object, data: { type: string }) {
   Workbox.instances.forEach((wb) => {
-    // setTimeout(() => {
-    //   wb.trigger('controlling');
-    // });
+    setTimeout(() => {
+      wb.trigger('controlling');
+    });
   });
 }
