@@ -5,6 +5,7 @@ type Props = {
   action: 'skip-back' | 'skip-forward';
   skipOffset: 10 | 30;
   label: string;
+  isDisabled: boolean;
 };
 
 function AudioPlayerSeeker({
@@ -13,7 +14,8 @@ function AudioPlayerSeeker({
   setCurrentTime,
   action,
   skipOffset,
-  label
+  label,
+  isDisabled
 }: Props) {
   function adjustTime() {
     if (action === 'skip-forward') {
@@ -28,7 +30,7 @@ function AudioPlayerSeeker({
     <button
       className={`audio-player-control audio-player-${action}`}
       onClick={() => adjustTime()}
-      disabled={!audioElement.duration || audioElement.src !== audioUrl}
+      disabled={isDisabled}
     >
       <img
         className={`audio-player-${action}-icon`}

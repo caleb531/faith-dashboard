@@ -6,13 +6,17 @@ type Props = {
   audioUrl: string;
   isPlaying: boolean;
   setIsPlaying: (newIsPlaying: boolean) => void;
+  isDisabled: boolean;
+  isLoading: boolean;
 };
 
 function AudioPlayerPlayPause({
   audioElement,
   audioUrl,
   isPlaying,
-  setIsPlaying
+  setIsPlaying,
+  isDisabled,
+  isLoading
 }: Props) {
   function toggleAudioElementPlayback() {
     if (audioElement.paused) {
@@ -29,11 +33,9 @@ function AudioPlayerPlayPause({
       type="button"
       className="audio-player-control audio-player-playpause"
       onClick={() => toggleAudioElementPlayback()}
-      disabled={Boolean(
-        !audioElement.duration || audioElement.src !== audioUrl
-      )}
+      disabled={isDisabled}
     >
-      {!audioElement.duration || audioElement.src !== audioUrl ? (
+      {isDisabled || isLoading ? (
         <LoadingIndicator />
       ) : audioElement.paused ? (
         <img
