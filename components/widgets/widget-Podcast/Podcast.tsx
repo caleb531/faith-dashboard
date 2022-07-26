@@ -2,7 +2,6 @@ import React from 'react';
 import useCachedAudio from '../../reusable/audio-player/useCachedAudio';
 import useCachedState from '../../useCachedState';
 import useMediaSession from '../../useMediaSession';
-import useUniqueFieldId from '../../useUniqueFieldId';
 import useWidgetCleanupOnRemove from '../useWidgetCleanupOnRemove';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useWidgetShell from '../useWidgetShell';
@@ -16,8 +15,8 @@ import {
 import PodcastContext from './PodcastContext';
 import PodcastEpisodeList from './PodcastEpisodeList';
 import PodcastNowPlaying from './PodcastNowPlaying';
-import PodcastPodcastList from './PodcastPodcastList';
 import reducer from './PodcastReducer';
+import PodcastSettings from './PodcastSettings';
 
 const PodcastWidget = React.memo(function PodcastWidget({
   widgetHead,
@@ -40,33 +39,32 @@ const PodcastWidget = React.memo(function PodcastWidget({
 
   const [audioElement, removeAudioElement] = useCachedAudio(widget.id);
 
-  const { fetchError, submitRequestQuery, requestQueryInputRef } =
-    useWidgetDataFetcher({
-      widget,
-      dispatchToWidget,
-      shouldFetchInitially: () => false,
-      requestQuery: podcastQuery,
-      setRequestQuery: (newPodcastQuery: typeof podcastQuery) => {
-        removePodcastList();
-        dispatchToWidget({ type: 'setPodcastQuery', payload: newPodcastQuery });
-      },
-      getApiUrl: (query: typeof podcastQuery) => {
-        return `/api/widgets/podcast?q=${encodeURIComponent(query)}`;
-      },
-      parseResponse: (response: PodcastSearchResponse) => response.results,
-      hasResults: (results: typeof podcastList) => results && results.length,
-      onSuccess: (results: typeof podcastList) => {
-        // When the user searches with a new query, access is lost to the Now
-        // Playing UI, since the feed URL has been reset (which is necessary in
-        // order for the UX to flow properly); however, the Audio element may
-        // still be playing from the previous podcast, so we must stop the audio
-        // since the user can't control it anyway
-        audioElement.pause();
-        setPodcastList(results);
-      },
-      getNoResultsMessage: () => 'No Podcasts Found',
-      getErrorMessage: () => 'Error Searching for Podcasts'
-    });
+  const podcastFetcher = useWidgetDataFetcher({
+    widget,
+    dispatchToWidget,
+    shouldFetchInitially: () => false,
+    requestQuery: podcastQuery,
+    setRequestQuery: (newPodcastQuery: typeof podcastQuery) => {
+      removePodcastList();
+      dispatchToWidget({ type: 'setPodcastQuery', payload: newPodcastQuery });
+    },
+    getApiUrl: (query: typeof podcastQuery) => {
+      return `/api/widgets/podcast?q=${encodeURIComponent(query)}`;
+    },
+    parseResponse: (response: PodcastSearchResponse) => response.results,
+    hasResults: (results: typeof podcastList) => results && results.length,
+    onSuccess: (results: typeof podcastList) => {
+      // When the user searches with a new query, access is lost to the Now
+      // Playing UI, since the feed URL has been reset (which is necessary in
+      // order for the UX to flow properly); however, the Audio element may
+      // still be playing from the previous podcast, so we must stop the audio
+      // since the user can't control it anyway
+      audioElement.pause();
+      setPodcastList(results);
+    },
+    getNoResultsMessage: () => 'No Podcasts Found',
+    getErrorMessage: () => 'Error Searching for Podcasts'
+  });
 
   const feedFetcher = useWidgetDataFetcher({
     widget,
@@ -117,8 +115,6 @@ const PodcastWidget = React.memo(function PodcastWidget({
     removePodcastList();
   });
 
-  const searchFieldId = useUniqueFieldId('podcast-search');
-
   return (
     <WidgetShell
       widget={widget}
@@ -130,41 +126,13 @@ const PodcastWidget = React.memo(function PodcastWidget({
           {widget.isSettingsOpen ||
           !podcastFeedUrl ||
           !podcastFeedData ||
-          fetchError ? (
-            <div className="podcast-search">
-              <form
-                className="podcast-settings"
-                onSubmit={(event) => submitRequestQuery(event)}
-              >
-                <h2 className="podcast-settings-heading">Podcast</h2>
-                <label
-                  htmlFor={searchFieldId}
-                  className="podcast-search accessibility-only"
-                >
-                  Podcast Search Query
-                </label>
-                <input
-                  type="search"
-                  id={searchFieldId}
-                  className="podcast-search"
-                  name="search"
-                  defaultValue={podcastQuery}
-                  placeholder="Search for podcasts"
-                  required
-                  ref={requestQueryInputRef}
-                />
-                <button type="submit" className="podcast-url-submit">
-                  Search
-                </button>
-                {fetchError ? (
-                  <p className="podcast-error">{fetchError}</p>
-                ) : null}
-              </form>
-              <PodcastPodcastList
-                podcastList={podcastList}
-                fetchPodcastFeed={feedFetcher.fetchWidgetData}
-              />
-            </div>
+          podcastFetcher.fetchError ? (
+            <PodcastSettings
+              podcastQuery={podcastQuery}
+              podcastFetcher={podcastFetcher}
+              feedFetcher={feedFetcher}
+              podcastList={podcastList}
+            />
           ) : podcastFeedUrl &&
             podcastFeedData &&
             nowPlaying &&
