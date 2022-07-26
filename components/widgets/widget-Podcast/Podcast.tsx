@@ -8,7 +8,11 @@ import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useWidgetShell from '../useWidgetShell';
 import { WidgetParameters } from '../widget.d';
 import WidgetShell from '../WidgetShell';
-import { PodcastFeedData, PodcastSearchResponse } from './podcast.d';
+import {
+  PodcastFeedData,
+  PodcastInfo,
+  PodcastSearchResponse
+} from './podcast.d';
 import PodcastContext from './PodcastContext';
 import PodcastEpisodeList from './PodcastEpisodeList';
 import PodcastNowPlaying from './PodcastNowPlaying';
@@ -31,7 +35,7 @@ const PodcastWidget = React.memo(function PodcastWidget({
 
   const [podcastList, setPodcastList, removePodcastList] = useCachedState(
     `podcast-list-${widget.id}`,
-    () => []
+    () => [] as PodcastInfo[]
   );
 
   const [audioElement, removeAudioElement] = useCachedAudio(widget.id);
