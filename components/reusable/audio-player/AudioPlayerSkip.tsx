@@ -1,22 +1,16 @@
+import { useContext } from 'react';
+import AudioPlayerContext from './AudioPlayerContext';
+
 type Props = {
-  audioElement: HTMLAudioElement;
-  audioUrl: string;
-  setCurrentTime: (newCurrentTime: number) => void;
   action: 'skip-back' | 'skip-forward';
   skipOffset: 10 | 30;
   label: string;
   isDisabled: boolean;
 };
 
-function AudioPlayerSeeker({
-  audioElement,
-  audioUrl,
-  setCurrentTime,
-  action,
-  skipOffset,
-  label,
-  isDisabled
-}: Props) {
+function AudioPlayerSeeker({ action, skipOffset, label, isDisabled }: Props) {
+  const { audioElement, setCurrentTime } = useContext(AudioPlayerContext);
+
   function adjustTime() {
     if (action === 'skip-forward') {
       audioElement.currentTime += skipOffset;

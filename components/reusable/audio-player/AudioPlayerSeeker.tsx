@@ -1,20 +1,13 @@
+import { useContext } from 'react';
 import useUniqueFieldId from '../../useUniqueFieldId';
+import AudioPlayerContext from './AudioPlayerContext';
 import useAudioSeeker from './useAudioSeeker';
 import useAudioTime from './useAudioTime';
 
-type Props = {
-  audioElement: HTMLAudioElement;
-  audioUrl: string;
-  currentTime: number;
-  setCurrentTime: (newCurrentTime: number) => void;
-};
+function AudioPlayerSeeker() {
+  const { audioElement, audioUrl, currentTime, setCurrentTime } =
+    useContext(AudioPlayerContext);
 
-function AudioPlayerSeeker({
-  audioElement,
-  audioUrl,
-  currentTime,
-  setCurrentTime
-}: Props) {
   const { seekerProvided, currentTimestamp, remainingTimestamp } =
     useAudioSeeker(audioElement, audioUrl, currentTime, setCurrentTime);
   useAudioTime(audioElement, audioUrl, currentTime, setCurrentTime);

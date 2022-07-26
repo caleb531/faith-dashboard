@@ -1,3 +1,5 @@
+import useMemoizedContextValue from '../../useMemoizedContextValue';
+import AudioPlayerContext from './AudioPlayerContext';
 import AudioPlayerMainControls from './AudioPlayerMainControls';
 import AudioPlayerSeeker from './AudioPlayerSeeker';
 import useAudioLoader from './useAudioLoader';
@@ -31,21 +33,21 @@ function AudioPlayer({
 
   useAudioLoader(audioElement);
 
+  const contextValue = useMemoizedContextValue({
+    audioElement,
+    audioUrl,
+    currentTime,
+    setCurrentTime,
+    isPlaying,
+    setIsPlaying
+  });
+
   return (
     <div className="audio-player">
-      <AudioPlayerMainControls
-        audioElement={audioElement}
-        audioUrl={audioUrl}
-        isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
-        setCurrentTime={setCurrentTime}
-      />
-      <AudioPlayerSeeker
-        audioElement={audioElement}
-        audioUrl={audioUrl}
-        currentTime={currentTime}
-        setCurrentTime={setCurrentTime}
-      />
+      <AudioPlayerContext.Provider value={contextValue}>
+        <AudioPlayerMainControls />
+        <AudioPlayerSeeker />
+      </AudioPlayerContext.Provider>
     </div>
   );
 }

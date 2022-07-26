@@ -1,23 +1,17 @@
+import { useContext } from 'react';
 import LoadingIndicator from '../LoadingIndicator';
+import AudioPlayerContext from './AudioPlayerContext';
 import useAudioPlayPause from './useAudioPlayPause';
 
 type Props = {
-  audioElement: HTMLAudioElement;
-  audioUrl: string;
-  isPlaying: boolean;
-  setIsPlaying: (newIsPlaying: boolean) => void;
   isDisabled: boolean;
   isLoading: boolean;
 };
 
-function AudioPlayerPlayPause({
-  audioElement,
-  audioUrl,
-  isPlaying,
-  setIsPlaying,
-  isDisabled,
-  isLoading
-}: Props) {
+function AudioPlayerPlayPause({ isDisabled, isLoading }: Props) {
+  const { audioElement, isPlaying, setIsPlaying } =
+    useContext(AudioPlayerContext);
+
   function toggleAudioElementPlayback() {
     if (audioElement.paused) {
       audioElement.play();
