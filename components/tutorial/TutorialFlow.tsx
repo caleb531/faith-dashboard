@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import AppContext from '../app/AppContext';
 import { JSXChildren } from '../global';
-import { TutorialContextValue } from './tutorial';
+import useMemoizedContextValue from '../useMemoizedContextValue';
 import TutorialContext from './TutorialContext';
 import TutorialOverlay from './TutorialOverlay';
 import tutorialSteps from './tutorialSteps';
@@ -36,15 +36,13 @@ function TutorialFlow({ inProgress, children }: Props) {
   // change on every render, causing useless renders for consumers of that
   // context; to fix, we can memoize the object (representing the latest
   // context value) until the current step changes
-  const contextValue: TutorialContextValue = useMemo(() => {
-    return {
-      inProgress,
-      currentStepIndex,
-      currentStep: tutorialSteps[currentStepIndex],
-      moveToNextStep,
-      skipTutorial
-    };
-  }, [inProgress, currentStepIndex, moveToNextStep, skipTutorial]);
+  const contextValue = useMemoizedContextValue({
+    inProgress,
+    currentStepIndex,
+    currentStep: tutorialSteps[currentStepIndex],
+    moveToNextStep,
+    skipTutorial
+  });
 
   return (
     <TutorialContext.Provider value={contextValue}>
