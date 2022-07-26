@@ -23,8 +23,8 @@ function AudioPlayerMainControls() {
   return (
     <div className="audio-player-main-controls">
       <AudioPlayerSkip
-        skipOffset={10}
         action="skip-back"
+        skipOffset={10}
         label="Skip Back {offset} Seconds"
         isDisabled={isDisabled}
       />
@@ -33,8 +33,8 @@ function AudioPlayerMainControls() {
         isLoading={isDisabled || isBuffering}
       />
       <AudioPlayerSkip
-        skipOffset={30}
         action="skip-forward"
+        skipOffset={30}
         label="Skip Forward {offset} Seconds"
         isDisabled={isDisabled}
       />
