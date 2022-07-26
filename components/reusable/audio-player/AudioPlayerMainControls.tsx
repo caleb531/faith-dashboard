@@ -1,5 +1,4 @@
-import { useContext, useState } from 'react';
-import useEventListener from '../../useEventListener';
+import { useContext } from 'react';
 import AudioPlayerContext from './AudioPlayerContext';
 import AudioPlayerPlayPause from './AudioPlayerPlayPause';
 import AudioPlayerSkip from './AudioPlayerSkip';
@@ -7,16 +6,10 @@ import AudioPlayerSkip from './AudioPlayerSkip';
 function AudioPlayerMainControls() {
   const { audioElement, audioUrl } = useContext(AudioPlayerContext);
 
-  const [isBuffering, setIsBuffering] = useState(false);
-
-  useEventListener(audioElement, 'waiting', () => {
-    setIsBuffering(true);
-  });
-  useEventListener(audioElement, 'playing', () => {
-    setIsBuffering(false);
-  });
-
-  const isDisabled = Boolean(
+  const isInitiallyBuffering = Boolean(
+    // When the src changes, the duration from the previous audio source is
+    // still present until the metadata for the new audio source has loaded;
+    // hence the reason for the second half of this condition
     !audioElement.duration || audioElement.src !== audioUrl
   );
 
@@ -26,17 +19,14 @@ function AudioPlayerMainControls() {
         action="skip-back"
         skipOffset={10}
         label="Skip Back {offset} Seconds"
-        isDisabled={isDisabled}
+        isDisabled={isInitiallyBuffering}
       />
-      <AudioPlayerPlayPause
-        isDisabled={isDisabled}
-        isLoading={isDisabled || isBuffering}
-      />
+      <AudioPlayerPlayPause isDisabled={isInitiallyBuffering} />
       <AudioPlayerSkip
         action="skip-forward"
         skipOffset={30}
         label="Skip Forward {offset} Seconds"
-        isDisabled={isDisabled}
+        isDisabled={isInitiallyBuffering}
       />
     </div>
   );

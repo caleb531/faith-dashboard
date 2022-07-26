@@ -1,16 +1,25 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import useEventListener from '../../useEventListener';
 import LoadingIndicator from '../LoadingIndicator';
 import AudioPlayerContext from './AudioPlayerContext';
 import useAudioPlayPause from './useAudioPlayPause';
 
 type Props = {
   isDisabled: boolean;
-  isLoading: boolean;
 };
 
-function AudioPlayerPlayPause({ isDisabled, isLoading }: Props) {
+function AudioPlayerPlayPause({ isDisabled }: Props) {
   const { audioElement, isPlaying, setIsPlaying } =
     useContext(AudioPlayerContext);
+  useAudioPlayPause(audioElement, isPlaying, setIsPlaying);
+  const [isBufferingAfterSeek, setIsBufferingAfterSeek] = useState(false);
+
+  useEventListener(audioElement, 'waiting', () => {
+    setIsBufferingAfterSeek(true);
+  });
+  useEventListener(audioElement, 'playing', () => {
+    setIsBufferingAfterSeek(false);
+  });
 
   function toggleAudioElementPlayback() {
     if (audioElement.paused) {
@@ -20,8 +29,6 @@ function AudioPlayerPlayPause({ isDisabled, isLoading }: Props) {
     }
   }
 
-  useAudioPlayPause(audioElement, isPlaying, setIsPlaying);
-
   return (
     <button
       type="button"
@@ -29,7 +36,7 @@ function AudioPlayerPlayPause({ isDisabled, isLoading }: Props) {
       onClick={() => toggleAudioElementPlayback()}
       disabled={isDisabled}
     >
-      {isDisabled || isLoading ? (
+      {isDisabled || isBufferingAfterSeek ? (
         <LoadingIndicator />
       ) : audioElement.paused ? (
         <img
