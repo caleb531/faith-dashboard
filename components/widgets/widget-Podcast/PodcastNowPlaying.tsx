@@ -54,9 +54,13 @@ function PodcastNowPlaying({
             className="podcast-now-playing-image"
             src={podcastImage}
             alt=""
+            data-testid="podcast-image"
           />
         ) : (
-          <div className="podcast-now-playing-image podcast-now-playing-image-missing">
+          <div
+            className="podcast-now-playing-image podcast-now-playing-image-missing"
+            data-testid="podcast-image"
+          >
             ?
           </div>
         )}

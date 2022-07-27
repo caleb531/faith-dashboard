@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
+import { omit } from 'lodash-es';
 import Home from '../pages/index';
 import podcastFeedJson from './__json__/podcastFeed.json';
 import podcastFeedRefreshedJson from './__json__/podcastFeedRefreshed.json';
@@ -308,5 +309,36 @@ describe('Podcast widget', () => {
     expect(
       screen.getByText('Error Searching for Podcasts')
     ).toBeInTheDocument();
+  });
+
+  it('should display correctly-sized thumbnail', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    render(<Home />);
+    await navigateToNowPlaying();
+
+    expect(screen.getByTestId('podcast-image')).toHaveProperty(
+      'src',
+      'https://is1-ssl.mzstatic.com/image/thumb/Podcasts113/v4/53/59/38/535938be-7e7b-554b-841b-53136de28029/mza_12935232606719538957.jpg/100x100bb.jpg'
+    );
+  });
+  it('should display correct placeholder for missing thumbnail', async () => {
+    fetch.mockResponseOnce(
+      JSON.stringify({
+        ...podcastSearchJson,
+        results: podcastSearchJson.results.map((result) => {
+          return omit(result, [
+            'artworkUrl30',
+            'artworkUrl60',
+            'artworkUrl100'
+          ]);
+        })
+      })
+    );
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    render(<Home />);
+    await navigateToNowPlaying();
+
+    expect(screen.getByTestId('podcast-image')).toHaveTextContent('?');
   });
 });
