@@ -49,10 +49,10 @@ function PodcastNowPlaying({
   return (
     <section className="podcast-view-now-playing">
       <header className="podcast-now-playing-header">
-        {podcastImage || podcastFeedData?.['itunes:image'] ? (
+        {podcastImage ? (
           <img
             className="podcast-now-playing-image"
-            src={podcastImage || podcastFeedData!['itunes:image'].href}
+            src={podcastImage}
             alt=""
           />
         ) : (
