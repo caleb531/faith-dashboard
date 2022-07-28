@@ -18,15 +18,10 @@ import AudioMock from './__mocks__/AudioMock';
 import {
   chooseEpisode,
   choosePodcast,
+  navigateToNowPlaying,
   searchPodcasts
 } from './__utils__/podcastTestUtils';
 import { getWidgetData } from './__utils__/testUtils';
-
-async function navigateToNowPlaying() {
-  await searchPodcasts('sermon of the day');
-  await choosePodcast('Sermon of the Day');
-  await chooseEpisode('Perfect Love Casts Out Fear');
-}
 
 async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
   const audioProgressSlider = screen.getByRole('slider', {

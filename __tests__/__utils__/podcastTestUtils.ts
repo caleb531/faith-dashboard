@@ -1,5 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import podcastFeedJson from '../__json__/podcastFeed.json';
+import podcastSearchJson from '../__json__/podcastSearch.json';
 import { waitForWidget } from './testUtils';
 
 export async function searchPodcasts(podcastQuery: string) {
@@ -30,4 +32,10 @@ export async function chooseEpisode(episodeTitle: string) {
   await waitFor(() => {
     expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
   });
+}
+
+export async function navigateToNowPlaying() {
+  await searchPodcasts(podcastSearchJson.results[0].trackName.toLowerCase());
+  await choosePodcast(podcastSearchJson.results[0].trackName);
+  await chooseEpisode(podcastFeedJson.channel.item[0].title);
 }
