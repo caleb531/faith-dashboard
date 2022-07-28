@@ -1,5 +1,11 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import { omit } from 'lodash-es';
@@ -322,6 +328,7 @@ describe('Podcast widget', () => {
       'https://is1-ssl.mzstatic.com/image/thumb/Podcasts113/v4/53/59/38/535938be-7e7b-554b-841b-53136de28029/mza_12935232606719538957.jpg/100x100bb.jpg'
     );
   });
+
   it('should display correct placeholder for missing thumbnail', async () => {
     fetch.mockResponseOnce(
       JSON.stringify({
@@ -340,5 +347,22 @@ describe('Podcast widget', () => {
     await navigateToNowPlaying();
 
     expect(screen.getByTestId('podcast-image')).toHaveTextContent('?');
+  });
+
+  it('should indicate when audio is buffering', async () => {
+    fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
+    fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
+    render(<Home />);
+
+    await navigateToNowPlaying();
+    await userEvent.click(screen.getByRole('button', { name: 'Play' }));
+    act(() => {
+      AudioMock.instances[0].trigger('waiting');
+    });
+    expect(screen.queryByText('Loading...')).toBeInTheDocument();
+    act(() => {
+      AudioMock.instances[0].trigger('playing');
+    });
+    expect(screen.getByRole('button', { name: 'Pause' })).toBeInTheDocument();
   });
 });
