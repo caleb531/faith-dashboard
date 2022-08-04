@@ -6,11 +6,7 @@ import podcastFeedJson from '../__json__/podcastFeed.json';
 import podcastSearchJson from '../__json__/podcastSearch.json';
 import AudioMock from '../__mocks__/AudioMock';
 import { mediaSessionMock } from '../__mocks__/mediaSessionMock';
-import {
-  chooseEpisode,
-  choosePodcast,
-  searchPodcasts
-} from '../__utils__/podcastTestUtils';
+import { navigateToNowPlaying } from '../__utils__/podcastTestUtils';
 
 describe('media session', () => {
   afterEach(() => {
@@ -21,9 +17,7 @@ describe('media session', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     render(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
     expect(navigator.mediaSession.metadata).not.toEqual(null);
   });
 
@@ -35,9 +29,7 @@ describe('media session', () => {
     });
     render(<Home />);
     expect(navigator.mediaSession).toEqual(undefined);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
     expect(navigator.mediaSession).toEqual(undefined);
   });
 
@@ -46,9 +38,7 @@ describe('media session', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     render(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
     expect(AudioMock.instances[0]).toHaveProperty('paused', true);
     act(() => {
       mediaSessionMock._triggerAction('play');
@@ -62,9 +52,7 @@ describe('media session', () => {
     render(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
     jest.spyOn(AudioMock.instances[0], 'pause');
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
     expect(AudioMock.instances[0]).toHaveProperty('paused', true);
     act(() => {
       mediaSessionMock._triggerAction('pause');
@@ -78,9 +66,7 @@ describe('media session', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     render(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
     act(() => {
       mediaSessionMock._triggerAction('seekto', { seekTime: 123 });
     });
@@ -92,9 +78,7 @@ describe('media session', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     render(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
     jest.spyOn(AudioMock.instances[0], 'fastSeek');
     act(() => {
       mediaSessionMock._triggerAction('seekto', {
@@ -110,9 +94,7 @@ describe('media session', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     render(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 0);
     act(() => {
       mediaSessionMock._triggerAction('seekforward');
@@ -125,9 +107,7 @@ describe('media session', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     render(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 0);
     act(() => {
       mediaSessionMock._triggerAction('seekforward', { seekOffset: 10 });
@@ -140,9 +120,7 @@ describe('media session', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     render(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
     AudioMock.instances[0].currentTime = 60;
     act(() => {
       mediaSessionMock._triggerAction('seekbackward');
@@ -155,9 +133,7 @@ describe('media session', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     render(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
-    await searchPodcasts('sermon of the day');
-    await choosePodcast('Sermon of the Day');
-    await chooseEpisode('Perfect Love Casts Out Fear');
+    await navigateToNowPlaying();
     AudioMock.instances[0].currentTime = 60;
     act(() => {
       mediaSessionMock._triggerAction('seekbackward', { seekOffset: 10 });
