@@ -79,8 +79,8 @@ describe('Sync functionality', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-    widgetSyncService.onPush = originalOnPush;
-    widgetSyncService.broadcastPush = originalBroadcastPush;
+    broadcastPushStub.mockRestore();
+    onPushStub.mockRestore();
     jest.useRealTimers();
   });
 
