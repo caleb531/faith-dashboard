@@ -1,16 +1,16 @@
 import '@testing-library/jest-dom';
 import { act, render } from '@testing-library/react';
 import fetch from 'jest-fetch-mock';
-import Home from '../pages/index';
-import podcastFeedJson from './__json__/podcastFeed.json';
-import podcastSearchJson from './__json__/podcastSearch.json';
-import AudioMock from './__mocks__/AudioMock';
-import { mediaSessionMock } from './__mocks__/mediaSessionMock';
+import Home from '../../pages/index';
+import podcastFeedJson from '../__json__/podcastFeed.json';
+import podcastSearchJson from '../__json__/podcastSearch.json';
+import AudioMock from '../__mocks__/AudioMock';
+import { mediaSessionMock } from '../__mocks__/mediaSessionMock';
 import {
   chooseEpisode,
   choosePodcast,
   searchPodcasts
-} from './__utils__/podcastTestUtils';
+} from '../__utils__/podcastTestUtils';
 
 describe('media session', () => {
   afterEach(() => {
