@@ -164,6 +164,7 @@ describe('Sync functionality', () => {
     expect(
       screen.getByRole('button', { name: 'Your Account' })
     ).toBeInTheDocument();
+    jest.runAllTimers();
     await waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('dashboards');
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
