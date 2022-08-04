@@ -69,8 +69,6 @@ function mockDelete(tableName: TableName) {
 
 const originalOnPush = widgetSyncService.onPush;
 const originalBroadcastPush = widgetSyncService.broadcastPush;
-let broadcastPushStub: jest.SpyInstance = jest.fn();
-let onPushStub: jest.SpyInstance = jest.fn();
 
 describe('Sync functionality', () => {
   beforeEach(() => {
@@ -79,8 +77,8 @@ describe('Sync functionality', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-    broadcastPushStub.mockRestore();
-    onPushStub.mockRestore();
+    widgetSyncService.onPush = originalOnPush;
+    widgetSyncService.broadcastPush = originalBroadcastPush;
     jest.useRealTimers();
   });
 
@@ -149,22 +147,18 @@ describe('Sync functionality', () => {
     // scenario we are testing for; that is, we want to ensure the widgets are
     // still pushed even if the push event listeners are bound too late
     const promiseCache: { [key: string]: Deferred<void> } = {};
-    onPushStub = jest
-      .spyOn(widgetSyncService, 'onPush')
-      .mockImplementation((widgetId) => {
-        if (!promiseCache[widgetId]) {
-          promiseCache[widgetId] = new Deferred();
-        }
-        return promiseCache[widgetId].promise.then(() => {
-          return originalOnPush(widgetId);
-        });
+    widgetSyncService.onPush = (widgetId) => {
+      if (!promiseCache[widgetId]) {
+        promiseCache[widgetId] = new Deferred();
+      }
+      return promiseCache[widgetId].promise.then(() => {
+        return originalOnPush(widgetId);
       });
-    broadcastPushStub = jest
-      .spyOn(widgetSyncService, 'broadcastPush')
-      .mockImplementation((widgetId) => {
-        originalBroadcastPush(widgetId);
-        promiseCache[widgetId]?.resolve();
-      });
+    };
+    widgetSyncService.broadcastPush = (widgetId) => {
+      originalBroadcastPush(widgetId);
+      promiseCache[widgetId]?.resolve();
+    };
     assignIdToLocalApp(uuidv4());
     render(<Home />);
     expect(
