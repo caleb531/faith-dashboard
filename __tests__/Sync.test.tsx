@@ -76,7 +76,7 @@ describe('Sync functionality', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
     widgetSyncService.onPush = originalOnPush;
     widgetSyncService.broadcastPush = originalBroadcastPush;
     jest.useRealTimers();
