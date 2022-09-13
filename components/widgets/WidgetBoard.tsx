@@ -1,6 +1,6 @@
+import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { fromPairs, times } from 'lodash-es';
 import { useContext } from 'react';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import AppContext from '../app/AppContext';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';

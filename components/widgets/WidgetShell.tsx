@@ -1,6 +1,6 @@
+import { DraggableProvided } from '@hello-pangea/dnd';
 import classNames from 'classnames';
 import React, { Dispatch, useCallback, useContext } from 'react';
-import { DraggableProvided } from 'react-beautiful-dnd';
 import AppContext from '../app/AppContext';
 import { JSXChildren } from '../global';
 import LoadingIndicator from '../reusable/LoadingIndicator';

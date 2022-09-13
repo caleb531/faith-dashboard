@@ -42,7 +42,7 @@ export default function reducer(state: AppState, action: AppAction): AppState {
         destinationIndex,
         destinationColumn
       } = action.payload;
-      // The destination index from react-beautiful-dnd assumes that the
+      // The destination index from @hello-pangea/dnd assumes that the
       // widget-to-move is still at the source index; however, because the
       // widget is about to be removed from its original position (via the
       // filter), we must adjust the destination index for when we reinsert the
@@ -70,7 +70,7 @@ export default function reducer(state: AppState, action: AppAction): AppState {
       // There are edge cases (when dragging-and-dropping and adding new
       // widgets) where the widgets in a particular column are no longer
       // contiguous in the widgets array; this scenario violates a stipulation
-      // from react-beautiful-dnd that the indices of all elements in the same
+      // from @hello-pangea/dnd that the indices of all elements in the same
       // column be contiguous; to fix this, we simply sort the array at the end
       // of every drag (sidenote: Lodash's sortBy is a stable sort, so this
       // will not alter the user order of widgets within the same column)
@@ -78,9 +78,9 @@ export default function reducer(state: AppState, action: AppAction): AppState {
     case 'replaceApp':
       return Object.keys(diff(action.payload, state)).length > 0
         ? {
-            // To manage the identity of the user's dashboard on the server-side,
-            // an unique ID must be generated for the dashboard if has not already
-            // been assigned one
+            // To manage the identity of the user's dashboard on the
+            // server-side, an unique ID must be generated for the dashboard if
+            // has not already been assigned one
             id: action.payload.id || uuidv4(),
             ...action.payload
           }

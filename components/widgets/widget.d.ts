@@ -1,4 +1,4 @@
-import { DraggableProvided } from 'react-beautiful-dnd';
+import { DraggableProvided } from '@hello-pangea/dnd';
 
 // The unique identifier of an implemented widget type
 export type WidgetTypeId = 'BibleVerse' | 'Note' | 'Podcast';
@@ -68,9 +68,9 @@ export interface WidgetParameters {
   // Every widget implementation receives the widget object as a parameter, so
   // that the author can implement a settings view for their widget type, etc.
   widgetHead: WidgetHead;
-  // The Draggable props provided by react-beautiful-dnd; in order to enable
-  // the drag-and-drop functionality, these props must be spread onto the
-  // top-level JSX element representing the widget,
+  // The Draggable props provided by @hello-pangea/dnd; in order to enable the
+  // drag-and-drop functionality, these props must be spread onto the top-level
+  // JSX element representing the widget,
   provided: DraggableProvided;
 }
 

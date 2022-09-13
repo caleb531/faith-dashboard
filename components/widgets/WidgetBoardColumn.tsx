@@ -1,4 +1,4 @@
-import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { Draggable, Droppable } from '@hello-pangea/dnd';
 import { WidgetHead } from './widget.d';
 import widgetTypeMap from './widgetTypeMap';
 
