@@ -9,7 +9,7 @@ function useVerifyCaptcha(): [() => string, (token: string) => void] {
   const getCaptchaToken = useCallback(() => {
     return tokenRef.current;
   }, []);
-  const setCaptchaToken = useCallback((token) => {
+  const setCaptchaToken = useCallback((token: string) => {
     tokenRef.current = token;
   }, []);
 
