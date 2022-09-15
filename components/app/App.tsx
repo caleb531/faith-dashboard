@@ -54,7 +54,15 @@ function App({
   // mismatch with the rendered page HTML); we use useIsomorphicLayoutEffect()
   // instead of useEffect() directly to minimize any possible page flicker
   useIsomorphicLayoutEffect(() => {
-    dispatchToApp({ type: 'replaceApp', payload: restoreApp() });
+    const newApp = restoreApp();
+    // The below conditional is necessary to prevent a 'flash of default app
+    // state' due to React 18's Strict Mode mounting the component twice; in
+    // our case here, we require the user to have completed/skipped the
+    // tutorial before restoring any persisted state of the app (see:
+    // https://dev.to/ag-grid/react-18-avoiding-use-effect-getting-called-twice-4i9e)
+    if (!newApp.shouldShowTutorial) {
+      dispatchToApp({ type: 'replaceApp', payload: newApp });
+    }
   }, [restoreApp]);
 
   // Serialize the app to localStorage whenever the app's state changes
