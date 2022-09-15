@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import Image from 'next/image';
+import Image from 'next/future/image';
 import Link from 'next/link';
 import LandingPage from '../components/LandingPage';
 import LinkButton from '../components/reusable/LinkButton';
@@ -124,19 +124,16 @@ function Help() {
         src={addToHomeScreenImage1}
         alt="Share Icon"
         className="block-image"
-        layout="responsive"
       />
       <Image
         src={addToHomeScreenImage2}
         alt="Share Sheet"
         className="block-image"
-        layout="responsive"
       />
       <Image
         src={addToHomeScreenImage3}
         alt="Add to Home Screen"
         className="block-image"
-        layout="responsive"
       />
 
       <h2>Syncing</h2>
