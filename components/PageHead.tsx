@@ -1,15 +1,10 @@
 import Head from 'next/head';
+import { PageProps } from './global';
 import site from './siteData';
-
-type Props = {
-  pagePath: string;
-  pageTitle: string;
-  pageDescription: string;
-};
 
 // The <head> content that should appear on all pages; the props for the
 // current page are passed into this function to maximize SEO for each page
-function PageHead({ pagePath, pageTitle, pageDescription }: Props) {
+function PageHead({ pagePath, pageTitle, pageDescription }: PageProps) {
   const pageUrl = `${site.baseUrl}${pagePath}`;
   const socialImageUrl = `${site.baseUrl}${site.socialImagePath}`;
   return (
