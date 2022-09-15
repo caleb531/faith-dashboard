@@ -1,6 +1,6 @@
 import { ApiError, Session, User } from '@supabase/supabase-js';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { JSXChildren } from '../global';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 import useMountListener from '../useMountListener';
@@ -40,7 +40,7 @@ function AuthForm(props: Props) {
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [isFormSuccess, setIsFormSuccess] = useState(false);
   const setSubmitLabelTimeout = useTimeout();
-  const [honeyPotValue, setHoneyPotValue] = useState('');
+  const honeyPotFieldRef = useRef<HTMLInputElement>(null);
 
   async function attemptSubmit(event: React.FormEvent<HTMLFormElement>) {
     const { user, session, error } = await props.onSubmit(event);
@@ -73,8 +73,9 @@ function AuthForm(props: Props) {
     setIsFormSubmitting(true);
     setFormErrorMessage(null);
     try {
-      if (honeyPotValue) {
+      if (honeyPotFieldRef.current && honeyPotFieldRef.current.value) {
         setFormErrorMessage('Cannot submit form; please try again');
+        setIsFormSubmitting(false);
         return;
       }
       // Even though we are not capturing the return value, we must await the
@@ -99,7 +100,7 @@ function AuthForm(props: Props) {
         id={honeyPotFieldId}
         name="verification_check"
         placeholder="Please leave this field blank"
-        onChange={(event) => setHoneyPotValue(event.target.value)}
+        ref={honeyPotFieldRef}
       />
 
       {formErrorMessage ? (
