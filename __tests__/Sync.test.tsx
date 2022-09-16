@@ -103,9 +103,11 @@ describe('Sync functionality', () => {
     });
     expect(screen.getByText('Evening')).toBeInTheDocument();
     expect(screen.queryByText('Shore')).not.toBeInTheDocument();
-    expect(
-      screen.getAllByRole('textbox', { name: 'Note Text' })[0]
-    ).toHaveProperty('value', 'God is always with you');
+    await waitFor(() => {
+      expect(
+        screen.getAllByRole('textbox', { name: 'Note Text' })[0]
+      ).toHaveProperty('value', 'God is always with you');
+    });
   });
 
   it('should push local dashboard if nothing to pull', async () => {
