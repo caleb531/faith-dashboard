@@ -60,6 +60,8 @@ describe('Sign In page', () => {
     mockCaptchaSuccessOnce('mytoken');
     render(<SignIn />);
     await populateFormFields({
+      Email: 'kaleb@example.com',
+      Password: 'CorrectHorseBatteryStaple',
       'Please leave this field blank': 'abc123'
     });
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));

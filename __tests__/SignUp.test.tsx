@@ -122,6 +122,11 @@ describe('Sign Up page', () => {
     mockCaptchaSuccessOnce('mytoken');
     render(<SignUp />);
     await populateFormFields({
+      'First Name': 'John',
+      'Last Name': 'Doe',
+      Email: 'john@example.com',
+      Password: 'CorrectHorseBatteryStaple',
+      'Confirm Password': 'CorrectHorseBatteryStaple',
       'Please leave this field blank': 'abc123'
     });
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
