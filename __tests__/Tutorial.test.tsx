@@ -1,13 +1,22 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import tutorialSteps from '../components/tutorial/tutorialSteps';
 import Home from '../pages/index';
 import { getAppData } from './__utils__/testUtils';
 
 describe('Tutorial', () => {
-  it('should render', () => {
+  it('should render', async () => {
     render(<Home />);
+    // The waitForElementToBeRemoved() call is necessary to squash act(...)
+    // warnings; it is unknown why the other tests do not have this issue
+    // (source:
+    // https://github.com/testing-library/react-testing-library/issues/1051#issuecomment-1212955270)
+    await waitForElementToBeRemoved(screen.getByText('Loading...'));
     expect(screen.getByText(/Welcome/)).toBeInTheDocument();
   });
 
