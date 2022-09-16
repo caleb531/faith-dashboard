@@ -28,7 +28,7 @@ function assignIdToLocalApp(appId: string) {
     appStateDefault;
   localStorage.setItem(
     'faith-dashboard-app',
-    JSON.stringify({ id: appId, ...app })
+    JSON.stringify({ ...app, id: appId, shouldShowTutorial: false })
   );
 }
 
