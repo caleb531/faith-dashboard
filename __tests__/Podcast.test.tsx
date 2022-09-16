@@ -62,10 +62,12 @@ describe('Podcast widget', () => {
         name: 'The Beautiful Faith of Fearless Submission'
       })
     ).toBeInTheDocument();
-    expect(getWidgetData({ type: 'Podcast', index: 3 })).toHaveProperty(
-      'podcastFeedData.title',
-      podcastFeedJson.channel.title
-    );
+    await waitFor(() => {
+      expect(getWidgetData({ type: 'Podcast', index: 3 })).toHaveProperty(
+        'podcastFeedData.title',
+        podcastFeedJson.channel.title
+      );
+    });
 
     await chooseEpisode('Perfect Love Casts Out Fear');
     expect(
@@ -307,9 +309,11 @@ describe('Podcast widget', () => {
     });
     await searchPodcasts('ask pastor john');
     log.mockReset();
-    expect(
-      screen.getByText('Error Searching for Podcasts')
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText('Error Searching for Podcasts')
+      ).toBeInTheDocument();
+    });
   });
 
   it('should display correctly-sized thumbnail', async () => {

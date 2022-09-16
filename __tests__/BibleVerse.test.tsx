@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import Home from '../pages/index';
@@ -79,6 +79,8 @@ describe('Bible Verse widget', () => {
     });
     await searchBibleVerses('john3.16');
     log.mockReset();
-    expect(screen.getByText('Error Fetching Verse')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Error Fetching Verse')).toBeInTheDocument();
+    });
   });
 });
