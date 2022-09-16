@@ -35,6 +35,7 @@ let originalMediaMetadata: typeof window.MediaMetadata;
 let originalMediaSession: typeof navigator.mediaSession;
 
 beforeEach(() => {
+  localStorage.clear();
   audioStub = jest.spyOn(window, 'Audio').mockImplementation(() => {
     return new AudioMock() as any;
   });
@@ -58,7 +59,6 @@ afterEach(() => {
   audioStub.mockRestore();
   AudioMock.instances.length = 0;
   onAuthStateChangeStub.mockRestore();
-  localStorage.clear();
   Object.defineProperty(navigator, 'mediaSession', {
     value: originalMediaSession
   });
