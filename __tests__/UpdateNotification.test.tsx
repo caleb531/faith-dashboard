@@ -1,5 +1,11 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import Home from '../pages/index';
 
 class ServiceWorkerMock {}
@@ -39,6 +45,11 @@ describe('Update Notification', () => {
 
   it('should show', async () => {
     render(<Home />);
+    // The waitForElementToBeRemoved() call is necessary to squash act(...)
+    // warnings; it is unknown why the other tests do not have this issue
+    // (source:
+    // https://github.com/testing-library/react-testing-library/issues/1051#issuecomment-1212955270)
+    await waitForElementToBeRemoved(screen.getByText('Loading...'));
     await waitFor(() => {
       expect(
         screen.getByRole('region', {
