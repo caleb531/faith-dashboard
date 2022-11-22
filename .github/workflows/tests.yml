@@ -35,6 +35,7 @@ jobs:
       - name: Run Test Suite
         run: |
           pnpm install --frozen-lockfile
+          pnpm build
           pnpm coverage
 
       - name: Coveralls
