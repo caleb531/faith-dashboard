@@ -5,9 +5,9 @@ name: tests
 
 on:
   push:
-    branches: ['main', 'develop']
+    branches: ['*']
   pull_request:
-    branches: ['main', 'develop']
+    branches: ['*']
 
 jobs:
   test:
@@ -20,16 +20,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Run Test Suite
         run: |
-          npm ci
-          npm run coverage
+          pnpm install --frozen-lockfile
+          pnpm coverage
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
