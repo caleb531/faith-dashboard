@@ -14,10 +14,16 @@ https://faithdashboard.com/
 
 ## Setup
 
-### Install npm packages
+### Install packages
+
+This project uses [pnpm][pnpm] (instead of npm) for package installation and
+management.
+
+[pnpm]: https://pnpm.io/
 
 ```sh
-npm install
+npm install -g pnpm
+pnpm install
 ```
 
 ### Obtain ESV API token (for use in the Bible widget)
@@ -60,7 +66,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=abcdefghijklmnopqrstuvwxyz.1234567890zyxwvutsrqpon
 ### Run app
 
 ```sh
-next dev
+pnpm exec next dev
 ```
 
 The local server will be available at `http://localhost:3000`.
