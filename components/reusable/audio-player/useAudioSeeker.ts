@@ -13,6 +13,8 @@ function useAudioSeeker(
   seekerProvided: {
     ref: RefObject<HTMLInputElement>;
     onInput: (event: React.FormEvent<HTMLInputElement>) => void;
+    onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+    onKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void;
     // We need to use separate mouse/touch events, rather than the unified
     // pointer events API, to work around a bug on iOS where the pointerUp
     // event would not run correctly; I suspect there is some necessity to have
@@ -70,10 +72,18 @@ function useAudioSeeker(
     setIsCurrentlySeeking(true);
   }
 
-  function sliderUp(event: React.UIEvent<HTMLInputElement>) {
+  function sliderUp(
+    event: React.UIEvent<HTMLInputElement> | React.FormEvent<HTMLInputElement>
+  ) {
     audioElement.currentTime = Number(event.currentTarget.value);
     setCurrentTime(audioElement.currentTime);
     setIsCurrentlySeeking(false);
+  }
+
+  // Return true if the key associated with the given keyboard event is used for
+  // accessibility-based navigation of the seeker slider
+  function isKeyUsedForSeeking(event: React.KeyboardEvent<HTMLInputElement>) {
+    return event.key === 'ArrowLeft' || event.key === 'ArrowRight';
   }
 
   // Update the position of the audio seeker while the audio is playing (but
@@ -107,8 +117,21 @@ function useAudioSeeker(
       ref: seekerInputRef,
       onInput: (event) => {
         updateSeekerFill(event.currentTarget);
-        if (isCurrentlySeeking) {
-          setPendingCurrentTime(Number(event.currentTarget.value));
+        // Do not seek the audio stream until the user releases their mouse /
+        // lifts their finger; this logic works in tandem with the event
+        // listeners below, and is designed to prevent excessive network calls
+        // to the server providing the audio stream (i.e. to avoid '429 Too Many
+        // Requests' errors)
+        setPendingCurrentTime(Number(event.currentTarget.value));
+      },
+      onKeyDown: (event) => {
+        if (isKeyUsedForSeeking(event)) {
+          sliderDown();
+        }
+      },
+      onKeyUp: (event) => {
+        if (isKeyUsedForSeeking(event)) {
+          sliderUp(event);
         }
       },
       onMouseDown: sliderDown,
