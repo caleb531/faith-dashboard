@@ -124,8 +124,11 @@ function AuthForm(props: Props) {
             : props.submitLabel}
         </button>
         {props.altLink ? (
-          <Link href={props.altLink.href}>
-            <a className="account-auth-form-alt-link">Forgot Password?</a>
+          <Link
+            href={props.altLink.href}
+            className="account-auth-form-alt-link"
+          >
+            {props.altLink.title}
           </Link>
         ) : null}
       </div>

@@ -9,8 +9,8 @@ type Props = {
 
 function LinkButton({ href, className = '', children }: Props) {
   return (
-    <Link href={href}>
-      <a className={`button ${className}`}>{children}</a>
+    <Link href={href} className={`button ${className}`}>
+      {children}
     </Link>
   );
 }

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import Image from 'next/future/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import LandingPage from '../components/LandingPage';
 import LinkButton from '../components/reusable/LinkButton';
