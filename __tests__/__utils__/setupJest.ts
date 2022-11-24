@@ -42,7 +42,7 @@ beforeEach(() => {
   onAuthStateChangeStub = jest
     .spyOn(supabase.auth, 'onAuthStateChange')
     .mockImplementation(() => {
-      return { data: { subscription: jest.fn() as any } };
+      return { data: { subscription: { unsubscribe: jest.fn() } as any } };
     });
   if (typeof navigator !== 'undefined') {
     originalMediaSession = navigator.mediaSession;

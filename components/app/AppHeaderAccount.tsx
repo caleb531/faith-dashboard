@@ -2,7 +2,7 @@ import { Session } from '@supabase/supabase-js';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
-import { isSessionActive } from '../accountUtils';
+import { getSession, isSessionActive } from '../accountUtils';
 import { supabase } from '../supabaseClient';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
@@ -17,6 +17,7 @@ function AppHeaderAccount() {
   // useEffect() call later in this function; this is done to avoid SSR
   // mismatches (please see the hook below)
   const [session, setSession] = useState<Session | null>(null);
+  const [isUserActive, setIsUserActive] = useState(false);
   const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
 
   async function signOut() {
@@ -54,8 +55,8 @@ function AppHeaderAccount() {
   // mismatch with the rendered page HTML); we use useIsomorphicLayoutEffect()
   // instead of useEffect() directly to minimize any possible page flicker
   async function updateSession() {
-    const newSession = (await supabase.auth.getSession()).data.session;
-    if (session !== newSession) {
+    const newSession = await getSession();
+    if (newSession && session !== newSession) {
       setSession(newSession);
     }
   }
@@ -75,7 +76,11 @@ function AppHeaderAccount() {
     };
   }, []);
 
-  return session?.user && (await isSessionActive(session)) ? (
+  useEffect(() => {
+    isSessionActive(session).then(setIsUserActive);
+  }, [session, setIsUserActive]);
+
+  return session && isUserActive ? (
     <div className="app-header-account">
       <label
         className="app-header-account-label accessibility-only"

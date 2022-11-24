@@ -1,4 +1,4 @@
-import { ApiError, Session, User } from '@supabase/supabase-js';
+import { Session, User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import React, { useRef, useState } from 'react';
 import { JSXChildren } from '../global';
@@ -16,7 +16,7 @@ type Props = {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<{
     user?: User | null;
     session?: Session | null;
-    error: ApiError | null;
+    error: Error | null;
   }>;
   onSuccess?: ({
     user,

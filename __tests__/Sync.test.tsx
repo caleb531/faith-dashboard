@@ -7,6 +7,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { v4 as uuidv4 } from 'uuid';
+import { getUser } from '../components/accountUtils';
 import appStateDefault from '../components/app/appStateDefault';
 import { Deferred } from '../components/deferred';
 import { supabase } from '../components/supabaseClient';
@@ -36,7 +37,7 @@ function assignIdToLocalApp(appId: string) {
 // upsert and delete)
 async function getDefaultWriteResponse() {
   return {
-    user: (await supabase.auth.getUser()).data.user,
+    user: await getUser(),
     session: supabase.auth.getSession(),
     error: null
   };
@@ -85,7 +86,7 @@ describe('Sync functionality', () => {
   });
 
   it('should pull latest dashboard on page load (when signed in)', async () => {
-    mockSupabaseUser();
+    await mockSupabaseUser();
     await mockSupabaseSession();
     mockSupabaseFrom();
     mockSelect('dashboards', {
@@ -113,7 +114,7 @@ describe('Sync functionality', () => {
   });
 
   it('should push local dashboard if nothing to pull', async () => {
-    mockSupabaseUser();
+    await mockSupabaseUser();
     await mockSupabaseSession();
     mockSupabaseFrom();
     mockSelect('dashboards', {
@@ -137,7 +138,7 @@ describe('Sync functionality', () => {
   });
 
   it('should run push listeners even if event was broadcast before listeners were bound', async () => {
-    mockSupabaseUser();
+    await mockSupabaseUser();
     await mockSupabaseSession();
     mockSupabaseFrom();
     mockSelect('dashboards', {
@@ -178,7 +179,7 @@ describe('Sync functionality', () => {
   });
 
   it('should push when widget changes', async () => {
-    mockSupabaseUser();
+    await mockSupabaseUser();
     await mockSupabaseSession();
     mockSupabaseFrom();
     const appId = uuidv4();
@@ -210,7 +211,7 @@ describe('Sync functionality', () => {
   });
 
   it('should delete widget from server when deleted locally', async () => {
-    mockSupabaseUser();
+    await mockSupabaseUser();
     await mockSupabaseSession();
     mockSupabaseFrom();
     const appId = uuidv4();

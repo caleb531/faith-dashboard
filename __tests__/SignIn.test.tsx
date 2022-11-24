@@ -36,7 +36,7 @@ describe('Sign In page', () => {
 
   it('should sign in successfully', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    mockSupabaseApiResponse(supabase.auth, 'signIn', {
+    mockSupabaseApiResponse(supabase.auth, 'signInWithPassword', {
       user: {
         email: 'caleb@example.com',
         user_metadata: { first_name: 'Caleb', last_name: 'Evans' }
@@ -72,7 +72,7 @@ describe('Sign In page', () => {
 
   it('should handle errors from server', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    mockSupabaseApiResponse(supabase.auth, 'signIn', {
+    mockSupabaseApiResponse(supabase.auth, 'signInWithPassword', {
       user: null,
       session: null,
       error: {

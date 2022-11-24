@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import AuthForm from '../components/account/AuthForm';
 import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
-import { isSessionActive } from '../components/accountUtils';
+import { getUser, isSessionActive } from '../components/accountUtils';
 import LandingPage from '../components/LandingPage';
 import { supabase } from '../components/supabaseClient';
 import useFormFieldMatcher from '../components/useFormFieldMatcher';
@@ -36,14 +36,11 @@ function AccountSettings() {
     const { error } = await supabase.rpc('cancel_email_change');
     if (error) {
       return {
-        user: (await supabase.auth.getUser()).data.user,
+        data: {
+          user: await getUser()
+        },
         // Convert PostgrestError type to Supabase ApiError
-        error: error
-          ? {
-              message: error.message,
-              status: 400
-            }
-          : null
+        error: error ? new Error(error.message) : null
       };
     } else {
       // If the RPC call completed successfully, we still need to force the
@@ -65,20 +62,15 @@ function AccountSettings() {
       new_password: fields.new_password
     });
     return {
-      user: (await supabase.auth.getUser()).data.user,
+      user: await getUser(),
       // Convert PostgrestError type to Supabase ApiError
-      error: error
-        ? {
-            message: error.message,
-            status: 400
-          }
-        : null
+      error: error ? new Error(error.message) : null
     };
   }
 
   async function loadUser() {
     if (await isSessionActive()) {
-      setUser((await supabase.auth.getUser()).data.user);
+      setUser(await getUser());
     } else {
       window.location.assign('/sign-in');
     }

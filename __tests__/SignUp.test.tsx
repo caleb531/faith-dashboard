@@ -86,7 +86,7 @@ describe('Sign Up page', () => {
 
   it('should create account successfully', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    const signUpStub = mockSupabaseApiResponse(supabase.auth, 'signUp', {
+    mockSupabaseApiResponse(supabase.auth, 'signUp', {
       user: {
         email: 'john@example.com',
         user_metadata: { first_name: 'John', last_name: 'Doe' }
@@ -103,19 +103,17 @@ describe('Sign Up page', () => {
       'Confirm Password': 'CorrectHorseBatteryStaple'
     });
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
-    expect(supabase.auth.signUp).toHaveBeenCalledWith(
-      {
-        email: 'john@example.com',
-        password: 'CorrectHorseBatteryStaple'
-      },
-      {
+    expect(supabase.auth.signUp).toHaveBeenCalledWith({
+      email: 'john@example.com',
+      password: 'CorrectHorseBatteryStaple',
+      options: {
         captchaToken: 'mytoken',
         data: {
           first_name: 'John',
           last_name: 'Doe'
         }
       }
-    );
+    });
   });
 
   it('should error if honey pot field is populated', async () => {

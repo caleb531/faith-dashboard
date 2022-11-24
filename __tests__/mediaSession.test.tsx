@@ -10,7 +10,7 @@ import { navigateToNowPlaying } from './__utils__/podcastTestUtils';
 
 describe('media session', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.clearAllMocks();
   });
   it('should populate', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
@@ -40,7 +40,7 @@ describe('media session', () => {
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
     expect(AudioMock.instances[0]).toHaveProperty('paused', true);
-    act(() => {
+    await act(() => {
       mediaSessionMock._triggerAction('play');
     });
     expect(AudioMock.instances[0]).toHaveProperty('paused', false);
@@ -54,7 +54,7 @@ describe('media session', () => {
     jest.spyOn(AudioMock.instances[0], 'pause');
     await navigateToNowPlaying();
     expect(AudioMock.instances[0]).toHaveProperty('paused', true);
-    act(() => {
+    await act(() => {
       mediaSessionMock._triggerAction('pause');
     });
     expect(AudioMock.instances[0].pause).toHaveBeenCalled();
@@ -67,7 +67,7 @@ describe('media session', () => {
     render(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
-    act(() => {
+    await act(() => {
       mediaSessionMock._triggerAction('seekto', { seekTime: 123 });
     });
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 123);
@@ -80,7 +80,7 @@ describe('media session', () => {
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
     jest.spyOn(AudioMock.instances[0], 'fastSeek');
-    act(() => {
+    await act(() => {
       mediaSessionMock._triggerAction('seekto', {
         seekTime: 123,
         fastSeek: true
@@ -96,7 +96,7 @@ describe('media session', () => {
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 0);
-    act(() => {
+    await act(() => {
       mediaSessionMock._triggerAction('seekforward');
     });
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 15);
@@ -109,7 +109,7 @@ describe('media session', () => {
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 0);
-    act(() => {
+    await act(() => {
       mediaSessionMock._triggerAction('seekforward', { seekOffset: 10 });
     });
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 10);
@@ -122,7 +122,7 @@ describe('media session', () => {
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
     AudioMock.instances[0].currentTime = 60;
-    act(() => {
+    await act(() => {
       mediaSessionMock._triggerAction('seekbackward');
     });
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 45);
@@ -135,7 +135,7 @@ describe('media session', () => {
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
     AudioMock.instances[0].currentTime = 60;
-    act(() => {
+    await act(() => {
       mediaSessionMock._triggerAction('seekbackward', { seekOffset: 10 });
     });
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 50);

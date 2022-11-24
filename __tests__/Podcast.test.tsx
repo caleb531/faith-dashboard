@@ -355,11 +355,11 @@ describe('Podcast widget', () => {
 
     await navigateToNowPlaying();
     await userEvent.click(screen.getByRole('button', { name: 'Play' }));
-    act(() => {
+    await act(() => {
       AudioMock.instances[0].trigger('waiting');
     });
     expect(screen.queryByText('Loading...')).toBeInTheDocument();
-    act(() => {
+    await act(() => {
       AudioMock.instances[0].trigger('playing');
     });
     expect(screen.getByRole('button', { name: 'Pause' })).toBeInTheDocument();

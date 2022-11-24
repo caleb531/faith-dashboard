@@ -1,6 +1,6 @@
 import { throttle } from 'lodash-es';
 import { Dispatch, useEffect } from 'react';
-import { isSessionActive } from '../accountUtils';
+import { getUser, isSessionActive } from '../accountUtils';
 import { supabase } from '../supabaseClient';
 import { getClientId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
@@ -62,7 +62,7 @@ async function pushLocalAppToServer(app: AppState) {
   if (!app.id) {
     return;
   }
-  const user = (await supabase.auth.getUser()).data.user;
+  const user = await getUser();
   if (!user) {
     return;
   }

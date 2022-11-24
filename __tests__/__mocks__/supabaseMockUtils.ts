@@ -1,4 +1,5 @@
 import { Session, User, UserResponse } from '@supabase/supabase-js';
+import { getUser } from '../../components/accountUtils';
 import { supabase } from '../../components/supabaseClient';
 
 // This must always be called BEFORE await mockSupabaseSession()
@@ -31,7 +32,7 @@ export async function mockSupabaseSession(
     expires_at: Date.now() / 1000 + 3600
   }
 ) {
-  const user = (await supabase.auth.getUser()).data.user;
+  const user = await getUser();
   if (session && user) {
     session.user = user;
   }

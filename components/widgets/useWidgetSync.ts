@@ -1,4 +1,5 @@
 import { Dispatch, useEffect, useRef } from 'react';
+import { getUser } from '../accountUtils';
 import { supabase } from '../supabaseClient';
 import { getClientId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
@@ -12,7 +13,7 @@ async function pushLocalWidgetToServer(widget: WidgetState) {
   if (widget.isLoading || widget.isRemoving) {
     return;
   }
-  const user = (await supabase.auth.getUser()).data.user;
+  const user = await getUser();
   if (!user) {
     return;
   }
@@ -29,7 +30,7 @@ async function pushLocalWidgetToServer(widget: WidgetState) {
 
 // Delete the widget from the server if it's removed from the local dashboard
 async function deleteLocalWidgetFromServer(widget: WidgetState) {
-  const user = (await supabase.auth.getUser()).data.user;
+  const user = await getUser();
   if (!user) {
     return;
   }
