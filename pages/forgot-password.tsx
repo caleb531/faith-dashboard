@@ -12,7 +12,7 @@ function ForgotPassword() {
 
   function sendPasswordRecoveryEmail(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
-    return supabase.auth.api.resetPasswordForEmail(fields.email);
+    return supabase.auth.resetPasswordForEmail(fields.email);
   }
 
   return (

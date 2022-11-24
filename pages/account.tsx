@@ -26,9 +26,9 @@ function AccountSettings() {
   function updateUserData(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
     if (fields.email) {
-      return supabase.auth.update({ email: fields.email });
+      return supabase.auth.updateUser({ email: fields.email });
     } else {
-      return supabase.auth.update({ data: fields });
+      return supabase.auth.updateUser({ data: fields });
     }
   }
 
@@ -36,7 +36,7 @@ function AccountSettings() {
     const { error } = await supabase.rpc('cancel_email_change');
     if (error) {
       return {
-        user: supabase.auth.user(),
+        user: (await supabase.auth.getUser()).data.user,
         // Convert PostgrestError type to Supabase ApiError
         error: error
           ? {
@@ -48,7 +48,7 @@ function AccountSettings() {
     } else {
       // If the RPC call completed successfully, we still need to force the
       // front end to fetch the latest state from the database
-      return supabase.auth.update({});
+      return supabase.auth.updateUser({});
     }
   }
 
@@ -65,7 +65,7 @@ function AccountSettings() {
       new_password: fields.new_password
     });
     return {
-      user: supabase.auth.user(),
+      user: (await supabase.auth.getUser()).data.user,
       // Convert PostgrestError type to Supabase ApiError
       error: error
         ? {
@@ -76,13 +76,17 @@ function AccountSettings() {
     };
   }
 
-  // Load the user data synchronously and isomorphically
-  useIsomorphicLayoutEffect(() => {
-    if (isSessionActive()) {
-      setUser(supabase.auth.user());
+  async function loadUser() {
+    if (await isSessionActive()) {
+      setUser((await supabase.auth.getUser()).data.user);
     } else {
       window.location.assign('/sign-in');
     }
+  }
+
+  // Load the user data synchronously and isomorphically
+  useIsomorphicLayoutEffect(() => {
+    loadUser();
   }, [user]);
 
   return (

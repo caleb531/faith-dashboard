@@ -1,7 +1,7 @@
-import { Session, User } from '@supabase/supabase-js';
+import { Session, User, UserResponse } from '@supabase/supabase-js';
 import { supabase } from '../../components/supabaseClient';
 
-// This must always be called BEFORE mockSupabaseSession()
+// This must always be called BEFORE await mockSupabaseSession()
 export function mockSupabaseUser(
   user: Partial<User> | null = {
     id: 'b9fa0901-c3d7-4e59-88e6-e483d69e49c4',
@@ -9,22 +9,47 @@ export function mockSupabaseUser(
     user_metadata: { first_name: 'Caleb', last_name: 'Evans' }
   }
 ) {
-  return jest.spyOn(supabase.auth, 'user').mockImplementation(() => {
-    return user as User | null;
+  return jest.spyOn(supabase.auth, 'getUser').mockImplementation(async () => {
+    if (user) {
+      return {
+        data: { user },
+        error: null
+      } as UserResponse;
+    } else {
+      return {
+        data: { user: null },
+        error: new Error('User signed out')
+      } as UserResponse;
+    }
   });
 }
 
 // This must always be called AFTER mockSupabaseUser()
-export function mockSupabaseSession(
+export async function mockSupabaseSession(
   session: Partial<Session> | null = {
     expires_in: 3600,
-    expires_at: Date.now() / 1000 + 3600,
-    user: supabase.auth.user()
+    expires_at: Date.now() / 1000 + 3600
   }
 ) {
-  return jest.spyOn(supabase.auth, 'session').mockImplementation(() => {
-    return session as Session | null;
-  });
+  const user = (await supabase.auth.getUser()).data.user;
+  if (session && user) {
+    session.user = user;
+  }
+  return jest
+    .spyOn(supabase.auth, 'getSession')
+    .mockImplementation(async () => {
+      if (session) {
+        return {
+          data: { session } as { session: Session },
+          error: null
+        };
+      } else {
+        return {
+          data: { session: null },
+          error: null
+        };
+      }
+    });
 }
 
 export function mockSupabaseApiResponse(

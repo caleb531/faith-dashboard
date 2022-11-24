@@ -48,7 +48,7 @@ describe('Account Header', () => {
 
   it('should Sign Out', async () => {
     mockSupabaseUser();
-    mockSupabaseSession();
+    await mockSupabaseSession();
     mockConfirm(() => true);
     jest.spyOn(supabase.auth, 'signOut').mockImplementation(() => {
       return {
@@ -68,7 +68,7 @@ describe('Account Header', () => {
 
   it('should cancel signing out', async () => {
     mockSupabaseUser();
-    mockSupabaseSession();
+    await mockSupabaseSession();
     mockConfirm(() => false);
     jest.spyOn(supabase.auth, 'signOut').mockImplementation(() => {
       return {
@@ -84,19 +84,18 @@ describe('Account Header', () => {
 
   it('should refresh session when halfway or less to expiry', async () => {
     mockSupabaseUser();
-    mockSupabaseSession({
+    await mockSupabaseSession({
       expires_in: 3600,
       expires_at: Date.now() / 1000 + 1800,
-      refresh_token: 'abc',
-      user: supabase.auth.user()
+      refresh_token: 'abc'
     });
-    jest.spyOn(supabase.auth, 'signIn').mockImplementation(() => {
+    jest.spyOn(supabase.auth, 'signInWithPassword').mockImplementation(() => {
       return {
         error: null
       } as any;
     });
     render(<Home />);
-    expect(supabase.auth.signIn).toHaveBeenCalledWith({
+    expect(supabase.auth.signInWithPassword).toHaveBeenCalledWith({
       refreshToken: 'abc'
     });
   });

@@ -24,16 +24,14 @@ function SignUpForm() {
     if (!captchaToken) {
       throw new Error('Please complete the CAPTCHA');
     }
-    return supabase.auth.signUp(
-      {
-        email: fields.email,
-        password: fields.password
-      },
-      {
+    return supabase.auth.signUp({
+      email: fields.email,
+      password: fields.password,
+      options: {
         captchaToken,
         data: pick(fields, ['first_name', 'last_name'])
       }
-    );
+    });
   }
 
   function redirectToHome() {

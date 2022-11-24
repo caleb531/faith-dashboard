@@ -12,7 +12,7 @@ function SignInForm() {
 
   function signIn(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
-    return supabase.auth.signIn({
+    return supabase.auth.signInWithPassword({
       email: fields.email,
       password: fields.password
     });

@@ -34,11 +34,13 @@ function assignIdToLocalApp(appId: string) {
 
 // The default response of any Supabase call that writes to the database (i.e.
 // upsert and delete)
-const defaultWriteResponse = {
-  user: supabase.auth.user(),
-  session: supabase.auth.session(),
-  error: null
-};
+async function getDefaultWriteResponse() {
+  return {
+    user: (await supabase.auth.getUser()).data.user,
+    session: supabase.auth.getSession(),
+    error: null
+  };
+}
 
 type TableName = 'dashboards' | 'widgets';
 
@@ -51,7 +53,7 @@ function mockSelect(tableName: TableName, response: any) {
 
 function mockUpsert(tableName: TableName) {
   supabaseFromMocks[tableName].upsert.mockImplementation(async () => {
-    return defaultWriteResponse;
+    return getDefaultWriteResponse();
   });
   return supabaseFromMocks[tableName].upsert;
 }
@@ -60,7 +62,7 @@ function mockDelete(tableName: TableName) {
   supabaseFromMocks[tableName].delete.mockImplementation(() => {
     return {
       match: jest.fn().mockImplementation(async () => {
-        return defaultWriteResponse;
+        return getDefaultWriteResponse();
       })
     };
   });
@@ -84,7 +86,7 @@ describe('Sync functionality', () => {
 
   it('should pull latest dashboard on page load (when signed in)', async () => {
     mockSupabaseUser();
-    mockSupabaseSession();
+    await mockSupabaseSession();
     mockSupabaseFrom();
     mockSelect('dashboards', {
       data: [{ raw_data: JSON.stringify(dashboardToPullJson) }]
@@ -112,7 +114,7 @@ describe('Sync functionality', () => {
 
   it('should push local dashboard if nothing to pull', async () => {
     mockSupabaseUser();
-    mockSupabaseSession();
+    await mockSupabaseSession();
     mockSupabaseFrom();
     mockSelect('dashboards', {
       data: []
@@ -136,7 +138,7 @@ describe('Sync functionality', () => {
 
   it('should run push listeners even if event was broadcast before listeners were bound', async () => {
     mockSupabaseUser();
-    mockSupabaseSession();
+    await mockSupabaseSession();
     mockSupabaseFrom();
     mockSelect('dashboards', {
       data: []
@@ -177,7 +179,7 @@ describe('Sync functionality', () => {
 
   it('should push when widget changes', async () => {
     mockSupabaseUser();
-    mockSupabaseSession();
+    await mockSupabaseSession();
     mockSupabaseFrom();
     const appId = uuidv4();
     mockSelect('dashboards', {
@@ -209,7 +211,7 @@ describe('Sync functionality', () => {
 
   it('should delete widget from server when deleted locally', async () => {
     mockSupabaseUser();
-    mockSupabaseSession();
+    await mockSupabaseSession();
     mockSupabaseFrom();
     const appId = uuidv4();
     mockSelect('dashboards', {
@@ -239,7 +241,7 @@ describe('Sync functionality', () => {
 
   it('should not push on widget change if not signed in', async () => {
     mockSupabaseUser(null);
-    mockSupabaseSession(null);
+    await mockSupabaseSession(null);
     mockSupabaseFrom();
     const appId = uuidv4();
     mockSelect('dashboards', {
@@ -269,7 +271,7 @@ describe('Sync functionality', () => {
 
   it('should not pull latest dashboard if not signed in', async () => {
     mockSupabaseUser(null);
-    mockSupabaseSession(null);
+    await mockSupabaseSession(null);
     mockSupabaseFrom();
     mockSelect('dashboards', { data: [] });
     mockSelect('widgets', { data: [] });

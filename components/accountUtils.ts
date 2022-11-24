@@ -7,9 +7,10 @@ const MS_IN_S = 1000;
 
 // Return true if the user is signed in with a session that isn't yet expired;
 // return false otherwise
-export function isSessionActive(
-  session: Session | null = supabase.auth.session()
-) {
+export async function isSessionActive(session?: Session | null) {
+  if (!session) {
+    session = (await supabase.auth.getSession()).data.session;
+  }
   const currentEpoch = Date.now() / MS_IN_S;
   return session && session.expires_at && currentEpoch < session.expires_at;
 }
@@ -25,12 +26,4 @@ export function shouldRefreshSession(session: Session | null) {
     currentEpoch > session.expires_at - session.expires_in / 2 &&
     currentEpoch < session.expires_at
   );
-}
-
-export async function refreshSession(session: Session | null) {
-  if (session) {
-    await supabase.auth.signIn({
-      refreshToken: session.refresh_token
-    });
-  }
 }

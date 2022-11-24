@@ -12,7 +12,7 @@ async function pushLocalWidgetToServer(widget: WidgetState) {
   if (widget.isLoading || widget.isRemoving) {
     return;
   }
-  const user = supabase.auth.user();
+  const user = (await supabase.auth.getUser()).data.user;
   if (!user) {
     return;
   }
@@ -29,7 +29,7 @@ async function pushLocalWidgetToServer(widget: WidgetState) {
 
 // Delete the widget from the server if it's removed from the local dashboard
 async function deleteLocalWidgetFromServer(widget: WidgetState) {
-  const user = supabase.auth.user();
+  const user = (await supabase.auth.getUser()).data.user;
   if (!user) {
     return;
   }
@@ -65,7 +65,7 @@ function useWidgetSync(
   // is typically only done if the widget state doesn't already exist on the
   // server, otherwise we only push based on changes to the widget state)
   useEffect(() => {
-    if (!supabase.auth.session()) {
+    if (!supabase.auth.getSession()) {
       return;
     }
     widgetSyncService.onPush(widget.id).then(() => {

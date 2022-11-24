@@ -2,11 +2,7 @@ import { Session } from '@supabase/supabase-js';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
-import {
-  isSessionActive,
-  refreshSession,
-  shouldRefreshSession
-} from '../accountUtils';
+import { isSessionActive } from '../accountUtils';
 import { supabase } from '../supabaseClient';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
@@ -57,36 +53,29 @@ function AppHeaderAccount() {
   // Update session asynchronously and isomorphically (so as to avoid any SSR
   // mismatch with the rendered page HTML); we use useIsomorphicLayoutEffect()
   // instead of useEffect() directly to minimize any possible page flicker
-  useIsomorphicLayoutEffect(() => {
-    const newSession = supabase.auth.session();
+  async function updateSession() {
+    const newSession = (await supabase.auth.getSession()).data.session;
     if (session !== newSession) {
       setSession(newSession);
     }
+  }
+  useIsomorphicLayoutEffect(() => {
+    updateSession();
   }, []);
-
-  // Refresh the session (using the refresh token) if the session is more than
-  // halfway elapsed
-  useEffect(() => {
-    if (isSessionActive(session) && shouldRefreshSession(session)) {
-      refreshSession(session);
-    }
-  }, [session]);
 
   // Detect session change and re-render account header accordingly
   useEffect(() => {
-    const { data, error } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (event === 'SIGNED_IN') {
-          setSession(session);
-        }
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN') {
+        setSession(session);
       }
-    );
+    });
     return () => {
-      data?.unsubscribe();
+      data?.subscription.unsubscribe();
     };
   }, []);
 
-  return session?.user && isSessionActive(session) ? (
+  return session?.user && (await isSessionActive(session)) ? (
     <div className="app-header-account">
       <label
         className="app-header-account-label accessibility-only"

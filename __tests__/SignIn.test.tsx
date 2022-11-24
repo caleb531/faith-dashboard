@@ -50,7 +50,7 @@ describe('Sign In page', () => {
       Password: 'CorrectHorseBatteryStaple'
     });
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
-    expect(supabase.auth.signIn).toHaveBeenCalledWith({
+    expect(supabase.auth.signInWithPassword).toHaveBeenCalledWith({
       email: 'caleb@example.com',
       password: 'CorrectHorseBatteryStaple'
     });
@@ -85,7 +85,7 @@ describe('Sign In page', () => {
       Password: 'CorrectHorseBatteryStaple'
     });
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
-    expect(supabase.auth.signIn).toHaveBeenCalled();
+    expect(supabase.auth.signInWithPassword).toHaveBeenCalled();
     expect(screen.getByText('Invalid login credentials')).toBeInTheDocument();
   });
 });

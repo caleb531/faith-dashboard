@@ -14,7 +14,7 @@ function ResetPassword() {
 
   function resetPassword(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
-    return supabase.auth.update({ password: fields.new_password });
+    return supabase.auth.updateUser({ password: fields.new_password });
   }
 
   function redirectToHome() {

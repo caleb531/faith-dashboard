@@ -15,7 +15,7 @@ async function applyServerAppToLocalApp(
   newApp: AppState,
   dispatchToApp: Dispatch<AppAction>
 ): Promise<void> {
-  if (!isSessionActive()) {
+  if (!(await isSessionActive())) {
     return;
   }
   dispatchToApp({
@@ -39,7 +39,7 @@ async function applyServerAppToLocalApp(
 // state to the server
 const pullLatestAppFromServer = throttle(
   async (app: AppState, dispatchToApp: Dispatch<AppAction>): Promise<void> => {
-    if (!isSessionActive()) {
+    if (!(await isSessionActive())) {
       return;
     }
     const { data, error } = await supabase
@@ -62,7 +62,7 @@ async function pushLocalAppToServer(app: AppState) {
   if (!app.id) {
     return;
   }
-  const user = supabase.auth.user();
+  const user = (await supabase.auth.getUser()).data.user;
   if (!user) {
     return;
   }
