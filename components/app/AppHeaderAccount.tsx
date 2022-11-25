@@ -56,9 +56,16 @@ function AppHeaderAccount() {
   // instead of useEffect() directly to minimize any possible page flicker
   async function updateSession() {
     const newSession = await getSession();
-    if (newSession && session !== newSession) {
+    // Do not re-render if login state hasn't changed
+    if (session !== newSession) {
       setSession(newSession);
     }
+    isSessionActive(newSession).then((newIsUserActive) => {
+      // Do not re-render if login state hasn't changed
+      if (newIsUserActive !== isUserActive) {
+        setIsUserActive(newIsUserActive);
+      }
+    });
   }
   useIsomorphicLayoutEffect(() => {
     updateSession();
@@ -75,10 +82,6 @@ function AppHeaderAccount() {
       data?.subscription.unsubscribe();
     };
   }, []);
-
-  useEffect(() => {
-    isSessionActive(session).then(setIsUserActive);
-  }, [session, setIsUserActive]);
 
   return session && isUserActive ? (
     <div className="app-header-account">
