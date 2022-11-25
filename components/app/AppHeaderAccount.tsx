@@ -6,7 +6,6 @@ import { getSession, isSessionActive } from '../accountUtils';
 import { supabase } from '../supabaseClient';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
-import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 import appStateDefault from './appStateDefault';
 
 function AppHeaderAccount() {
@@ -67,7 +66,7 @@ function AppHeaderAccount() {
       }
     });
   }
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     updateSession();
   }, []);
 
