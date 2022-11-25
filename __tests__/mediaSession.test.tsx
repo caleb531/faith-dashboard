@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { act, render } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import fetch from 'jest-fetch-mock';
 import Home from '../pages/index';
 import podcastFeedJson from './__json__/podcastFeed.json';
@@ -18,7 +18,9 @@ describe('media session', () => {
     render(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
-    expect(navigator.mediaSession.metadata).not.toEqual(null);
+    await waitFor(() => {
+      expect(navigator.mediaSession.metadata).not.toEqual(null);
+    });
   });
 
   it('should not error if client does not support Media Session API', async () => {
