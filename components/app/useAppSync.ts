@@ -1,5 +1,5 @@
 import { throttle } from 'lodash-es';
-import { Dispatch, useEffect } from 'react';
+import { Dispatch, useEffect, useMemo } from 'react';
 import { getUser, isSessionActive } from '../accountUtils';
 import { supabase } from '../supabaseClient';
 import { getClientId } from '../syncUtils';
@@ -33,28 +33,6 @@ async function applyServerAppToLocalApp(
     widgetSyncService.broadcastPull(widget.id, widget);
   });
 }
-
-// Replace the local application state with the latest application state from
-// the server; if there is no app state on the server, then push the local app
-// state to the server
-const pullLatestAppFromServer = throttle(
-  async (app: AppState, dispatchToApp: Dispatch<AppAction>): Promise<void> => {
-    if (!(await isSessionActive())) {
-      return;
-    }
-    const { data, error } = await supabase
-      .from('dashboards')
-      .select('raw_data');
-    if (!(data && data.length > 0)) {
-      pushLocalAppToServer(app);
-      pushLocalWidgetsToServer(app);
-      return;
-    }
-    const newApp: AppState = JSON.parse(data[0].raw_data);
-    applyServerAppToLocalApp(newApp, dispatchToApp);
-  },
-  1000
-);
 
 // Push the local application state to the server; this function runs when the
 // app changes, but also once when there is no app state on the server
@@ -95,6 +73,39 @@ function useAppSync(app: AppState, dispatchToApp: Dispatch<AppAction>): void {
     stateType: 'app',
     upsertState: pushLocalAppToServer
   });
+
+  // Replace the local application state with the latest application state from
+  // the server; if there is no app state on the server, then push the local app
+  // state to the server
+  const pullLatestAppFromServer = useMemo(() => {
+    // Even though this function has no dependencies (and therefore can
+    // technically be defined outside of the hook), we need to ensure that Jest
+    // is able to set up the fake timer mechanism (in the corresponding Sync
+    // tests) before this throttled function is created; otherwise, some tests
+    // will intermittently fail because the throttle() call bound itself to the
+    // native setTimeout() before Jest was able to set up the fake timers
+    return throttle(
+      async (
+        app: AppState,
+        dispatchToApp: Dispatch<AppAction>
+      ): Promise<void> => {
+        if (!(await isSessionActive())) {
+          return;
+        }
+        const { data, error } = await supabase
+          .from('dashboards')
+          .select('raw_data');
+        if (!(data && data.length > 0)) {
+          pushLocalAppToServer(app);
+          pushLocalWidgetsToServer(app);
+          return;
+        }
+        const newApp: AppState = JSON.parse(data[0].raw_data);
+        applyServerAppToLocalApp(newApp, dispatchToApp);
+      },
+      1000
+    );
+  }, []);
 
   // Pull latest data from server on initial app load
   useEffect(() => {
