@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { getSession, getUser } from '../components/accountUtils';
 import { supabase } from '../components/supabaseClient';
 import Home from '../pages/index';
 import {
@@ -56,6 +57,11 @@ describe('Account Header', () => {
       } as any;
     });
     render(<Home />);
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Your Account' })
+      ).toBeInTheDocument();
+    });
     await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
     localStorage.setItem('faith-dashboard-whatever', 'true');
     const log = jest.spyOn(console, 'log').mockImplementation(() => {
@@ -64,6 +70,10 @@ describe('Account Header', () => {
     await userEvent.click(screen.getByText('Sign Out'));
     log.mockReset();
     expect(localStorage.getItem('faith-dashboard-whatever')).toEqual(null);
+    await act(async () => {
+      await getUser();
+      await getSession();
+    });
   });
 
   it('should cancel signing out', async () => {
@@ -76,27 +86,18 @@ describe('Account Header', () => {
       } as any;
     });
     render(<Home />);
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Your Account' })
+      ).toBeInTheDocument();
+    });
     await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
     localStorage.setItem('faith-dashboard-whatever', 'true');
     await userEvent.click(screen.getByText('Sign Out'));
     expect(localStorage.getItem('faith-dashboard-whatever')).toEqual('true');
-  });
-
-  it('should refresh session when halfway or less to expiry', async () => {
-    await mockSupabaseUser();
-    await mockSupabaseSession({
-      expires_in: 3600,
-      expires_at: Date.now() / 1000 + 1800,
-      refresh_token: 'abc'
-    });
-    jest.spyOn(supabase.auth, 'signInWithPassword').mockImplementation(() => {
-      return {
-        error: null
-      } as any;
-    });
-    render(<Home />);
-    expect(supabase.auth.signInWithPassword).toHaveBeenCalledWith({
-      refreshToken: 'abc'
+    await act(async () => {
+      await getUser();
+      await getSession();
     });
   });
 });

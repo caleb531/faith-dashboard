@@ -97,12 +97,14 @@ describe('Sync functionality', () => {
     });
     assignIdToLocalApp(uuidv4());
     render(<Home />);
-    expect(
-      screen.getByRole('button', { name: 'Your Account' })
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Your Account' })
+      ).toBeInTheDocument();
+    });
     await waitFor(() => {
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(2);
-      expect(supabaseFromMocks.widgets.select).toHaveBeenCalledTimes(1);
+      expect(supabaseFromMocks.widgets.select).toHaveBeenCalled();
     });
     expect(screen.getByText('Evening')).toBeInTheDocument();
     expect(screen.queryByText('Shore')).not.toBeInTheDocument();
@@ -125,9 +127,11 @@ describe('Sync functionality', () => {
     mockUpsert('widgets');
     assignIdToLocalApp(uuidv4());
     render(<Home />);
-    expect(
-      screen.getByRole('button', { name: 'Your Account' })
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Your Account' })
+      ).toBeInTheDocument();
+    });
     await waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('dashboards');
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
@@ -166,9 +170,11 @@ describe('Sync functionality', () => {
     };
     assignIdToLocalApp(uuidv4());
     render(<Home />);
-    expect(
-      screen.getByRole('button', { name: 'Your Account' })
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Your Account' })
+      ).toBeInTheDocument();
+    });
     await waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('dashboards');
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
@@ -191,9 +197,11 @@ describe('Sync functionality', () => {
     mockUpsert('widgets');
     assignIdToLocalApp(appId);
     render(<Home />);
-    expect(
-      screen.getByRole('button', { name: 'Your Account' })
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Your Account' })
+      ).toBeInTheDocument();
+    });
     await waitForWidget({ type: 'Note', index: 1 });
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
     expect(textBox).toBeInTheDocument();
@@ -205,7 +213,7 @@ describe('Sync functionality', () => {
       }
     });
     await waitFor(() => {
-      expect(supabase.from).toHaveBeenNthCalledWith(1, 'widgets');
+      expect(supabase.from).toHaveBeenCalledWith('widgets');
       expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(1);
     });
   });
@@ -222,9 +230,11 @@ describe('Sync functionality', () => {
     mockDelete('widgets');
     assignIdToLocalApp(appId);
     render(<Home />);
-    expect(
-      screen.getByRole('button', { name: 'Your Account' })
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Your Account' })
+      ).toBeInTheDocument();
+    });
     jest.useRealTimers();
     await waitForWidget({ type: 'Note', index: 1 });
     const widgetElem = await removeWidget({
@@ -235,7 +245,6 @@ describe('Sync functionality', () => {
     await waitForElementToBeRemoved(widgetElem);
     jest.useFakeTimers();
     await waitFor(() => {
-      expect(supabase.from).toHaveBeenNthCalledWith(1, 'widgets');
       expect(supabaseFromMocks.widgets.delete).toHaveBeenCalled();
     });
   });
@@ -265,7 +274,6 @@ describe('Sync functionality', () => {
       }
     });
     await waitFor(() => {
-      expect(supabase.from).not.toHaveBeenCalledWith('widgets');
       expect(supabaseFromMocks.widgets.upsert).not.toHaveBeenCalled();
     });
   });
