@@ -23,7 +23,7 @@ function AccountSettings() {
   // before reloading the page (only applies to certain forms)
   const reloadDelay = 1000;
 
-  function updateUserData(event: React.FormEvent<HTMLFormElement>) {
+  async function updateUserData(event: React.FormEvent<HTMLFormElement>) {
     const fields = serializeForm(event.currentTarget);
     if (fields.email) {
       return supabase.auth.updateUser({ email: fields.email });
@@ -62,7 +62,9 @@ function AccountSettings() {
       new_password: fields.new_password
     });
     return {
-      user: await getUser(),
+      data: {
+        user: await getUser()
+      },
       // Convert PostgrestError type to Supabase ApiError
       error: error ? new Error(error.message) : null
     };

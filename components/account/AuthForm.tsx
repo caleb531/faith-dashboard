@@ -1,4 +1,4 @@
-import { Session, User } from '@supabase/supabase-js';
+import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import React, { useRef, useState } from 'react';
 import { JSXChildren } from '../global';
@@ -14,17 +14,12 @@ const successLabelDuration = 2000;
 
 type Props = {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<{
-    user?: User | null;
-    session?: Session | null;
+    data: {
+      user?: User | null;
+    } | null;
     error: Error | null;
   }>;
-  onSuccess?: ({
-    user,
-    session
-  }: {
-    user?: User | null;
-    session?: Session | null;
-  }) => boolean | void;
+  onSuccess?: ({ user }: { user?: User | null }) => boolean | void;
   submitLabel: string;
   submittingLabel: string;
   successLabel: string;
@@ -43,7 +38,8 @@ function AuthForm(props: Props) {
   const honeyPotFieldRef = useRef<HTMLInputElement>(null);
 
   async function attemptSubmit(event: React.FormEvent<HTMLFormElement>) {
-    const { user, session, error } = await props.onSubmit(event);
+    const { data, error } = await props.onSubmit(event);
+    const user = data?.user;
     // If there is no error, the value is conveniently null
     setFormErrorMessage(error?.message);
     if (error) {
@@ -53,7 +49,7 @@ function AuthForm(props: Props) {
       return;
     }
     const successCallbackResult = props.onSuccess
-      ? props.onSuccess({ user, session })
+      ? props.onSuccess({ user })
       : null;
     // If the onSuccess() callback returns false, the Submit button should not
     // revert to its initial label, but rather, remain in a "Submitting" state
