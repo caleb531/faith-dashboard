@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
-import AuthForm from '../components/account/AuthForm';
+import AuthForm, { redirectToHome } from '../components/account/AuthForm';
 import AuthFormField from '../components/account/AuthFormField';
 import serializeForm from '../components/account/serializeForm';
 import useAutoFocus from '../components/account/useAutoFocus';
@@ -16,16 +16,6 @@ function SignInForm() {
       email: fields.email,
       password: fields.password
     });
-  }
-
-  function redirectToHome() {
-    // Redirect to the main app if the user has been properly authenticated
-    // with a session; the "Submitting..." button label will continue showing
-    // while the browser is in the process of redirecting
-    window.location.assign('/');
-    // By returning false, we can disable the resetting of the Submit button
-    // label
-    return false;
   }
 
   return (

@@ -134,4 +134,13 @@ function AuthForm(props: Props) {
   );
 }
 
+// Redirect to the main app if the user has been properly authenticated with a
+// session; the "Submitting..." button label will continue showing while the
+// browser is in the process of redirecting
+export function redirectToHome() {
+  window.location.assign('/');
+  // By returning false, we can disable the resetting of the Submit button label
+  return false;
+}
+
 export default AuthForm;
