@@ -81,7 +81,7 @@ function AppHeaderAccount() {
       }
     });
     return () => {
-      data?.subscription.unsubscribe();
+      data.subscription.unsubscribe();
     };
   }, []);
 
