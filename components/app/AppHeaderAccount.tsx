@@ -68,6 +68,9 @@ function AppHeaderAccount() {
   }
   useEffect(() => {
     updateSession();
+    // This useEffect() can only run a finite number of times because it would
+    // otherwise cause an infinite loop due to the dependencies always changing
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
 
   // Detect session change and re-render account header accordingly
