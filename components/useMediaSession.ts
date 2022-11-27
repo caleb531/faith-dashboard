@@ -1,5 +1,3 @@
-/* global MediaMetadata */
-
 import { useEffect, useRef } from 'react';
 
 // The useMediaSession() hook should receive the same input parameters as the
