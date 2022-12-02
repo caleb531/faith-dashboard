@@ -1,13 +1,10 @@
 {
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[typescript][typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
       "source.organizeImports": true
     }
-  },
-  "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
