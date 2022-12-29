@@ -71,11 +71,15 @@ function AccountSettings() {
   }
 
   async function loadUser() {
-    if (await isSessionActive()) {
-      setUser(await getUser());
-    } else {
+    if (!(await isSessionActive())) {
       window.location.assign('/sign-in');
+      return;
     }
+    const newUser = await getUser();
+    if (newUser?.id === user?.id) {
+      return;
+    }
+    setUser(newUser);
   }
 
   // Load the user data synchronously and isomorphically
