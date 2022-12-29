@@ -26,7 +26,7 @@ function Copyright() {
 }
 
 /* istanbul ignore next */
-export async function getStaticProps() {
+export async function getServerSideProps() {
   return {
     props: {
       pagePath: '/copyright',

@@ -95,7 +95,7 @@ function SignUpForm() {
 }
 
 /* istanbul ignore next */
-export async function getStaticProps() {
+export async function getServerSideProps() {
   return {
     props: {
       pagePath: '/sign-up',

@@ -31,7 +31,7 @@ function Home() {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   /* istanbul ignore next */
   return {
     props: {

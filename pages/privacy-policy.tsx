@@ -92,7 +92,7 @@ function PrivacyPolicy() {
 }
 
 /* istanbul ignore next */
-export async function getStaticProps() {
+export async function getServerSideProps() {
   return {
     props: {
       pagePath: '/privacy-policy',
