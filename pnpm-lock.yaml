@@ -19,7 +19,6 @@ specifiers:
   '@types/puppeteer': ^5.4.7
   '@types/react': ^18.0.25
   '@types/react-dom': ^18.0.9
-  '@types/react-gtm-module': ^2.0.1
   '@types/testing-library__jest-dom': ^5.14.5
   '@types/uuid': ^8.3.4
   '@types/workbox-window': ^4.3.4
@@ -88,7 +87,6 @@ devDependencies:
   '@types/puppeteer': 5.4.7
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.9
-  '@types/react-gtm-module': 2.0.1
   '@types/testing-library__jest-dom': 5.14.5
   '@types/uuid': 8.3.4
   '@types/workbox-window': 4.3.4
@@ -2303,10 +2301,6 @@ packages:
     resolution: {integrity: sha512-qnVvHxASt/H7i+XG1U1xMiY5t+IHcPGUK7TDMDzom08xa7e86eCeKOiLZezwCKVxJn6NEiiy2ekgX8aQssjIKg==}
     dependencies:
       '@types/react': 18.0.25
-
-  /@types/react-gtm-module/2.0.1:
-    resolution: {integrity: sha512-T/DN9gAbCYk5wJ1nxf4pSwmXz4d1iVjM++OoG+mwMfz9STMAotGjSb65gJHOS5bPvl6vLSsJnuC+y/43OQrltg==}
-    dev: true
 
   /@types/react/18.0.25:
     resolution: {integrity: sha512-xD6c0KDT4m7n9uD4ZHi02lzskaiqcBxf4zi+tXZY98a04wvc0hi/TcCPC2FOESZi51Nd7tlUeOJY8RofL799/g==}
