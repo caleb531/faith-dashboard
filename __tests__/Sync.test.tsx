@@ -155,7 +155,7 @@ describe('Sync functionality', () => {
     // *after* the push event has already been broadcast, as this is the
     // scenario we are testing for; that is, we want to ensure the widgets are
     // still pushed even if the push event listeners are bound too late
-    const promiseCache: { [key: string]: Deferred<void> } = {};
+    const promiseCache: Record<string, Deferred<void>> = {};
     widgetSyncService.onPush = (widgetId) => {
       if (!promiseCache[widgetId]) {
         promiseCache[widgetId] = new Deferred();

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 // The storage map for the cached state values
-const stateCache: { [key: string]: any } = {};
+const stateCache: Record<string, any> = {};
 
 // The useCachedState() hook caches a particular value across component
 // mount/unmounts, using a unique key to identify the state along the way

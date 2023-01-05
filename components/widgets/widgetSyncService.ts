@@ -2,8 +2,8 @@ import { Deferred } from '../deferred';
 import { WidgetState } from './widget.d';
 
 // The callback for a widget sync event
-type WidgetPushQueue = { [key: string]: Deferred<void> };
-type WidgetPullQueue = { [key: string]: Deferred<WidgetState> };
+type WidgetPushQueue = Record<string, Deferred<void>>;
+type WidgetPullQueue = Record<string, Deferred<WidgetState>>;
 // Use a hashmap as a sort of queue structure to achieve constant time lookups
 // and to ensure that if a push/pull broadcast happens (from useAppSync())
 // before the widgets are mounted (i.e. before useWidgetSync() has even run),

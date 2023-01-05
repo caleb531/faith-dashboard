@@ -2,7 +2,7 @@
 // JSON object
 function serializeForm(form: HTMLFormElement) {
   const formData = new FormData(form);
-  const fields: { [key: string]: string } = {};
+  const fields: Record<string, string> = {};
   return Array.from(formData).reduce((fields, [key, value]) => {
     fields[key] = value as string;
     return fields;

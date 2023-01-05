@@ -6,7 +6,7 @@ class AudioMock {
   paused: boolean;
   _isAudioMock: true;
   _loaderPromise: Promise<void>;
-  _callbackMap: { [key: string]: (() => void)[] };
+  _callbackMap: Record<string, (() => void)[]>;
   static instances: AudioMock[];
 
   constructor() {

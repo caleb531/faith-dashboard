@@ -1,5 +1,5 @@
 class WorkboxMock {
-  _callbackMap: { [key: string]: ((...args: any[]) => void)[] };
+  _callbackMap: Record<string, ((...args: any[]) => void)[]>;
   static instances: WorkboxMock[];
 
   constructor() {

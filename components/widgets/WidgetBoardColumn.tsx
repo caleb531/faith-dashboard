@@ -4,7 +4,7 @@ import widgetTypeMap from './widgetTypeMap';
 
 type Props = {
   widgets: WidgetHead[];
-  widgetIdsToIndices: { [key: string]: number };
+  widgetIdsToIndices: Record<string, number>;
   columnIndex: number;
 };
 

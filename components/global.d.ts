@@ -8,7 +8,7 @@ export type JSONSerializable =
   | boolean
   | Array<JSONSerializable>
   | object
-  | { [key: string]: JSONSerializable }
+  | Record<string, JSONSerializable>
   | null;
 
 // The props that must be defined for each and every page

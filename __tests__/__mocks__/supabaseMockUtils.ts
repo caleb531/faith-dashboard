@@ -96,7 +96,7 @@ function generateSupabaseFromMocks(tableName: string) {
 }
 
 export const supabaseFromMocks: {
-  [key: string]: { [key: string]: jest.Mock };
+  [key: string]: Record<string, jest.Mock>;
 } = {
   dashboards: generateSupabaseFromMocks('dashboards'),
   widgets: generateSupabaseFromMocks('widgets')
