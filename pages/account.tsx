@@ -227,7 +227,7 @@ function AccountSettings() {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   return {
     props: {
       pageTitle: 'Account Settings | Faith Dashboard',

@@ -40,7 +40,7 @@ function ForgotPassword() {
 }
 
 /* istanbul ignore next */
-export async function getServerSideProps() {
+export async function getStaticProps() {
   return {
     props: {
       pagePath: '/forgot-password',
