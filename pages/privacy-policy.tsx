@@ -55,16 +55,19 @@ function PrivacyPolicy() {
         from the email you signed up with.
       </p>
 
-      <h2>Google Analytics</h2>
+      <h2>Analytics</h2>
 
       <p>
-        Faith Dashboard uses Google Analytics. I only use this information to
-        examine traffic trends and visitor statistics (i.e. the percentage of
-        Chrome users). However, you would need to read the{' '}
-        <a href="https://support.google.com/analytics/answer/6004245?hl=en">
-          Google Analytics privacy summary
+        Faith Dashboard uses{' '}
+        <a href="https://plausible.io/">Plausible Analytics</a>, a
+        privacy-focused analytics platform. We only use this information to
+        examine traffic trends and aggregated visitor statistics (i.e. the
+        percentage of Chrome users, or the total number of people who viewed a
+        particular project). However, you would need to read the{' '}
+        <a href="https://plausible.io/data-policy">
+          Plausible Analytics data policy
         </a>
-        to understand how Google collects and uses this information. I do not
+        to understand how Plausible collects and uses this information. I do not
         otherwise share this information.
       </p>
 
