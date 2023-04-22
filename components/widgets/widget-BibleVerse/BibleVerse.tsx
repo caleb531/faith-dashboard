@@ -100,7 +100,7 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({
             </div>
             <p className="bible-verse-notice">
               {verseContent.version.name} via{' '}
-              <a href="https://www.youversion.com/">YouVersion</a>
+              <a href="https://www.bible.com/">YouVersion</a>
             </p>
           </>
         ) : null}
