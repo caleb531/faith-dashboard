@@ -1,36 +1,19 @@
 {
-  "query": "Romans 8:28",
-  "canonical": "Romans 8:28",
-  "parsed": [
-    [
-      45008028,
-      45008028
-    ]
-  ],
-  "passage_meta": [
-    {
-      "canonical": "Romans 8:28",
-      "chapter_start": [
-        45008001,
-        45008039
-      ],
-      "chapter_end": [
-        45008001,
-        45008039
-      ],
-      "prev_verse": 45008027,
-      "next_verse": 45008029,
-      "prev_chapter": [
-        45007001,
-        45007025
-      ],
-      "next_chapter": [
-        45009001,
-        45009033
-      ]
-    }
-  ],
-  "passages": [
-    "<h2 class=\"extra_text\">Romans 8:28</h2>\n<p id=\"p45008028_01-1\" class=\"virtual\">And we know that for those who love God all things work together for good, for those who are called according to his purpose.</p>\n<p>(<a href=\"http://www.esv.org\" class=\"copyright\">ESV</a>)</p>"
-  ]
+  "id": "59/ROM.8.28",
+  "name": "Romans 8:28",
+  "url": "https://www.bible.com/bible/59/ROM.8.28",
+  "book": {
+    "id": "rom",
+    "name": "Romans",
+    "priority": 144
+  },
+  "chapter": 8,
+  "verse": 28,
+  "endVerse": null,
+  "version": {
+    "full_name": "English Standard Version 2016",
+    "id": 59,
+    "name": "ESV"
+  },
+  "content": "And we know that for those who love God all things work together for good, for those who are called according to his purpose."
 }

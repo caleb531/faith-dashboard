@@ -1,36 +1,27 @@
 {
-  "query": "Matthew 11:28–30",
-  "canonical": "Matthew 11:28–30",
-  "parsed": [
-    [
-      40011028,
-      40011030
-    ]
-  ],
-  "passage_meta": [
-    {
-      "canonical": "Matthew 11:28–30",
-      "chapter_start": [
-        40011001,
-        40011030
-      ],
-      "chapter_end": [
-        40011001,
-        40011030
-      ],
-      "prev_verse": 40011027,
-      "next_verse": 40012001,
-      "prev_chapter": [
-        40010001,
-        40010042
-      ],
-      "next_chapter": [
-        40012001,
-        40012050
+  "id": "59/MAT.11.28-30",
+  "name": "Matthew 11:28-30",
+  "url": "https://www.bible.com/bible/59/MAT.11.28-30",
+  "book": {
+    "id": "mat",
+    "name": "Matthew",
+    "priority": 139,
+    "metadata": {
+      "canon": "nt",
+      "chapters": 28,
+      "verses": [
+        25, 23, 17, 25, 48, 34, 29, 34, 38, 42, 30, 50, 58, 36, 39, 28, 27, 35,
+        30, 34, 46, 46, 39, 51, 46, 75, 66, 20
       ]
     }
-  ],
-  "passages": [
-    "<h2 class=\"extra_text\">Matthew 11:28–30</h2>\n<p id=\"p40011028_01-1\" class=\"virtual\"><span class=\"woc\">Come to me, all who labor and are heavy laden, and I will give you rest.</span> <span class=\"woc\">Take my yoke upon you, and learn from me, for I am gentle and lowly in heart, and you will find rest for your souls.</span> <span class=\"woc\">For my yoke is easy, and my burden is light.”</span></p>\n<p>(<a href=\"http://www.esv.org\" class=\"copyright\">ESV</a>)</p>"
-  ]
+  },
+  "chapter": 11,
+  "verse": 28,
+  "endVerse": 30,
+  "version": {
+    "full_name": "English Standard Version 2016",
+    "id": 59,
+    "name": "ESV"
+  },
+  "content": "Come to me, all who labor and are heavy laden, and I will give you rest. Take my yoke upon you, and learn from me, for I am gentle and lowly in heart, and you will find rest for your souls. For my yoke is easy, and my burden is light.”"
 }

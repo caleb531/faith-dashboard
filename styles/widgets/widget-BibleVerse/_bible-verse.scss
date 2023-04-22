@@ -1,4 +1,5 @@
 .widget-type-BibleVerse {
+  position: relative;
   height: auto !important;
 }
 
@@ -10,22 +11,19 @@
   h2 {
     font-size: var(--font-size-xl);
   }
-  *:last-of-type {
-    margin-bottom: 0;
-  }
-  // ESV Copyright link
-  p:not([class]):not([id]) {
-    margin-top: 0;
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    font-size: var(--font-size-xxs);
-    // If the user fetches multiple verses, then multiple copyright links will
-    // be brought in; only show one of them
-    &:not(:last-of-type) {
-      display: none;
-    }
-  }
+}
+.bible-verse-version {
+  font-size: var(--font-size-xxxs);
+}
+.bible-verse-notice {
+  opacity: 0.5;
+  margin-top: 0;
+  margin-bottom: -5px;
+  bottom: 10px;
+  right: 10px;
+  text-align: right;
+  font-size: 10px;
+  transition: opacity 250ms ease-in-out;
 }
 .bible-verse-error {
   margin-bottom: 0;

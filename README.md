@@ -26,16 +26,6 @@ npm install -g pnpm
 pnpm install
 ```
 
-### Obtain ESV API token (for use in the Bible widget)
-
-In order for the Bible widget to function locally, you must obtain an API token
-for the [ESV API](https://api.esv.org/). Once you have it, create a file called
-`.env.local` in the root of your repository with the following contents:
-
-```
-ESV_API_KEY=PASTE_YOUR_API_TOKEN_HERE
-```
-
 ### Set up Supabase
 
 First, you need to install Supabase and its dependencies, which you can do

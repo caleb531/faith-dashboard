@@ -1,9 +1,9 @@
 import { WidgetAction } from '../useWidgetShell';
-import { BibleVerseWidgetState } from './bibleVerse.d';
+import { BibleReference, BibleVerseWidgetState } from './bibleVerse.d';
 
 export type BibleVerseAction =
   | WidgetAction
-  | { type: 'setVerseContent'; payload: string | null }
+  | { type: 'setVerseContent'; payload: BibleReference | null }
   | { type: 'setVerseQuery'; payload: string };
 
 export default function reducer(

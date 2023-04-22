@@ -1,12 +1,13 @@
 import HtmlReactParser from 'html-react-parser';
+import { isPlainObject } from 'lodash-es';
 import React from 'react';
 import useUniqueFieldId from '../../useUniqueFieldId';
+import WidgetShell from '../WidgetShell';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useWidgetShell from '../useWidgetShell';
 import { WidgetParameters } from '../widget.d';
-import WidgetShell from '../WidgetShell';
-import { BibleVerseData } from './bibleVerse.d';
 import reducer from './BibleVerseReducer';
+import { BibleReference } from './bibleVerse.d';
 
 const BibleVerseWidget = React.memo(function BibleVerseWidget({
   widgetHead,
@@ -22,7 +23,8 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({
     useWidgetDataFetcher({
       widget,
       dispatchToWidget,
-      shouldFetchInitially: () => verseQuery && !verseContent,
+      shouldFetchInitially: () =>
+        verseQuery && (!verseContent || typeof verseContent === 'string'),
       requestQuery: verseQuery,
       setRequestQuery: (newQuery: typeof verseQuery) => {
         return dispatchToWidget({ type: 'setVerseQuery', payload: newQuery });
@@ -30,9 +32,9 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({
       getApiUrl: (query: typeof verseQuery) => {
         return `/api/widgets/bible-verse?q=${encodeURIComponent(query)}`;
       },
-      parseResponse: (response: BibleVerseData) => response.passages.join(''),
-      hasResults: (data: typeof verseContent) => data !== '',
-      onSuccess: (data: typeof verseContent) => {
+      parseResponse: (response: BibleReference) => response,
+      hasResults: (data: BibleReference) => data,
+      onSuccess: (data: BibleReference) => {
         dispatchToWidget({
           type: 'setVerseContent',
           payload: data
@@ -80,10 +82,27 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({
               <p className="bible-verse-error">{fetchError}</p>
             ) : null}
           </form>
-        ) : verseQuery && verseContent ? (
-          <div className="bible-verse-content">
-            {HtmlReactParser(verseContent)}
-          </div>
+        ) : verseQuery && isPlainObject(verseContent) ? (
+          <>
+            <div className="bible-verse-content">
+              {isPlainObject(verseContent) ? (
+                <>
+                  <h2>{verseContent.name}</h2>
+                  <p>
+                    {HtmlReactParser(
+                      verseContent.content?.replace(/\n/g, '<br />') || ''
+                    )}
+                  </p>
+                </>
+              ) : (
+                ''
+              )}
+            </div>
+            <p className="bible-verse-notice">
+              {verseContent.version.name} via{' '}
+              <a href="https://www.youversion.com/">YouVersion</a>
+            </p>
+          </>
         ) : null}
       </section>
     </WidgetShell>

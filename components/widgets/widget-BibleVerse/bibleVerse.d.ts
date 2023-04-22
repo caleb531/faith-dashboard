@@ -2,23 +2,36 @@ import { WidgetState } from '../widget.d';
 
 export interface BibleVerseWidgetState extends WidgetState {
   verseQuery: string;
-  verseContent: string | null;
+  verseContent: BibleReference | null;
 }
 
-export interface BibleVerseMeta {
-  canonical: string;
-  chapter_end: number[];
-  chapter_start: number[];
-  next_chapter: number[];
-  next_verse: number;
-  prev_chapter: number[];
-  prev_verse: number;
+export interface BibleReference {
+  id: string;
+  name: string;
+  url: string;
+  book: BibleReferenceBook;
+  chapter: number;
+  verse: number;
+  endVerse: null;
+  version: BibleVersion;
+  content: string;
 }
 
-export interface BibleVerseData {
-  canonical: string;
-  parsed: number[];
-  passage_meta: BibleVerseMeta[];
-  passages: string[];
-  query: string;
+export interface BibleReferenceBook {
+  id: string;
+  name: string;
+  priority: number;
+  metadata: BibleReferenceMetadata;
+}
+
+export interface BibleReferenceMetadata {
+  canon: string;
+  chapters: number;
+  verses: number[];
+}
+
+export interface BibleVersion {
+  full_name: string;
+  id: number;
+  name: string;
 }
