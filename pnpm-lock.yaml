@@ -53,8 +53,8 @@ dependencies:
     specifier: ^0.5.0
     version: 0.5.0
   youversion-suggest:
-    specifier: ^2.0.0
-    version: 2.0.0
+    specifier: ^2.0.1
+    version: 2.0.1
 
 devDependencies:
   '@jest/types':
@@ -8323,8 +8323,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /youversion-suggest@2.0.0:
-    resolution: {integrity: sha512-wSZZDqxVSMFCfg0H+agfgINzGNYgVy4yeE6T+ICXejFILWAgz3fdb2usKTl6uVXfV9aUhfSK2YaL58bUpu9xTQ==}
+  /youversion-suggest@2.0.1:
+    resolution: {integrity: sha512-akkmK/B2P9Z4MaE+ii47MSQbNJ/Fi2GKUA+yr/d73//9BNFS5Oiurhre1r1wsGgCB6neLRcB4pEDV67H4BuwHg==}
     engines: {node: '>=18.0.0'}
     dependencies:
       cheerio: 1.0.0-rc.12
