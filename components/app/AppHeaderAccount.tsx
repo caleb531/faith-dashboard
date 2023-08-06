@@ -98,12 +98,6 @@ function AppHeaderAccount() {
 
   return session && isUserActive ? (
     <div className="app-header-account">
-      <label
-        className="app-header-account-label accessibility-only"
-        htmlFor="app-header-account-button"
-      >
-        Your Account
-      </label>
       <button
         type="button"
         className="app-header-account-button"
