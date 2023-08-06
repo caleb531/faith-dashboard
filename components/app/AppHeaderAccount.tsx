@@ -1,11 +1,11 @@
 import { Session } from '@supabase/supabase-js';
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
 import { getSession, isSessionActive } from '../accountUtils';
 import { supabase } from '../supabaseClient';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
+import AppHeaderMenu from './AppHeaderMenu';
 import appStateDefault from './appStateDefault';
 
 function AppHeaderAccount() {
@@ -19,13 +19,11 @@ function AppHeaderAccount() {
   const [isUserActive, setIsUserActive] = useState(false);
   const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
 
-  function importDashboard(event: React.MouseEvent) {
-    event.preventDefault();
+  function importDashboard() {
     console.log('import dashboard');
     setIsShowingMenu(false);
   }
-  function exportDashboard(event: React.MouseEvent) {
-    event.preventDefault();
+  function exportDashboard() {
     console.log('export dashboard');
     setIsShowingMenu(false);
   }
@@ -96,77 +94,66 @@ function AppHeaderAccount() {
     };
   }, []);
 
-  return session && isUserActive ? (
+  const isSignedIn = session && isUserActive;
+
+  return (
     <div className="app-header-account">
-      <button
-        type="button"
-        className="app-header-account-button"
-        onClick={() => setIsShowingMenu(!isShowingMenu)}
-      >
-        <img
-          className="app-header-account-button-icon"
-          src="/icons/account-light.svg"
-          alt="Your Account"
-          draggable="false"
-        />
-      </button>
-      {isShowingMenu ? (
-        <div className="app-header-account-menu">
-          <div
-            className="app-header-account-menu-overlay"
-            onClick={() => setIsShowingMenu(false)}
-          ></div>
-          <menu className="app-header-account-menu-list">
-            <li className="app-header-account-menu-list-item app-header-account-menu-list-item-user-info">
-              <a data-disabled>
-                <div className="app-header-account-menu-user-name">
-                  {session.user.user_metadata.first_name}{' '}
-                  {session.user.user_metadata.last_name}
-                </div>
-                <div className="app-header-account-menu-user-email">
-                  {session.user.email}
-                </div>
-              </a>
-            </li>
-            <li className="app-header-account-menu-list-item app-header-account-menu-list-item-account-settings">
-              <Link href="/account">Account Settings</Link>
-            </li>
-            <li
-              className="app-header-account-menu-list-item app-header-account-menu-list-item-account-settings"
-              onClick={importDashboard}
-            >
-              <a>Import Dashboard</a>
-            </li>
-            <li
-              className="app-header-account-menu-list-item app-header-account-menu-list-item-account-settings"
-              onClick={exportDashboard}
-            >
-              <a>Export Dashboard</a>
-            </li>
-            <li
-              className="app-header-account-menu-list-item app-header-account-menu-list-item-sign-out"
-              onClick={signOut}
-            >
-              <a>Sign Out</a>
-            </li>
-          </menu>
+      {!isSignedIn && (
+        <div className="app-header-account-section">
+          {isCurrentStep ? <TutorialStepTooltip /> : null}
+          <button
+            type="button"
+            className="app-header-menu-button app-header-control-button"
+            onClick={() => setSignInModalIsOpen(true)}
+            {...stepProps}
+          >
+            Sign Up/In
+          </button>
+          {authModalIsOpen ? (
+            <AccountAuthFlow onCloseModal={onCloseSignInModal} />
+          ) : null}
         </div>
-      ) : null}
-    </div>
-  ) : (
-    <div className="app-header-account">
-      {isCurrentStep ? <TutorialStepTooltip /> : null}
-      <button
-        type="button"
-        className="app-header-account-button app-header-control-button"
-        onClick={() => setSignInModalIsOpen(true)}
-        {...stepProps}
-      >
-        Sign Up/In
-      </button>
-      {authModalIsOpen ? (
-        <AccountAuthFlow onCloseModal={onCloseSignInModal} />
-      ) : null}
+      )}
+      <div className="app-header-account-section">
+        <AppHeaderMenu
+          label={isSignedIn ? 'Your Account' : 'Tools'}
+          icon={isSignedIn ? 'account-light' : 'menu-light'}
+          items={[
+            isSignedIn && {
+              key: 'user-info',
+              content: (
+                <a data-disabled data-key="user-info">
+                  <div data-field="user-name">
+                    {session.user.user_metadata.first_name}{' '}
+                    {session.user.user_metadata.last_name}
+                  </div>
+                  <div data-field="user-email">{session.user.email}</div>
+                </a>
+              )
+            },
+            isSignedIn && {
+              key: 'account',
+              href: '/account',
+              content: 'Account Settings'
+            },
+            {
+              key: 'import-dashboard',
+              onClick: importDashboard,
+              content: 'Import Dashboard'
+            },
+            {
+              key: 'export-dashboard',
+              onClick: exportDashboard,
+              content: 'Export Dashboard'
+            },
+            isSignedIn && {
+              key: 'sign-out',
+              onClick: signOut,
+              content: 'Sign Out'
+            }
+          ]}
+        />
+      </div>
     </div>
   );
 }

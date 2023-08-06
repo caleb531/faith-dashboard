@@ -7,30 +7,30 @@
   }
 }
 
-.app-header-account {
+.app-header-menu-container {
   display: flex;
   align-items: stretch;
   position: relative;
 }
-.app-header-account-button {
+.app-header-menu-button {
   display: flex;
   align-items: center;
   padding-left: 12px;
   padding-right: 12px;
 }
-.app-header-account-button-icon {
+.app-header-menu-button-icon {
   --icon-size: 16px;
   width: var(--icon-size);
   height: var(--icon-size);
 }
 
-.app-header-account-menu {
+.app-header-menu {
   position: relative;
   z-index: 1;
   animation: menu-fade-in 100ms ease-in-out both;
 }
 
-.app-header-account-menu-overlay {
+.app-header-menu-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -39,13 +39,13 @@
   height: 100%;
 }
 
-.app-header-account-menu-list,
-.app-header-account-menu-list-item {
+.app-header-menu-list,
+.app-header-menu-list-item {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-.app-header-account-menu-list {
+.app-header-menu-list {
   position: absolute;
   top: 100%;
   right: 0;
@@ -70,7 +70,7 @@
     border-bottom-color: var(--color-white-100);
   }
 }
-.app-header-account-menu-list-item a {
+.app-header-menu-list-item a {
   display: block;
   position: relative;
   border-radius: 5px;
@@ -84,12 +84,12 @@
     cursor: pointer;
   }
 }
-li.app-header-account-menu-list-item-user-info {
+li [data-key='user-info'] {
   padding-bottom: 5px;
   border-radius: 0;
   border-bottom: solid 1px var(--color-black-25);
   margin-bottom: 5px;
 }
-.app-header-account-menu-user-email {
+[data-field='user-email'] {
   font-weight: 300;
 }
