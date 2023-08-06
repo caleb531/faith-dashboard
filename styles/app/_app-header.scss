@@ -41,7 +41,6 @@
   display: flex;
   align-items: stretch;
   position: relative;
-  margin: 0 15px;
 }
 .app-header-control-button {
   // Make all header buttons the same height on all pages, even if the Add
@@ -54,5 +53,14 @@
 
 .app-header button,
 .app-header .button {
+  margin-left: 15px;
   font-family: var(--font-family-sans-serif);
+}
+
+.app-header-account {
+  display: flex;
+  align-items: center;
+}
+.app-header-account-section {
+  position: relative;
 }
