@@ -1,6 +1,6 @@
 import { Session } from '@supabase/supabase-js';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
 import { getSession, isSessionActive } from '../accountUtils';
 import { supabase } from '../supabaseClient';
@@ -18,6 +18,17 @@ function AppHeaderAccount() {
   const [session, setSession] = useState<Session | null>(null);
   const [isUserActive, setIsUserActive] = useState(false);
   const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
+
+  function importDashboard(event: React.MouseEvent) {
+    event.preventDefault();
+    console.log('import dashboard');
+    setIsShowingMenu(false);
+  }
+  function exportDashboard(event: React.MouseEvent) {
+    event.preventDefault();
+    console.log('export dashboard');
+    setIsShowingMenu(false);
+  }
 
   async function signOut() {
     const confirmation = confirm(
@@ -125,6 +136,18 @@ function AppHeaderAccount() {
             </li>
             <li className="app-header-account-menu-list-item app-header-account-menu-list-item-account-settings">
               <Link href="/account">Account Settings</Link>
+            </li>
+            <li
+              className="app-header-account-menu-list-item app-header-account-menu-list-item-account-settings"
+              onClick={importDashboard}
+            >
+              <a>Import Dashboard</a>
+            </li>
+            <li
+              className="app-header-account-menu-list-item app-header-account-menu-list-item-account-settings"
+              onClick={exportDashboard}
+            >
+              <a>Export Dashboard</a>
             </li>
             <li
               className="app-header-account-menu-list-item app-header-account-menu-list-item-sign-out"
