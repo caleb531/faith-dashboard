@@ -1,20 +1,21 @@
 import { useEffect, useReducer, useState } from 'react';
 import { JSXChildren } from '../global';
+import { getAppStorageKey } from '../storageUtils';
 import TutorialFlow from '../tutorial/TutorialFlow';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 import useLocalStorage from '../useLocalStorage';
 import usePasswordRecoveryRedirect from '../usePasswordRecoveryRedirect';
 import useTouchDeviceDetection from '../useTouchDeviceDetection';
-import { AppState } from './app.d';
 import AppContext from './AppContext';
 import AppFooter from './AppFooter';
 import AppHeader from './AppHeader';
 import AppNotification from './AppNotification';
 import reducer from './AppReducer';
-import defaultApp from './appStateDefault';
-import getAppNotificationMessage from './getAppNotificationMessage';
 import ThemeMetadata from './ThemeMetadata';
 import UpdateNotification from './UpdateNotification';
+import { AppState } from './app.d';
+import defaultApp from './appStateDefault';
+import getAppNotificationMessage from './getAppNotificationMessage';
 import useAppSync from './useAppSync';
 import useThemeForEntirePage from './useThemeForEntirePage';
 
@@ -43,10 +44,7 @@ function App({
   canAddWidgets = false,
   children
 }: Props) {
-  const [restoreApp, saveApp] = useLocalStorage(
-    'faith-dashboard-app',
-    defaultApp
-  );
+  const [restoreApp, saveApp] = useLocalStorage(getAppStorageKey(), defaultApp);
   const [app, dispatchToApp] = useReducer(reducer, defaultApp);
   const [isTurorialStarted, setIsTutorialStarted] = useState(false);
 

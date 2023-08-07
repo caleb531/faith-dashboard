@@ -1,15 +1,19 @@
 import { Session } from '@supabase/supabase-js';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
 import { getSession, isSessionActive } from '../accountUtils';
+import { exportDashboard, promptToImportDashboard } from '../importExportUtils';
+import { getAppStorageKey } from '../storageUtils';
 import { supabase } from '../supabaseClient';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
+import AppContext from './AppContext';
 import AppHeaderMenu from './AppHeaderMenu';
 import appStateDefault from './appStateDefault';
 
 function AppHeaderAccount() {
   const { isCurrentStep, stepProps } = useTutorialStep('sign-up');
+  const dispatchToApp = useContext(AppContext);
 
   const [isShowingMenu, setIsShowingMenu] = useState(false);
   // The session will be loaded asynchronously and isomorphically, via a
@@ -19,12 +23,15 @@ function AppHeaderAccount() {
   const [isUserActive, setIsUserActive] = useState(false);
   const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
 
-  function importDashboard() {
-    console.log('import dashboard');
+  async function handleImportDashboard() {
+    const newApp = await promptToImportDashboard();
+    if (newApp) {
+      dispatchToApp({ type: 'replaceApp', payload: newApp });
+    }
     setIsShowingMenu(false);
   }
-  function exportDashboard() {
-    console.log('export dashboard');
+  async function handleExportDashboard() {
+    exportDashboard();
     setIsShowingMenu(false);
   }
 
@@ -43,7 +50,7 @@ function AppHeaderAccount() {
       localStorage.clear();
       // Do not show tutorial again
       localStorage.setItem(
-        'faith-dashboard-app',
+        getAppStorageKey(),
         JSON.stringify({ ...appStateDefault, shouldShowTutorial: false })
       );
       const queryStr = new URLSearchParams({
@@ -138,12 +145,12 @@ function AppHeaderAccount() {
             },
             {
               key: 'import-dashboard',
-              onClick: importDashboard,
+              onClick: handleImportDashboard,
               content: 'Import Dashboard'
             },
             {
               key: 'export-dashboard',
-              onClick: exportDashboard,
+              onClick: handleExportDashboard,
               content: 'Export Dashboard'
             },
             isSignedIn && {

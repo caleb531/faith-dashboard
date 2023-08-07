@@ -1,5 +1,6 @@
 import { diff } from 'deep-object-diff';
 import { Dispatch, useReducer } from 'react';
+import { getWidgetStorageKey } from '../storageUtils';
 import useLocalStorage from '../useLocalStorage';
 import { WidgetHead, WidgetState } from '../widgets/widget.d';
 import widgetTypes from '../widgets/widgetTypes';
@@ -90,7 +91,7 @@ export default function useWidgetShell<State extends WidgetState, Action>(
   }
 
   const [restoreWidget, saveWidget, removeWidget] = useLocalStorage(
-    `faith-dashboard-widget-${widgetHead.type}:${widgetHead.id}`,
+    getWidgetStorageKey(widgetHead),
     createNewWidget(widgetHead)
   );
   const [widget, dispatchToWidget] = useReducer(reducer, null, () =>
