@@ -66,6 +66,7 @@ export function exportDashboard() {
         ...JSON.parse(
           String(localStorage.getItem(getWidgetStorageKey(widgetHead)))
         ),
+        ...widgetHead,
         id: undefined
       };
     })
