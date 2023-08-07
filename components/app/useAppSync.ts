@@ -6,8 +6,8 @@ import { getClientId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
 import { WidgetHead, WidgetState } from '../widgets/widget';
 import widgetSyncService from '../widgets/widgetSyncService';
-import { AppState } from './app.d';
 import { AppAction } from './AppReducer';
+import { AppState } from './app.d';
 
 // Take the new app/dashboard state from the server and apply it to the local
 // application
@@ -94,7 +94,9 @@ function useAppSync(app: AppState, dispatchToApp: Dispatch<AppAction>): void {
         }
         const { data, error } = await supabase
           .from('dashboards')
-          .select('raw_data');
+          .select('raw_data')
+          // Always ensure the most recent dashboard is fetched from the server
+          .order('updated_at', { ascending: false });
         if (!(data && data.length > 0)) {
           pushLocalAppToServer(app);
           pushLocalWidgetsToServer(app);
@@ -108,13 +110,20 @@ function useAppSync(app: AppState, dispatchToApp: Dispatch<AppAction>): void {
   }, []);
 
   // Pull latest data from server on initial app load
+  const isDefaultAppState = app.id === undefined;
   useEffect(() => {
     if (app.id) {
       pullLatestAppFromServer(app, dispatchToApp);
     }
-    // We only want to pull the latest app data when the app ID changes
+    // We only want to pull the latest app data once per page load, when the
+    // default app state is replaced by the app from localStorage (hence why we
+    // pass the boolean variable as a dependency instead of passing app.id); if
+    // we were to pass app.id, the import functionality would break because the
+    // imported dashboard would have a randomized (but non-empty) UUID, which
+    // would cause this hook to pull the previous dashboard from the server and
+    // overwrite the imported dashboard state entirely
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, [app.id]);
+  }, [isDefaultAppState]);
 }
 
 export default useAppSync;
