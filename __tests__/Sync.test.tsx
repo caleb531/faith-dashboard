@@ -45,9 +45,36 @@ async function getDefaultWriteResponse() {
 
 type TableName = 'dashboards' | 'widgets';
 
+// The supabase.from().select() method returns a promise which also has .order()
+// and .where() methods, which also (respectively) return promises; therefore,
+// to mock this correctly and in a way where TypeScript won't complain, we must
+// subclass the native Promise class
+class SelectPromise<T> extends Promise<T> {
+  constructor(callback: ConstructorParameters<typeof Promise<T>>[0]) {
+    super(callback);
+  }
+  order?: jest.Mock;
+  where?: jest.Mock;
+}
+
 function mockSelect(tableName: TableName, response: any) {
-  supabaseFromMocks[tableName].select.mockImplementation(async () => {
-    return response;
+  supabaseFromMocks[tableName].select.mockImplementation(() => {
+    const promise = new SelectPromise((resolve) => {
+      resolve(response);
+    });
+    promise.order = jest
+      .fn()
+      .mockName(`${tableName} select.order`)
+      .mockImplementation(async () => {
+        return response;
+      });
+    promise.where = jest
+      .fn()
+      .mockName(`${tableName} select.where`)
+      .mockImplementation(async () => {
+        return response;
+      });
+    return promise;
   });
   return supabaseFromMocks[tableName].select;
 }
@@ -103,7 +130,7 @@ describe('Sync functionality', () => {
       ).toBeInTheDocument();
     });
     await waitFor(() => {
-      expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(2);
+      expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
       expect(supabaseFromMocks.widgets.select).toHaveBeenCalled();
     });
     expect(screen.getByText('Evening')).toBeInTheDocument();
