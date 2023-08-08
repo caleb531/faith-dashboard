@@ -23,11 +23,10 @@ export function broadcastPush(widgetId: string): void {
 // Broadcast the widget state from the server to the local component for that
 // widget
 export function broadcastPull(widgetId: string, widget: WidgetState): void {
-  if (widgetPullQueue[widgetId]) {
-    widgetPullQueue[widgetId].resolve(widget);
-  } else {
+  if (!widgetPullQueue[widgetId]) {
     widgetPullQueue[widgetId] = new Deferred();
   }
+  widgetPullQueue[widgetId].resolve(widget);
 }
 
 // Listen for broadcasts that this particular widget should push its state to
