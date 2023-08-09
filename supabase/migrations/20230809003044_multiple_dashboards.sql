@@ -1,7 +1,7 @@
 -- reset everything so this migration script can be re-run
+alter table public.widgets drop constraint if exists widgets_pkey;
 alter table public.widgets drop constraint if exists fk_dashboard_id;
 alter table public.dashboards drop constraint if exists unique_dashboard_id;
-alter table public.widgets drop constraint if exists widgets_pkey;
 
 -- Ensure that dashboard table's id (part of a composite primary key) is unique
 -- in itself
