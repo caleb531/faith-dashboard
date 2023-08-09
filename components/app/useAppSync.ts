@@ -27,7 +27,7 @@ async function applyServerAppToLocalApp(
     return;
   }
   const newWidgets: WidgetState[] = data.map((widgetRow) => {
-    return JSON.parse(widgetRow.raw_data);
+    return JSON.parse(String(widgetRow.raw_data));
   });
   newWidgets.forEach((widget) => {
     widgetSyncService.broadcastPull(widget.id, widget);
@@ -102,7 +102,7 @@ function useAppSync(app: AppState, dispatchToApp: Dispatch<AppAction>): void {
           pushLocalWidgetsToServer(app);
           return;
         }
-        const newApp: AppState = JSON.parse(data[0].raw_data);
+        const newApp: AppState = JSON.parse(String(data[0].raw_data));
         applyServerAppToLocalApp(newApp, dispatchToApp);
       },
       1000

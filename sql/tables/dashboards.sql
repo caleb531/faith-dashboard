@@ -1,5 +1,5 @@
 create table public.dashboards (
-  id uuid not null,
+  id uuid not null unique,
   raw_data json not null,
   user_id uuid references auth.users not null,
   client_id uuid,
