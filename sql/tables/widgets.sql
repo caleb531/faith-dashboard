@@ -4,7 +4,7 @@ create table public.widgets (
   user_id uuid references auth.users not null,
   client_id uuid,
   updated_at timestamptz,
-  dashboard_id references public.dashboards(id) not null
+  dashboard_id uuid references public.dashboards(id) not null,
   primary key(id, user_id, dashboard_id)
 );
 
