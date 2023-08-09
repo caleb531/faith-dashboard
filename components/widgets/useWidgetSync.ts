@@ -1,7 +1,7 @@
 import { Dispatch, useEffect, useRef } from 'react';
 import { getUser } from '../accountUtils';
 import { supabase } from '../supabaseClient';
-import { getClientId } from '../syncUtils';
+import { getClientId, getSelectedAppId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
 import { WidgetAction } from './useWidgetShell';
 import { WidgetState } from './widget';
@@ -21,6 +21,7 @@ async function pushLocalWidgetToServer(widget: WidgetState) {
     {
       id: widget.id,
       user_id: user.id,
+      dashboard_id: getSelectedAppId(),
       client_id: getClientId(),
       raw_data: JSON.stringify(widget),
       updated_at: new Date().toISOString()

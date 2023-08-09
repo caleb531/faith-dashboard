@@ -4,6 +4,7 @@ import { getAppStorageKey } from '../storageUtils';
 import TutorialFlow from '../tutorial/TutorialFlow';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 import useLocalStorage from '../useLocalStorage';
+import useMultipleDashboardsMigration from '../useMultipleDashboardsMigration';
 import usePasswordRecoveryRedirect from '../usePasswordRecoveryRedirect';
 import useTouchDeviceDetection from '../useTouchDeviceDetection';
 import AppContext from './AppContext';
@@ -47,6 +48,8 @@ function App({
   const [restoreApp, saveApp] = useLocalStorage(getAppStorageKey(), defaultApp);
   const [app, dispatchToApp] = useReducer(reducer, defaultApp);
   const [isTurorialStarted, setIsTutorialStarted] = useState(false);
+
+  useMultipleDashboardsMigration(app);
 
   // Update app state asynchronously and isomorphically (so as to avoid any SSR
   // mismatch with the rendered page HTML); we use useIsomorphicLayoutEffect()
