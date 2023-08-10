@@ -54,7 +54,7 @@ class SelectPromise<T> extends Promise<T> {
     super(callback);
   }
   order?: jest.Mock;
-  where?: jest.Mock;
+  match?: jest.Mock;
 }
 
 function mockSelect(tableName: TableName, response: any) {
@@ -68,7 +68,7 @@ function mockSelect(tableName: TableName, response: any) {
       .mockImplementation(async () => {
         return response;
       });
-    promise.where = jest
+    promise.match = jest
       .fn()
       .mockName(`${tableName} select.where`)
       .mockImplementation(async () => {
