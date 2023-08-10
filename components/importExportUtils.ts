@@ -45,7 +45,7 @@ export async function promptToImportDashboard(): Promise<AppState | null> {
     input.accept = '.json';
     input.onchange = (changeEvent: FormDataEvent) => {
       if (input.files) {
-        resolve(readDashboardFileToJSON(input?.files?.[0]));
+        resolve(readDashboardFileToJSON(input.files[0]));
       }
     };
     input.click();
