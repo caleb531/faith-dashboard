@@ -53,6 +53,9 @@ export function getWidgetData({
   return widgetData;
 }
 
+export function mockAlert(mockImpl: (message?: any) => void) {
+  return jest.spyOn(window, 'alert').mockImplementation(mockImpl);
+}
 export function mockConfirm(mockImpl: (message?: string) => boolean) {
   return jest.spyOn(window, 'confirm').mockImplementation(mockImpl);
 }

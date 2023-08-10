@@ -7,7 +7,11 @@ import Home from '../pages';
 import dashboardToExport from './__json__/dashboardToExport.json';
 import exportedDashboard from './__json__/exportedDashboard.json';
 import FileReaderMock from './__mocks__/FileReaderMock';
-import { assignIdToLocalApp, getAppData } from './__utils__/testUtils';
+import {
+  assignIdToLocalApp,
+  getAppData,
+  mockAlert
+} from './__utils__/testUtils';
 
 describe('Import/Export functionality', () => {
   afterEach(() => {
@@ -45,7 +49,7 @@ describe('Import/Export functionality', () => {
     let errorMessage;
     render(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();
-    jest.spyOn(window, 'alert').mockImplementation((message) => {
+    mockAlert((message) => {
       errorMessage = message;
     });
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
@@ -66,7 +70,7 @@ describe('Import/Export functionality', () => {
     let errorMessage;
     render(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();
-    jest.spyOn(window, 'alert').mockImplementation((message) => {
+    mockAlert((message) => {
       errorMessage = message;
     });
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
