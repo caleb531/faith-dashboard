@@ -1,0 +1,10 @@
+{
+  "theme": "evening",
+  "widgets": [
+    {
+      "type": "Note",
+      "column": 3,
+      "isSettingsOpen": false
+    }
+  ]
+}
