@@ -22,7 +22,10 @@ async function applyServerAppToLocalApp(
     type: 'replaceApp',
     payload: newApp
   });
-  const { data, error } = await supabase.from('widgets').select('raw_data');
+  const { data, error } = await supabase
+    .from('widgets')
+    .select('raw_data')
+    .match({ dashboard_id: newApp.id });
   if (!(data && data.length > 0)) {
     return;
   }
