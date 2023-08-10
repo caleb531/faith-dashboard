@@ -2,6 +2,7 @@ import { configure } from '@testing-library/dom';
 import fetch, { enableFetchMocks } from 'jest-fetch-mock';
 import { supabase } from '../../components/supabaseClient';
 import AudioMock from '../__mocks__/AudioMock';
+import FileReaderMock from '../__mocks__/FileReaderMock';
 import {
   MediaMetadataMock,
   mediaSessionMock
@@ -57,6 +58,7 @@ beforeEach(() => {
 afterEach(() => {
   fetch.resetMocks();
   audioStub.mockRestore();
+  FileReaderMock._fileData = '';
   AudioMock.instances.length = 0;
   onAuthStateChangeStub.mockRestore();
   Object.defineProperty(navigator, 'mediaSession', {
