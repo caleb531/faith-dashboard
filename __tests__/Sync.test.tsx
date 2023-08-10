@@ -21,17 +21,11 @@ import {
   mockSupabaseUser,
   supabaseFromMocks
 } from './__mocks__/supabaseMockUtils';
-import { removeWidget, waitForWidget } from './__utils__/testUtils';
-
-function assignIdToLocalApp(appId: string) {
-  const app =
-    JSON.parse(localStorage.getItem('faith-dashboard-app') || 'null') ||
-    appStateDefault;
-  localStorage.setItem(
-    'faith-dashboard-app',
-    JSON.stringify({ ...app, id: appId, shouldShowTutorial: false })
-  );
-}
+import {
+  assignIdToLocalApp,
+  removeWidget,
+  waitForWidget
+} from './__utils__/testUtils';
 
 // The default response of any Supabase call that writes to the database (i.e.
 // upsert and delete)

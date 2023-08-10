@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { v4 as uuidv4 } from 'uuid';
 import { AppState } from '../../components/app/app.types';
+import appStateDefault from '../../components/app/appStateDefault';
 import {
   WidgetHead,
   WidgetState,
@@ -80,4 +81,18 @@ export async function populateFormFields(fields: object) {
   for (const [name, value] of Object.entries(fields)) {
     await userEvent.type(screen.getByLabelText(name), value);
   }
+}
+
+export function assignIdToLocalApp(appId: string) {
+  const app =
+    JSON.parse(localStorage.getItem('faith-dashboard-app') || 'null') ||
+    appStateDefault;
+  localStorage.setItem(
+    'faith-dashboard-app',
+    JSON.stringify({ ...app, id: appId, shouldShowTutorial: false })
+  );
+}
+
+export function getCurrentAppId(): string | null | undefined {
+  return JSON.parse(String(localStorage.getItem('faith-dashboard-app')))?.id;
 }

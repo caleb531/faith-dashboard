@@ -1,9 +1,11 @@
 import '@testing-library/jest-dom';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { v4 as uuidv4 } from 'uuid';
 import Home from '../pages';
 import exportedDashboard from './__json__/exportedDashboard.json';
 import FileReaderMock from './__mocks__/FileReaderMock';
+import { assignIdToLocalApp, getCurrentAppId } from './__utils__/testUtils';
 
 describe('Import/Export functionality', () => {
   beforeEach(() => {
@@ -16,6 +18,8 @@ describe('Import/Export functionality', () => {
   });
 
   it('should import dashboard', async () => {
+    assignIdToLocalApp(uuidv4());
+    const originalAppId = getCurrentAppId();
     render(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
@@ -27,5 +31,7 @@ describe('Import/Export functionality', () => {
       });
     });
     expect(screen.queryByText('Evening')).toBeInTheDocument();
+    const newAppId = getCurrentAppId();
+    expect(newAppId).not.toEqual(originalAppId);
   });
 });
