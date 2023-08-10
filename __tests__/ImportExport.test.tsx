@@ -62,6 +62,25 @@ describe('Import/Export functionality', () => {
     );
   });
 
+  it('should not import dashboard from malformed JSON file', async () => {
+    let errorMessage;
+    render(<Home />);
+    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    jest.spyOn(window, 'alert').mockImplementation((message) => {
+      errorMessage = message;
+    });
+    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    const fileContents = 'not_valid_json';
+    FileReaderMock._fileData = fileContents;
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText('Import Dashboard'), {
+        target: { files: [new File([fileContents], 'blankFile.json')] }
+      });
+    });
+    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    expect(errorMessage).toEqual('Unexpected token o in JSON at position 1');
+  });
+
   it('should not trigger import if files are missing', async () => {
     render(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();
