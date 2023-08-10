@@ -1,13 +1,13 @@
 import { defer } from 'lodash-es';
 import Link from 'next/link';
-import { ReactNode, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { isTruthy } from '../accountUtils';
 
 type MenuItem = {
   key: string;
   content: string | ReactNode;
   href?: string;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent | React.KeyboardEvent) => void;
 };
 
 type Props = {
@@ -19,9 +19,13 @@ type Props = {
 function AppHeaderMenu({ label, icon, items }: Props) {
   const [isShowingMenu, setIsShowingMenu] = useState(false);
 
-  function wrapMenuItemClick(onClick: MenuItem['onClick']) {
+  function wrapMenuItemClick(
+    event: React.MouseEvent | React.KeyboardEvent,
+    onClick: MenuItem['onClick']
+  ) {
+    event.preventDefault();
     if (onClick) {
-      onClick();
+      onClick(event);
       setIsShowingMenu(false);
     }
   }
@@ -53,7 +57,17 @@ function AppHeaderMenu({ label, icon, items }: Props) {
                   {item.href ? (
                     <Link href={item.href}>{item.content}</Link>
                   ) : item.onClick ? (
-                    <a onClick={() => wrapMenuItemClick(item.onClick)}>
+                    <a
+                      href="#"
+                      onClick={(event) =>
+                        wrapMenuItemClick(event, item.onClick)
+                      }
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          wrapMenuItemClick(event, item.onClick);
+                        }
+                      }}
+                    >
                       {item.content}
                     </a>
                   ) : (

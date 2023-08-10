@@ -152,7 +152,9 @@ function AppHeaderAccount() {
               key: 'import-dashboard',
               content: (
                 <label htmlFor="app-import-input">
-                  <a>Import Dashboard</a>
+                  <a href="#" onClick={(event) => event.preventDefault()}>
+                    Import Dashboard
+                  </a>
                 </label>
               )
             },

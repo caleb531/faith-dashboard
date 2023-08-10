@@ -79,7 +79,8 @@
   font-size: var(--font-size-xxs);
   color: inherit;
   text-decoration: none;
-  &:not([data-disabled]):hover {
+  &:not([data-disabled]):hover,
+  &:not([data-disabled]):focus-visible {
     background-color: var(--color-blue);
     color: var(--color-white-100);
     cursor: pointer;
