@@ -79,7 +79,7 @@
     "jest-preview": "^0.3.1",
     "prettier": "^3.0.1",
     "puppeteer": "^21.0.2",
-    "sass": "^1.65.0",
+    "sass": "^1.65.1",
     "supabase": "^1.83.7",
     "ts-node": "^10.9.1",
     "tsx": "^3.12.7",
