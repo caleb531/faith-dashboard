@@ -55,6 +55,20 @@ describe('Import/Export functionality', () => {
     expect(screen.queryByText('Shore')).toBeInTheDocument();
   });
 
+  it('should not trigger import if files are missing', async () => {
+    render(<Home />);
+    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    const fileContents = '';
+    FileReaderMock._fileData = fileContents;
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText('Import Dashboard'), {
+        target: { files: [] }
+      });
+    });
+    expect(screen.queryByText('Shore')).toBeInTheDocument();
+  });
+
   it('should export dashboard', async () => {
     let exportedBlob: Blob | undefined;
     localStorage.setItem(
