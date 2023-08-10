@@ -20,15 +20,19 @@ export function randomizeUUIDs(app: AppState): AppState {
 
 // Import a dashboard into the application from the given File object (which is
 // probably the result of an <input type=file /> prompt)
-export async function readDashboardFileToJSON(
-  file: File
-): Promise<AppState | null> {
+export async function readDashboardFileToJSON(file: File): Promise<AppState> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (loadEvent) => {
       const app = JSON.parse(String(loadEvent.target?.result || null));
       if (app && app.widgets) {
         resolve(randomizeUUIDs(app));
+      } else {
+        reject(
+          new Error(
+            'Dashboard file is not in the correct format. Please try another file.'
+          )
+        );
       }
     };
     reader.onerror = reject;

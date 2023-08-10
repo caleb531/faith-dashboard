@@ -29,11 +29,18 @@ function AppHeaderAccount() {
     if (!fileInput?.files?.length) {
       return;
     }
-    const newApp = await readDashboardFileToJSON(fileInput.files[0]);
-    if (newApp) {
-      // Reset file input for any subsequent imports
-      fileInput.value = '';
+    try {
+      const newApp = await readDashboardFileToJSON(fileInput.files[0]);
       dispatchToApp({ type: 'replaceApp', payload: newApp });
+    } catch (error) {
+      alert(
+        error instanceof Error && error.message
+          ? error.message
+          : 'An error occurred while uploading the file. Please try again.'
+      );
+    } finally {
+      // Always reset file input for any subsequent imports
+      fileInput.value = '';
     }
   }
   async function handleExportDashboard() {

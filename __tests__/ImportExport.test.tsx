@@ -42,8 +42,12 @@ describe('Import/Export functionality', () => {
   });
 
   it('should not import dashboard from empty JSON file', async () => {
+    let errorMessage;
     render(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();
+    jest.spyOn(window, 'alert').mockImplementation((message) => {
+      errorMessage = message;
+    });
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
     const fileContents = '';
     FileReaderMock._fileData = fileContents;
@@ -53,6 +57,9 @@ describe('Import/Export functionality', () => {
       });
     });
     expect(screen.queryByText('Shore')).toBeInTheDocument();
+    expect(errorMessage).toEqual(
+      'Dashboard file is not in the correct format. Please try another file.'
+    );
   });
 
   it('should not trigger import if files are missing', async () => {
