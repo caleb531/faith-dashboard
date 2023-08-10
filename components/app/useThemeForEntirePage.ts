@@ -1,6 +1,6 @@
 import { groupBy } from 'lodash-es';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
-import { AppTheme } from './app.d';
+import { AppTheme } from './app.types';
 import colorThemeList from './appColorThemeList';
 import photoThemeList from './appPhotoThemeList';
 

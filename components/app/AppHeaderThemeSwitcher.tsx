@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
-import { AppTheme } from './app.d';
+import ThemeSwitcher from './ThemeSwitcher';
+import { AppTheme } from './app.types';
 import colorThemeList from './appColorThemeList';
 import photoThemeList from './appPhotoThemeList';
-import ThemeSwitcher from './ThemeSwitcher';
 
 const allThemes = [...photoThemeList, ...colorThemeList];
 

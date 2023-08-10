@@ -1,4 +1,4 @@
-import { WidgetHead } from './widgets/widget';
+import { WidgetHead } from './widgets/widget.types';
 
 export function getSelectedAppIdStorageKey() {
   return 'faith-dashboard-selected-appid';

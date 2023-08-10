@@ -1,5 +1,5 @@
 import { Deferred } from '../deferred';
-import { WidgetState } from './widget.d';
+import { WidgetState } from './widget.types';
 
 // The callback for a widget sync event
 type WidgetPushQueue = Record<string, Deferred<void>>;

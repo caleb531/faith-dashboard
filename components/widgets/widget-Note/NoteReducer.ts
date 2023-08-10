@@ -1,5 +1,5 @@
 import { WidgetAction } from '../useWidgetShell';
-import { NoteWidgetState } from './note.d';
+import { NoteWidgetState } from './note.types';
 
 export type NoteAction =
   | WidgetAction

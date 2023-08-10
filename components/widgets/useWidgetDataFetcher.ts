@@ -1,8 +1,8 @@
 import { format } from 'date-fns';
 import React, { Dispatch, RefObject, useEffect, useRef } from 'react';
-import { JSONSerializable } from '../global.d';
+import { JSONSerializable } from '../global.types';
 import { WidgetAction } from './useWidgetShell';
-import { WidgetState } from './widget.d';
+import { WidgetState } from './widget.types';
 
 // Return true if the user currently has network connectivity, and false
 // otherwise; this behavior may vary slightly depending on the browser

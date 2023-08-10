@@ -1,4 +1,4 @@
-import { AppState } from './app/app.d';
+import { AppState } from './app/app.types';
 import { getSelectedAppIdStorageKey } from './storageUtils';
 import useLocalStorage from './useLocalStorage';
 

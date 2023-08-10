@@ -1,8 +1,8 @@
 import React from 'react';
 import useUniqueFieldId from '../../useUniqueFieldId';
-import useWidgetShell from '../useWidgetShell';
-import { WidgetParameters } from '../widget.d';
 import WidgetShell from '../WidgetShell';
+import useWidgetShell from '../useWidgetShell';
+import { WidgetParameters } from '../widget.types';
 import reducer from './NoteReducer';
 
 const NoteWidget = React.memo(function NoteWidget({

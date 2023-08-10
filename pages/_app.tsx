@@ -1,6 +1,6 @@
 import { AppProps } from 'next/app';
-import { PageProps } from '../components/global';
 import PageHead from '../components/PageHead';
+import { PageProps } from '../components/global.types';
 import usePlausibleAnalytics from '../components/usePlausibleAnalytics';
 import '../styles/index.scss';
 import '../styles/landing-page.scss';

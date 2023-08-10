@@ -5,9 +5,9 @@ import useUniqueFieldId from '../../useUniqueFieldId';
 import WidgetShell from '../WidgetShell';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useWidgetShell from '../useWidgetShell';
-import { WidgetParameters } from '../widget.d';
+import { WidgetParameters } from '../widget.types';
 import reducer from './BibleVerseReducer';
-import { BibleReference } from './bibleVerse.d';
+import { BibleReference } from './bibleVerse.types';
 
 const BibleVerseWidget = React.memo(function BibleVerseWidget({
   widgetHead,

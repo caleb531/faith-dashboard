@@ -2,21 +2,21 @@ import React from 'react';
 import useCachedAudio from '../../reusable/audio-player/useCachedAudio';
 import useCachedState from '../../useCachedState';
 import useMediaSession from '../../useMediaSession';
+import WidgetShell from '../WidgetShell';
 import useWidgetCleanupOnRemove from '../useWidgetCleanupOnRemove';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
 import useWidgetShell from '../useWidgetShell';
-import { WidgetParameters } from '../widget.d';
-import WidgetShell from '../WidgetShell';
-import {
-  PodcastFeedData,
-  PodcastInfo,
-  PodcastSearchResponse
-} from './podcast.d';
+import { WidgetParameters } from '../widget.types';
 import PodcastContext from './PodcastContext';
 import PodcastEpisodeList from './PodcastEpisodeList';
 import PodcastNowPlaying from './PodcastNowPlaying';
 import reducer from './PodcastReducer';
 import PodcastSettings from './PodcastSettings';
+import {
+  PodcastFeedData,
+  PodcastInfo,
+  PodcastSearchResponse
+} from './podcast.types';
 
 const PodcastWidget = React.memo(function PodcastWidget({
   widgetHead,

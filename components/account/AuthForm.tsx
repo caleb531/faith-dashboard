@@ -1,7 +1,7 @@
 import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import React, { useRef, useState } from 'react';
-import { JSXChildren } from '../global';
+import { JSXChildren } from '../global.types';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 import useMountListener from '../useMountListener';
 import useTimeout from '../useTimeout';

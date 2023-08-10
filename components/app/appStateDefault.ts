@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { AppState } from './app.d';
+import { AppState } from './app.types';
 
 export default {
   theme: 'shore',

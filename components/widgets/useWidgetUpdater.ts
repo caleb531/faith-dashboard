@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { WidgetState } from './widget.d';
+import { WidgetState } from './widget.types';
 
 // The useWidgetUpdater() hook persists updates to the widget in the global
 // application state; do not call this hook directly, but rather, call the

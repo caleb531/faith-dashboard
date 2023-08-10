@@ -1,8 +1,8 @@
 import { debounce } from 'lodash-es';
 import { useEffect, useMemo } from 'react';
-import { AppState } from './app/app.d';
+import { AppState } from './app/app.types';
 import useObjectHasChanged from './useObjectHasChanged';
-import { WidgetState } from './widgets/widget';
+import { WidgetState } from './widgets/widget.types';
 
 // The number of milliseconds to wait since the last state change before
 // pushing the state to the server

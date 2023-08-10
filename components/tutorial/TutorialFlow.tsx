@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useCallback, useContext, useState } from 'react';
 import AppContext from '../app/AppContext';
-import { JSXChildren } from '../global';
+import { JSXChildren } from '../global.types';
 import useMemoizedContextValue from '../useMemoizedContextValue';
 import TutorialContext from './TutorialContext';
 import TutorialOverlay from './TutorialOverlay';

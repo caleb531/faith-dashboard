@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { WidgetTypeId } from '../components/widgets/widget';
+import { WidgetTypeId } from '../components/widgets/widget.types';
 import widgetTypes from '../components/widgets/widgetTypes';
 import Home from '../pages/index';
 

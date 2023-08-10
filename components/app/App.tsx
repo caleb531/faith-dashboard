@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-import { JSXChildren } from '../global';
+import { JSXChildren } from '../global.types';
 import { getAppStorageKey } from '../storageUtils';
 import TutorialFlow from '../tutorial/TutorialFlow';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
@@ -14,7 +14,7 @@ import AppNotification from './AppNotification';
 import reducer from './AppReducer';
 import ThemeMetadata from './ThemeMetadata';
 import UpdateNotification from './UpdateNotification';
-import { AppState } from './app.d';
+import { AppState } from './app.types';
 import defaultApp from './appStateDefault';
 import getAppNotificationMessage from './getAppNotificationMessage';
 import useAppSync from './useAppSync';

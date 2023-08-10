@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { WidgetState } from './widget.d';
+import { WidgetState } from './widget.types';
 
 // The duration (in ms) of a widget transitioning onto / off of the dashboard
 // (i.e as the result of adding or removing a widget); this value MUST match

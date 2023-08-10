@@ -1,4 +1,4 @@
-import { WidgetState } from '../widget.d';
+import { WidgetState } from '../widget.types';
 
 export interface PodcastWidgetState extends WidgetState {
   podcastQuery: string;

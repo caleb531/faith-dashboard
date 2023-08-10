@@ -11,8 +11,8 @@
     "start": "next start",
     "test": "jest",
     "coverage": "jest --coverage",
-    "prettier": "prettier -w components/**/*.ts pages styles __tests__/**/*.ts utilities --ignore-path components/databaseSchema.d.ts",
-    "generate-database-types": "supabase gen types typescript --local > components/databaseSchema.d.ts",
+    "prettier": "prettier -w components/**/*.ts pages styles __tests__/**/*.ts utilities --ignore-path components/databaseSchema.types.ts",
+    "generate-database-types": "supabase gen types typescript --local > components/databaseSchema.types.ts",
     "screenshot-social-preview": "tsx utilities/screenshot-social-preview.ts"
   },
   "cacheDirectories": [

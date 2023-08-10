@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { PageProps } from './global';
+import { PageProps } from './global.types';
 import site from './siteData';
 
 // The <head> content that should appear on all pages; the props for the

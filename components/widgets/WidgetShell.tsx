@@ -2,13 +2,13 @@ import { DraggableProvided } from '@hello-pangea/dnd';
 import classNames from 'classnames';
 import React, { Dispatch, useCallback, useContext } from 'react';
 import AppContext from '../app/AppContext';
-import { JSXChildren } from '../global';
+import { JSXChildren } from '../global.types';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import { WidgetAction } from './useWidgetShell';
 import useWidgetTransitioner from './useWidgetTransitioner';
-import { WidgetState } from './widget.d';
+import { WidgetState } from './widget.types';
 
 type Props = {
   widget: WidgetState;

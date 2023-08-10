@@ -2,10 +2,10 @@ import { diff } from 'deep-object-diff';
 import { Dispatch, useReducer } from 'react';
 import { getWidgetStorageKey } from '../storageUtils';
 import useLocalStorage from '../useLocalStorage';
-import { WidgetHead, WidgetState } from '../widgets/widget.d';
 import widgetTypes from '../widgets/widgetTypes';
 import useWidgetSync from './useWidgetSync';
 import useWidgetUpdater from './useWidgetUpdater';
+import { WidgetHead, WidgetState } from './widget.types';
 
 export type WidgetAction =
   | { type: 'toggleSettings' }

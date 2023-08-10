@@ -4,8 +4,8 @@ import { useContext } from 'react';
 import AppContext from '../app/AppContext';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
-import { WidgetHead } from './widget.d';
 import WidgetBoardColumn from './WidgetBoardColumn';
+import { WidgetHead } from './widget.types';
 
 /* istanbul ignore next */
 // Convert the ID of a dropzone to a base-1 column index (e.g. "column-3" => 3)

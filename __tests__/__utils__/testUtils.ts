@@ -1,12 +1,12 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { v4 as uuidv4 } from 'uuid';
-import { AppState } from '../../components/app/app.d';
+import { AppState } from '../../components/app/app.types';
 import {
   WidgetHead,
   WidgetState,
   WidgetTypeId
-} from '../../components/widgets/widget';
+} from '../../components/widgets/widget.types';
 
 export function createWidget(props: object): WidgetHead {
   return {

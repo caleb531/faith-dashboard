@@ -1,5 +1,5 @@
 import { WidgetAction } from '../useWidgetShell';
-import { PodcastFeedData, PodcastWidgetState } from './podcast.d';
+import { PodcastFeedData, PodcastWidgetState } from './podcast.types';
 
 export type PodcastAction =
   | WidgetAction

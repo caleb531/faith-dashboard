@@ -1,7 +1,10 @@
 import { debounce } from 'lodash-es';
 import { RefObject, useLayoutEffect, useMemo, useState } from 'react';
 import useEventListener from '../useEventListener';
-import { TutorialStep, TutorialStepPosition as Position } from './tutorial.d';
+import {
+  TutorialStepPosition as Position,
+  TutorialStep
+} from './tutorial.types';
 
 // If the position of a tutorial step is set to 'auto', then this module will
 // do its best to position the message by enumerating the following array until

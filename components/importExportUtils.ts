@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { AppState } from './app/app.d';
+import { AppState } from './app/app.types';
 import appStateDefault from './app/appStateDefault';
 import { getAppStorageKey, getWidgetStorageKey } from './storageUtils';
 

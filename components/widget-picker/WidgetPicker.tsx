@@ -1,5 +1,5 @@
 import Modal from '../reusable/Modal';
-import { WidgetType } from '../widgets/widget.d';
+import { WidgetType } from '../widgets/widget.types';
 import widgetTypes from '../widgets/widgetTypes';
 import WidgetPickerEntry from './WidgetPickerEntry';
 

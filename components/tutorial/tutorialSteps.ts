@@ -1,4 +1,4 @@
-import { TutorialStep } from './tutorial.d';
+import { TutorialStep } from './tutorial.types';
 
 const tutorialSteps: TutorialStep[] = [
   {

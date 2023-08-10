@@ -1,5 +1,5 @@
 import { Draggable, Droppable } from '@hello-pangea/dnd';
-import { WidgetHead } from './widget.d';
+import { WidgetHead } from './widget.types';
 import widgetTypeMap from './widgetTypeMap';
 
 type Props = {

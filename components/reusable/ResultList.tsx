@@ -1,5 +1,5 @@
 import React from 'react';
-import { Result } from './resultList.d';
+import { Result } from './resultList.types';
 
 // A generic result list to be used within any widget and which can contain any
 // list of data (search results or otherwise)

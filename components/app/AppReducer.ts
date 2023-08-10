@@ -5,8 +5,8 @@ import {
   WidgetHead,
   WidgetMoveParameters,
   WidgetState
-} from '../widgets/widget';
-import { AppState, AppTheme } from './app.d';
+} from '../widgets/widget.types';
+import { AppState, AppTheme } from './app.types';
 
 export type AppAction =
   | { type: 'changeTheme'; payload: AppTheme }

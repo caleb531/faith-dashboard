@@ -4,7 +4,7 @@ import { supabase } from '../supabaseClient';
 import { getClientId, getSelectedAppId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
 import { WidgetAction } from './useWidgetShell';
-import { WidgetState } from './widget';
+import { WidgetState } from './widget.types';
 import widgetSyncService from './widgetSyncService';
 
 // Push the local widget state to the server; this function runs when the

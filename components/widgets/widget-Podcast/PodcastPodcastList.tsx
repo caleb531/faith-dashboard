@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import ResultList from '../../reusable/ResultList';
-import { Result } from '../../reusable/resultList.d';
-import { PodcastInfo } from './podcast.d';
+import { Result } from '../../reusable/resultList.types';
 import PodcastContext from './PodcastContext';
+import { PodcastInfo } from './podcast.types';
 
 type Props = {
   podcastList: PodcastInfo[];

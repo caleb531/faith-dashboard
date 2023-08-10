@@ -1,5 +1,5 @@
 import { sortBy } from 'lodash-es';
-import { AppThemeListItem } from './app.d';
+import { AppThemeListItem } from './app.types';
 
 const colorThemeList: AppThemeListItem[] = sortBy(
   [

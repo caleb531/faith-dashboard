@@ -1,4 +1,4 @@
-import { WidgetHead } from '../widgets/widget.d';
+import { WidgetHead } from '../widgets/widget.types';
 
 // An available color theme that can be set by the user to personalize their
 // app dashboard
@@ -32,7 +32,7 @@ export interface AppState {
 }
 
 // A dropdown entry for an available app color theme
-interface AppThemeListItem {
+export interface AppThemeListItem {
   label: string;
   value: AppTheme;
 }

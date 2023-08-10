@@ -1,5 +1,5 @@
 import { WidgetAction } from '../useWidgetShell';
-import { BibleReference, BibleVerseWidgetState } from './bibleVerse.d';
+import { BibleReference, BibleVerseWidgetState } from './bibleVerse.types';
 
 export type BibleVerseAction =
   | WidgetAction

@@ -1,9 +1,9 @@
 import { formatDistanceToNow } from 'date-fns';
 import { useContext } from 'react';
 import ResultList from '../../reusable/ResultList';
-import { Result } from '../../reusable/resultList.d';
-import { PodcastEpisode, PodcastWidgetState } from './podcast.d';
+import { Result } from '../../reusable/resultList.types';
 import PodcastContext from './PodcastContext';
+import { PodcastEpisode, PodcastWidgetState } from './podcast.types';
 
 type Props = {
   widget: PodcastWidgetState;

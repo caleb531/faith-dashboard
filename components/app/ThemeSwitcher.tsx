@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import Modal from '../reusable/Modal';
 import useTimeout from '../useTimeout';
-import { AppTheme } from './app.d';
-import colorThemeList from './appColorThemeList';
 import AppContext from './AppContext';
-import photoThemeList from './appPhotoThemeList';
 import ThemeSwitcherList from './ThemeSwitcherList';
+import { AppTheme } from './app.types';
+import colorThemeList from './appColorThemeList';
+import photoThemeList from './appPhotoThemeList';
 
 // The number of milliseconds that the Theme Switcher modal will stay open
 // after choosing a theme (to give the user time to react to the change)

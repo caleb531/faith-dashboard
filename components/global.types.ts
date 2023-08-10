@@ -6,13 +6,13 @@ export type JSONSerializable =
   | string
   | number
   | boolean
-  | Array<JSONSerializable>
+  | JSONSerializable[]
   | object
-  | Record<string, JSONSerializable>
+  | { [key: string]: JSONSerializable }
   | null;
 
 // The props that must be defined for each and every page
-interface PageProps {
+export interface PageProps {
   pagePath: string;
   pageTitle: string;
   pageDescription: string;

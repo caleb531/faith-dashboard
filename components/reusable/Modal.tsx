@@ -1,4 +1,4 @@
-import { JSXChildren } from '../global';
+import { JSXChildren } from '../global.types';
 
 type Props = {
   children: JSXChildren;

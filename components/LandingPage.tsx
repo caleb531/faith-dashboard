@@ -1,5 +1,5 @@
 import App from './app/App';
-import { JSXChildren } from './global';
+import { JSXChildren } from './global.types';
 import LinkButton from './reusable/LinkButton';
 
 type Props = {

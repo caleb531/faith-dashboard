@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { AppTheme } from './app.d';
 import AppHeaderAccount from './AppHeaderAccount';
 import AppHeaderAddWidgetButton from './AppHeaderAddWidgetButton';
 import AppHeaderThemeSwitcher from './AppHeaderThemeSwitcher';
+import { AppTheme } from './app.types';
 
 type Props = {
   currentTheme: AppTheme;

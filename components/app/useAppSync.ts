@@ -4,10 +4,10 @@ import { getUser, isSessionActive } from '../accountUtils';
 import { supabase } from '../supabaseClient';
 import { getClientId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
-import { WidgetHead, WidgetState } from '../widgets/widget';
+import { WidgetHead, WidgetState } from '../widgets/widget.types';
 import widgetSyncService from '../widgets/widgetSyncService';
 import { AppAction } from './AppReducer';
-import { AppState } from './app.d';
+import { AppState } from './app.types';
 
 // Take the new app/dashboard state from the server and apply it to the local
 // application

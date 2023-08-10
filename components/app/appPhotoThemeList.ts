@@ -1,4 +1,4 @@
-import { AppThemeListItem } from './app.d';
+import { AppThemeListItem } from './app.types';
 
 const photoThemeList: AppThemeListItem[] = [
   {

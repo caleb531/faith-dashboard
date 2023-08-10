@@ -1,6 +1,6 @@
 import useUniqueFieldId from '../../useUniqueFieldId';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
-import { PodcastInfo } from './podcast.d';
+import { PodcastInfo } from './podcast.types';
 import PodcastPodcastList from './PodcastPodcastList';
 
 type Props = {

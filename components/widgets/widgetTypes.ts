@@ -1,4 +1,4 @@
-import { WidgetType } from './widget.d';
+import { WidgetType } from './widget.types';
 
 const widgetTypes: WidgetType[] = [
   {

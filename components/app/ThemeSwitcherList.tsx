@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import React from 'react';
-import { AppTheme, AppThemeListItem } from './app.d';
+import { AppTheme, AppThemeListItem } from './app.types';
 
 type Props = {
   themeList: AppThemeListItem[];
