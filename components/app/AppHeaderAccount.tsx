@@ -21,6 +21,7 @@ function AppHeaderAccount() {
   const [session, setSession] = useState<Session | null>(null);
   const [isUserActive, setIsUserActive] = useState(false);
   const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
+  const isSignedIn = session && isUserActive;
 
   async function handleFileInputChange(
     event: React.FormEvent<HTMLInputElement>
@@ -31,7 +32,12 @@ function AppHeaderAccount() {
     }
     try {
       const newApp = await readDashboardFileToJSON(fileInput.files[0]);
-      dispatchToApp({ type: 'replaceApp', payload: newApp });
+      const confirmation = confirm(
+        'This will overwrite your current dashboard. Are you sure you want to continue?'
+      );
+      if (!isSignedIn || confirmation) {
+        dispatchToApp({ type: 'replaceApp', payload: newApp });
+      }
     } catch (error) {
       alert(
         error instanceof Error && error.message
@@ -112,8 +118,6 @@ function AppHeaderAccount() {
       data.subscription.unsubscribe();
     };
   }, []);
-
-  const isSignedIn = session && isUserActive;
 
   return (
     <div className="app-header-account">

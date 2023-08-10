@@ -111,3 +111,67 @@ export function mockSupabaseFrom() {
       return supabaseFromMocks[tableName] as any;
     }) as any;
 }
+
+// The default response of any Supabase call that writes to the database (i.e.
+// upsert and delete)
+async function getDefaultWriteResponse() {
+  return {
+    user: await getUser(),
+    session: supabase.auth.getSession(),
+    error: null
+  };
+}
+
+export type TableName = 'dashboards' | 'widgets';
+
+// The supabase.from().select() method returns a promise which also has .order()
+// and .where() methods, which also (respectively) return promises; therefore,
+// to mock this correctly and in a way where TypeScript won't complain, we must
+// subclass the native Promise class
+export class SelectPromise<T> extends Promise<T> {
+  constructor(callback: ConstructorParameters<typeof Promise<T>>[0]) {
+    super(callback);
+  }
+  order?: jest.Mock;
+  match?: jest.Mock;
+}
+
+export function mockSelect(tableName: TableName, response: any) {
+  supabaseFromMocks[tableName].select.mockImplementation(() => {
+    const promise = new SelectPromise((resolve) => {
+      resolve(response);
+    });
+    promise.order = jest
+      .fn()
+      .mockName(`${tableName} select.order`)
+      .mockImplementation(async () => {
+        return response;
+      });
+    promise.match = jest
+      .fn()
+      .mockName(`${tableName} select.where`)
+      .mockImplementation(async () => {
+        return response;
+      });
+    return promise;
+  });
+  return supabaseFromMocks[tableName].select;
+}
+
+export function mockUpsert(tableName: TableName) {
+  supabaseFromMocks[tableName].upsert.mockImplementation(async () => {
+    return getDefaultWriteResponse();
+  });
+  return supabaseFromMocks[tableName].upsert;
+}
+
+export function mockDelete(tableName: TableName) {
+  supabaseFromMocks[tableName].delete.mockImplementation(() => {
+    return {
+      match: jest.fn().mockImplementation(async () => {
+        return getDefaultWriteResponse();
+      })
+    };
+  });
+  return supabaseFromMocks[tableName].delete;
+}

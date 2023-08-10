@@ -8,17 +8,25 @@ import dashboardToExport from './__json__/dashboardToExport.json';
 import exportedDashboard from './__json__/exportedDashboard.json';
 import FileReaderMock from './__mocks__/FileReaderMock';
 import {
+  mockSelect,
+  mockSupabaseFrom,
+  mockSupabaseSession,
+  mockSupabaseUser
+} from './__mocks__/supabaseMockUtils';
+import {
   assignIdToLocalApp,
   getAppData,
-  mockAlert
+  mockAlert,
+  mockConfirm
 } from './__utils__/testUtils';
 
 describe('Import/Export functionality', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetAllMocks();
   });
 
   it('should import dashboard', async () => {
+    mockConfirm(() => true);
     assignIdToLocalApp(uuidv4());
     const originalApp = getAppData();
     render(<Home />);
@@ -43,6 +51,45 @@ describe('Import/Export functionality', () => {
       expect(originalWidgetIds.has(newWidget.id)).toBeFalsy();
     });
     expect(originalApp.widgets).toHaveLength(4);
+  });
+
+  it('should display confirmation if user is signed in', async () => {
+    localStorage.setItem('hey', 'true');
+    await mockSupabaseUser();
+    await mockSupabaseSession();
+    mockSupabaseFrom();
+    mockSelect('dashboards', { data: [] });
+    mockConfirm(() => true);
+    render(<Home />);
+    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    const fileContents = JSON.stringify(exportedDashboard);
+    FileReaderMock._fileData = fileContents;
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText('Import Dashboard'), {
+        target: { files: [new File([fileContents], 'exportedDashboard.json')] }
+      });
+    });
+    expect(screen.queryByText('Evening')).toBeInTheDocument();
+  });
+
+  it('should not import dashboard is user denied confirmation', async () => {
+    await mockSupabaseUser();
+    await mockSupabaseSession();
+    mockSupabaseFrom();
+    mockSelect('dashboards', { data: [] });
+    mockConfirm(() => false);
+    render(<Home />);
+    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    const fileContents = JSON.stringify(exportedDashboard);
+    FileReaderMock._fileData = fileContents;
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText('Import Dashboard'), {
+        target: { files: [new File([fileContents], 'exportedDashboard.json')] }
+      });
+    });
+    expect(screen.queryByText('Shore')).toBeInTheDocument();
   });
 
   it('should not import dashboard from empty JSON file', async () => {

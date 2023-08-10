@@ -7,7 +7,6 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { v4 as uuidv4 } from 'uuid';
-import { getUser } from '../components/accountUtils';
 import appStateDefault from '../components/app/appStateDefault';
 import { Deferred } from '../components/deferred';
 import { supabase } from '../components/supabaseClient';
@@ -16,9 +15,12 @@ import Home from '../pages';
 import dashboardToPullJson from './__json__/dashboardToPull.json';
 import widgetToPullJson from './__json__/widgetToPull.json';
 import {
+  mockDelete,
+  mockSelect,
   mockSupabaseFrom,
   mockSupabaseSession,
   mockSupabaseUser,
+  mockUpsert,
   supabaseFromMocks
 } from './__mocks__/supabaseMockUtils';
 import {
@@ -26,70 +28,6 @@ import {
   removeWidget,
   waitForWidget
 } from './__utils__/testUtils';
-
-// The default response of any Supabase call that writes to the database (i.e.
-// upsert and delete)
-async function getDefaultWriteResponse() {
-  return {
-    user: await getUser(),
-    session: supabase.auth.getSession(),
-    error: null
-  };
-}
-
-type TableName = 'dashboards' | 'widgets';
-
-// The supabase.from().select() method returns a promise which also has .order()
-// and .where() methods, which also (respectively) return promises; therefore,
-// to mock this correctly and in a way where TypeScript won't complain, we must
-// subclass the native Promise class
-class SelectPromise<T> extends Promise<T> {
-  constructor(callback: ConstructorParameters<typeof Promise<T>>[0]) {
-    super(callback);
-  }
-  order?: jest.Mock;
-  match?: jest.Mock;
-}
-
-function mockSelect(tableName: TableName, response: any) {
-  supabaseFromMocks[tableName].select.mockImplementation(() => {
-    const promise = new SelectPromise((resolve) => {
-      resolve(response);
-    });
-    promise.order = jest
-      .fn()
-      .mockName(`${tableName} select.order`)
-      .mockImplementation(async () => {
-        return response;
-      });
-    promise.match = jest
-      .fn()
-      .mockName(`${tableName} select.where`)
-      .mockImplementation(async () => {
-        return response;
-      });
-    return promise;
-  });
-  return supabaseFromMocks[tableName].select;
-}
-
-function mockUpsert(tableName: TableName) {
-  supabaseFromMocks[tableName].upsert.mockImplementation(async () => {
-    return getDefaultWriteResponse();
-  });
-  return supabaseFromMocks[tableName].upsert;
-}
-
-function mockDelete(tableName: TableName) {
-  supabaseFromMocks[tableName].delete.mockImplementation(() => {
-    return {
-      match: jest.fn().mockImplementation(async () => {
-        return getDefaultWriteResponse();
-      })
-    };
-  });
-  return supabaseFromMocks[tableName].delete;
-}
 
 const originalOnPush = widgetSyncService.onPush;
 const originalBroadcastPush = widgetSyncService.broadcastPush;
@@ -271,7 +209,7 @@ describe('Sync functionality', () => {
   });
 
   it('should not push on widget change if not signed in', async () => {
-    mockSupabaseUser(null);
+    await mockSupabaseUser(null);
     await mockSupabaseSession(null);
     mockSupabaseFrom();
     const appId = uuidv4();
@@ -300,7 +238,7 @@ describe('Sync functionality', () => {
   });
 
   it('should not pull latest dashboard if not signed in', async () => {
-    mockSupabaseUser(null);
+    await mockSupabaseUser(null);
     await mockSupabaseSession(null);
     mockSupabaseFrom();
     mockSelect('dashboards', { data: [] });
