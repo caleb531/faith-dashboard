@@ -25,7 +25,7 @@ describe('Import/Export functionality', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
     const fileContents = JSON.stringify(exportedDashboard);
     FileReaderMock._fileData = fileContents;
-    await act(() => {
+    await act(async () => {
       fireEvent.change(screen.getByLabelText('Import Dashboard'), {
         target: { files: [new File([fileContents], 'exportedDashboard.json')] }
       });
@@ -41,7 +41,7 @@ describe('Import/Export functionality', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
     const fileContents = '';
     FileReaderMock._fileData = fileContents;
-    await act(() => {
+    await act(async () => {
       fireEvent.change(screen.getByLabelText('Import Dashboard'), {
         target: { files: [new File([fileContents], 'blankFile.json')] }
       });
