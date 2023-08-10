@@ -7,7 +7,7 @@ import Home from '../pages';
 import dashboardToExport from './__json__/dashboardToExport.json';
 import exportedDashboard from './__json__/exportedDashboard.json';
 import FileReaderMock from './__mocks__/FileReaderMock';
-import { assignIdToLocalApp, getCurrentAppId } from './__utils__/testUtils';
+import { assignIdToLocalApp, getAppData } from './__utils__/testUtils';
 
 describe('Import/Export functionality', () => {
   afterEach(() => {
@@ -16,7 +16,7 @@ describe('Import/Export functionality', () => {
 
   it('should import dashboard', async () => {
     assignIdToLocalApp(uuidv4());
-    const originalAppId = getCurrentAppId();
+    const originalApp = getAppData();
     render(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
@@ -28,8 +28,17 @@ describe('Import/Export functionality', () => {
       });
     });
     expect(screen.queryByText('Evening')).toBeInTheDocument();
-    const newAppId = getCurrentAppId();
-    expect(newAppId).not.toEqual(originalAppId);
+    // App IDs should not match
+    const newApp = getAppData();
+    expect(newApp.id).not.toEqual(originalApp.id);
+    // Widgets IDs should also not match
+    const originalWidgetIds = new Set(
+      originalApp.widgets.map((widget) => widget.id)
+    );
+    newApp.widgets.forEach((newWidget) => {
+      expect(originalWidgetIds.has(newWidget.id)).toBeFalsy();
+    });
+    expect(originalApp.widgets).toHaveLength(4);
   });
 
   it('should not import dashboard from empty JSON file', async () => {
