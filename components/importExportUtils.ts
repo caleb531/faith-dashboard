@@ -26,7 +26,7 @@ export async function readDashboardFileToJSON(
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (loadEvent) => {
-      const app = JSON.parse(String(loadEvent.target?.result ?? null));
+      const app = JSON.parse(String(loadEvent.target?.result || null));
       if (app) {
         resolve(randomizeUUIDs(app));
       }

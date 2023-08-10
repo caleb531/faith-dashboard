@@ -34,4 +34,18 @@ describe('Import/Export functionality', () => {
     const newAppId = getCurrentAppId();
     expect(newAppId).not.toEqual(originalAppId);
   });
+
+  it('should not import dashboard from empty JSON file', async () => {
+    render(<Home />);
+    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    const fileContents = '';
+    FileReaderMock._fileData = fileContents;
+    await act(() => {
+      fireEvent.change(screen.getByLabelText('Import Dashboard'), {
+        target: { files: [new File([fileContents], 'blankFile.json')] }
+      });
+    });
+    expect(screen.queryByText('Shore')).toBeInTheDocument();
+  });
 });
