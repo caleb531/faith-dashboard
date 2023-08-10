@@ -29,14 +29,14 @@ async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
   }) as HTMLInputElement;
   expect(audioProgressSlider).toBeInTheDocument();
 
-  await fireEvent.mouseDown(audioProgressSlider);
-  await fireEvent.input(audioProgressSlider, {
+  fireEvent.mouseDown(audioProgressSlider);
+  fireEvent.input(audioProgressSlider, {
     target: { value: String(newCurrentTime) }
   });
-  await fireEvent.change(audioProgressSlider, {
+  fireEvent.change(audioProgressSlider, {
     target: { value: String(newCurrentTime) }
   });
-  await fireEvent.mouseUp(audioProgressSlider);
+  fireEvent.mouseUp(audioProgressSlider);
 }
 
 describe('Podcast widget', () => {
@@ -129,7 +129,7 @@ describe('Podcast widget', () => {
     const firstPodcastResult = screen.getByRole('heading', {
       name: 'Sermon of the Day'
     });
-    await fireEvent.keyDown(firstPodcastResult, { key: 'Enter' });
+    fireEvent.keyDown(firstPodcastResult, { key: 'Enter' });
     await waitFor(() => {
       expect(screen.getByText('50 episodes')).toBeInTheDocument();
     });
@@ -146,7 +146,7 @@ describe('Podcast widget', () => {
     const firstPodcastResult = screen.getByRole('heading', {
       name: 'Sermon of the Day'
     });
-    await fireEvent.keyDown(firstPodcastResult, { key: ' ' });
+    fireEvent.keyDown(firstPodcastResult, { key: ' ' });
     await waitFor(() => {
       expect(screen.getByText('50 episodes')).toBeInTheDocument();
     });

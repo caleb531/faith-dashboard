@@ -25,8 +25,8 @@ describe('Note widget', () => {
     const input = screen.getAllByRole('slider', {
       name: 'Font Size'
     })[0] as HTMLInputElement;
-    await fireEvent.input(input, { target: { value: '30' } });
-    await fireEvent.change(input, { target: { value: '30' } });
+    fireEvent.input(input, { target: { value: '30' } });
+    fireEvent.change(input, { target: { value: '30' } });
     expect(input).toHaveProperty('value', '30');
     expect(screen.getByText('Example Text')).toHaveProperty(
       'style.fontSize',
@@ -58,8 +58,8 @@ describe('Note widget', () => {
     const input = screen.getAllByRole('slider', {
       name: 'Font Size'
     })[0] as HTMLInputElement;
-    await fireEvent.input(input, { target: { value: '12' } });
-    await fireEvent.change(input, { target: { value: '12' } });
+    fireEvent.input(input, { target: { value: '12' } });
+    fireEvent.change(input, { target: { value: '12' } });
     expect(input).toHaveProperty('value', '12');
     expect(
       screen.getByText(
@@ -81,8 +81,8 @@ describe('Note widget', () => {
     const input = screen.getAllByRole('slider', {
       name: 'Font Size'
     })[0] as HTMLInputElement;
-    await fireEvent.input(input, { target: { value: '50' } });
-    await fireEvent.change(input, { target: { value: '50' } });
+    fireEvent.input(input, { target: { value: '50' } });
+    fireEvent.change(input, { target: { value: '50' } });
     expect(input).toHaveProperty('value', '50');
     expect(screen.getByText('Lorem ipsum...')).toBeInTheDocument();
   });
