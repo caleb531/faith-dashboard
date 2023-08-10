@@ -36,22 +36,6 @@ export async function readDashboardFileToJSON(
   });
 }
 
-// Prompt the user to select a *.faithdashboard.json file to import into the
-// application
-export async function promptToImportDashboard(): Promise<AppState | null> {
-  return new Promise((resolve, reject) => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
-    input.onchange = (changeEvent: FormDataEvent) => {
-      if (input.files) {
-        resolve(readDashboardFileToJSON(input.files[0]));
-      }
-    };
-    input.click();
-  });
-}
-
 // Export the dashboard to a file and immediately trigger a download for that
 // file
 export function exportDashboard() {

@@ -1,3 +1,4 @@
+import { defer } from 'lodash-es';
 import Link from 'next/link';
 import { ReactNode, useState } from 'react';
 import { isTruthy } from '../accountUtils';
@@ -56,7 +57,20 @@ function AppHeaderMenu({ label, icon, items }: Props) {
                       {item.content}
                     </a>
                   ) : (
-                    item.content
+                    // Assuming an element in item.content has its own click
+                    // handler, automatically close the menu after it's clicked;
+                    // we use lodash's defer() utility to ensure that the
+                    // content is not removed from the DOM until any click
+                    // listeners in the content have run
+                    <div
+                      onClick={() =>
+                        defer(() => {
+                          setIsShowingMenu(false);
+                        })
+                      }
+                    >
+                      {item.content}
+                    </div>
                   )}
                 </li>
               );

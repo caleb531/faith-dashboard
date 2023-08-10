@@ -1,8 +1,8 @@
 import { Session } from '@supabase/supabase-js';
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
 import { getSession, isSessionActive } from '../accountUtils';
-import { exportDashboard, promptToImportDashboard } from '../importExportUtils';
+import { exportDashboard, readDashboardFileToJSON } from '../importExportUtils';
 import { getAppStorageKey } from '../storageUtils';
 import { supabase } from '../supabaseClient';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
@@ -15,7 +15,6 @@ function AppHeaderAccount() {
   const { isCurrentStep, stepProps } = useTutorialStep('sign-up');
   const dispatchToApp = useContext(AppContext);
 
-  const [isShowingMenu, setIsShowingMenu] = useState(false);
   // The session will be loaded asynchronously and isomorphically, via a
   // useEffect() call later in this function; this is done to avoid SSR
   // mismatches (please see the hook below)
@@ -23,16 +22,22 @@ function AppHeaderAccount() {
   const [isUserActive, setIsUserActive] = useState(false);
   const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
 
-  async function handleImportDashboard() {
-    const newApp = await promptToImportDashboard();
+  async function handleFileInputChange(
+    event: React.FormEvent<HTMLInputElement>
+  ) {
+    const fileInput = event.target as HTMLInputElement;
+    if (!fileInput?.files?.length) {
+      return;
+    }
+    const newApp = await readDashboardFileToJSON(fileInput.files[0]);
     if (newApp) {
+      // Reset file input for any subsequent imports
+      fileInput.value = '';
       dispatchToApp({ type: 'replaceApp', payload: newApp });
     }
-    setIsShowingMenu(false);
   }
   async function handleExportDashboard() {
     exportDashboard();
-    setIsShowingMenu(false);
   }
 
   async function signOut() {
@@ -145,8 +150,11 @@ function AppHeaderAccount() {
             },
             {
               key: 'import-dashboard',
-              onClick: handleImportDashboard,
-              content: 'Import Dashboard'
+              content: (
+                <label htmlFor="app-import-input">
+                  <a>Import Dashboard</a>
+                </label>
+              )
             },
             {
               key: 'export-dashboard',
@@ -161,6 +169,14 @@ function AppHeaderAccount() {
           ]}
         />
       </div>
+      <input
+        id="app-import-input"
+        name="app_import_input"
+        type="file"
+        accept=".json"
+        className="app-import-input accessibility-only"
+        onChange={handleFileInputChange}
+      />
     </div>
   );
 }

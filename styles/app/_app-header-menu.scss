@@ -76,6 +76,7 @@
   border-radius: 5px;
   padding: 5px 10px;
   white-space: nowrap;
+  font-size: var(--font-size-xxs);
   color: inherit;
   text-decoration: none;
   &:not([data-disabled]):hover {
