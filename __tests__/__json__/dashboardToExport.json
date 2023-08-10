@@ -1,0 +1,47 @@
+{
+  "theme": "stars",
+  "id": "a40bb85f-5af3-4ddc-9e00-fccf7e727e2c",
+  "widgets": [
+    {
+      "id": "bdcd3778-9872-44ca-b240-fe099260cdd0",
+      "type": "Note",
+      "column": 2,
+      "text": "There will always be grace",
+      "fontSize": 31,
+      "height": 115,
+      "isSettingsOpen": false
+    },
+    {
+      "id": "875f3da2-7cdf-4008-b56f-e57a74d7ee66",
+      "type": "BibleVerse",
+      "column": 2,
+      "verseQuery": "Romans 8:28",
+      "verseContent": {
+        "name": "Romans 8:28",
+        "version": { "name": "ESV" },
+        "content": "And we know that for those who love God all things work together for good, for those who are called according to his purpose."
+      },
+      "isSettingsOpen": false
+    },
+    {
+      "id": "7eaa4700-825b-471f-8e2d-7dd0b57b7c54",
+      "type": "Note",
+      "column": 3,
+      "text": "God is good",
+      "fontSize": 42,
+      "isSettingsOpen": false
+    },
+    {
+      "id": "92199d17-ad44-4fb7-81ad-db59ef281116",
+      "type": "BibleVerse",
+      "column": 3,
+      "verseQuery": "Psalm 23:1",
+      "verseContent": {
+        "name": "Psalm 23:1",
+        "version": { "name": "ESV" },
+        "content": "The Lord is my shepherd; I shall not want."
+      },
+      "isSettingsOpen": false
+    }
+  ]
+}

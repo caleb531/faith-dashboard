@@ -2,6 +2,7 @@ import { configure } from '@testing-library/dom';
 import fetch, { enableFetchMocks } from 'jest-fetch-mock';
 import { supabase } from '../../components/supabaseClient';
 import AudioMock from '../__mocks__/AudioMock';
+import BlobMock from '../__mocks__/BlobMock';
 import FileReaderMock from '../__mocks__/FileReaderMock';
 import {
   MediaMetadataMock,
@@ -37,6 +38,14 @@ let originalMediaSession: typeof navigator.mediaSession;
 
 beforeEach(() => {
   localStorage.clear();
+  Object.defineProperty(window, 'Blob', {
+    configurable: true,
+    value: BlobMock
+  });
+  URL.createObjectURL = jest.fn();
+  jest.spyOn(window, 'FileReader').mockImplementation(() => {
+    return new FileReaderMock() as FileReader;
+  });
   audioStub = jest.spyOn(window, 'Audio').mockImplementation(() => {
     return new AudioMock() as any;
   });

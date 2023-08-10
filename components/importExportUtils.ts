@@ -51,7 +51,8 @@ export function exportDashboard() {
           String(localStorage.getItem(getWidgetStorageKey(widgetHead)))
         ),
         ...widgetHead,
-        id: undefined
+        id: undefined,
+        isSettingsOpen: undefined
       };
     })
   };
