@@ -46,10 +46,12 @@ function AppHeaderMenu({ label, icon, items }: Props) {
       </button>
       {isShowingMenu && (
         <div className="app-header-menu">
-          <div
+          <button
+            data-type="overlay"
             className="app-header-menu-overlay"
             onClick={() => setIsShowingMenu(false)}
-          ></div>
+            aria-label="Close Menu"
+          ></button>
           <menu className="app-header-menu-list">
             {items.filter(isTruthy).map((item) => {
               return (

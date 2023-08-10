@@ -76,6 +76,22 @@ describe('Account Header', () => {
     });
   });
 
+  it('should close menu by clicking overlay', async () => {
+    await mockSupabaseUser();
+    await mockSupabaseSession();
+    render(<Home />);
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Your Account' })
+      ).toBeInTheDocument();
+    });
+    await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
+    const overlay = screen.getByRole('button', { name: 'Close Menu' });
+    expect(overlay).toBeInTheDocument();
+    await userEvent.click(overlay);
+    expect(overlay).not.toBeInTheDocument();
+  });
+
   it('should cancel signing out', async () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
