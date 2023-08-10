@@ -3,7 +3,7 @@ import { getUser } from '../../components/accountUtils';
 import { supabase } from '../../components/supabaseClient';
 
 // This must always be called BEFORE await mockSupabaseSession()
-export function mockSupabaseUser(
+export async function mockSupabaseUser(
   user: Partial<User> | null = {
     id: 'b9fa0901-c3d7-4e59-88e6-e483d69e49c4',
     email: 'caleb@example.com',
