@@ -79,7 +79,7 @@ export default function reducer(state: AppState, action: AppAction): AppState {
       return Object.keys(diff(action.payload, state)).length > 0
         ? {
             // To manage the identity of the user's dashboard on the
-            // server-side, an unique ID must be generated for the dashboard if
+            // server-side, a unique ID must be generated for the dashboard if
             // has not already been assigned one
             id: action.payload.id || uuidv4(),
             ...action.payload
