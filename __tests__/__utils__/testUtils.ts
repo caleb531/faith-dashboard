@@ -20,6 +20,10 @@ export function getAppData(): AppState {
   return JSON.parse(localStorage.getItem('faith-dashboard-app') || '{}');
 }
 
+export function setAppData(app: object) {
+  localStorage.setItem('faith-dashboard-app', JSON.stringify(app));
+}
+
 export function waitForWidget({
   type,
   index
@@ -90,10 +94,7 @@ export function assignIdToLocalApp(appId: string) {
   const app =
     JSON.parse(localStorage.getItem('faith-dashboard-app') || 'null') ||
     appStateDefault;
-  localStorage.setItem(
-    'faith-dashboard-app',
-    JSON.stringify({ ...app, id: appId, shouldShowTutorial: false })
-  );
+  setAppData({ ...app, id: appId, shouldShowTutorial: false });
 }
 
 export function getCurrentAppId(): string | null | undefined {

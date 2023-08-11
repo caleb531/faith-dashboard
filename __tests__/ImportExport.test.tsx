@@ -17,7 +17,8 @@ import {
   assignIdToLocalApp,
   getAppData,
   mockAlert,
-  mockConfirm
+  mockConfirm,
+  setAppData
 } from './__utils__/testUtils';
 
 describe('Import/Export functionality', () => {
@@ -148,10 +149,7 @@ describe('Import/Export functionality', () => {
 
   it('should export dashboard', async () => {
     let exportedBlob: Blob | undefined;
-    localStorage.setItem(
-      'faith-dashboard-app',
-      JSON.stringify(dashboardToExport)
-    );
+    setAppData(dashboardToExport);
     render(<Home />);
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
     jest.spyOn(URL, 'createObjectURL').mockImplementation((blob: Blob) => {
