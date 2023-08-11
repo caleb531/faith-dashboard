@@ -32,12 +32,10 @@
       }
     }
   ],
-  "plugins": [
-    "@typescript-eslint",
-    "jest"
-  ],
+  "plugins": ["@typescript-eslint", "jest"],
   "parser": "@typescript-eslint/parser",
   "extends": [
+    "plugin:@next/next/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended"
   ],
@@ -47,6 +45,7 @@
     }
   },
   "rules": {
+    "@next/next/no-img-element": ["off"],
     "accessor-pairs": ["error"],
     "array-callback-return": ["error"],
     "array-element-newline": ["warn", "consistent"],
