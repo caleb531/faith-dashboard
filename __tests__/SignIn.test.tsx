@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { supabase } from '../components/supabaseClient';
 import SignIn from '../pages/sign-in';
 import { mockCaptchaSuccessOnce } from './__mocks__/captchaMockUtils';
-import { mockSupabaseApiResponse } from './__mocks__/supabaseMockUtils';
+import { mockSupabaseApiResponse } from './__utils__/supabaseMockUtils';
 import { populateFormFields } from './__utils__/testUtils';
 describe('Sign In page', () => {
   afterEach(() => {

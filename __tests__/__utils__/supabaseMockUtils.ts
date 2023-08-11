@@ -128,7 +128,7 @@ export type TableName = 'dashboards' | 'widgets';
 // and .where() methods, which also (respectively) return promises; therefore,
 // to mock this correctly and in a way where TypeScript won't complain, we must
 // subclass the native Promise class
-export class SelectPromise<T> extends Promise<T> {
+export class SupabaseSelectPromise<T> extends Promise<T> {
   constructor(callback: ConstructorParameters<typeof Promise<T>>[0]) {
     super(callback);
   }
@@ -136,9 +136,9 @@ export class SelectPromise<T> extends Promise<T> {
   match?: jest.Mock;
 }
 
-export function mockSelect(tableName: TableName, response: any) {
+export function mockSupabaseSelect(tableName: TableName, response: any) {
   supabaseFromMocks[tableName].select.mockImplementation(() => {
-    const promise = new SelectPromise((resolve) => {
+    const promise = new SupabaseSelectPromise((resolve) => {
       resolve(response);
     });
     promise.order = jest
@@ -158,14 +158,14 @@ export function mockSelect(tableName: TableName, response: any) {
   return supabaseFromMocks[tableName].select;
 }
 
-export function mockUpsert(tableName: TableName) {
+export function mockSupabaseUpsert(tableName: TableName) {
   supabaseFromMocks[tableName].upsert.mockImplementation(async () => {
     return getDefaultWriteResponse();
   });
   return supabaseFromMocks[tableName].upsert;
 }
 
-export function mockDelete(tableName: TableName) {
+export function mockSupabaseDelete(tableName: TableName) {
   supabaseFromMocks[tableName].delete.mockImplementation(() => {
     return {
       match: jest.fn().mockImplementation(async () => {

@@ -7,7 +7,7 @@ import {
   mockCaptchaFailOnce,
   mockCaptchaSuccessOnce
 } from './__mocks__/captchaMockUtils';
-import { mockSupabaseApiResponse } from './__mocks__/supabaseMockUtils';
+import { mockSupabaseApiResponse } from './__utils__/supabaseMockUtils';
 import { populateFormFields } from './__utils__/testUtils';
 
 describe('Sign Up page', () => {

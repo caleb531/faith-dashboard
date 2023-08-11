@@ -15,14 +15,14 @@ import Home from '../pages';
 import dashboardToPullJson from './__json__/dashboardToPull.json';
 import widgetToPullJson from './__json__/widgetToPull.json';
 import {
-  mockDelete,
-  mockSelect,
+  mockSupabaseDelete,
   mockSupabaseFrom,
+  mockSupabaseSelect,
   mockSupabaseSession,
+  mockSupabaseUpsert,
   mockSupabaseUser,
-  mockUpsert,
   supabaseFromMocks
-} from './__mocks__/supabaseMockUtils';
+} from './__utils__/supabaseMockUtils';
 import {
   assignIdToLocalApp,
   removeWidget,
@@ -48,10 +48,10 @@ describe('Sync functionality', () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
     mockSupabaseFrom();
-    mockSelect('dashboards', {
+    mockSupabaseSelect('dashboards', {
       data: [{ raw_data: JSON.stringify(dashboardToPullJson) }]
     });
-    mockSelect('widgets', {
+    mockSupabaseSelect('widgets', {
       data: [{ raw_data: JSON.stringify(widgetToPullJson) }]
     });
     assignIdToLocalApp(uuidv4());
@@ -78,12 +78,12 @@ describe('Sync functionality', () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
     mockSupabaseFrom();
-    mockSelect('dashboards', {
+    mockSupabaseSelect('dashboards', {
       data: []
     });
-    mockSelect('widgets', { data: [] });
-    mockUpsert('dashboards');
-    mockUpsert('widgets');
+    mockSupabaseSelect('widgets', { data: [] });
+    mockSupabaseUpsert('dashboards');
+    mockSupabaseUpsert('widgets');
     assignIdToLocalApp(uuidv4());
     render(<Home />);
     await waitFor(() => {
@@ -104,12 +104,12 @@ describe('Sync functionality', () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
     mockSupabaseFrom();
-    mockSelect('dashboards', {
+    mockSupabaseSelect('dashboards', {
       data: []
     });
-    mockSelect('widgets', { data: [] });
-    mockUpsert('dashboards');
-    mockUpsert('widgets');
+    mockSupabaseSelect('widgets', { data: [] });
+    mockSupabaseUpsert('dashboards');
+    mockSupabaseUpsert('widgets');
     // Force the widgetSyncService.onPush listener to be bound
     // *after* the push event has already been broadcast, as this is the
     // scenario we are testing for; that is, we want to ensure the widgets are
@@ -148,12 +148,12 @@ describe('Sync functionality', () => {
     await mockSupabaseSession();
     mockSupabaseFrom();
     const appId = uuidv4();
-    mockSelect('dashboards', {
+    mockSupabaseSelect('dashboards', {
       data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
     });
-    mockSelect('widgets', { data: [] });
-    mockUpsert('dashboards');
-    mockUpsert('widgets');
+    mockSupabaseSelect('widgets', { data: [] });
+    mockSupabaseUpsert('dashboards');
+    mockSupabaseUpsert('widgets');
     assignIdToLocalApp(appId);
     render(<Home />);
     await waitFor(() => {
@@ -182,11 +182,11 @@ describe('Sync functionality', () => {
     await mockSupabaseSession();
     mockSupabaseFrom();
     const appId = uuidv4();
-    mockSelect('dashboards', {
+    mockSupabaseSelect('dashboards', {
       data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
     });
-    mockSelect('widgets', { data: [] });
-    mockDelete('widgets');
+    mockSupabaseSelect('widgets', { data: [] });
+    mockSupabaseDelete('widgets');
     assignIdToLocalApp(appId);
     render(<Home />);
     await waitFor(() => {
@@ -213,12 +213,12 @@ describe('Sync functionality', () => {
     await mockSupabaseSession(null);
     mockSupabaseFrom();
     const appId = uuidv4();
-    mockSelect('dashboards', {
+    mockSupabaseSelect('dashboards', {
       data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
     });
-    mockSelect('widgets', { data: [] });
-    mockUpsert('dashboards');
-    mockUpsert('widgets');
+    mockSupabaseSelect('widgets', { data: [] });
+    mockSupabaseUpsert('dashboards');
+    mockSupabaseUpsert('widgets');
     assignIdToLocalApp(appId);
     render(<Home />);
     expect(
@@ -241,8 +241,8 @@ describe('Sync functionality', () => {
     await mockSupabaseUser(null);
     await mockSupabaseSession(null);
     mockSupabaseFrom();
-    mockSelect('dashboards', { data: [] });
-    mockSelect('widgets', { data: [] });
+    mockSupabaseSelect('dashboards', { data: [] });
+    mockSupabaseSelect('widgets', { data: [] });
     assignIdToLocalApp(uuidv4());
     render(<Home />);
     expect(

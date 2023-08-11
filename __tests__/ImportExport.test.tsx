@@ -8,11 +8,11 @@ import dashboardToExport from './__json__/dashboardToExport.json';
 import exportedDashboard from './__json__/exportedDashboard.json';
 import FileReaderMock from './__mocks__/FileReaderMock';
 import {
-  mockSelect,
   mockSupabaseFrom,
+  mockSupabaseSelect,
   mockSupabaseSession,
   mockSupabaseUser
-} from './__mocks__/supabaseMockUtils';
+} from './__utils__/supabaseMockUtils';
 import {
   assignIdToLocalApp,
   getAppData,
@@ -58,7 +58,7 @@ describe('Import/Export functionality', () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
     mockSupabaseFrom();
-    mockSelect('dashboards', { data: [] });
+    mockSupabaseSelect('dashboards', { data: [] });
     mockConfirm(() => true);
     render(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();
@@ -77,7 +77,7 @@ describe('Import/Export functionality', () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
     mockSupabaseFrom();
-    mockSelect('dashboards', { data: [] });
+    mockSupabaseSelect('dashboards', { data: [] });
     mockConfirm(() => false);
     render(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();

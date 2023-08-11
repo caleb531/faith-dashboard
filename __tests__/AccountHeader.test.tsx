@@ -7,7 +7,7 @@ import Home from '../pages/index';
 import {
   mockSupabaseSession,
   mockSupabaseUser
-} from './__mocks__/supabaseMockUtils';
+} from './__utils__/supabaseMockUtils';
 import { mockConfirm } from './__utils__/testUtils';
 
 const originalLocationObject = window.location;
