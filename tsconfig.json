@@ -18,13 +18,19 @@
     "jsx": "preserve",
     "incremental": true,
     "strict": true,
-    "strictFunctionTypes": false
+    "strictFunctionTypes": false,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.js",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
