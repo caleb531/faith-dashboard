@@ -1,41 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Metadata } from 'next';
-import React from 'react';
 import LandingPage from '../../components/LandingPage';
-import AuthForm from '../../components/account/AuthForm';
-import AuthFormField from '../../components/account/AuthFormField';
-import serializeForm from '../../components/account/serializeForm';
-import useAutoFocus from '../../components/account/useAutoFocus';
-import { supabase } from '../../components/supabaseClient';
+import ForgotPasswordForm from '../../components/account/ForgotPasswordForm';
 
 function ForgotPassword() {
-  const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
-
-  function sendPasswordRecoveryEmail(event: React.FormEvent<HTMLFormElement>) {
-    const fields = serializeForm(event.currentTarget);
-    return supabase.auth.resetPasswordForEmail(fields.email);
-  }
-
   return (
     <LandingPage
       heading="Forgot Password | Faith Dashboard"
       altLink={{ title: 'Sign In', href: '/sign-in' }}
     >
-      <AuthForm
-        onSubmit={sendPasswordRecoveryEmail}
-        submitLabel="Send Email"
-        submittingLabel="Sending..."
-        successLabel="Almost done! Check your email to finish resetting"
-      >
-        <AuthFormField
-          type="email"
-          id="forgot-password-form-email"
-          name="email"
-          placeholder="Email"
-          required
-          {...emailAutoFocusProps}
-        />
-      </AuthForm>
+      <ForgotPasswordForm />
     </LandingPage>
   );
 }

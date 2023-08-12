@@ -1,13 +1,15 @@
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { throttle } from 'lodash-es';
 import { Dispatch, useEffect, useMemo } from 'react';
 import { getUser, isSessionActive } from '../accountUtils';
-import { supabase } from '../supabaseClient';
 import { getClientId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
 import { WidgetHead, WidgetState } from '../widgets/widget.types';
 import widgetSyncService from '../widgets/widgetSyncService';
 import { AppAction } from './AppReducer';
 import { AppState } from './app.types';
+
+const supabase = createClientComponentClient();
 
 // Take the new app/dashboard state from the server and apply it to the local
 // application

@@ -38,12 +38,14 @@ function shouldLoadServiceWorker() {
 type Props = {
   enableTutorial?: boolean;
   canAddWidgets?: boolean;
+  isClientOnly?: boolean;
   children: React.ReactNode;
 };
 
 function App({
   enableTutorial = false,
   canAddWidgets = false,
+  isClientOnly = false,
   children
 }: Props) {
   const [restoreApp, saveApp] = useLocalStorage(getAppStorageKey(), defaultApp);
@@ -103,7 +105,7 @@ function App({
         >
           <AppHeader currentTheme={app.theme} canAddWidgets={canAddWidgets} />
           <AppNotification />
-          {isMounted ? (
+          {!isClientOnly || isMounted ? (
             <div className="app-contents">{children}</div>
           ) : (
             <LoadingIndicator />

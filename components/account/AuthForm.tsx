@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, { useRef, useState } from 'react';
 import { JSXChildren } from '../global.types';
 import LoadingIndicator from '../reusable/LoadingIndicator';
+import useAllSearchParams from '../useAllSearchParams';
 import useMountListener from '../useMountListener';
 import useTimeout from '../useTimeout';
 import useUniqueFieldId from '../useUniqueFieldId';
@@ -13,7 +14,9 @@ import AuthFormField from './AuthFormField';
 const successLabelDuration = 2000;
 
 type Props = {
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<{
+  action?: string;
+  method?: 'GET' | 'POST' | 'get' | 'post';
+  onSubmit?: (event: React.FormEvent<HTMLFormElement>) => Promise<{
     data: {
       user?: User | null;
     } | null;
@@ -31,13 +34,19 @@ type Props = {
 };
 
 function AuthForm(props: Props) {
-  const [formErrorMessage, setFormErrorMessage] = useState<string | null>();
+  const params = useAllSearchParams();
+  const [formErrorMessage, setFormErrorMessage] = useState<
+    string | null | undefined
+  >(params.error ?? null);
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [isFormSuccess, setIsFormSuccess] = useState(false);
   const setSubmitLabelTimeout = useTimeout();
   const honeyPotFieldRef = useRef<HTMLInputElement>(null);
 
   async function attemptSubmit(event: React.FormEvent<HTMLFormElement>) {
+    if (!props.onSubmit) {
+      return;
+    }
     const { data, error } = await props.onSubmit(event);
     const user = data?.user;
     // If there is no error, the value is conveniently null
@@ -65,7 +74,9 @@ function AuthForm(props: Props) {
   }
 
   async function onSubmitWrapper(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+    if (!props.action) {
+      event.preventDefault();
+    }
     setIsFormSubmitting(true);
     setFormErrorMessage(null);
     try {
@@ -88,7 +99,12 @@ function AuthForm(props: Props) {
   const honeyPotFieldId = useUniqueFieldId('verification-check');
   const isMounted = useMountListener();
   return isMounted ? (
-    <form className="account-auth-form" onSubmit={onSubmitWrapper}>
+    <form
+      className="account-auth-form"
+      onSubmit={onSubmitWrapper}
+      action={props.action}
+      method={props.method ?? 'POST'}
+    >
       {props.children}
       {/* A "honey pot" field which must remain blank to prove the user is human */}
       <AuthFormField

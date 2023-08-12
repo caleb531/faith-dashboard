@@ -1,11 +1,11 @@
 'use client';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Session } from '@supabase/supabase-js';
 import React, { useContext, useEffect, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
 import { getSession, isSessionActive } from '../accountUtils';
 import { exportDashboard, readDashboardFileToJSON } from '../importExportUtils';
 import { getAppStorageKey } from '../storageUtils';
-import { supabase } from '../supabaseClient';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import AppContext from './AppContext';
@@ -13,6 +13,7 @@ import AppHeaderMenu from './AppHeaderMenu';
 import appStateDefault from './appStateDefault';
 
 function AppHeaderAccount() {
+  const supabase = createClientComponentClient();
   const { isCurrentStep, stepProps } = useTutorialStep('sign-up');
   const { dispatchToApp } = useContext(AppContext);
 

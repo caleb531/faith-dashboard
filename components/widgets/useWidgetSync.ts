@@ -1,11 +1,13 @@
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Dispatch, useEffect, useRef } from 'react';
 import { getUser } from '../accountUtils';
-import { supabase } from '../supabaseClient';
 import { getClientId, getSelectedAppId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
 import { WidgetAction } from './useWidgetShell';
 import { WidgetState } from './widget.types';
 import widgetSyncService from './widgetSyncService';
+
+const supabase = createClientComponentClient();
 
 // Push the local widget state to the server; this function runs when the
 // widget changes, but also once when there is no widget state on the server
