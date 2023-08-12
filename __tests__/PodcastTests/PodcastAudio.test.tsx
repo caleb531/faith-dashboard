@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
-import Home from '../../pages/index';
+import Home from '../../app/page';
 import podcastFeedJson from '../__json__/podcastFeed.json';
 import podcastSearchJson from '../__json__/podcastSearch.json';
 import AudioMock from '../__mocks__/AudioMock';

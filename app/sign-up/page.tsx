@@ -1,15 +1,16 @@
 /* eslint-disable react/no-unescaped-entities */
 import { pick } from 'lodash-es';
+import { Metadata } from 'next';
 import React from 'react';
-import AuthForm, { redirectToHome } from '../components/account/AuthForm';
-import AuthFormField from '../components/account/AuthFormField';
-import serializeForm from '../components/account/serializeForm';
-import useAutoFocus from '../components/account/useAutoFocus';
-import Captcha from '../components/Captcha';
-import LandingPage from '../components/LandingPage';
-import { supabase } from '../components/supabaseClient';
-import useFormFieldMatcher from '../components/useFormFieldMatcher';
-import useVerifyCaptcha from '../components/useVerifyCaptcha';
+import Captcha from '../../components/Captcha';
+import LandingPage from '../../components/LandingPage';
+import AuthForm, { redirectToHome } from '../../components/account/AuthForm';
+import AuthFormField from '../../components/account/AuthFormField';
+import serializeForm from '../../components/account/serializeForm';
+import useAutoFocus from '../../components/account/useAutoFocus';
+import { supabase } from '../../components/supabaseClient';
+import useFormFieldMatcher from '../../components/useFormFieldMatcher';
+import useVerifyCaptcha from '../../components/useVerifyCaptcha';
 
 function SignUpForm() {
   const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
@@ -95,15 +96,10 @@ function SignUpForm() {
 }
 
 /* istanbul ignore next */
-export async function getStaticProps() {
-  return {
-    props: {
-      pagePath: '/sign-up',
-      pageTitle: 'Sign Up | Faith Dashboard',
-      pageDescription:
-        'Sign up for Faith Dashboard, your home for strength and encouragement every day.'
-    }
-  };
-}
+export const metadata: Metadata = {
+  title: 'Sign Up | Faith Dashboard',
+  description:
+    'Sign up for Faith Dashboard, your home for strength and encouragement every day.'
+};
 
 export default SignUpForm;

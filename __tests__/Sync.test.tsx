@@ -7,11 +7,11 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { v4 as uuidv4 } from 'uuid';
+import Home from '../app/page';
 import appStateDefault from '../components/app/appStateDefault';
 import { Deferred } from '../components/deferred';
 import { supabase } from '../components/supabaseClient';
 import widgetSyncService from '../components/widgets/widgetSyncService';
-import Home from '../pages';
 import dashboardToPullJson from './__json__/dashboardToPull.json';
 import widgetToPullJson from './__json__/widgetToPull.json';
 import {

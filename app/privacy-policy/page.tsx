@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
-import LandingPage from '../components/LandingPage';
-import LinkButton from '../components/reusable/LinkButton';
+import { Metadata } from 'next';
+import LandingPage from '../../components/LandingPage';
+import LinkButton from '../../components/reusable/LinkButton';
 
 function PrivacyPolicy() {
   return (
@@ -95,15 +96,10 @@ function PrivacyPolicy() {
 }
 
 /* istanbul ignore next */
-export async function getStaticProps() {
-  return {
-    props: {
-      pagePath: '/privacy-policy',
-      pageTitle: 'Privacy Policy | Faith Dashboard',
-      pageDescription:
-        'Privacy policy for Faith Dashboard, your home for strength and encouragement every day.'
-    }
-  };
-}
+export const metadata: Metadata = {
+  title: 'Privacy Policy | Faith Dashboard',
+  description:
+    'Privacy policy for Faith Dashboard, your home for strength and encouragement every day.'
+};
 
 export default PrivacyPolicy;

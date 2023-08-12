@@ -1,3 +1,4 @@
+'use client';
 import classNames from 'classnames';
 import { useContext, useRef } from 'react';
 import useScrollIntoView from '../useScrollIntoView';

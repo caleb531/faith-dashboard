@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import SignUp from '../app/sign-up/page';
 import { supabase } from '../components/supabaseClient';
-import SignUp from '../pages/sign-up';
 import {
   mockCaptchaFailOnce,
   mockCaptchaSuccessOnce

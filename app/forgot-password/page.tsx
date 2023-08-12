@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
+import { Metadata } from 'next';
 import React from 'react';
-import AuthForm from '../components/account/AuthForm';
-import AuthFormField from '../components/account/AuthFormField';
-import serializeForm from '../components/account/serializeForm';
-import useAutoFocus from '../components/account/useAutoFocus';
-import LandingPage from '../components/LandingPage';
-import { supabase } from '../components/supabaseClient';
+import LandingPage from '../../components/LandingPage';
+import AuthForm from '../../components/account/AuthForm';
+import AuthFormField from '../../components/account/AuthFormField';
+import serializeForm from '../../components/account/serializeForm';
+import useAutoFocus from '../../components/account/useAutoFocus';
+import { supabase } from '../../components/supabaseClient';
 
 function ForgotPassword() {
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
@@ -40,15 +41,10 @@ function ForgotPassword() {
 }
 
 /* istanbul ignore next */
-export async function getStaticProps() {
-  return {
-    props: {
-      pagePath: '/forgot-password',
-      pageTitle: 'Forgot Password | Faith Dashboard',
-      pageDescription:
-        'Start the process to reset your account password for Faith Dashboard, your home for strength and encouragement every day.'
-    }
-  };
-}
+export const metadata: Metadata = {
+  title: 'Forgot Password | Faith Dashboard',
+  description:
+    'Start the process to reset your account password for Faith Dashboard, your home for strength and encouragement every day.'
+};
 
 export default ForgotPassword;

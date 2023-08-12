@@ -1,3 +1,4 @@
+'use client';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { fromPairs, times } from 'lodash-es';
 import { useContext } from 'react';

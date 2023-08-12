@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ForgotPassword from '../pages/forgot-password';
-import SignIn from '../pages/sign-in';
+import ForgotPassword from '../app/forgot-password/page';
+import SignIn from '../app/sign-in/page';
 import { populateFormFields } from './__utils__/testUtils';
 
 describe('Forgot Password page', () => {

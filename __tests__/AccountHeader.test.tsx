@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import Home from '../app/page';
 import { getSession, getUser } from '../components/accountUtils';
 import { supabase } from '../components/supabaseClient';
-import Home from '../pages/index';
 import {
   mockSupabaseSession,
   mockSupabaseUser

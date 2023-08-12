@@ -5,8 +5,8 @@ import {
   waitForElementToBeRemoved
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import Home from '../app/page';
 import tutorialSteps from '../components/tutorial/tutorialSteps';
-import Home from '../pages/index';
 import { getAppData } from './__utils__/testUtils';
 
 describe('Tutorial', () => {

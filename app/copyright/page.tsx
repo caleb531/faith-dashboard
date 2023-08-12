@@ -1,5 +1,6 @@
-import LandingPage from '../components/LandingPage';
-import LinkButton from '../components/reusable/LinkButton';
+import { Metadata } from 'next';
+import LandingPage from '../../components/LandingPage';
+import LinkButton from '../../components/reusable/LinkButton';
 
 function Copyright() {
   return (
@@ -22,15 +23,10 @@ function Copyright() {
 }
 
 /* istanbul ignore next */
-export async function getStaticProps() {
-  return {
-    props: {
-      pagePath: '/copyright',
-      pageTitle: 'Copyright | Faith Dashboard',
-      pageDescription:
-        'Copyright information for Faith Dashboard, your home for strength and encouragement every day.'
-    }
-  };
-}
+export const metadata: Metadata = {
+  title: 'Copyright | Faith Dashboard',
+  description:
+    'Copyright information for Faith Dashboard, your home for strength and encouragement every day.'
+};
 
 export default Copyright;

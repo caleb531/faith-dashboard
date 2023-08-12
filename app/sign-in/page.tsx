@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
+import { Metadata } from 'next';
 import React from 'react';
-import AuthForm, { redirectToHome } from '../components/account/AuthForm';
-import AuthFormField from '../components/account/AuthFormField';
-import serializeForm from '../components/account/serializeForm';
-import useAutoFocus from '../components/account/useAutoFocus';
-import LandingPage from '../components/LandingPage';
-import { supabase } from '../components/supabaseClient';
+import LandingPage from '../../components/LandingPage';
+import AuthForm, { redirectToHome } from '../../components/account/AuthForm';
+import AuthFormField from '../../components/account/AuthFormField';
+import serializeForm from '../../components/account/serializeForm';
+import useAutoFocus from '../../components/account/useAutoFocus';
+import { supabase } from '../../components/supabaseClient';
 
 function SignInForm() {
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
@@ -55,15 +56,10 @@ function SignInForm() {
 }
 
 /* istanbul ignore next */
-export async function getStaticProps() {
-  return {
-    props: {
-      pagePath: '/sign-in',
-      pageTitle: 'Sign In | Faith Dashboard',
-      pageDescription:
-        'Sign into Faith Dashboard, your home for strength and encouragement every day.'
-    }
-  };
-}
+export const metadata: Metadata = {
+  title: 'Sign In | Faith Dashboard',
+  description:
+    'Sign into Faith Dashboard, your home for strength and encouragement every day.'
+};
 
 export default SignInForm;

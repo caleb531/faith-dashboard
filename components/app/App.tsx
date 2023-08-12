@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useReducer, useState } from 'react';
 import { JSXChildren } from '../global.types';
 import { getAppStorageKey } from '../storageUtils';

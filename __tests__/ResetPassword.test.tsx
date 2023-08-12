@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ResetPassword from '../pages/sign-up';
+import ResetPassword from '../app/sign-up/page';
 import { populateFormFields } from './__utils__/testUtils';
 
 describe('Reset Password page', () => {

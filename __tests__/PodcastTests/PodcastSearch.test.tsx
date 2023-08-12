@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import fetch from 'jest-fetch-mock';
-import Home from '../../pages/index';
+import Home from '../../app/page';
 import podcastNoResultsJson from '../__json__/podcastNoResults.json';
 import podcastSearchJson from '../__json__/podcastSearch.json';
 import { searchPodcasts } from '../__utils__/podcastTestUtils';

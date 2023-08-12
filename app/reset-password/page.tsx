@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
+import { Metadata } from 'next';
 import React from 'react';
-import AuthForm from '../components/account/AuthForm';
-import AuthFormField from '../components/account/AuthFormField';
-import serializeForm from '../components/account/serializeForm';
-import LandingPage from '../components/LandingPage';
-import { supabase } from '../components/supabaseClient';
-import useFormFieldMatcher from '../components/useFormFieldMatcher';
+import LandingPage from '../../components/LandingPage';
+import AuthForm from '../../components/account/AuthForm';
+import AuthFormField from '../../components/account/AuthFormField';
+import serializeForm from '../../components/account/serializeForm';
+import { supabase } from '../../components/supabaseClient';
+import useFormFieldMatcher from '../../components/useFormFieldMatcher';
 
 function ResetPassword() {
   const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
@@ -61,15 +62,10 @@ function ResetPassword() {
 }
 
 /* istanbul ignore next */
-export async function getStaticProps() {
-  return {
-    props: {
-      pagePath: '/reset-password',
-      pageTitle: 'Reset Password | Faith Dashboard',
-      pageDescription:
-        'Reset your account password for Faith Dashboard, your home for strength and encouragement every day.'
-    }
-  };
-}
+export const metadata: Metadata = {
+  title: 'Reset Password | Faith Dashboard',
+  description:
+    'Reset your account password for Faith Dashboard, your home for strength and encouragement every day.'
+};
 
 export default ResetPassword;

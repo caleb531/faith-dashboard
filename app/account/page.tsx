@@ -1,14 +1,14 @@
 import { User } from '@supabase/supabase-js';
 import React, { useState } from 'react';
-import AuthForm from '../components/account/AuthForm';
-import AuthFormField from '../components/account/AuthFormField';
-import serializeForm from '../components/account/serializeForm';
-import { getUser, isSessionActive } from '../components/accountUtils';
-import LandingPage from '../components/LandingPage';
-import { supabase } from '../components/supabaseClient';
-import useFormFieldMatcher from '../components/useFormFieldMatcher';
-import useIsomorphicLayoutEffect from '../components/useIsomorphicLayoutEffect';
-import useTimeout from '../components/useTimeout';
+import LandingPage from '../../components/LandingPage';
+import AuthForm from '../../components/account/AuthForm';
+import AuthFormField from '../../components/account/AuthFormField';
+import serializeForm from '../../components/account/serializeForm';
+import { getUser, isSessionActive } from '../../components/accountUtils';
+import { supabase } from '../../components/supabaseClient';
+import useFormFieldMatcher from '../../components/useFormFieldMatcher';
+import useIsomorphicLayoutEffect from '../../components/useIsomorphicLayoutEffect';
+import useTimeout from '../../components/useTimeout';
 
 function AccountSettings() {
   const [user, setUser] = useState<User | null>(null);

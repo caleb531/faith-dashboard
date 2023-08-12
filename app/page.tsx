@@ -1,3 +1,4 @@
+'use client';
 import React, { Suspense } from 'react';
 import App from '../components/app/App';
 import AppCompletedTutorial from '../components/app/AppCompletedTutorial';
@@ -29,18 +30,6 @@ function Home() {
       }
     </App>
   );
-}
-
-export async function getStaticProps() {
-  /* istanbul ignore next */
-  return {
-    props: {
-      pagePath: '/',
-      pageTitle: 'Faith Dashboard',
-      pageDescription:
-        'Be strengthened every day with this private board for your favorite Bible verses, sermons, and anything else you need to be encouraged when life happens.'
-    }
-  };
 }
 
 export default Home;

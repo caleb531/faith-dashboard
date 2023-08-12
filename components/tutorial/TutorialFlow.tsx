@@ -1,3 +1,4 @@
+'use client';
 import classNames from 'classnames';
 import { useCallback, useContext, useState } from 'react';
 import AppContext from '../app/AppContext';
