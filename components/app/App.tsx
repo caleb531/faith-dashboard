@@ -1,4 +1,5 @@
 'use client';
+import { Session } from '@supabase/supabase-js';
 import React, { useEffect, useMemo, useReducer, useState } from 'react';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 import { getAppStorageKey } from '../storageUtils';
@@ -14,6 +15,7 @@ import AppFooter from './AppFooter';
 import AppHeader from './AppHeader';
 import AppNotification from './AppNotification';
 import reducer from './AppReducer';
+import SessionContext from './SessionContext';
 import ThemeMetadata from './ThemeMetadata';
 import UpdateNotification from './UpdateNotification';
 import defaultApp from './appStateDefault';
@@ -39,6 +41,7 @@ type Props = {
   enableTutorial?: boolean;
   canAddWidgets?: boolean;
   isClientOnly?: boolean;
+  session: Session | null;
   children: React.ReactNode;
 };
 
@@ -46,6 +49,7 @@ function App({
   enableTutorial = false,
   canAddWidgets = false,
   isClientOnly = false,
+  session,
   children
 }: Props) {
   const [restoreApp, saveApp] = useLocalStorage(getAppStorageKey(), defaultApp);
@@ -95,24 +99,26 @@ function App({
 
   return (
     <AppContext.Provider value={appContext}>
-      <div className="app">
-        <ThemeMetadata />
-        {shouldLoadServiceWorker() ? <UpdateNotification /> : null}
-        <TutorialFlow
-          inProgress={Boolean(
-            app.shouldShowTutorial && enableTutorial && isTurorialStarted
-          )}
-        >
-          <AppHeader currentTheme={app.theme} canAddWidgets={canAddWidgets} />
-          <AppNotification />
-          {!isClientOnly || isMounted ? (
-            <div className="app-contents">{children}</div>
-          ) : (
-            <LoadingIndicator />
-          )}
-          <AppFooter />
-        </TutorialFlow>
-      </div>
+      <SessionContext.Provider value={session}>
+        <div className="app">
+          <ThemeMetadata />
+          {shouldLoadServiceWorker() ? <UpdateNotification /> : null}
+          <TutorialFlow
+            inProgress={Boolean(
+              app.shouldShowTutorial && enableTutorial && isTurorialStarted
+            )}
+          >
+            <AppHeader currentTheme={app.theme} canAddWidgets={canAddWidgets} />
+            <AppNotification />
+            {!isClientOnly || isMounted ? (
+              <div className="app-contents">{children}</div>
+            ) : (
+              <LoadingIndicator />
+            )}
+            <AppFooter />
+          </TutorialFlow>
+        </div>
+      </SessionContext.Provider>
     </AppContext.Provider>
   );
 }

@@ -3,11 +3,9 @@ import { cookies } from 'next/headers';
 
 // The getSupabaseSessionInfo() utility returns info related to the
 // authenticated session and user
-async function getSupabaseSessionInfo() {
+async function getSupabaseSession() {
   const supabase = createServerComponentClient({ cookies });
-  return {
-    session: await supabase.auth.getSession(),
-    user: await supabase.auth.getUser()
-  };
+  const sessionResponse = await supabase.auth.getSession();
+  return sessionResponse.data.session;
 }
-export default getSupabaseSessionInfo;
+export default getSupabaseSession;

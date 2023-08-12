@@ -1,4 +1,5 @@
 import App from './app/App';
+import getSupabaseSession from './getSupabaseSession';
 import { JSXChildren } from './global.types';
 import LinkButton from './reusable/LinkButton';
 
@@ -11,9 +12,10 @@ type Props = {
   children: JSXChildren;
 };
 
-function LandingPage({ heading, altLink, children }: Props) {
+async function LandingPage({ heading, altLink, children }: Props) {
+  const session = await getSupabaseSession();
   return (
-    <App>
+    <App session={session}>
       <article className="landing-page">
         <section className="landing-page-section sheet">
           <header>

@@ -1,15 +1,15 @@
 'use client';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Session } from '@supabase/supabase-js';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
-import { getSession, isSessionActive } from '../accountUtils';
+import { isSessionActive } from '../accountUtils';
 import { exportDashboard, readDashboardFileToJSON } from '../importExportUtils';
 import { getAppStorageKey } from '../storageUtils';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import AppContext from './AppContext';
 import AppHeaderMenu from './AppHeaderMenu';
+import SessionContext from './SessionContext';
 import appStateDefault from './appStateDefault';
 
 function AppHeaderAccount() {
@@ -20,8 +20,8 @@ function AppHeaderAccount() {
   // The session will be loaded asynchronously and isomorphically, via a
   // useEffect() call later in this function; this is done to avoid SSR
   // mismatches (please see the hook below)
-  const [session, setSession] = useState<Session | null>(null);
-  const [isUserActive, setIsUserActive] = useState(false);
+  const session = useContext(SessionContext);
+  const isUserActive = isSessionActive();
   const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
   const isSignedIn = session && isUserActive;
 
@@ -85,41 +85,6 @@ function AppHeaderAccount() {
   function onCloseSignInModal() {
     setSignInModalIsOpen(false);
   }
-
-  // Update session asynchronously and isomorphically (so as to avoid any SSR
-  // mismatch with the rendered page HTML); we use useIsomorphicLayoutEffect()
-  // instead of useEffect() directly to minimize any possible page flicker
-  async function updateSession() {
-    const newSession = await getSession();
-    // Do not re-render if login state hasn't changed
-    if (session !== newSession) {
-      setSession(newSession);
-    }
-    isSessionActive(newSession).then((newIsUserActive) => {
-      // Do not re-render if login state hasn't changed
-      if (newIsUserActive !== isUserActive) {
-        setIsUserActive(newIsUserActive);
-      }
-    });
-  }
-  useEffect(() => {
-    updateSession();
-    // This useEffect() can only run a finite number of times because it would
-    // otherwise cause an infinite loop due to the dependencies always changing
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, []);
-
-  // Detect session change and re-render account header accordingly
-  useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN') {
-        setSession(session);
-      }
-    });
-    return () => {
-      data.subscription.unsubscribe();
-    };
-  }, []);
 
   return (
     <div className="app-header-account">
