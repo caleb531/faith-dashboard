@@ -1,16 +1,16 @@
 import '@testing-library/jest-dom';
 import {
-  render,
   screen,
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
 import Home from '../app/page';
+import { renderServerComponent } from './__utils__/renderServerComponent';
 import { removeWidget } from './__utils__/testUtils';
 
 describe('Remove Widget UI', () => {
   it('should remove BibleVerse widget', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
@@ -24,7 +24,7 @@ describe('Remove Widget UI', () => {
   });
 
   it('should remove Note widget', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
@@ -38,7 +38,7 @@ describe('Remove Widget UI', () => {
   });
 
   it('should remove Podcast widget', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
@@ -52,7 +52,7 @@ describe('Remove Widget UI', () => {
   });
 
   it('should cancel removing widget', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });

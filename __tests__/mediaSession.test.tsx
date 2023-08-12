@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { act, render, waitFor } from '@testing-library/react';
+import { act, waitFor } from '@testing-library/react';
 import fetch from 'jest-fetch-mock';
 import Home from '../app/page';
 import podcastFeedJson from './__json__/podcastFeed.json';
@@ -7,6 +7,7 @@ import podcastSearchJson from './__json__/podcastSearch.json';
 import AudioMock from './__mocks__/AudioMock';
 import { mediaSessionMock } from './__mocks__/mediaSessionMock';
 import { navigateToNowPlaying } from './__utils__/podcastTestUtils';
+import { renderServerComponent } from './__utils__/renderServerComponent';
 
 describe('media session', () => {
   afterEach(() => {
@@ -15,7 +16,7 @@ describe('media session', () => {
   it('should populate', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
     await waitFor(() => {
@@ -29,7 +30,7 @@ describe('media session', () => {
     Object.defineProperty(navigator, 'mediaSession', {
       value: undefined
     });
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(navigator.mediaSession).toEqual(undefined);
     await navigateToNowPlaying();
     expect(navigator.mediaSession).toEqual(undefined);
@@ -38,7 +39,7 @@ describe('media session', () => {
   it('should play', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
     expect(AudioMock.instances[0]).toHaveProperty('paused', true);
@@ -51,7 +52,7 @@ describe('media session', () => {
   it('should pause', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
     jest.spyOn(AudioMock.instances[0], 'pause');
     await navigateToNowPlaying();
@@ -66,7 +67,7 @@ describe('media session', () => {
   it('should seek to specified position', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
     await act(async () => {
@@ -78,7 +79,7 @@ describe('media session', () => {
   it('should fast seek to specified position', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
     jest.spyOn(AudioMock.instances[0], 'fastSeek');
@@ -94,7 +95,7 @@ describe('media session', () => {
   it('should seek forward by default offset', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 0);
@@ -107,7 +108,7 @@ describe('media session', () => {
   it('should seek forward by provided offset', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
     expect(AudioMock.instances[0]).toHaveProperty('currentTime', 0);
@@ -120,7 +121,7 @@ describe('media session', () => {
   it('should seek backward by default offset', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
     AudioMock.instances[0].currentTime = 60;
@@ -133,7 +134,7 @@ describe('media session', () => {
   it('should seek backward by provided offset', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
     AudioMock.instances[0].currentTime = 60;

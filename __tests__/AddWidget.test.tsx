@@ -1,9 +1,10 @@
 import '@testing-library/jest-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../app/page';
 import { WidgetTypeId } from '../components/widgets/widget.types';
 import widgetTypes from '../components/widgets/widgetTypes';
+import { renderServerComponent } from './__utils__/renderServerComponent';
 
 async function addWidget(widgetTypeId: WidgetTypeId) {
   const widgetType = widgetTypes.find((widgetType) => {
@@ -12,7 +13,7 @@ async function addWidget(widgetTypeId: WidgetTypeId) {
   if (!widgetType) {
     throw new Error(`Invalid widget type: ${widgetTypeId}`);
   }
-  render(await Home());
+  await renderServerComponent(<Home />);
   await waitFor(() => {
     expect(screen.getAllByRole('article')).toHaveLength(4);
   });

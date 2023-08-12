@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import fetch from 'jest-fetch-mock';
 import Home from '../../app/page';
 import podcastNoResultsJson from '../__json__/podcastNoResults.json';
 import podcastSearchJson from '../__json__/podcastSearch.json';
 import { searchPodcasts } from '../__utils__/podcastTestUtils';
+import { renderServerComponent } from '../__utils__/renderServerComponent';
 
 async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
   const audioProgressSlider = screen.getByRole('slider', {
@@ -29,14 +30,14 @@ describe('Podcast widget', () => {
 
   it('should handle no results', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastNoResultsJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
 
     await searchPodcasts('abc123xyz');
     expect(screen.getByText('No Podcasts Found')).toBeInTheDocument();
   });
 
   it('should clear last search results after changing query', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
 
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     await searchPodcasts('sermon of the day');
@@ -49,7 +50,7 @@ describe('Podcast widget', () => {
 
   it('should handle bad data from server', async () => {
     fetch.mockResponseOnce('notjson');
-    render(await Home());
+    await renderServerComponent(<Home />);
 
     // Suppress the error that's logged when fetch() tries to parse invalid
     // JSON in the useWidgetDataFetcher() hook

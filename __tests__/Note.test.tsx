@@ -1,12 +1,13 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../app/page';
+import { renderServerComponent } from './__utils__/renderServerComponent';
 import { getWidgetData, waitForWidget } from './__utils__/testUtils';
 
 describe('Note widget', () => {
   it('should change note text', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitForWidget({ type: 'Note', index: 1 });
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
     await userEvent.type(textBox, 'God is good');
@@ -17,7 +18,7 @@ describe('Note widget', () => {
     );
   });
   it('should change text font size', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitForWidget({ type: 'Note', index: 1 });
     await userEvent.click(
       screen.getAllByRole('button', { name: 'Toggle Settings' })[1]
@@ -45,7 +46,7 @@ describe('Note widget', () => {
     );
   });
   it('should truncate preview text to no fewer than 2 words', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitForWidget({ type: 'Note', index: 1 });
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
     await userEvent.type(
@@ -68,7 +69,7 @@ describe('Note widget', () => {
     ).toBeInTheDocument();
   });
   it('should truncate preview text to no more than 10 words', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitForWidget({ type: 'Note', index: 1 });
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
     await userEvent.type(

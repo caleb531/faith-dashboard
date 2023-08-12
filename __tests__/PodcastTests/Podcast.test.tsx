@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import Home from '../../app/page';
@@ -12,6 +12,7 @@ import {
   choosePodcast,
   searchPodcasts
 } from '../__utils__/podcastTestUtils';
+import { renderServerComponent } from '../__utils__/renderServerComponent';
 import { getWidgetData } from '../__utils__/testUtils';
 
 describe('Podcast widget', () => {
@@ -21,7 +22,7 @@ describe('Podcast widget', () => {
   it('should search for podcast and select episode', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();
@@ -60,7 +61,7 @@ describe('Podcast widget', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedRefreshedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
 
     await searchPodcasts('sermon of the day');
     await choosePodcast('Sermon of the Day');
@@ -78,7 +79,7 @@ describe('Podcast widget', () => {
   it('should return to list from Now Playing screen', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();
@@ -96,7 +97,7 @@ describe('Podcast widget', () => {
   it('should choose result via Enter key for accessibility', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();
@@ -113,7 +114,7 @@ describe('Podcast widget', () => {
   it('should choose result via spacebar for accessibility', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();

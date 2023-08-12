@@ -1,17 +1,14 @@
 import '@testing-library/jest-dom';
-import {
-  render,
-  screen,
-  waitForElementToBeRemoved
-} from '@testing-library/react';
+import { screen, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../app/page';
 import tutorialSteps from '../components/tutorial/tutorialSteps';
+import { renderServerComponent } from './__utils__/renderServerComponent';
 import { getAppData } from './__utils__/testUtils';
 
 describe('Tutorial', () => {
   it('should render', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     // The waitForElementToBeRemoved() call is necessary to squash act(...)
     // warnings; it is unknown why the other tests do not have this issue
     // (source:
@@ -21,7 +18,7 @@ describe('Tutorial', () => {
   });
 
   it('should skip', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(getAppData()).toHaveProperty('shouldShowTutorial', true);
     const skipButton = screen.getByRole('button', { name: 'Skip Tutorial' });
     expect(skipButton).toBeInTheDocument();
@@ -35,7 +32,7 @@ describe('Tutorial', () => {
   });
 
   it('should advance', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(
       screen.getByRole('button', { name: 'Get Started' })
     ).toBeInTheDocument();
@@ -44,7 +41,7 @@ describe('Tutorial', () => {
     expect(screen.getByText(/This is your dashboard/)).toBeInTheDocument();
   });
   it('should complete all defined steps', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     const advanceButtonLabelPattern = /Get Started|Next|Done/;
     for (const step of tutorialSteps) {
       await userEvent.click(

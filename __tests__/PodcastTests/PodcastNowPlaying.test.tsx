@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import { omit } from 'lodash-es';
@@ -13,6 +13,7 @@ import {
   navigateToNowPlaying,
   searchPodcasts
 } from '../__utils__/podcastTestUtils';
+import { renderServerComponent } from '../__utils__/renderServerComponent';
 
 async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
   const audioProgressSlider = screen.getByRole('slider', {
@@ -37,7 +38,7 @@ describe('Podcast widget', () => {
   it('should access Now Playing screen from episode list', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();
@@ -65,7 +66,7 @@ describe('Podcast widget', () => {
   it('should display correctly-sized thumbnail', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
     await navigateToNowPlaying();
 
     expect(screen.getByTestId('podcast-image')).toHaveProperty(
@@ -88,7 +89,7 @@ describe('Podcast widget', () => {
       })
     );
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
     await navigateToNowPlaying();
 
     expect(screen.getByTestId('podcast-image')).toHaveTextContent('?');

@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import {
-  render,
   screen,
   waitFor,
   waitForElementToBeRemoved
@@ -14,6 +13,7 @@ import { supabase } from '../components/supabaseClient';
 import widgetSyncService from '../components/widgets/widgetSyncService';
 import dashboardToPullJson from './__json__/dashboardToPull.json';
 import widgetToPullJson from './__json__/widgetToPull.json';
+import { renderServerComponent } from './__utils__/renderServerComponent';
 import {
   mockSupabaseDelete,
   mockSupabaseFrom,
@@ -55,7 +55,7 @@ describe('Sync functionality', () => {
       data: [{ raw_data: JSON.stringify(widgetToPullJson) }]
     });
     assignIdToLocalApp(uuidv4());
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })
@@ -85,7 +85,7 @@ describe('Sync functionality', () => {
     mockSupabaseUpsert('dashboards');
     mockSupabaseUpsert('widgets');
     assignIdToLocalApp(uuidv4());
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })
@@ -128,7 +128,7 @@ describe('Sync functionality', () => {
       promiseCache[widgetId]?.resolve();
     };
     assignIdToLocalApp(uuidv4());
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })
@@ -155,7 +155,7 @@ describe('Sync functionality', () => {
     mockSupabaseUpsert('dashboards');
     mockSupabaseUpsert('widgets');
     assignIdToLocalApp(appId);
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })
@@ -188,7 +188,7 @@ describe('Sync functionality', () => {
     mockSupabaseSelect('widgets', { data: [] });
     mockSupabaseDelete('widgets');
     assignIdToLocalApp(appId);
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })
@@ -220,7 +220,7 @@ describe('Sync functionality', () => {
     mockSupabaseUpsert('dashboards');
     mockSupabaseUpsert('widgets');
     assignIdToLocalApp(appId);
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(
       screen.getByRole('button', { name: 'Sign Up/In' })
     ).toBeInTheDocument();
@@ -244,7 +244,7 @@ describe('Sync functionality', () => {
     mockSupabaseSelect('dashboards', { data: [] });
     mockSupabaseSelect('widgets', { data: [] });
     assignIdToLocalApp(uuidv4());
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(
       screen.getByRole('button', { name: 'Sign Up/In' })
     ).toBeInTheDocument();

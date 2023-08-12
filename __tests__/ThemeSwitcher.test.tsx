@@ -1,12 +1,13 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '../app/page';
+import { renderServerComponent } from './__utils__/renderServerComponent';
 import { getAppData } from './__utils__/testUtils';
 
 describe('Theme Switcher', () => {
   it('should close', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     await userEvent.click(
       screen.getByRole('button', { name: 'Background Theme' })
     );
@@ -19,7 +20,7 @@ describe('Theme Switcher', () => {
     ).not.toBeInTheDocument();
   });
   it('should change theme to photo theme', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     // Assert default theme
     expect(document.body).toHaveClass('theme-shore');
     await userEvent.click(
@@ -30,7 +31,7 @@ describe('Theme Switcher', () => {
     expect(getAppData()).toHaveProperty('theme', 'worship');
   });
   it('should change theme to color theme', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     // Assert default theme
     expect(document.body).toHaveClass('theme-shore');
     await userEvent.click(

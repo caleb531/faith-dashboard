@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { omit } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,6 +7,7 @@ import Home from '../app/page';
 import dashboardToExport from './__json__/dashboardToExport.json';
 import exportedDashboard from './__json__/exportedDashboard.json';
 import FileReaderMock from './__mocks__/FileReaderMock';
+import { renderServerComponent } from './__utils__/renderServerComponent';
 import {
   mockSupabaseFrom,
   mockSupabaseSelect,
@@ -30,7 +31,7 @@ describe('Import/Export functionality', () => {
     mockConfirm(() => true);
     assignIdToLocalApp(uuidv4());
     const originalApp = getAppData();
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
     const fileContents = JSON.stringify(exportedDashboard);
@@ -61,7 +62,7 @@ describe('Import/Export functionality', () => {
     mockSupabaseFrom();
     mockSupabaseSelect('dashboards', { data: [] });
     mockConfirm(() => true);
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
     const fileContents = JSON.stringify(exportedDashboard);
@@ -80,7 +81,7 @@ describe('Import/Export functionality', () => {
     mockSupabaseFrom();
     mockSupabaseSelect('dashboards', { data: [] });
     mockConfirm(() => false);
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
     const fileContents = JSON.stringify(exportedDashboard);
@@ -95,7 +96,7 @@ describe('Import/Export functionality', () => {
 
   it('should not import dashboard from empty JSON file', async () => {
     let errorMessage;
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();
     mockAlert((message) => {
       errorMessage = message;
@@ -116,7 +117,7 @@ describe('Import/Export functionality', () => {
 
   it('should not import dashboard from malformed JSON file', async () => {
     let errorMessage;
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();
     mockAlert((message) => {
       errorMessage = message;
@@ -134,7 +135,7 @@ describe('Import/Export functionality', () => {
   });
 
   it('should not trigger import if files are missing', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
     const fileContents = '';
@@ -150,7 +151,7 @@ describe('Import/Export functionality', () => {
   it('should export dashboard', async () => {
     let exportedBlob: Blob | undefined;
     setAppData(dashboardToExport);
-    render(await Home());
+    await renderServerComponent(<Home />);
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
     jest.spyOn(URL, 'createObjectURL').mockImplementation((blob: Blob) => {
       exportedBlob = blob;

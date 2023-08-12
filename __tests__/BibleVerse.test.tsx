@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import Home from '../app/page';
 import bibleVerseRangeJson from './__json__/bibleVerseRange.json';
 import bibleVerseSingleJson from './__json__/bibleVerseSingle.json';
+import { renderServerComponent } from './__utils__/renderServerComponent';
 import { getWidgetData, waitForWidget } from './__utils__/testUtils';
 
 async function searchBibleVerses(verseQuery: string) {
@@ -19,7 +20,7 @@ async function searchBibleVerses(verseQuery: string) {
 describe('Bible Verse widget', () => {
   it('should search for verse', async () => {
     fetch.mockResponseOnce(JSON.stringify(bibleVerseSingleJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
 
     await searchBibleVerses('rom8.28');
     expect(screen.getByText(/And we know/)).toHaveTextContent(
@@ -33,7 +34,7 @@ describe('Bible Verse widget', () => {
 
   it('should search for verse range', async () => {
     fetch.mockResponseOnce(JSON.stringify(bibleVerseRangeJson));
-    render(await Home());
+    await renderServerComponent(<Home />);
 
     await searchBibleVerses('mat11.28');
     expect(screen.getByText(/Come to me/)).toHaveTextContent(
@@ -43,7 +44,7 @@ describe('Bible Verse widget', () => {
 
   it('should handle bad data from server', async () => {
     fetch.mockResponseOnce('notjson');
-    render(await Home());
+    await renderServerComponent(<Home />);
 
     const log = jest.spyOn(console, 'log').mockImplementation(() => {
       /* noop */

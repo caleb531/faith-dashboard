@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SignUp from '../app/sign-up/page';
 import { supabase } from '../components/supabaseClient';
@@ -7,6 +7,7 @@ import {
   mockCaptchaFailOnce,
   mockCaptchaSuccessOnce
 } from './__mocks__/captchaMockUtils';
+import { renderServerComponent } from './__utils__/renderServerComponent';
 import { mockSupabaseApiResponse } from './__utils__/supabaseMockUtils';
 import { populateFormFields } from './__utils__/testUtils';
 
@@ -16,7 +17,7 @@ describe('Sign Up page', () => {
   });
 
   it('should validate that passwords are matching', async () => {
-    render(await SignUp());
+    await renderServerComponent(<SignUp />);
     await populateFormFields({
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStaple'
@@ -28,7 +29,7 @@ describe('Sign Up page', () => {
   });
 
   it('should validate that passwords are not matching', async () => {
-    render(await SignUp());
+    await renderServerComponent(<SignUp />);
     await populateFormFields({
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStale'
@@ -40,7 +41,7 @@ describe('Sign Up page', () => {
   });
 
   it('should require all form fields to be populated', async () => {
-    render(await SignUp());
+    await renderServerComponent(<SignUp />);
     const requiredFields = [
       'First Name',
       'Last Name',
@@ -58,7 +59,7 @@ describe('Sign Up page', () => {
   });
 
   it('should require valid email addresses', async () => {
-    render(await SignUp());
+    await renderServerComponent(<SignUp />);
     await populateFormFields({
       Email: 'notanemail'
     });
@@ -70,7 +71,7 @@ describe('Sign Up page', () => {
 
   it('should require CAPTCHA to be completed', async () => {
     mockCaptchaFailOnce();
-    render(await SignUp());
+    await renderServerComponent(<SignUp />);
     await populateFormFields({
       'First Name': 'John',
       'Last Name': 'Doe',
@@ -94,7 +95,7 @@ describe('Sign Up page', () => {
       session: {},
       error: null
     });
-    render(await SignUp());
+    await renderServerComponent(<SignUp />);
     await populateFormFields({
       'First Name': 'John',
       'Last Name': 'Doe',
@@ -118,7 +119,7 @@ describe('Sign Up page', () => {
 
   it('should error if honey pot field is populated', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    render(await SignUp());
+    await renderServerComponent(<SignUp />);
     await populateFormFields({
       'First Name': 'John',
       'Last Name': 'Doe',
@@ -142,7 +143,7 @@ describe('Sign Up page', () => {
         message: 'User already exists'
       }
     });
-    render(await SignUp());
+    await renderServerComponent(<SignUp />);
     await populateFormFields({
       'First Name': 'John',
       'Last Name': 'Doe',

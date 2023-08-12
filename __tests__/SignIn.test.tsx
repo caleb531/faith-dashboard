@@ -1,9 +1,10 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SignIn from '../app/sign-in/page';
 import { supabase } from '../components/supabaseClient';
 import { mockCaptchaSuccessOnce } from './__mocks__/captchaMockUtils';
+import { renderServerComponent } from './__utils__/renderServerComponent';
 import { mockSupabaseApiResponse } from './__utils__/supabaseMockUtils';
 import { populateFormFields } from './__utils__/testUtils';
 describe('Sign In page', () => {
@@ -12,7 +13,7 @@ describe('Sign In page', () => {
   });
 
   it('should require all form fields to be populated', async () => {
-    render(await SignIn());
+    await renderServerComponent(<SignIn />);
     const requiredFields = ['Email', 'Password'];
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
     requiredFields.forEach((labelText) => {
@@ -24,7 +25,7 @@ describe('Sign In page', () => {
   });
 
   it('should require valid email address', async () => {
-    render(await SignIn());
+    await renderServerComponent(<SignIn />);
     await populateFormFields({
       Email: 'notanemail'
     });
@@ -44,7 +45,7 @@ describe('Sign In page', () => {
       session: {},
       error: null
     });
-    render(await SignIn());
+    await renderServerComponent(<SignIn />);
     await populateFormFields({
       Email: 'caleb@example.com',
       Password: 'CorrectHorseBatteryStaple'
@@ -58,7 +59,7 @@ describe('Sign In page', () => {
 
   it('should error if honey pot field is populated', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    render(await SignIn());
+    await renderServerComponent(<SignIn />);
     await populateFormFields({
       Email: 'kaleb@example.com',
       Password: 'CorrectHorseBatteryStaple',
@@ -79,7 +80,7 @@ describe('Sign In page', () => {
         message: 'Invalid login credentials'
       }
     });
-    render(await SignIn());
+    await renderServerComponent(<SignIn />);
     await populateFormFields({
       Email: 'kaleb@example.com',
       Password: 'CorrectHorseBatteryStaple'

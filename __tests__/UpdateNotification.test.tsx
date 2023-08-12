@@ -1,12 +1,12 @@
 import '@testing-library/jest-dom';
 import {
   fireEvent,
-  render,
   screen,
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
 import Home from '../app/page';
+import { renderServerComponent } from './__utils__/renderServerComponent';
 
 class ServiceWorkerMock {}
 let originalServiceWorker: typeof navigator.serviceWorker;
@@ -44,7 +44,7 @@ describe('Update Notification', () => {
   });
 
   it('should show', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     // The waitForElementToBeRemoved() call is necessary to squash act(...)
     // warnings; it is unknown why the other tests do not have this issue
     // (source:
@@ -60,7 +60,7 @@ describe('Update Notification', () => {
   });
 
   it('should show loading indicator when clicked', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitFor(() => {
       expect(
         screen.getByRole('region', {
@@ -78,7 +78,7 @@ describe('Update Notification', () => {
     expect(screen.queryByText('Loading...')).toBeInTheDocument();
   });
   it('should reload page when service worker is updated', async () => {
-    render(await Home());
+    await renderServerComponent(<Home />);
     await waitFor(() => {
       expect(
         screen.getByRole('region', {
