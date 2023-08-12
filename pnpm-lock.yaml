@@ -15,7 +15,7 @@ dependencies:
     version: 0.7.4(@supabase/supabase-js@2.32.0)
   '@supabase/supabase-js':
     specifier: ^2.32.0
-    version: 2.32.0
+    version: 2.32.0(encoding@0.1.13)
   classnames:
     specifier: ^2.3.2
     version: 2.3.2
@@ -114,6 +114,9 @@ devDependencies:
   '@typescript-eslint/parser':
     specifier: ^6.3.0
     version: 6.3.0(eslint@8.46.0)(typescript@5.1.6)
+  encoding:
+    specifier: ^0.1.13
+    version: 0.1.13
   eslint:
     specifier: ^8.46.0
     version: 8.46.0
@@ -131,7 +134,7 @@ devDependencies:
     version: 29.3.1
   jest-fetch-mock:
     specifier: ^3.0.3
-    version: 3.0.3
+    version: 3.0.3(encoding@0.1.13)
   jest-preview:
     specifier: ^0.3.1
     version: 0.3.1(postcss@8.4.19)(ts-node@10.9.1)
@@ -140,7 +143,7 @@ devDependencies:
     version: 3.0.1
   puppeteer:
     specifier: ^21.0.2
-    version: 21.0.2
+    version: 21.0.2(encoding@0.1.13)
   sass:
     specifier: ^1.65.1
     version: 1.65.1
@@ -1962,7 +1965,7 @@ packages:
       '@supabase/supabase-js': ^2.19.0
     dependencies:
       '@supabase/auth-helpers-shared': 0.4.1(@supabase/supabase-js@2.32.0)
-      '@supabase/supabase-js': 2.32.0
+      '@supabase/supabase-js': 2.32.0(encoding@0.1.13)
       set-cookie-parser: 2.6.0
     dev: false
 
@@ -1971,30 +1974,30 @@ packages:
     peerDependencies:
       '@supabase/supabase-js': ^2.19.0
     dependencies:
-      '@supabase/supabase-js': 2.32.0
+      '@supabase/supabase-js': 2.32.0(encoding@0.1.13)
       jose: 4.14.4
     dev: false
 
-  /@supabase/functions-js@2.1.1:
+  /@supabase/functions-js@2.1.1(encoding@0.1.13):
     resolution: {integrity: sha512-bIR1Puae6W+1/MzPfYBWOG/SCWGo4B5CB7c0ZZksvliNEAzhxNBJ0UFKYINcGdGtxG8ZC+1xr3utWpNZNwnoRw==}
     dependencies:
-      cross-fetch: 3.1.5
+      cross-fetch: 3.1.5(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@supabase/gotrue-js@2.46.1:
+  /@supabase/gotrue-js@2.46.1(encoding@0.1.13):
     resolution: {integrity: sha512-tebFX3XvPqEJKHOVgkXTN20g9iUhLx6tebIYQvTggYTrqOT2af8oTpSBdgYzbwJ291G6P6CSpR6KY0cT9ade5A==}
     dependencies:
-      cross-fetch: 3.1.5
+      cross-fetch: 3.1.5(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@supabase/postgrest-js@1.8.0:
+  /@supabase/postgrest-js@1.8.0(encoding@0.1.13):
     resolution: {integrity: sha512-R6leDIC92NgjyG2/tCRJ42rWN7+fZY6ulTEE+c00tcnghn6cX4IYUlnTNMtrdfYC2JYNOTyM+rWj63Wdhr7Zig==}
     dependencies:
-      cross-fetch: 3.1.5
+      cross-fetch: 3.1.5(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -2009,23 +2012,23 @@ packages:
       - supports-color
     dev: false
 
-  /@supabase/storage-js@2.5.1:
+  /@supabase/storage-js@2.5.1(encoding@0.1.13):
     resolution: {integrity: sha512-nkR0fQA9ScAtIKA3vNoPEqbZv1k5B5HVRYEvRWdlP6mUpFphM9TwPL2jZ/ztNGMTG5xT6SrHr+H7Ykz8qzbhjw==}
     dependencies:
-      cross-fetch: 3.1.5
+      cross-fetch: 3.1.5(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@supabase/supabase-js@2.32.0:
+  /@supabase/supabase-js@2.32.0(encoding@0.1.13):
     resolution: {integrity: sha512-1ShFhuOI5Du7604nlCelBsRD61daXk2O0qwjumoz35bqrYThnSPPtpJqZOHw6Mg6o7mLjIInYLh/DBlh8UvzRg==}
     dependencies:
-      '@supabase/functions-js': 2.1.1
-      '@supabase/gotrue-js': 2.46.1
-      '@supabase/postgrest-js': 1.8.0
+      '@supabase/functions-js': 2.1.1(encoding@0.1.13)
+      '@supabase/gotrue-js': 2.46.1(encoding@0.1.13)
+      '@supabase/postgrest-js': 1.8.0(encoding@0.1.13)
       '@supabase/realtime-js': 2.7.3
-      '@supabase/storage-js': 2.5.1
-      cross-fetch: 3.1.5
+      '@supabase/storage-js': 2.5.1(encoding@0.1.13)
+      cross-fetch: 3.1.5(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -3624,17 +3627,17 @@ packages:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
     dev: true
 
-  /cross-fetch@3.1.5:
+  /cross-fetch@3.1.5(encoding@0.1.13):
     resolution: {integrity: sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==}
     dependencies:
-      node-fetch: 2.6.7
+      node-fetch: 2.6.7(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
 
-  /cross-fetch@4.0.0:
+  /cross-fetch@4.0.0(encoding@0.1.13):
     resolution: {integrity: sha512-e4a5N8lVvuLgAWgnCrLr2PP0YyDOTHa9H/Rj54dirp61qXnNq46m82bRhNqIA5VccJtWBvPTFRV3TtvHUKPB1g==}
     dependencies:
-      node-fetch: 2.6.12
+      node-fetch: 2.6.12(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: true
@@ -4006,6 +4009,11 @@ packages:
     resolution: {integrity: sha512-TPJXq8JqFaVYm2CWmPvnP2Iyo4ZSM7/QKcSmuMLDObfpH5fi7RUGmd/rTDf+rut/saiDiQEeVTNgAmJEdAOx0w==}
     engines: {node: '>= 0.8'}
     dev: true
+
+  /encoding@0.1.13:
+    resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
+    dependencies:
+      iconv-lite: 0.6.3
 
   /end-of-stream@1.4.4:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
@@ -5420,7 +5428,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       safer-buffer: 2.1.2
-    dev: true
 
   /idb@7.1.1:
     resolution: {integrity: sha512-gchesWBzyvGHRO9W8tzUWFDycow5gwjvFKfyV9FF32Y7F50yZMp7mP+T2mJIWFx49zicqyC4uefHM17o6xKIVQ==}
@@ -6000,10 +6007,10 @@ packages:
       jest-util: 29.3.1
     dev: true
 
-  /jest-fetch-mock@3.0.3:
+  /jest-fetch-mock@3.0.3(encoding@0.1.13):
     resolution: {integrity: sha512-Ux1nWprtLrdrH4XwE7O7InRY6psIi3GOsqNESJgMJ+M5cv4A8Lh7SN9d2V2kKRZ8ebAfcd1LNyZguAOb6JiDqw==}
     dependencies:
-      cross-fetch: 3.1.5
+      cross-fetch: 3.1.5(encoding@0.1.13)
       promise-polyfill: 8.2.3
     transitivePeerDependencies:
       - encoding
@@ -6817,7 +6824,7 @@ packages:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
 
-  /node-fetch@2.6.12:
+  /node-fetch@2.6.12(encoding@0.1.13):
     resolution: {integrity: sha512-C/fGU2E8ToujUivIO0H+tpQ6HWo4eEmchoPIoXtxCrVghxdKq+QOHqEZW7tuP3KlV3bC8FRMO5nMCC7Zm1VP6g==}
     engines: {node: 4.x || >=6.0.0}
     peerDependencies:
@@ -6826,10 +6833,11 @@ packages:
       encoding:
         optional: true
     dependencies:
+      encoding: 0.1.13
       whatwg-url: 5.0.0
     dev: true
 
-  /node-fetch@2.6.7:
+  /node-fetch@2.6.7(encoding@0.1.13):
     resolution: {integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==}
     engines: {node: 4.x || >=6.0.0}
     peerDependencies:
@@ -6838,6 +6846,7 @@ packages:
       encoding:
         optional: true
     dependencies:
+      encoding: 0.1.13
       whatwg-url: 5.0.0
 
   /node-fetch@3.3.2:
@@ -7357,13 +7366,13 @@ packages:
       escape-goat: 2.1.1
     dev: true
 
-  /puppeteer-core@21.0.2:
+  /puppeteer-core@21.0.2(encoding@0.1.13):
     resolution: {integrity: sha512-6tRjB9RZmPApPhQhzXZxmPUBt+6KM2P/eCp8p2o0DvK3P1V2qYkRi6/EQJEBIFquqZ+kF1zaW9Tg69p0dQlqFg==}
     engines: {node: '>=16.3.0'}
     dependencies:
       '@puppeteer/browsers': 1.5.1
       chromium-bidi: 0.4.20(devtools-protocol@0.0.1147663)
-      cross-fetch: 4.0.0
+      cross-fetch: 4.0.0(encoding@0.1.13)
       debug: 4.3.4
       devtools-protocol: 0.0.1147663
       ws: 8.13.0
@@ -7374,14 +7383,14 @@ packages:
       - utf-8-validate
     dev: true
 
-  /puppeteer@21.0.2:
+  /puppeteer@21.0.2(encoding@0.1.13):
     resolution: {integrity: sha512-RAgbVjvwLABz8y+83xGdE+v7JLmvvcyGSlhQUX6k3rpBeRIO593E3DCaSY9VRUq3VJPMm7nWzDiZjUaK1tIpQg==}
     engines: {node: '>=16.3.0'}
     requiresBuild: true
     dependencies:
       '@puppeteer/browsers': 1.5.1
       cosmiconfig: 8.2.0
-      puppeteer-core: 21.0.2
+      puppeteer-core: 21.0.2(encoding@0.1.13)
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -7743,7 +7752,6 @@ packages:
 
   /safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
-    dev: true
 
   /sass@1.65.1:
     resolution: {integrity: sha512-9DINwtHmA41SEd36eVPQ9BJKpn7eKDQmUHmpI0y5Zv2Rcorrh0zS+cFrt050hdNbmmCNKTW3hV5mWfuegNRsEA==}
