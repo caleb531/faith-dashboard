@@ -12,7 +12,7 @@ async function addWidget(widgetTypeId: WidgetTypeId) {
   if (!widgetType) {
     throw new Error(`Invalid widget type: ${widgetTypeId}`);
   }
-  render(<Home />);
+  render(await Home());
   await waitFor(() => {
     expect(screen.getAllByRole('article')).toHaveLength(4);
   });

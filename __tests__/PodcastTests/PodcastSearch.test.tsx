@@ -29,14 +29,14 @@ describe('Podcast widget', () => {
 
   it('should handle no results', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastNoResultsJson));
-    render(<Home />);
+    render(await Home());
 
     await searchPodcasts('abc123xyz');
     expect(screen.getByText('No Podcasts Found')).toBeInTheDocument();
   });
 
   it('should clear last search results after changing query', async () => {
-    render(<Home />);
+    render(await Home());
 
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     await searchPodcasts('sermon of the day');
@@ -49,7 +49,7 @@ describe('Podcast widget', () => {
 
   it('should handle bad data from server', async () => {
     fetch.mockResponseOnce('notjson');
-    render(<Home />);
+    render(await Home());
 
     // Suppress the error that's logged when fetch() tries to parse invalid
     // JSON in the useWidgetDataFetcher() hook

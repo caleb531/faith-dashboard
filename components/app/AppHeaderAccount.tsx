@@ -2,7 +2,7 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import React, { useContext, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
-import { isSessionActive } from '../accountUtils';
+import { isSessionActive, isTruthy } from '../accountUtils';
 import { exportDashboard, readDashboardFileToJSON } from '../importExportUtils';
 import { getAppStorageKey } from '../storageUtils';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
@@ -21,9 +21,8 @@ function AppHeaderAccount() {
   // useEffect() call later in this function; this is done to avoid SSR
   // mismatches (please see the hook below)
   const session = useContext(SessionContext);
-  const isUserActive = isSessionActive();
   const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
-  const isSignedIn = session && isUserActive;
+  const isSignedIn = isTruthy(session) && isSessionActive(session);
 
   async function handleFileInputChange(
     event: React.FormEvent<HTMLInputElement>
@@ -34,10 +33,12 @@ function AppHeaderAccount() {
     }
     try {
       const newApp = await readDashboardFileToJSON(fileInput.files[0]);
-      const confirmation = confirm(
-        'This will overwrite your current dashboard. Are you sure you want to continue?'
-      );
-      if (!isSignedIn || confirmation) {
+      if (
+        !isSignedIn ||
+        confirm(
+          'This will overwrite your current dashboard. Are you sure you want to continue?'
+        )
+      ) {
         dispatchToApp({ type: 'replaceApp', payload: newApp });
       }
     } catch (error) {

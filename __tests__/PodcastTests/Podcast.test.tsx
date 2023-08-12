@@ -21,7 +21,7 @@ describe('Podcast widget', () => {
   it('should search for podcast and select episode', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
+    render(await Home());
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();
@@ -60,7 +60,7 @@ describe('Podcast widget', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedRefreshedJson));
-    render(<Home />);
+    render(await Home());
 
     await searchPodcasts('sermon of the day');
     await choosePodcast('Sermon of the Day');
@@ -78,7 +78,7 @@ describe('Podcast widget', () => {
   it('should return to list from Now Playing screen', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
+    render(await Home());
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();
@@ -96,7 +96,7 @@ describe('Podcast widget', () => {
   it('should choose result via Enter key for accessibility', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
+    render(await Home());
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();
@@ -113,7 +113,7 @@ describe('Podcast widget', () => {
   it('should choose result via spacebar for accessibility', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
+    render(await Home());
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();

@@ -16,7 +16,7 @@ describe('Sign Up page', () => {
   });
 
   it('should validate that passwords are matching', async () => {
-    render(<SignUp />);
+    render(await SignUp());
     await populateFormFields({
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStaple'
@@ -28,7 +28,7 @@ describe('Sign Up page', () => {
   });
 
   it('should validate that passwords are not matching', async () => {
-    render(<SignUp />);
+    render(await SignUp());
     await populateFormFields({
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStale'
@@ -40,7 +40,7 @@ describe('Sign Up page', () => {
   });
 
   it('should require all form fields to be populated', async () => {
-    render(<SignUp />);
+    render(await SignUp());
     const requiredFields = [
       'First Name',
       'Last Name',
@@ -58,7 +58,7 @@ describe('Sign Up page', () => {
   });
 
   it('should require valid email addresses', async () => {
-    render(<SignUp />);
+    render(await SignUp());
     await populateFormFields({
       Email: 'notanemail'
     });
@@ -70,7 +70,7 @@ describe('Sign Up page', () => {
 
   it('should require CAPTCHA to be completed', async () => {
     mockCaptchaFailOnce();
-    render(<SignUp />);
+    render(await SignUp());
     await populateFormFields({
       'First Name': 'John',
       'Last Name': 'Doe',
@@ -94,7 +94,7 @@ describe('Sign Up page', () => {
       session: {},
       error: null
     });
-    render(<SignUp />);
+    render(await SignUp());
     await populateFormFields({
       'First Name': 'John',
       'Last Name': 'Doe',
@@ -118,7 +118,7 @@ describe('Sign Up page', () => {
 
   it('should error if honey pot field is populated', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    render(<SignUp />);
+    render(await SignUp());
     await populateFormFields({
       'First Name': 'John',
       'Last Name': 'Doe',
@@ -142,7 +142,7 @@ describe('Sign Up page', () => {
         message: 'User already exists'
       }
     });
-    render(<SignUp />);
+    render(await SignUp());
     await populateFormFields({
       'First Name': 'John',
       'Last Name': 'Doe',

@@ -10,7 +10,7 @@ import { removeWidget } from './__utils__/testUtils';
 
 describe('Remove Widget UI', () => {
   it('should remove BibleVerse widget', async () => {
-    render(<Home />);
+    render(await Home());
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
@@ -24,7 +24,7 @@ describe('Remove Widget UI', () => {
   });
 
   it('should remove Note widget', async () => {
-    render(<Home />);
+    render(await Home());
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
@@ -38,7 +38,7 @@ describe('Remove Widget UI', () => {
   });
 
   it('should remove Podcast widget', async () => {
-    render(<Home />);
+    render(await Home());
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });
@@ -52,7 +52,7 @@ describe('Remove Widget UI', () => {
   });
 
   it('should cancel removing widget', async () => {
-    render(<Home />);
+    render(await Home());
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(4);
     });

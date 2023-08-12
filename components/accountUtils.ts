@@ -18,12 +18,7 @@ export async function getUser(): Promise<User | null> {
 
 // Return true if the user is signed in with a session that isn't yet expired;
 // return false otherwise
-export async function isSessionActive(
-  session?: Session | null
-): Promise<boolean> {
-  if (!session) {
-    session = await getSession();
-  }
+export function isSessionActive(session?: Session | null): boolean {
   const currentEpoch = Date.now() / MS_IN_S;
   return Boolean(
     session && session.expires_at && currentEpoch < session.expires_at

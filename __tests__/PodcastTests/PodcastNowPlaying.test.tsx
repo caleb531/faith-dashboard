@@ -37,7 +37,7 @@ describe('Podcast widget', () => {
   it('should access Now Playing screen from episode list', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
+    render(await Home());
 
     await searchPodcasts('sermon of the day');
     expect(screen.getByText('26 podcasts')).toBeInTheDocument();
@@ -65,7 +65,7 @@ describe('Podcast widget', () => {
   it('should display correctly-sized thumbnail', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
+    render(await Home());
     await navigateToNowPlaying();
 
     expect(screen.getByTestId('podcast-image')).toHaveProperty(
@@ -88,7 +88,7 @@ describe('Podcast widget', () => {
       })
     );
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
+    render(await Home());
     await navigateToNowPlaying();
 
     expect(screen.getByTestId('podcast-image')).toHaveTextContent('?');

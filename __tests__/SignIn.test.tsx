@@ -12,7 +12,7 @@ describe('Sign In page', () => {
   });
 
   it('should require all form fields to be populated', async () => {
-    render(<SignIn />);
+    render(await SignIn());
     const requiredFields = ['Email', 'Password'];
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
     requiredFields.forEach((labelText) => {
@@ -24,7 +24,7 @@ describe('Sign In page', () => {
   });
 
   it('should require valid email address', async () => {
-    render(<SignIn />);
+    render(await SignIn());
     await populateFormFields({
       Email: 'notanemail'
     });
@@ -44,7 +44,7 @@ describe('Sign In page', () => {
       session: {},
       error: null
     });
-    render(<SignIn />);
+    render(await SignIn());
     await populateFormFields({
       Email: 'caleb@example.com',
       Password: 'CorrectHorseBatteryStaple'
@@ -58,7 +58,7 @@ describe('Sign In page', () => {
 
   it('should error if honey pot field is populated', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    render(<SignIn />);
+    render(await SignIn());
     await populateFormFields({
       Email: 'kaleb@example.com',
       Password: 'CorrectHorseBatteryStaple',
@@ -79,7 +79,7 @@ describe('Sign In page', () => {
         message: 'Invalid login credentials'
       }
     });
-    render(<SignIn />);
+    render(await SignIn());
     await populateFormFields({
       Email: 'kaleb@example.com',
       Password: 'CorrectHorseBatteryStaple'

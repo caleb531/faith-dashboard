@@ -27,6 +27,9 @@ const config: Config.InitialOptions = {
     'next/link': require.resolve('./__tests__/__mocks__/LinkMock.tsx'),
     'workbox-window': require.resolve(
       './__tests__/__mocks__/WorkboxWindowMock.ts'
+    ),
+    '@supabase/auth-helpers-nextjs': require.resolve(
+      './__tests__/__mocks__/supabaseAuthHelpersMock.ts'
     )
   },
   // Display coverage summary below file-by-file coverage breakdown

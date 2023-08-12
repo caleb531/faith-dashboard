@@ -44,7 +44,7 @@ describe('Update Notification', () => {
   });
 
   it('should show', async () => {
-    render(<Home />);
+    render(await Home());
     // The waitForElementToBeRemoved() call is necessary to squash act(...)
     // warnings; it is unknown why the other tests do not have this issue
     // (source:
@@ -60,7 +60,7 @@ describe('Update Notification', () => {
   });
 
   it('should show loading indicator when clicked', async () => {
-    render(<Home />);
+    render(await Home());
     await waitFor(() => {
       expect(
         screen.getByRole('region', {
@@ -78,7 +78,7 @@ describe('Update Notification', () => {
     expect(screen.queryByText('Loading...')).toBeInTheDocument();
   });
   it('should reload page when service worker is updated', async () => {
-    render(<Home />);
+    render(await Home());
     await waitFor(() => {
       expect(
         screen.getByRole('region', {

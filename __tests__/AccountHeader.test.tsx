@@ -29,14 +29,14 @@ describe('Account Header', () => {
   });
 
   it('should provide links to Sign Up / Sign In when not signed in', async () => {
-    render(<Home />);
+    render(await Home());
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up/In' }));
     expect(screen.getByRole('link', { name: 'Sign Up' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Sign In' })).toBeInTheDocument();
   });
 
   it('should close Sign Up / Sign In modal', async () => {
-    render(<Home />);
+    render(await Home());
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up/In' }));
     expect(
       screen.getByRole('heading', { name: 'Account' })
@@ -56,7 +56,7 @@ describe('Account Header', () => {
         error: null
       } as any;
     });
-    render(<Home />);
+    render(await Home());
     await waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })
@@ -79,7 +79,7 @@ describe('Account Header', () => {
   it('should close menu by clicking overlay', async () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
-    render(<Home />);
+    render(await Home());
     await waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })
@@ -101,7 +101,7 @@ describe('Account Header', () => {
         error: null
       } as any;
     });
-    render(<Home />);
+    render(await Home());
     await waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })

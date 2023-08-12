@@ -1,7 +1,7 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { throttle } from 'lodash-es';
 import { Dispatch, useEffect, useMemo } from 'react';
-import { getUser, isSessionActive } from '../accountUtils';
+import { getSession, getUser, isSessionActive } from '../accountUtils';
 import { getClientId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
 import { WidgetHead, WidgetState } from '../widgets/widget.types';
@@ -17,7 +17,7 @@ async function applyServerAppToLocalApp(
   newApp: AppState,
   dispatchToApp: Dispatch<AppAction>
 ): Promise<void> {
-  if (!(await isSessionActive())) {
+  if (!isSessionActive(await getSession())) {
     return;
   }
   dispatchToApp({

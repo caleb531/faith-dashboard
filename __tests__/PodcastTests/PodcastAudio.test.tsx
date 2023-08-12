@@ -34,7 +34,7 @@ describe('Podcast widget', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     const playStub = jest.spyOn(AudioMock.prototype, 'play');
     const pauseStub = jest.spyOn(AudioMock.prototype, 'pause');
-    render(<Home />);
+    render(await Home());
     await navigateToNowPlaying();
 
     expect(playStub).not.toHaveBeenCalled();
@@ -52,7 +52,7 @@ describe('Podcast widget', () => {
   it('should skip back in audio', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
+    render(await Home());
     await navigateToNowPlaying();
 
     AudioMock.instances[0].currentTime = 123;
@@ -64,7 +64,7 @@ describe('Podcast widget', () => {
   it('should skip forward in audio', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
+    render(await Home());
     await navigateToNowPlaying();
 
     AudioMock.instances[0].currentTime = 123;
@@ -77,7 +77,7 @@ describe('Podcast widget', () => {
   it('should interact with audio seeker', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
+    render(await Home());
     await navigateToNowPlaying();
 
     // 0:10
@@ -88,7 +88,7 @@ describe('Podcast widget', () => {
   it('should display audio timestamps correctly when current time is in hours', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
+    render(await Home());
     // 1:18:32
     AudioMock.instances[0].duration = 4712;
     await navigateToNowPlaying();
@@ -102,7 +102,7 @@ describe('Podcast widget', () => {
   it('should display audio timestamps correctly when current time is in seconds', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
+    render(await Home());
     // 9:30
     AudioMock.instances[0].duration = 570;
     await navigateToNowPlaying();
@@ -116,7 +116,7 @@ describe('Podcast widget', () => {
   it('should maintain separate audio stream per widget', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
+    render(await Home());
     await navigateToNowPlaying();
 
     await userEvent.click(screen.getByRole('button', { name: 'Add Widget' }));
@@ -129,7 +129,7 @@ describe('Podcast widget', () => {
   it('should indicate when audio is buffering', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    render(<Home />);
+    render(await Home());
 
     await navigateToNowPlaying();
     await userEvent.click(screen.getByRole('button', { name: 'Play' }));

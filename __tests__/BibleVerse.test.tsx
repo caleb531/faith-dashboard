@@ -19,7 +19,7 @@ async function searchBibleVerses(verseQuery: string) {
 describe('Bible Verse widget', () => {
   it('should search for verse', async () => {
     fetch.mockResponseOnce(JSON.stringify(bibleVerseSingleJson));
-    render(<Home />);
+    render(await Home());
 
     await searchBibleVerses('rom8.28');
     expect(screen.getByText(/And we know/)).toHaveTextContent(
@@ -33,7 +33,7 @@ describe('Bible Verse widget', () => {
 
   it('should search for verse range', async () => {
     fetch.mockResponseOnce(JSON.stringify(bibleVerseRangeJson));
-    render(<Home />);
+    render(await Home());
 
     await searchBibleVerses('mat11.28');
     expect(screen.getByText(/Come to me/)).toHaveTextContent(
@@ -43,7 +43,7 @@ describe('Bible Verse widget', () => {
 
   it('should handle bad data from server', async () => {
     fetch.mockResponseOnce('notjson');
-    render(<Home />);
+    render(await Home());
 
     const log = jest.spyOn(console, 'log').mockImplementation(() => {
       /* noop */
