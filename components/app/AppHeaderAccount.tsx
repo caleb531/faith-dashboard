@@ -1,3 +1,4 @@
+'use client';
 import { Session } from '@supabase/supabase-js';
 import React, { useContext, useEffect, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';

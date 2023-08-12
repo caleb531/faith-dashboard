@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import AddWidgetButton from '../reusable/AddWidgetButton';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';

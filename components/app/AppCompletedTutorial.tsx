@@ -1,4 +1,4 @@
-import React from 'react';
+'use client';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 
