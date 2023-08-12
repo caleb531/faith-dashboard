@@ -1,3 +1,4 @@
+'use client';
 import { useContext } from 'react';
 import TutorialContext from './TutorialContext';
 import tutorialSteps from './tutorialSteps';

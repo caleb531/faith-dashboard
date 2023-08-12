@@ -17,7 +17,7 @@ type Props = {
 };
 
 function ThemeSwitcher({ currentTheme, onCloseThemeSwitcher }: Props) {
-  const dispatchToApp = useContext(AppContext);
+  const { dispatchToApp } = useContext(AppContext);
   const setThemeSwitchTimeout = useTimeout();
 
   function onChooseTheme(newTheme: AppTheme): void {

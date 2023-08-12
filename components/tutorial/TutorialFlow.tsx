@@ -14,7 +14,7 @@ type Props = {
 };
 
 function TutorialFlow({ inProgress, children }: Props) {
-  const dispatchToApp = useContext(AppContext);
+  const { dispatchToApp } = useContext(AppContext);
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 

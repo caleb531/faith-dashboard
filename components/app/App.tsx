@@ -1,10 +1,11 @@
 'use client';
-import { useEffect, useReducer, useState } from 'react';
-import { JSXChildren } from '../global.types';
+import React, { useEffect, useMemo, useReducer, useState } from 'react';
+import LoadingIndicator from '../reusable/LoadingIndicator';
 import { getAppStorageKey } from '../storageUtils';
 import TutorialFlow from '../tutorial/TutorialFlow';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 import useLocalStorage from '../useLocalStorage';
+import useMountListener from '../useMountListener';
 import useMultipleDashboardsMigration from '../useMultipleDashboardsMigration';
 import usePasswordRecoveryRedirect from '../usePasswordRecoveryRedirect';
 import useTouchDeviceDetection from '../useTouchDeviceDetection';
@@ -15,7 +16,6 @@ import AppNotification from './AppNotification';
 import reducer from './AppReducer';
 import ThemeMetadata from './ThemeMetadata';
 import UpdateNotification from './UpdateNotification';
-import { AppState } from './app.types';
 import defaultApp from './appStateDefault';
 import getAppNotificationMessage from './getAppNotificationMessage';
 import useAppSync from './useAppSync';
@@ -38,7 +38,7 @@ function shouldLoadServiceWorker() {
 type Props = {
   enableTutorial?: boolean;
   canAddWidgets?: boolean;
-  children: (app: AppState) => JSXChildren;
+  children: React.ReactNode;
 };
 
 function App({
@@ -85,8 +85,14 @@ function App({
 
   useTouchDeviceDetection();
 
+  const isMounted = useMountListener();
+
+  const appContext = useMemo(() => {
+    return { app, dispatchToApp };
+  }, [app, dispatchToApp]);
+
   return (
-    <AppContext.Provider value={dispatchToApp}>
+    <AppContext.Provider value={appContext}>
       <div className="app">
         <ThemeMetadata />
         {shouldLoadServiceWorker() ? <UpdateNotification /> : null}
@@ -97,7 +103,11 @@ function App({
         >
           <AppHeader currentTheme={app.theme} canAddWidgets={canAddWidgets} />
           <AppNotification />
-          <div className="app-contents">{children(app)}</div>
+          {isMounted ? (
+            <div className="app-contents">{children}</div>
+          ) : (
+            <LoadingIndicator />
+          )}
           <AppFooter />
         </TutorialFlow>
       </div>

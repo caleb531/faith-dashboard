@@ -18,7 +18,7 @@ type Props = {
 };
 
 function WidgetShell({ widget, dispatchToWidget, provided, children }: Props) {
-  const dispatchToApp = useContext(AppContext);
+  const { dispatchToApp } = useContext(AppContext);
 
   const widgetStepData = useTutorialStep(`widget-${widget.tutorialStepId}`);
   const dragStepData = useTutorialStep(`drag-widget-${widget.tutorialStepId}`);

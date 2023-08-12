@@ -6,7 +6,6 @@ import AppContext from '../app/AppContext';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import WidgetBoardColumn from './WidgetBoardColumn';
-import { WidgetHead } from './widget.types';
 
 /* istanbul ignore next */
 // Convert the ID of a dropzone to a base-1 column index (e.g. "column-3" => 3)
@@ -15,14 +14,13 @@ function getColumnFromDroppableId(droppableId: string): number {
   return Number(matches && matches[0]);
 }
 
-type Props = {
-  widgets: WidgetHead[];
-};
-
-function WidgetBoard({ widgets }: Props) {
-  const dispatchToApp = useContext(AppContext);
+function WidgetBoard() {
+  const { dispatchToApp } = useContext(AppContext);
   const columnCount = 3;
 
+  const {
+    app: { widgets }
+  } = useContext(AppContext);
   const { isCurrentStep, stepProps } = useTutorialStep('dashboard');
 
   // Because the widgets are stored in a one-dimensional array, yet we are

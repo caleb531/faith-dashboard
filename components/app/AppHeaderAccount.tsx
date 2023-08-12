@@ -13,7 +13,7 @@ import appStateDefault from './appStateDefault';
 
 function AppHeaderAccount() {
   const { isCurrentStep, stepProps } = useTutorialStep('sign-up');
-  const dispatchToApp = useContext(AppContext);
+  const { dispatchToApp } = useContext(AppContext);
 
   // The session will be loaded asynchronously and isomorphically, via a
   // useEffect() call later in this function; this is done to avoid SSR

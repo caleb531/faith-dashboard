@@ -10,7 +10,7 @@ type Props = {
 };
 
 function WidgetPickerEntry({ widgetType, onAddWidget }: Props) {
-  const dispatchToApp = useContext(AppContext);
+  const { dispatchToApp } = useContext(AppContext);
 
   function addWidget() {
     dispatchToApp({
