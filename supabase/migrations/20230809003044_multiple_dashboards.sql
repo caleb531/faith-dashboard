@@ -3,7 +3,7 @@ alter table public.widgets drop constraint if exists widgets_pkey;
 alter table public.widgets drop constraint if exists fk_dashboard_id;
 alter table public.dashboards drop constraint if exists unique_dashboard_id;
 
--- Ensure that dashboard table's id (part of a composite primary key) is unique
+-- ensure that dashboard table's id (part of a composite primary key) is unique
 -- in itself
 alter table public.dashboards
   add constraint unique_dashboard_id
