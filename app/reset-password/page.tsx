@@ -2,7 +2,7 @@ import LandingPage from '../../components/LandingPage';
 import ResetPasswordForm from '../../components/account/ResetPasswordForm';
 import { getPageMetadata } from '../../components/seoUtils';
 
-function ResetPassword() {
+async function ResetPassword() {
   return (
     <LandingPage
       heading="Reset Password | Faith Dashboard"

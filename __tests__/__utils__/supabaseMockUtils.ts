@@ -41,12 +41,12 @@ export async function mockSupabaseSession(
     .mockImplementation(async () => {
       if (session) {
         return {
-          data: { session } as { session: Session },
+          data: { session, __mock: true } as { session: Session },
           error: null
         };
       } else {
         return {
-          data: { session: null },
+          data: { session: null, __mock: true },
           error: null
         };
       }

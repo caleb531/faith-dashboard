@@ -2,7 +2,7 @@ import LandingPage from '../../components/LandingPage';
 import SignInForm from '../../components/account/SignInForm';
 import { getPageMetadata } from '../../components/seoUtils';
 
-function SignIn() {
+async function SignIn() {
   return (
     <LandingPage
       heading="Sign In | Faith Dashboard"

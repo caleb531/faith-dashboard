@@ -2,7 +2,7 @@ import LandingPage from '../../components/LandingPage';
 import LinkButton from '../../components/reusable/LinkButton';
 import { getPageMetadata } from '../../components/seoUtils';
 
-function PrivacyPolicy() {
+async function PrivacyPolicy() {
   return (
     <LandingPage heading="Privacy Policy | Faith Dashboard">
       <p>

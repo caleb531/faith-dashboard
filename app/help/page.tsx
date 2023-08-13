@@ -7,7 +7,7 @@ import addToHomeScreenImage1 from '../public/images/help/ios-add-to-home-screen-
 import addToHomeScreenImage2 from '../public/images/help/ios-add-to-home-screen-ios-2.jpg';
 import addToHomeScreenImage3 from '../public/images/help/ios-add-to-home-screen-ios-3.jpg';
 
-function Help() {
+async function Help() {
   return (
     <LandingPage heading="Help | Faith Dashboard">
       <p>

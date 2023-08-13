@@ -2,7 +2,7 @@ import LandingPage from '../../components/LandingPage';
 import LinkButton from '../../components/reusable/LinkButton';
 import { getPageMetadata } from '../../components/seoUtils';
 
-function Copyright() {
+async function Copyright() {
   return (
     <LandingPage heading="Copyright | Faith Dashboard">
       <p>

@@ -16,7 +16,6 @@ configure({ asyncUtilTimeout: 10000 });
 jest.setTimeout(20000);
 
 enableFetchMocks();
-jest.mock('../../components/supabaseClient');
 
 jest.mock('../../components/useVerifyCaptcha', () => {
   return jest.fn().mockImplementation(() => {

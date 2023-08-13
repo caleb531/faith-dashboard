@@ -2,7 +2,7 @@ import LandingPage from '../../components/LandingPage';
 import ForgotPasswordForm from '../../components/account/ForgotPasswordForm';
 import { getPageMetadata } from '../../components/seoUtils';
 
-function ForgotPassword() {
+async function ForgotPassword() {
   return (
     <LandingPage
       heading="Forgot Password | Faith Dashboard"
