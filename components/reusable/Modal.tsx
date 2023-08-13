@@ -1,7 +1,5 @@
-import { JSXChildren } from '../global.types';
-
 type Props = {
-  children: JSXChildren;
+  children: React.ReactNode;
   onCloseModal: () => void;
 };
 

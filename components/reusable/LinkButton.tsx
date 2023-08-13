@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { JSXChildren } from '../global.types';
+import React from 'react';
 
 type Props = {
   href: string;
   className?: string;
-  children: JSXChildren | string;
+  children: React.ReactNode | string;
 };
 
 function LinkButton({ href, className = '', children }: Props) {

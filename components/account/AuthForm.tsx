@@ -1,7 +1,6 @@
 import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import React, { useRef, useState } from 'react';
-import { JSXChildren } from '../global.types';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 import useAllSearchParams from '../useAllSearchParams';
 import useMountListener from '../useMountListener';
@@ -30,7 +29,7 @@ type Props = {
     title: string;
     href: string;
   };
-  children: JSXChildren;
+  children: React.ReactNode;
 };
 
 function AuthForm(props: Props) {

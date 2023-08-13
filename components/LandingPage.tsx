@@ -1,6 +1,5 @@
 import App from './app/App';
 import getSupabaseSession from './getSupabaseSession';
-import { JSXChildren } from './global.types';
 import LinkButton from './reusable/LinkButton';
 
 type Props = {
@@ -9,7 +8,7 @@ type Props = {
     title: string;
     href: string;
   };
-  children: JSXChildren;
+  children: React.ReactNode;
 };
 
 async function LandingPage({ heading, altLink, children }: Props) {

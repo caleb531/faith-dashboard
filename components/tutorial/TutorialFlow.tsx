@@ -2,7 +2,6 @@
 import classNames from 'classnames';
 import { useCallback, useContext, useState } from 'react';
 import AppContext from '../app/AppContext';
-import { JSXChildren } from '../global.types';
 import useMemoizedContextValue from '../useMemoizedContextValue';
 import TutorialContext from './TutorialContext';
 import TutorialOverlay from './TutorialOverlay';
@@ -10,7 +9,7 @@ import tutorialSteps from './tutorialSteps';
 
 type Props = {
   inProgress: boolean;
-  children: JSXChildren;
+  children: React.ReactNode;
 };
 
 function TutorialFlow({ inProgress, children }: Props) {
