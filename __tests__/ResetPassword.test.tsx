@@ -1,12 +1,13 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ResetPassword from '../app/sign-up/page';
+import { renderServerComponent } from './__utils__/renderServerComponent';
 import { populateFormFields } from './__utils__/testUtils';
 
 describe('Reset Password page', () => {
   it('should validate that passwords are matching', async () => {
-    render(<ResetPassword />);
+    await renderServerComponent(<ResetPassword />);
     await populateFormFields({
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStaple'
@@ -18,7 +19,7 @@ describe('Reset Password page', () => {
   });
 
   it('should validate that passwords are not matching', async () => {
-    render(<ResetPassword />);
+    await renderServerComponent(<ResetPassword />);
     await populateFormFields({
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStale'
@@ -30,7 +31,7 @@ describe('Reset Password page', () => {
   });
 
   it('should require all form fields to be populated', async () => {
-    render(<ResetPassword />);
+    await renderServerComponent(<ResetPassword />);
     const requiredFields = ['Password', 'Confirm Password'];
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
     requiredFields.forEach((labelText) => {

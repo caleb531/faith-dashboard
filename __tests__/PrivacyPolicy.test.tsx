@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import PrivacyPolicy from '../app/privacy-policy/page';
+import { renderServerComponent } from './__utils__/renderServerComponent';
 
 describe('Privacy Policy page', () => {
   it('should render', async () => {
-    render(<PrivacyPolicy />);
+    await renderServerComponent(<PrivacyPolicy />);
     expect(
       screen.getByRole('heading', { name: 'Privacy Policy | Faith Dashboard' })
     ).toBeInTheDocument();
