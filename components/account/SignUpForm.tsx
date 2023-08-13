@@ -1,5 +1,4 @@
 'use client';
-/* eslint-disable react/no-unescaped-entities */
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import AuthForm, { redirectToHome } from '../../components/account/AuthForm';
 import AuthFormField from '../../components/account/AuthFormField';

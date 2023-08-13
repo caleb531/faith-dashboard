@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import LandingPage from '../../components/LandingPage';
 import ForgotPasswordForm from '../../components/account/ForgotPasswordForm';
 import { getPageMetadata } from '../../components/seoUtils';

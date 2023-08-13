@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import LandingPage from '../../components/LandingPage';
 import LinkButton from '../../components/reusable/LinkButton';
 

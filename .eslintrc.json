@@ -45,6 +45,7 @@
     }
   },
   "rules": {
+    "react/no-unescaped-entities": ["off"],
     "@next/next/no-img-element": ["off"],
     "accessor-pairs": ["error"],
     "array-callback-return": ["error"],

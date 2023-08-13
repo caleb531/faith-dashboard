@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import LinkButton from '../reusable/LinkButton';
 import Modal from '../reusable/Modal';
 
