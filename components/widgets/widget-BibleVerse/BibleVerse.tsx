@@ -33,7 +33,7 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({
         return `/api/widgets/bible-verse?q=${encodeURIComponent(query)}`;
       },
       parseResponse: (response: BibleReference) => response,
-      hasResults: (data: BibleReference) => data,
+      hasResults: (data: BibleReference) => 'name' in data,
       onSuccess: (data: BibleReference) => {
         dispatchToWidget({
           type: 'setVerseContent',
