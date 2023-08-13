@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Metadata } from 'next';
 import LandingPage from '../../components/LandingPage';
 import SignUpForm from '../../components/account/SignUpForm';
+import { getPageMetadata } from '../../components/seoUtils';
 
 function SignUp() {
   return (
@@ -19,10 +19,13 @@ function SignUp() {
 }
 
 /* istanbul ignore next */
-export const metadata: Metadata = {
-  title: 'Sign Up | Faith Dashboard',
-  description:
-    'Sign up for Faith Dashboard, your home for strength and encouragement every day.'
-};
+export function generateMetadata() {
+  return getPageMetadata({
+    path: '/sign-up',
+    title: 'Sign Up | Faith Dashboard',
+    description:
+      'Sign up for Faith Dashboard, your home for strength and encouragement every day.'
+  });
+}
 
 export default SignUp;

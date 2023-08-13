@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Metadata } from 'next';
 import LandingPage from '../../components/LandingPage';
 import LinkButton from '../../components/reusable/LinkButton';
+import { getPageMetadata } from '../../components/seoUtils';
 
 function PrivacyPolicy() {
   return (
@@ -96,10 +96,13 @@ function PrivacyPolicy() {
 }
 
 /* istanbul ignore next */
-export const metadata: Metadata = {
-  title: 'Privacy Policy | Faith Dashboard',
-  description:
-    'Privacy policy for Faith Dashboard, your home for strength and encouragement every day.'
-};
+export function generateMetadata() {
+  return getPageMetadata({
+    path: '/privacy-policy',
+    title: 'Privacy Policy | Faith Dashboard',
+    description:
+      'Privacy policy for Faith Dashboard, your home for strength and encouragement every day.'
+  });
+}
 
 export default PrivacyPolicy;

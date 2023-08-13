@@ -1,13 +1,6 @@
-import { Metadata } from 'next';
 import React from 'react';
 import '../styles/index.scss';
 import '../styles/landing-page.scss';
-
-export const metadata: Metadata = {
-  title: 'Faith Dashboard',
-  description:
-    'Be strengthened every day with this private board for your favorite Bible verses, sermons, and anything else you need to be encouraged when life happens.'
-};
 
 export default function RootLayout({
   children
@@ -17,6 +10,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

@@ -1,6 +1,6 @@
-import { Metadata } from 'next';
 import LandingPage from '../../components/LandingPage';
 import LinkButton from '../../components/reusable/LinkButton';
+import { getPageMetadata } from '../../components/seoUtils';
 
 function Copyright() {
   return (
@@ -22,11 +22,13 @@ function Copyright() {
   );
 }
 
-/* istanbul ignore next */
-export const metadata: Metadata = {
-  title: 'Copyright | Faith Dashboard',
-  description:
-    'Copyright information for Faith Dashboard, your home for strength and encouragement every day.'
-};
+export function getMetadata() {
+  return getPageMetadata({
+    path: '/copyright',
+    title: 'Copyright | Faith Dashboard',
+    description:
+      'Copyright information for Faith Dashboard, your home for strength and encouragement every day.'
+  });
+}
 
 export default Copyright;

@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import LandingPage from '../../components/LandingPage';
 import LinkButton from '../../components/reusable/LinkButton';
+import { getPageMetadata } from '../../components/seoUtils';
 import addToHomeScreenImage1 from '../public/images/help/ios-add-to-home-screen-ios-1.jpg';
 import addToHomeScreenImage2 from '../public/images/help/ios-add-to-home-screen-ios-2.jpg';
 import addToHomeScreenImage3 from '../public/images/help/ios-add-to-home-screen-ios-3.jpg';
@@ -174,10 +174,13 @@ function Help() {
 }
 
 /* istanbul ignore next */
-export const metadata: Metadata = {
-  title: 'Help | Faith Dashboard',
-  description:
-    'Documentation on how to get started with Faith Dashboard, your home for strength and encouragement every day.'
-};
+export function generateMetadata() {
+  return getPageMetadata({
+    path: '/help',
+    title: 'Help | Faith Dashboard',
+    description:
+      'Documentation on how to get started with Faith Dashboard, your home for strength and encouragement every day.'
+  });
+}
 
 export default Help;

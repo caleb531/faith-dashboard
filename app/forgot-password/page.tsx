@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Metadata } from 'next';
 import LandingPage from '../../components/LandingPage';
 import ForgotPasswordForm from '../../components/account/ForgotPasswordForm';
+import { getPageMetadata } from '../../components/seoUtils';
 
 function ForgotPassword() {
   return (
@@ -15,10 +15,13 @@ function ForgotPassword() {
 }
 
 /* istanbul ignore next */
-export const metadata: Metadata = {
-  title: 'Forgot Password | Faith Dashboard',
-  description:
-    'Start the process to reset your account password for Faith Dashboard, your home for strength and encouragement every day.'
-};
+export function generateMetadata() {
+  return getPageMetadata({
+    path: '/forgot-password',
+    title: 'Forgot Password | Faith Dashboard',
+    description:
+      'Start the process to reset your account password for Faith Dashboard, your home for strength and encouragement every day.'
+  });
+}
 
 export default ForgotPassword;
