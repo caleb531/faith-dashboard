@@ -1,20 +1,23 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 import fetch from 'node-fetch';
 import xml2js from 'xml2js';
+import { getAllSearchParams } from '../../../utils';
 
 // Some podcast feeds have hundreds of episodes, which can quickly exceed the
 // localStorage quota if cached on the front end; to avoid this, we cap the
 // number of episodes at a finite number of episodes
 const MAX_EPISODE_COUNT = 50;
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (!req.query.url) {
-    res.status(400);
-    res.json({ error: 'Missing parameter: url' });
-    return;
+export async function GET(request: Request) {
+  const searchParams = getAllSearchParams(request);
+  if (!searchParams.url) {
+    return NextResponse.json(
+      { error: 'Missing parameter: url' },
+      { status: 400 }
+    );
   }
 
-  const response = await fetch(String(req.query.url));
+  const response = await fetch(String(searchParams.url));
   const xmlStr = await response.text();
 
   const result = await xml2js.parseStringPromise(xmlStr, {
@@ -44,6 +47,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     result.channel.item.length = MAX_EPISODE_COUNT;
   }
 
-  res.status(response.status);
-  res.json(result);
-};
+  return NextResponse.json(result, { status: response.status });
+}
