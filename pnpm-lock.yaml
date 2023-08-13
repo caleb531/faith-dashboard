@@ -4,6 +4,12 @@ overrides:
   got@<11.8.5: '>=11.8.5'
 
 dependencies:
+  '@fontsource/merriweather':
+    specifier: ^5.0.8
+    version: 5.0.8
+  '@fontsource/merriweather-sans':
+    specifier: ^5.0.8
+    version: 5.0.8
   '@hcaptcha/react-hcaptcha':
     specifier: ^1.8.1
     version: 1.8.1(react-dom@18.2.0)(react@18.2.0)
@@ -1424,6 +1430,14 @@ packages:
     resolution: {integrity: sha512-a8TLtmPi8xzPkCbp/OGFUo5yhRkHM2Ko9kOWP4znJr0WAhWyThaw3PnwX4vOTWOAMsV2uRt32PPDcEz63esSaA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@fontsource/merriweather-sans@5.0.8:
+    resolution: {integrity: sha512-hFJJjMM8zyzykKLPRcuTE74xGqTurahJ00pObsm7Axu4VQKl+n0EJO/nEsu9hoHTUv4Aw7GfA16mJHqibXEcEQ==}
+    dev: false
+
+  /@fontsource/merriweather@5.0.8:
+    resolution: {integrity: sha512-4vvR6psdKcGzaFCQL8fGCqMI/mOLKD+mhmUe3iQilx/4VFkIcF7wswWHZ7KCPeF24edX8yd0QXX0DQ1CenMrYA==}
+    dev: false
 
   /@hcaptcha/react-hcaptcha@1.8.1(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-33tIl77HgeahiQ6R0+JPDA8cGBBv95cIVcdOcFVwiGCJhrOxyiOQetCdEUNTDS13xrkvIP29K/PrqLXXSbKl6Q==}

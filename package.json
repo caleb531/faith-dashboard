@@ -20,6 +20,8 @@
     ".next/cache"
   ],
   "dependencies": {
+    "@fontsource/merriweather": "^5.0.8",
+    "@fontsource/merriweather-sans": "^5.0.8",
     "@hcaptcha/react-hcaptcha": "^1.8.1",
     "@hello-pangea/dnd": "^16.3.0",
     "@supabase/auth-helpers-nextjs": "^0.7.4",
