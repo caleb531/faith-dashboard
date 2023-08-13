@@ -1,6 +1,6 @@
 import { configure } from '@testing-library/dom';
 import fetch, { enableFetchMocks } from 'jest-fetch-mock';
-import { supabase } from '../../components/supabaseClient';
+import { supabase } from '../../__tests__/__mocks__/supabaseAuthHelpersMock';
 import AudioMock from '../__mocks__/AudioMock';
 import BlobMock from '../__mocks__/BlobMock';
 import FileReaderMock from '../__mocks__/FileReaderMock';

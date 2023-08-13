@@ -1,6 +1,6 @@
 import { Session, User, UserResponse } from '@supabase/supabase-js';
+import { supabase } from '../../__tests__/__mocks__/supabaseAuthHelpersMock';
 import { getUser } from '../../components/accountUtils';
-import { supabase } from '../../components/supabaseClient';
 
 // This must always be called BEFORE await mockSupabaseSession()
 export async function mockSupabaseUser(
