@@ -1,3 +1,4 @@
+import React from 'react';
 import App from './app/App';
 import getSupabaseSession from './getSupabaseSession';
 import LinkButton from './reusable/LinkButton';
@@ -11,7 +12,13 @@ type Props = {
   children: React.ReactNode;
 };
 
-async function LandingPage({ heading, altLink, children }: Props) {
+// The default argument is mostly to suppress an error related to React's
+// internal describeNativeComponentFrame() function, which calls the component
+// in an erroneous way so as to gather stack trace information that is useful
+// for debugging
+async function LandingPage(
+  { heading, altLink, children }: Props = { heading: '', children: <></> }
+) {
   const session = await getSupabaseSession();
   return (
     <App session={session}>
