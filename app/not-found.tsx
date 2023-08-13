@@ -1,5 +1,6 @@
-import LandingPage from '../../components/LandingPage';
-import LinkButton from '../../components/reusable/LinkButton';
+import { Metadata } from 'next';
+import LandingPage from '../components/LandingPage';
+import LinkButton from '../components/reusable/LinkButton';
 
 function PageNotFound() {
   return (
@@ -13,12 +14,8 @@ function PageNotFound() {
   );
 }
 
-export async function getStaticProps() {
-  return {
-    props: {
-      pageTitle: 'Page Not Found | Faith Dashboard'
-    }
-  };
-}
+export const metadata: Metadata = {
+  title: 'Page Not Found | Faith Dashboard'
+};
 
 export default PageNotFound;
