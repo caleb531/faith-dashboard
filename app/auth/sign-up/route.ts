@@ -36,11 +36,8 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.redirect(
-    `${requestUrl.origin}/login?message=Check email to continue sign in process`,
-    {
-      // a 301 status is required to redirect from a POST to a GET route
-      status: 301
-    }
-  );
+  return NextResponse.redirect(requestUrl.origin, {
+    // a 301 status is required to redirect from a POST to a GET route
+    status: 301
+  });
 }
