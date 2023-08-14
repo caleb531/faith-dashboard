@@ -27,6 +27,12 @@ $theme-photos: (
   'forest': 'forest'
 );
 
+// Fallback theme colors until theme loads
+body {
+  --current-theme-color: var(--color-grey);
+  --current-theme-color-dark: var(--color-grey-dark);
+}
+
 // Dynamically define CSS variables / custom properties using Sass variable
 // interpolation
 @each $theme-name, $theme-color in join($theme-colors, $theme-photos) {
