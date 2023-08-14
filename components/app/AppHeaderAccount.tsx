@@ -78,8 +78,7 @@ function AppHeaderAccount() {
         message:
           'You have been signed out. Your dashboard will be waiting for you when you sign in again.'
       }).toString();
-      window.location.hash = `#${queryStr}`;
-      window.location.reload();
+      window.location.href = `/#${queryStr}`;
     }
   }
 
