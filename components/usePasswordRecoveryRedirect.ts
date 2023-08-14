@@ -13,6 +13,6 @@ function usePasswordRecoveryRedirect() {
         window.location.assign('/reset-password' + window.location.hash);
       }
     });
-  }, []);
+  }, [supabase.auth]);
 }
 export default usePasswordRecoveryRedirect;
