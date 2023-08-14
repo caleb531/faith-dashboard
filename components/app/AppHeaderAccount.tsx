@@ -2,7 +2,7 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import React, { useContext, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
-import { isSessionActive, isTruthy } from '../accountUtils';
+import { isSessionActive, isTruthy } from '../authUtils.client';
 import { exportDashboard, readDashboardFileToJSON } from '../importExportUtils';
 import { getAppStorageKey } from '../storageUtils';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';

@@ -1,7 +1,7 @@
 import { defer } from 'lodash-es';
 import Link from 'next/link';
 import React, { ReactNode, useState } from 'react';
-import { isTruthy } from '../accountUtils';
+import { isTruthy } from '../authUtils.client';
 
 type MenuItem = {
   key: string;

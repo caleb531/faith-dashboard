@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import React from 'react';
 import App from './app/App';
-import getSupabaseSession from './getSupabaseSession';
+import { getSession, getSignInUrlForCurrentPage } from './authUtils.server';
 import LinkButton from './reusable/LinkButton';
 
 type Props = {
@@ -24,11 +24,11 @@ async function LandingPage(
     children: <></>
   }
 ) {
-  const session = await getSupabaseSession();
+  const session = await getSession();
   // If route is protected, redirect to the Sign In page if the user has not
   // signed in
   if (isProtected && !session) {
-    redirect('/sign-in');
+    redirect(getSignInUrlForCurrentPage());
   }
   return (
     <App session={session}>

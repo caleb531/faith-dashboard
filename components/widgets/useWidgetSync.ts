@@ -1,6 +1,6 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Dispatch, useEffect, useRef } from 'react';
-import { getUser } from '../accountUtils';
+import { getUser } from '../authUtils.client';
 import { getClientId, getSelectedAppId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
 import { WidgetAction } from './useWidgetShell';

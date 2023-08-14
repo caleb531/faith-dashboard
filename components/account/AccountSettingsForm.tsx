@@ -4,10 +4,10 @@ import React, { useContext } from 'react';
 import AuthForm from '../../components/account/AuthForm';
 import AuthFormField from '../../components/account/AuthFormField';
 import serializeForm from '../../components/account/serializeForm';
-import { getUser } from '../../components/accountUtils';
 import useFormFieldMatcher from '../../components/useFormFieldMatcher';
 import useTimeout from '../../components/useTimeout';
 import SessionContext from '../app/SessionContext';
+import { getUser } from '../authUtils.client';
 
 function AccountSettingsForm() {
   const supabase = createClientComponentClient();

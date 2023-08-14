@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import App from '../components/app/App';
 import AppCompletedTutorial from '../components/app/AppCompletedTutorial';
 import AppWelcome from '../components/app/AppWelcome';
-import getSupabaseSession from '../components/getSupabaseSession';
+import { getSession } from '../components/authUtils.server';
 import LoadingIndicator from '../components/reusable/LoadingIndicator';
 import { getPageMetadata } from '../components/seoUtils';
 
@@ -11,7 +11,7 @@ const WidgetBoard = React.lazy(
 );
 
 async function Home() {
-  const session = await getSupabaseSession();
+  const session = await getSession();
   return (
     <App enableTutorial canAddWidgets isClientOnly session={session}>
       <AppWelcome />

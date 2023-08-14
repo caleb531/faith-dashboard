@@ -1,7 +1,7 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { throttle } from 'lodash-es';
 import { Dispatch, useEffect, useMemo } from 'react';
-import { getSession, getUser, isSessionActive } from '../accountUtils';
+import { getSession, getUser, isSessionActive } from '../authUtils.client';
 import { getClientId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
 import { WidgetHead, WidgetState } from '../widgets/widget.types';

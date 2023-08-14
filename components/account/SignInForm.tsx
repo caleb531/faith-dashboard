@@ -1,13 +1,13 @@
 'use client';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import AuthForm, { redirectToHome } from '../../components/account/AuthForm';
 import AuthFormField from '../../components/account/AuthFormField';
 import useAutoFocus from '../../components/account/useAutoFocus';
 
 function SignInForm() {
-  const supabase = createClientComponentClient();
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
 
+  // TODO: handle ?redirect_to parameter that could be present on the URL for
+  // the Sign In page
   return (
     <AuthForm
       action="/auth/sign-in"
