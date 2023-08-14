@@ -19,16 +19,17 @@ export function getPageMetadata({
   title,
   description
 }: PageMetadataBase): Metadata {
-  const url = `${site.baseUrl}path`;
-  const socialImageUrl = `${site.baseUrl}${site.socialImagePath}`;
+  const baseProdUrl = site.baseUrl;
+  const url = `${baseProdUrl}${path}`;
   return {
+    metadataBase: new URL(baseProdUrl),
     title,
     description,
     manifest: '/manifest.json',
     icons: {
       icon: '/app-icons/favicon.png',
       shortcut: '/app-icons/favicon.png',
-      apple: '/app-icons/apple-touch-icon.png'
+      apple: `${baseProdUrl}/app-icons/apple-touch-icon.png`
     },
     appleWebApp: {
       title: 'Faith Dashboard',
@@ -40,7 +41,7 @@ export function getPageMetadata({
       url,
       type: 'website',
       images: {
-        url: socialImageUrl,
+        url: site.socialImagePath,
         width: 2400,
         height: 1260
       }
