@@ -1,6 +1,7 @@
+'use client';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { User } from '@supabase/supabase-js';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AuthForm from '../../components/account/AuthForm';
 import AuthFormField from '../../components/account/AuthFormField';
 import serializeForm from '../../components/account/serializeForm';
@@ -8,10 +9,12 @@ import { getUser, isSessionActive } from '../../components/accountUtils';
 import useFormFieldMatcher from '../../components/useFormFieldMatcher';
 import useIsomorphicLayoutEffect from '../../components/useIsomorphicLayoutEffect';
 import useTimeout from '../../components/useTimeout';
+import SessionContext from '../app/SessionContext';
 
 function AccountSettingsForm() {
   const supabase = createClientComponentClient();
   const [user, setUser] = useState<User | null>(null);
+  const session = useContext(SessionContext);
   const [emailFieldProps, confirmEmailFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Emails must match'
   });
@@ -71,7 +74,7 @@ function AccountSettingsForm() {
   }
 
   async function loadUser() {
-    if (!(await isSessionActive())) {
+    if (!(await isSessionActive(session))) {
       window.location.assign('/sign-in');
       return;
     }
