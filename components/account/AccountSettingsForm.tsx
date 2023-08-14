@@ -223,14 +223,4 @@ function AccountSettingsForm() {
   );
 }
 
-export async function getStaticProps() {
-  return {
-    props: {
-      pageTitle: 'Account Settings | Faith Dashboard',
-      pageDescription:
-        'Account settings for Faith Dashboard, your home for strength and encouragement every day.'
-    }
-  };
-}
-
 export default AccountSettingsForm;
