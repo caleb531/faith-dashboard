@@ -1,12 +1,12 @@
+import Home from '@app/page';
 import '@testing-library/jest-dom';
 import {
   screen,
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import Home from '../app/page';
-import { renderServerComponent } from './__utils__/renderServerComponent';
-import { removeWidget } from './__utils__/testUtils';
+import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
+import { removeWidget } from '@tests/__utils__/testUtils';
 
 describe('Remove Widget UI', () => {
   it('should remove BibleVerse widget', async () => {

@@ -1,6 +1,6 @@
+import { getAllSearchParams } from '@app/api/utils';
 import { NextResponse } from 'next/server';
 import fetch from 'node-fetch';
-import { getAllSearchParams } from '../../utils';
 
 const API_BASE_URL = 'https://itunes.apple.com/search';
 

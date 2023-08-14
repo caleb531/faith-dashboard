@@ -1,3 +1,7 @@
+import Home from '@app/page';
+import appStateDefault from '@components/app/appStateDefault';
+import { Deferred } from '@components/deferred';
+import widgetSyncService from '@components/widgets/widgetSyncService';
 import '@testing-library/jest-dom';
 import {
   screen,
@@ -5,15 +9,10 @@ import {
   waitForElementToBeRemoved
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { v4 as uuidv4 } from 'uuid';
-import { supabase } from '../__tests__/__mocks__/supabaseAuthHelpersMock';
-import Home from '../app/page';
-import appStateDefault from '../components/app/appStateDefault';
-import { Deferred } from '../components/deferred';
-import widgetSyncService from '../components/widgets/widgetSyncService';
-import dashboardToPullJson from './__json__/dashboardToPull.json';
-import widgetToPullJson from './__json__/widgetToPull.json';
-import { renderServerComponent } from './__utils__/renderServerComponent';
+import dashboardToPullJson from '@tests/__json__/dashboardToPull.json';
+import widgetToPullJson from '@tests/__json__/widgetToPull.json';
+import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
+import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
   mockSupabaseDelete,
   mockSupabaseFrom,
@@ -22,12 +21,13 @@ import {
   mockSupabaseUpsert,
   mockSupabaseUser,
   supabaseFromMocks
-} from './__utils__/supabaseMockUtils';
+} from '@tests/__utils__/supabaseMockUtils';
 import {
   assignIdToLocalApp,
   removeWidget,
   waitForWidget
-} from './__utils__/testUtils';
+} from '@tests/__utils__/testUtils';
+import { v4 as uuidv4 } from 'uuid';
 
 const originalOnPush = widgetSyncService.onPush;
 const originalBroadcastPush = widgetSyncService.broadcastPush;

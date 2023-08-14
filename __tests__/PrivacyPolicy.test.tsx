@@ -1,7 +1,7 @@
+import PrivacyPolicy from '@app/privacy-policy/page';
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
-import PrivacyPolicy from '../app/privacy-policy/page';
-import { renderServerComponent } from './__utils__/renderServerComponent';
+import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 
 describe('Privacy Policy page', () => {
   it('should render', async () => {

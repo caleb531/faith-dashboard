@@ -1,7 +1,7 @@
+import { getAllSearchParams } from '@app/api/utils';
 import { NextResponse } from 'next/server';
 import fetch from 'node-fetch';
 import xml2js from 'xml2js';
-import { getAllSearchParams } from '../../../utils';
 
 // Some podcast feeds have hundreds of episodes, which can quickly exceed the
 // localStorage quota if cached on the front end; to avoid this, we cap the

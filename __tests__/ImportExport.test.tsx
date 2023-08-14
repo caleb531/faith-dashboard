@@ -1,26 +1,26 @@
+import Home from '@app/page';
 import '@testing-library/jest-dom';
 import { act, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { omit } from 'lodash-es';
-import { v4 as uuidv4 } from 'uuid';
-import Home from '../app/page';
-import dashboardToExport from './__json__/dashboardToExport.json';
-import exportedDashboard from './__json__/exportedDashboard.json';
-import FileReaderMock from './__mocks__/FileReaderMock';
-import { renderServerComponent } from './__utils__/renderServerComponent';
+import dashboardToExport from '@tests/__json__/dashboardToExport.json';
+import exportedDashboard from '@tests/__json__/exportedDashboard.json';
+import FileReaderMock from '@tests/__mocks__/FileReaderMock';
+import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
   mockSupabaseFrom,
   mockSupabaseSelect,
   mockSupabaseSession,
   mockSupabaseUser
-} from './__utils__/supabaseMockUtils';
+} from '@tests/__utils__/supabaseMockUtils';
 import {
   assignIdToLocalApp,
   getAppData,
   mockAlert,
   mockConfirm,
   setAppData
-} from './__utils__/testUtils';
+} from '@tests/__utils__/testUtils';
+import { omit } from 'lodash-es';
+import { v4 as uuidv4 } from 'uuid';
 
 describe('Import/Export functionality', () => {
   afterEach(() => {

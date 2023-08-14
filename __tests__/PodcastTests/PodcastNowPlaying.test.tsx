@@ -1,19 +1,19 @@
+import Home from '@app/page';
 import '@testing-library/jest-dom';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import fetch from 'jest-fetch-mock';
-import { omit } from 'lodash-es';
-import Home from '../../app/page';
-import podcastFeedJson from '../__json__/podcastFeed.json';
-import podcastSearchJson from '../__json__/podcastSearch.json';
-import AudioMock from '../__mocks__/AudioMock';
+import podcastFeedJson from '@tests/__json__/podcastFeed.json';
+import podcastSearchJson from '@tests/__json__/podcastSearch.json';
+import AudioMock from '@tests/__mocks__/AudioMock';
 import {
   chooseEpisode,
   choosePodcast,
   navigateToNowPlaying,
   searchPodcasts
-} from '../__utils__/podcastTestUtils';
-import { renderServerComponent } from '../__utils__/renderServerComponent';
+} from '@tests/__utils__/podcastTestUtils';
+import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
+import fetch from 'jest-fetch-mock';
+import { omit } from 'lodash-es';
 
 async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
   const audioProgressSlider = screen.getByRole('slider', {

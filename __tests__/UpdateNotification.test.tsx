@@ -1,3 +1,4 @@
+import Home from '@app/page';
 import '@testing-library/jest-dom';
 import {
   fireEvent,
@@ -5,8 +6,7 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import Home from '../app/page';
-import { renderServerComponent } from './__utils__/renderServerComponent';
+import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 
 class ServiceWorkerMock {}
 let originalServiceWorker: typeof navigator.serviceWorker;

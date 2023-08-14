@@ -1,8 +1,8 @@
 'use client';
+import AuthForm, { redirectToHome } from '@components/account/AuthForm';
+import AuthFormField from '@components/account/AuthFormField';
+import useAutoFocus from '@components/account/useAutoFocus';
 import { useEffect, useState } from 'react';
-import AuthForm, { redirectToHome } from '../../components/account/AuthForm';
-import AuthFormField from '../../components/account/AuthFormField';
-import useAutoFocus from '../../components/account/useAutoFocus';
 import useAllSearchParams from '../useAllSearchParams';
 
 function SignInForm() {

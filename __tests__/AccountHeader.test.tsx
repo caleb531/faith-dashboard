@@ -1,15 +1,15 @@
+import Home from '@app/page';
+import { getSession, getUser } from '@components/authUtils.client';
 import '@testing-library/jest-dom';
 import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { supabase } from '../__tests__/__mocks__/supabaseAuthHelpersMock';
-import Home from '../app/page';
-import { getSession, getUser } from '../components/authUtils.client';
-import { renderServerComponent } from './__utils__/renderServerComponent';
+import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
+import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
   mockSupabaseSession,
   mockSupabaseUser
-} from './__utils__/supabaseMockUtils';
-import { mockConfirm } from './__utils__/testUtils';
+} from '@tests/__utils__/supabaseMockUtils';
+import { mockConfirm } from '@tests/__utils__/testUtils';
 
 const originalLocationObject = window.location;
 

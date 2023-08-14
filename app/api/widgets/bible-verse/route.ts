@@ -1,6 +1,6 @@
+import { getAllSearchParams } from '@app/api/utils';
 import { NextResponse } from 'next/server';
 import { fetchReferenceContent } from 'youversion-suggest';
-import { getAllSearchParams } from '../../utils';
 
 export async function GET(request: Request) {
   const searchParams = getAllSearchParams(request);

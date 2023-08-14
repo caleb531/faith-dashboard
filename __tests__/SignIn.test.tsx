@@ -1,12 +1,12 @@
+import SignIn from '@app/sign-in/page';
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { supabase } from '../__tests__/__mocks__/supabaseAuthHelpersMock';
-import SignIn from '../app/sign-in/page';
-import { mockCaptchaSuccessOnce } from './__mocks__/captchaMockUtils';
-import { renderServerComponent } from './__utils__/renderServerComponent';
-import { mockSupabaseApiResponse } from './__utils__/supabaseMockUtils';
-import { populateFormFields } from './__utils__/testUtils';
+import { mockCaptchaSuccessOnce } from '@tests/__mocks__/captchaMockUtils';
+import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
+import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
+import { mockSupabaseApiResponse } from '@tests/__utils__/supabaseMockUtils';
+import { populateFormFields } from '@tests/__utils__/testUtils';
 describe('Sign In page', () => {
   afterEach(() => {
     jest.restoreAllMocks();

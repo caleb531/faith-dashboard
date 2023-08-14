@@ -4,9 +4,9 @@ import '@fontsource/merriweather/300-italic.css';
 import '@fontsource/merriweather/300.css';
 import '@fontsource/merriweather/400-italic.css';
 import '@fontsource/merriweather/400.css';
+import '@styles/index.scss';
+import '@styles/landing-page.scss';
 import React from 'react';
-import '../styles/index.scss';
-import '../styles/landing-page.scss';
 
 export default function RootLayout({
   children

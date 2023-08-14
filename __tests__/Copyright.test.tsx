@@ -1,7 +1,7 @@
+import Copyright from '@app/copyright/page';
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
-import Copyright from '../app/copyright/page';
-import { renderServerComponent } from './__utils__/renderServerComponent';
+import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 
 describe('Copyright page', () => {
   it('should render', async () => {

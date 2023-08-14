@@ -24,6 +24,10 @@ const config: Config.InitialOptions = {
   // Testing Library); to solve this, we mock the <Link> component entirely so
   // as to eliminate the possibility of re-rendering
   moduleNameMapper: {
+    '^@app/(.*)$': '<rootDir>/app/$1',
+    '^@components/(.*)$': '<rootDir>/components/$1',
+    '^@styles/(.*)$': '<rootDir>/styles/$1',
+    '^@tests/(.*)$': '<rootDir>/__tests__/$1',
     'next/link': require.resolve('./__tests__/__mocks__/LinkMock.tsx'),
     'workbox-window': require.resolve(
       './__tests__/__mocks__/WorkboxWindowMock.ts'

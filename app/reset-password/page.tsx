@@ -1,6 +1,6 @@
-import LandingPage from '../../components/LandingPage';
-import ResetPasswordForm from '../../components/account/ResetPasswordForm';
-import { getPageMetadata } from '../../components/seoUtils';
+import LandingPage from '@components/LandingPage';
+import ResetPasswordForm from '@components/account/ResetPasswordForm';
+import { getPageMetadata } from '@components/seoUtils';
 
 async function ResetPassword() {
   return (

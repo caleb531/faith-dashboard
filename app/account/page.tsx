@@ -1,6 +1,6 @@
-import LandingPage from '../../components/LandingPage';
-import AccountSettingsForm from '../../components/account/AccountSettingsForm';
-import { getPageMetadata } from '../../components/seoUtils';
+import LandingPage from '@components/LandingPage';
+import AccountSettingsForm from '@components/account/AccountSettingsForm';
+import { getPageMetadata } from '@components/seoUtils';
 
 async function AccountSettings() {
   return (

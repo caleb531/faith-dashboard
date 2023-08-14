@@ -1,6 +1,6 @@
-import LandingPage from '../../components/LandingPage';
-import SignInForm from '../../components/account/SignInForm';
-import { getPageMetadata } from '../../components/seoUtils';
+import LandingPage from '@components/LandingPage';
+import SignInForm from '@components/account/SignInForm';
+import { getPageMetadata } from '@components/seoUtils';
 
 async function SignIn() {
   return (

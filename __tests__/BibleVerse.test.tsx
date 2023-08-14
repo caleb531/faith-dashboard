@@ -1,12 +1,12 @@
+import Home from '@app/page';
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import bibleVerseRangeJson from '@tests/__json__/bibleVerseRange.json';
+import bibleVerseSingleJson from '@tests/__json__/bibleVerseSingle.json';
+import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
+import { getWidgetData, waitForWidget } from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
-import Home from '../app/page';
-import bibleVerseRangeJson from './__json__/bibleVerseRange.json';
-import bibleVerseSingleJson from './__json__/bibleVerseSingle.json';
-import { renderServerComponent } from './__utils__/renderServerComponent';
-import { getWidgetData, waitForWidget } from './__utils__/testUtils';
 
 async function searchBibleVerses(verseQuery: string) {
   await waitForWidget({ type: 'BibleVerse', index: 0 });

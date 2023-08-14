@@ -1,8 +1,8 @@
 'use client';
+import AppContext from '@components/app/AppContext';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { fromPairs, times } from 'lodash-es';
 import { useContext } from 'react';
-import AppContext from '../app/AppContext';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import WidgetBoardColumn from './WidgetBoardColumn';

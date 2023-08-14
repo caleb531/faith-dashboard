@@ -1,10 +1,10 @@
 'use client';
+import AuthForm, { redirectToHome } from '@components/account/AuthForm';
+import AuthFormField from '@components/account/AuthFormField';
+import useAutoFocus from '@components/account/useAutoFocus';
+import useFormFieldMatcher from '@components/useFormFieldMatcher';
+import useVerifyCaptcha from '@components/useVerifyCaptcha';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import AuthForm, { redirectToHome } from '../../components/account/AuthForm';
-import AuthFormField from '../../components/account/AuthFormField';
-import useAutoFocus from '../../components/account/useAutoFocus';
-import useFormFieldMatcher from '../../components/useFormFieldMatcher';
-import useVerifyCaptcha from '../../components/useVerifyCaptcha';
 
 function SignUpForm() {
   const supabase = createClientComponentClient();

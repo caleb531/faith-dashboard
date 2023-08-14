@@ -1,6 +1,6 @@
+import App from '@components/app/App';
 import { redirect } from 'next/navigation';
 import React from 'react';
-import App from './app/App';
 import { getSession, getSignInUrlForCurrentPage } from './authUtils.server';
 import LinkButton from './reusable/LinkButton';
 

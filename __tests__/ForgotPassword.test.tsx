@@ -1,10 +1,10 @@
+import ForgotPassword from '@app/forgot-password/page';
+import SignIn from '@app/sign-in/page';
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ForgotPassword from '../app/forgot-password/page';
-import SignIn from '../app/sign-in/page';
-import { renderServerComponent } from './__utils__/renderServerComponent';
-import { populateFormFields } from './__utils__/testUtils';
+import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
+import { populateFormFields } from '@tests/__utils__/testUtils';
 
 describe('Forgot Password page', () => {
   it('should be accessible from Sign In page', async () => {

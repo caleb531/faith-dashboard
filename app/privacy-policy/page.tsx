@@ -1,6 +1,6 @@
-import LandingPage from '../../components/LandingPage';
-import LinkButton from '../../components/reusable/LinkButton';
-import { getPageMetadata } from '../../components/seoUtils';
+import LandingPage from '@components/LandingPage';
+import LinkButton from '@components/reusable/LinkButton';
+import { getPageMetadata } from '@components/seoUtils';
 
 async function PrivacyPolicy() {
   return (

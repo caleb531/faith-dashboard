@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import podcastFeedJson from '../__json__/podcastFeed.json';
-import podcastSearchJson from '../__json__/podcastSearch.json';
+import podcastFeedJson from '@tests/__json__/podcastFeed.json';
+import podcastSearchJson from '@tests/__json__/podcastSearch.json';
 import { waitForWidget } from './testUtils';
 
 export async function searchPodcasts(podcastQuery: string) {

@@ -1,9 +1,9 @@
+import Home from '@app/page';
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Home from '../app/page';
-import { renderServerComponent } from './__utils__/renderServerComponent';
-import { getAppData } from './__utils__/testUtils';
+import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
+import { getAppData } from '@tests/__utils__/testUtils';
 
 describe('Theme Switcher', () => {
   it('should close', async () => {

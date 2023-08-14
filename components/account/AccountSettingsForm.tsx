@@ -1,12 +1,12 @@
 'use client';
+import AuthForm from '@components/account/AuthForm';
+import AuthFormField from '@components/account/AuthFormField';
+import serializeForm from '@components/account/serializeForm';
+import SessionContext from '@components/app/SessionContext';
+import useFormFieldMatcher from '@components/useFormFieldMatcher';
+import useTimeout from '@components/useTimeout';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import React, { useContext } from 'react';
-import AuthForm from '../../components/account/AuthForm';
-import AuthFormField from '../../components/account/AuthFormField';
-import serializeForm from '../../components/account/serializeForm';
-import useFormFieldMatcher from '../../components/useFormFieldMatcher';
-import useTimeout from '../../components/useTimeout';
-import SessionContext from '../app/SessionContext';
 import { getUser } from '../authUtils.client';
 
 function AccountSettingsForm() {

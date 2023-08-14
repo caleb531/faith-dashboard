@@ -1,6 +1,6 @@
+import { AppState } from '@components/app/app.types';
 import { debounce } from 'lodash-es';
 import { useEffect, useMemo } from 'react';
-import { AppState } from './app/app.types';
 import useObjectHasChanged from './useObjectHasChanged';
 import { WidgetState } from './widgets/widget.types';
 

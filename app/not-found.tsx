@@ -1,6 +1,6 @@
+import LandingPage from '@components/LandingPage';
+import LinkButton from '@components/reusable/LinkButton';
 import { Metadata } from 'next';
-import LandingPage from '../components/LandingPage';
-import LinkButton from '../components/reusable/LinkButton';
 
 function PageNotFound() {
   return (

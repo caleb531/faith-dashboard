@@ -1,10 +1,10 @@
+import Home from '@app/page';
+import tutorialSteps from '@components/tutorial/tutorialSteps';
 import '@testing-library/jest-dom';
 import { screen, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Home from '../app/page';
-import tutorialSteps from '../components/tutorial/tutorialSteps';
-import { renderServerComponent } from './__utils__/renderServerComponent';
-import { getAppData } from './__utils__/testUtils';
+import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
+import { getAppData } from '@tests/__utils__/testUtils';
 
 describe('Tutorial', () => {
   it('should render', async () => {

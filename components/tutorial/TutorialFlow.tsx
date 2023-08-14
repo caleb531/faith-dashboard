@@ -1,7 +1,7 @@
 'use client';
+import AppContext from '@components/app/AppContext';
 import classNames from 'classnames';
 import React, { useCallback, useContext, useState } from 'react';
-import AppContext from '../app/AppContext';
 import useMemoizedContextValue from '../useMemoizedContextValue';
 import TutorialContext from './TutorialContext';
 import TutorialOverlay from './TutorialOverlay';

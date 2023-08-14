@@ -1,9 +1,9 @@
+import ResetPassword from '@app/sign-up/page';
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ResetPassword from '../app/sign-up/page';
-import { renderServerComponent } from './__utils__/renderServerComponent';
-import { populateFormFields } from './__utils__/testUtils';
+import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
+import { populateFormFields } from '@tests/__utils__/testUtils';
 
 describe('Reset Password page', () => {
   it('should validate that passwords are matching', async () => {

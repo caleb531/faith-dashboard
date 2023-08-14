@@ -1,14 +1,12 @@
+import App from '@components/app/App';
+import AppCompletedTutorial from '@components/app/AppCompletedTutorial';
+import AppWelcome from '@components/app/AppWelcome';
+import { getSession } from '@components/authUtils.server';
+import LoadingIndicator from '@components/reusable/LoadingIndicator';
+import { getPageMetadata } from '@components/seoUtils';
 import React, { Suspense } from 'react';
-import App from '../components/app/App';
-import AppCompletedTutorial from '../components/app/AppCompletedTutorial';
-import AppWelcome from '../components/app/AppWelcome';
-import { getSession } from '../components/authUtils.server';
-import LoadingIndicator from '../components/reusable/LoadingIndicator';
-import { getPageMetadata } from '../components/seoUtils';
 
-const WidgetBoard = React.lazy(
-  () => import('../components/widgets/WidgetBoard')
-);
+const WidgetBoard = React.lazy(() => import('@components/widgets/WidgetBoard'));
 
 async function Home() {
   const session = await getSession();

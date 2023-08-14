@@ -1,6 +1,6 @@
+import { AppState } from '@components/app/app.types';
+import appStateDefault from '@components/app/appStateDefault';
 import { v4 as uuidv4 } from 'uuid';
-import { AppState } from './app/app.types';
-import appStateDefault from './app/appStateDefault';
 import { getAppStorageKey, getWidgetStorageKey } from './storageUtils';
 
 // Randomize the UUIDs of the app and widgets when importing (in case this file

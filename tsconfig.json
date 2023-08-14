@@ -15,6 +15,13 @@
     "incremental": true,
     "strict": true,
     "strictFunctionTypes": false,
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["./app/*"],
+      "@components/*": ["./components/*"],
+      "@styles/*": ["./styles/*"],
+      "@tests/*": ["./__tests__/*"]
+    },
     "plugins": [
       {
         "name": "next"

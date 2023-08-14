@@ -1,13 +1,13 @@
 import { configure } from '@testing-library/dom';
-import fetch, { enableFetchMocks } from 'jest-fetch-mock';
-import { supabase } from '../../__tests__/__mocks__/supabaseAuthHelpersMock';
-import AudioMock from '../__mocks__/AudioMock';
-import BlobMock from '../__mocks__/BlobMock';
-import FileReaderMock from '../__mocks__/FileReaderMock';
+import AudioMock from '@tests/__mocks__/AudioMock';
+import BlobMock from '@tests/__mocks__/BlobMock';
+import FileReaderMock from '@tests/__mocks__/FileReaderMock';
 import {
   MediaMetadataMock,
   mediaSessionMock
-} from '../__mocks__/mediaSessionMock';
+} from '@tests/__mocks__/mediaSessionMock';
+import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
+import fetch, { enableFetchMocks } from 'jest-fetch-mock';
 
 // Increase timeout of React Testing Library's waitFor() function, as well as
 // Jest's global max timeout; this is an attempt to resolve the 'Unable to find
