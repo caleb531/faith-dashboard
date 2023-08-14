@@ -1,9 +1,7 @@
 import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import React, { useRef, useState } from 'react';
-import LoadingIndicator from '../reusable/LoadingIndicator';
 import useAllSearchParams from '../useAllSearchParams';
-import useMountListener from '../useMountListener';
 import useTimeout from '../useTimeout';
 import useUniqueFieldId from '../useUniqueFieldId';
 import AuthFormField from './AuthFormField';
@@ -96,8 +94,8 @@ function AuthForm(props: Props) {
   }
 
   const honeyPotFieldId = useUniqueFieldId('verification-check');
-  const isMounted = useMountListener();
-  return isMounted ? (
+
+  return (
     <form
       className="account-auth-form"
       onSubmit={onSubmitWrapper}
@@ -144,8 +142,6 @@ function AuthForm(props: Props) {
         ) : null}
       </div>
     </form>
-  ) : (
-    <LoadingIndicator />
   );
 }
 

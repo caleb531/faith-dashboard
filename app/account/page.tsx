@@ -2,9 +2,9 @@ import LandingPage from '../../components/LandingPage';
 import AccountSettingsForm from '../../components/account/AccountSettingsForm';
 import { getPageMetadata } from '../../components/seoUtils';
 
-function AccountSettings() {
+async function AccountSettings() {
   return (
-    <LandingPage heading="Account Settings | Faith Dashboard">
+    <LandingPage heading="Account Settings | Faith Dashboard" isProtected>
       <AccountSettingsForm />
     </LandingPage>
   );

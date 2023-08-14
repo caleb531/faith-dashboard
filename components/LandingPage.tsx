@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import React from 'react';
 import App from './app/App';
 import getSupabaseSession from './getSupabaseSession';
@@ -9,6 +10,7 @@ type Props = {
     title: string;
     href: string;
   };
+  isProtected?: boolean;
   children: React.ReactNode;
 };
 
@@ -17,9 +19,17 @@ type Props = {
 // in an erroneous way so as to gather stack trace information that is useful
 // for debugging
 async function LandingPage(
-  { heading, altLink, children }: Props = { heading: '', children: <></> }
+  { heading, altLink, isProtected, children }: Props = {
+    heading: '',
+    children: <></>
+  }
 ) {
   const session = await getSupabaseSession();
+  // If route is protected, redirect to the Sign In page if the user has not
+  // signed in
+  if (isProtected && !session) {
+    redirect('/sign-in');
+  }
   return (
     <App session={session}>
       <article className="landing-page">
