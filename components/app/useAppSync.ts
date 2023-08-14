@@ -94,7 +94,7 @@ function useAppSync(app: AppState, dispatchToApp: Dispatch<AppAction>): void {
         app: AppState,
         dispatchToApp: Dispatch<AppAction>
       ): Promise<void> => {
-        if (!(await isSessionActive())) {
+        if (!isSessionActive(await getSession())) {
           return;
         }
         const { data, error } = await supabase
