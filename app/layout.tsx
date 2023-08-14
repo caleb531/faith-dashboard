@@ -20,9 +20,6 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1"
         />
-        <link rel="shortcut icon" href="/app-icons/favicon.png" />
-        <link rel="apple-touch-icon" href="/app-icons/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
         <script
           defer
           data-domain="faithdashboard.com"

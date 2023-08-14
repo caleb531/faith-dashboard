@@ -24,6 +24,16 @@ export function getPageMetadata({
   return {
     title,
     description,
+    manifest: '/manifest.json',
+    icons: {
+      icon: '/app-icons/favicon.png',
+      shortcut: '/app-icons/favicon.png',
+      apple: '/app-icons/apple-touch-icon.png'
+    },
+    appleWebApp: {
+      title: 'Faith Dashboard',
+      statusBarStyle: 'black-translucent'
+    },
     openGraph: {
       title,
       description,
