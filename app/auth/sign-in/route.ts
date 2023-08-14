@@ -6,6 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
   const requestUrl = new URL(request.url);
+  const redirectTo = requestUrl.searchParams.get('redirect_to');
   const formData = await request.formData();
   const email = String(formData.get('email'));
   const password = String(formData.get('password'));
@@ -27,8 +28,12 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.redirect(requestUrl.origin, {
-    // a 301 status is required to redirect from a POST to a GET route
-    status: 301
-  });
+  if (redirectTo) {
+    // A 301 status is required to redirect from a POST to a GET route
+    return NextResponse.redirect(`${requestUrl.origin}${redirectTo}`, {
+      status: 301
+    });
+  } else {
+    return NextResponse.redirect(requestUrl.origin, { status: 301 });
+  }
 }
