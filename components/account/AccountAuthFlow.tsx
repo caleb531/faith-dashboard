@@ -12,8 +12,8 @@ function AccountAuthFlow({ onCloseModal }: Props) {
         <div className="account-auth-flow-start">
           <h1>Account</h1>
           <p>
-            Create a Faith Dashboard account to sync your dashboard and gain
-            other features!
+            Create a free Faith Dashboard account to sync your dashboard and
+            gain other features!
           </p>
           <div className="account-auth-flow-cta-container">
             {/* Signing in with a new email address is the same as signing up */}

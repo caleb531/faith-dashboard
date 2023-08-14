@@ -9,8 +9,8 @@ async function SignUp() {
       altLink={{ title: 'Sign In', href: '/sign-in' }}
     >
       <p>
-        By signing up with Faith Dashboard, you'll be able to sync your settings
-        and widgets across all your devices.
+        By signing up for Faith Dashboard with a free account, you'll be able to
+        sync your settings and widgets across all your devices.
       </p>
       <SignUpForm />
     </LandingPage>
