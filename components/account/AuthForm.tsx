@@ -1,6 +1,6 @@
 import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useAllSearchParams from '../useAllSearchParams';
 import useTimeout from '../useTimeout';
 import useUniqueFieldId from '../useUniqueFieldId';
@@ -34,7 +34,7 @@ function AuthForm(props: Props) {
   const params = useAllSearchParams();
   const [formErrorMessage, setFormErrorMessage] = useState<
     string | null | undefined
-  >(params.error ?? null);
+  >(null);
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [isFormSuccess, setIsFormSuccess] = useState(false);
   const setSubmitLabelTimeout = useTimeout();
@@ -92,6 +92,12 @@ function AuthForm(props: Props) {
       setIsFormSubmitting(false);
     }
   }
+
+  // To prevent hydration mismatches, we must grab the error message from the
+  // URL via useEffect
+  useEffect(() => {
+    setFormErrorMessage(params.error ?? null);
+  }, [params.error]);
 
   const honeyPotFieldId = useUniqueFieldId('verification-check');
 
