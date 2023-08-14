@@ -22,7 +22,7 @@ async function Copyright() {
   );
 }
 
-export function getMetadata() {
+export function generateMetadata() {
   return getPageMetadata({
     path: '/copyright',
     title: 'Copyright | Faith Dashboard',
