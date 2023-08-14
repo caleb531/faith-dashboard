@@ -1,7 +1,7 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies, headers } from 'next/headers';
 
-// The getSupabaseSessionInfo() utility returns info related to the
+// The getSession() utility returns info related to the
 // authenticated session and user
 export async function getSession() {
   const supabase = createServerComponentClient({ cookies });
