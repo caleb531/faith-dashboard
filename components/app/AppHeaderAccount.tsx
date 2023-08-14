@@ -63,7 +63,9 @@ function AppHeaderAccount() {
     if (!confirmation) {
       return;
     }
-    const { error } = await supabase.auth.signOut();
+    const { error } = await (
+      await fetch('/auth/sign-out', { method: 'POST' })
+    ).json();
     if (error) {
       console.log('error', error);
     } else {
@@ -79,6 +81,7 @@ function AppHeaderAccount() {
           'You have been signed out. Your dashboard will be waiting for you when you sign in again.'
       }).toString();
       window.location.href = `/#${queryStr}`;
+      window.location.reload();
     }
   }
 
