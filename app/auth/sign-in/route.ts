@@ -5,20 +5,19 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
-  const requestUrl = new URL(request.url);
-  const redirectTo = requestUrl.searchParams.get('redirect_to');
   const formData = await request.formData();
-  const email = String(formData.get('email'));
-  const password = String(formData.get('password'));
+  const requestUrl = new URL(request.url);
   const supabase = createRouteHandlerClient({ cookies });
+  // If no redirectTo parameter is specified, redirect to the user's dashboard
+  // (i.e. the homepage)
+  const pathToRedirectTo = requestUrl.searchParams.get('redirect_to') ?? '/';
 
   const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password
+    email: String(formData.get('email')),
+    password: String(formData.get('password'))
   });
 
   if (error) {
-    console.error(error);
     return NextResponse.redirect(
       `${requestUrl.origin}/sign-in?error=${error.message}`,
       {
@@ -28,12 +27,8 @@ export async function POST(request: Request) {
     );
   }
 
-  if (redirectTo) {
-    // A 301 status is required to redirect from a POST to a GET route
-    return NextResponse.redirect(`${requestUrl.origin}${redirectTo}`, {
-      status: 301
-    });
-  } else {
-    return NextResponse.redirect(requestUrl.origin, { status: 301 });
-  }
+  // A 301 status is required to redirect from a POST to a GET route
+  return NextResponse.redirect(`${requestUrl.origin}${pathToRedirectTo}`, {
+    status: 301
+  });
 }

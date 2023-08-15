@@ -9,9 +9,12 @@ import AuthFormField from './AuthFormField';
 // The number of milliseconds to show the success label of the Submit button
 // before reverting to the initial Submit button label
 const successLabelDuration = 2000;
+// The default HTTP method to use for form submission
+const defaultHttpMethod = 'POST';
 
 type Props = {
   action?: string;
+  useAjax?: boolean;
   method?: 'GET' | 'POST' | 'get' | 'post';
   onSubmit?: (event: React.FormEvent<HTMLFormElement>) => Promise<{
     data: {
@@ -40,15 +43,24 @@ function AuthForm(props: Props) {
   const setSubmitLabelTimeout = useTimeout();
   const honeyPotFieldRef = useRef<HTMLInputElement>(null);
 
-  async function attemptSubmit(event: React.FormEvent<HTMLFormElement>) {
-    if (!props.onSubmit) {
+  async function submitFormViaHandler(event: React.FormEvent<HTMLFormElement>) {
+    let response;
+    if (props.action && props.useAjax) {
+      response = await (
+        await fetch(props.action, {
+          method: props.method ?? defaultHttpMethod,
+          body: new FormData(event.currentTarget)
+        })
+      ).json();
+    } else if (props.onSubmit) {
+      response = await props.onSubmit(event);
+    } else {
       return;
     }
-    const { data, error } = await props.onSubmit(event);
-    const user = data?.user;
+    const user = response.data?.user;
     // If there is no error, the value is conveniently null
-    setFormErrorMessage(error?.message);
-    if (error) {
+    setFormErrorMessage(response.error?.message);
+    if (response.error) {
       // Only stop showing "Submitting..." message if the authentication failed
       // somehow
       setIsFormSubmitting(false);
@@ -70,8 +82,8 @@ function AuthForm(props: Props) {
     }
   }
 
-  async function onSubmitWrapper(event: React.FormEvent<HTMLFormElement>) {
-    if (!props.action) {
+  async function prepareForSubmit(event: React.FormEvent<HTMLFormElement>) {
+    if (!props.action || props.useAjax) {
       event.preventDefault();
     }
     setIsFormSubmitting(true);
@@ -83,10 +95,10 @@ function AuthForm(props: Props) {
         return;
       }
       // Even though we are not capturing the return value, we must await the
-      // attemptSubmit() call to properly catch any errors, because
-      // attemptSubmit() is an async function and would otherwise run
+      // submitForm() call to properly catch any errors, because
+      // submitForm() is an async function and would otherwise run
       // asynchronously outside of the try..catch statement's control
-      await attemptSubmit(event);
+      await submitFormViaHandler(event);
     } catch (error: any) {
       setFormErrorMessage(error?.toString());
       setIsFormSubmitting(false);
@@ -104,16 +116,15 @@ function AuthForm(props: Props) {
   return (
     <form
       className="account-auth-form"
-      onSubmit={onSubmitWrapper}
+      onSubmit={prepareForSubmit}
       action={props.action}
-      method={props.method ?? 'POST'}
+      method={props.method ?? defaultHttpMethod}
     >
       {props.children}
       {/* A "honey pot" field which must remain blank to prove the user is human */}
       <AuthFormField
         type="text"
         id={honeyPotFieldId}
-        name="verification_check"
         placeholder="Please leave this field blank"
         ref={honeyPotFieldRef}
       />
