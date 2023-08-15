@@ -4,11 +4,6 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-type FormFields = {
-  first_name: string;
-  last_name: string;
-};
-
 export async function POST(request: Request) {
   const supabase = createRouteHandlerClient({ cookies });
   const formData = await request.formData();
