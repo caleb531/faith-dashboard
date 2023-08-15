@@ -20,9 +20,10 @@ function AppHeaderAccount() {
   // The session will be loaded asynchronously and isomorphically, via a
   // useEffect() call later in this function; this is done to avoid SSR
   // mismatches (please see the hook below)
-  const { session } = useContext(SessionContext);
+  const { session, user } = useContext(SessionContext);
   const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
-  const isSignedIn = isTruthy(session) && isSessionActive(session);
+  const isSignedIn =
+    isTruthy(session) && isTruthy(user) && isSessionActive(session);
 
   async function handleFileInputChange(
     event: React.FormEvent<HTMLInputElement>
@@ -122,10 +123,10 @@ function AppHeaderAccount() {
               content: (
                 <a data-disabled data-key="user-info">
                   <div data-field="user-name">
-                    {session.user.user_metadata.first_name}{' '}
-                    {session.user.user_metadata.last_name}
+                    {user.user_metadata.first_name}{' '}
+                    {user.user_metadata.last_name}
                   </div>
-                  <div data-field="user-email">{session.user.email}</div>
+                  <div data-field="user-email">{user.email}</div>
                 </a>
               )
             },

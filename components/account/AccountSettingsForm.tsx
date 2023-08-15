@@ -31,6 +31,7 @@ function AccountSettingsForm() {
     <div className="account-settings-container">
       <AuthForm
         action="/auth/update-user-name"
+        onSuccess={reloadPage}
         submitLabel="Save Details"
         submittingLabel="Saving..."
         successLabel="Saved!"
