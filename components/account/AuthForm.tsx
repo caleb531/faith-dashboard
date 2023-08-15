@@ -129,6 +129,7 @@ function AuthForm(props: Props) {
       <AuthFormField
         type="text"
         id={honeyPotFieldId}
+        name="verification_check"
         placeholder="Please leave this field blank"
         ref={honeyPotFieldRef}
       />
