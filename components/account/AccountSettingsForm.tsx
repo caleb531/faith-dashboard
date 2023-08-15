@@ -23,22 +23,6 @@ function AccountSettingsForm() {
   // before reloading the page (only applies to certain forms)
   const reloadDelay = 1000;
 
-  async function updateUserData(event: React.FormEvent<HTMLFormElement>) {
-    const fields = serializeForm(event.currentTarget);
-    if (fields.email) {
-      return supabase.auth.updateUser({ email: fields.email });
-    } else {
-      return supabase.auth.updateUser({ data: fields });
-    }
-  }
-
-  async function acknowledgeEmailChangeCancel() {
-    // If the RPC call completed successfully, we still need to force the
-    // front end to fetch the latest state from the database
-    await supabase.auth.updateUser({});
-    reloadPage();
-  }
-
   function reloadPage() {
     setPageReloadTimeout(() => {
       window.location.reload();
@@ -93,7 +77,7 @@ function AccountSettingsForm() {
       {user.new_email ? (
         <AuthForm
           action="/auth/cancel-email-change"
-          onSuccess={acknowledgeEmailChangeCancel}
+          onSuccess={reloadPage}
           submitLabel="Cancel Email Change"
           submittingLabel="Submitting..."
           successLabel="Email Change Canceled!"
@@ -116,7 +100,7 @@ function AccountSettingsForm() {
         </AuthForm>
       ) : (
         <AuthForm
-          onSubmit={updateUserData}
+          action="/auth/request-email-change"
           onSuccess={reloadPage}
           submitLabel="Change Email"
           submittingLabel="Submitting..."
