@@ -1,5 +1,5 @@
 'use client';
-import { Session } from '@supabase/supabase-js';
+import { Session, User } from '@supabase/supabase-js';
 import React, { useEffect, useMemo, useReducer, useState } from 'react';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 import { getAppStorageKey } from '../storageUtils';
@@ -42,6 +42,7 @@ type Props = {
   canAddWidgets?: boolean;
   isClientOnly?: boolean;
   session: Session | null;
+  user: User | null;
   children: React.ReactNode;
 };
 
@@ -50,6 +51,7 @@ function App({
   canAddWidgets = false,
   isClientOnly = false,
   session,
+  user,
   children
 }: Props) {
   const [restoreApp, saveApp] = useLocalStorage(getAppStorageKey(), defaultApp);
@@ -97,9 +99,13 @@ function App({
     return { app, dispatchToApp };
   }, [app, dispatchToApp]);
 
+  const sessionContext = useMemo(() => {
+    return { session, user };
+  }, [session, user]);
+
   return (
     <AppContext.Provider value={appContext}>
-      <SessionContext.Provider value={session}>
+      <SessionContext.Provider value={sessionContext}>
         <div className="app">
           <ThemeMetadata />
           {shouldLoadServiceWorker() ? <UpdateNotification /> : null}

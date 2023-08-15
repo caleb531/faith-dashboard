@@ -20,7 +20,7 @@ function AppHeaderAccount() {
   // The session will be loaded asynchronously and isomorphically, via a
   // useEffect() call later in this function; this is done to avoid SSR
   // mismatches (please see the hook below)
-  const session = useContext(SessionContext);
+  const { session } = useContext(SessionContext);
   const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
   const isSignedIn = isTruthy(session) && isSessionActive(session);
 

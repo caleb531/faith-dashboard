@@ -11,8 +11,7 @@ import { getUser } from '../authUtils.client';
 
 function AccountSettingsForm() {
   const supabase = createClientComponentClient();
-  const session = useContext(SessionContext);
-  const user = session?.user ?? null;
+  const { user } = useContext(SessionContext);
   const [emailFieldProps, confirmEmailFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Emails must match'
   });
@@ -33,21 +32,11 @@ function AccountSettingsForm() {
     }
   }
 
-  async function cancelEmailChange() {
-    const { error } = await supabase.rpc('cancel_email_change');
-    if (error) {
-      return {
-        data: {
-          user: await getUser()
-        },
-        // Convert PostgrestError type to Supabase ApiError
-        error: error ? new Error(error.message) : null
-      };
-    } else {
-      // If the RPC call completed successfully, we still need to force the
-      // front end to fetch the latest state from the database
-      return supabase.auth.updateUser({});
-    }
+  async function acknowledgeEmailChangeCancel() {
+    // If the RPC call completed successfully, we still need to force the
+    // front end to fetch the latest state from the database
+    await supabase.auth.updateUser({});
+    reloadPage();
   }
 
   function reloadPage() {
@@ -103,8 +92,8 @@ function AccountSettingsForm() {
 
       {user.new_email ? (
         <AuthForm
-          action="/api/cancel-email-change"
-          onSuccess={reloadPage}
+          action="/auth/cancel-email-change"
+          onSuccess={acknowledgeEmailChangeCancel}
           submitLabel="Cancel Email Change"
           submittingLabel="Submitting..."
           successLabel="Email Change Canceled!"

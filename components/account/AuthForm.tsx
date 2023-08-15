@@ -22,7 +22,11 @@ type Props = {
     } | null;
     error: Error | null;
   }>;
-  onSuccess?: ({ user }: { user?: User | null }) => boolean | void;
+  onSuccess?: ({
+    user
+  }: {
+    user?: User | null;
+  }) => boolean | void | Promise<void>;
   submitLabel: string;
   submittingLabel: string;
   successLabel: string;
@@ -67,7 +71,7 @@ function AuthForm(props: Props) {
       return;
     }
     const successCallbackResult = props.onSuccess
-      ? props.onSuccess({ user })
+      ? await props.onSuccess({ user })
       : null;
     // If the onSuccess() callback returns false, the Submit button should not
     // revert to its initial label, but rather, remain in a "Submitting" state

@@ -1,7 +1,7 @@
 import App from '@components/app/App';
 import AppCompletedTutorial from '@components/app/AppCompletedTutorial';
 import AppWelcome from '@components/app/AppWelcome';
-import { getSession } from '@components/authUtils.server';
+import { getSession, getUser } from '@components/authUtils.server';
 import LoadingIndicator from '@components/reusable/LoadingIndicator';
 import { getPageMetadata } from '@components/seoUtils';
 import React, { Suspense } from 'react';
@@ -10,8 +10,15 @@ const WidgetBoard = React.lazy(() => import('@components/widgets/WidgetBoard'));
 
 async function Home() {
   const session = await getSession();
+  const user = await getUser();
   return (
-    <App enableTutorial canAddWidgets isClientOnly session={session}>
+    <App
+      enableTutorial
+      canAddWidgets
+      isClientOnly
+      session={session}
+      user={user}
+    >
       <AppWelcome />
       <AppCompletedTutorial />
       <Suspense fallback={<LoadingIndicator />}>

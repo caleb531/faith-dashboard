@@ -1,7 +1,11 @@
 import App from '@components/app/App';
 import { redirect } from 'next/navigation';
 import React from 'react';
-import { getSession, getSignInUrlForCurrentPage } from './authUtils.server';
+import {
+  getSession,
+  getSignInUrlForCurrentPage,
+  getUser
+} from './authUtils.server';
 import LinkButton from './reusable/LinkButton';
 
 type Props = {
@@ -25,13 +29,14 @@ async function LandingPage(
   }
 ) {
   const session = await getSession();
+  const user = await getUser();
   // If route is protected, redirect to the Sign In page if the user has not
   // signed in
   if (isProtected && !session) {
     redirect(getSignInUrlForCurrentPage());
   }
   return (
-    <App session={session}>
+    <App session={session} user={user}>
       <article className="landing-page">
         <section className="landing-page-section sheet">
           <header>

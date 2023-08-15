@@ -9,6 +9,15 @@ export async function getSession() {
   return sessionResponse.data.session;
 }
 
+// The getUser() utility returns info related to the authenticated user (but
+// with more fields than what getSession().user provides, like details of a
+// pending email change)
+export async function getUser() {
+  const supabase = createServerComponentClient({ cookies });
+  const sessionResponse = await supabase.auth.getUser();
+  return sessionResponse.data.user;
+}
+
 // Retrieve a link to the Sign In page that will redirect to the current page on
 // successful authentication
 export function getSignInUrlForCurrentPage() {
