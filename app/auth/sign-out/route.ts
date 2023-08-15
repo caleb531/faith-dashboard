@@ -8,7 +8,11 @@ export async function POST(request: Request) {
   const requestUrl = new URL(request.url);
   const supabase = createRouteHandlerClient({ cookies });
 
-  await supabase.auth.signOut();
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    return NextResponse.json({ success: false, error });
+  }
 
   return NextResponse.json({ success: true });
 }

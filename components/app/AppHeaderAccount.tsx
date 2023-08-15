@@ -68,6 +68,11 @@ function AppHeaderAccount() {
     ).json();
     if (error) {
       console.log('error', error);
+      const queryStr = new URLSearchParams({
+        message: 'Sorry, there was an error signing you out.'
+      }).toString();
+      window.location.hash = `#${queryStr}`;
+      window.location.reload();
     } else {
       // Revert to the default dashboard state when signing out
       localStorage.clear();
