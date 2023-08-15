@@ -9,6 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "preview": "next start",
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "tsc --noEmit; eslint 'components/**/*.ts' 'app/**/*.tsx' 'app/**/*.ts' '__tests__/**/*.ts' 'utilities/**/*.ts'",
