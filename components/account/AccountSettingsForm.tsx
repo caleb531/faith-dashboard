@@ -1,13 +1,11 @@
 'use client';
 import AuthForm from '@components/account/AuthForm';
 import AuthFormField from '@components/account/AuthFormField';
-import serializeForm from '@components/account/serializeForm';
 import SessionContext from '@components/app/SessionContext';
 import useFormFieldMatcher from '@components/useFormFieldMatcher';
 import useTimeout from '@components/useTimeout';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import React, { useContext } from 'react';
-import { getUser } from '../authUtils.client';
+import { useContext } from 'react';
 
 function AccountSettingsForm() {
   const supabase = createClientComponentClient();
@@ -27,21 +25,6 @@ function AccountSettingsForm() {
     setPageReloadTimeout(() => {
       window.location.reload();
     }, reloadDelay);
-  }
-
-  async function changeUserPassword(event: React.FormEvent<HTMLFormElement>) {
-    const fields = serializeForm(event.currentTarget);
-    const { error } = await supabase.rpc('change_user_password', {
-      current_password: fields.current_password,
-      new_password: fields.new_password
-    });
-    return {
-      data: {
-        user: await getUser()
-      },
-      // Convert PostgrestError type to Supabase ApiError
-      error: error ? new Error(error.message) : null
-    };
   }
 
   return user ? (
@@ -134,7 +117,7 @@ function AccountSettingsForm() {
       )}
 
       <AuthForm
-        onSubmit={changeUserPassword}
+        action="/auth/change-password"
         submitLabel="Change Password"
         submittingLabel="Changing..."
         successLabel="Password Changed!"
