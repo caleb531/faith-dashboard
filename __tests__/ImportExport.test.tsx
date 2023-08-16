@@ -64,7 +64,7 @@ describe('Import/Export functionality', () => {
     mockConfirm(() => true);
     await renderServerComponent(<Home />);
     expect(screen.queryByText('Shore')).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
     const fileContents = JSON.stringify(exportedDashboard);
     FileReaderMock._fileData = fileContents;
     await act(async () => {
