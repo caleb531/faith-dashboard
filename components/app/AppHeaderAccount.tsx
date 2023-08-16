@@ -35,7 +35,7 @@ function AppHeaderAccount() {
     try {
       const newApp = await readDashboardFileToJSON(fileInput.files[0]);
       if (
-        !isSignedIn ||
+        isSignedIn ||
         confirm(
           'This will overwrite your current dashboard. Are you sure you want to continue?'
         )

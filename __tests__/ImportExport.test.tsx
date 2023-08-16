@@ -76,8 +76,6 @@ describe('Import/Export functionality', () => {
   });
 
   it('should not import dashboard is user denied confirmation', async () => {
-    await mockSupabaseUser();
-    await mockSupabaseSession();
     mockSupabaseFrom();
     mockSupabaseSelect('dashboards', { data: [] });
     mockConfirm(() => false);
