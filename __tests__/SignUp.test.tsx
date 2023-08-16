@@ -10,6 +10,7 @@ import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import { mockSupabaseApiResponse } from '@tests/__utils__/supabaseMockUtils';
 import { populateFormFields } from '@tests/__utils__/testUtils';
+import fetch from 'jest-fetch-mock';
 
 describe('Sign Up page', () => {
   afterEach(() => {
@@ -136,12 +137,14 @@ describe('Sign Up page', () => {
 
   it('should handle errors from server', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    const signUpStub = mockSupabaseApiResponse(supabase.auth, 'signUp', {
-      user: null,
-      session: null,
-      error: {
-        message: 'User already exists'
-      }
+    fetch.mockIf(/sign-up/, async () => {
+      return JSON.stringify({
+        user: null,
+        session: null,
+        error: {
+          message: 'User already registered'
+        }
+      });
     });
     await renderServerComponent(<SignUp />);
     await populateFormFields({
@@ -152,6 +155,6 @@ describe('Sign Up page', () => {
       'Confirm Password': 'CorrectHorseBatteryStaple'
     });
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
-    expect(screen.getByText('User already exists')).toBeInTheDocument();
+    expect(screen.getByText('User already registered')).toBeInTheDocument();
   });
 });
