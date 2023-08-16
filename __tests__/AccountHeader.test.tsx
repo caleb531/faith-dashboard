@@ -10,6 +10,7 @@ import {
   mockSupabaseUser
 } from '@tests/__utils__/supabaseMockUtils';
 import { mockConfirm } from '@tests/__utils__/testUtils';
+import fetch from 'jest-fetch-mock';
 
 const originalLocationObject = window.location;
 
@@ -51,6 +52,9 @@ describe('Account Header', () => {
   it('should Sign Out', async () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
+    fetch.mockIf(/sign-out/i, async () => {
+      return JSON.stringify({ success: true });
+    });
     mockConfirm(() => true);
     jest.spyOn(supabase.auth, 'signOut').mockImplementation(() => {
       return {

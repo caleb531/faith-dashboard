@@ -8,6 +8,7 @@ import {
 } from '@tests/__mocks__/mediaSessionMock';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 import fetch, { enableFetchMocks } from 'jest-fetch-mock';
+import { mockSupabaseSession, mockSupabaseUser } from './supabaseMockUtils';
 
 // Increase timeout of React Testing Library's waitFor() function, as well as
 // Jest's global max timeout; this is an attempt to resolve the 'Unable to find
@@ -35,7 +36,7 @@ let onAuthStateChangeStub: jest.SpyInstance;
 let originalMediaMetadata: typeof window.MediaMetadata;
 let originalMediaSession: typeof navigator.mediaSession;
 
-beforeEach(() => {
+beforeEach(async () => {
   localStorage.clear();
   Object.defineProperty(window, 'Blob', {
     configurable: true,
@@ -62,8 +63,10 @@ beforeEach(() => {
     });
     window.MediaMetadata = MediaMetadataMock;
   }
+  await mockSupabaseUser(null);
+  await mockSupabaseSession(null);
 });
-afterEach(() => {
+afterEach(async () => {
   fetch.resetMocks();
   audioStub.mockRestore();
   FileReaderMock._fileData = '';
