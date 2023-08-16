@@ -6,10 +6,11 @@ import {
   mockCaptchaFailOnce,
   mockCaptchaSuccessOnce
 } from '@tests/__mocks__/captchaMockUtils';
-import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
-import { mockSupabaseApiResponse } from '@tests/__utils__/supabaseMockUtils';
-import { populateFormFields } from '@tests/__utils__/testUtils';
+import {
+  convertFormDataToObject,
+  populateFormFields
+} from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
 
 describe('Sign Up page', () => {
@@ -88,13 +89,15 @@ describe('Sign Up page', () => {
 
   it('should create account successfully', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    mockSupabaseApiResponse(supabase.auth, 'signUp', {
-      user: {
-        email: 'john@example.com',
-        user_metadata: { first_name: 'John', last_name: 'Doe' }
-      },
-      session: {},
-      error: null
+    fetch.mockIf(/sign-up/, async () => {
+      return JSON.stringify({
+        user: {
+          email: 'john@example.com',
+          user_metadata: { first_name: 'John', last_name: 'Doe' }
+        },
+        session: {},
+        error: null
+      });
     });
     await renderServerComponent(<SignUp />);
     await populateFormFields({
@@ -105,16 +108,16 @@ describe('Sign Up page', () => {
       'Confirm Password': 'CorrectHorseBatteryStaple'
     });
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
-    expect(supabase.auth.signUp).toHaveBeenCalledWith({
+    const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
+    expect(actualFetchUrl).toEqual('/auth/sign-up');
+    expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
+    expect(convertFormDataToObject(actualFetchOptions?.body)).toEqual({
       email: 'john@example.com',
       password: 'CorrectHorseBatteryStaple',
-      options: {
-        captchaToken: 'mytoken',
-        data: {
-          first_name: 'John',
-          last_name: 'Doe'
-        }
-      }
+      confirm_password: 'CorrectHorseBatteryStaple',
+      first_name: 'John',
+      last_name: 'Doe',
+      verification_check: ''
     });
   });
 

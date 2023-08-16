@@ -7,6 +7,7 @@ import {
 } from '@components/widgets/widget.types';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { fromPairs } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
 
 export function createWidget(props: object): WidgetHead {
@@ -99,4 +100,12 @@ export function assignIdToLocalApp(appId: string) {
 
 export function getCurrentAppId(): string | null | undefined {
   return JSON.parse(String(localStorage.getItem('faith-dashboard-app')))?.id;
+}
+
+export function convertFormDataToObject(formData: any) {
+  if (formData instanceof FormData) {
+    return fromPairs(Array.from(formData.entries()));
+  } else {
+    return {};
+  }
 }
