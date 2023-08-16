@@ -35,6 +35,8 @@ let audioStub: jest.SpyInstance;
 let onAuthStateChangeStub: jest.SpyInstance;
 let originalMediaMetadata: typeof window.MediaMetadata;
 let originalMediaSession: typeof navigator.mediaSession;
+let getUserStub: jest.SpyInstance;
+let getSessionStub: jest.SpyInstance;
 
 beforeEach(async () => {
   localStorage.clear();
@@ -63,8 +65,8 @@ beforeEach(async () => {
     });
     window.MediaMetadata = MediaMetadataMock;
   }
-  await mockSupabaseUser(null);
-  await mockSupabaseSession(null);
+  getUserStub = await mockSupabaseUser(null);
+  getSessionStub = await mockSupabaseSession(null);
 });
 afterEach(async () => {
   fetch.resetMocks();
@@ -76,4 +78,6 @@ afterEach(async () => {
     value: originalMediaSession
   });
   window.MediaMetadata = originalMediaMetadata;
+  getUserStub.mockRestore();
+  getSessionStub.mockRestore();
 });
