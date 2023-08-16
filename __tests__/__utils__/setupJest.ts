@@ -18,6 +18,8 @@ jest.setTimeout(20000);
 
 enableFetchMocks();
 
+jest.mock('next/headers');
+
 jest.mock('../../components/useVerifyCaptcha', () => {
   return jest.fn().mockImplementation(() => {
     return [
