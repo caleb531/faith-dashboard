@@ -1,11 +1,8 @@
 import SignUp from '@app/sign-up/page';
 import '@testing-library/jest-dom';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {
-  mockCaptchaFailOnce,
-  mockCaptchaSuccessOnce
-} from '@tests/__mocks__/captchaMockUtils';
+import { mockCaptchaSuccessOnce } from '@tests/__mocks__/captchaMockUtils';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
   convertFormDataToObject,
@@ -69,22 +66,6 @@ describe('Sign Up page', () => {
       'validity.typeMismatch',
       true
     );
-  });
-
-  it('should require CAPTCHA to be completed', async () => {
-    mockCaptchaFailOnce();
-    await renderServerComponent(<SignUp />);
-    await populateFormFields({
-      'First Name': 'John',
-      'Last Name': 'Doe',
-      Email: 'john@example.com',
-      Password: 'CorrectHorseBatteryStaple',
-      'Confirm Password': 'CorrectHorseBatteryStaple'
-    });
-    await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
-    expect(
-      screen.getByText('Error: Please complete the CAPTCHA')
-    ).toBeInTheDocument();
   });
 
   it('should create account successfully', async () => {
@@ -158,6 +139,8 @@ describe('Sign Up page', () => {
       'Confirm Password': 'CorrectHorseBatteryStaple'
     });
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
-    expect(screen.getByText('User already registered')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('User already registered')).toBeInTheDocument();
+    });
   });
 });

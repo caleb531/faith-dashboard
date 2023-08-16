@@ -1,12 +1,15 @@
 import SignIn from '@app/sign-in/page';
 import '@testing-library/jest-dom';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockCaptchaSuccessOnce } from '@tests/__mocks__/captchaMockUtils';
-import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
-import { mockSupabaseApiResponse } from '@tests/__utils__/supabaseMockUtils';
-import { populateFormFields } from '@tests/__utils__/testUtils';
+import {
+  convertFormDataToObject,
+  populateFormFields
+} from '@tests/__utils__/testUtils';
+import fetch from 'jest-fetch-mock';
+
 describe('Sign In page', () => {
   afterEach(() => {
     jest.restoreAllMocks();
@@ -37,13 +40,15 @@ describe('Sign In page', () => {
 
   it('should sign in successfully', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    mockSupabaseApiResponse(supabase.auth, 'signInWithPassword', {
-      user: {
-        email: 'caleb@example.com',
-        user_metadata: { first_name: 'Caleb', last_name: 'Evans' }
-      },
-      session: {},
-      error: null
+    fetch.mockIf(/sign-in/, async () => {
+      return JSON.stringify({
+        user: {
+          email: 'caleb@example.com',
+          user_metadata: { first_name: 'Caleb', last_name: 'Evans' }
+        },
+        session: {},
+        error: null
+      });
     });
     await renderServerComponent(<SignIn />);
     await populateFormFields({
@@ -51,9 +56,13 @@ describe('Sign In page', () => {
       Password: 'CorrectHorseBatteryStaple'
     });
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
-    expect(supabase.auth.signInWithPassword).toHaveBeenCalledWith({
+    const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
+    expect(actualFetchUrl).toEqual('/auth/sign-in');
+    expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
+    expect(convertFormDataToObject(actualFetchOptions?.body)).toEqual({
       email: 'caleb@example.com',
-      password: 'CorrectHorseBatteryStaple'
+      password: 'CorrectHorseBatteryStaple',
+      verification_check: ''
     });
   });
 
@@ -73,12 +82,14 @@ describe('Sign In page', () => {
 
   it('should handle errors from server', async () => {
     mockCaptchaSuccessOnce('mytoken');
-    mockSupabaseApiResponse(supabase.auth, 'signInWithPassword', {
-      user: null,
-      session: null,
-      error: {
-        message: 'Invalid login credentials'
-      }
+    fetch.mockIf(/sign-in/, async () => {
+      return JSON.stringify({
+        user: null,
+        session: null,
+        error: {
+          message: 'Invalid login credentials'
+        }
+      });
     });
     await renderServerComponent(<SignIn />);
     await populateFormFields({
@@ -86,7 +97,8 @@ describe('Sign In page', () => {
       Password: 'CorrectHorseBatteryStaple'
     });
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
-    expect(supabase.auth.signInWithPassword).toHaveBeenCalled();
-    expect(screen.getByText('Invalid login credentials')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Invalid login credentials')).toBeInTheDocument();
+    });
   });
 });

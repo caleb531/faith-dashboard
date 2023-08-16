@@ -13,6 +13,14 @@ function SignInForm() {
   const [redirectTo, setRedirectTo] = useState('');
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
 
+  function redirectToDestination() {
+    if (redirectTo) {
+      window.location.assign(redirectTo);
+    } else {
+      redirectToHome();
+    }
+  }
+
   useEffect(() => {
     if (params.redirect_to) {
       setRedirectTo(params.redirect_to);
@@ -23,16 +31,13 @@ function SignInForm() {
   // the Sign In page
   return (
     <AuthForm
-      action={
-        redirectTo
-          ? `/auth/sign-in?redirect_to=${encodeURIComponent(redirectTo)}`
-          : '/auth/sign-in'
-      }
-      onSuccess={redirectToHome}
+      action={'/auth/sign-in'}
+      onSuccess={redirectToDestination}
       submitLabel="Sign In"
       submittingLabel="Submitting..."
       successLabel="Success! Redirecting..."
       altLink={{ title: 'Forgot Password?', href: '/forgot-password' }}
+      useAjax
     >
       <AuthFormField
         type="email"
