@@ -21,19 +21,5 @@ export async function POST(request: Request) {
     }
   });
 
-  if (response.error) {
-    console.error(response.error);
-    return NextResponse.redirect(
-      `${requestUrl.origin}/sign-up?error=${response.error.message}`,
-      {
-        // a 301 status is required to redirect from a POST to a GET route
-        status: 301
-      }
-    );
-  }
-
-  return NextResponse.redirect(requestUrl.origin, {
-    // a 301 status is required to redirect from a POST to a GET route
-    status: 301
-  });
+  return NextResponse.json(response);
 }

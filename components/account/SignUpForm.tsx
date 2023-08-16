@@ -21,6 +21,7 @@ function SignUpForm() {
       submitLabel="Sign Up"
       submittingLabel="Submitting..."
       successLabel="Success! Redirecting..."
+      useAjax
     >
       <AuthFormField
         type="text"
