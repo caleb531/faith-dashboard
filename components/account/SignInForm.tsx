@@ -2,7 +2,7 @@
 import AuthForm, { redirectToHome } from '@components/account/AuthForm';
 import AuthFormField from '@components/account/AuthFormField';
 import useAutoFocus from '@components/account/useAutoFocus';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useAllSearchParams from '../useAllSearchParams';
 
 function SignInForm() {
@@ -14,21 +14,13 @@ function SignInForm() {
   const emailAutoFocusProps = useAutoFocus<HTMLInputElement>();
 
   function redirectToDestination() {
-    if (redirectTo) {
-      window.location.assign(redirectTo);
+    if (params.redirect_to) {
+      window.location.assign(params.redirect_to);
     } else {
       redirectToHome();
     }
   }
 
-  useEffect(() => {
-    if (params.redirect_to) {
-      setRedirectTo(params.redirect_to);
-    }
-  }, [params.redirect_to]);
-
-  // TODO: handle ?redirect_to parameter that could be present on the URL for
-  // the Sign In page
   return (
     <AuthForm
       action={'/auth/sign-in'}
