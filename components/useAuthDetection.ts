@@ -27,11 +27,10 @@ function useAuthDetection() {
       body: convertObjectToFormData({ access_token, refresh_token }),
       signal: abortController.signal
     }).then((response) => {
-      const searchParams = new URLSearchParams(window.location.href);
-      // Redirect to the designated page (with a hard reload so that the
-      // newly-authenticated session is reflected in the UI)
+      // Reload the entire page so that the newly-authenticated session is
+      // reflected in the UI
       if (response.ok) {
-        window.location.href = searchParams.get('redirect_to') ?? '';
+        window.location.reload();
       }
     });
     return () => {
