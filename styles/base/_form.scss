@@ -37,6 +37,7 @@ input[type='tel'],
 input[type='url'],
 button {
   -webkit-appearance: none;
+  appearance: none;
   padding-top: 5px;
   padding-bottom: 5px;
   font-family: var(--font-family-sans-serif);
