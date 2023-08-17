@@ -3,6 +3,9 @@
   margin-bottom: 10px;
   font-size: var(--font-size-xs);
   color: var(--color-white-50);
+  a {
+    color: inherit;
+  }
 }
 .app-footer-dedication {
   font-size: inherit;
