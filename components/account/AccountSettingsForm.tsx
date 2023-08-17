@@ -35,7 +35,6 @@ function AccountSettingsForm() {
         submitLabel="Save Details"
         submittingLabel="Saving..."
         successLabel="Saved!"
-        useAjax
       >
         <h2>Your Details</h2>
 
@@ -65,7 +64,6 @@ function AccountSettingsForm() {
           submitLabel="Cancel Email Change"
           submittingLabel="Submitting..."
           successLabel="Email Change Canceled!"
-          useAjax
         >
           <h2>Change Email</h2>
 
@@ -89,7 +87,6 @@ function AccountSettingsForm() {
           submitLabel="Change Email"
           submittingLabel="Submitting..."
           successLabel="Almost done! Check your email to confirm the change"
-          useAjax
         >
           <h2>Change Email</h2>
 
@@ -122,7 +119,6 @@ function AccountSettingsForm() {
         submitLabel="Change Password"
         submittingLabel="Changing..."
         successLabel="Password Changed!"
-        useAjax
       >
         <h2>Change Password</h2>
 

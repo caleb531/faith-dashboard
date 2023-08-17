@@ -13,8 +13,7 @@ const successLabelDuration = 2000;
 const defaultHttpMethod = 'POST';
 
 type Props = {
-  action?: string;
-  useAjax?: boolean;
+  action: string;
   method?: 'GET' | 'POST' | 'get' | 'post';
   onSubmit?: (event: React.FormEvent<HTMLFormElement>) => Promise<{
     data: {
@@ -47,32 +46,33 @@ function AuthForm(props: Props) {
   const setSubmitLabelTimeout = useTimeout();
   const honeyPotFieldRef = useRef<HTMLInputElement>(null);
 
-  async function submitFormViaHandler(event: React.FormEvent<HTMLFormElement>) {
-    let response;
-    if (props.action && props.useAjax) {
-      response = await (
-        await fetch(props.action, {
-          method: props.method ?? defaultHttpMethod,
-          body: new FormData(event.currentTarget)
-        })
-      ).json();
-    } else if (props.onSubmit) {
-      response = await props.onSubmit(event);
-    } else {
-      return;
-    }
-    const user = response.data?.user;
+  async function callActionEndpoint(
+    action: string,
+    formData: FormData
+  ): Promise<any> {
+    return (
+      await fetch(action, {
+        method: props.method ?? defaultHttpMethod,
+        body: formData
+      })
+    ).json();
+  }
+
+  // Display error message if response contains error information, otherwise
+  // reset the current error message in the case of success
+  function synchronizeFormErrorState(response: any): void {
     // If there is no error, the value is conveniently null
-    setFormErrorMessage(response.error?.message);
     if (response.error) {
-      // Only stop showing "Submitting..." message if the authentication failed
-      // somehow
-      setIsFormSubmitting(false);
-      return;
+      // This will be caught by the handlePreSubmit() function
+      throw response.error;
+    } else {
+      setFormErrorMessage(null);
     }
-    const successCallbackResult = props.onSuccess
-      ? await props.onSuccess({ user })
-      : null;
+  }
+
+  function setFormStatePostSuccess(
+    successCallbackResult: boolean | void | null
+  ) {
     // If the onSuccess() callback returns false, the Submit button should not
     // revert to its initial label, but rather, remain in a "Submitting" state
     if (successCallbackResult !== false) {
@@ -86,25 +86,39 @@ function AuthForm(props: Props) {
     }
   }
 
-  async function prepareForSubmit(event: React.FormEvent<HTMLFormElement>) {
-    if (!props.action || props.useAjax) {
-      event.preventDefault();
-    }
+  async function submitForm(
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> {
+    const response = await callActionEndpoint(
+      props.action,
+      new FormData(event.currentTarget)
+    );
+    const user = response?.data?.user;
+    synchronizeFormErrorState(response);
+    const successCallbackResult = props.onSuccess
+      ? await props.onSuccess({ user })
+      : null;
+    setFormStatePostSuccess(successCallbackResult);
+  }
+
+  // When clicking the Submit button, immediately show the button label in a
+  // "Submitting" state, verify the honeypot field, and try to call the
+  // designated action endpoint
+  async function handlePreSubmit(
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> {
+    event.preventDefault();
     setIsFormSubmitting(true);
     setFormErrorMessage(null);
+    if (honeyPotFieldRef.current && honeyPotFieldRef.current.value) {
+      setFormErrorMessage('Cannot submit form; please try again');
+      setIsFormSubmitting(false);
+      return;
+    }
     try {
-      if (honeyPotFieldRef.current && honeyPotFieldRef.current.value) {
-        setFormErrorMessage('Cannot submit form; please try again');
-        setIsFormSubmitting(false);
-        return;
-      }
-      // Even though we are not capturing the return value, we must await the
-      // submitForm() call to properly catch any errors, because
-      // submitForm() is an async function and would otherwise run
-      // asynchronously outside of the try..catch statement's control
-      await submitFormViaHandler(event);
+      await submitForm(event);
     } catch (error: any) {
-      setFormErrorMessage(error?.toString());
+      setFormErrorMessage(error?.message);
       setIsFormSubmitting(false);
     }
   }
@@ -120,7 +134,7 @@ function AuthForm(props: Props) {
   return (
     <form
       className="account-auth-form"
-      onSubmit={prepareForSubmit}
+      onSubmit={handlePreSubmit}
       action={props.action}
       method={props.method ?? defaultHttpMethod}
     >

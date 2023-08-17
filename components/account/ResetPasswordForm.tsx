@@ -32,7 +32,7 @@ function ResetPasswordForm() {
 
   return session ? (
     <AuthForm
-      onSubmit={resetPassword}
+      action="/auth/reset-password"
       onSuccess={redirectToHome}
       submitLabel="Reset Password"
       submittingLabel="Resetting..."

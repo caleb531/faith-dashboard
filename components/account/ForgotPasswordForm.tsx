@@ -12,7 +12,6 @@ function ForgotPasswordForm() {
       submitLabel="Send Email"
       submittingLabel="Sending..."
       successLabel="Almost done! Check your email to finish resetting"
-      useAjax
     >
       <AuthFormField
         type="email"

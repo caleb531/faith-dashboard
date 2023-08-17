@@ -27,11 +27,11 @@ function useAuthDetection() {
       body: convertObjectToFormData({ access_token, refresh_token }),
       signal: abortController.signal
     }).then((response) => {
-      console.log(response);
-      // Redirect to the /reset-password page (with a hard reload so that the
+      const searchParams = new URLSearchParams(window.location.href);
+      // Redirect to the designated page (with a hard reload so that the
       // newly-authenticated session is reflected in the UI)
-      if (response.ok) {
-        window.location.href = '/reset-password';
+      if (response.ok && searchParams.get('redirect_to')) {
+        window.location.href = searchParams.get('redirect_to') ?? '';
       }
     });
     return () => {

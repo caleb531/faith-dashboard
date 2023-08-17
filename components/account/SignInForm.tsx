@@ -23,13 +23,12 @@ function SignInForm() {
 
   return (
     <AuthForm
-      action={'/auth/sign-in'}
+      action="/auth/sign-in"
       onSuccess={redirectToDestination}
       submitLabel="Sign In"
       submittingLabel="Submitting..."
       successLabel="Success! Redirecting..."
       altLink={{ title: 'Forgot Password?', href: '/forgot-password' }}
-      useAjax
     >
       <AuthFormField
         type="email"
