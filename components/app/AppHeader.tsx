@@ -1,3 +1,4 @@
+import useMountListener from '@components/useMountListener';
 import Link from 'next/link';
 import AppHeaderAccount from './AppHeaderAccount';
 import AppHeaderAddWidgetButton from './AppHeaderAddWidgetButton';
@@ -10,6 +11,7 @@ type Props = {
 };
 
 function AppHeader({ currentTheme, canAddWidgets }: Props) {
+  const isMounted = useMountListener();
   return (
     <header className="app-header" role="banner">
       <h1 className="app-header-title">
@@ -18,8 +20,12 @@ function AppHeader({ currentTheme, canAddWidgets }: Props) {
         </Link>
       </h1>
       <div className="app-header-controls">
-        {canAddWidgets ? <AppHeaderAddWidgetButton /> : null}
-        <AppHeaderThemeSwitcher currentTheme={currentTheme} />
+        {isMounted ? (
+          <>
+            {canAddWidgets ? <AppHeaderAddWidgetButton /> : null}
+            <AppHeaderThemeSwitcher currentTheme={currentTheme} />
+          </>
+        ) : null}
         <AppHeaderAccount />
       </div>
     </header>
