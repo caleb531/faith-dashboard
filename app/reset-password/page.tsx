@@ -4,10 +4,7 @@ import { getPageMetadata } from '@components/seoUtils';
 
 async function ResetPassword() {
   return (
-    <LandingPage
-      heading="Reset Password | Faith Dashboard"
-      altLink={{ title: 'Sign In', href: '/sign-in' }}
-    >
+    <LandingPage heading="Reset Password | Faith Dashboard">
       <ResetPasswordForm />
     </LandingPage>
   );

@@ -5,6 +5,7 @@
 }
 
 a {
-  color: inherit;
+  font-weight: 400;
+  color: var(--current-theme-color);
   text-decoration: underline;
 }

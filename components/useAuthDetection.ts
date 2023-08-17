@@ -30,7 +30,7 @@ function useAuthDetection() {
       const searchParams = new URLSearchParams(window.location.href);
       // Redirect to the designated page (with a hard reload so that the
       // newly-authenticated session is reflected in the UI)
-      if (response.ok && searchParams.get('redirect_to')) {
+      if (response.ok) {
         window.location.href = searchParams.get('redirect_to') ?? '';
       }
     });

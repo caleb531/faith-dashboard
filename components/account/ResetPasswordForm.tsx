@@ -20,6 +20,11 @@ function ResetPasswordForm() {
     return supabase.auth.updateUser({ password: fields.new_password });
   }
 
+  function reloadPage(event: React.MouseEvent) {
+    event.preventDefault();
+    window.location.reload();
+  }
+
   function redirectToHome() {
     // Redirect to the main app if the user has been properly authenticated
     // with a session; the "Submitting..." button label will continue showing
@@ -56,7 +61,15 @@ function ResetPasswordForm() {
       />
     </AuthForm>
   ) : (
-    <LoadingIndicator />
+    <>
+      <LoadingIndicator />
+      <p className="landing-page-message">
+        If the page doesn't redirect,{' '}
+        <a href="#" onClick={reloadPage}>
+          click here.
+        </a>
+      </p>
+    </>
   );
 }
 
