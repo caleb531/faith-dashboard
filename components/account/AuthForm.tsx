@@ -15,12 +15,6 @@ const defaultHttpMethod = 'POST';
 type Props = {
   action: string;
   method?: 'GET' | 'POST' | 'get' | 'post';
-  onSubmit?: (event: React.FormEvent<HTMLFormElement>) => Promise<{
-    data: {
-      user?: User | null;
-    } | null;
-    error: Error | null;
-  }>;
   onSuccess?: ({
     user
   }: {
