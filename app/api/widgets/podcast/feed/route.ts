@@ -1,4 +1,3 @@
-import { getAllSearchParams } from '@app/api/utils';
 import { NextResponse } from 'next/server';
 import fetch from 'node-fetch';
 import xml2js from 'xml2js';
@@ -9,15 +8,15 @@ import xml2js from 'xml2js';
 const MAX_EPISODE_COUNT = 50;
 
 export async function GET(request: Request) {
-  const searchParams = getAllSearchParams(request);
-  if (!searchParams.url) {
+  const searchParams = new URL(request.url).searchParams;
+  if (!searchParams.get('url')) {
     return NextResponse.json(
       { error: 'Missing parameter: url' },
       { status: 400 }
     );
   }
 
-  const response = await fetch(String(searchParams.url));
+  const response = await fetch(String(searchParams.get('url')));
   const xmlStr = await response.text();
 
   const result = await xml2js.parseStringPromise(xmlStr, {
