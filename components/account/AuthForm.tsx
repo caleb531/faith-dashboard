@@ -23,6 +23,7 @@ type Props = {
   submitLabel: string;
   submittingLabel: string;
   successLabel: string;
+  persistSuccessState?: boolean;
   altLink?: {
     title: string;
     href: string;
@@ -69,11 +70,14 @@ function AuthForm(props: Props) {
   ) {
     // If the onSuccess() callback returns false, the Submit button should not
     // revert to its initial label, but rather, remain in a "Submitting" state
-    if (successCallbackResult !== false) {
-      setIsFormSubmitting(false);
-      setIsFormSuccess(true);
-      // Reset the Submit button to its initial label after a few seconds of
-      // showing the success label
+    if (successCallbackResult === false) {
+      return;
+    }
+    setIsFormSubmitting(false);
+    setIsFormSuccess(true);
+    // Reset the Submit button to its initial label after a few seconds of
+    // showing the success label
+    if (!props.persistSuccessState) {
       setSubmitLabelTimeout(() => {
         setIsFormSuccess(false);
       }, successLabelDuration);

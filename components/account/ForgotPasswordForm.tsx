@@ -12,6 +12,7 @@ function ForgotPasswordForm() {
       submitLabel="Send Email"
       submittingLabel="Sending..."
       successLabel="Almost done! Check your email to finish resetting"
+      persistSuccessState
     >
       <AuthFormField
         type="email"
