@@ -4,11 +4,11 @@ import React, { useEffect, useMemo, useReducer, useState } from 'react';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 import { getAppStorageKey } from '../storageUtils';
 import TutorialFlow from '../tutorial/TutorialFlow';
+import useAuthenticationDetection from '../useAuthDetection';
 import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 import useLocalStorage from '../useLocalStorage';
 import useMountListener from '../useMountListener';
 import useMultipleDashboardsMigration from '../useMultipleDashboardsMigration';
-import usePasswordRecoveryRedirect from '../usePasswordRecoveryRedirect';
 import useTouchDeviceDetection from '../useTouchDeviceDetection';
 import AppContext from './AppContext';
 import AppFooter from './AppFooter';
@@ -82,7 +82,7 @@ function App({
 
   useAppSync(app, dispatchToApp);
   useThemeForEntirePage(app.theme);
-  usePasswordRecoveryRedirect();
+  useAuthenticationDetection();
 
   // Defer the starting of the tutorial so the app's loading state isn't blurry
   useEffect(() => {

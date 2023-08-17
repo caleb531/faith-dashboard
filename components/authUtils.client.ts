@@ -43,3 +43,14 @@ export function shouldRefreshSession(session: Session | null) {
 export function isTruthy<T>(value: T | null | undefined | false): value is T {
   return Boolean(value);
 }
+
+// Convert the given object of key-value pairs to a FormData object; this is
+// useful for serializing an object into a format that can be POST'ed to the
+// server with the Fetch API
+export function convertObjectToFormData(fields: object) {
+  const formData = new FormData();
+  Object.entries(fields).forEach(([key, value]) => {
+    formData.append(key, String(value));
+  });
+  return formData;
+}

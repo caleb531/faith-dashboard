@@ -2,12 +2,15 @@
 import AuthForm from '@components/account/AuthForm';
 import AuthFormField from '@components/account/AuthFormField';
 import serializeForm from '@components/account/serializeForm';
+import SessionContext from '@components/app/SessionContext';
+import LoadingIndicator from '@components/reusable/LoadingIndicator';
 import useFormFieldMatcher from '@components/useFormFieldMatcher';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import React from 'react';
+import React, { useContext } from 'react';
 
 function ResetPasswordForm() {
   const supabase = createClientComponentClient();
+  const { session } = useContext(SessionContext);
   const [passwordFieldProps, confirmPasswordFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Passwords must match'
   });
@@ -27,7 +30,7 @@ function ResetPasswordForm() {
     return false;
   }
 
-  return (
+  return session ? (
     <AuthForm
       onSubmit={resetPassword}
       onSuccess={redirectToHome}
@@ -52,6 +55,8 @@ function ResetPasswordForm() {
         {...confirmPasswordFieldProps}
       />
     </AuthForm>
+  ) : (
+    <LoadingIndicator />
   );
 }
 
