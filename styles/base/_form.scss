@@ -102,13 +102,17 @@ button,
 a {
   &:focus-visible {
     outline-width: 0;
-    box-shadow: 0 0 0 2px var(--color-white-100), 0 0 0 4px var(--color-blue);
+    box-shadow:
+      0 0 0 2px var(--color-white-100),
+      0 0 0 4px var(--color-blue);
   }
 }
 
 input:focus-visible {
   outline-width: 0;
-  box-shadow: 0 0 0 1px var(--color-blue), 0 0 0 2px var(--color-white-100);
+  box-shadow:
+    0 0 0 1px var(--color-blue),
+    0 0 0 2px var(--color-white-100);
 }
 
 .form-error-message {
