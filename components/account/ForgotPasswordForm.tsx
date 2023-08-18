@@ -13,6 +13,7 @@ function ForgotPasswordForm() {
       submittingLabel="Sending..."
       successLabel="Almost done! Check your email to finish resetting"
       persistSuccessState
+      requireCaptcha
     >
       <AuthFormField
         type="email"

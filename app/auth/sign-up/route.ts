@@ -13,6 +13,7 @@ export async function POST(request: Request) {
     email: String(formData.get('email')),
     password: String(formData.get('password')),
     options: {
+      captchaToken: String(formData.get('cf-turnstile-response')),
       data: {
         first_name: String(formData.get('first_name')),
         last_name: String(formData.get('last_name'))

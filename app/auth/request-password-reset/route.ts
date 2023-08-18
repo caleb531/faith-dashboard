@@ -12,7 +12,8 @@ export async function POST(request: Request) {
   const response = await supabase.auth.resetPasswordForEmail(
     String(formData.get('email')),
     {
-      redirectTo: `${requestUrl.origin}/reset-password`
+      redirectTo: `${requestUrl.origin}/reset-password`,
+      captchaToken: String(formData.get('cf-turnstile-response'))
     }
   );
 

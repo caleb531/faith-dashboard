@@ -116,7 +116,7 @@ function AuthForm(props: Props) {
       if (honeyPotFieldRef.current && honeyPotFieldRef.current.value) {
         throw new Error('Cannot submit form; please try again');
       }
-      if (!getCaptchaToken()) {
+      if (props.requireCaptcha && getCaptchaToken()) {
         throw new Error(
           'Sorry, something went wrong. Try submitting the form again.'
         );
