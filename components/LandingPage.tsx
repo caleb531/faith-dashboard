@@ -15,6 +15,7 @@ type Props = {
     href: string;
   };
   isProtected?: boolean;
+  redirectSignedInUsersTo?: string;
   children: React.ReactNode;
 };
 
@@ -23,17 +24,27 @@ type Props = {
 // in an erroneous way so as to gather stack trace information that is useful
 // for debugging
 async function LandingPage(
-  { heading, altLink, isProtected, children }: Props = {
+  {
+    heading,
+    altLink,
+    isProtected,
+    redirectSignedInUsersTo,
+    children
+  }: Props = {
     heading: '',
     children: <></>
   }
 ) {
   const session = await getSession();
   const user = await getUser();
-  // If route is protected, redirect to the Sign In page if the user has not
-  // signed in
   if (isProtected && !session) {
+    // If route is protected, redirect to the Sign In page if the user has not
+    // signed in
     redirect(getSignInUrlForCurrentPage());
+  } else if (redirectSignedInUsersTo && session) {
+    // If the user is signed in but on a page which should only be accessible to
+    // signed-out users, redirect them to the designated page
+    redirect(redirectSignedInUsersTo);
   }
   return (
     <App session={session} user={user}>

@@ -7,6 +7,7 @@ async function ForgotPassword() {
     <LandingPage
       heading="Forgot Password | Faith Dashboard"
       altLink={{ title: 'Sign In', href: '/sign-in' }}
+      redirectSignedInUsersTo="/account"
     >
       <ForgotPasswordForm />
     </LandingPage>
