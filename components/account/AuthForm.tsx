@@ -1,3 +1,5 @@
+import Captcha from '@components/Captcha';
+import useVerifyCaptcha from '@components/useVerifyCaptcha';
 import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
@@ -28,6 +30,7 @@ type Props = {
     title: string;
     href: string;
   };
+  requireCaptcha?: boolean;
   children: React.ReactNode;
 };
 
@@ -40,6 +43,7 @@ function AuthForm(props: Props) {
   const [isFormSuccess, setIsFormSuccess] = useState(false);
   const setSubmitLabelTimeout = useTimeout();
   const honeyPotFieldRef = useRef<HTMLInputElement>(null);
+  const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
 
   async function callActionEndpoint(
     action: string,
@@ -108,12 +112,15 @@ function AuthForm(props: Props) {
     event.preventDefault();
     setIsFormSubmitting(true);
     setFormErrorMessage(null);
-    if (honeyPotFieldRef.current && honeyPotFieldRef.current.value) {
-      setFormErrorMessage('Cannot submit form; please try again');
-      setIsFormSubmitting(false);
-      return;
-    }
     try {
+      if (honeyPotFieldRef.current && honeyPotFieldRef.current.value) {
+        throw new Error('Cannot submit form; please try again');
+      }
+      if (!getCaptchaToken()) {
+        throw new Error(
+          'Sorry, something went wrong. Try submitting the form again.'
+        );
+      }
       await submitForm(event);
     } catch (error: any) {
       setFormErrorMessage(error?.message);
@@ -175,6 +182,9 @@ function AuthForm(props: Props) {
           </Link>
         ) : null}
       </div>
+      {props.requireCaptcha ? (
+        <Captcha setCaptchaToken={setCaptchaToken} />
+      ) : null}
     </form>
   );
 }

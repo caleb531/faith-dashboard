@@ -24,6 +24,7 @@ function SignInForm() {
       submittingLabel="Submitting..."
       successLabel="Success! Redirecting..."
       altLink={{ title: 'Forgot Password?', href: '/forgot-password' }}
+      requireCaptcha
     >
       <AuthFormField
         type="email"

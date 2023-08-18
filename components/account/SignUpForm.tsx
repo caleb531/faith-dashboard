@@ -3,7 +3,6 @@ import AuthForm, { redirectToHome } from '@components/account/AuthForm';
 import AuthFormField from '@components/account/AuthFormField';
 import useAutoFocus from '@components/account/useAutoFocus';
 import useFormFieldMatcher from '@components/useFormFieldMatcher';
-import useVerifyCaptcha from '@components/useVerifyCaptcha';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 function SignUpForm() {
@@ -12,7 +11,6 @@ function SignUpForm() {
     mismatchMessage: 'Passwords must match'
   });
   const firstNameAutoFocusProps = useAutoFocus<HTMLInputElement>();
-  const [getCaptchaToken, setCaptchaToken] = useVerifyCaptcha();
 
   return (
     <AuthForm
@@ -21,6 +19,7 @@ function SignUpForm() {
       submitLabel="Sign Up"
       submittingLabel="Submitting..."
       successLabel="Success! Redirecting..."
+      requireCaptcha
     >
       <AuthFormField
         type="text"

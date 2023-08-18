@@ -1,14 +1,20 @@
-import HCaptcha from '@hcaptcha/react-hcaptcha';
+import { Turnstile } from '@marsidev/react-turnstile';
 
 type Props = {
   setCaptchaToken: (token: string) => void;
 };
 
 function Captcha({ setCaptchaToken }: Props) {
-  const sitekey = process.env.NEXT_PUBLIC_GOTRUE_SECURITY_CAPTCHA_SITEKEY;
+  const siteKey = process.env.NEXT_PUBLIC_GOTRUE_SECURITY_CAPTCHA_SITEKEY;
 
-  return sitekey ? (
-    <HCaptcha sitekey={sitekey} onVerify={setCaptchaToken} />
+  return siteKey ? (
+    <Turnstile
+      siteKey={siteKey}
+      onSuccess={(token) => setCaptchaToken(token)}
+      onExpire={() => setCaptchaToken('')}
+      onError={() => setCaptchaToken('')}
+      options={{ size: 'invisible' }}
+    />
   ) : null;
 }
 
