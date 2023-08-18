@@ -27,6 +27,7 @@ function SignUpForm() {
         name="first_name"
         placeholder="First Name"
         required
+        autoComplete="on"
         {...firstNameAutoFocusProps}
       />
       <AuthFormField
@@ -35,6 +36,7 @@ function SignUpForm() {
         name="last_name"
         placeholder="Last Name"
         required
+        autoComplete="on"
       />
       <AuthFormField
         type="email"
@@ -42,6 +44,7 @@ function SignUpForm() {
         name="email"
         placeholder="Email"
         required
+        autoComplete="on"
       />
       <AuthFormField
         type="password"

@@ -32,6 +32,7 @@ function SignInForm() {
         name="email"
         placeholder="Email"
         required
+        autoComplete="on"
         {...emailAutoFocusProps}
       />
       <AuthFormField
