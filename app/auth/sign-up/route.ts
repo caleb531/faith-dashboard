@@ -16,8 +16,7 @@ export async function POST(request: Request) {
       data: {
         first_name: String(formData.get('first_name')),
         last_name: String(formData.get('last_name'))
-      },
-      emailRedirectTo: `${requestUrl.origin}/api/callback`
+      }
     }
   });
 
