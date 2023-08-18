@@ -30,7 +30,8 @@ function useAuthDetection() {
       // Reload the entire page so that the newly-authenticated session is
       // reflected in the UI
       if (response.ok) {
-        window.location.reload();
+        window.location.href =
+          window.location.pathname + window.location.search;
       }
     });
     return () => {
