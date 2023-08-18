@@ -19,7 +19,11 @@ const Captcha = React.memo(function Captcha({ setCaptchaToken }: Props) {
     <Turnstile
       siteKey={siteKey}
       onSuccess={(token) => setCaptchaToken(token)}
-      onExpire={() => setCaptchaToken('')}
+      onExpire={() => {
+        console.log('CAPTCHA expired. Resetting...');
+        setCaptchaToken('');
+        window.turnstile?.reset();
+      }}
       onError={() => setCaptchaToken('')}
       options={{ size: 'invisible' }}
     />
