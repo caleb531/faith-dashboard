@@ -6,6 +6,7 @@ import '@fontsource/merriweather/400-italic.css';
 import '@fontsource/merriweather/400.css';
 import '@styles/index.scss';
 import '@styles/landing-page.scss';
+import Script from 'next/script';
 import React from 'react';
 
 export default function RootLayout({
@@ -20,11 +21,11 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1"
         />
-        <script
+        <Script
           defer
           data-domain="faithdashboard.com"
           src="https://plausible.io/js/script.js"
-        ></script>
+        ></Script>
       </head>
       <body>{children}</body>
     </html>
