@@ -12,7 +12,7 @@ import type { Database } from './components/databaseSchema.types';
 // <https://stackoverflow.com/questions/76270173/can-a-nonce-be-used-for-multiple-scripts-or-not>)
 function generateCSP() {
   const nonce = crypto.randomUUID();
-  return `default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://hcaptcha.com https://*.hcaptcha.com; font-src 'self' https://fonts.gstatic.com data:; img-src * data:; script-src 'self' 'nonce-${nonce}' https://storage.googleapis.com https://plausible.io https://hcaptcha.com https://*.hcaptcha.com; child-src 'self' https://hcaptcha.com https://*.hcaptcha.com; prefetch-src 'self'; connect-src *; manifest-src 'self'; media-src *;`;
+  return `default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://hcaptcha.com https://*.hcaptcha.com; font-src 'self' https://fonts.gstatic.com data:; img-src * data:; script-src 'self' 'nonce-${nonce}' https://storage.googleapis.com https://plausible.io https://hcaptcha.com https://*.hcaptcha.com; child-src 'self' https://hcaptcha.com https://*.hcaptcha.com; connect-src *; manifest-src 'self'; media-src *;`;
 }
 
 // Source:
