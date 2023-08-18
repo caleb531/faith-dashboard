@@ -23,14 +23,6 @@ const nextConfig = withPWA({
         key: 'Strict-Transport-Security',
         value: 'max-age=15552000; includeSubDomains'
       });
-      // Only apply Content Security Policy for production build
-      headers.push({
-        key: 'Content-Security-Policy',
-        /* eslint-disable quotes */
-        value:
-          "default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://hcaptcha.com https://*.hcaptcha.com; font-src 'self' https://fonts.gstatic.com data:; img-src * data:; script-src 'self' 'unsafe-inline' https://storage.googleapis.com https://plausible.io https://hcaptcha.com https://*.hcaptcha.com; child-src 'self' https://hcaptcha.com https://*.hcaptcha.com; prefetch-src 'self'; connect-src *; manifest-src 'self'; media-src *;"
-        /* eslint-enable quotes */
-      });
     }
     return [{ source: '/:path*', headers }];
   }
