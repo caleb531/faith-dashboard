@@ -32,6 +32,8 @@ const withPWA = require('next-pwa')({
     }
   ],
   buildExcludes: [
+    // This is necessary to prevent service worker errors; see
+    // <https://github.com/shadowwalker/next-pwa/issues/424#issuecomment-1399683017>
     /app-build-manifest\.json$/,
     /middleware-manifest\.json$/,
     /middleware-runtime\.js$/,
@@ -39,34 +41,9 @@ const withPWA = require('next-pwa')({
   ]
 });
 
-// Generate the relevant entries needed to Webpack to compile files under the
-// App Router (source:
-// <https://github.com/Schular/next-with-pwa/blob/main/next.config.js>)
-const generateAppDirEntry = async (entry) => {
-  const packagePath = require.resolve('next-pwa');
-  const packageDirectory = path.dirname(packagePath);
-  const registerJs = path.join(packageDirectory, 'register.js');
-
-  const entries = await entry();
-  // Register SW on App directory, solution: https://github.com/shadowwalker/next-pwa/pull/427
-  if (entries['main-app'] && !entries['main-app'].includes(registerJs)) {
-    if (Array.isArray(entries['main-app'])) {
-      entries['main-app'].unshift(registerJs);
-    } else if (typeof entries['main-app'] === 'string') {
-      entries['main-app'] = [registerJs, entries['main-app']];
-    }
-  }
-  return entries;
-};
-
 /** @type {import('next').NextConfig} */
 const nextConfig = withPWA({
   reactStrictMode: true,
-  webpack: (config) => {
-    const entry = generateAppDirEntry(config.entry);
-    config.entry = () => entry;
-    return config;
-  },
   async headers() {
     const headers = [
       {
