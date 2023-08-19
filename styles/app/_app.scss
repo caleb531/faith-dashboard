@@ -5,7 +5,7 @@
 }
 
 a {
-  font-weight: 400;
+  font-weight: var(--font-weight-bold);
   color: var(--current-theme-color);
   text-decoration: underline;
 }

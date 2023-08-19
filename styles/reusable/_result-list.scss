@@ -19,25 +19,26 @@
   cursor: pointer;
   background-color: var(--color-black-10);
   transition: background-color 150ms ease-in-out;
+  font-size: var(--font-size-xxs);
+  line-height: var(--line-height-comfortable);
   &:hover {
     background-color: var(--color-black-30);
   }
   &:focus-visible {
     outline-width: 0;
     border-radius: 5px;
-    box-shadow: inset 0 0 0 1px var(--color-blue),
+    box-shadow:
+      inset 0 0 0 1px var(--color-blue),
       inset 0 0 0 2px var(--color-white-100);
   }
 }
 
 h3.result-title {
   margin: 0;
-  font-size: var(--font-size-xxxs);
-  font-weight: 300;
+  font-size: inherit;
 }
 
 .result-subtitle {
-  font-weight: 300;
-  font-size: var(--font-size-xxxs);
+  font-weight: var(--font-weight-normal);
   color: var(--color-white-50);
 }

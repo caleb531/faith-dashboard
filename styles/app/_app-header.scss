@@ -47,7 +47,9 @@
   // Widget button (which is slightly taller than the natural height of the
   // other buttons) isn't present
   min-height: 28px;
-  font-size: var(--font-size-xxxs);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xxs);
+  line-height: var(--line-height-tight);
 }
 
 .app-header-control-button,

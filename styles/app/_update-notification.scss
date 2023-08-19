@@ -54,7 +54,7 @@
   // Inline elements cannot be transformed
   display: block;
   font-size: var(--font-size-m);
-  font-weight: 400;
+  font-weight: var(--font-weight-bold);
   .is-updating & {
     animation: update-element-hide 400ms var(--update-animation-timing-function)
       both;

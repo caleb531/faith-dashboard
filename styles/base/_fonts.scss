@@ -1,26 +1,43 @@
 @use 'sass:math';
 
-// Return the correct (scaled) rem value given a base font size (in pixels) and
-// the number of
-@function px-to-rem($font-size-base, $n) {
-  @return #{math.div($font-size-base + $n, $font-size-base)}rem;
-}
-
 :root {
   // Font families
   --font-family-serif: 'Merriweather', 'Georgia', serif;
-  --font-family-sans-serif: 'Merriweather Sans', 'Open Sans', sans-serif;
+  --font-family-sans-serif: 'Lato', sans-serif;
+
+  // Font weights
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  // Line heights
+  --line-height-tight: 1;
+  --line-height-normal: normal;
+  --line-height-comfortable: 1.3;
+  --line-height-roomy: 1.5;
+  --line-height-gratuitous: 1.7;
 
   // Font sizes
-  $font-size-base: 15px;
-  --font-size-base: #{$font-size-base};
-  --font-size-xxxs: #{px-to-rem($font-size-base, -4)};
-  --font-size-xxs: #{px-to-rem($font-size-base, -3)};
-  --font-size-xs: #{px-to-rem($font-size-base, -2)};
-  --font-size-s: #{px-to-rem($font-size-base, -1)};
+
+  font-size: 16px;
+  /*
+  From https://typescale.com/:
+    - 1.067 (Minor Second)
+    - 1.125 (Major Second)
+    - 1.200 (Minor Third)
+    - 1.250 (Major Third)
+    - 1.333 (Perfect Fourth)
+    - 1.414 (Augmented Fourth)
+    - 1.500 (Perfect Fifth)
+    - 1.618 (Golden Ratio)
+  */
+  --font-size-xxxxs: calc(1rem * 10 / 15);
+  --font-size-xxxs: calc(1rem * 11 / 15);
+  --font-size-xxs: calc(1rem * 12 / 15);
+  --font-size-xs: calc(1rem * 13 / 15);
+  --font-size-s: calc(1rem * 14 / 15);
   --font-size-m: 1rem;
-  --font-size-l: #{px-to-rem($font-size-base, 1)};
-  --font-size-xl: #{px-to-rem($font-size-base, 2)};
-  --font-size-xxl: #{px-to-rem($font-size-base, 3)};
-  --font-size-xxxl: #{px-to-rem($font-size-base, 7)};
+  --font-size-l: calc(1rem * 16 / 15);
+  --font-size-xl: calc(1rem * 17 / 15);
+  --font-size-xxl: calc(1rem * 18 / 15);
+  --font-size-xxxl: calc(1rem * 22 / 15);
 }

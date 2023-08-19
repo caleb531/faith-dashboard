@@ -26,6 +26,8 @@ body {
   padding: 0 10px;
   background-color: var(--color-grey);
   font-family: var(--font-family-serif);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
   color: var(--color-white-100);
   text-align: center;
   @include layout(desktop) {

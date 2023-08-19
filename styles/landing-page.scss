@@ -19,9 +19,8 @@
   margin-top: 0;
   border-radius: 20px;
   padding: 10px 30px 30px;
-  font-weight: 300;
   text-align: left;
-  line-height: 1.7;
+  line-height: var(--line-height-gratuitous);
   color: var(--color-black-100);
   box-shadow: 0 2px 5px var(--color-black-50);
   h1,
@@ -33,7 +32,7 @@
     margin-top: 30px;
     border-bottom-width: 6px;
     margin-bottom: 10px;
-    font-weight: 400;
+    font-weight: var(--font-weight-bold);
   }
   h2 {
     margin-top: 20px;
@@ -65,6 +64,9 @@
   p > img {
     background-color: var(--current-theme-color);
   }
+  li {
+    padding-right: 2px;
+  }
   button[type] {
     margin: 0;
   }
@@ -80,7 +82,7 @@
   padding: 15px 15px;
   text-decoration: none;
   font-size: var(--font-size-xs);
-  font-weight: 400;
+  font-weight: var(--font-weight-bold);
 }
 .sheet-control-icon.landing-page-control-icon {
   --icon-size: 20px;
@@ -88,7 +90,7 @@
   height: var(--icon-size);
 }
 .landing-page-em {
-  font-weight: 400;
+  font-weight: var(--font-weight-bold);
 }
 .landing-page-message {
   text-align: center;

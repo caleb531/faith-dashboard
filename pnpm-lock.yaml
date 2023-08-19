@@ -4,10 +4,10 @@ overrides:
   got@<11.8.5: '>=11.8.5'
 
 dependencies:
+  '@fontsource/lato':
+    specifier: ^5.0.9
+    version: 5.0.9
   '@fontsource/merriweather':
-    specifier: ^5.0.8
-    version: 5.0.8
-  '@fontsource/merriweather-sans':
     specifier: ^5.0.8
     version: 5.0.8
   '@hello-pangea/dnd':
@@ -1435,8 +1435,8 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@fontsource/merriweather-sans@5.0.8:
-    resolution: {integrity: sha512-hFJJjMM8zyzykKLPRcuTE74xGqTurahJ00pObsm7Axu4VQKl+n0EJO/nEsu9hoHTUv4Aw7GfA16mJHqibXEcEQ==}
+  /@fontsource/lato@5.0.9:
+    resolution: {integrity: sha512-VqqZWU5he/4gCBjbexQCL5chelaeYu+ssZ8im4vx4VeDeMS/M6mxPelX2zlCbCdzYczwrVBodr3GVRbqIMpWUg==}
     dev: false
 
   /@fontsource/merriweather@5.0.8:

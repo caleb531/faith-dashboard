@@ -5,15 +5,13 @@
 
 .bible-verse-content {
   font-size: var(--font-size-s);
-  * {
-    font-size: inherit;
-  }
+  line-height: var(--line-height-comfortable);
   h2 {
     font-size: var(--font-size-xl);
   }
 }
 .bible-verse-version {
-  font-size: var(--font-size-xxxs);
+  font-size: var(--font-size-xxs);
 }
 .bible-verse-notice {
   opacity: 0.5;
@@ -22,7 +20,7 @@
   bottom: 10px;
   right: 10px;
   text-align: right;
-  font-size: 10px;
+  font-size: var(--font-size-xxxxs);
   transition: opacity 250ms ease-in-out;
 }
 .bible-verse-error {

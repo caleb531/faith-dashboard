@@ -93,5 +93,5 @@ li [data-key='user-info'] {
   margin-bottom: 5px;
 }
 [data-field='user-email'] {
-  font-weight: 300;
+  font-weight: var(--font-weight-normal);
 }

@@ -3,7 +3,6 @@
   width: 100%;
   background-color: var(--color-white-100);
   font-family: var(--font-family-sans-serif);
-  -webkit-font-smoothing: antialiased;
   overflow: hidden;
   button,
   .button {
@@ -23,7 +22,7 @@
     box-sizing: content-box;
     // Fixed the vertical centering of the control icon if the control happens
     // to be an <a> tag
-    line-height: 1;
+    line-height: var(--line-height-tight);
     color: var(--black-100);
   }
   .sheet-control-left {
