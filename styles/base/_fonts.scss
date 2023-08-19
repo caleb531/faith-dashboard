@@ -19,17 +19,6 @@
   // Font sizes
 
   font-size: 16px;
-  /*
-  From https://typescale.com/:
-    - 1.067 (Minor Second)
-    - 1.125 (Major Second)
-    - 1.200 (Minor Third)
-    - 1.250 (Major Third)
-    - 1.333 (Perfect Fourth)
-    - 1.414 (Augmented Fourth)
-    - 1.500 (Perfect Fifth)
-    - 1.618 (Golden Ratio)
-  */
   --font-size-xxxxs: calc(1rem * 10 / 15);
   --font-size-xxxs: calc(1rem * 11 / 15);
   --font-size-xxs: calc(1rem * 12 / 15);
