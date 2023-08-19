@@ -167,7 +167,7 @@ describe('Import/Export functionality', () => {
           {
             ...widget
           },
-          ['id', 'isSettingsOpen']
+          ['id']
         );
       })
     });
