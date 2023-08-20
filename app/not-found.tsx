@@ -2,7 +2,7 @@ import LandingPage from '@components/LandingPage';
 import LinkButton from '@components/reusable/LinkButton';
 import { Metadata } from 'next';
 
-function PageNotFound() {
+async function PageNotFound() {
   return (
     <LandingPage heading="Page Not Found | Faith Dashboard">
       <p>Sorry about that! You ended up on a page that doesn't exist.</p>
