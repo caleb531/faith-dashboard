@@ -45,7 +45,7 @@ export default function reducer(
                       // refreshes, lest we lose listening history, etc.)
                       guid:
                         typeof episode.guid !== 'string'
-                          ? episode.enclosure.url || episode.title
+                          ? episode.enclosure.url
                           : episode.guid
                     };
                   }) || []

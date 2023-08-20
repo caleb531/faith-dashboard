@@ -2088,10 +2088,7 @@
         "description": "God’s word is every Christian’s infallible guide to maximum sexual fulfillment. The good news for singles is that they are included.<img src=\"https://feed.desiringgod.org/link/10721/13536622.gif\" height=\"1\" width=\"1\"/>",
         "link": "https://feed.desiringgod.org/link/10721/13536622/sex-and-the-single-person",
         "itunes:keywords": "sermon, daily sermon, message, preaching, John Piper, Desiring God, 163859",
-        "guid": {
-          "_": "https://www.desiringgod.org/messages/sex-and-the-single-person/2022-05-14T10:00:00Z",
-          "isPermaLink": "false"
-        },
+        "guid": "someValueGuaranteedToBeUnique",
         "enclosure": {
           "url": "https://feed.desiringgod.org/link/10721/5830465/10826311.mp3",
           "length": "36544916",
