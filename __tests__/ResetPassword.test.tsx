@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
   convertFormDataToObject,
-  populateFormFields
+  typeIntoFormFields
 } from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
 import {
@@ -35,7 +35,7 @@ describe('Reset Password page', () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
     await renderServerComponent(<ResetPassword />);
-    await populateFormFields({
+    await typeIntoFormFields({
       'New Password': 'CorrectHorseBatteryStaple',
       'Confirm New Password': 'CorrectHorseBatteryStaple'
     });
@@ -49,7 +49,7 @@ describe('Reset Password page', () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
     await renderServerComponent(<ResetPassword />);
-    await populateFormFields({
+    await typeIntoFormFields({
       'New Password': 'CorrectHorseBatteryStaple',
       'Confirm New Password': 'CorrectHorseBatteryStale'
     });
@@ -89,7 +89,7 @@ describe('Reset Password page', () => {
       });
     });
     await renderServerComponent(<ResetPassword />);
-    await populateFormFields({
+    await typeIntoFormFields({
       'New Password': 'CorrectHorseBatteryStaple',
       'Confirm New Password': 'CorrectHorseBatteryStaple'
     });

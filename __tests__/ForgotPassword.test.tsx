@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
-import { populateFormFields } from '@tests/__utils__/testUtils';
+import { typeIntoFormFields } from '@tests/__utils__/testUtils';
 
 describe('Forgot Password page', () => {
   it('should be accessible from Sign In page', async () => {
@@ -25,7 +25,7 @@ describe('Forgot Password page', () => {
 
   it('should require valid email address', async () => {
     await renderServerComponent(<ForgotPassword />);
-    await populateFormFields({
+    await typeIntoFormFields({
       Email: 'notanemail'
     });
     expect(screen.getByLabelText('Email')).toHaveProperty(

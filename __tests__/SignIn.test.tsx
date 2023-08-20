@@ -6,7 +6,7 @@ import { mockCaptchaSuccessOnce } from '@tests/__mocks__/captchaMockUtils';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
   convertFormDataToObject,
-  populateFormFields
+  typeIntoFormFields
 } from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
 
@@ -29,7 +29,7 @@ describe('Sign In page', () => {
 
   it('should require valid email address', async () => {
     await renderServerComponent(<SignIn />);
-    await populateFormFields({
+    await typeIntoFormFields({
       Email: 'notanemail'
     });
     expect(screen.getByLabelText('Email')).toHaveProperty(
@@ -51,7 +51,7 @@ describe('Sign In page', () => {
       });
     });
     await renderServerComponent(<SignIn />);
-    await populateFormFields({
+    await typeIntoFormFields({
       Email: 'caleb@example.com',
       Password: 'CorrectHorseBatteryStaple'
     });
@@ -69,7 +69,7 @@ describe('Sign In page', () => {
   it('should error if honey pot field is populated', async () => {
     mockCaptchaSuccessOnce('mytoken');
     await renderServerComponent(<SignIn />);
-    await populateFormFields({
+    await typeIntoFormFields({
       Email: 'kaleb@example.com',
       Password: 'CorrectHorseBatteryStaple',
       'Please leave this field blank': 'abc123'
@@ -92,7 +92,7 @@ describe('Sign In page', () => {
       });
     });
     await renderServerComponent(<SignIn />);
-    await populateFormFields({
+    await typeIntoFormFields({
       Email: 'kaleb@example.com',
       Password: 'CorrectHorseBatteryStaple'
     });

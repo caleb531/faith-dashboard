@@ -12,7 +12,7 @@ import {
 } from './__utils__/supabaseMockUtils';
 import {
   convertFormDataToObject,
-  populateFormFields
+  typeIntoFormFields
 } from './__utils__/testUtils';
 
 const originalLocationObject = window.location;
@@ -63,7 +63,7 @@ describe('Account Settings page', () => {
       return JSON.stringify({});
     });
     await renderServerComponent(<AccountSettings />);
-    await populateFormFields(
+    await typeIntoFormFields(
       {
         'First Name': 'Twin',
         'Last Name': 'Caleb'

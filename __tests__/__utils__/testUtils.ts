@@ -85,7 +85,7 @@ export async function removeWidget({
   return widgetElem;
 }
 
-export async function populateFormFields(
+export async function typeIntoFormFields(
   fields: object,
   { clearFieldsFirst = false }: { clearFieldsFirst: boolean } = {
     clearFieldsFirst: false

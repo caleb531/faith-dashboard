@@ -6,7 +6,7 @@ import { mockCaptchaSuccessOnce } from '@tests/__mocks__/captchaMockUtils';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
   convertFormDataToObject,
-  populateFormFields
+  typeIntoFormFields
 } from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
 
@@ -17,7 +17,7 @@ describe('Sign Up page', () => {
 
   it('should validate that passwords are matching', async () => {
     await renderServerComponent(<SignUp />);
-    await populateFormFields({
+    await typeIntoFormFields({
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStaple'
     });
@@ -29,7 +29,7 @@ describe('Sign Up page', () => {
 
   it('should validate that passwords are not matching', async () => {
     await renderServerComponent(<SignUp />);
-    await populateFormFields({
+    await typeIntoFormFields({
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStale'
     });
@@ -59,7 +59,7 @@ describe('Sign Up page', () => {
 
   it('should require valid email addresses', async () => {
     await renderServerComponent(<SignUp />);
-    await populateFormFields({
+    await typeIntoFormFields({
       Email: 'notanemail'
     });
     expect(screen.getByLabelText('Email')).toHaveProperty(
@@ -81,7 +81,7 @@ describe('Sign Up page', () => {
       });
     });
     await renderServerComponent(<SignUp />);
-    await populateFormFields({
+    await typeIntoFormFields({
       'First Name': 'John',
       'Last Name': 'Doe',
       Email: 'john@example.com',
@@ -105,7 +105,7 @@ describe('Sign Up page', () => {
   it('should error if honey pot field is populated', async () => {
     mockCaptchaSuccessOnce('mytoken');
     await renderServerComponent(<SignUp />);
-    await populateFormFields({
+    await typeIntoFormFields({
       'First Name': 'John',
       'Last Name': 'Doe',
       Email: 'john@example.com',
@@ -131,7 +131,7 @@ describe('Sign Up page', () => {
       });
     });
     await renderServerComponent(<SignUp />);
-    await populateFormFields({
+    await typeIntoFormFields({
       'First Name': 'John',
       'Last Name': 'Doe',
       Email: 'john@example.com',
