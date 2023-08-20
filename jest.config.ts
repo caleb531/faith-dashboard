@@ -29,6 +29,10 @@ const config: Config.InitialOptions = {
     '^@styles/(.*)$': '<rootDir>/styles/$1',
     '^@tests/(.*)$': '<rootDir>/__tests__/$1',
     'next/link': require.resolve('./__tests__/__mocks__/LinkMock.tsx'),
+    'next/headers': require.resolve('./__tests__/__mocks__/nextHeaders.ts'),
+    'next/navigation': require.resolve(
+      './__tests__/__mocks__/nextNavigation.ts'
+    ),
     'workbox-window': require.resolve(
       './__tests__/__mocks__/WorkboxWindowMock.ts'
     ),
