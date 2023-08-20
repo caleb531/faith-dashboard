@@ -85,9 +85,18 @@ export async function removeWidget({
   return widgetElem;
 }
 
-export async function populateFormFields(fields: object) {
+export async function populateFormFields(
+  fields: object,
+  { clearFieldsFirst = false }: { clearFieldsFirst: boolean } = {
+    clearFieldsFirst: false
+  }
+) {
   for (const [name, value] of Object.entries(fields)) {
-    await userEvent.type(screen.getByLabelText(name), value);
+    const input: HTMLInputElement = screen.getByLabelText(name);
+    if (clearFieldsFirst) {
+      input.value = '';
+    }
+    await userEvent.type(input, value);
   }
 }
 
