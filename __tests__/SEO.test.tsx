@@ -29,4 +29,13 @@ describe('SEO metadata', () => {
       );
     });
   });
+  it('should include a basic title on 404 page', async () => {
+    const pagePath = '../app/not-found.tsx';
+    const page = await import(pagePath);
+    if (typeof page.generateMetadata !== 'function') {
+      throw new Error(`missing generateMetadata() function for ${pagePath}`);
+    }
+    const metadata = await page.generateMetadata();
+    expect(metadata).toHaveProperty('title');
+  });
 });

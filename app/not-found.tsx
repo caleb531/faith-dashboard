@@ -1,6 +1,5 @@
 import LandingPage from '@components/LandingPage';
 import LinkButton from '@components/reusable/LinkButton';
-import { Metadata } from 'next';
 
 async function PageNotFound() {
   return (
@@ -14,8 +13,10 @@ async function PageNotFound() {
   );
 }
 
-export const metadata: Metadata = {
-  title: 'Page Not Found | Faith Dashboard'
-};
+export function generateMetadata() {
+  return {
+    title: 'Page Not Found | Faith Dashboard'
+  };
+}
 
 export default PageNotFound;
