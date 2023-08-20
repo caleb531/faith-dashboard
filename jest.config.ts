@@ -34,7 +34,8 @@ const config: Config.InitialOptions = {
     ),
     '@supabase/auth-helpers-nextjs': require.resolve(
       './__tests__/__mocks__/supabaseAuthHelpersMock.ts'
-    )
+    ),
+    '(.*).(jpg|png|svg)$': require.resolve('./__tests__/__mocks__/imageMock.ts')
   },
   // Display coverage summary below file-by-file coverage breakdown
   coverageReporters: ['clover', 'json', 'lcov', 'html', 'text', 'text-summary']
