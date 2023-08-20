@@ -17,7 +17,6 @@ function useAuthDetection() {
     const hashParams = new URLSearchParams(hashPart);
     const access_token = hashParams.get('access_token');
     const refresh_token = hashParams.get('refresh_token');
-    const redirectTo = '/reset-password';
     if (!(access_token && refresh_token)) {
       return;
     }
@@ -30,8 +29,9 @@ function useAuthDetection() {
       // Reload the entire page so that the newly-authenticated session is
       // reflected in the UI
       if (response.ok) {
-        window.location.href =
-          window.location.pathname + window.location.search;
+        window.location.assign(
+          window.location.pathname + window.location.search
+        );
       }
     });
     return () => {

@@ -3,13 +3,34 @@ import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
-import { populateFormFields } from '@tests/__utils__/testUtils';
+import {
+  convertFormDataToObject,
+  populateFormFields
+} from '@tests/__utils__/testUtils';
+import fetch from 'jest-fetch-mock';
 import {
   mockSupabaseSession,
   mockSupabaseUser
 } from './__utils__/supabaseMockUtils';
 
+const originalLocationObject = window.location;
+
 describe('Reset Password page', () => {
+  beforeEach(() => {
+    // @ts-ignore (see <https://stackoverflow.com/a/61649798/560642>)
+    delete window.location;
+    window.location = {
+      ...originalLocationObject,
+      reload: jest.fn(),
+      assign: jest.fn()
+    };
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+    window.location = originalLocationObject;
+  });
+
   it('should validate that passwords are matching', async () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
@@ -52,5 +73,72 @@ describe('Reset Password page', () => {
         true
       );
     });
+  });
+
+  it('should reset password successfully', async () => {
+    await mockSupabaseUser();
+    await mockSupabaseSession();
+    fetch.mockIf(/reset-password/, async () => {
+      return JSON.stringify({
+        user: {
+          email: 'caleb@example.com',
+          user_metadata: { first_name: 'Caleb', last_name: 'Evans' }
+        },
+        session: {},
+        error: null
+      });
+    });
+    await renderServerComponent(<ResetPassword />);
+    await populateFormFields({
+      'New Password': 'CorrectHorseBatteryStaple',
+      'Confirm New Password': 'CorrectHorseBatteryStaple'
+    });
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Reset Password' })
+    );
+    const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
+    expect(actualFetchUrl).toEqual('/auth/reset-password');
+    expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
+    expect(convertFormDataToObject(actualFetchOptions?.body)).toEqual({
+      new_password: 'CorrectHorseBatteryStaple',
+      confirm_new_password: 'CorrectHorseBatteryStaple',
+      verification_check: ''
+    });
+  });
+
+  it('should indicate page is loading when signed out / redirect to signed-in state automatically', async () => {
+    window.location.hash = '#access_token=abc123&refresh_token=def234';
+    fetch.mockIf(/\/auth\/session/i, async () => {
+      return {
+        status: 200,
+        ok: true,
+        body: JSON.stringify({})
+      };
+    });
+    await renderServerComponent(<ResetPassword />);
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
+    expect(actualFetchUrl).toEqual('/auth/session');
+    expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
+    expect(convertFormDataToObject(actualFetchOptions?.body)).toEqual({
+      access_token: 'abc123',
+      refresh_token: 'def234'
+    });
+    expect(window.location.assign).toHaveBeenCalled();
+  });
+
+  it('should click "Click here" link to force refresh', async () => {
+    window.location.hash = '#access_token=abc123&refresh_token=def234';
+    fetch.mockIf(/\/auth\/session/i, async () => {
+      return {
+        status: 200,
+        ok: true,
+        body: JSON.stringify({})
+      };
+    });
+    await renderServerComponent(<ResetPassword />);
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('link', { name: /CLICK HeRe/i }));
+    expect(window.location.reload).toHaveBeenCalled();
   });
 });
