@@ -14,7 +14,6 @@ async function ForgotPassword() {
   );
 }
 
-/* istanbul ignore next */
 export function generateMetadata() {
   return getPageMetadata({
     path: '/forgot-password',

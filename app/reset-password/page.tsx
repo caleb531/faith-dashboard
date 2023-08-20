@@ -10,7 +10,6 @@ async function ResetPassword() {
   );
 }
 
-/* istanbul ignore next */
 export function generateMetadata() {
   return getPageMetadata({
     path: '/reset-password',

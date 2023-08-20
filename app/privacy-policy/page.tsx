@@ -94,7 +94,6 @@ async function PrivacyPolicy() {
   );
 }
 
-/* istanbul ignore next */
 export function generateMetadata() {
   return getPageMetadata({
     path: '/privacy-policy',

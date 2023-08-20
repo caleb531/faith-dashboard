@@ -17,7 +17,6 @@ async function SignUp() {
   );
 }
 
-/* istanbul ignore next */
 export function generateMetadata() {
   return getPageMetadata({
     path: '/sign-up',

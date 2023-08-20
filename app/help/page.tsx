@@ -172,7 +172,6 @@ async function Help() {
   );
 }
 
-/* istanbul ignore next */
 export function generateMetadata() {
   return getPageMetadata({
     path: '/help',
