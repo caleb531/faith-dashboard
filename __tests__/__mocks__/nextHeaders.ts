@@ -1,15 +1,14 @@
+const cookiesObject = {};
+
 export function cookies() {
-  return {};
+  return cookiesObject;
 }
+
+const headersObject = {
+  get: jest.fn(),
+  set: jest.fn()
+};
 
 export function headers() {
-  return {
-    get: jest.fn(),
-    set: jest.fn()
-  };
+  return headersObject;
 }
-
-export default {
-  cookies,
-  headers
-};
