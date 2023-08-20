@@ -28,6 +28,7 @@ async function Home() {
   );
 }
 
+/* istanbul ignore next */
 export function generateMetadata() {
   return getPageMetadata({
     path: '/',
