@@ -1,4 +1,5 @@
 import AccountSettings from '@app/account/page';
+import { POST as CancelEmailChangePOST } from '@app/auth/cancel-email-change/route';
 import { POST as ChangePasswordPOST } from '@app/auth/change-password/route';
 import { POST as RequestEmailChangePOST } from '@app/auth/request-email-change/route';
 import { POST as UpdateUserNamePOST } from '@app/auth/update-user-name/route';
@@ -207,5 +208,17 @@ describe('Account Settings page', () => {
     expect(supabase.auth.updateUser).toHaveBeenCalledWith({
       email: fields.new_email
     });
+  });
+
+  it('should cancel email change on server side', async () => {
+    jest.spyOn(supabase, 'rpc').mockImplementationOnce(() => {
+      return { data: {}, error: null } as any;
+    });
+    await callRouteHandler({
+      handler: CancelEmailChangePOST,
+      path: '/auth/cancel-email-change',
+      fields: {}
+    });
+    expect(supabase.rpc).toHaveBeenCalledWith('cancel_email_change');
   });
 });
