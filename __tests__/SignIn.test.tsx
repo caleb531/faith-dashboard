@@ -105,7 +105,7 @@ describe('Sign In page', () => {
     });
   });
 
-  it('should call Supabase API correctly on server', async () => {
+  it('should sign in on server side', async () => {
     jest
       .spyOn(supabase.auth, 'signInWithPassword')
       .mockImplementationOnce(async () => {

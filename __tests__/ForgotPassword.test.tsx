@@ -39,7 +39,7 @@ describe('Forgot Password page', () => {
     );
   });
 
-  it('should call Supabase API correctly on server', async () => {
+  it('should request password reset on server side', async () => {
     jest
       .spyOn(supabase.auth, 'resetPasswordForEmail')
       .mockImplementationOnce(async () => {

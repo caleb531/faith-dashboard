@@ -145,7 +145,7 @@ describe('Reset Password page', () => {
     expect(window.location.reload).toHaveBeenCalled();
   });
 
-  it('should call Supabase API correctly on server', async () => {
+  it('should reset password on server side', async () => {
     jest.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(async () => {
       return { data: { user: {}, session: {} }, error: null } as any;
     });

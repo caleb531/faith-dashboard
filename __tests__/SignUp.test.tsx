@@ -175,7 +175,7 @@ describe('Sign Up page', () => {
       }
     });
   });
-  it('should call Supabase API correctly on server', async () => {
+  it('should sign up on server side', async () => {
     jest.spyOn(supabase.auth, 'signUp').mockImplementationOnce(async () => {
       return { data: { user: {}, session: {} }, error: null } as any;
     });
