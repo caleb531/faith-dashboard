@@ -1,4 +1,5 @@
 import { POST as ResetPasswordPOST } from '@app/auth/reset-password/route';
+import { POST as SessionPOST } from '@app/auth/session/route';
 import ResetPassword from '@app/reset-password/page';
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
@@ -160,6 +161,25 @@ describe('Reset Password page', () => {
     });
     expect(supabase.auth.updateUser).toHaveBeenCalledWith({
       password: fields.new_password
+    });
+  });
+
+  it('should set session on server side', async () => {
+    jest.spyOn(supabase.auth, 'setSession').mockImplementationOnce(async () => {
+      return { data: { user: {}, session: {} }, error: null } as any;
+    });
+    const fields = {
+      access_token: 'abc123',
+      refresh_token: 'def234'
+    };
+    await callRouteHandler({
+      handler: SessionPOST,
+      path: '/auth/session',
+      fields
+    });
+    expect(supabase.auth.setSession).toHaveBeenCalledWith({
+      access_token: fields.access_token,
+      refresh_token: fields.refresh_token
     });
   });
 });
