@@ -30,6 +30,7 @@ const config: Config.InitialOptions = {
     '^@tests/(.*)$': '<rootDir>/__tests__/$1',
     'next/link': require.resolve('./__tests__/__mocks__/LinkMock.tsx'),
     'next/headers': require.resolve('./__tests__/__mocks__/nextHeaders.ts'),
+    'next/server': require.resolve('./__tests__/__mocks__/nextServer.ts'),
     'next/navigation': require.resolve(
       './__tests__/__mocks__/nextNavigation.ts'
     ),

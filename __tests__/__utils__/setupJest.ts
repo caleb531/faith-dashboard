@@ -10,6 +10,14 @@ import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 import fetch, { enableFetchMocks } from 'jest-fetch-mock';
 import { mockSupabaseSession, mockSupabaseUser } from './supabaseMockUtils';
 
+declare global {
+  interface Window {
+    Request: any;
+    NextRequest: any;
+    NextResponse: any;
+  }
+}
+
 // Increase timeout of React Testing Library's waitFor() function, as well as
 // Jest's global max timeout; this is an attempt to resolve the 'Unable to find
 // role' error when running tests on CI (even though all tests pass locally)

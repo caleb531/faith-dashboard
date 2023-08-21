@@ -12,3 +12,9 @@ export function createClientComponentClient() {
 export function createServerComponentClient() {
   return supabase;
 }
+export function createRouteHandlerClient() {
+  return supabase;
+}
+export function createMiddlewareClient<TDatabase>() {
+  return supabase;
+}
