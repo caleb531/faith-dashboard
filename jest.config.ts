@@ -26,6 +26,7 @@ const config: Config.InitialOptions = {
   moduleNameMapper: {
     '^@app/(.*)$': '<rootDir>/app/$1',
     '^@components/(.*)$': '<rootDir>/components/$1',
+    '^@public/(.*)$': '<rootDir>/public/$1',
     '^@styles/(.*)$': '<rootDir>/styles/$1',
     '^@tests/(.*)$': '<rootDir>/__tests__/$1',
     'next/link': require.resolve('./__tests__/__mocks__/LinkMock.tsx'),

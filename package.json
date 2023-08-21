@@ -18,8 +18,9 @@
     "screenshot-social-preview": "tsx utilities/screenshot-social-preview.ts"
   },
   "_moduleAliases": {
-    "@components": "components",
     "@app": "app",
+    "@components": "components",
+    "@public": "public",
     "@styles": "styles",
     "@tests": "__tests__"
   },
