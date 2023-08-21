@@ -1,5 +1,6 @@
 import AccountSettings from '@app/account/page';
 import { POST as ChangePasswordPOST } from '@app/auth/change-password/route';
+import { POST as RequestEmailChangePOST } from '@app/auth/request-email-change/route';
 import { POST as UpdateUserNamePOST } from '@app/auth/update-user-name/route';
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
@@ -187,6 +188,24 @@ describe('Account Settings page', () => {
     expect(supabase.rpc).toHaveBeenCalledWith('change_user_password', {
       current_password: fields.current_password,
       new_password: fields.new_password
+    });
+  });
+
+  it('should request email change on server side', async () => {
+    jest.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(() => {
+      return { data: {}, error: null } as any;
+    });
+    const fields = {
+      new_email: 'caleb2@example.com',
+      confirm_new_email: 'caleb2@example.com'
+    };
+    await callRouteHandler({
+      handler: RequestEmailChangePOST,
+      path: '/auth/request-email-change',
+      fields
+    });
+    expect(supabase.auth.updateUser).toHaveBeenCalledWith({
+      email: fields.new_email
     });
   });
 });
