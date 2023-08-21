@@ -4,11 +4,9 @@ import AuthFormField from '@components/account/AuthFormField';
 import SessionContext from '@components/app/SessionContext';
 import useFormFieldMatcher from '@components/useFormFieldMatcher';
 import useTimeout from '@components/useTimeout';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useContext } from 'react';
 
 function AccountSettingsForm() {
-  const supabase = createClientComponentClient();
   const { user } = useContext(SessionContext);
   const [emailFieldProps, confirmEmailFieldProps] = useFormFieldMatcher({
     mismatchMessage: 'Emails must match'
@@ -98,7 +96,7 @@ function AccountSettingsForm() {
           <AuthFormField
             type="email"
             id="account-settings-form-email"
-            name="email"
+            name="new_email"
             placeholder="New Email"
             required
             {...emailFieldProps}
@@ -106,7 +104,7 @@ function AccountSettingsForm() {
           <AuthFormField
             type="email"
             id="account-settings-form-confirm-email"
-            name="confirm_email"
+            name="confirm_new_email"
             placeholder="Confirm New Email"
             required
             {...confirmEmailFieldProps}

@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   const formData = await request.formData();
 
   const response = await supabase.auth.updateUser({
-    email: String(formData.get('email'))
+    email: String(formData.get('new_email'))
   });
 
   return NextResponse.json(response);
