@@ -59,7 +59,7 @@ describe('Account Settings page', () => {
   it('should update name of user successfully', async () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
-    fetch.mockIf(/update-user-name/, async () => {
+    fetch.mockIf(/\/auth\/update-user-name/, async () => {
       return JSON.stringify({});
     });
     await renderServerComponent(<AccountSettings />);
