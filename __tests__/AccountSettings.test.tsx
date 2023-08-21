@@ -83,4 +83,30 @@ describe('Account Settings page', () => {
       expect(window.location.reload).toHaveBeenCalled();
     });
   });
+
+  it('should change password successfully', async () => {
+    await mockSupabaseUser();
+    await mockSupabaseSession();
+    fetch.mockIf(/\/auth\/change-password/, async () => {
+      return JSON.stringify({});
+    });
+    await renderServerComponent(<AccountSettings />);
+    await typeIntoFormFields({
+      'Current Password': 'MyPassword123',
+      'New Password': 'CorrectHorseBatteryStaple',
+      'Confirm New Password': 'CorrectHorseBatteryStaple'
+    });
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Change Password' })
+    );
+    const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
+    expect(actualFetchUrl).toEqual('/auth/change-password');
+    expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
+    expect(convertFormDataToObject(actualFetchOptions?.body)).toEqual({
+      current_password: 'MyPassword123',
+      new_password: 'CorrectHorseBatteryStaple',
+      confirm_new_password: 'CorrectHorseBatteryStaple',
+      verification_check: ''
+    });
+  });
 });
