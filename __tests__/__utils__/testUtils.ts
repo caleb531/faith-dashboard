@@ -8,10 +8,10 @@ import {
 } from '@components/widgets/widget.types';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { NextRequest } from '@tests/__mocks__/nextServer';
 import { fromPairs } from 'lodash-es';
 import { NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
-import { NextRequest } from '../__mocks__/nextServer';
 
 export function createWidget(props: object): WidgetHead {
   return {

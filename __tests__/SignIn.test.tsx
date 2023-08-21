@@ -1,3 +1,4 @@
+import { POST as SignInPOST } from '@app/auth/sign-in/route';
 import SignIn from '@app/sign-in/page';
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
@@ -11,7 +12,6 @@ import {
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
-import { POST as SignInPOST } from '../app/auth/sign-in/route';
 
 describe('Sign In page', () => {
   afterEach(() => {
