@@ -125,7 +125,7 @@ describe('Account Settings page', () => {
     );
   });
 
-  it('should require all form fields to be populated', async () => {
+  it('should require all Change Password fields to be populated', async () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
     await renderServerComponent(<AccountSettings />);
