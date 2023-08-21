@@ -32,7 +32,7 @@ describe('Import/Export functionality', () => {
     assignIdToLocalApp(uuidv4());
     const originalApp = getAppData();
     await renderServerComponent(<Home />);
-    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    expect(screen.getByText('Shore')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
     const fileContents = JSON.stringify(exportedDashboard);
     FileReaderMock._fileData = fileContents;
@@ -41,7 +41,7 @@ describe('Import/Export functionality', () => {
         target: { files: [new File([fileContents], 'exportedDashboard.json')] }
       });
     });
-    expect(screen.queryByText('Evening')).toBeInTheDocument();
+    expect(screen.getByText('Evening')).toBeInTheDocument();
     // App IDs should not match
     const newApp = getAppData();
     expect(newApp.id).not.toEqual(originalApp.id);
@@ -63,7 +63,7 @@ describe('Import/Export functionality', () => {
     mockSupabaseSelect('dashboards', { data: [] });
     mockConfirm(() => true);
     await renderServerComponent(<Home />);
-    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    expect(screen.getByText('Shore')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
     const fileContents = JSON.stringify(exportedDashboard);
     FileReaderMock._fileData = fileContents;
@@ -72,7 +72,7 @@ describe('Import/Export functionality', () => {
         target: { files: [new File([fileContents], 'exportedDashboard.json')] }
       });
     });
-    expect(screen.queryByText('Evening')).toBeInTheDocument();
+    expect(screen.getByText('Evening')).toBeInTheDocument();
   });
 
   it('should not import dashboard is user denied confirmation', async () => {
@@ -80,7 +80,7 @@ describe('Import/Export functionality', () => {
     mockSupabaseSelect('dashboards', { data: [] });
     mockConfirm(() => false);
     await renderServerComponent(<Home />);
-    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    expect(screen.getByText('Shore')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
     const fileContents = JSON.stringify(exportedDashboard);
     FileReaderMock._fileData = fileContents;
@@ -89,13 +89,13 @@ describe('Import/Export functionality', () => {
         target: { files: [new File([fileContents], 'exportedDashboard.json')] }
       });
     });
-    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    expect(screen.getByText('Shore')).toBeInTheDocument();
   });
 
   it('should not import dashboard from empty JSON file', async () => {
     let errorMessage;
     await renderServerComponent(<Home />);
-    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    expect(screen.getByText('Shore')).toBeInTheDocument();
     mockAlert((message) => {
       errorMessage = message;
     });
@@ -107,7 +107,7 @@ describe('Import/Export functionality', () => {
         target: { files: [new File([fileContents], 'blankFile.json')] }
       });
     });
-    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    expect(screen.getByText('Shore')).toBeInTheDocument();
     expect(errorMessage).toEqual(
       'Dashboard file is not in the correct format. Please try another file.'
     );
@@ -116,7 +116,7 @@ describe('Import/Export functionality', () => {
   it('should not import dashboard from malformed JSON file', async () => {
     let errorMessage;
     await renderServerComponent(<Home />);
-    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    expect(screen.getByText('Shore')).toBeInTheDocument();
     mockAlert((message) => {
       errorMessage = message;
     });
@@ -128,13 +128,13 @@ describe('Import/Export functionality', () => {
         target: { files: [new File([fileContents], 'blankFile.json')] }
       });
     });
-    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    expect(screen.getByText('Shore')).toBeInTheDocument();
     expect(errorMessage).toEqual('Unexpected token o in JSON at position 1');
   });
 
   it('should not trigger import if files are missing', async () => {
     await renderServerComponent(<Home />);
-    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    expect(screen.getByText('Shore')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
     const fileContents = '';
     FileReaderMock._fileData = fileContents;
@@ -143,7 +143,7 @@ describe('Import/Export functionality', () => {
         target: { files: [] }
       });
     });
-    expect(screen.queryByText('Shore')).toBeInTheDocument();
+    expect(screen.getByText('Shore')).toBeInTheDocument();
   });
 
   it('should export dashboard', async () => {

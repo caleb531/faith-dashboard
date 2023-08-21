@@ -137,7 +137,7 @@ describe('Podcast widget', () => {
     await act(async () => {
       AudioMock.instances[0].trigger('waiting');
     });
-    expect(screen.queryByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
     await act(async () => {
       AudioMock.instances[0].trigger('playing');
     });

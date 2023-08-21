@@ -65,7 +65,7 @@ describe('Update Notification', () => {
     // For some reason, using userEvent.click() for the below causes Jest to
     // timeout; so we are using fireEvent instead
     fireEvent.click(updateNotification);
-    expect(screen.queryByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
   it('should reload page when service worker is updated', async () => {
     await renderServerComponent(<Home />);
