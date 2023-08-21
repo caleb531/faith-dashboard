@@ -1,4 +1,5 @@
 import AccountSettings from '@app/account/page';
+import { POST as ChangePasswordPOST } from '@app/auth/change-password/route';
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -6,11 +7,13 @@ import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import fetch from 'jest-fetch-mock';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { supabase } from './__mocks__/supabaseAuthHelpersMock';
 import {
   mockSupabaseSession,
   mockSupabaseUser
 } from './__utils__/supabaseMockUtils';
 import {
+  callRouteHandler,
   convertFormDataToObject,
   typeIntoFormFields
 } from './__utils__/testUtils';
@@ -142,6 +145,26 @@ describe('Account Settings page', () => {
         'validity.valueMissing',
         true
       );
+    });
+  });
+
+  it('should change password on server side', async () => {
+    jest.spyOn(supabase, 'rpc').mockImplementationOnce(() => {
+      return { data: {}, error: null } as any;
+    });
+    const fields = {
+      current_password: 'MyPassword123',
+      new_password: 'CorrectHorseBatteryStaple',
+      confirm_new_password: 'CorrectHorseBatteryStaple'
+    };
+    await callRouteHandler({
+      handler: ChangePasswordPOST,
+      path: '/auth/change-password',
+      fields
+    });
+    expect(supabase.rpc).toHaveBeenCalledWith('change_user_password', {
+      current_password: fields.current_password,
+      new_password: fields.new_password
     });
   });
 });
