@@ -1,3 +1,4 @@
+import { POST as SignOutPOST } from '@app/auth/sign-out/route';
 import Home from '@app/page';
 import { getSession, getUser } from '@components/authUtils.client';
 import '@testing-library/jest-dom';
@@ -9,7 +10,7 @@ import {
   mockSupabaseSession,
   mockSupabaseUser
 } from '@tests/__utils__/supabaseMockUtils';
-import { mockConfirm } from '@tests/__utils__/testUtils';
+import { callRouteHandler, mockConfirm } from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
 
 const originalLocationObject = window.location;
@@ -120,5 +121,17 @@ describe('Account Header', () => {
       await getUser();
       await getSession();
     });
+  });
+
+  it('should sign out on server side', async () => {
+    jest.spyOn(supabase.auth, 'signOut').mockImplementationOnce(async () => {
+      return { data: { user: {}, session: {} }, error: null } as any;
+    });
+    await callRouteHandler({
+      handler: SignOutPOST,
+      path: '/auth/sign-out',
+      fields: {}
+    });
+    expect(supabase.auth.signOut).toHaveBeenCalledWith();
   });
 });
