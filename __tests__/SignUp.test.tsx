@@ -3,12 +3,15 @@ import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockCaptchaSuccessOnce } from '@tests/__mocks__/captchaMockUtils';
+import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
+  callRouteHandler,
   convertFormDataToObject,
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
+import { POST as SignUpPOST } from '../app/auth/sign-up/route';
 
 describe('Sign Up page', () => {
   afterEach(() => {
@@ -141,6 +144,63 @@ describe('Sign Up page', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
     await waitFor(() => {
       expect(screen.getByText('User already registered')).toBeInTheDocument();
+    });
+  });
+
+  it('should include Sign Up functionality', async () => {
+    jest.spyOn(supabase.auth, 'signUp').mockImplementationOnce(async () => {
+      return { data: { user: {}, session: {} }, error: null } as any;
+    });
+    const fields = {
+      first_name: 'Caleb',
+      last_name: 'Evans',
+      email: 'caleb@calebevans.me',
+      password: 'CorrectHorseBatteryStaple',
+      'cf-turnstile-response': 'abc123'
+    };
+    await callRouteHandler({
+      handler: SignUpPOST,
+      path: '/auth/sign-up',
+      fields
+    });
+    expect(supabase.auth.signUp).toHaveBeenCalledWith({
+      email: fields.email,
+      password: fields.password,
+      options: {
+        captchaToken: fields['cf-turnstile-response'],
+        data: {
+          first_name: fields.first_name,
+          last_name: fields.last_name
+        }
+      }
+    });
+  });
+  it('should call Supabase API correctly on server', async () => {
+    jest.spyOn(supabase.auth, 'signUp').mockImplementationOnce(async () => {
+      return { data: { user: {}, session: {} }, error: null } as any;
+    });
+    const fields = {
+      first_name: 'Caleb',
+      last_name: 'Evans',
+      email: 'caleb@calebevans.me',
+      password: 'CorrectHorseBatteryStaple',
+      'cf-turnstile-response': 'abc123'
+    };
+    await callRouteHandler({
+      handler: SignUpPOST,
+      path: '/auth/sign-up',
+      fields
+    });
+    expect(supabase.auth.signUp).toHaveBeenCalledWith({
+      email: fields.email,
+      password: fields.password,
+      options: {
+        captchaToken: fields['cf-turnstile-response'],
+        data: {
+          first_name: fields.first_name,
+          last_name: fields.last_name
+        }
+      }
     });
   });
 });
