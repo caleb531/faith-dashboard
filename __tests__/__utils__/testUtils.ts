@@ -1,5 +1,6 @@
 import { AppState } from '@components/app/app.types';
 import appStateDefault from '@components/app/appStateDefault';
+import { convertObjectToFormData } from '@components/authUtils.client';
 import {
   WidgetHead,
   WidgetState,
@@ -8,7 +9,9 @@ import {
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { fromPairs } from 'lodash-es';
+import { NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
+import { NextRequest } from '../__mocks__/nextServer';
 
 export function createWidget(props: object): WidgetHead {
   return {
@@ -117,4 +120,24 @@ export function convertFormDataToObject(formData: any) {
   } else {
     return {};
   }
+}
+
+export async function callRouteHandler({
+  handler,
+  path,
+  method = 'POST',
+  fields
+}: {
+  handler: (req: NextRequest) => Promise<NextResponse>;
+  path: string;
+  method?: 'GET' | 'POST' | 'get' | 'post';
+  fields: object;
+}) {
+  NextRequest._formData = convertObjectToFormData(fields);
+  return handler(
+    new NextRequest(`http://localhost:3000/${path.replace(/^\//, '')}`, {
+      method: 'POST',
+      body: NextRequest._formData
+    })
+  );
 }

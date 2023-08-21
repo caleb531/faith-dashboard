@@ -3,12 +3,15 @@ import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockCaptchaSuccessOnce } from '@tests/__mocks__/captchaMockUtils';
+import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
+  callRouteHandler,
   convertFormDataToObject,
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
+import { POST as SignInPOST } from '../app/auth/sign-in/route';
 
 describe('Sign In page', () => {
   afterEach(() => {
@@ -99,6 +102,31 @@ describe('Sign In page', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
     await waitFor(() => {
       expect(screen.getByText('Invalid login credentials')).toBeInTheDocument();
+    });
+  });
+
+  it('should call Supabase API correctly on server', async () => {
+    jest
+      .spyOn(supabase.auth, 'signInWithPassword')
+      .mockImplementationOnce(async () => {
+        return { data: { user: {}, session: {} }, error: null } as any;
+      });
+    const fields = {
+      email: 'caleb@calebevans.me',
+      password: 'CorrectHorseBatteryStaple',
+      'cf-turnstile-response': 'abc123'
+    };
+    await callRouteHandler({
+      handler: SignInPOST,
+      path: '/auth/sign-in',
+      fields
+    });
+    expect(supabase.auth.signInWithPassword).toHaveBeenCalledWith({
+      email: fields.email,
+      password: fields.password,
+      options: {
+        captchaToken: fields['cf-turnstile-response']
+      }
     });
   });
 });
