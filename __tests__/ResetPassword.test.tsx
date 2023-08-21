@@ -1,9 +1,12 @@
+import { POST as ResetPasswordPOST } from '@app/auth/reset-password/route';
 import ResetPassword from '@app/reset-password/page';
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
+  callRouteHandler,
   convertFormDataToObject,
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
@@ -140,5 +143,23 @@ describe('Reset Password page', () => {
     expect(screen.getByText('Loading...')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('link', { name: /CLICK HeRe/i }));
     expect(window.location.reload).toHaveBeenCalled();
+  });
+
+  it('should call Supabase API correctly on server', async () => {
+    jest.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(async () => {
+      return { data: { user: {}, session: {} }, error: null } as any;
+    });
+    const fields = {
+      new_password: 'CorrectHorseBatteryStaple',
+      confirm_new_password: 'CorrectHorseBatteryStaple'
+    };
+    await callRouteHandler({
+      handler: ResetPasswordPOST,
+      path: '/auth/reset-password',
+      fields
+    });
+    expect(supabase.auth.updateUser).toHaveBeenCalledWith({
+      password: fields.new_password
+    });
   });
 });
