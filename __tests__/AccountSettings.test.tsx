@@ -1,5 +1,6 @@
 import AccountSettings from '@app/account/page';
 import { POST as ChangePasswordPOST } from '@app/auth/change-password/route';
+import { POST as UpdateUserNamePOST } from '@app/auth/update-user-name/route';
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -145,6 +146,27 @@ describe('Account Settings page', () => {
         'validity.valueMissing',
         true
       );
+    });
+  });
+
+  it('should change user name on server side', async () => {
+    jest.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(async () => {
+      return { data: {}, error: null } as any;
+    });
+    const fields = {
+      first_name: 'Twin',
+      last_name: 'Caleb'
+    };
+    await callRouteHandler({
+      handler: UpdateUserNamePOST,
+      path: '/auth/update-user-name',
+      fields
+    });
+    expect(supabase.auth.updateUser).toHaveBeenCalledWith({
+      data: {
+        first_name: fields.first_name,
+        last_name: fields.last_name
+      }
     });
   });
 
