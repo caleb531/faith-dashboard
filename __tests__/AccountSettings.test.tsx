@@ -109,4 +109,39 @@ describe('Account Settings page', () => {
       verification_check: ''
     });
   });
+
+  it('should validate that passwords are not matching', async () => {
+    await mockSupabaseUser();
+    await mockSupabaseSession();
+    await renderServerComponent(<AccountSettings />);
+    await typeIntoFormFields({
+      'Current Password': 'MyPassword123',
+      'New Password': 'CorrectHorseBatteryStaple',
+      'Confirm New Password': 'CorrectHorseBatteryStale'
+    });
+    expect(screen.getByLabelText('Confirm New Password')).toHaveProperty(
+      'validationMessage',
+      'Passwords must match'
+    );
+  });
+
+  it('should require all form fields to be populated', async () => {
+    await mockSupabaseUser();
+    await mockSupabaseSession();
+    await renderServerComponent(<AccountSettings />);
+    const requiredFields = [
+      'Current Password',
+      'New Password',
+      'Confirm New Password'
+    ];
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Change Password' })
+    );
+    requiredFields.forEach((labelText) => {
+      expect(screen.getByLabelText(labelText)).toHaveProperty(
+        'validity.valueMissing',
+        true
+      );
+    });
+  });
 });
