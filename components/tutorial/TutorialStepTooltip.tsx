@@ -35,6 +35,14 @@ function TutorialStepTooltip() {
         `position-${calculatedPosition}`,
         `alignment-${currentStep.alignment}`
       )}
+      // Because there are several steps which are tied to the same component
+      // (namely, WidgetShell), the DOM element for this tooltip gets reused
+      // between steps, which means that tab-based keyboard navigation does not
+      // get reset between steps; however, from a UX standpoint, it would be
+      // nice for tab-navigation to reset for each step, and we can accomplish
+      // this behavior by simply keying the DOM element with a unique ID
+      // (namely, the ID of the current step)
+      key={currentStep.id}
       style={{ width: currentStep.width || 'auto' }}
       ref={messageRef}
     >
