@@ -90,6 +90,34 @@ describe('Account Settings page', () => {
     });
   });
 
+  it('should request email change successfully', async () => {
+    await mockSupabaseUser();
+    await mockSupabaseSession();
+    fetch.mockIf(/\/auth\/request-email-change/, async () => {
+      return JSON.stringify({});
+    });
+    await renderServerComponent(<AccountSettings />);
+    await typeIntoFormFields(
+      {
+        'New Email': 'caleb2@example.com',
+        'Confirm New Email': 'caleb2@example.com'
+      },
+      { clearFieldsFirst: true }
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Change Email' }));
+    const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
+    expect(actualFetchUrl).toEqual('/auth/request-email-change');
+    expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
+    expect(convertFormDataToObject(actualFetchOptions?.body)).toEqual({
+      new_email: 'caleb2@example.com',
+      confirm_new_email: 'caleb2@example.com',
+      verification_check: ''
+    });
+    await waitFor(() => {
+      expect(window.location.reload).toHaveBeenCalled();
+    });
+  });
+
   it('should change password successfully', async () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
