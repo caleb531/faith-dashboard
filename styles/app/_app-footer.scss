@@ -20,6 +20,12 @@
     color: var(--color-white-60);
   }
   backdrop-filter: blur(5px);
+  // We cannot have the backdrop filter active while the tutorial is in progress
+  // because it creates a new stacking context; see
+  // <https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index/Stacking_context>
+  .tutorial-in-progress & {
+    backdrop-filter: none;
+  }
   a {
     color: inherit;
   }
