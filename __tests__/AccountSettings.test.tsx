@@ -146,6 +146,28 @@ describe('Account Settings page', () => {
     });
   });
 
+  it('should cancel email change successfully', async () => {
+    await mockSupabaseUser({
+      email: 'caleb@example.com',
+      new_email: 'caleb2@example.com',
+      user_metadata: { first_name: 'Caleb', last_name: 'Evans' }
+    });
+    await mockSupabaseSession();
+    fetch.mockIf(/\/auth\/cancel-email-change/, async () => {
+      return JSON.stringify({});
+    });
+    await renderServerComponent(<AccountSettings />);
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Cancel Email Change' })
+    );
+    const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
+    expect(actualFetchUrl).toEqual('/auth/cancel-email-change');
+    expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
+    await waitFor(() => {
+      expect(window.location.reload).toHaveBeenCalled();
+    });
+  });
+
   it('should change password successfully', async () => {
     await mockSupabaseUser();
     await mockSupabaseSession();

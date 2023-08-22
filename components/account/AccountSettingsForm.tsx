@@ -70,13 +70,11 @@ function AccountSettingsForm() {
             <span className="landing-page-em">{user.email}</span>.
           </p>
 
-          {user.new_email ? (
-            <p>
-              You have an invite currently pending for{' '}
-              <span className="landing-page-em">{user.new_email}</span>. Please
-              check your email.
-            </p>
-          ) : null}
+          <p>
+            You have an invite currently pending for{' '}
+            <span className="landing-page-em">{user.new_email}</span>. Please
+            check your email.
+          </p>
         </AuthForm>
       ) : (
         <AuthForm
