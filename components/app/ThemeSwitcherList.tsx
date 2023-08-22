@@ -59,16 +59,14 @@ function ThemeSwitcherList({
                 <div className="theme-switcher-theme-selected-icon"></div>
               ) : null}
               {themeType === 'photo' ? (
-                <div className="theme-switcher-photo-theme-photo-container">
-                  <Image
-                    className="theme-switcher-theme-visual theme-switcher-photo-theme-photo"
-                    src={`/images/background-photos/${themeListItem.value}.jpg`}
-                    alt=""
-                    width="200"
-                    height="100"
-                    draggable="false"
-                  />
-                </div>
+                <Image
+                  className="theme-switcher-theme-visual theme-switcher-photo-theme-photo"
+                  src={`/images/background-photos/${themeListItem.value}.jpg`}
+                  alt=""
+                  width="200"
+                  height="100"
+                  draggable="false"
+                />
               ) : themeType === 'color' ? (
                 <div
                   className={classNames(
