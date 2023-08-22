@@ -55,6 +55,39 @@ function AccountSettingsForm() {
         />
       </AuthForm>
 
+      <AuthForm
+        action="/auth/change-password"
+        submitLabel="Change Password"
+        submittingLabel="Changing..."
+        successLabel="Password Changed!"
+      >
+        <h2>Change Password</h2>
+
+        <AuthFormField
+          type="password"
+          id="account-settings-form-old-password"
+          name="current_password"
+          placeholder="Current Password"
+          required
+        />
+        <AuthFormField
+          type="password"
+          id="account-settings-form-new-password"
+          name="new_password"
+          placeholder="New Password"
+          required
+          {...passwordFieldProps}
+        />
+        <AuthFormField
+          type="password"
+          id="account-settings-form-confirm-new-password"
+          name="confirm_new_password"
+          placeholder="Confirm New Password"
+          required
+          {...confirmPasswordFieldProps}
+        />
+      </AuthForm>
+
       {user.new_email ? (
         <AuthForm
           action="/auth/cancel-email-change"
@@ -109,39 +142,6 @@ function AccountSettingsForm() {
           />
         </AuthForm>
       )}
-
-      <AuthForm
-        action="/auth/change-password"
-        submitLabel="Change Password"
-        submittingLabel="Changing..."
-        successLabel="Password Changed!"
-      >
-        <h2>Change Password</h2>
-
-        <AuthFormField
-          type="password"
-          id="account-settings-form-old-password"
-          name="current_password"
-          placeholder="Current Password"
-          required
-        />
-        <AuthFormField
-          type="password"
-          id="account-settings-form-new-password"
-          name="new_password"
-          placeholder="New Password"
-          required
-          {...passwordFieldProps}
-        />
-        <AuthFormField
-          type="password"
-          id="account-settings-form-confirm-new-password"
-          name="confirm_new_password"
-          placeholder="Confirm New Password"
-          required
-          {...confirmPasswordFieldProps}
-        />
-      </AuthForm>
 
       <h2>Delete Account</h2>
 
