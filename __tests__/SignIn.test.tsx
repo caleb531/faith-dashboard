@@ -112,7 +112,7 @@ describe('Sign In page', () => {
         return { data: { user: {}, session: {} }, error: null } as any;
       });
     const fields = {
-      email: 'caleb@calebevans.me',
+      email: 'caleb@example.com',
       password: 'CorrectHorseBatteryStaple',
       'cf-turnstile-response': 'abc123'
     };

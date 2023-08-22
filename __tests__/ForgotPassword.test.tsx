@@ -46,7 +46,7 @@ describe('Forgot Password page', () => {
         return { data: { user: {}, session: {} }, error: null } as any;
       });
     const fields = {
-      email: 'caleb@calebevans.me',
+      email: 'caleb@example.com',
       'cf-turnstile-response': 'abc123'
     };
     await callRouteHandler({

@@ -154,7 +154,7 @@ describe('Sign Up page', () => {
     const fields = {
       first_name: 'Caleb',
       last_name: 'Evans',
-      email: 'caleb@calebevans.me',
+      email: 'caleb@example.com',
       password: 'CorrectHorseBatteryStaple',
       'cf-turnstile-response': 'abc123'
     };
@@ -182,7 +182,7 @@ describe('Sign Up page', () => {
     const fields = {
       first_name: 'Caleb',
       last_name: 'Evans',
-      email: 'caleb@calebevans.me',
+      email: 'caleb@example.com',
       password: 'CorrectHorseBatteryStaple',
       'cf-turnstile-response': 'abc123'
     };
