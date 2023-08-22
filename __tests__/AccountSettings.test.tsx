@@ -118,6 +118,34 @@ describe('Account Settings page', () => {
     });
   });
 
+  it('should validate that emails are not matching', async () => {
+    await mockSupabaseUser();
+    await mockSupabaseSession();
+    await renderServerComponent(<AccountSettings />);
+    await typeIntoFormFields({
+      'New Email': 'caleb2@example.com',
+      'Confirm New Email': 'caleb2@example.con'
+    });
+    expect(screen.getByLabelText('Confirm New Email')).toHaveProperty(
+      'validationMessage',
+      'Emails must match'
+    );
+  });
+
+  it('should require all Change Email fields to be populated', async () => {
+    await mockSupabaseUser();
+    await mockSupabaseSession();
+    await renderServerComponent(<AccountSettings />);
+    const requiredFields = ['New Email', 'Confirm New Email'];
+    await userEvent.click(screen.getByRole('button', { name: 'Change Email' }));
+    requiredFields.forEach((labelText) => {
+      expect(screen.getByLabelText(labelText)).toHaveProperty(
+        'validity.valueMissing',
+        true
+      );
+    });
+  });
+
   it('should change password successfully', async () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
