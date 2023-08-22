@@ -9,7 +9,7 @@ type Props = {
 
 function WidgetPicker({ onCloseWidgetPicker }: Props) {
   return (
-    <Modal onCloseModal={onCloseWidgetPicker}>
+    <Modal onClose={onCloseWidgetPicker}>
       <section className="widget-picker">
         <h1>Add Widget</h1>
         <ul className="widget-picker-list">

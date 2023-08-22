@@ -31,7 +31,7 @@ function ThemeSwitcher({ currentTheme, onCloseThemeSwitcher }: Props) {
   }
 
   return (
-    <Modal onCloseModal={onCloseThemeSwitcher}>
+    <Modal onClose={onCloseThemeSwitcher}>
       <section className="theme-switcher">
         <h1>Change Theme</h1>
         <p>Click a theme to use it for your dashboard!</p>

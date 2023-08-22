@@ -2,18 +2,18 @@ import React from 'react';
 
 type Props = {
   children: React.ReactNode;
-  onCloseModal: () => void;
+  onClose: () => void;
 };
 
-function Modal({ children, onCloseModal }: Props) {
+function Modal({ children, onClose }: Props) {
   return (
     <div className="modal-scroll-container">
-      <div className="modal-overlay" onClick={onCloseModal}></div>
+      <div className="modal-overlay" onClick={onClose}></div>
       <aside className="modal sheet" role="dialog">
         <button
           type="button"
           className="sheet-control sheet-control-right modal-control modal-close-control"
-          onClick={onCloseModal}
+          onClick={onClose}
         >
           <img
             className="sheet-control-icon modal-control-icon modal-close-control-icon"

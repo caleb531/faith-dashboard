@@ -2,12 +2,12 @@ import LinkButton from '../reusable/LinkButton';
 import Modal from '../reusable/Modal';
 
 type Props = {
-  onCloseModal: () => void;
+  onClose: () => void;
 };
 
-function AccountAuthFlow({ onCloseModal }: Props) {
+function AccountAuthFlow({ onClose }: Props) {
   return (
-    <Modal onCloseModal={onCloseModal}>
+    <Modal onClose={onClose}>
       <section className="account-auth-flow">
         <div className="account-auth-flow-start">
           <h1>Account</h1>

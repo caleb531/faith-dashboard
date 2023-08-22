@@ -109,7 +109,7 @@ function AppHeaderAccount() {
             Sign Up/In
           </button>
           {authModalIsOpen ? (
-            <AccountAuthFlow onCloseModal={onCloseSignInModal} />
+            <AccountAuthFlow onClose={onCloseSignInModal} />
           ) : null}
         </div>
       )}
