@@ -130,11 +130,6 @@ function AppHeaderAccount() {
                 </a>
               )
             },
-            isSignedIn && {
-              key: 'account',
-              href: '/account',
-              content: 'Account Settings'
-            },
             {
               key: 'import-dashboard',
               content: (
@@ -147,6 +142,11 @@ function AppHeaderAccount() {
               key: 'export-dashboard',
               onClick: handleExportDashboard,
               content: 'Export Dashboard'
+            },
+            isSignedIn && {
+              key: 'account',
+              href: '/account',
+              content: 'Account Settings'
             },
             isSignedIn && {
               key: 'sign-out',
