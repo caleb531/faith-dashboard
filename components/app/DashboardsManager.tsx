@@ -1,7 +1,6 @@
 import LoadingIndicator from '@components/reusable/LoadingIndicator';
 import Modal from '@components/reusable/Modal';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { capitalize } from 'lodash-es';
 import Image from 'next/image';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import AppContext from './AppContext';
@@ -52,7 +51,7 @@ const DashboardsManager = ({ onClose }: Props) => {
           <p>You have no dashboards. Create one!</p>
         ) : (
           <ul className="dashboards-manager-dashboards">
-            {dashboards.map((dashboard: AppState) => {
+            {dashboards.map((dashboard: AppState, d) => {
               return (
                 <li key={dashboard.id} className="dashboards-manager-dashboard">
                   <button
@@ -77,7 +76,7 @@ const DashboardsManager = ({ onClose }: Props) => {
                     data-action="change-dashboard"
                     htmlFor={`dashboard-${dashboard.id}`}
                   >
-                    {capitalize(dashboard.theme)}
+                    Dashboard {d + 1}
                   </label>
                 </li>
               );
