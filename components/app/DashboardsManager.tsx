@@ -2,7 +2,9 @@ import LoadingIndicator from '@components/reusable/LoadingIndicator';
 import Modal from '@components/reusable/Modal';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { capitalize } from 'lodash-es';
+import Image from 'next/image';
 import { useCallback, useContext, useEffect, useState } from 'react';
+import AppContext from './AppContext';
 import SessionContext from './SessionContext';
 import { AppState } from './app.types';
 
@@ -14,6 +16,7 @@ const DashboardsManager = ({ onClose }: Props) => {
   const [dashboards, setDashboards] = useState<AppState[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(SessionContext);
+  const { app } = useContext(AppContext);
   const supabase = createClientComponentClient();
 
   const fetchDashboards = useCallback(async () => {
@@ -52,7 +55,30 @@ const DashboardsManager = ({ onClose }: Props) => {
             {dashboards.map((dashboard: AppState) => {
               return (
                 <li key={dashboard.id} className="dashboards-manager-dashboard">
-                  <h2>{capitalize(dashboard.theme)}</h2>
+                  <button
+                    type="button"
+                    className="dashboards-manager-dashboard-button"
+                    data-action="change-dashboard"
+                    id={`dashboard-${dashboard.id}`}
+                  >
+                    <div className="dashboards-manager-dashboard-mask">
+                      {dashboard.id === app.id ? (
+                        <div className="dashboards-manager-dashboard-selected-icon"></div>
+                      ) : null}
+                      <Image
+                        src={`/images/background-photos/${dashboard.theme}.jpg`}
+                        alt=""
+                        fill
+                      />
+                    </div>
+                  </button>
+                  <label
+                    className="dashboards-manager-dashboard-label"
+                    data-action="change-dashboard"
+                    htmlFor={`dashboard-${dashboard.id}`}
+                  >
+                    {capitalize(dashboard.theme)}
+                  </label>
                 </li>
               );
             })}
