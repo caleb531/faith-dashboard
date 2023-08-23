@@ -1,0 +1,53 @@
+.item-collection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+.item-collection-item {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 15px;
+  padding-bottom: 0;
+  list-style-type: none;
+  &:hover:active {
+    filter: brightness(60%);
+    color: var(--color-black-100);
+  }
+}
+button.item-collection-item-button {
+  position: relative;
+  margin: 0;
+  padding: 5px;
+  border-width: 0 !important;
+  border-radius: 0;
+  background: none !important;
+}
+.item-collection-item-selected .item-collection-item-selected-icon {
+  pointer-events: none;
+  --icon-size: 50%;
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  width: var(--icon-size);
+  height: var(--icon-size);
+  background-image: url('../../public/icons/check-light.svg');
+  background-repeat: no-repeat;
+  background-size: var(--icon-size);
+  background-position: center center;
+  filter: drop-shadow(0 1px 3px var(--color-black-50));
+}
+.item-collection-item-label {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-sans-serif);
+  color: var(--color-black-75);
+  cursor: default;
+  user-select: none;
+}

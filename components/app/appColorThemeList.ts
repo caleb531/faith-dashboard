@@ -1,54 +1,54 @@
 import { sortBy } from 'lodash-es';
-import { AppThemeListItem } from './app.types';
+import { AppTheme } from './app.types';
 
-const colorThemeList: AppThemeListItem[] = sortBy(
+const colorThemeList: AppTheme[] = sortBy(
   [
     {
-      label: 'Brown',
-      value: 'brown'
+      name: 'Brown',
+      id: 'brown'
     },
     {
-      label: 'Green',
-      value: 'green'
+      name: 'Green',
+      id: 'green'
     },
     {
-      label: 'Teal',
-      value: 'teal'
+      name: 'Teal',
+      id: 'teal'
     },
     {
-      label: 'Blue',
-      value: 'blue'
+      name: 'Blue',
+      id: 'blue'
     },
     {
-      label: 'Purple',
-      value: 'purple'
+      name: 'Purple',
+      id: 'purple'
     },
     {
-      label: 'Royal',
-      value: 'royal'
+      name: 'Royal',
+      id: 'royal'
     },
     {
-      label: 'Rose',
-      value: 'rose'
+      name: 'Rose',
+      id: 'rose'
     },
     {
-      label: 'Red',
-      value: 'red'
+      name: 'Red',
+      id: 'red'
     },
     {
-      label: 'Orange',
-      value: 'orange'
+      name: 'Orange',
+      id: 'orange'
     },
     {
-      label: 'Yellow',
-      value: 'yellow'
+      name: 'Yellow',
+      id: 'yellow'
     },
     {
-      label: 'Violet',
-      value: 'violet'
+      name: 'Violet',
+      id: 'violet'
     }
   ],
-  'label'
+  'name'
 );
 
 export default colorThemeList;

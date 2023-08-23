@@ -16,6 +16,7 @@ import AppHeader from './AppHeader';
 import AppNotification from './AppNotification';
 import reducer from './AppReducer';
 import SessionContext from './SessionContext';
+import ThemeContext from './ThemeContext';
 import ThemeMetadata from './ThemeMetadata';
 import UpdateNotification from './UpdateNotification';
 import defaultApp from './appStateDefault';
@@ -106,24 +107,26 @@ function App({
   return (
     <AppContext.Provider value={appContext}>
       <SessionContext.Provider value={sessionContext}>
-        <div className="app">
-          <ThemeMetadata />
-          {shouldLoadServiceWorker() ? <UpdateNotification /> : null}
-          <TutorialFlow
-            inProgress={Boolean(
-              app.shouldShowTutorial && enableTutorial && isTurorialStarted
-            )}
-          >
-            <AppHeader currentTheme={app.theme} canAddWidgets={canAddWidgets} />
-            <AppNotification />
-            {!isClientOnly || isMounted ? (
-              <div className="app-contents">{children}</div>
-            ) : (
-              <LoadingIndicator />
-            )}
-            <AppFooter />
-          </TutorialFlow>
-        </div>
+        <ThemeContext.Provider value={app.theme}>
+          <div className="app">
+            <ThemeMetadata />
+            {shouldLoadServiceWorker() ? <UpdateNotification /> : null}
+            <TutorialFlow
+              inProgress={Boolean(
+                app.shouldShowTutorial && enableTutorial && isTurorialStarted
+              )}
+            >
+              <AppHeader canAddWidgets={canAddWidgets} />
+              <AppNotification />
+              {!isClientOnly || isMounted ? (
+                <div className="app-contents">{children}</div>
+              ) : (
+                <LoadingIndicator />
+              )}
+              <AppFooter />
+            </TutorialFlow>
+          </div>
+        </ThemeContext.Provider>
       </SessionContext.Provider>
     </AppContext.Provider>
   );

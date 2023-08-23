@@ -6,10 +6,10 @@ import {
   WidgetMoveParameters,
   WidgetState
 } from '../widgets/widget.types';
-import { AppState, AppTheme } from './app.types';
+import { AppState, AppThemeId } from './app.types';
 
 export type AppAction =
-  | { type: 'changeTheme'; payload: AppTheme }
+  | { type: 'changeTheme'; payload: AppThemeId }
   | { type: 'skipTutorial' }
   | { type: 'addWidget'; payload: WidgetState }
   | { type: 'removeWidget'; payload: Omit<WidgetHead, 'type' | 'column'> }

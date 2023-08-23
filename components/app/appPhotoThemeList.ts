@@ -1,37 +1,37 @@
-import { AppThemeListItem } from './app.types';
+import { AppTheme } from './app.types';
 
-const photoThemeList: AppThemeListItem[] = [
+const photoThemeList: AppTheme[] = [
   {
-    label: 'Shore',
-    value: 'shore'
+    name: 'Shore',
+    id: 'shore'
   },
   {
-    label: 'Forest',
-    value: 'forest'
+    name: 'Forest',
+    id: 'forest'
   },
   {
-    label: 'Stars',
-    value: 'stars'
+    name: 'Stars',
+    id: 'stars'
   },
   {
-    label: 'Mountains',
-    value: 'mountain'
+    name: 'Mountains',
+    id: 'mountain'
   },
   {
-    label: 'Evening',
-    value: 'evening'
+    name: 'Evening',
+    id: 'evening'
   },
   {
-    label: 'Word',
-    value: 'word'
+    name: 'Word',
+    id: 'word'
   },
   {
-    label: 'Worship',
-    value: 'worship'
+    name: 'Worship',
+    id: 'worship'
   },
   {
-    label: 'Pasture',
-    value: 'pasture'
+    name: 'Pasture',
+    id: 'pasture'
   }
 ];
 

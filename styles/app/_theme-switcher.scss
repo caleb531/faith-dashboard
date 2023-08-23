@@ -9,91 +9,15 @@
   }
 }
 
-// Styles for all theme types
-
-.theme-switcher-themes {
-  margin: 0;
-  padding: 0;
-}
-.theme-switcher-theme {
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 10px 15px;
-  padding-bottom: 0;
-  list-style-type: none;
-}
-button.theme-switcher-theme-button {
-  position: relative;
-  margin: 0;
-  padding: 5px;
-  border-width: 0 !important;
-  border-radius: 0;
-  background: none !important;
-}
-.theme-switcher-theme-selected .theme-switcher-theme-selected-icon {
-  pointer-events: none;
-  --icon-size: 75%;
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 10;
-  transform: translate(-50%, -50%);
-  width: var(--icon-size);
-  height: var(--icon-size);
-  background-image: url('../../public/icons/check-light.svg');
-  background-repeat: no-repeat;
-  background-size: var(--icon-size);
-  background-position: center center;
-  filter: drop-shadow(0 1px 3px var(--color-black-50));
-}
-.theme-switcher-label {
-  font-size: var(--font-size-xs);
-  font-family: var(--font-family-sans-serif);
-  color: var(--color-black-75);
-  cursor: default;
-  user-select: none;
-}
-// Indicate which theme the user is switching to
-.theme-switcher-theme-visual {
-  &:hover:active {
-    filter: brightness(60%);
-    color: var(--color-black-100);
-  }
-}
-
-// Photo themes
-
-.theme-switcher-photo-theme-photo {
+.photo-theme-preview {
   border-radius: 10px;
   background-color: rgba(#000, 0.25);
 }
-.theme-switcher-photo-theme .theme-switcher-theme-selected-icon {
-  --icon-size: 70px;
-  width: var(--icon-size);
-  height: var(--icon-size);
-  background-size: var(--icon-size);
-}
 
-// Color themes
-
-.theme-switcher-color-themes {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.theme-switcher-color-theme-swatch {
+.color-theme-preview {
   --swatch-size: 40px;
   width: var(--swatch-size);
   height: var(--swatch-size);
   border-radius: 50%;
   background-color: var(--current-theme-color);
-}
-.theme-switcher-color-theme .theme-switcher-theme-selected-icon {
-  --icon-size: 28px;
-  width: var(--icon-size);
-  height: var(--icon-size);
-  background-size: var(--icon-size);
 }

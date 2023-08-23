@@ -1,8 +1,11 @@
+import ItemCollection from '@components/reusable/ItemCollection';
 import { useContext } from 'react';
 import Modal from '../reusable/Modal';
 import useTimeout from '../useTimeout';
 import AppContext from './AppContext';
-import ThemeSwitcherList from './ThemeSwitcherList';
+import ColorThemePreview from './ColorThemePreview';
+import PhotoThemePreview from './PhotoThemePreview';
+import ThemeContext from './ThemeContext';
 import { AppTheme } from './app.types';
 import colorThemeList from './appColorThemeList';
 import photoThemeList from './appPhotoThemeList';
@@ -12,16 +15,16 @@ import photoThemeList from './appPhotoThemeList';
 const themeChangeDelay = 350;
 
 type Props = {
-  currentTheme: AppTheme;
   onCloseThemeSwitcher: () => void;
 };
 
-function ThemeSwitcher({ currentTheme, onCloseThemeSwitcher }: Props) {
+function ThemeSwitcher({ onCloseThemeSwitcher }: Props) {
   const { dispatchToApp } = useContext(AppContext);
+  const currentThemeId = useContext(ThemeContext);
   const setThemeSwitchTimeout = useTimeout();
 
   function onChooseTheme(newTheme: AppTheme): void {
-    dispatchToApp({ type: 'changeTheme', payload: newTheme });
+    dispatchToApp({ type: 'changeTheme', payload: newTheme.id });
     // Close modal after short delay to give user time to see that the selected
     // theme has been changed (since the 'selected' checkmark will now show up
     // over the theme they just clicked)
@@ -34,20 +37,25 @@ function ThemeSwitcher({ currentTheme, onCloseThemeSwitcher }: Props) {
     <Modal onClose={onCloseThemeSwitcher}>
       <section className="theme-switcher">
         <h1>Change Theme</h1>
+
         <p>Click a theme to use it for your dashboard!</p>
+
         <h2>You can pick a photo...</h2>
-        <ThemeSwitcherList
-          themeList={photoThemeList}
-          themeType="photo"
-          onChooseTheme={onChooseTheme}
-          currentTheme={currentTheme}
+
+        <ItemCollection
+          items={photoThemeList}
+          onChooseItem={onChooseTheme}
+          isCurrentItem={(theme) => theme.id === currentThemeId}
+          itemPreview={(theme) => <PhotoThemePreview theme={theme} />}
         />
+
         <h2>...or pick a color...</h2>
-        <ThemeSwitcherList
-          themeList={colorThemeList}
-          themeType="color"
-          onChooseTheme={onChooseTheme}
-          currentTheme={currentTheme}
+
+        <ItemCollection
+          items={colorThemeList}
+          onChooseItem={onChooseTheme}
+          isCurrentItem={(theme) => theme.id === currentThemeId}
+          itemPreview={(theme) => <ColorThemePreview theme={theme} />}
         />
       </section>
     </Modal>

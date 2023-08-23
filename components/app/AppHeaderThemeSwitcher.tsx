@@ -1,19 +1,16 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
+import ThemeContext from './ThemeContext';
 import ThemeSwitcher from './ThemeSwitcher';
-import { AppTheme } from './app.types';
 import colorThemeList from './appColorThemeList';
 import photoThemeList from './appPhotoThemeList';
 
 const allThemes = [...photoThemeList, ...colorThemeList];
 
-type Props = {
-  currentTheme: AppTheme;
-};
-
-function AppHeaderThemeSwitcher({ currentTheme }: Props) {
+function AppHeaderThemeSwitcher() {
   const { isCurrentStep, stepProps } = useTutorialStep('change-theme');
+  const currentThemeId = useContext(ThemeContext);
   const [themeSwitcherIsOpen, setThemeSwitcherIsOpen] = useState(false);
 
   return (
@@ -40,14 +37,13 @@ function AppHeaderThemeSwitcher({ currentTheme }: Props) {
         <span className="app-header-theme-switcher-button-label">
           {
             allThemes.find((themeListItem) => {
-              return themeListItem.value === currentTheme;
-            })?.label
+              return themeListItem.id === currentThemeId;
+            })?.name
           }
         </span>
       </button>
       {themeSwitcherIsOpen ? (
         <ThemeSwitcher
-          currentTheme={currentTheme}
           onCloseThemeSwitcher={() => setThemeSwitcherIsOpen(false)}
         />
       ) : null}

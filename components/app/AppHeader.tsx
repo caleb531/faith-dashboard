@@ -3,14 +3,12 @@ import Link from 'next/link';
 import AppHeaderAccount from './AppHeaderAccount';
 import AppHeaderAddWidgetButton from './AppHeaderAddWidgetButton';
 import AppHeaderThemeSwitcher from './AppHeaderThemeSwitcher';
-import { AppTheme } from './app.types';
 
 type Props = {
-  currentTheme: AppTheme;
   canAddWidgets?: boolean;
 };
 
-function AppHeader({ currentTheme, canAddWidgets }: Props) {
+function AppHeader({ canAddWidgets }: Props) {
   const isMounted = useMountListener();
   return (
     <header className="app-header" role="banner">
@@ -23,7 +21,7 @@ function AppHeader({ currentTheme, canAddWidgets }: Props) {
         {isMounted ? (
           <>
             {canAddWidgets ? <AppHeaderAddWidgetButton /> : null}
-            <AppHeaderThemeSwitcher currentTheme={currentTheme} />
+            <AppHeaderThemeSwitcher />
           </>
         ) : null}
         <AppHeaderAccount />
