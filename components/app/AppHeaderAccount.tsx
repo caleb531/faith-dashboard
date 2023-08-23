@@ -9,6 +9,7 @@ import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import AppContext from './AppContext';
 import AppHeaderMenu from './AppHeaderMenu';
+import DashboardsManager from './DashboardsManager';
 import SessionContext from './SessionContext';
 import appStateDefault from './appStateDefault';
 
@@ -16,6 +17,8 @@ function AppHeaderAccount() {
   const supabase = createClientComponentClient();
   const { isCurrentStep, stepProps } = useTutorialStep('sign-up');
   const { dispatchToApp } = useContext(AppContext);
+  const [isDashboardsManagerVisible, setIsDashboardsManagerVisible] =
+    useState(false);
 
   // The session will be loaded asynchronously and isomorphically, via a
   // useEffect() call later in this function; this is done to avoid SSR
@@ -130,6 +133,13 @@ function AppHeaderAccount() {
                 </a>
               )
             },
+            isSignedIn && {
+              key: 'dashboards',
+              onClick: () => {
+                setIsDashboardsManagerVisible(true);
+              },
+              content: 'My Dashboards'
+            },
             {
               key: 'import-dashboard',
               content: (
@@ -156,6 +166,13 @@ function AppHeaderAccount() {
           ]}
         />
       </div>
+      {isDashboardsManagerVisible ? (
+        <DashboardsManager
+          onClose={() => {
+            setIsDashboardsManagerVisible(false);
+          }}
+        />
+      ) : null}
       <input
         id="app-import-input"
         name="app_import_input"
