@@ -28,15 +28,9 @@ const ItemCollection = <TItem extends Item>({
   function chooseItem(event: React.MouseEvent) {
     const target = event.target as HTMLElement;
     const itemElement = target.closest('.item-collection-item');
-    console.log(
-      'before data-action',
-      itemElement,
-      target.closest('[data-action="choose-item"]')
-    );
     if (!(target.closest('[data-action="choose-item"]') && itemElement)) {
       return;
     }
-    console.log('before data-item');
     const newItemId = itemElement.getAttribute('data-item') as Item['id'];
     const newItem = items.find((item) => item.id === newItemId);
     if (!newItem) {
