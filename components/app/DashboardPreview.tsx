@@ -12,6 +12,7 @@ const DashboardPreview = ({ dashboard }: Props) => {
         src={`/images/background-photos/${dashboard.theme}.jpg`}
         alt=""
         fill
+        sizes="200px"
       />
     </div>
   );
