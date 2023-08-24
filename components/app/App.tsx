@@ -105,8 +105,8 @@ function App({
   }, [session, user]);
 
   return (
-    <AppContext.Provider value={appContext}>
-      <SessionContext.Provider value={sessionContext}>
+    <SessionContext.Provider value={sessionContext}>
+      <AppContext.Provider value={appContext}>
         <ThemeContext.Provider value={app.theme}>
           <div className="app">
             <ThemeMetadata />
@@ -127,8 +127,8 @@ function App({
             </TutorialFlow>
           </div>
         </ThemeContext.Provider>
-      </SessionContext.Provider>
-    </AppContext.Provider>
+      </AppContext.Provider>
+    </SessionContext.Provider>
   );
 }
 
