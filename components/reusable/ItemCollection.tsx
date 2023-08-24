@@ -3,26 +3,26 @@ import React from 'react';
 
 export type Item = { id: string; name: string };
 
-type Props = {
-  items: Item[];
-  itemPreview: (item: Item) => React.ReactNode;
-  isCurrentItem: (item: Item) => boolean;
-  onChooseItem: (item: Item) => void;
-  onEditItemName?: (item: Item) => void;
-  onDeleteItem?: (item: Item) => void;
+type Props<TItem extends Item> = {
+  items: TItem[];
+  itemPreview: (item: TItem) => React.ReactNode;
+  isCurrentItem: (item: TItem) => boolean;
+  onChooseItem: (item: TItem) => void;
+  onEditItemName?: (item: TItem) => void;
+  onDeleteItem?: (item: TItem) => void;
 };
 
 // A collection of items, any of which can be selected and have some arbitrary
 // action run against; every item can have a preview of some sort (can be an
 // image, element, etc.), but must have a name at a very minimum
-const ItemCollection = ({
+const ItemCollection = <TItem extends Item>({
   items,
   itemPreview,
   isCurrentItem,
   onChooseItem,
   onEditItemName,
   onDeleteItem
-}: Props) => {
+}: Props<TItem>) => {
   // Since there can be many items, use event delegation to attach only a
   // single listener and figure out which item was clicked
   function chooseItem(event: React.MouseEvent) {
