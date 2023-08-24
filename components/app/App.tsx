@@ -1,6 +1,7 @@
 'use client';
+import useMemoizedContextValue from '@components/useMemoizedContextValue';
 import { Session, User } from '@supabase/supabase-js';
-import React, { useEffect, useMemo, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 import { getAppStorageKey } from '../storageUtils';
 import TutorialFlow from '../tutorial/TutorialFlow';
@@ -97,17 +98,9 @@ function App({
 
   const isMounted = useMountListener();
 
-  const appContext = useMemo(() => {
-    return { app, dispatchToApp };
-  }, [app, dispatchToApp]);
-
-  const sessionContext = useMemo(() => {
-    return { session, user };
-  }, [session, user]);
-
-  const syncContext = useMemo(() => {
-    return { pullLatestAppFromServer };
-  }, [pullLatestAppFromServer]);
+  const appContext = useMemoizedContextValue({ app, dispatchToApp });
+  const sessionContext = useMemoizedContextValue({ session, user });
+  const syncContext = useMemoizedContextValue({ pullLatestAppFromServer });
 
   return (
     <SessionContext.Provider value={sessionContext}>
