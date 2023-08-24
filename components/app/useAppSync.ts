@@ -1,6 +1,6 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { throttle } from 'lodash-es';
-import { Dispatch, useEffect, useMemo } from 'react';
+import { Dispatch, useCallback, useEffect, useMemo } from 'react';
 import { getSession, getUser, isSessionActive } from '../authUtils.client';
 import { getClientId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
@@ -70,7 +70,12 @@ function pushLocalWidgetsToServer(app: AppState): void {
 
 // The useAppSync() hook mangages the sychronization of the app state between
 // the client and server, pushing and pulling data as appropriate
-function useAppSync(app: AppState, dispatchToApp: Dispatch<AppAction>): void {
+function useAppSync(
+  app: AppState,
+  dispatchToApp: Dispatch<AppAction>
+): {
+  pullLatestAppFromServer: (app: AppState) => void;
+} {
   // Push the local app state to the server every time the app state changes
   // locally; please note that this push operation is debounced
   useSyncPush({
@@ -82,43 +87,44 @@ function useAppSync(app: AppState, dispatchToApp: Dispatch<AppAction>): void {
   // Replace the local application state with the latest application state from
   // the server; if there is no app state on the server, then push the local app
   // state to the server
-  const pullLatestAppFromServer = useMemo(() => {
+  const pullLatestAppFromServer = useCallback(
+    async (app: AppState): Promise<void> => {
+      if (!isSessionActive(await getSession())) {
+        return;
+      }
+      const { data, error } = await supabase
+        .from('dashboards')
+        .select('raw_data')
+        // Always ensure the dashboard matching the specified ID is fetched from
+        // the server
+        .match({ id: app.id });
+      if (!(data && data.length > 0)) {
+        pushLocalAppToServer(app);
+        pushLocalWidgetsToServer(app);
+        return;
+      }
+      const newApp: AppState = JSON.parse(String(data[0].raw_data));
+      applyServerAppToLocalApp(newApp, dispatchToApp);
+    },
+    [dispatchToApp]
+  );
+
+  // A throttled version of the above pullLatestAppFromServer() function
+  const pullLatestAppFromServerThrottled = useMemo(() => {
     // Even though this function has no dependencies (and therefore can
     // technically be defined outside of the hook), we need to ensure that Jest
     // is able to set up the fake timer mechanism (in the corresponding Sync
     // tests) before this throttled function is created; otherwise, some tests
     // will intermittently fail because the throttle() call bound itself to the
     // native setTimeout() before Jest was able to set up the fake timers
-    return throttle(
-      async (
-        app: AppState,
-        dispatchToApp: Dispatch<AppAction>
-      ): Promise<void> => {
-        if (!isSessionActive(await getSession())) {
-          return;
-        }
-        const { data, error } = await supabase
-          .from('dashboards')
-          .select('raw_data')
-          // Always ensure the most recent dashboard is fetched from the server
-          .order('updated_at', { ascending: false });
-        if (!(data && data.length > 0)) {
-          pushLocalAppToServer(app);
-          pushLocalWidgetsToServer(app);
-          return;
-        }
-        const newApp: AppState = JSON.parse(String(data[0].raw_data));
-        applyServerAppToLocalApp(newApp, dispatchToApp);
-      },
-      1000
-    );
-  }, []);
+    return throttle(pullLatestAppFromServer, 1000);
+  }, [pullLatestAppFromServer]);
 
   // Pull latest data from server on initial app load
   const isDefaultAppState = app.id === undefined;
   useEffect(() => {
     if (app.id) {
-      pullLatestAppFromServer(app, dispatchToApp);
+      pullLatestAppFromServerThrottled(app);
     }
     // We only want to pull the latest app data once per page load, when the
     // default app state is replaced by the app from localStorage (hence why we
@@ -129,6 +135,8 @@ function useAppSync(app: AppState, dispatchToApp: Dispatch<AppAction>): void {
     // overwrite the imported dashboard state entirely
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [isDefaultAppState]);
+
+  return { pullLatestAppFromServer };
 }
 
 export default useAppSync;

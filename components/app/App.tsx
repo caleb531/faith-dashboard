@@ -16,6 +16,7 @@ import AppHeader from './AppHeader';
 import AppNotification from './AppNotification';
 import reducer from './AppReducer';
 import SessionContext from './SessionContext';
+import SyncContext from './SyncContext';
 import ThemeContext from './ThemeContext';
 import ThemeMetadata from './ThemeMetadata';
 import UpdateNotification from './UpdateNotification';
@@ -81,7 +82,7 @@ function App({
     saveApp(app);
   }, [app, saveApp]);
 
-  useAppSync(app, dispatchToApp);
+  const { pullLatestAppFromServer } = useAppSync(app, dispatchToApp);
   useThemeForEntirePage(app.theme);
   useAuthenticationDetection();
 
@@ -104,29 +105,35 @@ function App({
     return { session, user };
   }, [session, user]);
 
+  const syncContext = useMemo(() => {
+    return { pullLatestAppFromServer };
+  }, [pullLatestAppFromServer]);
+
   return (
     <SessionContext.Provider value={sessionContext}>
       <AppContext.Provider value={appContext}>
-        <ThemeContext.Provider value={app.theme}>
-          <div className="app">
-            <ThemeMetadata />
-            {shouldLoadServiceWorker() ? <UpdateNotification /> : null}
-            <TutorialFlow
-              inProgress={Boolean(
-                app.shouldShowTutorial && enableTutorial && isTurorialStarted
-              )}
-            >
-              <AppHeader canAddWidgets={canAddWidgets} />
-              <AppNotification />
-              {!isClientOnly || isMounted ? (
-                <div className="app-contents">{children}</div>
-              ) : (
-                <LoadingIndicator />
-              )}
-              <AppFooter />
-            </TutorialFlow>
-          </div>
-        </ThemeContext.Provider>
+        <SyncContext.Provider value={syncContext}>
+          <ThemeContext.Provider value={app.theme}>
+            <div className="app">
+              <ThemeMetadata />
+              {shouldLoadServiceWorker() ? <UpdateNotification /> : null}
+              <TutorialFlow
+                inProgress={Boolean(
+                  app.shouldShowTutorial && enableTutorial && isTurorialStarted
+                )}
+              >
+                <AppHeader canAddWidgets={canAddWidgets} />
+                <AppNotification />
+                {!isClientOnly || isMounted ? (
+                  <div className="app-contents">{children}</div>
+                ) : (
+                  <LoadingIndicator />
+                )}
+                <AppFooter />
+              </TutorialFlow>
+            </div>
+          </ThemeContext.Provider>
+        </SyncContext.Provider>
       </AppContext.Provider>
     </SessionContext.Provider>
   );
