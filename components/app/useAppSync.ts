@@ -74,7 +74,7 @@ function useAppSync(
   app: AppState,
   dispatchToApp: Dispatch<AppAction>
 ): {
-  pullLatestAppFromServer: (app: AppState) => void;
+  pullLatestAppFromServer: (app: AppState) => Promise<void>;
 } {
   // Push the local app state to the server every time the app state changes
   // locally; please note that this push operation is debounced

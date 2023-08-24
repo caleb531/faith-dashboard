@@ -6,18 +6,25 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import AppContext from './AppContext';
 import DashboardPreview from './DashboardPreview';
 import SessionContext from './SessionContext';
-import { AppState } from './app.types';
+import SyncContext from './SyncContext';
+import { SyncedAppState } from './app.types';
 
 type Props = {
   onClose: () => void;
 };
 
 const DashboardsManager = ({ onClose }: Props) => {
-  const [dashboards, setDashboards] = useState<AppState[]>([]);
+  const [dashboards, setDashboards] = useState<SyncedAppState[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(SessionContext);
   const { app } = useContext(AppContext);
+  const { pullLatestAppFromServer } = useContext(SyncContext);
   const supabase = createClientComponentClient();
+
+  const switchToDashboard = async (dashboard: SyncedAppState) => {
+    await pullLatestAppFromServer(dashboard);
+    onClose();
+  };
 
   const fetchDashboards = useCallback(async () => {
     if (!user) {
@@ -55,11 +62,10 @@ const DashboardsManager = ({ onClose }: Props) => {
             items={dashboards.map((dashboard, d) => {
               return {
                 ...dashboard,
-                id: String(dashboard.id),
                 name: dashboard.name ?? `Dashboard ${d + 1}`
-              };
+              } as SyncedAppState;
             })}
-            onChooseItem={(dashboard) => alert(`${dashboard.name} chosen!`)}
+            onChooseItem={(dashboard) => switchToDashboard(dashboard)}
             isCurrentItem={(dashboard) => dashboard.id === app.id}
             itemPreview={(dashboard) => (
               <DashboardPreview dashboard={dashboard} />

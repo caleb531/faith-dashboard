@@ -13,6 +13,10 @@ export interface AppState {
   shouldShowTutorial?: boolean | undefined;
   widgets: WidgetHead[];
 }
+export interface SyncedAppState extends AppState {
+  id: NonNullable<AppState['id']>;
+  name: NonNullable<AppState['name']>;
+}
 
 // A dropdown entry for an available app color theme
 export interface AppTheme extends Item {
