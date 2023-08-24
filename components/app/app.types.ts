@@ -8,6 +8,7 @@ export type AppThemeId = string;
 // The state of the application; an instance of
 export interface AppState {
   id?: string;
+  name?: string;
   theme: AppThemeId;
   shouldShowTutorial?: boolean | undefined;
   widgets: WidgetHead[];

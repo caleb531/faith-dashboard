@@ -1,9 +1,10 @@
+import ItemCollection from '@components/reusable/ItemCollection';
 import LoadingIndicator from '@components/reusable/LoadingIndicator';
 import Modal from '@components/reusable/Modal';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import Image from 'next/image';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import AppContext from './AppContext';
+import DashboardPreview from './DashboardPreview';
 import SessionContext from './SessionContext';
 import { AppState } from './app.types';
 
@@ -50,38 +51,20 @@ const DashboardsManager = ({ onClose }: Props) => {
         ) : dashboards.length === 0 ? (
           <p>You have no dashboards. Create one!</p>
         ) : (
-          <ul className="dashboards-manager-dashboards">
-            {dashboards.map((dashboard: AppState, d) => {
-              return (
-                <li key={dashboard.id} className="dashboards-manager-dashboard">
-                  <button
-                    type="button"
-                    className="dashboards-manager-dashboard-button"
-                    data-action="change-dashboard"
-                    id={`dashboard-${dashboard.id}`}
-                  >
-                    <div className="dashboards-manager-dashboard-mask">
-                      {dashboard.id === app.id ? (
-                        <div className="dashboards-manager-dashboard-selected-icon"></div>
-                      ) : null}
-                      <Image
-                        src={`/images/background-photos/${dashboard.theme}.jpg`}
-                        alt=""
-                        fill
-                      />
-                    </div>
-                  </button>
-                  <label
-                    className="dashboards-manager-dashboard-label"
-                    data-action="change-dashboard"
-                    htmlFor={`dashboard-${dashboard.id}`}
-                  >
-                    Dashboard {d + 1}
-                  </label>
-                </li>
-              );
+          <ItemCollection
+            items={dashboards.map((dashboard, d) => {
+              return {
+                ...dashboard,
+                id: String(dashboard.id),
+                name: dashboard.name ?? `Dashboard ${d + 1}`
+              };
             })}
-          </ul>
+            onChooseItem={(dashboard) => alert(`${dashboard.name} chosen!`)}
+            isCurrentItem={(dashboard) => dashboard.id === app.id}
+            itemPreview={(dashboard) => (
+              <DashboardPreview dashboard={dashboard} />
+            )}
+          />
         )}
       </section>
     </Modal>

@@ -4,45 +4,6 @@
 .add-dashboard {
   margin-bottom: 20px;
 }
-.dashboards-manager-dashboards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-}
-.dashboards-manager-dashboard {
-  padding: 10px 15px;
-  list-style-type: none;
-}
-.dashboards-manager-dashboard-label {
-  text-align: center;
-}
-button.dashboards-manager-dashboard-button {
-  position: relative;
-  margin: 0;
-  padding: 5px;
-  border-width: 0 !important;
-  border-radius: 0;
-  background: none !important;
-}
-.dashboards-manager-dashboard-selected-icon {
-  pointer-events: none;
-  --icon-size: 70px;
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 10;
-  transform: translate(-50%, -50%);
-  width: var(--icon-size);
-  height: var(--icon-size);
-  background-image: url('../../public/icons/check-light.svg');
-  background-repeat: no-repeat;
-  background-size: var(--icon-size);
-  background-position: center center;
-  filter: drop-shadow(0 1px 3px var(--color-black-50));
-}
 .dashboards-manager-dashboard-mask {
   position: relative;
   width: 200px;
