@@ -25,7 +25,7 @@ async function pushLocalWidgetToServer(widget: WidgetState) {
       user_id: user.id,
       dashboard_id: getSelectedAppId(),
       client_id: getClientId(),
-      raw_data: JSON.stringify(widget),
+      raw_data: widget,
       updated_at: new Date().toISOString()
     }
   ]);

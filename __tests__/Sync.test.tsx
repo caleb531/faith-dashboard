@@ -49,10 +49,10 @@ describe('Sync functionality', () => {
     await mockSupabaseSession();
     mockSupabaseFrom();
     mockSupabaseSelect('dashboards', {
-      data: [{ raw_data: JSON.stringify(dashboardToPullJson) }]
+      data: [{ raw_data: dashboardToPullJson }]
     });
     mockSupabaseSelect('widgets', {
-      data: [{ raw_data: JSON.stringify(widgetToPullJson) }]
+      data: [{ raw_data: widgetToPullJson }]
     });
     assignIdToLocalApp(uuidv4());
     await renderServerComponent(<Home />);
@@ -149,7 +149,7 @@ describe('Sync functionality', () => {
     mockSupabaseFrom();
     const appId = uuidv4();
     mockSupabaseSelect('dashboards', {
-      data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
+      data: [{ raw_data: { ...appStateDefault, id: appId } }]
     });
     mockSupabaseSelect('widgets', { data: [] });
     mockSupabaseUpsert('dashboards');
@@ -183,7 +183,7 @@ describe('Sync functionality', () => {
     mockSupabaseFrom();
     const appId = uuidv4();
     mockSupabaseSelect('dashboards', {
-      data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
+      data: [{ raw_data: { ...appStateDefault, id: appId } }]
     });
     mockSupabaseSelect('widgets', { data: [] });
     mockSupabaseDelete('widgets');
@@ -214,7 +214,7 @@ describe('Sync functionality', () => {
     mockSupabaseFrom();
     const appId = uuidv4();
     mockSupabaseSelect('dashboards', {
-      data: [{ raw_data: JSON.stringify({ ...appStateDefault, id: appId }) }]
+      data: [{ raw_data: { ...appStateDefault, id: appId } }]
     });
     mockSupabaseSelect('widgets', { data: [] });
     mockSupabaseUpsert('dashboards');

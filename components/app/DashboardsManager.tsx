@@ -49,7 +49,7 @@ const DashboardsManager = ({ onClose }: Props) => {
     if (!(data && data.length > 0)) {
       return;
     }
-    setDashboards(data.map((result) => JSON.parse(String(result.raw_data))));
+    setDashboards(data.map((result) => result.raw_data));
     setIsLoading(false);
   }, [supabase, user]);
 

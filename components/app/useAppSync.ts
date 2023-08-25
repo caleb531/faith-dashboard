@@ -32,7 +32,7 @@ async function applyServerAppToLocalApp(
     return;
   }
   const newWidgets: WidgetState[] = data.map((widgetRow) => {
-    return JSON.parse(String(widgetRow.raw_data));
+    return widgetRow.raw_data;
   });
   newWidgets.forEach((widget) => {
     widgetSyncService.broadcastPull(widget.id, widget);
@@ -54,7 +54,7 @@ async function pushLocalAppToServer(app: AppState) {
       id: app.id,
       user_id: user.id,
       client_id: getClientId(),
-      raw_data: JSON.stringify(app),
+      raw_data: app,
       updated_at: new Date().toISOString()
     }
   ]);
@@ -103,7 +103,7 @@ function useAppSync(
         pushLocalWidgetsToServer(app);
         return;
       }
-      const newApp: AppState = JSON.parse(String(data[0].raw_data));
+      const newApp: AppState = data[0].raw_data;
       applyServerAppToLocalApp(newApp, dispatchToApp);
     },
     [dispatchToApp]
