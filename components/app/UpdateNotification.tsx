@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import {
-  messageSW,
+  WorkboxLifecycleWaitingEvent as WaitingEvent,
   Workbox,
-  WorkboxLifecycleWaitingEvent as WaitingEvent
+  messageSW
 } from 'workbox-window';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 
@@ -75,11 +75,7 @@ function UpdateNotification() {
       )}
       onClick={() => setIsUpdating(true)}
     >
-      {isUpdating ? (
-        <div className="update-loading-container">
-          <LoadingIndicator />
-        </div>
-      ) : null}
+      {isUpdating ? <LoadingIndicator autoCenter /> : null}
       <span className="update-notification-message">
         Update available! Click here to update.
       </span>

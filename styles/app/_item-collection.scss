@@ -44,12 +44,7 @@ button.item-collection-item-button {
   background-position: center center;
   filter: drop-shadow(0 1px 3px var(--color-black-50));
 }
-.item-collection-item .loading-indicator {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
+.item-collection-item-loading-indicator {
   --icon-size: 100px;
   width: var(--icon-size);
   height: var(--icon-size);

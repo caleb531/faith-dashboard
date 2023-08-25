@@ -70,7 +70,7 @@ const DashboardsManager = ({ onClose }: Props) => {
           Add Dashboard
         </button>
         {isLoading ? (
-          <LoadingIndicator />
+          <LoadingIndicator className="dashboards-manager-loading-indicator" />
         ) : dashboards.length === 0 ? (
           <p>You have no dashboards. Create one!</p>
         ) : (

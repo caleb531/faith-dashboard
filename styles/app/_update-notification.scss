@@ -61,13 +61,6 @@
   }
 }
 
-.update-loading-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 .update-notification .loading-indicator {
   animation: update-element-show var(--update-animation-duration)
     var(--update-animation-timing-function) both;

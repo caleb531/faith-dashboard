@@ -10,6 +10,13 @@
   justify-content: center;
   align-items: center;
 }
+.loading-indicator-auto-centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
 .loading-indicator-icon {
   --icon-max-size: 100px;
   --icon-size: 50%;

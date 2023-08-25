@@ -127,9 +127,7 @@ function WidgetShell({ widget, dispatchToWidget, provided, children }: Props) {
         </button>
       </div>
       {widget.isLoading ? (
-        <div className="loading-indicator-blocking-container">
-          <LoadingIndicator />
-        </div>
+        <LoadingIndicator className="widget-loading-indicator" />
       ) : (
         <div
           className="widget-contents"

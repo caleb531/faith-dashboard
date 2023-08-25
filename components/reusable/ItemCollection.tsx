@@ -59,7 +59,10 @@ const ItemCollection = <TItem extends Item>({
             {isCurrentItem(item) ? (
               <div className="item-collection-item-selected-icon"></div>
             ) : isItemLoading && isItemLoading(item) ? (
-              <LoadingIndicator />
+              <LoadingIndicator
+                className="item-collection-item-loading-indicator"
+                autoCenter
+              />
             ) : null}
             <button
               type="button"
