@@ -27,7 +27,7 @@ button.item-collection-item-button {
   border-radius: 0;
   background: none !important;
 }
-.item-collection-item-selected .item-collection-item-selected-icon {
+.item-collection-item-selected-icon {
   pointer-events: none;
   --icon-size: 50%;
   content: '';
@@ -43,6 +43,16 @@ button.item-collection-item-button {
   background-size: var(--icon-size);
   background-position: center center;
   filter: drop-shadow(0 1px 3px var(--color-black-50));
+}
+.item-collection-item .loading-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  --icon-size: 100px;
+  width: var(--icon-size);
+  height: var(--icon-size);
 }
 .item-collection-item-label {
   font-size: var(--font-size-xs);

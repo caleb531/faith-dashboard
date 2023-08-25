@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
+import LoadingIndicator from './LoadingIndicator';
 
 export type Item = { id: string; name: string };
 
@@ -8,6 +9,7 @@ type Props<TItem extends Item> = {
   itemPreview: (item: TItem) => React.ReactNode;
   isCurrentItem: (item: TItem) => boolean;
   onChooseItem: (item: TItem) => void;
+  isItemLoading?: (item: TItem) => boolean;
   onEditItemName?: (item: TItem) => void;
   onDeleteItem?: (item: TItem) => void;
 };
@@ -20,6 +22,7 @@ const ItemCollection = <TItem extends Item>({
   itemPreview,
   isCurrentItem,
   onChooseItem,
+  isItemLoading,
   onEditItemName,
   onDeleteItem
 }: Props<TItem>) => {
@@ -47,11 +50,16 @@ const ItemCollection = <TItem extends Item>({
             key={item.id}
             data-item={item.id}
             className={classNames('item-collection-item', {
-              'item-collection-item-selected': isCurrentItem(item)
+              'item-collection-item-selected': isCurrentItem(item),
+              'item-collection-item-loading': Boolean(
+                isItemLoading && isItemLoading(item)
+              )
             })}
           >
             {isCurrentItem(item) ? (
               <div className="item-collection-item-selected-icon"></div>
+            ) : isItemLoading && isItemLoading(item) ? (
+              <LoadingIndicator />
             ) : null}
             <button
               type="button"

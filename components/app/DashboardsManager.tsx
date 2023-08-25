@@ -12,7 +12,7 @@ import { SyncedAppState } from './app.types';
 
 // The number of milliseconds that the Dashboard Manager modal will stay open
 // after choosing a dashboard (to give the user time to react to the change)
-const dashboardChangeDelay = 350;
+const dashboardChangeDelay = 500;
 
 type Props = {
   onClose: () => void;
@@ -20,6 +20,8 @@ type Props = {
 
 const DashboardsManager = ({ onClose }: Props) => {
   const [dashboards, setDashboards] = useState<SyncedAppState[]>([]);
+  const [pendingDashboard, setPendingDashboard] =
+    useState<SyncedAppState | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(SessionContext);
   const { app } = useContext(AppContext);
@@ -28,7 +30,9 @@ const DashboardsManager = ({ onClose }: Props) => {
   const supabase = createClientComponentClient();
 
   const switchToDashboard = async (dashboard: SyncedAppState) => {
+    setPendingDashboard(dashboard);
     await pullLatestAppFromServer(dashboard);
+    setPendingDashboard(null);
     // Close modal after short delay to give user time to see that the selected
     // dashboard has been changed (since the 'selected' checkmark will now show
     // up over the dashboard they just clicked)
@@ -74,6 +78,7 @@ const DashboardsManager = ({ onClose }: Props) => {
             items={dashboards}
             onChooseItem={(dashboard) => switchToDashboard(dashboard)}
             isCurrentItem={(dashboard) => dashboard.id === app.id}
+            isItemLoading={(dashboard) => dashboard.id === pendingDashboard?.id}
             itemPreview={(dashboard) => (
               <DashboardPreview dashboard={dashboard} />
             )}
