@@ -1,6 +1,7 @@
 import ItemCollection from '@components/reusable/ItemCollection';
 import LoadingIndicator from '@components/reusable/LoadingIndicator';
 import Modal from '@components/reusable/Modal';
+import useTimeout from '@components/useTimeout';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import AppContext from './AppContext';
@@ -8,6 +9,10 @@ import DashboardPreview from './DashboardPreview';
 import SessionContext from './SessionContext';
 import SyncContext from './SyncContext';
 import { SyncedAppState } from './app.types';
+
+// The number of milliseconds that the Dashboard Manager modal will stay open
+// after choosing a dashboard (to give the user time to react to the change)
+const dashboardChangeDelay = 350;
 
 type Props = {
   onClose: () => void;
@@ -19,11 +24,17 @@ const DashboardsManager = ({ onClose }: Props) => {
   const { user } = useContext(SessionContext);
   const { app } = useContext(AppContext);
   const { pullLatestAppFromServer } = useContext(SyncContext);
+  const setDashboardSwitchTimeout = useTimeout();
   const supabase = createClientComponentClient();
 
   const switchToDashboard = async (dashboard: SyncedAppState) => {
     await pullLatestAppFromServer(dashboard);
-    onClose();
+    // Close modal after short delay to give user time to see that the selected
+    // dashboard has been changed (since the 'selected' checkmark will now show
+    // up over the dashboard they just clicked)
+    setDashboardSwitchTimeout(() => {
+      onClose();
+    }, dashboardChangeDelay);
   };
 
   const fetchDashboards = useCallback(async () => {
@@ -33,7 +44,8 @@ const DashboardsManager = ({ onClose }: Props) => {
     const { data, error } = await supabase
       .from('dashboards')
       .select('raw_data')
-      .match({ user_id: user.id });
+      .match({ user_id: user.id })
+      .order('updated_at', { ascending: false });
     if (!(data && data.length > 0)) {
       return;
     }
@@ -59,12 +71,7 @@ const DashboardsManager = ({ onClose }: Props) => {
           <p>You have no dashboards. Create one!</p>
         ) : (
           <ItemCollection
-            items={dashboards.map((dashboard, d) => {
-              return {
-                ...dashboard,
-                name: dashboard.name ?? `Dashboard ${d + 1}`
-              } as SyncedAppState;
-            })}
+            items={dashboards}
             onChooseItem={(dashboard) => switchToDashboard(dashboard)}
             isCurrentItem={(dashboard) => dashboard.id === app.id}
             itemPreview={(dashboard) => (
