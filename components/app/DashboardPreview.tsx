@@ -13,6 +13,7 @@ const DashboardPreview = ({ dashboard }: Props) => {
         alt=""
         fill
         sizes="200px"
+        draggable="false"
       />
     </div>
   );
