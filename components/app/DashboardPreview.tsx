@@ -46,6 +46,7 @@ const DashboardPreview = ({ dashboard }: Props) => {
                       // read the name of every widget in each dashboard
                       alt=""
                       className="dashboard-preview-widget-icon"
+                      draggable="false"
                     />
                   </div>
                 );
