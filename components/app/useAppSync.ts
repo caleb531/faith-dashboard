@@ -98,7 +98,7 @@ function useAppSync(
         // the server
         .match({ id: app.id });
       if (!(data && data.length > 0)) {
-        pushLocalAppToServer(app);
+        await pushLocalAppToServer(app);
         pushLocalWidgetsToServer(app);
         return;
       }
