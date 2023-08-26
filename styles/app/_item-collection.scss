@@ -80,7 +80,7 @@ button.item-collection-item-button {
   &:hover {
     background-color: var(--color-black-25);
   }
-  &:active {
+  &:hover:active {
     background-color: var(--color-black-30);
   }
 }
