@@ -9,6 +9,7 @@ import DashboardPreview from './DashboardPreview';
 import SessionContext from './SessionContext';
 import SyncContext from './SyncContext';
 import { SyncedAppState } from './app.types';
+import appStateDefault from './appStateDefault';
 
 // The number of milliseconds that the Dashboard Manager modal will stay open
 // after choosing a dashboard (to give the user time to react to the change)
@@ -24,11 +25,26 @@ const DashboardsManager = ({ onClose }: Props) => {
     useState<SyncedAppState | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(SessionContext);
-  const { app } = useContext(AppContext);
+  const { app, dispatchToApp } = useContext(AppContext);
   const { pullLatestAppFromServer, pushLocalAppToServer } =
     useContext(SyncContext);
   const setDashboardSwitchTimeout = useTimeout();
   const supabase = createClientComponentClient();
+
+  function addDashboard() {
+    const name = prompt('Please enter a name for your new dashboard:');
+    if (name?.trim()) {
+      dispatchToApp({
+        type: 'replaceApp',
+        payload: {
+          ...appStateDefault,
+          name,
+          shouldShowTutorial: false
+        }
+      });
+      onClose();
+    }
+  }
 
   function updateDashboardInList(
     dashboards: SyncedAppState[],
@@ -82,7 +98,7 @@ const DashboardsManager = ({ onClose }: Props) => {
       <section className="dashboards-manager">
         <h1>My Dashboards</h1>
         <p>Here, you can manage and switch between multiple dashboards.</p>
-        <button className="add-dashboard" type="button">
+        <button className="add-dashboard" type="button" onClick={addDashboard}>
           Add Dashboard
         </button>
         {isLoading ? (
