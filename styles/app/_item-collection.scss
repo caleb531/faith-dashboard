@@ -24,6 +24,7 @@ button.item-collection-item-button {
   background: none !important;
 }
 .item-collection-item-preview {
+  display: flex;
   &:hover:active {
     filter: brightness(60%);
     color: var(--color-black-100);
@@ -36,7 +37,7 @@ button.item-collection-item-button {
   position: absolute;
   top: 50%;
   left: 50%;
-  z-index: 10;
+  z-index: 100;
   transform: translate(-50%, -50%);
   width: var(--icon-size);
   height: var(--icon-size);
@@ -51,6 +52,11 @@ button.item-collection-item-button {
   width: var(--icon-size);
   height: var(--icon-size);
 }
+.item-collection-item-name-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .item-collection-item-label {
   font-size: var(--font-size-xs);
   font-family: var(--font-family-sans-serif);
@@ -58,7 +64,27 @@ button.item-collection-item-button {
   cursor: default;
   user-select: none;
 }
-.item-collection-item-name-input {
-  flex-grow: 1;
+.dashboards-manager .edit-item-name-button {
   border-radius: 3px;
+  padding: 3px;
+  box-sizing: content-box;
+  --icon-size: 16px;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  margin-left: 5px;
+  vertical-align: middle;
+  img {
+    width: inherit;
+    height: inherit;
+  }
+  &:hover {
+    background-color: var(--color-black-25);
+  }
+  &:active {
+    background-color: var(--color-black-30);
+  }
+}
+.item-collection-item-name {
+  font-weight: var(--font-weight-bold);
+  vertical-align: middle;
 }

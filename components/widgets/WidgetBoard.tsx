@@ -7,6 +7,8 @@ import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import WidgetBoardColumn from './WidgetBoardColumn';
 
+export const columnCount = 3;
+
 /* istanbul ignore next */
 // Convert the ID of a dropzone to a base-1 column index (e.g. "column-3" => 3)
 function getColumnFromDroppableId(droppableId: string): number {
@@ -16,7 +18,6 @@ function getColumnFromDroppableId(droppableId: string): number {
 
 function WidgetBoard() {
   const { dispatchToApp } = useContext(AppContext);
-  const columnCount = 3;
 
   const {
     app: { widgets }
