@@ -13,6 +13,7 @@ function Modal({ children, onClose }: Props) {
         <button
           type="button"
           className="sheet-control sheet-control-right modal-control modal-close-control"
+          data-unstyled
           onClick={onClose}
         >
           <img

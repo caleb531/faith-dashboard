@@ -1,8 +1,10 @@
+import InlineErrorMessage from '@components/reusable/InlineErrorMessage';
 import ItemCollection from '@components/reusable/ItemCollection';
 import LoadingIndicator from '@components/reusable/LoadingIndicator';
 import Modal from '@components/reusable/Modal';
 import useTimeout from '@components/useTimeout';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { PostgrestError } from '@supabase/supabase-js';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import AppContext from './AppContext';
 import DashboardPreview from './DashboardPreview';
@@ -24,6 +26,9 @@ const DashboardsManager = ({ onClose }: Props) => {
   const [pendingDashboard, setPendingDashboard] =
     useState<SyncedAppState | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [dashboardError, setDashboardError] = useState<
+    Error | PostgrestError | null
+  >();
   const { user } = useContext(SessionContext);
   const { app, dispatchToApp } = useContext(AppContext);
   const { pullLatestAppFromServer, pushLocalAppToServer } =
@@ -61,7 +66,30 @@ const DashboardsManager = ({ onClose }: Props) => {
     return newDashboards;
   }
 
+  async function saveEditedDashboardName(dashboard: SyncedAppState) {
+    setDashboardError(null);
+    setDashboards(updateDashboardInList(dashboards, dashboard));
+    pushLocalAppToServer(dashboard);
+  }
+
+  async function deleteDashboard(dashboard: SyncedAppState) {
+    setDashboardError(null);
+    const { error } = await supabase
+      .from('dashboards')
+      .delete()
+      .match({
+        id: dashboard.id,
+        user_id: user?.id
+      });
+    if (error) {
+      setDashboardError(error);
+      return;
+    }
+    fetchDashboards();
+  }
+
   async function switchToDashboard(dashboard: SyncedAppState): Promise<void> {
+    setDashboardError(null);
     setPendingDashboard(dashboard);
     await pullLatestAppFromServer(dashboard);
     setPendingDashboard(null);
@@ -74,15 +102,16 @@ const DashboardsManager = ({ onClose }: Props) => {
   }
 
   const fetchDashboards = useCallback(async (): Promise<void> => {
-    if (!user) {
-      return;
-    }
     const { data, error } = await supabase
       .from('dashboards')
       .select('raw_data')
-      .match({ user_id: user.id })
+      .match({ user_id: user?.id })
       .order('updated_at', { ascending: false });
     if (!(data && data.length > 0)) {
+      return;
+    }
+    if (error) {
+      setDashboardError(error);
       return;
     }
     setDashboards(data.map((result) => result.raw_data));
@@ -101,6 +130,9 @@ const DashboardsManager = ({ onClose }: Props) => {
         <button className="add-dashboard" type="button" onClick={addDashboard}>
           Add Dashboard
         </button>
+        {dashboardError ? (
+          <InlineErrorMessage message={dashboardError.message} />
+        ) : null}
         {isLoading ? (
           <LoadingIndicator className="dashboards-manager-loading-indicator" />
         ) : dashboards.length === 0 ? (
@@ -108,15 +140,22 @@ const DashboardsManager = ({ onClose }: Props) => {
         ) : (
           <ItemCollection
             items={dashboards}
+            itemType="dashboard"
             onChooseItem={(dashboard) => switchToDashboard(dashboard)}
             isCurrentItem={(dashboard) => dashboard.id === app.id}
             isItemLoading={(dashboard) => dashboard.id === pendingDashboard?.id}
             itemPreview={(dashboard) => (
               <DashboardPreview dashboard={dashboard} />
             )}
-            onEditItemName={(dashboard) => {
-              setDashboards(updateDashboardInList(dashboards, dashboard));
-              pushLocalAppToServer(dashboard);
+            onEditItemName={(dashboard) => saveEditedDashboardName(dashboard)}
+            onDeleteItem={(dashboard) => {
+              const confirmation = confirm(
+                `Are you sure you want to permanently delete the dashboard "${dashboard.name}" and all of its widgets?`
+              );
+              if (!confirmation) {
+                return;
+              }
+              deleteDashboard(dashboard);
             }}
           />
         )}

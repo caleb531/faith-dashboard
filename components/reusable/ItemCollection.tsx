@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { capitalize } from 'lodash-es';
 import React from 'react';
 import LoadingIndicator from './LoadingIndicator';
 
@@ -6,6 +7,7 @@ export type Item = { id: string; name: string };
 
 type Props<TItem extends Item> = {
   items: TItem[];
+  itemType: string;
   itemPreview: (item: TItem) => React.ReactNode;
   isCurrentItem: (item: TItem) => boolean;
   onChooseItem?: (item: TItem) => void;
@@ -19,6 +21,7 @@ type Props<TItem extends Item> = {
 // image, element, etc.), but must have a name at a very minimum
 const ItemCollection = <TItem extends Item>({
   items,
+  itemType,
   itemPreview,
   isCurrentItem,
   onChooseItem,
@@ -53,7 +56,7 @@ const ItemCollection = <TItem extends Item>({
       return;
     }
     const newName = prompt(
-      `Please enter a new name for "${item.name}":`,
+      `Please enter a new name for the ${itemType} "${item.name}":`,
       item.name
     );
     if (newName?.trim()) {
@@ -62,6 +65,15 @@ const ItemCollection = <TItem extends Item>({
         name: newName
       });
     }
+  }
+
+  function onDeleteItemWrapper(event: React.MouseEvent) {
+    event.preventDefault();
+    const item = getItemFromElement(event.target as HTMLElement);
+    if (!(item && onDeleteItem)) {
+      return;
+    }
+    onDeleteItem(item);
   }
 
   return (
@@ -78,22 +90,37 @@ const ItemCollection = <TItem extends Item>({
               )
             })}
           >
-            {isCurrentItem(item) ? (
-              <div className="item-collection-item-selected-icon"></div>
-            ) : isItemLoading && isItemLoading(item) ? (
-              <LoadingIndicator
-                className="item-collection-item-loading-indicator"
-                autoCenter
-              />
+            {onDeleteItem ? (
+              <button
+                type="button"
+                className="item-collection-item-delete-button"
+                data-unstyled
+                onClick={onDeleteItemWrapper}
+              >
+                <img
+                  src="/icons/remove-light.svg"
+                  alt={`Delete ${capitalize(itemType)}`}
+                  draggable="false"
+                />
+              </button>
             ) : null}
             <button
               type="button"
-              className="item-collection-item-button"
+              className="item-collection-item-choose-button"
               data-action="choose-item"
+              data-unstyled
               aria-labelledby={`item-${item.id}-label`}
               onClick={onChooseItemWrapper}
             >
               <div className="item-collection-item-preview">
+                {isCurrentItem(item) ? (
+                  <div className="item-collection-item-selected-icon"></div>
+                ) : isItemLoading && isItemLoading(item) ? (
+                  <LoadingIndicator
+                    className="item-collection-item-loading-indicator"
+                    autoCenter
+                  />
+                ) : null}
                 {itemPreview(item)}
               </div>
             </button>
@@ -113,7 +140,7 @@ const ItemCollection = <TItem extends Item>({
                   >
                     <img
                       src="/icons/edit-dark.svg"
-                      alt="Edit Dashboard Name"
+                      alt={`Edit ${capitalize(itemType)} Name`}
                       draggable="false"
                     />
                   </button>

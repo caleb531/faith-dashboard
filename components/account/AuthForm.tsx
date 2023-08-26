@@ -1,4 +1,5 @@
 import Captcha from '@components/Captcha';
+import InlineErrorMessage from '@components/reusable/InlineErrorMessage';
 import useVerifyCaptcha from '@components/useVerifyCaptcha';
 import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
@@ -154,11 +155,7 @@ function AuthForm(props: Props) {
       />
 
       {formErrorMessage ? (
-        <div className="account-auth-form-validation-area">
-          <div className="account-auth-form-validation-message">
-            {formErrorMessage}
-          </div>
-        </div>
+        <InlineErrorMessage message={formErrorMessage} />
       ) : null}
 
       <div className="account-auth-form-submit-container">

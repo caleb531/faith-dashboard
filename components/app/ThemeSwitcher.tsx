@@ -44,6 +44,7 @@ function ThemeSwitcher({ onCloseThemeSwitcher }: Props) {
 
         <ItemCollection
           items={photoThemeList}
+          itemType="theme"
           onChooseItem={onChooseTheme}
           isCurrentItem={(theme) => theme.id === currentThemeId}
           itemPreview={(theme) => <PhotoThemePreview theme={theme} />}
@@ -53,6 +54,7 @@ function ThemeSwitcher({ onCloseThemeSwitcher }: Props) {
 
         <ItemCollection
           items={colorThemeList}
+          itemType="theme"
           onChooseItem={onChooseTheme}
           isCurrentItem={(theme) => theme.id === currentThemeId}
           itemPreview={(theme) => <ColorThemePreview theme={theme} />}

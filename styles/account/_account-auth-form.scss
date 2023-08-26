@@ -22,17 +22,6 @@ button.account-auth-form-submit {
   border-radius: 40px;
 }
 
-.account-auth-form-validation-message {
-  display: inline-block;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  padding: 10px 20px;
-  background-color: var(--color-red);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-xs);
-  color: var(--color-white-100);
-}
-
 .account-auth-form-alt-link {
   margin-left: 15px;
   color: var(--current-theme-color);

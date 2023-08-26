@@ -4,8 +4,8 @@
   background-color: var(--color-white-100);
   font-family: var(--font-family-sans-serif);
   overflow: hidden;
-  button,
-  .button {
+  button:not([data-unstyled]),
+  .button:not([data-unstyled]) {
     --button-background-color: var(--current-theme-color);
     --button-background-color-active: var(--current-theme-color-dark);
   }

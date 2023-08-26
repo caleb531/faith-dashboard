@@ -11,20 +11,15 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 10px 15px;
-  padding-bottom: 0;
+  margin: 5px;
+  margin-bottom: 10px;
+  padding: 0 15px;
   list-style-type: none;
-}
-button.item-collection-item-button {
-  position: relative;
-  margin: 0;
-  padding: 5px;
-  border-width: 0 !important;
-  border-radius: 0;
-  background: none !important;
 }
 .item-collection-item-preview {
   display: flex;
+  position: relative;
+  margin-bottom: 3px;
   &:hover:active {
     filter: brightness(60%);
     color: var(--color-black-100);
@@ -52,6 +47,23 @@ button.item-collection-item-button {
   width: var(--icon-size);
   height: var(--icon-size);
 }
+button.item-collection-item-delete-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  z-index: 100;
+  border-radius: 50%;
+  --button-background-color: var(--color-grey);
+  box-shadow: 0 1px 3px var(--color-black-25);
+  img {
+    --icon-size: 20px;
+    width: var(--icon-size);
+    height: var(--icon-size);
+  }
+}
 .item-collection-item-name-area {
   display: flex;
   justify-content: center;
@@ -64,7 +76,7 @@ button.item-collection-item-button {
   cursor: default;
   user-select: none;
 }
-.dashboards-manager .edit-item-name-button {
+.dashboards-manager button.edit-item-name-button {
   border-radius: 3px;
   padding: 3px;
   box-sizing: content-box;
@@ -77,12 +89,8 @@ button.item-collection-item-button {
     width: inherit;
     height: inherit;
   }
-  &:hover {
-    background-color: var(--color-black-25);
-  }
-  &:hover:active {
-    background-color: var(--color-black-30);
-  }
+  --button-background-color-hover: var(--color-black-25);
+  --button-background-color-active: var(--color-black-30);
 }
 .item-collection-item-name {
   font-weight: var(--font-weight-bold);
