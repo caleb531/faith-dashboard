@@ -85,10 +85,18 @@ const DashboardsManager = ({ onClose }: Props) => {
       setDashboardError(error);
       return;
     }
-    fetchDashboards();
+    const newDashboards = await fetchDashboards();
+    // Only switch dashboards if the selected dashboard is the dashboard being
+    // deleted
+    if (newDashboards && newDashboards.length >= 1 && app.id === dashboard.id) {
+      await switchToDashboard(newDashboards[0]);
+    }
   }
 
-  async function switchToDashboard(dashboard: SyncedAppState): Promise<void> {
+  async function switchToDashboard(
+    dashboard: SyncedAppState,
+    { autoClose = false }: { autoClose?: boolean } = {}
+  ): Promise<void> {
     setDashboardError(null);
     setPendingDashboard(dashboard);
     await pullLatestAppFromServer(dashboard);
@@ -96,12 +104,16 @@ const DashboardsManager = ({ onClose }: Props) => {
     // Close modal after short delay to give user time to see that the selected
     // dashboard has been changed (since the 'selected' checkmark will now show
     // up over the dashboard they just clicked)
-    setDashboardSwitchTimeout(() => {
-      onClose();
-    }, dashboardChangeDelay);
+    if (autoClose) {
+      setDashboardSwitchTimeout(() => {
+        onClose();
+      }, dashboardChangeDelay);
+    }
   }
 
-  const fetchDashboards = useCallback(async (): Promise<void> => {
+  const fetchDashboards = useCallback(async (): Promise<
+    SyncedAppState[] | undefined
+  > => {
     const { data, error } = await supabase
       .from('dashboards')
       .select('raw_data')
@@ -114,8 +126,10 @@ const DashboardsManager = ({ onClose }: Props) => {
       setDashboardError(error);
       return;
     }
-    setDashboards(data.map((result) => result.raw_data));
+    const newDashboards = data.map((result) => result.raw_data);
+    setDashboards(newDashboards);
     setIsLoading(false);
+    return newDashboards;
   }, [supabase, user]);
 
   useEffect(() => {
@@ -141,7 +155,9 @@ const DashboardsManager = ({ onClose }: Props) => {
           <ItemCollection
             items={dashboards}
             itemType="dashboard"
-            onChooseItem={(dashboard) => switchToDashboard(dashboard)}
+            onChooseItem={(dashboard) =>
+              switchToDashboard(dashboard, { autoClose: true })
+            }
             isCurrentItem={(dashboard) => dashboard.id === app.id}
             isItemLoading={(dashboard) => dashboard.id === pendingDashboard?.id}
             itemPreview={(dashboard) => (
