@@ -83,7 +83,7 @@ function App({
     saveApp(app);
   }, [app, saveApp]);
 
-  const { pullLatestAppFromServer } = useAppSync(app, dispatchToApp);
+  const appSyncUtils = useAppSync(app, dispatchToApp);
   useThemeForEntirePage(app.theme);
   useAuthenticationDetection();
 
@@ -100,7 +100,7 @@ function App({
 
   const appContext = useMemoizedContextValue({ app, dispatchToApp });
   const sessionContext = useMemoizedContextValue({ session, user });
-  const syncContext = useMemoizedContextValue({ pullLatestAppFromServer });
+  const syncContext = useMemoizedContextValue(appSyncUtils);
 
   return (
     <SessionContext.Provider value={sessionContext}>

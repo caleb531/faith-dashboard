@@ -8,7 +8,7 @@ type Props<TItem extends Item> = {
   items: TItem[];
   itemPreview: (item: TItem) => React.ReactNode;
   isCurrentItem: (item: TItem) => boolean;
-  onChooseItem: (item: TItem) => void;
+  onChooseItem?: (item: TItem) => void;
   isItemLoading?: (item: TItem) => boolean;
   onEditItemName?: (item: TItem) => void;
   onDeleteItem?: (item: TItem) => void;
@@ -26,24 +26,39 @@ const ItemCollection = <TItem extends Item>({
   onEditItemName,
   onDeleteItem
 }: Props<TItem>) => {
-  // Since there can be many items, use event delegation to attach only a
-  // single listener and figure out which item was clicked
-  function chooseItem(event: React.MouseEvent) {
-    const target = event.target as HTMLElement;
-    const itemElement = target.closest('.item-collection-item');
-    if (!(target.closest('[data-action="choose-item"]') && itemElement)) {
+  // Retrieve the Item object corresponding to the given DOM element
+  function getItemFromElement(element: HTMLElement): TItem | undefined {
+    const itemElement = element.closest('.item-collection-item');
+    if (!itemElement) {
       return;
     }
     const newItemId = itemElement.getAttribute('data-item') as Item['id'];
-    const newItem = items.find((item) => item.id === newItemId);
-    if (!newItem) {
+    return items.find((item) => item.id === newItemId);
+  }
+
+  // Since there can be many items, use event delegation to attach only a
+  // single listener and figure out which item was clicked
+  function onChooseItemWrapper(event: React.MouseEvent) {
+    const item = getItemFromElement(event.target as HTMLElement);
+    if (!(item && onChooseItem)) {
       return;
     }
-    onChooseItem(newItem);
+    onChooseItem(item);
+  }
+
+  function onEditItemNameWrapper(event: React.MouseEvent) {
+    const item = getItemFromElement(event.target as HTMLElement);
+    if (!(item && onEditItemName)) {
+      return;
+    }
+    onEditItemName({
+      ...item,
+      name: prompt(`Please enter a new name for "${item.name}"`, item.name)
+    });
   }
 
   return (
-    <ul className="item-collection" onClick={chooseItem}>
+    <ul className="item-collection">
       {items.map((item) => {
         return (
           <li
@@ -69,18 +84,35 @@ const ItemCollection = <TItem extends Item>({
               className="item-collection-item-button"
               data-action="choose-item"
               id={`item-${item.id}`}
+              onClick={onChooseItemWrapper}
             >
               <div className="item-collection-item-preview">
                 {itemPreview(item)}
               </div>
             </button>
-            <label
-              className="item-collection-item-label"
-              data-action="choose-item"
-              htmlFor={`item-${item.id}`}
-            >
-              {item.name}
-            </label>
+            <span className="item-collection-item-name-area">
+              <label
+                className="item-collection-item-label"
+                data-action="choose-item"
+                htmlFor={`item-${item.id}`}
+              >
+                {item.name}
+              </label>
+              {onEditItemName ? (
+                <button
+                  type="button"
+                  className="edit-dashboard-name-button"
+                  data-unstyled
+                  onClick={onEditItemNameWrapper}
+                >
+                  <img
+                    src="/icons/edit-dark.svg"
+                    alt="Edit Dashboard Name"
+                    draggable="false"
+                  />
+                </button>
+              ) : null}
+            </span>
           </li>
         );
       })}

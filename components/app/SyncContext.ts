@@ -4,6 +4,7 @@ import { AppState } from './app.types';
 
 export type SyncContextType = {
   pullLatestAppFromServer: (app: AppState) => Promise<void>;
+  pushLocalAppToServer: (app: AppState) => Promise<void>;
 };
 
 // @ts-ignore (the SyncContext will be initiailized with a non-null value in

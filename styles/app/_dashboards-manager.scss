@@ -12,3 +12,27 @@
   overflow: hidden;
   background-color: var(--color-black-25);
 }
+.item-collection-item-name-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+button.edit-dashboard-name-button {
+  border-radius: 3px;
+  padding: 3px;
+  box-sizing: content-box;
+  --icon-size: 16px;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  margin-left: 5px;
+  img {
+    width: inherit;
+    height: inherit;
+  }
+  &:hover {
+    background-color: var(--color-black-25);
+  }
+  &:active {
+    background-color: var(--color-black-30);
+  }
+}

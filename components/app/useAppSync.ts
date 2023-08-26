@@ -7,6 +7,7 @@ import useSyncPush from '../useSyncPush';
 import { WidgetHead, WidgetState } from '../widgets/widget.types';
 import widgetSyncService from '../widgets/widgetSyncService';
 import { AppAction } from './AppReducer';
+import { SyncContextType } from './SyncContext';
 import { AppState } from './app.types';
 
 const supabase = createClientComponentClient();
@@ -73,9 +74,7 @@ function pushLocalWidgetsToServer(app: AppState): void {
 function useAppSync(
   app: AppState,
   dispatchToApp: Dispatch<AppAction>
-): {
-  pullLatestAppFromServer: (app: AppState) => Promise<void>;
-} {
+): SyncContextType {
   // Push the local app state to the server every time the app state changes
   // locally; please note that this push operation is debounced
   useSyncPush({
@@ -136,7 +135,7 @@ function useAppSync(
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [isDefaultAppState]);
 
-  return { pullLatestAppFromServer };
+  return { pullLatestAppFromServer, pushLocalAppToServer };
 }
 
 export default useAppSync;

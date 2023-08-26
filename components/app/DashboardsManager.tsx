@@ -25,11 +25,27 @@ const DashboardsManager = ({ onClose }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(SessionContext);
   const { app } = useContext(AppContext);
-  const { pullLatestAppFromServer } = useContext(SyncContext);
+  const { pullLatestAppFromServer, pushLocalAppToServer } =
+    useContext(SyncContext);
   const setDashboardSwitchTimeout = useTimeout();
   const supabase = createClientComponentClient();
 
-  const switchToDashboard = async (dashboard: SyncedAppState) => {
+  function updateDashboardInList(
+    dashboards: SyncedAppState[],
+    newDashboard: SyncedAppState
+  ): SyncedAppState[] {
+    const dashboardIndex = dashboards.findIndex((dashboard) => {
+      return dashboard.id === newDashboard.id;
+    });
+    if (dashboardIndex === -1) {
+      return dashboards;
+    }
+    const newDashboards = dashboards.slice(0);
+    newDashboards.splice(dashboardIndex, 1, newDashboard);
+    return newDashboards;
+  }
+
+  async function switchToDashboard(dashboard: SyncedAppState): Promise<void> {
     setPendingDashboard(dashboard);
     await pullLatestAppFromServer(dashboard);
     setPendingDashboard(null);
@@ -39,9 +55,9 @@ const DashboardsManager = ({ onClose }: Props) => {
     setDashboardSwitchTimeout(() => {
       onClose();
     }, dashboardChangeDelay);
-  };
+  }
 
-  const fetchDashboards = useCallback(async () => {
+  const fetchDashboards = useCallback(async (): Promise<void> => {
     if (!user) {
       return;
     }
@@ -82,6 +98,10 @@ const DashboardsManager = ({ onClose }: Props) => {
             itemPreview={(dashboard) => (
               <DashboardPreview dashboard={dashboard} />
             )}
+            onEditItemName={(dashboard) => {
+              setDashboards(updateDashboardInList(dashboards, dashboard));
+              pushLocalAppToServer(dashboard);
+            }}
           />
         )}
       </section>
