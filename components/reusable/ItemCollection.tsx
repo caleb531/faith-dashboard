@@ -52,10 +52,16 @@ const ItemCollection = <TItem extends Item>({
     if (!(item && onEditItemName)) {
       return;
     }
-    onEditItemName({
-      ...item,
-      name: prompt(`Please enter a new name for "${item.name}"`, item.name)
-    });
+    const newName = prompt(
+      `Please enter a new name for "${item.name}"`,
+      item.name
+    );
+    if (newName?.trim()) {
+      onEditItemName({
+        ...item,
+        name: newName
+      });
+    }
   }
 
   return (
