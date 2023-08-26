@@ -53,7 +53,7 @@ const ItemCollection = <TItem extends Item>({
       return;
     }
     const newName = prompt(
-      `Please enter a new name for "${item.name}"`,
+      `Please enter a new name for "${item.name}":`,
       item.name
     );
     if (newName?.trim()) {
