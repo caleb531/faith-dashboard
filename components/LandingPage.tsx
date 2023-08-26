@@ -55,6 +55,7 @@ async function LandingPage(
             <LinkButton
               href="/"
               className="sheet-control sheet-control-left landing-page-control landing-page-home-control"
+              unstyled
             >
               <img
                 className="sheet-control-icon landing-page-control-icon landing-page-home-control-icon"
@@ -67,6 +68,7 @@ async function LandingPage(
               <LinkButton
                 href={altLink.href}
                 className="sheet-control sheet-control-right landing-page-control landing-page-alt-control"
+                unstyled
               >
                 {altLink.title}
               </LinkButton>

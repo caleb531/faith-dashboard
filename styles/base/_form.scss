@@ -98,8 +98,8 @@ button,
     background-color: var(--button-background-color-active);
   }
 }
-button[data-unstyled],
-.button[data-unstyled] {
+button[data-unstyled='true'],
+.button[data-unstyled='true'] {
   margin: 0;
   border-width: 0;
   padding: 0;
