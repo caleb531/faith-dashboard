@@ -47,6 +47,7 @@ const ItemCollection = <TItem extends Item>({
   }
 
   function onEditItemNameWrapper(event: React.MouseEvent) {
+    event.preventDefault();
     const item = getItemFromElement(event.target as HTMLElement);
     if (!(item && onEditItemName)) {
       return;
@@ -83,7 +84,7 @@ const ItemCollection = <TItem extends Item>({
               type="button"
               className="item-collection-item-button"
               data-action="choose-item"
-              id={`item-${item.id}`}
+              aria-labelledby={`item-${item.id}-label`}
               onClick={onChooseItemWrapper}
             >
               <div className="item-collection-item-preview">
@@ -91,27 +92,27 @@ const ItemCollection = <TItem extends Item>({
               </div>
             </button>
             <span className="item-collection-item-name-area">
-              <label
+              <span
                 className="item-collection-item-label"
                 data-action="choose-item"
-                htmlFor={`item-${item.id}`}
+                id={`item-${item.id}-label`}
               >
-                {item.name}
-              </label>
-              {onEditItemName ? (
-                <button
-                  type="button"
-                  className="edit-dashboard-name-button"
-                  data-unstyled
-                  onClick={onEditItemNameWrapper}
-                >
-                  <img
-                    src="/icons/edit-dark.svg"
-                    alt="Edit Dashboard Name"
-                    draggable="false"
-                  />
-                </button>
-              ) : null}
+                <span className="item-collection-item-name">{item.name}</span>
+                {onEditItemName ? (
+                  <button
+                    type="button"
+                    className="edit-item-name-button"
+                    data-unstyled
+                    onClick={onEditItemNameWrapper}
+                  >
+                    <img
+                      src="/icons/edit-dark.svg"
+                      alt="Edit Dashboard Name"
+                      draggable="false"
+                    />
+                  </button>
+                ) : null}
+              </span>
             </span>
           </li>
         );
