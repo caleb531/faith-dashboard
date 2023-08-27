@@ -17,6 +17,7 @@ import {
   mockSupabaseDelete,
   mockSupabaseFrom,
   mockSupabaseSelect,
+  mockSupabaseSelectOnce,
   mockSupabaseSession,
   mockSupabaseUpsert,
   mockSupabaseUser,
@@ -98,6 +99,69 @@ describe('Sync functionality', () => {
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
       expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(4);
     });
+  });
+
+  it('should pull remote dashboard matching local dashboard ID', async () => {
+    await mockSupabaseUser();
+    await mockSupabaseSession();
+    mockSupabaseFrom();
+    mockSupabaseSelect('dashboards', {
+      data: [{ raw_data: dashboardToPullJson }]
+    });
+    mockSupabaseSelect('widgets', {
+      data: [{ raw_data: widgetToPullJson }]
+    });
+    mockSupabaseUpsert('dashboards');
+    mockSupabaseUpsert('widgets');
+    assignIdToLocalApp(uuidv4());
+    await renderServerComponent(<Home />);
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Your Account' })
+      ).toBeInTheDocument();
+    });
+    await waitFor(() => {
+      expect(supabase.from).toHaveBeenCalledWith('dashboards');
+      expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
+      expect(supabaseFromMocks.widgets.select).toHaveBeenCalled();
+      expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(0);
+      expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(0);
+    });
+    expect(screen.getByText('Evening')).toBeInTheDocument();
+    expect(screen.queryByText('Shore')).not.toBeInTheDocument();
+  });
+
+  it('should pull most recent dashboard for user if the local dashboard was not found on server', async () => {
+    await mockSupabaseUser();
+    await mockSupabaseSession();
+    mockSupabaseFrom();
+    mockSupabaseSelectOnce('dashboards', {
+      data: []
+    });
+    mockSupabaseSelectOnce('dashboards', {
+      data: [{ raw_data: dashboardToPullJson }]
+    });
+    mockSupabaseSelectOnce('widgets', {
+      data: [{ raw_data: widgetToPullJson }]
+    });
+    mockSupabaseUpsert('dashboards');
+    mockSupabaseUpsert('widgets');
+    assignIdToLocalApp(uuidv4());
+    await renderServerComponent(<Home />);
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Your Account' })
+      ).toBeInTheDocument();
+    });
+    await waitFor(() => {
+      expect(supabase.from).toHaveBeenCalledWith('dashboards');
+      expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(2);
+      expect(supabaseFromMocks.widgets.select).toHaveBeenCalled();
+      expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(0);
+      expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(0);
+    });
+    expect(screen.getByText('Evening')).toBeInTheDocument();
+    expect(screen.queryByText('Shore')).not.toBeInTheDocument();
   });
 
   it('should run push listeners even if event was broadcast before listeners were bound', async () => {

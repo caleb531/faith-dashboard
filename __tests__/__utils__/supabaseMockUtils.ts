@@ -137,33 +137,53 @@ export class SupabaseSelectPromise<T> extends Promise<T> {
   limit?: jest.Mock;
 }
 
-function getPostgresBuilderMock(tableName: TableName, response: any) {
+function getPostgresBuilderMock(
+  mockMethodName: 'mockImplementation' | 'mockImplementationOnce',
+  tableName: TableName,
+  response: any
+) {
   const promise = new SupabaseSelectPromise((resolve) => {
     resolve(response);
   });
+  /* eslint-disable no-unexpected-multiline */
   promise.order = jest
-    .fn()
-    .mockName(`${tableName} order`)
     // Because we are attaching additional members to the Promise object, it is
     // essential that the mockImplementation() callbacks NOT be async functions,
     // since an async function will return a native Promise wrapped around our
     // modified promise object (which defeats the whole purpose); in other
     // words, we must return our modified promise object directly
-    .mockImplementation(() => getPostgresBuilderMock(tableName, response));
+    .fn()
+    .mockName(`${tableName} order`)
+    [mockMethodName](() =>
+      getPostgresBuilderMock(mockMethodName, tableName, response)
+    );
   promise.match = jest
     .fn()
     .mockName(`${tableName} match`)
-    .mockImplementation(() => getPostgresBuilderMock(tableName, response));
+    [mockMethodName](() =>
+      getPostgresBuilderMock(mockMethodName, tableName, response)
+    );
   promise.limit = jest
     .fn()
     .mockName(`${tableName} limit`)
-    .mockImplementation(() => getPostgresBuilderMock(tableName, response));
+    [mockMethodName](() =>
+      getPostgresBuilderMock(mockMethodName, tableName, response)
+    );
+  /* eslint-enable no-unexpected-multiline */
   return promise;
 }
 
 export function mockSupabaseSelect(tableName: TableName, response: any) {
-  supabaseFromMocks[tableName].select.mockImplementation(() => {
-    return getPostgresBuilderMock(tableName, response);
+  const mockMethodName = 'mockImplementation';
+  supabaseFromMocks[tableName].select[mockMethodName](() => {
+    return getPostgresBuilderMock(mockMethodName, tableName, response);
+  });
+  return supabaseFromMocks[tableName].select;
+}
+export function mockSupabaseSelectOnce(tableName: TableName, response: any) {
+  const mockMethodName = 'mockImplementationOnce';
+  supabaseFromMocks[tableName].select[mockMethodName](() => {
+    return getPostgresBuilderMock(mockMethodName, tableName, response);
   });
   return supabaseFromMocks[tableName].select;
 }
