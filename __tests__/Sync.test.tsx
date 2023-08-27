@@ -165,7 +165,7 @@ describe('Sync functionality', () => {
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
     expect(textBox).toBeInTheDocument();
     await userEvent.type(textBox, 'God is good', {
-      // Because we are using fake timers, we must advance the time mannally
+      // Because we are using fake timers, we must advance the time manually
       // via the optional advanceTimers() callback to userEvent methods
       advanceTimers: (delay) => {
         jest.advanceTimersByTime(delay);
