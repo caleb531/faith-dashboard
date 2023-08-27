@@ -88,7 +88,7 @@ button,
   color: var(--color-white-100);
   font-size: var(--font-size-xs);
   text-decoration: none;
-  &[disabled] {
+  &[disabled]:not([data-unstyled='true']) {
     opacity: 0.5;
   }
   &:not([disabled]):hover {

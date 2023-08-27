@@ -146,7 +146,11 @@ const DashboardsManager = ({ onClose }: Props) => {
       <section className="dashboards-manager">
         <h1>My Dashboards</h1>
         <p>Here, you can manage and switch between multiple dashboards.</p>
-        <Button className="add-dashboard" onClick={addDashboard}>
+        <Button
+          className="add-dashboard"
+          disabled={isLoading}
+          onClick={addDashboard}
+        >
           Add Dashboard
         </Button>
         {dashboardError ? (

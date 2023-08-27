@@ -97,6 +97,10 @@ const ItemCollection = <TItem extends Item>({
               <Button
                 className="item-collection-item-delete-button"
                 unstyled
+                disabled={Boolean(
+                  (isItemBeingDeleted && isItemBeingDeleted(item)) ||
+                    (isItemBeingChosen && isItemBeingChosen(item))
+                )}
                 onClick={onDeleteItemWrapper}
               >
                 {isItemBeingDeleted && isItemBeingDeleted(item) ? (
@@ -114,6 +118,7 @@ const ItemCollection = <TItem extends Item>({
               className="item-collection-item-choose-button"
               data-action="choose-item"
               unstyled
+              disabled={Boolean(isItemBeingChosen && isItemBeingChosen(item))}
               aria-labelledby={`item-${item.id}-label`}
               onClick={onChooseItemWrapper}
             >
