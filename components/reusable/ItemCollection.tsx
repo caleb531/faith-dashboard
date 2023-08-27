@@ -11,7 +11,8 @@ type Props<TItem extends Item> = {
   itemPreview: (item: TItem) => React.ReactNode;
   isCurrentItem: (item: TItem) => boolean;
   onChooseItem?: (item: TItem) => void;
-  isItemLoading?: (item: TItem) => boolean;
+  isItemBeingChosen?: (item: TItem) => boolean;
+  isItemBeingDeleted?: (item: TItem) => boolean;
   onEditItemName?: (item: TItem) => void;
   onDeleteItem?: (item: TItem) => void;
 };
@@ -25,7 +26,8 @@ const ItemCollection = <TItem extends Item>({
   itemPreview,
   isCurrentItem,
   onChooseItem,
-  isItemLoading,
+  isItemBeingChosen,
+  isItemBeingDeleted,
   onEditItemName,
   onDeleteItem
 }: Props<TItem>) => {
@@ -86,7 +88,7 @@ const ItemCollection = <TItem extends Item>({
             className={classNames('item-collection-item', {
               'item-collection-item-selected': isCurrentItem(item),
               'item-collection-item-loading': Boolean(
-                isItemLoading && isItemLoading(item)
+                isItemBeingChosen && isItemBeingChosen(item)
               )
             })}
           >
@@ -97,11 +99,15 @@ const ItemCollection = <TItem extends Item>({
                 data-unstyled
                 onClick={onDeleteItemWrapper}
               >
-                <img
-                  src="/icons/remove-light.svg"
-                  alt={`Delete ${capitalize(itemType)}`}
-                  draggable="false"
-                />
+                {isItemBeingDeleted && isItemBeingDeleted(item) ? (
+                  <LoadingIndicator />
+                ) : (
+                  <img
+                    src="/icons/remove-light.svg"
+                    alt={`Delete ${capitalize(itemType)}`}
+                    draggable="false"
+                  />
+                )}
               </button>
             ) : null}
             <button
@@ -113,7 +119,7 @@ const ItemCollection = <TItem extends Item>({
               onClick={onChooseItemWrapper}
             >
               <div className="item-collection-item-preview">
-                {isItemLoading && isItemLoading(item) ? (
+                {isItemBeingChosen && isItemBeingChosen(item) ? (
                   <LoadingIndicator
                     className="item-collection-item-loading-indicator"
                     autoCenter

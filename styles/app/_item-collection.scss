@@ -55,6 +55,9 @@ button.item-collection-item-delete-button {
   top: -5px;
   right: -5px;
   z-index: 100;
+  --button-size: 24px;
+  width: var(--button-size);
+  height: var(--button-size);
   border-radius: 50%;
   --button-background-color: var(--color-grey);
   box-shadow: 0 1px 3px var(--color-black-25);
@@ -62,6 +65,9 @@ button.item-collection-item-delete-button {
     --icon-size: 20px;
     width: var(--icon-size);
     height: var(--icon-size);
+  }
+  .loading-indicator-icon {
+    --icon-size: 12px;
   }
 }
 .item-collection-item-name-area {

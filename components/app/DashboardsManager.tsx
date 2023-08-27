@@ -23,7 +23,9 @@ type Props = {
 
 const DashboardsManager = ({ onClose }: Props) => {
   const [dashboards, setDashboards] = useState<SyncedAppState[]>([]);
-  const [pendingDashboard, setPendingDashboard] =
+  const [dashboardBeingChosen, setDashboardBeingChosen] =
+    useState<SyncedAppState | null>(null);
+  const [dashboardBeingDeleted, setDashboardBeingDeleted] =
     useState<SyncedAppState | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [dashboardError, setDashboardError] = useState<
@@ -74,6 +76,7 @@ const DashboardsManager = ({ onClose }: Props) => {
 
   async function deleteDashboard(dashboard: SyncedAppState) {
     setDashboardError(null);
+    setDashboardBeingDeleted(dashboard);
     const { error } = await supabase
       .from('dashboards')
       .delete()
@@ -86,6 +89,7 @@ const DashboardsManager = ({ onClose }: Props) => {
       return;
     }
     const newDashboards = await fetchDashboards();
+    setDashboardBeingDeleted(null);
     // Only switch dashboards if the selected dashboard is the dashboard being
     // deleted
     if (newDashboards && newDashboards.length >= 1 && app.id === dashboard.id) {
@@ -98,9 +102,9 @@ const DashboardsManager = ({ onClose }: Props) => {
     { autoClose = false }: { autoClose?: boolean } = {}
   ): Promise<void> {
     setDashboardError(null);
-    setPendingDashboard(dashboard);
+    setDashboardBeingChosen(dashboard);
     await pullLatestAppFromServer(dashboard);
-    setPendingDashboard(null);
+    setDashboardBeingChosen(null);
     // Close modal after short delay to give user time to see that the selected
     // dashboard has been changed (since the 'selected' checkmark will now show
     // up over the dashboard they just clicked)
@@ -159,7 +163,12 @@ const DashboardsManager = ({ onClose }: Props) => {
               switchToDashboard(dashboard, { autoClose: true })
             }
             isCurrentItem={(dashboard) => dashboard.id === app.id}
-            isItemLoading={(dashboard) => dashboard.id === pendingDashboard?.id}
+            isItemBeingChosen={(dashboard) =>
+              dashboard.id === dashboardBeingChosen?.id
+            }
+            isItemBeingDeleted={(dashboard) =>
+              dashboard.id === dashboardBeingDeleted?.id
+            }
             itemPreview={(dashboard) => (
               <DashboardPreview dashboard={dashboard} />
             )}
