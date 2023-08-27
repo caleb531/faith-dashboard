@@ -42,7 +42,7 @@ async function applyServerAppToLocalApp(
 
 // Push the local application state to the server; this function runs when the
 // app changes, but also once when there is no app state on the server
-async function pushLocalAppToServer(app: AppState) {
+async function pushLocalAppToServer(app: AppState): Promise<void> {
   if (!app.id) {
     return;
   }
@@ -63,10 +63,16 @@ async function pushLocalAppToServer(app: AppState) {
 
 // Push all local widgets to the server (this is only necessary as a one-time
 // operation)
-function pushLocalWidgetsToServer(app: AppState): void {
+async function pushLocalWidgetsToServer(app: AppState): Promise<void> {
   app.widgets.forEach((widgetHead: WidgetHead) => {
     widgetSyncService.broadcastPush(widgetHead.id);
   });
+}
+
+// Push the local app and all of its widgets to the server in succession
+async function pushLocalAppAndWidgetsToServer(app: AppState): Promise<void> {
+  await pushLocalAppToServer(app);
+  await pushLocalWidgetsToServer(app);
 }
 
 // The useAppSync() hook mangages the sychronization of the app state between
@@ -91,18 +97,29 @@ function useAppSync(
       if (!isSessionActive(await getSession())) {
         return;
       }
-      const { data, error } = await supabase
+      let response = await supabase
         .from('dashboards')
         .select('raw_data')
         // Always ensure the dashboard matching the specified ID is fetched from
         // the server
         .match({ id: app.id });
-      if (!(data && data.length > 0)) {
-        await pushLocalAppToServer(app);
-        pushLocalWidgetsToServer(app);
+      // If the dashboard matching the specified ID can't be found, pull down
+      // the most recent dashboard from the server
+      if (!(response.data && response.data.length > 0)) {
+        response = await supabase
+          .from('dashboards')
+          .select('raw_data')
+          .order('updated_at', { ascending: false })
+          .limit(1);
+      }
+      // If still the query returns empty, then that implies the user has no
+      // dashboards associated with their account; only at this point, will it
+      // be safe to push the local dashboard and its widgets
+      if (!(response.data && response.data.length > 0)) {
+        await pushLocalAppAndWidgetsToServer(app);
         return;
       }
-      const newApp: AppState = data[0].raw_data;
+      const newApp: AppState = response.data[0].raw_data;
       applyServerAppToLocalApp(newApp, dispatchToApp);
     },
     [dispatchToApp]
