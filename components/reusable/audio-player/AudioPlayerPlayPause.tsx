@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import useEventListener from '../../useEventListener';
+import Button from '../Button';
 import LoadingIndicator from '../LoadingIndicator';
 import AudioPlayerContext from './AudioPlayerContext';
 import useAudioPlayPause from './useAudioPlayPause';
@@ -30,8 +31,7 @@ function AudioPlayerPlayPause({ isDisabled }: Props) {
   }
 
   return (
-    <button
-      type="button"
+    <Button
       className="audio-player-control audio-player-playpause"
       onClick={() => toggleAudioElementPlayback()}
       disabled={isDisabled}
@@ -53,7 +53,7 @@ function AudioPlayerPlayPause({ isDisabled }: Props) {
           draggable="false"
         />
       )}
-    </button>
+    </Button>
   );
 }
 

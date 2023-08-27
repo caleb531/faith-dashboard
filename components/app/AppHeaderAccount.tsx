@@ -1,4 +1,5 @@
 'use client';
+import Button from '@components/reusable/Button';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import React, { useContext, useState } from 'react';
 import AccountAuthFlow from '../account/AccountAuthFlow';
@@ -103,14 +104,13 @@ function AppHeaderAccount() {
       {!isSignedIn && (
         <div className="app-header-account-section">
           {isCurrentStep ? <TutorialStepTooltip /> : null}
-          <button
-            type="button"
+          <Button
             className="app-header-menu-button app-header-control-button"
             onClick={() => setSignInModalIsOpen(true)}
             {...stepProps}
           >
             Sign Up/In
-          </button>
+          </Button>
           {authModalIsOpen ? (
             <AccountAuthFlow onClose={onCloseSignInModal} />
           ) : null}

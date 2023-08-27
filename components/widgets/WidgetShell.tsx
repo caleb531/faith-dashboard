@@ -1,4 +1,5 @@
 import AppContext from '@components/app/AppContext';
+import Button from '@components/reusable/Button';
 import { DraggableProvided } from '@hello-pangea/dnd';
 import classNames from 'classnames';
 import React, { Dispatch, useCallback, useContext } from 'react';
@@ -99,8 +100,7 @@ function WidgetShell({ widget, dispatchToWidget, provided, children }: Props) {
         </div>
       </div>
       <div className="widget-controls widget-controls-right">
-        <button
-          type="button"
+        <Button
           className="widget-remove-control widget-control"
           onClick={() => requestRemoveWidget()}
           {...removeStepData.stepProps}
@@ -111,9 +111,8 @@ function WidgetShell({ widget, dispatchToWidget, provided, children }: Props) {
             className="widget-remove-control-icon widget-control-icon"
             draggable="false"
           />
-        </button>
-        <button
-          type="button"
+        </Button>
+        <Button
           className="widget-settings-toggle widget-control"
           onClick={(event) => dispatchToWidget({ type: 'toggleSettings' })}
           {...settingsStepData.stepProps}
@@ -124,7 +123,7 @@ function WidgetShell({ widget, dispatchToWidget, provided, children }: Props) {
             draggable="false"
             className="widget-settings-toggle-icon widget-control-icon"
           />
-        </button>
+        </Button>
       </div>
       {widget.isLoading ? (
         <LoadingIndicator className="widget-loading-indicator" />

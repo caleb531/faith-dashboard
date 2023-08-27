@@ -1,3 +1,4 @@
+import Button from '@components/reusable/Button';
 import InlineErrorMessage from '@components/reusable/InlineErrorMessage';
 import ItemCollection from '@components/reusable/ItemCollection';
 import LoadingIndicator from '@components/reusable/LoadingIndicator';
@@ -145,9 +146,9 @@ const DashboardsManager = ({ onClose }: Props) => {
       <section className="dashboards-manager">
         <h1>My Dashboards</h1>
         <p>Here, you can manage and switch between multiple dashboards.</p>
-        <button className="add-dashboard" type="button" onClick={addDashboard}>
+        <Button className="add-dashboard" onClick={addDashboard}>
           Add Dashboard
-        </button>
+        </Button>
         {dashboardError ? (
           <InlineErrorMessage message={dashboardError.message} />
         ) : null}

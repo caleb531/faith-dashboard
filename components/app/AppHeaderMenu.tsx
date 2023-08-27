@@ -1,3 +1,4 @@
+import Button from '@components/reusable/Button';
 import { defer } from 'lodash-es';
 import Link from 'next/link';
 import React, { ReactNode, useState } from 'react';
@@ -32,8 +33,7 @@ function AppHeaderMenu({ label, icon, items }: Props) {
 
   return (
     <div className="app-header-menu-container">
-      <button
-        type="button"
+      <Button
         className="app-header-menu-button"
         onClick={() => setIsShowingMenu(!isShowingMenu)}
       >
@@ -43,15 +43,15 @@ function AppHeaderMenu({ label, icon, items }: Props) {
           alt={label}
           draggable="false"
         />
-      </button>
+      </Button>
       {isShowingMenu && (
         <div className="app-header-menu">
-          <button
+          <Button
             data-type="overlay"
             className="app-header-menu-overlay"
             onClick={() => setIsShowingMenu(false)}
             aria-label="Close Menu"
-          ></button>
+          ></Button>
           <menu className="app-header-menu-list">
             {items.filter(isTruthy).map((item) => {
               return (

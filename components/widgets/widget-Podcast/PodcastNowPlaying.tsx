@@ -1,3 +1,4 @@
+import Button from '@components/reusable/Button';
 import { useCallback, useContext } from 'react';
 import AudioPlayer from '../../reusable/audio-player/AudioPlayer';
 import PodcastContext from './PodcastContext';
@@ -81,13 +82,12 @@ function PodcastNowPlaying({
         />
       </div>
       <footer className="podcast-now-playing-footer">
-        <button
-          type="button"
+        <Button
           className="podcast-now-playing-return-to-list"
           onClick={returnToEpisodeList}
         >
           Return to List
-        </button>
+        </Button>
       </footer>
     </section>
   );

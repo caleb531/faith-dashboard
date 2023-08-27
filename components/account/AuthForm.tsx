@@ -1,4 +1,5 @@
 import Captcha from '@components/Captcha';
+import Button from '@components/reusable/Button';
 import InlineErrorMessage from '@components/reusable/InlineErrorMessage';
 import useVerifyCaptcha from '@components/useVerifyCaptcha';
 import { User } from '@supabase/supabase-js';
@@ -159,7 +160,7 @@ function AuthForm(props: Props) {
       ) : null}
 
       <div className="account-auth-form-submit-container">
-        <button
+        <Button
           type="submit"
           className="account-auth-form-submit"
           disabled={isFormSubmitting || isFormSuccess}
@@ -169,7 +170,7 @@ function AuthForm(props: Props) {
             : isFormSuccess && props.successLabel
             ? props.successLabel
             : props.submitLabel}
-        </button>
+        </Button>
         {props.altLink ? (
           <Link
             href={props.altLink.href}

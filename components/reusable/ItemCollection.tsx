@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { capitalize } from 'lodash-es';
 import React from 'react';
+import Button from './Button';
 import LoadingIndicator from './LoadingIndicator';
 
 export type Item = { id: string; name: string };
@@ -93,10 +94,9 @@ const ItemCollection = <TItem extends Item>({
             })}
           >
             {onDeleteItem ? (
-              <button
-                type="button"
+              <Button
                 className="item-collection-item-delete-button"
-                data-unstyled
+                unstyled
                 onClick={onDeleteItemWrapper}
               >
                 {isItemBeingDeleted && isItemBeingDeleted(item) ? (
@@ -108,13 +108,12 @@ const ItemCollection = <TItem extends Item>({
                     draggable="false"
                   />
                 )}
-              </button>
+              </Button>
             ) : null}
-            <button
-              type="button"
+            <Button
               className="item-collection-item-choose-button"
               data-action="choose-item"
-              data-unstyled
+              unstyled
               aria-labelledby={`item-${item.id}-label`}
               onClick={onChooseItemWrapper}
             >
@@ -129,7 +128,7 @@ const ItemCollection = <TItem extends Item>({
                 ) : null}
                 {itemPreview(item)}
               </div>
-            </button>
+            </Button>
             <span className="item-collection-item-name-area">
               <span
                 className="item-collection-item-label"
@@ -138,10 +137,9 @@ const ItemCollection = <TItem extends Item>({
               >
                 <span className="item-collection-item-name">{item.name}</span>
                 {onEditItemName ? (
-                  <button
-                    type="button"
+                  <Button
                     className="edit-item-name-button"
-                    data-unstyled
+                    unstyled
                     onClick={onEditItemNameWrapper}
                   >
                     <img
@@ -149,7 +147,7 @@ const ItemCollection = <TItem extends Item>({
                       alt={`Edit ${capitalize(itemType)} Name`}
                       draggable="false"
                     />
-                  </button>
+                  </Button>
                 ) : null}
               </span>
             </span>

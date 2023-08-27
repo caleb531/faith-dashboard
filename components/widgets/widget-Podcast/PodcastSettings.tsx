@@ -1,7 +1,8 @@
+import Button from '@components/reusable/Button';
 import useUniqueFieldId from '../../useUniqueFieldId';
 import useWidgetDataFetcher from '../useWidgetDataFetcher';
-import { PodcastInfo } from './podcast.types';
 import PodcastPodcastList from './PodcastPodcastList';
+import { PodcastInfo } from './podcast.types';
 
 type Props = {
   podcastQuery: string;
@@ -41,9 +42,9 @@ function PodcastSettings({
           required
           ref={podcastFetcher.requestQueryInputRef}
         />
-        <button type="submit" className="podcast-url-submit">
+        <Button type="submit" className="podcast-url-submit">
           Search
-        </button>
+        </Button>
         {podcastFetcher.fetchError ? (
           <p className="podcast-error">{podcastFetcher.fetchError}</p>
         ) : null}

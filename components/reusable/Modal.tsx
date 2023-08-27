@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from './Button';
 
 type Props = {
   children: React.ReactNode;
@@ -10,10 +11,9 @@ function Modal({ children, onClose }: Props) {
     <div className="modal-scroll-container">
       <div className="modal-overlay" onClick={onClose}></div>
       <aside className="modal sheet" role="dialog">
-        <button
-          type="button"
+        <Button
           className="sheet-control sheet-control-right modal-control modal-close-control"
-          data-unstyled
+          unstyled
           onClick={onClose}
         >
           <img
@@ -22,7 +22,7 @@ function Modal({ children, onClose }: Props) {
             alt="Close Modal"
             draggable="false"
           />
-        </button>
+        </Button>
         <div className="modal-contents">{children}</div>
       </aside>
     </div>

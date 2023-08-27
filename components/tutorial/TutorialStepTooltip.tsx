@@ -1,4 +1,5 @@
 'use client';
+import Button from '@components/reusable/Button';
 import classNames from 'classnames';
 import { useContext, useRef } from 'react';
 import useScrollIntoView from '../useScrollIntoView';
@@ -48,21 +49,20 @@ function TutorialStepTooltip() {
     >
       <p className="tutorial-step-tooltip-message">{currentStep.message}</p>
       <div className="tutorial-step-tooltip-controls">
-        <button
+        <Button
           type="submit"
           className="tutorial-step-tooltip-control"
           onClick={moveToNextStep}
         >
           {currentStep.primaryButtonLabel || (isLastStep ? 'Done' : 'Next')}
-        </button>
+        </Button>
         {isLastStep === false ? (
-          <button
-            type="button"
+          <Button
             className="tutorial-step-tooltip-control warning"
             onClick={skipTutorial}
           >
             Skip Tutorial
-          </button>
+          </Button>
         ) : null}
       </div>
     </div>

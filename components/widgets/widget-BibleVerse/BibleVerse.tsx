@@ -1,3 +1,4 @@
+import Button from '@components/reusable/Button';
 import HtmlReactParser from 'html-react-parser';
 import { isPlainObject } from 'lodash-es';
 import React from 'react';
@@ -75,9 +76,9 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({
               required
               ref={requestQueryInputRef}
             />
-            <button type="submit" className="bible-verse-search-submit">
+            <Button type="submit" className="bible-verse-search-submit">
               Search
-            </button>
+            </Button>
             {fetchError ? (
               <p className="bible-verse-error">{fetchError}</p>
             ) : null}

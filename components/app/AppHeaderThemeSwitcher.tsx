@@ -1,3 +1,4 @@
+import Button from '@components/reusable/Button';
 import { useContext, useState } from 'react';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
@@ -22,7 +23,7 @@ function AppHeaderThemeSwitcher() {
       >
         Background Theme
       </label>
-      <button
+      <Button
         className="app-header-theme-switcher-button app-header-control-button"
         id="app-header-theme-switcher-button"
         onClick={() => setThemeSwitcherIsOpen((isOpen) => !isOpen)}
@@ -41,7 +42,7 @@ function AppHeaderThemeSwitcher() {
             })?.name
           }
         </span>
-      </button>
+      </Button>
       {themeSwitcherIsOpen ? (
         <ThemeSwitcher
           onCloseThemeSwitcher={() => setThemeSwitcherIsOpen(false)}

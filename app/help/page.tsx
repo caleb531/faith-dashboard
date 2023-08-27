@@ -1,4 +1,5 @@
 import LandingPage from '@components/LandingPage';
+import Button from '@components/reusable/Button';
 import LinkButton from '@components/reusable/LinkButton';
 import { getPageMetadata } from '@components/seoUtils';
 import Image from 'next/image';
@@ -36,18 +37,18 @@ async function Help() {
 
       <p>
         You can add a new widget by clicking the{' '}
-        <button type="button" disabled className="add-widget-button">
+        <Button disabled className="add-widget-button">
           <img src="/icons/add-light.svg" alt="" /> Add Widget
-        </button>{' '}
+        </Button>{' '}
         button at the top edge of the app. A panel will appear, allowing you to
         browse for a widget to add.
       </p>
 
       <p>
         When you've found your desired widget, click the{' '}
-        <button type="button" disabled className="add-widget-button">
+        <Button disabled className="add-widget-button">
           <img src="/icons/add-light.svg" alt="" /> Add Widget
-        </button>{' '}
+        </Button>{' '}
         button next to the widget listing. It will then automatically appear in
         the first column on your dashboard.
       </p>
@@ -84,13 +85,9 @@ async function Help() {
         There are several background themes you can choose from for your
         dashboard. Some are photos, other are solid colors. To pick one, click
         the{' '}
-        <button
-          type="button"
-          disabled
-          className="app-header-theme-switcher-button"
-        >
+        <Button disabled className="app-header-theme-switcher-button">
           Shore
-        </button>{' '}
+        </Button>{' '}
         icon ("Shore" is the name of whatever current theme). You'll see a
         gallery of themes to choose from. Click one to use it.
       </p>
@@ -141,9 +138,9 @@ async function Help() {
       <p>
         If you want to sync your dashboard across all your devices, you'll need
         to <Link href="/sign-up">create an account</Link>. If you already have
-        an account, you can click the <button disabled>Sign Up/In</button> link
+        an account, you can click the <Button disabled>Sign Up/In</Button> link
         in the top-right corner of the page, then click the{' '}
-        <button disabled>Sign In</button> button.
+        <Button disabled>Sign In</Button> button.
       </p>
 
       <p>

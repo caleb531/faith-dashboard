@@ -1,3 +1,4 @@
+import Button from '@components/reusable/Button';
 import { formatDistanceToNow } from 'date-fns';
 import { useContext } from 'react';
 import ResultList from '../../reusable/ResultList';
@@ -50,13 +51,9 @@ function PodcastEpisodeList({
     <section className="podcast-view-episodes">
       <h2 className="podcast-title">{podcastFeedData?.title}</h2>
       {nowPlaying ? (
-        <button
-          type="button"
-          className="podcast-now-playing-link"
-          onClick={viewNowPlaying}
-        >
+        <Button className="podcast-now-playing-link" onClick={viewNowPlaying}>
           Now Playing
-        </button>
+        </Button>
       ) : null}
       <div className="podcast-subtext">
         <span className="podcast-episode-count">
@@ -64,8 +61,7 @@ function PodcastEpisodeList({
             ? `${podcastFeedData.item.length} episode`
             : `${podcastFeedData?.item.length} episodes`}
         </span>
-        <button
-          type="button"
+        <Button
           className="podcast-episodes-refresh-control widget-control"
           onClick={() => fetchPodcastFeed(podcastFeedUrl!)}
         >
@@ -75,7 +71,7 @@ function PodcastEpisodeList({
             alt="Check for New Episodes"
             draggable="false"
           />
-        </button>
+        </Button>
       </div>
       <ResultList
         results={getEpisodeResultList()}

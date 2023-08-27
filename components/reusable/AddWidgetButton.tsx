@@ -1,3 +1,5 @@
+import Button from './Button';
+
 type Props = {
   onPressButton: () => void;
   [key: string]: any;
@@ -5,8 +7,7 @@ type Props = {
 
 function AddWidget({ onPressButton, ...buttonProps }: Props) {
   return (
-    <button
-      type="button"
+    <Button
       onClick={onPressButton}
       {...buttonProps}
       className={`add-widget-button ${
@@ -20,7 +21,7 @@ function AddWidget({ onPressButton, ...buttonProps }: Props) {
         draggable="false"
       />
       <span className="add-widget-button-label">Add Widget</span>
-    </button>
+    </Button>
   );
 }
 

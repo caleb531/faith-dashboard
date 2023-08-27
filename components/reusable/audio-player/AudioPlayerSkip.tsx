@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import Button from '../Button';
 import AudioPlayerContext from './AudioPlayerContext';
 
 type Props = {
@@ -21,7 +22,7 @@ function AudioPlayerSeeker({ action, skipOffset, label, isDisabled }: Props) {
   }
 
   return (
-    <button
+    <Button
       className={`audio-player-control audio-player-${action}`}
       onClick={() => adjustTime()}
       disabled={isDisabled}
@@ -32,7 +33,7 @@ function AudioPlayerSeeker({ action, skipOffset, label, isDisabled }: Props) {
         alt={label.replace(/{offset}/gi, String(skipOffset))}
         draggable="false"
       />
-    </button>
+    </Button>
   );
 }
 
