@@ -113,13 +113,13 @@ const ItemCollection = <TItem extends Item>({
               onClick={onChooseItemWrapper}
             >
               <div className="item-collection-item-preview">
-                {isCurrentItem(item) ? (
-                  <div className="item-collection-item-selected-icon"></div>
-                ) : isItemLoading && isItemLoading(item) ? (
+                {isItemLoading && isItemLoading(item) ? (
                   <LoadingIndicator
                     className="item-collection-item-loading-indicator"
                     autoCenter
                   />
+                ) : isCurrentItem(item) ? (
+                  <div className="item-collection-item-selected-icon"></div>
                 ) : null}
                 {itemPreview(item)}
               </div>
