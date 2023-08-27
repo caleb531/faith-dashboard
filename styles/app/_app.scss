@@ -4,6 +4,10 @@
   text-align: center;
 }
 
+.app-notification-message {
+  font-weight: var(--font-weight-bold);
+}
+
 a {
   font-weight: var(--font-weight-bold);
   color: var(--current-theme-color);

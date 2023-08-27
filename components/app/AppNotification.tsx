@@ -25,7 +25,7 @@ function AppNotification() {
 
   return message ? (
     <Modal onClose={onDismissNotification}>
-      <p className="notification-message">{message}</p>
+      <p className="app-notification-message">{message}</p>
     </Modal>
   ) : null;
 }
