@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { AppTheme } from './app.types';
 
 type Props = {
@@ -6,9 +6,7 @@ type Props = {
 };
 
 const ColorThemePreview = ({ theme }: Props) => {
-  return (
-    <div className={classNames('color-theme-preview', `theme-${theme.id}`)} />
-  );
+  return <div className={clsx('color-theme-preview', `theme-${theme.id}`)} />;
 };
 
 export default ColorThemePreview;

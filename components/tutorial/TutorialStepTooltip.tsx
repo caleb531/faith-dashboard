@@ -1,6 +1,6 @@
 'use client';
 import Button from '@components/reusable/Button';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { useContext, useRef } from 'react';
 import useScrollIntoView from '../useScrollIntoView';
 import TutorialContext from './TutorialContext';
@@ -31,7 +31,7 @@ function TutorialStepTooltip() {
 
   return (
     <div
-      className={classNames(
+      className={clsx(
         'tutorial-step-tooltip',
         `position-${calculatedPosition}`,
         `alignment-${currentStep.alignment}`

@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { capitalize } from 'lodash-es';
 import React from 'react';
 import Button from './Button';
@@ -86,7 +86,7 @@ const ItemCollection = <TItem extends Item>({
           <li
             key={item.id}
             data-item={item.id}
-            className={classNames('item-collection-item', {
+            className={clsx('item-collection-item', {
               'item-collection-item-selected': isCurrentItem(item),
               'item-collection-item-loading': Boolean(
                 isItemBeingChosen && isItemBeingChosen(item)

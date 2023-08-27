@@ -1,7 +1,7 @@
 import AppContext from '@components/app/AppContext';
 import Button from '@components/reusable/Button';
 import { DraggableProvided } from '@hello-pangea/dnd';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React, { Dispatch, useCallback, useContext } from 'react';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
@@ -74,7 +74,7 @@ function WidgetShell({ widget, dispatchToWidget, provided, children }: Props) {
     <article
       data-widget-id={widget.id}
       data-widget-type={widget.type}
-      className={classNames('widget', `widget-type-${widget.type}`, {
+      className={clsx('widget', `widget-type-${widget.type}`, {
         'widget-settings-open': widget.isSettingsOpen
       })}
       ref={provided.innerRef}

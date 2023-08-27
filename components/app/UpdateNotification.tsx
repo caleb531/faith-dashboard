@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import {
   WorkboxLifecycleWaitingEvent as WaitingEvent,
@@ -68,7 +68,7 @@ function UpdateNotification() {
     <div
       role="region"
       aria-label="Update available! Click here to update."
-      className={classNames(
+      className={clsx(
         'update-notification',
         { 'update-available': availableUpdate },
         { 'is-updating': isUpdating }

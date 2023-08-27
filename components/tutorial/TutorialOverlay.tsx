@@ -1,5 +1,4 @@
-import classNames from 'classnames';
-import React from 'react';
+import clsx from 'clsx';
 
 type Props = {
   isVisible: boolean;
@@ -7,9 +6,7 @@ type Props = {
 
 function TutorialOverlay({ isVisible }: Props) {
   return (
-    <div
-      className={classNames('tutorial-overlay', { 'is-visible': isVisible })}
-    />
+    <div className={clsx('tutorial-overlay', { 'is-visible': isVisible })} />
   );
 }
 

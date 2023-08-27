@@ -1,6 +1,6 @@
 'use client';
 import AppContext from '@components/app/AppContext';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React, { useCallback, useContext, useState } from 'react';
 import useMemoizedContextValue from '../useMemoizedContextValue';
 import TutorialContext from './TutorialContext';
@@ -47,7 +47,7 @@ function TutorialFlow({ inProgress, children }: Props) {
   return (
     <TutorialContext.Provider value={contextValue}>
       <div
-        className={classNames([
+        className={clsx([
           'tutorial-flow-wrapper',
           { 'tutorial-in-progress': inProgress }
         ])}

@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 type Props = {
   className?: string;
@@ -14,7 +14,7 @@ function LoadingIndicator({
 }: Props) {
   return (
     <div
-      className={classNames(
+      className={clsx(
         'loading-indicator',
         { 'loading-indicator-auto-centered': autoCenter },
         ...className.split(' ')
