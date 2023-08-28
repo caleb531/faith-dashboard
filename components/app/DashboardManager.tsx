@@ -22,7 +22,7 @@ type Props = {
   onClose: () => void;
 };
 
-const DashboardsManager = ({ onClose }: Props) => {
+const DashboardManager = ({ onClose }: Props) => {
   const [dashboards, setDashboards] = useState<SyncedAppState[]>([]);
   const [dashboardBeingChosen, setDashboardBeingChosen] =
     useState<SyncedAppState | null>(null);
@@ -194,4 +194,4 @@ const DashboardsManager = ({ onClose }: Props) => {
   );
 };
 
-export default DashboardsManager;
+export default DashboardManager;

@@ -10,7 +10,7 @@ import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
 import AppContext from './AppContext';
 import AppHeaderMenu from './AppHeaderMenu';
-import DashboardsManager from './DashboardsManager';
+import DashboardManager from './DashboardManager';
 import SessionContext from './SessionContext';
 import appStateDefault from './appStateDefault';
 
@@ -18,7 +18,7 @@ function AppHeaderAccount() {
   const supabase = createClientComponentClient();
   const { isCurrentStep, stepProps } = useTutorialStep('sign-up');
   const { dispatchToApp } = useContext(AppContext);
-  const [isDashboardsManagerVisible, setIsDashboardsManagerVisible] =
+  const [isDashboardManagerVisible, setIsDashboardManagerVisible] =
     useState(false);
 
   // The session will be loaded asynchronously and isomorphically, via a
@@ -136,7 +136,7 @@ function AppHeaderAccount() {
             isSignedIn && {
               key: 'dashboards',
               onClick: () => {
-                setIsDashboardsManagerVisible(true);
+                setIsDashboardManagerVisible(true);
               },
               content: 'My Dashboards'
             },
@@ -166,10 +166,10 @@ function AppHeaderAccount() {
           ]}
         />
       </div>
-      {isDashboardsManagerVisible ? (
-        <DashboardsManager
+      {isDashboardManagerVisible ? (
+        <DashboardManager
           onClose={() => {
-            setIsDashboardsManagerVisible(false);
+            setIsDashboardManagerVisible(false);
           }}
         />
       ) : null}
