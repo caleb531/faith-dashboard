@@ -1,0 +1,22 @@
+{
+  "id": "5f8a80fc-7a8f-4e8f-b8f8-c20977be94ac",
+  "name": "Main Dashboard",
+  "theme": "forest",
+  "widgets": [
+    {
+      "id": "e9cbe465-510f-4cda-a0cc-08e68b113101",
+      "type": "Podcast",
+      "column": 1
+    },
+    {
+      "id": "30fdb0c8-81ef-4c67-a484-7f7891e944e7",
+      "type": "BibleVerse",
+      "column": 2
+    },
+    {
+      "id": "ca4e06f2-247b-494c-9f45-3b6f390b7f17",
+      "type": "Note",
+      "column": 3
+    }
+  ]
+}

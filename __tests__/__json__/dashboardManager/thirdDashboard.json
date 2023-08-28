@@ -1,0 +1,22 @@
+{
+  "id": "a4aeab69-b67a-4260-85e3-9110b8080453",
+  "name": "Spiritual Warfare Dashboard",
+  "theme": "forest",
+  "widgets": [
+    {
+      "id": "3378f34a-b9a0-4c7c-a777-3a24c38f6421",
+      "type": "BibleVerse",
+      "column": 1
+    },
+    {
+      "id": "d0b6c9f1-ae46-4ddc-a204-21b8503a451c",
+      "type": "Podcast",
+      "column": 2
+    },
+    {
+      "id": "8f9655ef-52eb-4379-afa0-6e65da227789",
+      "type": "BibleVerse",
+      "column": 3
+    }
+  ]
+}

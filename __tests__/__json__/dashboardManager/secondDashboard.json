@@ -1,0 +1,22 @@
+{
+  "id": "bc548782-78fd-4d42-bb5f-577c151e4fcc",
+  "name": "Evening Dashboard",
+  "theme": "evening",
+  "widgets": [
+    {
+      "id": "773b5870-e450-4d5e-a1a3-013130fdfc78",
+      "type": "Note",
+      "column": 1
+    },
+    {
+      "id": "71ccdce2-be10-4454-8bf9-2835b4fc4829",
+      "type": "BibleVerse",
+      "column": 2
+    },
+    {
+      "id": "2d4c5787-ebaf-4204-9654-75fee3058264",
+      "type": "Podcast",
+      "column": 3
+    }
+  ]
+}
