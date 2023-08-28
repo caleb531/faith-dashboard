@@ -138,8 +138,8 @@ const ItemCollection = <TItem extends Item>({
               <span
                 className="item-collection-item-label"
                 data-action="choose-item"
-                id={`item-${item.id}-label`}
               >
+                id={`item-${item.id}-label`}
                 <span className="item-collection-item-name">{item.name}</span>
                 {onEditItemName ? (
                   <Button
