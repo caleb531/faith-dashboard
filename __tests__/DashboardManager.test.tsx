@@ -74,5 +74,8 @@ describe('Dashboard Manager', () => {
         screen.getByText('Spiritual Warfare Dashboard')
       ).toBeInTheDocument();
     });
+    // Ensure that current dashboard hasn't changed (mostly as a sanity check)
+    expect(screen.getByText('Evening')).toBeInTheDocument();
+    expect(screen.queryByText('Shore')).not.toBeInTheDocument();
   });
 });
