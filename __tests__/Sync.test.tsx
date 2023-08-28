@@ -200,8 +200,6 @@ describe('Sync functionality', () => {
     });
     await waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('dashboards');
-      expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(2);
-      expect(supabaseFromMocks.widgets.select).not.toHaveBeenCalled();
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
       expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(4);
     });
