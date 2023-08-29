@@ -1,4 +1,6 @@
 import { AppState } from '@components/app/app.types';
+import colorThemeList from '@components/app/appColorThemeList';
+import photoThemeList from '@components/app/appPhotoThemeList';
 import appStateDefault from '@components/app/appStateDefault';
 import { convertObjectToFormData } from '@components/authUtils.client';
 import {
@@ -139,5 +141,12 @@ export async function callRouteHandler({
       method: 'POST',
       body: NextRequest._formData
     })
+  );
+}
+
+export function getThemeName(themeId: string) {
+  return String(
+    photoThemeList.find((theme) => theme.id === themeId)?.name ??
+      colorThemeList.find((theme) => theme.id === themeId)?.name
   );
 }

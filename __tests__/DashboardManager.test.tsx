@@ -1,6 +1,5 @@
 import Home from '@app/page';
 import { AppState } from '@components/app/app.types';
-import photoThemeList from '@components/app/appPhotoThemeList';
 import widgetSyncService from '@components/widgets/widgetSyncService';
 import '@testing-library/jest-dom';
 import { act, fireEvent, screen, waitFor } from '@testing-library/react';
@@ -16,8 +15,7 @@ import {
   mockSupabaseUser,
   supabaseFromMocks
 } from '@tests/__utils__/supabaseMockUtils';
-import { setAppData } from '@tests/__utils__/testUtils';
-import { capitalize } from 'lodash-es';
+import { getThemeName, setAppData } from '@tests/__utils__/testUtils';
 
 async function openDashboardManager({
   localDashboard,
@@ -65,15 +63,19 @@ async function openDashboardManager({
   });
   // Ensure that current dashboard hasn't changed (mostly as a sanity check)
   expect(
-    screen.getByText(
-      String(
-        photoThemeList.find((theme) => {
-          return theme.id === localDashboard.theme;
-        })?.name || capitalize(localDashboard.theme)
-      )
-    )
+    screen.getByText(getThemeName(localDashboard.theme))
   ).toBeInTheDocument();
   expect(screen.queryByText('Shore')).not.toBeInTheDocument();
+}
+
+async function switchToDashboard(dashboard: AppState) {
+  mockSupabaseSelectOnce('dashboards', {
+    data: [{ raw_data: dashboard }]
+  });
+  await act(async () => {
+    fireEvent.click(screen.getByLabelText('Stars Dashboard'));
+  });
+  expect(screen.getByText(getThemeName(dashboard.theme))).toBeInTheDocument();
 }
 
 const originalOnPush = widgetSyncService.onPush;
@@ -111,12 +113,6 @@ describe('Dashboard Manager', () => {
         thirdDashboardJson as AppState
       ]
     });
-    mockSupabaseSelectOnce('dashboards', {
-      data: [{ raw_data: thirdDashboardJson }]
-    });
-    await act(async () => {
-      fireEvent.click(screen.getByLabelText('Stars Dashboard'));
-    });
-    expect(screen.getByText('Stars')).toBeInTheDocument();
+    await switchToDashboard(thirdDashboardJson as AppState);
   });
 });
