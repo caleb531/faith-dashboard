@@ -22,7 +22,7 @@ import {
   mockPrompt,
   setAppData
 } from '@tests/__utils__/testUtils';
-import userEventAuto from './__utils__/userEventAuto';
+import userEventFakeTimers from './__utils__/userEventFakeTimers';
 
 function mockDashboardsFetch(dashboards: JsonAppState[]) {
   mockSupabaseSelectOnce('dashboards', {
@@ -60,10 +60,10 @@ async function openDashboardManager({
   });
   // Reset the calls and call counts on the supabase mocks
   supabaseFromMocks.dashboards.select.mockClear();
-  await userEventAuto.click(
+  await userEventFakeTimers.click(
     screen.getByRole('button', { name: 'Your Account' })
   );
-  await userEventAuto.click(
+  await userEventFakeTimers.click(
     screen.getByRole('link', { name: 'My Dashboards' })
   );
   expect(
@@ -85,7 +85,9 @@ async function switchToDashboard(dashboard: JsonAppState) {
   mockSupabaseSelectOnce('dashboards', {
     data: [{ raw_data: dashboard }]
   });
-  await userEventAuto.click(screen.getByLabelText(String(dashboard.name)));
+  await userEventFakeTimers.click(
+    screen.getByLabelText(String(dashboard.name))
+  );
   await waitFor(() => {
     expect(screen.getByText(getThemeName(dashboard.theme))).toBeInTheDocument();
   });
@@ -143,7 +145,7 @@ describe('Dashboard Manager', () => {
     });
     const newDashboardName = 'Spiritual Warfare Dashboard';
     mockPrompt(() => newDashboardName);
-    await userEventAuto.click(
+    await userEventFakeTimers.click(
       screen.getByRole('button', {
         name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
       })
@@ -165,7 +167,7 @@ describe('Dashboard Manager', () => {
       availableDashboards
     });
     mockPrompt(() => null);
-    await userEventAuto.click(
+    await userEventFakeTimers.click(
       screen.getByRole('button', {
         name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
       })
@@ -189,7 +191,7 @@ describe('Dashboard Manager', () => {
     mockSupabaseDelete('dashboards');
     mockDashboardsFetch(availableDashboards.slice(0, 2));
     mockConfirm(() => true);
-    await userEventAuto.click(
+    await userEventFakeTimers.click(
       screen.getByRole('button', {
         name: `Delete Dashboard "${thirdDashboardJson.name}"`
       })
@@ -213,7 +215,7 @@ describe('Dashboard Manager', () => {
       availableDashboards
     });
     mockConfirm(() => false);
-    await userEventAuto.click(
+    await userEventFakeTimers.click(
       screen.getByRole('button', {
         name: `Delete Dashboard "${thirdDashboardJson.name}"`
       })

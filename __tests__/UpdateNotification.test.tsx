@@ -2,7 +2,7 @@ import Home from '@app/page';
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
-import userEventAuto from './__utils__/userEventAuto';
+import userEventFakeTimers from './__utils__/userEventFakeTimers';
 
 class ServiceWorkerMock {}
 let originalServiceWorker: typeof navigator.serviceWorker;
@@ -63,7 +63,7 @@ describe('Update Notification', () => {
       name: updateAvailableMessage
     });
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    await userEventAuto.click(updateNotification);
+    await userEventFakeTimers.click(updateNotification);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
   it('should reload page when service worker is updated', async () => {
@@ -75,7 +75,7 @@ describe('Update Notification', () => {
         })
       ).toBeInTheDocument();
     });
-    await userEventAuto.click(
+    await userEventFakeTimers.click(
       screen.getByRole('region', {
         name: updateAvailableMessage
       })
