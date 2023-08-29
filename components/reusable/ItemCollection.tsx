@@ -108,7 +108,7 @@ const ItemCollection = <TItem extends Item>({
                 ) : (
                   <img
                     src="/icons/remove-light.svg"
-                    alt={`Delete ${capitalize(itemType)}`}
+                    alt={`Delete ${capitalize(itemType)} "${item.name}"`}
                     draggable="false"
                   />
                 )}
