@@ -1,10 +1,13 @@
 {
   "id": "835ef64c-38b3-4426-aba1-a51adb4bc01c",
+  "name": "Lonely Dashboard",
   "theme": "evening",
-  "widgets": [{
-    "id": "4d567d62-2b0c-492a-9705-06f5d37511bd",
-    "type": "Note",
-    "column": 3,
-    "isSettingsOpen": false
-  }]
+  "widgets": [
+    {
+      "id": "4d567d62-2b0c-492a-9705-06f5d37511bd",
+      "type": "Note",
+      "column": 3,
+      "isSettingsOpen": false
+    }
+  ]
 }
