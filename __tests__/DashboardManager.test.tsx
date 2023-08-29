@@ -204,6 +204,43 @@ describe('Dashboard Manager', () => {
     });
   });
 
+  it('should switch to another dashboard when active dashboard is deleted', async () => {
+    const availableDashboards = [
+      firstDashboardJson,
+      secondDashboardJson,
+      thirdDashboardJson
+    ];
+    const dashboardToDelete = secondDashboardJson;
+    await openDashboardManager({
+      localDashboard: secondDashboardJson,
+      availableDashboards
+    });
+    mockSupabaseDelete('dashboards');
+    mockDashboardsFetch(
+      availableDashboards.filter((dashboard) => {
+        return dashboard !== dashboardToDelete;
+      })
+    );
+    mockConfirm(() => true);
+    mockSupabaseSelectOnce('dashboards', {
+      data: [{ raw_data: firstDashboardJson }]
+    });
+    await userEventFakeTimers.click(
+      screen.getByRole('button', {
+        name: `Delete Dashboard "${dashboardToDelete.name}"`
+      })
+    );
+    await waitFor(() => {
+      expect(
+        screen.queryByText(dashboardToDelete.name)
+      ).not.toBeInTheDocument();
+      expect(supabaseFromMocks.dashboards.delete).toHaveBeenCalledTimes(1);
+      expect(
+        screen.getByText(getThemeName(firstDashboardJson.theme))
+      ).toBeInTheDocument();
+    });
+  });
+
   it('should cancel confirmation to delete dashboard', async () => {
     const availableDashboards = [
       firstDashboardJson,
