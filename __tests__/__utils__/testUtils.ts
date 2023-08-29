@@ -15,6 +15,14 @@ import { fromPairs } from 'lodash-es';
 import { NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 
+export interface JsonWidgetHead extends Omit<WidgetHead, 'type'> {
+  type: string;
+}
+
+export interface JsonAppState extends Omit<AppState, 'widgets'> {
+  widgets: JsonWidgetHead[];
+}
+
 export function createWidget(props: object): WidgetHead {
   return {
     id: uuidv4(),

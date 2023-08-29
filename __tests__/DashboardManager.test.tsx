@@ -1,5 +1,4 @@
 import Home from '@app/page';
-import { AppState } from '@components/app/app.types';
 import widgetSyncService from '@components/widgets/widgetSyncService';
 import '@testing-library/jest-dom';
 import { act, fireEvent, screen, waitFor } from '@testing-library/react';
@@ -15,14 +14,18 @@ import {
   mockSupabaseUser,
   supabaseFromMocks
 } from '@tests/__utils__/supabaseMockUtils';
-import { getThemeName, setAppData } from '@tests/__utils__/testUtils';
+import {
+  JsonAppState,
+  getThemeName,
+  setAppData
+} from '@tests/__utils__/testUtils';
 
 async function openDashboardManager({
   localDashboard,
   availableDashboards
 }: {
-  localDashboard: AppState;
-  availableDashboards: AppState[];
+  localDashboard: JsonAppState;
+  availableDashboards: JsonAppState[];
 }): Promise<void> {
   await mockSupabaseUser();
   await mockSupabaseSession();
@@ -68,7 +71,7 @@ async function openDashboardManager({
   expect(screen.queryByText('Shore')).not.toBeInTheDocument();
 }
 
-async function switchToDashboard(dashboard: AppState) {
+async function switchToDashboard(dashboard: JsonAppState) {
   mockSupabaseSelectOnce('dashboards', {
     data: [{ raw_data: dashboard }]
   });
@@ -95,24 +98,24 @@ describe('Dashboard Manager', () => {
 
   it('should open and fetch all user dashboards', async () => {
     await openDashboardManager({
-      localDashboard: secondDashboardJson as AppState,
+      localDashboard: secondDashboardJson,
       availableDashboards: [
-        firstDashboardJson as AppState,
-        secondDashboardJson as AppState,
-        thirdDashboardJson as AppState
+        firstDashboardJson,
+        secondDashboardJson,
+        thirdDashboardJson
       ]
     });
   });
 
   it('should switch to another dashboard', async () => {
     await openDashboardManager({
-      localDashboard: secondDashboardJson as AppState,
+      localDashboard: secondDashboardJson,
       availableDashboards: [
-        firstDashboardJson as AppState,
-        secondDashboardJson as AppState,
-        thirdDashboardJson as AppState
+        firstDashboardJson,
+        secondDashboardJson,
+        thirdDashboardJson
       ]
     });
-    await switchToDashboard(thirdDashboardJson as AppState);
+    await switchToDashboard(thirdDashboardJson);
   });
 });
