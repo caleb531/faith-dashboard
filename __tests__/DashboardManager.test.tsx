@@ -133,6 +133,53 @@ describe('Dashboard Manager', () => {
     await switchToDashboard(thirdDashboardJson);
   });
 
+  it('should successfully create new dashboard', async () => {
+    const availableDashboards = [
+      firstDashboardJson,
+      secondDashboardJson,
+      thirdDashboardJson
+    ];
+    await openDashboardManager({
+      localDashboard: secondDashboardJson,
+      availableDashboards
+    });
+    const newDashboardName = 'Prayer Dashboard';
+    mockPrompt(() => newDashboardName);
+    await userEventFakeTimers.click(
+      screen.getByRole('button', { name: `Add Dashboard` })
+    );
+    await waitFor(() => {
+      expect(screen.getByText('Shore')).toBeInTheDocument();
+      expect(
+        screen.queryByRole('heading', { name: 'My Dashboards' })
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('button', { name: 'Skip Tutorial' })
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it('should cancel prompt to create dashboard', async () => {
+    const availableDashboards = [
+      firstDashboardJson,
+      secondDashboardJson,
+      thirdDashboardJson
+    ];
+    await openDashboardManager({
+      localDashboard: secondDashboardJson,
+      availableDashboards
+    });
+    mockPrompt(() => null);
+    await userEventFakeTimers.click(
+      screen.getByRole('button', {
+        name: 'Add Dashboard'
+      })
+    );
+    expect(
+      screen.getByText(getThemeName(secondDashboardJson.theme))
+    ).toBeInTheDocument();
+  });
+
   it('should successfully edit dashboard name', async () => {
     const availableDashboards = [
       firstDashboardJson,
