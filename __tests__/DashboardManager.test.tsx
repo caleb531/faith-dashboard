@@ -141,4 +141,25 @@ describe('Dashboard Manager', () => {
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
     });
   });
+
+  it('should cancel prompt to edit dashboard name', async () => {
+    await openDashboardManager({
+      localDashboard: secondDashboardJson,
+      availableDashboards: [
+        firstDashboardJson,
+        secondDashboardJson,
+        thirdDashboardJson
+      ]
+    });
+    mockPrompt(() => null);
+    fireEvent.click(
+      screen.getByRole('button', {
+        name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
+      })
+    );
+    expect(screen.getByText(thirdDashboardJson.name)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(0);
+    });
+  });
 });
