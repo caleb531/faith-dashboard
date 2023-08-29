@@ -99,6 +99,7 @@ button.item-collection-item-delete-button {
   --button-background-color-active: var(--color-black-30);
 }
 .item-collection-item-name {
+  display: inline-block;
   font-weight: var(--font-weight-bold);
   vertical-align: middle;
 }
