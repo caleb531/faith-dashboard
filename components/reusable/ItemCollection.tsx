@@ -153,7 +153,9 @@ const ItemCollection = <TItem extends Item>({
                   >
                     <img
                       src="/icons/edit-dark.svg"
-                      alt={`Edit ${capitalize(itemType)} Name`}
+                      alt={`Edit Name for ${capitalize(itemType)} "${
+                        item.name
+                      }"`}
                       draggable="false"
                     />
                   </Button>

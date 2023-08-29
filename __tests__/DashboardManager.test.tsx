@@ -17,6 +17,7 @@ import {
 import {
   JsonAppState,
   getThemeName,
+  mockPrompt,
   setAppData
 } from '@tests/__utils__/testUtils';
 
@@ -117,5 +118,27 @@ describe('Dashboard Manager', () => {
       ]
     });
     await switchToDashboard(thirdDashboardJson);
+  });
+
+  it('should successfully edit dashboard name', async () => {
+    await openDashboardManager({
+      localDashboard: secondDashboardJson,
+      availableDashboards: [
+        firstDashboardJson,
+        secondDashboardJson,
+        thirdDashboardJson
+      ]
+    });
+    const newDashboardName = 'Spiritual Warfare Dashboard';
+    mockPrompt(() => newDashboardName);
+    fireEvent.click(
+      screen.getByRole('button', {
+        name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
+      })
+    );
+    expect(screen.getByText(newDashboardName)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
+    });
   });
 });

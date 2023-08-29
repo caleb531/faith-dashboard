@@ -77,6 +77,9 @@ export function mockAlert(mockImpl: (message?: any) => void) {
 export function mockConfirm(mockImpl: (message?: string) => boolean) {
   return jest.spyOn(window, 'confirm').mockImplementation(mockImpl);
 }
+export function mockPrompt(mockImpl: (message?: string) => string | null) {
+  return jest.spyOn(window, 'prompt').mockImplementation(mockImpl);
+}
 
 export async function removeWidget({
   type,
