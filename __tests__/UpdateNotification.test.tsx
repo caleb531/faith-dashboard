@@ -1,7 +1,8 @@
 import Home from '@app/page';
 import '@testing-library/jest-dom';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
+import userEventAuto from './__utils__/userEventAuto';
 
 class ServiceWorkerMock {}
 let originalServiceWorker: typeof navigator.serviceWorker;
@@ -62,9 +63,7 @@ describe('Update Notification', () => {
       name: updateAvailableMessage
     });
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    // For some reason, using userEvent.click() for the below causes Jest to
-    // timeout; so we are using fireEvent instead
-    fireEvent.click(updateNotification);
+    await userEventAuto.click(updateNotification);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
   it('should reload page when service worker is updated', async () => {
@@ -76,7 +75,7 @@ describe('Update Notification', () => {
         })
       ).toBeInTheDocument();
     });
-    fireEvent.click(
+    await userEventAuto.click(
       screen.getByRole('region', {
         name: updateAvailableMessage
       })

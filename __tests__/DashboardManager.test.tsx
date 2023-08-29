@@ -1,7 +1,7 @@
 import Home from '@app/page';
 import widgetSyncService from '@components/widgets/widgetSyncService';
 import '@testing-library/jest-dom';
-import { act, fireEvent, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import firstDashboardJson from '@tests/__json__/dashboardManager/firstDashboard.json';
 import secondDashboardJson from '@tests/__json__/dashboardManager/secondDashboard.json';
 import thirdDashboardJson from '@tests/__json__/dashboardManager/thirdDashboard.json';
@@ -22,6 +22,7 @@ import {
   mockPrompt,
   setAppData
 } from '@tests/__utils__/testUtils';
+import userEventAuto from './__utils__/userEventAuto';
 
 function mockDashboardsFetch(dashboards: JsonAppState[]) {
   mockSupabaseSelectOnce('dashboards', {
@@ -59,10 +60,12 @@ async function openDashboardManager({
   });
   // Reset the calls and call counts on the supabase mocks
   supabaseFromMocks.dashboards.select.mockClear();
-  // For some reason, using userEvent.click() for the below causes Jest to
-  // timeout; so we are using fireEvent instead
-  fireEvent.click(screen.getByRole('button', { name: 'Your Account' }));
-  fireEvent.click(screen.getByRole('link', { name: 'My Dashboards' }));
+  await userEventAuto.click(
+    screen.getByRole('button', { name: 'Your Account' })
+  );
+  await userEventAuto.click(
+    screen.getByRole('link', { name: 'My Dashboards' })
+  );
   expect(
     screen.getByRole('heading', { name: 'My Dashboards' })
   ).toBeInTheDocument();
@@ -82,10 +85,10 @@ async function switchToDashboard(dashboard: JsonAppState) {
   mockSupabaseSelectOnce('dashboards', {
     data: [{ raw_data: dashboard }]
   });
-  await act(async () => {
-    fireEvent.click(screen.getByLabelText('Stars Dashboard'));
+  await userEventAuto.click(screen.getByLabelText(String(dashboard.name)));
+  await waitFor(() => {
+    expect(screen.getByText(getThemeName(dashboard.theme))).toBeInTheDocument();
   });
-  expect(screen.getByText(getThemeName(dashboard.theme))).toBeInTheDocument();
 }
 
 const originalOnPush = widgetSyncService.onPush;
@@ -140,13 +143,13 @@ describe('Dashboard Manager', () => {
     });
     const newDashboardName = 'Spiritual Warfare Dashboard';
     mockPrompt(() => newDashboardName);
-    fireEvent.click(
+    await userEventAuto.click(
       screen.getByRole('button', {
         name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
       })
     );
-    expect(screen.getByText(newDashboardName)).toBeInTheDocument();
     await waitFor(() => {
+      expect(screen.getByText(newDashboardName)).toBeInTheDocument();
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
     });
   });
@@ -162,13 +165,13 @@ describe('Dashboard Manager', () => {
       availableDashboards
     });
     mockPrompt(() => null);
-    fireEvent.click(
+    await userEventAuto.click(
       screen.getByRole('button', {
         name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
       })
     );
-    expect(screen.getByText(thirdDashboardJson.name)).toBeInTheDocument();
     await waitFor(() => {
+      expect(screen.getByText(thirdDashboardJson.name)).toBeInTheDocument();
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(0);
     });
   });
@@ -186,15 +189,15 @@ describe('Dashboard Manager', () => {
     mockSupabaseDelete('dashboards');
     mockDashboardsFetch(availableDashboards.slice(0, 2));
     mockConfirm(() => true);
-    await act(async () => {
-      fireEvent.click(
-        screen.getByRole('button', {
-          name: `Delete Dashboard "${thirdDashboardJson.name}"`
-        })
-      );
-    });
-    expect(screen.queryByText(thirdDashboardJson.name)).not.toBeInTheDocument();
+    await userEventAuto.click(
+      screen.getByRole('button', {
+        name: `Delete Dashboard "${thirdDashboardJson.name}"`
+      })
+    );
     await waitFor(() => {
+      expect(
+        screen.queryByText(thirdDashboardJson.name)
+      ).not.toBeInTheDocument();
       expect(supabaseFromMocks.dashboards.delete).toHaveBeenCalledTimes(1);
     });
   });
@@ -210,15 +213,13 @@ describe('Dashboard Manager', () => {
       availableDashboards
     });
     mockConfirm(() => false);
-    await act(async () => {
-      fireEvent.click(
-        screen.getByRole('button', {
-          name: `Delete Dashboard "${thirdDashboardJson.name}"`
-        })
-      );
-    });
-    expect(screen.getByText(thirdDashboardJson.name)).toBeInTheDocument();
+    await userEventAuto.click(
+      screen.getByRole('button', {
+        name: `Delete Dashboard "${thirdDashboardJson.name}"`
+      })
+    );
     await waitFor(() => {
+      expect(screen.getByText(thirdDashboardJson.name)).toBeInTheDocument();
       expect(supabaseFromMocks.dashboards.delete).toHaveBeenCalledTimes(0);
     });
   });
