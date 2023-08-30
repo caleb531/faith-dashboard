@@ -138,9 +138,7 @@ async function Help() {
       <p>
         If you want to sync your dashboard across all your devices, you'll need
         to <Link href="/sign-up">create an account</Link>. If you already have
-        an account, you can click the <Button disabled>Sign Up/In</Button> link
-        in the top-right corner of the page, then click the{' '}
-        <Button disabled>Sign In</Button> button.
+        an account, you can <Link href="/sign-in">click here to sign in</Link>.
       </p>
 
       <p>
