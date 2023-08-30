@@ -127,19 +127,21 @@ const DashboardManager = ({ onClose }: Props) => {
   const fetchDashboards = useCallback(async (): Promise<
     SyncedAppState[] | undefined
   > => {
-    const { data, error } = await supabase
+    const response = await supabase
       .from('dashboards')
       .select('raw_data')
       .match({ user_id: user?.id })
       .order('updated_at', { ascending: false });
-    if (!(data && data.length > 0)) {
+    if (response.error) {
+      setDashboardError(response.error);
+      setIsLoading(false);
       return;
     }
-    if (error) {
-      setDashboardError(error);
+    if (!(response.data && response.data.length > 0)) {
+      setIsLoading(false);
       return;
     }
-    const newDashboards = data.map((result) => result.raw_data);
+    const newDashboards = response.data.map((result) => result.raw_data);
     setDashboards(newDashboards);
     setIsLoading(false);
     return newDashboards;

@@ -25,20 +25,26 @@ import {
 } from '@tests/__utils__/testUtils';
 import userEventFakeTimers from './__utils__/userEventFakeTimers';
 
-function mockDashboardsFetch(dashboards: JsonAppState[]) {
+function mockDashboardsFetch(
+  dashboards: JsonAppState[],
+  { error = null }: { error: Error | null } = { error: null }
+) {
   mockSupabaseSelectOnce('dashboards', {
     data: dashboards.map((dashboard) => {
       return { raw_data: dashboard };
-    })
+    }),
+    error
   });
 }
 
 async function openDashboardManager({
   localDashboard,
-  availableDashboards
+  availableDashboards,
+  error = null
 }: {
   localDashboard: JsonAppState;
   availableDashboards: JsonAppState[];
+  error?: Error | null;
 }): Promise<void> {
   await mockSupabaseUser();
   await mockSupabaseSession();
@@ -47,8 +53,8 @@ async function openDashboardManager({
     data: [{ raw_data: localDashboard }]
   });
   mockSupabaseSelect('widgets', { data: [] });
-  mockDashboardsFetch(availableDashboards);
-  setAppData(firstDashboardJson);
+  mockDashboardsFetch(availableDashboards, { error });
+  setAppData(localDashboard);
   await renderServerComponent(<Home />);
   await waitFor(() => {
     expect(
@@ -56,8 +62,10 @@ async function openDashboardManager({
     ).toBeInTheDocument();
   });
   await waitFor(() => {
-    expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
-    expect(supabaseFromMocks.widgets.select).toHaveBeenCalled();
+    if (availableDashboards?.length > 0) {
+      expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
+      expect(supabaseFromMocks.widgets.select).toHaveBeenCalled();
+    }
   });
   // Reset the calls and call counts on the supabase mocks
   supabaseFromMocks.dashboards.select.mockClear();
@@ -118,6 +126,43 @@ describe('Dashboard Manager', () => {
     await openDashboardManager({
       localDashboard: secondDashboardJson,
       availableDashboards
+    });
+  });
+
+  it('should switch to another dashboard', async () => {
+    const availableDashboards = [
+      firstDashboardJson,
+      secondDashboardJson,
+      thirdDashboardJson
+    ];
+    await openDashboardManager({
+      localDashboard: secondDashboardJson,
+      availableDashboards
+    });
+    await switchToDashboard(thirdDashboardJson);
+  });
+
+  it('should handle errors when fetching dashboards', async () => {
+    const error = new Error('Server error fetching dashboards');
+    await openDashboardManager({
+      localDashboard: secondDashboardJson,
+      availableDashboards: [],
+      error
+    });
+    await waitFor(() => {
+      expect(screen.getByText(error.message)).toBeInTheDocument();
+    });
+  });
+
+  it('should indicate when user has no dashboards', async () => {
+    await openDashboardManager({
+      localDashboard: secondDashboardJson,
+      availableDashboards: []
+    });
+    await waitFor(() => {
+      expect(
+        screen.getByText('You have no dashboards. Create one!')
+      ).toBeInTheDocument();
     });
   });
 
