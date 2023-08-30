@@ -336,6 +336,32 @@ describe('Dashboard Manager', () => {
     });
   });
 
+  it('should successfully delete dashboard', async () => {
+    const error = new Error('Could not delete dashboard. Sorry!');
+    const availableDashboards = [
+      firstDashboardJson,
+      secondDashboardJson,
+      thirdDashboardJson
+    ];
+    await openDashboardManager({
+      localDashboard: secondDashboardJson,
+      availableDashboards
+    });
+    mockSupabaseDelete('dashboards', { error });
+    mockDashboardsFetch(availableDashboards.slice(0, 2));
+    mockConfirm(() => true);
+    await userEventFakeTimers.click(
+      screen.getByRole('button', {
+        name: `Delete Dashboard "${thirdDashboardJson.name}"`
+      })
+    );
+    await waitFor(() => {
+      expect(screen.queryByText(thirdDashboardJson.name)).toBeInTheDocument();
+      expect(supabaseFromMocks.dashboards.delete).toHaveBeenCalledTimes(1);
+      expect(screen.getByText(error.message)).toBeInTheDocument();
+    });
+  });
+
   it('should switch to another dashboard when active dashboard is deleted', async () => {
     const availableDashboards = [
       firstDashboardJson,
