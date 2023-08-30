@@ -15,6 +15,11 @@ import AuthFormField from './AuthFormField';
 const successLabelDuration = 2000;
 // The default HTTP method to use for form submission
 const defaultHttpMethod = 'POST';
+// The number of milliseconds to wait between each check of the Captcha
+// response's availability
+const captchaRetryDelay = 500;
+// The maximum number of attempts to check the Captcha response's availability
+const captchaMaxAttempts = 5;
 
 type Props = {
   action: string;
@@ -95,7 +100,7 @@ function AuthForm(props: Props) {
   ): Promise<void> {
     const response = await callActionEndpoint(
       props.action,
-      new FormData(event.currentTarget)
+      new FormData(event.target as HTMLFormElement)
     );
     const user = response?.data?.user;
     synchronizeFormErrorState(response);
@@ -103,6 +108,24 @@ function AuthForm(props: Props) {
       ? await props.onSuccess({ user })
       : null;
     setFormStatePostSuccess(successCallbackResult);
+  }
+
+  // Wait for the CAPTCHA response to be generated on the client-side, timing
+  // out and erroring after
+  async function waitForCaptcha(attemptNumber = 0) {
+    if (!props.requireCaptcha || getCaptchaToken()) {
+      return Promise.resolve();
+    } else if (attemptNumber < captchaMaxAttempts) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(waitForCaptcha(attemptNumber + 1));
+        }, captchaRetryDelay);
+      });
+    } else {
+      throw new Error(
+        'Sorry, something went wrong. Try submitting the form again.'
+      );
+    }
   }
 
   // When clicking the Submit button, immediately show the button label in a
@@ -118,11 +141,7 @@ function AuthForm(props: Props) {
       if (honeyPotFieldRef.current && honeyPotFieldRef.current.value) {
         throw new Error('Cannot submit form; please try again');
       }
-      if (props.requireCaptcha && !getCaptchaToken()) {
-        throw new Error(
-          'Sorry, something went wrong. Try submitting the form again.'
-        );
-      }
+      await waitForCaptcha();
       await submitForm(event);
     } catch (error: any) {
       setFormErrorMessage(error?.message);
