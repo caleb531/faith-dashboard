@@ -10,6 +10,7 @@ import {
   mockSupabaseFrom,
   mockSupabaseSelect,
   mockSupabaseSession,
+  mockSupabaseUpsert,
   mockSupabaseUser
 } from '@tests/__utils__/supabaseMockUtils';
 import {
@@ -61,6 +62,7 @@ describe('Import/Export functionality', () => {
     await mockSupabaseSession();
     mockSupabaseFrom();
     mockSupabaseSelect('dashboards', { data: [] });
+    mockSupabaseUpsert('dashboards');
     mockConfirm(() => true);
     await renderServerComponent(<Home />);
     expect(screen.getByText('Shore')).toBeInTheDocument();

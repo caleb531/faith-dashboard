@@ -1,4 +1,5 @@
 import { Item } from '@components/reusable/ItemCollection';
+import { PostgrestResponse } from '@supabase/supabase-js';
 import { WidgetHead } from '../widgets/widget.types';
 
 // An available color theme that can be set by the user to personalize their
@@ -23,3 +24,8 @@ export interface AppTheme extends Item {
   name: string;
   id: AppThemeId;
 }
+
+// The response of any Supabase request
+export type SyncResponse =
+  | PostgrestResponse<{ raw_data: any }>
+  | { error: null };

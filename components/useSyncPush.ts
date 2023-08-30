@@ -35,7 +35,7 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
 }: {
   state: T;
   stateType: string;
-  upsertState: (state: T) => Promise<void>;
+  upsertState: (state: T) => Promise<any>;
 }) {
   const [getStateChanges] = useObjectHasChanged(state);
 

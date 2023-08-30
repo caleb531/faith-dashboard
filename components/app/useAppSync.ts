@@ -8,7 +8,7 @@ import { WidgetHead, WidgetState } from '../widgets/widget.types';
 import widgetSyncService from '../widgets/widgetSyncService';
 import { AppAction } from './AppReducer';
 import { SyncContextType } from './SyncContext';
-import { AppState } from './app.types';
+import { AppState, SyncResponse } from './app.types';
 
 const supabase = createClientComponentClient();
 
@@ -17,40 +17,44 @@ const supabase = createClientComponentClient();
 async function applyServerAppToLocalApp(
   newApp: AppState,
   dispatchToApp: Dispatch<AppAction>
-): Promise<void> {
+): Promise<SyncResponse> {
   if (!isSessionActive(await getSession())) {
-    return;
+    return { error: null };
   }
   dispatchToApp({
     type: 'replaceApp',
     payload: newApp
   });
-  const { data, error } = await supabase
+  const response = await supabase
     .from('widgets')
     .select('raw_data')
     .match({ dashboard_id: newApp.id });
-  if (!(data && data.length > 0)) {
-    return;
+  if (response.error) {
+    return response;
   }
-  const newWidgets: WidgetState[] = data.map((widgetRow) => {
+  if (!(response.data && response.data.length > 0)) {
+    return { error: null };
+  }
+  const newWidgets: WidgetState[] = response.data.map((widgetRow) => {
     return widgetRow.raw_data;
   });
   newWidgets.forEach((widget) => {
     widgetSyncService.broadcastPull(widget.id, widget);
   });
+  return { error: null };
 }
 
 // Push the local application state to the server; this function runs when the
 // app changes, but also once when there is no app state on the server
-async function pushLocalAppToServer(app: AppState): Promise<void> {
+async function pushLocalAppToServer(app: AppState): Promise<SyncResponse> {
   if (!app.id) {
-    return;
+    return { error: null };
   }
   const user = await getUser();
   if (!user) {
-    return;
+    return { error: null };
   }
-  await supabase.from('dashboards').upsert([
+  return supabase.from('dashboards').upsert([
     {
       id: app.id,
       user_id: user.id,
@@ -70,9 +74,15 @@ async function pushLocalWidgetsToServer(app: AppState): Promise<void> {
 }
 
 // Push the local app and all of its widgets to the server in succession
-async function pushLocalAppAndWidgetsToServer(app: AppState): Promise<void> {
-  await pushLocalAppToServer(app);
+async function pushLocalAppAndWidgetsToServer(
+  app: AppState
+): Promise<SyncResponse> {
+  const response = await pushLocalAppToServer(app);
+  if (response.error) {
+    return response;
+  }
   await pushLocalWidgetsToServer(app);
+  return { error: null };
 }
 
 // The useAppSync() hook mangages the sychronization of the app state between
@@ -93,9 +103,9 @@ function useAppSync(
   // the server; if there is no app state on the server, then push the local app
   // state to the server
   const pullLatestAppFromServer = useCallback(
-    async (app: AppState): Promise<void> => {
+    async (app: AppState): Promise<SyncResponse> => {
       if (!isSessionActive(await getSession())) {
-        return;
+        return { error: null };
       }
       let response = await supabase
         .from('dashboards')
@@ -103,6 +113,9 @@ function useAppSync(
         // Always ensure the dashboard matching the specified ID is fetched from
         // the server
         .match({ id: app.id });
+      if (response.error) {
+        return response;
+      }
       // If the dashboard matching the specified ID can't be found, pull down
       // the most recent dashboard from the server
       if (!(response.data && response.data.length > 0)) {
@@ -116,11 +129,10 @@ function useAppSync(
       // dashboards associated with their account; only at this point, will it
       // be safe to push the local dashboard and its widgets
       if (!(response.data && response.data.length > 0)) {
-        await pushLocalAppAndWidgetsToServer(app);
-        return;
+        return pushLocalAppAndWidgetsToServer(app);
       }
       const newApp: AppState = response.data[0].raw_data;
-      applyServerAppToLocalApp(newApp, dispatchToApp);
+      return applyServerAppToLocalApp(newApp, dispatchToApp);
     },
     [dispatchToApp]
   );

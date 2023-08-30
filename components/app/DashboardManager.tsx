@@ -71,8 +71,12 @@ const DashboardManager = ({ onClose }: Props) => {
 
   async function saveEditedDashboardName(dashboard: SyncedAppState) {
     setDashboardError(null);
+    const response = await pushLocalAppToServer(dashboard);
+    if (response.error) {
+      setDashboardError(response.error);
+      return;
+    }
     setDashboards(updateDashboardInList(dashboards, dashboard));
-    pushLocalAppToServer(dashboard);
   }
 
   async function deleteDashboard(dashboard: SyncedAppState) {
@@ -104,8 +108,12 @@ const DashboardManager = ({ onClose }: Props) => {
   ): Promise<void> {
     setDashboardError(null);
     setDashboardBeingChosen(dashboard);
-    await pullLatestAppFromServer(dashboard);
+    const response = await pullLatestAppFromServer(dashboard);
     setDashboardBeingChosen(null);
+    if (response.error) {
+      setDashboardError(response.error);
+      return;
+    }
     // Close modal after short delay to give user time to see that the selected
     // dashboard has been changed (since the 'selected' checkmark will now show
     // up over the dashboard they just clicked)

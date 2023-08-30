@@ -1,10 +1,10 @@
 'use client';
 import { createContext } from 'react';
-import { AppState } from './app.types';
+import { AppState, SyncResponse } from './app.types';
 
 export type SyncContextType = {
-  pullLatestAppFromServer: (app: AppState) => Promise<void>;
-  pushLocalAppToServer: (app: AppState) => Promise<void>;
+  pullLatestAppFromServer: (app: AppState) => Promise<SyncResponse>;
+  pushLocalAppToServer: (app: AppState) => Promise<SyncResponse>;
 };
 
 // @ts-ignore (the SyncContext will be initiailized with a non-null value in

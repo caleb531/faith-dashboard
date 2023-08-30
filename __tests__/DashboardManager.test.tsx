@@ -12,6 +12,7 @@ import {
   mockSupabaseSelect,
   mockSupabaseSelectOnce,
   mockSupabaseSession,
+  mockSupabaseUpsert,
   mockSupabaseUser,
   supabaseFromMocks
 } from '@tests/__utils__/supabaseMockUtils';
@@ -192,6 +193,7 @@ describe('Dashboard Manager', () => {
     });
     const newDashboardName = 'Spiritual Warfare Dashboard';
     mockPrompt(() => newDashboardName);
+    mockSupabaseUpsert('dashboards');
     await userEventFakeTimers.click(
       screen.getByRole('button', {
         name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
