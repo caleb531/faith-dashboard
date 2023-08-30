@@ -143,7 +143,7 @@ const DashboardManager = ({ onClose }: Props) => {
 
   return (
     <Modal onClose={onClose}>
-      <section className="dashboards-manager">
+      <section className="dashboard-manager">
         <h1>My Dashboards</h1>
         <p>Here, you can manage and switch between multiple dashboards.</p>
         <Button
@@ -157,7 +157,7 @@ const DashboardManager = ({ onClose }: Props) => {
           <InlineErrorMessage message={dashboardError.message} />
         ) : null}
         {isLoading ? (
-          <LoadingIndicator className="dashboards-manager-loading-indicator" />
+          <LoadingIndicator className="dashboard-manager-loading-indicator" />
         ) : dashboards.length === 0 ? (
           <p>You have no dashboards. Create one!</p>
         ) : (

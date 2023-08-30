@@ -1,15 +1,15 @@
-.dashboards-manager-loading-indicator .loading-indicator-icon {
+.dashboard-manager-loading-indicator .loading-indicator-icon {
   stroke: var(--color-black-20);
 }
 .add-dashboard {
   margin-bottom: 20px;
 }
-.dashboards-manager .item-collection-item {
+.dashboard-manager .item-collection-item {
   flex-shrink: 0;
   width: 250px;
   min-height: 150px;
 }
-.dashboards-manager .item-collection-item-choose-button {
+.dashboard-manager .item-collection-item-choose-button {
   flex-shrink: 0;
   --item-width: 250px;
   --item-height: 155px;
