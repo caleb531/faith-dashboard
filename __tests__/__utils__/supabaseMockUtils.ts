@@ -2,6 +2,8 @@ import { getUser } from '@components/authUtils.client';
 import { Session, User, UserResponse } from '@supabase/supabase-js';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 
+export type ErrorConfig = { error: Error | null };
+
 // This must always be called BEFORE await mockSupabaseSession()
 export async function mockSupabaseUser(
   user: Partial<User> | null = {
@@ -114,11 +116,11 @@ export function mockSupabaseFrom() {
 
 // The default response of any Supabase call that writes to the database (i.e.
 // upsert and delete)
-async function getDefaultWriteResponse() {
+async function getMockSupabasesMutationResponse({ error = null }: ErrorConfig) {
   return {
     user: await getUser(),
     session: supabase.auth.getSession(),
-    error: null
+    error
   };
 }
 
@@ -188,18 +190,24 @@ export function mockSupabaseSelectOnce(tableName: TableName, response: any) {
   return supabaseFromMocks[tableName].select;
 }
 
-export function mockSupabaseUpsert(tableName: TableName) {
+export function mockSupabaseUpsert(
+  tableName: TableName,
+  { error = null }: ErrorConfig = { error: null }
+) {
   supabaseFromMocks[tableName].upsert.mockImplementation(async () => {
-    return getDefaultWriteResponse();
+    return getMockSupabasesMutationResponse({ error });
   });
   return supabaseFromMocks[tableName].upsert;
 }
 
-export function mockSupabaseDelete(tableName: TableName) {
+export function mockSupabaseDelete(
+  tableName: TableName,
+  { error = null }: ErrorConfig = { error: null }
+) {
   supabaseFromMocks[tableName].delete.mockImplementation(() => {
     return {
       match: jest.fn().mockImplementation(async () => {
-        return getDefaultWriteResponse();
+        return getMockSupabasesMutationResponse({ error });
       })
     };
   });

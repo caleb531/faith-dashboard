@@ -7,6 +7,7 @@ import secondDashboardJson from '@tests/__json__/dashboardManager/secondDashboar
 import thirdDashboardJson from '@tests/__json__/dashboardManager/thirdDashboard.json';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
+  ErrorConfig,
   mockSupabaseDelete,
   mockSupabaseFrom,
   mockSupabaseSelect,
@@ -27,7 +28,7 @@ import userEventFakeTimers from './__utils__/userEventFakeTimers';
 
 function mockDashboardsFetch(
   dashboards: JsonAppState[],
-  { error = null }: { error: Error | null } = { error: null }
+  { error = null }: ErrorConfig = { error: null }
 ) {
   mockSupabaseSelectOnce('dashboards', {
     data: dashboards.map((dashboard) => {
@@ -44,7 +45,7 @@ async function openDashboardManager({
 }: {
   localDashboard: JsonAppState;
   availableDashboards: JsonAppState[];
-  error?: Error | null;
+  error?: ErrorConfig['error'];
 }): Promise<void> {
   await mockSupabaseUser();
   await mockSupabaseSession();
@@ -92,7 +93,7 @@ async function openDashboardManager({
 
 async function switchToDashboard(
   dashboard: JsonAppState,
-  { error = null }: { error: Error | null } = { error: null }
+  { error = null }: ErrorConfig = { error: null }
 ) {
   mockSupabaseSelectOnce('dashboards', {
     data: [{ raw_data: dashboard }],
@@ -259,6 +260,31 @@ describe('Dashboard Manager', () => {
     await waitFor(() => {
       expect(screen.getByText(newDashboardName)).toBeInTheDocument();
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('should handle errors while editing dashboard name', async () => {
+    const error = new Error('Could not edit dashboard name');
+    const availableDashboards = [
+      firstDashboardJson,
+      secondDashboardJson,
+      thirdDashboardJson
+    ];
+    await openDashboardManager({
+      localDashboard: secondDashboardJson,
+      availableDashboards
+    });
+    const newDashboardName = 'Spiritual Warfare Dashboard';
+    mockPrompt(() => newDashboardName);
+    mockSupabaseUpsert('dashboards', { error });
+    await userEventFakeTimers.click(
+      screen.getByRole('button', {
+        name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
+      })
+    );
+    await waitFor(() => {
+      expect(screen.getByText(thirdDashboardJson.name)).toBeInTheDocument();
+      expect(screen.getByText(error.message)).toBeInTheDocument();
     });
   });
 
