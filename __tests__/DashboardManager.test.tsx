@@ -90,16 +90,24 @@ async function openDashboardManager({
   expect(screen.queryByText('Shore')).not.toBeInTheDocument();
 }
 
-async function switchToDashboard(dashboard: JsonAppState) {
+async function switchToDashboard(
+  dashboard: JsonAppState,
+  { error = null }: { error: Error | null } = { error: null }
+) {
   mockSupabaseSelectOnce('dashboards', {
-    data: [{ raw_data: dashboard }]
+    data: [{ raw_data: dashboard }],
+    error
   });
   await userEventFakeTimers.click(
     screen.getByLabelText(String(dashboard.name))
   );
-  await waitFor(() => {
-    expect(screen.getByText(getThemeName(dashboard.theme))).toBeInTheDocument();
-  });
+  if (!error) {
+    await waitFor(() => {
+      expect(
+        screen.getByText(getThemeName(dashboard.theme))
+      ).toBeInTheDocument();
+    });
+  }
 }
 
 const originalOnPush = widgetSyncService.onPush;
@@ -164,6 +172,23 @@ describe('Dashboard Manager', () => {
       availableDashboards
     });
     await switchToDashboard(thirdDashboardJson);
+  });
+
+  it('should handle errors when switching dashboards', async () => {
+    const error = new Error('There was a problem switching to this dashboard.');
+    const availableDashboards = [
+      firstDashboardJson,
+      secondDashboardJson,
+      thirdDashboardJson
+    ];
+    await openDashboardManager({
+      localDashboard: secondDashboardJson,
+      availableDashboards
+    });
+    await switchToDashboard(thirdDashboardJson, { error });
+    await waitFor(() => {
+      expect(screen.getByText(error.message)).toBeInTheDocument();
+    });
   });
 
   it('should successfully create new dashboard', async () => {
