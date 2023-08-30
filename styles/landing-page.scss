@@ -57,7 +57,7 @@
     }
   }
   // Make instructional button on Help page fully opaque to be more readable
-  p > button {
+  p > button[disabled] {
     opacity: 1;
   }
   // If image is used directly within a paragraph, it's probably one of the
