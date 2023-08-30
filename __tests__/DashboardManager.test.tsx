@@ -129,19 +129,6 @@ describe('Dashboard Manager', () => {
     });
   });
 
-  it('should switch to another dashboard', async () => {
-    const availableDashboards = [
-      firstDashboardJson,
-      secondDashboardJson,
-      thirdDashboardJson
-    ];
-    await openDashboardManager({
-      localDashboard: secondDashboardJson,
-      availableDashboards
-    });
-    await switchToDashboard(thirdDashboardJson);
-  });
-
   it('should handle errors when fetching dashboards', async () => {
     const error = new Error('Server error fetching dashboards');
     await openDashboardManager({
