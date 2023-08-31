@@ -66,6 +66,20 @@
   p > img {
     background-color: var(--current-theme-color);
   }
+  .instructional-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    img {
+      --icon-size: 16px;
+      width: var(--icon-size);
+      height: var(--icon-size);
+    }
+    img + span {
+      margin-left: 5px;
+    }
+  }
   li {
     padding-right: 2px;
   }
