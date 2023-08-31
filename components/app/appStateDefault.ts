@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AppState } from './app.types';
 
 export default {
+  isDefaultApp: true,
   name: 'Main Dashboard',
   theme: 'shore',
   shouldShowTutorial: true,

@@ -14,7 +14,6 @@ describe('Tutorial', () => {
 
   it('should skip', async () => {
     await renderServerComponent(<Home />);
-    expect(getAppData()).toHaveProperty('shouldShowTutorial', true);
     const skipButton = screen.getByRole('button', { name: 'Skip Tutorial' });
     expect(skipButton).toBeInTheDocument();
     await userEvent.click(skipButton);

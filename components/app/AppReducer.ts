@@ -1,4 +1,3 @@
-import { diff } from 'deep-object-diff';
 import { sortBy } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -20,9 +19,9 @@ export default function reducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
     case 'changeTheme':
       const newTheme = action.payload;
-      return { ...state, theme: newTheme };
+      return { ...state, theme: newTheme, isDefaultApp: undefined };
     case 'skipTutorial':
-      return { ...state, shouldShowTutorial: false };
+      return { ...state, shouldShowTutorial: false, isDefaultApp: undefined };
     case 'addWidget':
       const newWidget = action.payload;
       return { ...state, widgets: [newWidget, ...state.widgets] };
@@ -76,15 +75,14 @@ export default function reducer(state: AppState, action: AppAction): AppState {
       // will not alter the user order of widgets within the same column)
       return { ...state, widgets: sortBy(newWidgets, 'column') };
     case 'replaceApp':
-      return Object.keys(diff(action.payload, state)).length > 0
-        ? {
-            // To manage the identity of the user's dashboard on the
-            // server-side, a unique ID must be generated for the dashboard if
-            // has not already been assigned one
-            id: action.payload.id || uuidv4(),
-            ...action.payload
-          }
-        : state;
+      return {
+        // To manage the identity of the user's dashboard on the
+        // server-side, a unique ID must be generated for the dashboard if
+        // has not already been assigned one
+        id: action.payload.id || uuidv4(),
+        isDefaultApp: undefined,
+        ...action.payload
+      };
     default:
       return state;
   }

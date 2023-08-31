@@ -8,6 +8,7 @@ export type AppThemeId = string;
 
 // The state of the application; an instance of
 export interface AppState {
+  isDefaultApp?: boolean;
   id?: string;
   name?: string;
   theme: AppThemeId;

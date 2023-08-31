@@ -149,7 +149,7 @@ function useAppSync(
   }, [pullLatestAppFromServer]);
 
   // Pull latest data from server on initial app load
-  const isDefaultAppState = app.id === undefined;
+  const isDefaultAppState = app.id === undefined && app.isDefaultApp;
   useEffect(() => {
     if (app.id) {
       pullLatestAppFromServerThrottled(app);

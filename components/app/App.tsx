@@ -73,14 +73,16 @@ function App({
     // our case here, we require the user to have completed/skipped the
     // tutorial before restoring any persisted state of the app (see:
     // https://dev.to/ag-grid/react-18-avoiding-use-effect-getting-called-twice-4i9e)
-    if (!newApp.shouldShowTutorial) {
+    if (!newApp.isDefaultApp || (session && user)) {
       dispatchToApp({ type: 'replaceApp', payload: newApp });
     }
   }, [restoreApp]);
 
   // Serialize the app to localStorage whenever the app's state changes
   useEffect(() => {
-    saveApp(app);
+    if (!app.isDefaultApp) {
+      saveApp(app);
+    }
   }, [app, saveApp]);
 
   const appSyncUtils = useAppSync(app, dispatchToApp);
