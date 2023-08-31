@@ -78,7 +78,9 @@ button,
   --button-background-color: var(--color-black-30);
   --button-background-color-hover: var(--button-background-color);
   --button-background-color-active: var(--color-black-50);
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   user-select: none;
   border: solid 1px transparent;
   border-radius: 20px;

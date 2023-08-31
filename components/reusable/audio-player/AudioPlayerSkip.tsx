@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import Button from '../Button';
+import Icon from '../Icon';
 import AudioPlayerContext from './AudioPlayerContext';
 
 type Props = {
@@ -27,11 +28,9 @@ function AudioPlayerSeeker({ action, skipOffset, label, isDisabled }: Props) {
       onClick={() => adjustTime()}
       disabled={isDisabled}
     >
-      <img
-        className={`audio-player-${action}-icon`}
-        src={`/icons/${action}-${skipOffset}-light.svg`}
+      <Icon
+        name={`${action}-${skipOffset}-light`}
         alt={label.replace(/{offset}/gi, String(skipOffset))}
-        draggable="false"
       />
     </Button>
   );

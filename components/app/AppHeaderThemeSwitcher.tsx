@@ -1,4 +1,5 @@
 import Button from '@components/reusable/Button';
+import Icon from '@components/reusable/Icon';
 import { useContext, useState } from 'react';
 import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
 import useTutorialStep from '../tutorial/useTutorialStep';
@@ -29,12 +30,7 @@ function AppHeaderThemeSwitcher() {
         onClick={() => setThemeSwitcherIsOpen((isOpen) => !isOpen)}
         {...stepProps}
       >
-        <img
-          className="app-header-theme-switcher-button-icon"
-          src="/icons/paintbrush-light.svg"
-          alt=""
-          draggable="false"
-        />
+        <Icon name="paintbrush-light" />
         <span className="app-header-theme-switcher-button-label">
           {
             allThemes.find((themeListItem) => {

@@ -18,6 +18,7 @@
 }
 .item-collection-item-preview {
   display: flex;
+  width: inherit;
   position: relative;
   margin-bottom: 3px;
   &:hover:active {
@@ -25,22 +26,25 @@
     color: var(--color-black-100);
   }
 }
-.item-collection-item-selected-icon {
+.item-collection-item-chosen-indicator {
   pointer-events: none;
   --icon-size: 50%;
-  content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   z-index: 100;
   transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --icon-size: 50%;
   width: var(--icon-size);
   height: var(--icon-size);
-  background-image: url('../../public/icons/check-light.svg');
-  background-repeat: no-repeat;
-  background-size: var(--icon-size);
-  background-position: center center;
   filter: drop-shadow(0 1px 3px var(--color-black-50));
+  .icon {
+    width: 100%;
+    height: 100%;
+  }
 }
 .item-collection-item-loading-indicator {
   --icon-size: 100px;
@@ -61,7 +65,7 @@ button.item-collection-item-delete-button {
   border-radius: 50%;
   --button-background-color: var(--color-grey);
   box-shadow: 0 1px 3px var(--color-black-25);
-  img {
+  .icon {
     --icon-size: 20px;
     width: var(--icon-size);
     height: var(--icon-size);
@@ -91,7 +95,7 @@ button.edit-item-name-button {
   height: var(--icon-size);
   margin-left: 5px;
   vertical-align: middle;
-  img {
+  .icon {
     width: inherit;
     height: inherit;
   }

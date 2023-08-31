@@ -1,3 +1,4 @@
+import Icon from '@components/reusable/Icon';
 import { columnCount } from '@components/widgets/WidgetBoard';
 import widgetTypes from '@components/widgets/widgetTypes';
 import { fromPairs, groupBy, times } from 'lodash-es';
@@ -40,14 +41,7 @@ const DashboardPreview = ({ dashboard }: Props) => {
                     data-type={widget.type}
                     className="dashboard-preview-widget"
                   >
-                    <img
-                      src={`/icons/${iconNamesByWidgetType[widget.type]}.svg`}
-                      // It could be information overload for a screen reader to
-                      // read the name of every widget in each dashboard
-                      alt=""
-                      className="dashboard-preview-widget-icon"
-                      draggable="false"
-                    />
+                    <Icon name={iconNamesByWidgetType[widget.type]} />
                   </div>
                 );
               })}

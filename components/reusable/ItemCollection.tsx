@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { capitalize } from 'lodash-es';
 import React from 'react';
 import Button from './Button';
+import Icon from './Icon';
 import LoadingIndicator from './LoadingIndicator';
 
 export type Item = { id: string; name: string };
@@ -106,10 +107,9 @@ const ItemCollection = <TItem extends Item>({
                 {isItemBeingDeleted && isItemBeingDeleted(item) ? (
                   <LoadingIndicator />
                 ) : (
-                  <img
-                    src="/icons/remove-light.svg"
+                  <Icon
+                    name="remove-light"
                     alt={`Delete ${capitalize(itemType)} "${item.name}"`}
-                    draggable="false"
                   />
                 )}
               </Button>
@@ -129,7 +129,9 @@ const ItemCollection = <TItem extends Item>({
                     autoCenter
                   />
                 ) : isCurrentItem(item) ? (
-                  <div className="item-collection-item-selected-icon"></div>
+                  <div className="item-collection-item-chosen-indicator">
+                    <Icon name="check-light" />
+                  </div>
                 ) : null}
                 {itemPreview(item)}
               </div>
@@ -151,12 +153,11 @@ const ItemCollection = <TItem extends Item>({
                     unstyled
                     onClick={onEditItemNameWrapper}
                   >
-                    <img
-                      src="/icons/edit-dark.svg"
+                    <Icon
+                      name="edit-dark"
                       alt={`Edit Name for ${capitalize(itemType)} "${
                         item.name
                       }"`}
-                      draggable="false"
                     />
                   </Button>
                 ) : null}

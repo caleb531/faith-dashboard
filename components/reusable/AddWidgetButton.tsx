@@ -1,4 +1,5 @@
 import Button from './Button';
+import Icon from './Icon';
 
 type Props = {
   onPressButton: () => void;
@@ -14,12 +15,7 @@ function AddWidget({ onPressButton, ...buttonProps }: Props) {
         buttonProps.className ? buttonProps.className : ''
       }`}
     >
-      <img
-        className="add-widget-button-icon"
-        src="/icons/add-light.svg"
-        alt=""
-        draggable="false"
-      />
+      <Icon name="add-light" />
       <span className="add-widget-button-label">Add Widget</span>
     </Button>
   );

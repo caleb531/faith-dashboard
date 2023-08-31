@@ -12,17 +12,13 @@
   line-height: var(--line-height-tight);
   vertical-align: middle;
 }
-.app-header-theme-switcher-button-icon {
+.app-header-theme-switcher-button .icon {
   --icon-size: 16px;
   width: var(--icon-size);
   height: var(--icon-size);
   @include layout(tablet) {
     margin-right: 4px;
   }
-}
-.app-header-theme-switcher-button-icon,
-.app-header-theme-switcher-button-label {
-  vertical-align: middle;
 }
 .app-header-theme-switcher-button-label {
   display: none;

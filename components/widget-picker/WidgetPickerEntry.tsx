@@ -1,4 +1,5 @@
 import AppContext from '@components/app/AppContext';
+import Icon from '@components/reusable/Icon';
 import { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import AddWidgetButton from '../reusable/AddWidgetButton';
@@ -30,11 +31,7 @@ function WidgetPickerEntry({ widgetType, onAddWidget }: Props) {
     <div className="widget-picker-entry">
       <header className="widget-picker-entry-header">
         <h2 className="widget-picker-entry-heading">
-          <img
-            src={`icons/${widgetType.icon}.svg`}
-            alt=""
-            className="widget-picker-entry-icon"
-          />
+          <Icon name={widgetType.icon} />
           {widgetType.name}
         </h2>
         <AddWidgetButton

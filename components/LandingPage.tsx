@@ -6,6 +6,7 @@ import {
   getSignInUrlForCurrentPage,
   getUser
 } from './authUtils.server';
+import Icon from './reusable/Icon';
 import LinkButton from './reusable/LinkButton';
 
 type Props = {
@@ -57,12 +58,7 @@ async function LandingPage(
               className="sheet-control sheet-control-left landing-page-control landing-page-home-control"
               unstyled
             >
-              <img
-                className="sheet-control-icon landing-page-control-icon landing-page-home-control-icon"
-                src="/icons/home-dark.svg"
-                alt="Go to Dashboard"
-                draggable="false"
-              />
+              <Icon name="home-dark" alt="Go to Dashboard" />
             </LinkButton>
             {altLink ? (
               <LinkButton

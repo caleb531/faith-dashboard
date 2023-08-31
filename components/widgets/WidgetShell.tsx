@@ -1,5 +1,6 @@
 import AppContext from '@components/app/AppContext';
 import Button from '@components/reusable/Button';
+import Icon from '@components/reusable/Icon';
 import { DraggableProvided } from '@hello-pangea/dnd';
 import clsx from 'clsx';
 import React, { Dispatch, useCallback, useContext } from 'react';
@@ -91,12 +92,7 @@ function WidgetShell({ widget, dispatchToWidget, provided, children }: Props) {
           {...provided.dragHandleProps}
           {...dragStepData.stepProps}
         >
-          <img
-            src="/icons/drag-handle-light.svg"
-            alt="Drag Widget"
-            draggable="false"
-            className="widget-drag-handle-icon widget-control-icon"
-          />
+          <Icon name="drag-handle-light" alt="Drag Widget" />
         </div>
       </div>
       <div className="widget-controls widget-controls-right">
@@ -105,24 +101,14 @@ function WidgetShell({ widget, dispatchToWidget, provided, children }: Props) {
           onClick={() => requestRemoveWidget()}
           {...removeStepData.stepProps}
         >
-          <img
-            src="/icons/remove-circle-light.svg"
-            alt="Remove Widget"
-            className="widget-remove-control-icon widget-control-icon"
-            draggable="false"
-          />
+          <Icon name="remove-circle-light" alt="Remove Widget" />
         </Button>
         <Button
           className="widget-settings-toggle widget-control"
           onClick={(event) => dispatchToWidget({ type: 'toggleSettings' })}
           {...settingsStepData.stepProps}
         >
-          <img
-            src="/icons/settings-light.svg"
-            alt="Toggle Settings"
-            draggable="false"
-            className="widget-settings-toggle-icon widget-control-icon"
-          />
+          <Icon name="settings-light" alt="Toggle Settings" />
         </Button>
       </div>
       {widget.isLoading ? (

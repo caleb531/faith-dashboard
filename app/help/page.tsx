@@ -1,4 +1,5 @@
 import LandingPage from '@components/LandingPage';
+import Icon from '@components/reusable/Icon';
 import InstructionalButton from '@components/reusable/InstructionalButton';
 import LinkButton from '@components/reusable/LinkButton';
 import { getPageMetadata } from '@components/seoUtils';
@@ -34,7 +35,7 @@ async function Help() {
       <p>
         You can add a new widget by clicking the{' '}
         <InstructionalButton>
-          <img src="/icons/add-light.svg" alt="Add" />
+          <Icon name="add-light" alt="Add" />
           <span>Add Widget</span>
         </InstructionalButton>{' '}
         button at the top edge of the app. A panel will appear, allowing you to
@@ -43,7 +44,7 @@ async function Help() {
       <p>
         When you've found your desired widget, click the{' '}
         <InstructionalButton>
-          <img src="/icons/add-light.svg" alt="Add" />
+          <Icon name="add-light" alt="Add" />
           <span>Add Widget</span>
         </InstructionalButton>{' '}
         button next to the widget listing. It will then automatically appear in
@@ -53,24 +54,24 @@ async function Help() {
       <h3>Rearranging widgets</h3>
       <p>
         You can move a widget to a different position or column with the{' '}
-        <img src="/icons/drag-handle-light.svg" alt="Drag" /> icon in the
-        top-left corner of any widget.
+        <Icon name="drag-handle-light" alt="Drag" /> icon in the top-left corner
+        of any widget.
       </p>
 
       <h3>Deleting a widget</h3>
       <p>
         You can delete a widget from your dashboard via the{' '}
-        <img src="/icons/remove-light.svg" alt="Remove" /> icon in the top-right
-        corner of any widget. This will permanently delete the widget and its
-        contents from your dashboard.
+        <Icon name="remove-light" alt="Remove" /> icon in the top-right corner
+        of any widget. This will permanently delete the widget and its contents
+        from your dashboard.
       </p>
 
       <h3>Changing settings</h3>
       <p>
         If you want to change which Bible verse you are displaying or which
         Podcast you are listening to, click the{' '}
-        <img src="/icons/settings-light.svg" alt="Settings" /> icon in the
-        top-right corner of any widget.
+        <Icon name="settings-light" alt="Settings" /> icon in the top-right
+        corner of any widget.
       </p>
 
       <h3>Changing themes</h3>
@@ -79,7 +80,7 @@ async function Help() {
         dashboard. Some are photos, other are solid colors. To pick one, click
         the{' '}
         <InstructionalButton>
-          <img src="/icons/paintbrush-light.svg" alt="" />
+          <Icon name="paintbrush-light" alt="" />
           <span>Shore</span>
         </InstructionalButton>{' '}
         icon in the top-right corner of the page ("Shore" is the name of
@@ -144,7 +145,7 @@ async function Help() {
         dashboard for different purposes! To create, manage, or switch to
         another dashboard, click the{' '}
         <InstructionalButton>
-          <img src="/icons/account-light.svg" alt="Person" />
+          <Icon name="account-light" alt="Person" />
         </InstructionalButton>{' '}
         button in the top-right corner of the page, then choose "My Dashboards"
         from the menu. You will then be presented with all your dashboards, and
@@ -158,11 +159,11 @@ async function Help() {
         dashboard to a file, or import it if you have a file to upload. You can
         accomplish this by clicking the{' '}
         <InstructionalButton>
-          <img src="/icons/account-light.svg" alt="Person" />
+          <Icon name="account-light" alt="Person" />
         </InstructionalButton>{' '}
         or{' '}
         <InstructionalButton>
-          <img src="/icons/menu-light.svg" alt="Menu" />
+          <Icon name="menu-light" alt="Menu" />
         </InstructionalButton>{' '}
         button in the top-right corner of the page, then choosing "Import
         Dashboard" or "Export Dashboard" from the menu.
@@ -182,7 +183,7 @@ async function Help() {
         If you have an account and wish to change details about your account,
         click the{' '}
         <InstructionalButton>
-          <img src="/icons/account-light.svg" alt="Person" />
+          <Icon name="account-light" alt="Person" />
         </InstructionalButton>{' '}
         button in the top-right corner of the page, then choose "Account
         Settings" from the menu. You will then be redirected to a page where you

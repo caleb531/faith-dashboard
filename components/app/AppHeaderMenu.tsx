@@ -1,4 +1,5 @@
 import Button from '@components/reusable/Button';
+import Icon from '@components/reusable/Icon';
 import { defer } from 'lodash-es';
 import Link from 'next/link';
 import React, { ReactNode, useState } from 'react';
@@ -37,12 +38,7 @@ function AppHeaderMenu({ label, icon, items }: Props) {
         className="app-header-menu-button"
         onClick={() => setIsShowingMenu(!isShowingMenu)}
       >
-        <img
-          className="app-header-menu-button-icon"
-          src={`/icons/${icon}.svg`}
-          alt={label}
-          draggable="false"
-        />
+        <Icon name={icon} alt={label} />
       </Button>
       {isShowingMenu && (
         <div className="app-header-menu">

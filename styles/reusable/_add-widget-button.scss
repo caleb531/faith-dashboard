@@ -9,11 +9,7 @@
     padding-left: 10px;
   }
 }
-.add-widget-button-icon,
-.add-widget-button-label {
-  vertical-align: middle;
-}
-.add-widget-button img {
+.add-widget-button .icon {
   --icon-size: 18px;
   width: var(--icon-size);
   height: var(--icon-size);

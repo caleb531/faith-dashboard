@@ -1,4 +1,5 @@
 import Button from '@components/reusable/Button';
+import Icon from '@components/reusable/Icon';
 import { formatDistanceToNow } from 'date-fns';
 import { useContext } from 'react';
 import ResultList from '../../reusable/ResultList';
@@ -65,12 +66,7 @@ function PodcastEpisodeList({
           className="podcast-episodes-refresh-control widget-control"
           onClick={() => fetchPodcastFeed(podcastFeedUrl!)}
         >
-          <img
-            className="podcast-episodes-refresh-control-icon"
-            src="/icons/refresh.svg"
-            alt="Check for New Episodes"
-            draggable="false"
-          />
+          <Icon name="refresh-light" alt="Check for New Episodes" />
         </Button>
       </div>
       <ResultList

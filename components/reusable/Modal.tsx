@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from './Button';
+import Icon from './Icon';
 
 type Props = {
   children: React.ReactNode;
@@ -16,12 +17,7 @@ function Modal({ children, onClose }: Props) {
           unstyled
           onClick={onClose}
         >
-          <img
-            className="sheet-control-icon modal-control-icon modal-close-control-icon"
-            src="/icons/close-dark.svg"
-            alt="Close Modal"
-            draggable="false"
-          />
+          <Icon name="close-dark" alt="Close Modal" />
         </Button>
         <div className="modal-contents">{children}</div>
       </aside>

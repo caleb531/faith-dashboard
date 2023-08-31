@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import useEventListener from '../../useEventListener';
 import Button from '../Button';
+import Icon from '../Icon';
 import LoadingIndicator from '../LoadingIndicator';
 import AudioPlayerContext from './AudioPlayerContext';
 import useAudioPlayPause from './useAudioPlayPause';
@@ -39,19 +40,9 @@ function AudioPlayerPlayPause({ isDisabled }: Props) {
       {isDisabled || isBufferingAfterSeek ? (
         <LoadingIndicator />
       ) : audioElement.paused ? (
-        <img
-          className="audio-player-playpause-icon"
-          src="/icons/play-light.svg"
-          alt="Play"
-          draggable="false"
-        />
+        <Icon name="play-light" alt="Play" />
       ) : (
-        <img
-          className="audio-player-playpause-icon"
-          src="/icons/pause-light.svg"
-          alt="Pause"
-          draggable="false"
-        />
+        <Icon name="pause-light" alt="Pause" />
       )}
     </Button>
   );
