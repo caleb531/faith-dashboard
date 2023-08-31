@@ -90,6 +90,7 @@ button,
   color: var(--color-white-100);
   font-size: var(--font-size-xs);
   text-decoration: none;
+  white-space: nowrap;
   &[disabled]:not([data-unstyled='true']) {
     opacity: 0.5;
   }
