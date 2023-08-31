@@ -61,7 +61,17 @@
   }
 }
 
-.update-notification .loading-indicator {
+// Even though the LoadingIndicator component allows for an autoCenter prop, we
+// need a wrapper container so that the transform used for position:absolute
+// does not conflict with the transform from the animation
+.update-notification-loading-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.update-notification.is-updating .loading-indicator {
   animation: update-element-show var(--update-animation-duration)
     var(--update-animation-timing-function) both;
   animation-delay: var(--update-animation-duration);

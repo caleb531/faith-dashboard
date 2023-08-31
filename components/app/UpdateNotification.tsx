@@ -75,7 +75,11 @@ function UpdateNotification() {
       )}
       onClick={() => setIsUpdating(true)}
     >
-      {isUpdating ? <LoadingIndicator autoCenter /> : null}
+      {isUpdating ? (
+        <div className="update-notification-loading-container">
+          <LoadingIndicator />
+        </div>
+      ) : null}
       <span className="update-notification-message">
         Update available! Click here to update.
       </span>
