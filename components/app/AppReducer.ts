@@ -15,29 +15,34 @@ export type AppAction =
   | { type: 'moveWidget'; payload: WidgetMoveParameters }
   | { type: 'replaceApp'; payload: AppState };
 
+// Anytime we change the app state, we should unset the isDefaultApp flag; to
+// reduce duplication, rather than adding `isDefaultApp: undefined`
+function unsetDefaultFlagForApp(state: AppState) {
+  const { isDefaultApp, ...newState } = state;
+  return newState;
+}
+
 export default function reducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
     case 'changeTheme':
       const newTheme = action.payload;
-      return { ...state, isDefaultApp: undefined, theme: newTheme };
+      return unsetDefaultFlagForApp({ ...state, theme: newTheme });
     case 'endTutorial':
-      return { ...state, isDefaultApp: undefined, shouldShowTutorial: false };
+      return unsetDefaultFlagForApp({ ...state, shouldShowTutorial: false });
     case 'addWidget':
       const newWidget = action.payload;
-      return {
+      return unsetDefaultFlagForApp({
         ...state,
-        isDefaultApp: undefined,
         widgets: [newWidget, ...state.widgets]
-      };
+      });
     case 'removeWidget':
       const widgetToRemove = action.payload;
-      return {
+      return unsetDefaultFlagForApp({
         ...state,
-        isDefaultApp: undefined,
         widgets: state.widgets.filter(
           (widget) => widget.id !== widgetToRemove.id
         )
-      };
+      });
     case 'moveWidget':
       const {
         widgetToMove,
@@ -78,20 +83,18 @@ export default function reducer(state: AppState, action: AppAction): AppState {
       // column be contiguous; to fix this, we simply sort the array at the end
       // of every drag (sidenote: Lodash's sortBy is a stable sort, so this
       // will not alter the user order of widgets within the same column)
-      return {
+      return unsetDefaultFlagForApp({
         ...state,
-        isDefaultApp: undefined,
         widgets: sortBy(newWidgets, 'column')
-      };
+      });
     case 'replaceApp':
-      return {
+      return unsetDefaultFlagForApp({
         // To manage the identity of the user's dashboard on the
         // server-side, a unique ID must be generated for the dashboard if
         // has not already been assigned one
         id: action.payload.id || uuidv4(),
-        ...action.payload,
-        isDefaultApp: undefined
-      };
+        ...action.payload
+      });
     default:
       return state;
   }
