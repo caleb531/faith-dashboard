@@ -1,7 +1,7 @@
 create table public.dashboards (
   id uuid not null unique,
   raw_data json not null,
-  user_id uuid references auth.users not null,
+  user_id uuid references auth.users not null on delete cascade,
   client_id uuid,
   updated_at timestamptz,
   primary key(id, user_id)
