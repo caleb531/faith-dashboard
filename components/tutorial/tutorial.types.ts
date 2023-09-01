@@ -26,5 +26,5 @@ export interface TutorialContextValue {
   currentStepIndex: number;
   currentStep: TutorialStep;
   moveToNextStep: () => void;
-  skipTutorial: () => void;
+  endTutorial: () => void;
 }

@@ -11,7 +11,7 @@ import useTutorialStepTooltipPositioner from './useTutorialStepTooltipPositioner
 // wrapped inside of an isCurrentStep check (from the useTutorialStep()
 // hook), so that only one instance of TutorialStepTooltip is active at a time
 function TutorialStepTooltip() {
-  const { currentStep, currentStepIndex, moveToNextStep, skipTutorial } =
+  const { currentStep, currentStepIndex, moveToNextStep, endTutorial } =
     useContext(TutorialContext);
   const messageRef = useRef<HTMLDivElement>(null);
   const isLastStep = currentStepIndex === tutorialSteps.length - 1;
@@ -59,7 +59,7 @@ function TutorialStepTooltip() {
         {isLastStep === false ? (
           <Button
             className="tutorial-step-tooltip-control warning"
-            onClick={skipTutorial}
+            onClick={endTutorial}
           >
             Skip Tutorial
           </Button>

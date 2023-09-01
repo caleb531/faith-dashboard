@@ -9,7 +9,7 @@ import { AppState, AppThemeId } from './app.types';
 
 export type AppAction =
   | { type: 'changeTheme'; payload: AppThemeId }
-  | { type: 'skipTutorial' }
+  | { type: 'endTutorial' }
   | { type: 'addWidget'; payload: WidgetState }
   | { type: 'removeWidget'; payload: Omit<WidgetHead, 'type' | 'column'> }
   | { type: 'moveWidget'; payload: WidgetMoveParameters }
@@ -20,7 +20,7 @@ export default function reducer(state: AppState, action: AppAction): AppState {
     case 'changeTheme':
       const newTheme = action.payload;
       return { ...state, isDefaultApp: undefined, theme: newTheme };
-    case 'skipTutorial':
+    case 'endTutorial':
       return { ...state, isDefaultApp: undefined, shouldShowTutorial: false };
     case 'addWidget':
       const newWidget = action.payload;

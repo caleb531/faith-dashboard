@@ -17,19 +17,19 @@ function TutorialFlow({ inProgress, children }: Props) {
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
-  const skipTutorial = useCallback(() => {
-    dispatchToApp({ type: 'skipTutorial' });
+  const endTutorial = useCallback(() => {
+    dispatchToApp({ type: 'endTutorial' });
   }, [dispatchToApp]);
 
   const moveToNextStep = useCallback(() => {
     if (currentStepIndex + 1 === tutorialSteps.length) {
       // Close Tutorial UI when all steps are completed
-      skipTutorial();
+      endTutorial();
     } else {
       // Otherwise, just advance to the next step in the flow
       setCurrentStepIndex((newIndex) => newIndex + 1);
     }
-  }, [currentStepIndex, skipTutorial, setCurrentStepIndex]);
+  }, [currentStepIndex, endTutorial, setCurrentStepIndex]);
 
   // We want to send multiple values (the count and a setter) to the below
   // context; however, if we try to inline an object, the context value will
@@ -41,7 +41,7 @@ function TutorialFlow({ inProgress, children }: Props) {
     currentStepIndex,
     currentStep: tutorialSteps[currentStepIndex],
     moveToNextStep,
-    skipTutorial
+    endTutorial
   });
 
   return (
