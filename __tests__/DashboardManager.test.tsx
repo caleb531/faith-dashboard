@@ -19,6 +19,7 @@ import {
 } from '@tests/__utils__/supabaseMockUtils';
 import {
   JsonAppState,
+  getAppData,
   getThemeName,
   mockConfirmOnce,
   mockPromptOnce,
@@ -193,13 +194,14 @@ describe('Dashboard Manager', () => {
   });
 
   it('should successfully create new dashboard', async () => {
+    const localDashboard = secondDashboardJson;
     const availableDashboards = [
       firstDashboardJson,
       secondDashboardJson,
       thirdDashboardJson
     ];
     await openDashboardManager({
-      localDashboard: secondDashboardJson,
+      localDashboard,
       availableDashboards
     });
     const newDashboardName = 'Prayer Dashboard';
@@ -215,6 +217,7 @@ describe('Dashboard Manager', () => {
       expect(
         screen.queryByRole('button', { name: 'Skip Tutorial' })
       ).not.toBeInTheDocument();
+      expect(getAppData().id).not.toEqual(localDashboard.id);
     });
   });
 

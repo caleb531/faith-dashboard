@@ -85,12 +85,12 @@ export default function reducer(state: AppState, action: AppAction): AppState {
       };
     case 'replaceApp':
       return {
-        isDefaultApp: undefined,
         // To manage the identity of the user's dashboard on the
         // server-side, a unique ID must be generated for the dashboard if
         // has not already been assigned one
         id: action.payload.id || uuidv4(),
-        ...action.payload
+        ...action.payload,
+        isDefaultApp: undefined
       };
     default:
       return state;
