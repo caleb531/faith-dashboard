@@ -10,7 +10,7 @@ import {
   mockSupabaseSession,
   mockSupabaseUser
 } from '@tests/__utils__/supabaseMockUtils';
-import { callRouteHandler, mockConfirm } from '@tests/__utils__/testUtils';
+import { callRouteHandler, mockConfirmOnce } from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
 
 const originalLocationObject = window.location;
@@ -56,7 +56,7 @@ describe('Account Header', () => {
     fetch.mockIf(/sign-out/i, async () => {
       return JSON.stringify({ success: true });
     });
-    mockConfirm(() => true);
+    mockConfirmOnce(() => true);
     jest.spyOn(supabase.auth, 'signOut').mockImplementation(() => {
       return {
         error: null
@@ -101,7 +101,7 @@ describe('Account Header', () => {
   it('should cancel signing out', async () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
-    mockConfirm(() => false);
+    mockConfirmOnce(() => false);
     jest.spyOn(supabase.auth, 'signOut').mockImplementation(() => {
       return {
         error: null

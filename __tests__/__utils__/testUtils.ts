@@ -71,14 +71,14 @@ export function getWidgetData({
   return widgetData;
 }
 
-export function mockAlert(mockImpl: (message?: any) => void) {
-  return jest.spyOn(window, 'alert').mockImplementation(mockImpl);
+export function mockAlertOnce(mockImpl: (message?: any) => void) {
+  return jest.spyOn(window, 'alert').mockImplementationOnce(mockImpl);
 }
-export function mockConfirm(mockImpl: (message?: string) => boolean) {
-  return jest.spyOn(window, 'confirm').mockImplementation(mockImpl);
+export function mockConfirmOnce(mockImpl: (message?: string) => boolean) {
+  return jest.spyOn(window, 'confirm').mockImplementationOnce(mockImpl);
 }
-export function mockPrompt(mockImpl: (message?: string) => string | null) {
-  return jest.spyOn(window, 'prompt').mockImplementation(mockImpl);
+export function mockPromptOnce(mockImpl: (message?: string) => string | null) {
+  return jest.spyOn(window, 'prompt').mockImplementationOnce(mockImpl);
 }
 
 export async function removeWidget({
@@ -90,7 +90,7 @@ export async function removeWidget({
   index: number;
   confirmRemove: boolean;
 }) {
-  const confirm = mockConfirm(() => confirmRemove);
+  const confirm = mockConfirmOnce(() => confirmRemove);
   const widgetElem = screen.getAllByRole('article')[index];
   expect(widgetElem).toHaveProperty('dataset.widgetType', type);
   await userEvent.click(

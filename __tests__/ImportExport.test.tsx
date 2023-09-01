@@ -16,8 +16,8 @@ import {
 import {
   assignIdToLocalApp,
   getAppData,
-  mockAlert,
-  mockConfirm,
+  mockAlertOnce,
+  mockConfirmOnce,
   setAppData
 } from '@tests/__utils__/testUtils';
 import { omit } from 'lodash-es';
@@ -29,7 +29,7 @@ describe('Import/Export functionality', () => {
   });
 
   it('should import dashboard', async () => {
-    mockConfirm(() => true);
+    mockConfirmOnce(() => true);
     assignIdToLocalApp(uuidv4());
     const originalApp = getAppData();
     await renderServerComponent(<Home />);
@@ -63,7 +63,7 @@ describe('Import/Export functionality', () => {
     mockSupabaseFrom();
     mockSupabaseSelect('dashboards', { data: [] });
     mockSupabaseUpsert('dashboards');
-    mockConfirm(() => true);
+    mockConfirmOnce(() => true);
     await renderServerComponent(<Home />);
     expect(screen.getByText('Shore')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
@@ -80,7 +80,7 @@ describe('Import/Export functionality', () => {
   it('should not import dashboard is user denied confirmation', async () => {
     mockSupabaseFrom();
     mockSupabaseSelect('dashboards', { data: [] });
-    mockConfirm(() => false);
+    mockConfirmOnce(() => false);
     await renderServerComponent(<Home />);
     expect(screen.getByText('Shore')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
@@ -98,7 +98,7 @@ describe('Import/Export functionality', () => {
     let errorMessage;
     await renderServerComponent(<Home />);
     expect(screen.getByText('Shore')).toBeInTheDocument();
-    mockAlert((message) => {
+    mockAlertOnce((message) => {
       errorMessage = message;
     });
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
@@ -119,7 +119,7 @@ describe('Import/Export functionality', () => {
     let errorMessage;
     await renderServerComponent(<Home />);
     expect(screen.getByText('Shore')).toBeInTheDocument();
-    mockAlert((message) => {
+    mockAlertOnce((message) => {
       errorMessage = message;
     });
     await userEvent.click(screen.getByRole('button', { name: 'Tools' }));

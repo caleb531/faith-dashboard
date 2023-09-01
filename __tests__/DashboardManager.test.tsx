@@ -20,8 +20,8 @@ import {
 import {
   JsonAppState,
   getThemeName,
-  mockConfirm,
-  mockPrompt,
+  mockConfirmOnce,
+  mockPromptOnce,
   setAppData
 } from '@tests/__utils__/testUtils';
 import userEventFakeTimers from './__utils__/userEventFakeTimers';
@@ -203,7 +203,7 @@ describe('Dashboard Manager', () => {
       availableDashboards
     });
     const newDashboardName = 'Prayer Dashboard';
-    mockPrompt(() => newDashboardName);
+    mockPromptOnce(() => newDashboardName);
     await userEventFakeTimers.click(
       screen.getByRole('button', { name: `Add Dashboard` })
     );
@@ -228,7 +228,7 @@ describe('Dashboard Manager', () => {
       localDashboard: secondDashboardJson,
       availableDashboards
     });
-    mockPrompt(() => null);
+    mockPromptOnce(() => null);
     await userEventFakeTimers.click(
       screen.getByRole('button', {
         name: 'Add Dashboard'
@@ -250,7 +250,7 @@ describe('Dashboard Manager', () => {
       availableDashboards
     });
     const newDashboardName = 'Spiritual Warfare Dashboard';
-    mockPrompt(() => newDashboardName);
+    mockPromptOnce(() => newDashboardName);
     mockSupabaseUpsert('dashboards');
     await userEventFakeTimers.click(
       screen.getByRole('button', {
@@ -275,7 +275,7 @@ describe('Dashboard Manager', () => {
       availableDashboards
     });
     const newDashboardName = 'Spiritual Warfare Dashboard';
-    mockPrompt(() => newDashboardName);
+    mockPromptOnce(() => newDashboardName);
     mockSupabaseUpsert('dashboards', { error });
     await userEventFakeTimers.click(
       screen.getByRole('button', {
@@ -298,7 +298,7 @@ describe('Dashboard Manager', () => {
       localDashboard: secondDashboardJson,
       availableDashboards
     });
-    mockPrompt(() => null);
+    mockPromptOnce(() => null);
     await userEventFakeTimers.click(
       screen.getByRole('button', {
         name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
@@ -322,7 +322,7 @@ describe('Dashboard Manager', () => {
     });
     mockSupabaseDelete('dashboards');
     mockDashboardsFetch(availableDashboards.slice(0, 2));
-    mockConfirm(() => true);
+    mockConfirmOnce(() => true);
     await userEventFakeTimers.click(
       screen.getByRole('button', {
         name: `Delete Dashboard "${thirdDashboardJson.name}"`
@@ -349,7 +349,7 @@ describe('Dashboard Manager', () => {
     });
     mockSupabaseDelete('dashboards', { error });
     mockDashboardsFetch(availableDashboards.slice(0, 2));
-    mockConfirm(() => true);
+    mockConfirmOnce(() => true);
     await userEventFakeTimers.click(
       screen.getByRole('button', {
         name: `Delete Dashboard "${thirdDashboardJson.name}"`
@@ -379,7 +379,7 @@ describe('Dashboard Manager', () => {
         return dashboard !== dashboardToDelete;
       })
     );
-    mockConfirm(() => true);
+    mockConfirmOnce(() => true);
     mockSupabaseSelectOnce('dashboards', {
       data: [{ raw_data: firstDashboardJson }]
     });
@@ -409,7 +409,7 @@ describe('Dashboard Manager', () => {
       localDashboard: secondDashboardJson,
       availableDashboards
     });
-    mockConfirm(() => false);
+    mockConfirmOnce(() => false);
     await userEventFakeTimers.click(
       screen.getByRole('button', {
         name: `Delete Dashboard "${thirdDashboardJson.name}"`
