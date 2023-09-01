@@ -19,16 +19,21 @@ export default function reducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
     case 'changeTheme':
       const newTheme = action.payload;
-      return { ...state, theme: newTheme, isDefaultApp: undefined };
+      return { ...state, isDefaultApp: undefined, theme: newTheme };
     case 'skipTutorial':
-      return { ...state, shouldShowTutorial: false, isDefaultApp: undefined };
+      return { ...state, isDefaultApp: undefined, shouldShowTutorial: false };
     case 'addWidget':
       const newWidget = action.payload;
-      return { ...state, widgets: [newWidget, ...state.widgets] };
+      return {
+        ...state,
+        isDefaultApp: undefined,
+        widgets: [newWidget, ...state.widgets]
+      };
     case 'removeWidget':
       const widgetToRemove = action.payload;
       return {
         ...state,
+        isDefaultApp: undefined,
         widgets: state.widgets.filter(
           (widget) => widget.id !== widgetToRemove.id
         )
@@ -73,14 +78,18 @@ export default function reducer(state: AppState, action: AppAction): AppState {
       // column be contiguous; to fix this, we simply sort the array at the end
       // of every drag (sidenote: Lodash's sortBy is a stable sort, so this
       // will not alter the user order of widgets within the same column)
-      return { ...state, widgets: sortBy(newWidgets, 'column') };
+      return {
+        ...state,
+        isDefaultApp: undefined,
+        widgets: sortBy(newWidgets, 'column')
+      };
     case 'replaceApp':
       return {
+        isDefaultApp: undefined,
         // To manage the identity of the user's dashboard on the
         // server-side, a unique ID must be generated for the dashboard if
         // has not already been assigned one
         id: action.payload.id || uuidv4(),
-        isDefaultApp: undefined,
         ...action.payload
       };
     default:
