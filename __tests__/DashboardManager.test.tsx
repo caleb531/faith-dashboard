@@ -242,6 +242,54 @@ describe('Dashboard Manager', () => {
     ).toBeInTheDocument();
   });
 
+  it('should use different UUIDs for all newly-created dashboards', async () => {
+    const localDashboard = secondDashboardJson;
+    const availableDashboards = [
+      firstDashboardJson,
+      secondDashboardJson,
+      thirdDashboardJson
+    ];
+    await openDashboardManager({
+      localDashboard,
+      availableDashboards
+    });
+    const newDashboardName1 = 'Prayer Dashboard';
+    mockPromptOnce(() => newDashboardName1);
+    await userEventFakeTimers.click(
+      screen.getByRole('button', { name: `Add Dashboard` })
+    );
+    await waitFor(() => {
+      expect(screen.getByText('Shore')).toBeInTheDocument();
+    });
+    const newDashboard1 = getAppData();
+    mockDashboardsFetch([newDashboard1, ...availableDashboards]);
+    await userEventFakeTimers.click(
+      screen.getByRole('button', { name: 'Your Account' })
+    );
+    await userEventFakeTimers.click(
+      screen.getByRole('link', { name: 'My Dashboards' })
+    );
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    });
+    const newDashboardName2 = 'Worship Dashboard';
+    mockPromptOnce(() => newDashboardName2);
+    await userEventFakeTimers.click(
+      screen.getByRole('button', { name: 'Add Dashboard' })
+    );
+    await waitFor(() => {
+      expect(
+        screen.queryByRole('heading', { name: 'My Dashboards' })
+      ).not.toBeInTheDocument();
+      const newDashboard2 = getAppData();
+      expect(newDashboard2.name).toEqual(newDashboardName2);
+      expect(newDashboard2.id).not.toEqual(newDashboard1.id);
+      newDashboard2.widgets.forEach((widget, w) => {
+        expect(widget.id).not.toEqual(newDashboard1.widgets[w].id);
+      });
+    });
+  });
+
   it('should successfully edit dashboard name', async () => {
     const availableDashboards = [
       firstDashboardJson,

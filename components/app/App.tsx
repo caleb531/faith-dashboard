@@ -21,7 +21,7 @@ import SyncContext from './SyncContext';
 import ThemeContext from './ThemeContext';
 import ThemeMetadata from './ThemeMetadata';
 import UpdateNotification from './UpdateNotification';
-import defaultApp from './appStateDefault';
+import { getDefaultAppState } from './appUtils';
 import getAppNotificationMessage from './getAppNotificationMessage';
 import useAppSync from './useAppSync';
 import useThemeForEntirePage from './useThemeForEntirePage';
@@ -49,6 +49,8 @@ type Props = {
   children: React.ReactNode;
 };
 
+const defaultAppState = getDefaultAppState();
+
 function App({
   enableTutorial = false,
   canAddWidgets = false,
@@ -57,8 +59,11 @@ function App({
   user,
   children
 }: Props) {
-  const [restoreApp, saveApp] = useLocalStorage(getAppStorageKey(), defaultApp);
-  const [app, dispatchToApp] = useReducer(reducer, defaultApp);
+  const [restoreApp, saveApp] = useLocalStorage(
+    getAppStorageKey(),
+    defaultAppState
+  );
+  const [app, dispatchToApp] = useReducer(reducer, defaultAppState);
   const [isTurorialStarted, setIsTutorialStarted] = useState(false);
 
   useMultipleDashboardsMigration(app);

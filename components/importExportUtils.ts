@@ -1,5 +1,5 @@
 import { AppState } from '@components/app/app.types';
-import appStateDefault from '@components/app/appStateDefault';
+import { getDefaultAppState } from '@components/app/appUtils';
 import { v4 as uuidv4 } from 'uuid';
 import { getAppStorageKey, getWidgetStorageKey } from './storageUtils';
 
@@ -45,7 +45,7 @@ export async function readDashboardFileToJSON(file: File): Promise<AppState> {
 export function exportDashboard() {
   const app: AppState =
     JSON.parse(String(localStorage.getItem(getAppStorageKey()))) ||
-    appStateDefault;
+    getDefaultAppState();
   const appJson = {
     ...app,
     id: undefined,

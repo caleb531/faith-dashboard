@@ -12,7 +12,7 @@ import DashboardPreview from './DashboardPreview';
 import SessionContext from './SessionContext';
 import SyncContext from './SyncContext';
 import { SyncedAppState } from './app.types';
-import appStateDefault from './appStateDefault';
+import { getDefaultAppState } from './appUtils';
 
 // The number of milliseconds that the Dashboard Manager modal will stay open
 // after choosing a dashboard (to give the user time to react to the change)
@@ -45,7 +45,7 @@ const DashboardManager = ({ onClose }: Props) => {
       dispatchToApp({
         type: 'replaceApp',
         payload: {
-          ...appStateDefault,
+          ...getDefaultAppState(),
           name,
           shouldShowTutorial: false
         }

@@ -1,7 +1,7 @@
 import { AppState } from '@components/app/app.types';
 import colorThemeList from '@components/app/appColorThemeList';
 import photoThemeList from '@components/app/appPhotoThemeList';
-import appStateDefault from '@components/app/appStateDefault';
+import { getDefaultAppState } from '@components/app/appUtils';
 import { convertObjectToFormData } from '@components/authUtils.client';
 import {
   WidgetHead,
@@ -119,7 +119,7 @@ export async function typeIntoFormFields(
 export function assignIdToLocalApp(appId: string) {
   const app =
     JSON.parse(localStorage.getItem('faith-dashboard-app') || 'null') ||
-    appStateDefault;
+    getDefaultAppState();
   setAppData({ ...app, id: appId, shouldShowTutorial: false });
 }
 

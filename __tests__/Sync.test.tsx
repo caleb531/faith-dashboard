@@ -1,5 +1,5 @@
 import Home from '@app/page';
-import appStateDefault from '@components/app/appStateDefault';
+import { getDefaultAppState } from '@components/app/appUtils';
 import { Deferred } from '@components/deferred';
 import widgetSyncService from '@components/widgets/widgetSyncService';
 import '@testing-library/jest-dom';
@@ -211,7 +211,7 @@ describe('Sync functionality', () => {
     mockSupabaseFrom();
     const appId = uuidv4();
     mockSupabaseSelect('dashboards', {
-      data: [{ raw_data: { ...appStateDefault, id: appId } }]
+      data: [{ raw_data: { ...getDefaultAppState(), id: appId } }]
     });
     mockSupabaseSelect('widgets', { data: [] });
     mockSupabaseUpsert('dashboards');
@@ -245,7 +245,7 @@ describe('Sync functionality', () => {
     mockSupabaseFrom();
     const appId = uuidv4();
     mockSupabaseSelect('dashboards', {
-      data: [{ raw_data: { ...appStateDefault, id: appId } }]
+      data: [{ raw_data: { ...getDefaultAppState(), id: appId } }]
     });
     mockSupabaseSelect('widgets', { data: [] });
     mockSupabaseDelete('widgets');
@@ -276,7 +276,7 @@ describe('Sync functionality', () => {
     mockSupabaseFrom();
     const appId = uuidv4();
     mockSupabaseSelect('dashboards', {
-      data: [{ raw_data: { ...appStateDefault, id: appId } }]
+      data: [{ raw_data: { ...getDefaultAppState(), id: appId } }]
     });
     mockSupabaseSelect('widgets', { data: [] });
     mockSupabaseUpsert('dashboards');

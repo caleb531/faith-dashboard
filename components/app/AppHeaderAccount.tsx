@@ -12,7 +12,7 @@ import AppContext from './AppContext';
 import AppHeaderMenu from './AppHeaderMenu';
 import DashboardManager from './DashboardManager';
 import SessionContext from './SessionContext';
-import appStateDefault from './appStateDefault';
+import { getDefaultAppState } from './appUtils';
 
 function AppHeaderAccount() {
   const supabase = createClientComponentClient();
@@ -84,7 +84,7 @@ function AppHeaderAccount() {
       // Do not show tutorial again
       localStorage.setItem(
         getAppStorageKey(),
-        JSON.stringify({ ...appStateDefault, shouldShowTutorial: false })
+        JSON.stringify({ ...getDefaultAppState(), shouldShowTutorial: false })
       );
       const queryStr = new URLSearchParams({
         message:
