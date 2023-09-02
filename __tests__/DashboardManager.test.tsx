@@ -423,4 +423,20 @@ describe('Dashboard Manager', () => {
       expect(supabaseFromMocks.dashboards.delete).toHaveBeenCalledTimes(0);
     });
   });
+
+  it('should prevent deletion of only dashboard', async () => {
+    const localDashboard = firstDashboardJson;
+    const availableDashboards = [localDashboard];
+    await openDashboardManager({
+      localDashboard,
+      availableDashboards
+    });
+    mockSupabaseDelete('dashboards');
+    mockDashboardsFetch(availableDashboards.slice(0, 2));
+    expect(
+      screen.queryByRole('button', {
+        name: `Delete Dashboard "${firstDashboardJson.name}"`
+      })
+    ).not.toBeInTheDocument();
+  });
 });

@@ -197,6 +197,7 @@ const DashboardManager = ({ onClose }: Props) => {
               }
               deleteDashboard(dashboard);
             }}
+            preventDeletingOnlyItem
           />
         )}
       </section>

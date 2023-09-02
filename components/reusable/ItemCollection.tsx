@@ -17,6 +17,7 @@ type Props<TItem extends Item> = {
   isItemBeingDeleted?: (item: TItem) => boolean;
   onEditItemName?: (item: TItem) => void;
   onDeleteItem?: (item: TItem) => void;
+  preventDeletingOnlyItem?: boolean;
 };
 
 // A collection of items, any of which can be selected and have some arbitrary
@@ -31,7 +32,8 @@ const ItemCollection = <TItem extends Item>({
   isItemBeingChosen,
   isItemBeingDeleted,
   onEditItemName,
-  onDeleteItem
+  onDeleteItem,
+  preventDeletingOnlyItem = false
 }: Props<TItem>) => {
   // Retrieve the Item object corresponding to the given DOM element
   function getItemFromElement(element: HTMLElement): TItem | undefined {
@@ -94,7 +96,8 @@ const ItemCollection = <TItem extends Item>({
               )
             })}
           >
-            {onDeleteItem ? (
+            {onDeleteItem &&
+            !(preventDeletingOnlyItem && items.length === 1) ? (
               <Button
                 className="item-collection-item-delete-button"
                 unstyled
