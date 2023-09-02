@@ -1,6 +1,7 @@
 {
   "theme": "stars",
   "id": "a40bb85f-5af3-4ddc-9e00-fccf7e727e2c",
+  "name": "Stars Dashboard",
   "widgets": [
     {
       "id": "bdcd3778-9872-44ca-b240-fe099260cdd0",

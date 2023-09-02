@@ -6,6 +6,7 @@ import {
   WidgetState
 } from '../widgets/widget.types';
 import { AppState, AppThemeId } from './app.types';
+import { defaultAppName } from './appUtils';
 
 export type AppAction =
   | { type: 'changeTheme'; payload: AppThemeId }
@@ -93,6 +94,7 @@ export default function reducer(state: AppState, action: AppAction): AppState {
         // server-side, a unique ID must be generated for the dashboard if
         // has not already been assigned one
         id: action.payload.id || uuidv4(),
+        name: defaultAppName,
         ...action.payload
       });
     default:

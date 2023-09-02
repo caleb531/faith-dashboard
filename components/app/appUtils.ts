@@ -1,10 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import { AppState } from './app.types';
 
+export const defaultAppName = 'Main Dashboard';
+
 export function getDefaultAppState() {
   return {
     isDefaultApp: true,
-    name: 'Main Dashboard',
+    name: defaultAppName,
     theme: 'shore',
     shouldShowTutorial: true,
     widgets: [
