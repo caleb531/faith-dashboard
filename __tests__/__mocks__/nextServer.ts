@@ -8,4 +8,7 @@ export class NextResponse extends Response {
   static async json(responseBody: ConstructorParameters<typeof Response>[0]) {
     return new Response(responseBody);
   }
+  static redirect(url: string, status?: number | undefined): Response {
+    return new Response();
+  }
 }

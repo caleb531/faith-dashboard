@@ -1,3 +1,4 @@
+import { GET as CallbackGET } from '@app/auth/callback/route';
 import { POST as SignUpPOST } from '@app/auth/sign-up/route';
 import SignUp from '@app/sign-up/page';
 import '@testing-library/jest-dom';
@@ -12,6 +13,7 @@ import {
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
+import { NextResponse } from 'next/server';
 
 describe('Sign Up page', () => {
   afterEach(() => {
@@ -213,5 +215,35 @@ describe('Sign Up page', () => {
         }
       }
     });
+  });
+
+  it('should exchange code for session upon email confirmation', async () => {
+    jest
+      .spyOn(supabase.auth, 'exchangeCodeForSession')
+      .mockImplementationOnce(async () => {
+        return { data: { user: {}, session: {} }, error: null } as any;
+      });
+    jest.spyOn(NextResponse, 'redirect');
+    const code = 'dfbc19a6-f750-4620-8390-56f3158a299d';
+    await callRouteHandler({
+      handler: CallbackGET,
+      path: `/auth/callback?code=${code}`,
+      method: 'GET'
+    });
+    expect(supabase.auth.exchangeCodeForSession).toHaveBeenCalledWith(code);
+    expect(NextResponse.redirect).toHaveBeenCalledWith('http://localhost:3000');
+  });
+  it('should redirect to error page when email confirmation code is missing', async () => {
+    jest.spyOn(NextResponse, 'redirect');
+    await callRouteHandler({
+      handler: CallbackGET,
+      path: `/auth/callback`,
+      method: 'GET'
+    });
+    expect(NextResponse.redirect).toHaveBeenCalledWith(
+      `http://localhost:3000#message=${encodeURIComponent(
+        'There was an error confirming your email. Please contact support at support@faithdashboard.com'
+      )}`
+    );
   });
 });

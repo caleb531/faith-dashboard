@@ -139,12 +139,12 @@ export async function callRouteHandler({
   handler,
   path,
   method = 'POST',
-  fields
+  fields = {}
 }: {
   handler: (req: NextRequest) => Promise<NextResponse>;
   path: string;
   method?: 'GET' | 'POST' | 'get' | 'post';
-  fields: object;
+  fields?: object;
 }) {
   NextRequest._formData = convertObjectToFormData(fields);
   return handler(
