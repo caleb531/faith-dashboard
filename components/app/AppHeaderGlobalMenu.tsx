@@ -14,7 +14,7 @@ import DashboardManager from './DashboardManager';
 import SessionContext from './SessionContext';
 import { getDefaultAppState } from './appUtils';
 
-function AppHeaderAccount() {
+function AppHeaderGlobalMenu() {
   const supabase = createClientComponentClient();
   const { isCurrentStep, stepProps } = useTutorialStep('sign-up');
   const { dispatchToApp } = useContext(AppContext);
@@ -100,9 +100,9 @@ function AppHeaderAccount() {
   }
 
   return (
-    <div className="app-header-account">
+    <>
       {!isSignedIn && (
-        <div className="app-header-account-section">
+        <div className="app-header-global-menu-section">
           {isCurrentStep ? <TutorialStepTooltip /> : null}
           <Button
             className="app-header-menu-button app-header-control-button"
@@ -116,7 +116,7 @@ function AppHeaderAccount() {
           ) : null}
         </div>
       )}
-      <div className="app-header-account-section">
+      <div className="app-header-global-menu-section">
         <AppHeaderMenu
           label={isSignedIn ? 'Your Account' : 'Tools'}
           icon={isSignedIn ? 'account-light' : 'menu-light'}
@@ -181,8 +181,8 @@ function AppHeaderAccount() {
         className="app-import-input accessibility-only"
         onChange={handleFileInputChange}
       />
-    </div>
+    </>
   );
 }
 
-export default AppHeaderAccount;
+export default AppHeaderGlobalMenu;
