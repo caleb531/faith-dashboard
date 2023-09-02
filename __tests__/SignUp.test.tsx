@@ -107,6 +107,40 @@ describe('Sign Up page', () => {
     });
   });
 
+  it('should indicate if email needs to be confirmed post-sign up', async () => {
+    mockCaptchaSuccessOnce('mytoken');
+    fetch.mockIf(/sign-up/, async () => {
+      return JSON.stringify({
+        data: {
+          user: {
+            email: 'john@example.com',
+            user_metadata: { first_name: 'John', last_name: 'Doe' },
+            confirmation_sent_at: '2023-09-01T00:00:00'
+          },
+          session: {}
+        },
+        error: null
+      });
+    });
+    await renderServerComponent(<SignUp />);
+    await typeIntoFormFields({
+      'First Name': 'John',
+      'Last Name': 'Doe',
+      Email: 'john@example.com',
+      Password: 'CorrectHorseBatteryStaple',
+      'Confirm Password': 'CorrectHorseBatteryStaple'
+    });
+    await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
+    const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
+    expect(actualFetchUrl).toEqual('/auth/sign-up');
+    expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
+    expect(
+      screen.getByText(
+        'Success! Please check your email to complete your registration'
+      )
+    ).toBeInTheDocument();
+  });
+
   it('should error if honey pot field is populated', async () => {
     mockCaptchaSuccessOnce('mytoken');
     await renderServerComponent(<SignUp />);
