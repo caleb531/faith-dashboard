@@ -62,6 +62,6 @@ export function exportDashboard() {
   const blob = new Blob([JSON.stringify(appJson, null, 2) + '\n']);
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `${app.id}.faithdashboard.json`;
+  a.download = `${app.name ?? app.id}.faithdashboard.json`;
   a.click();
 }
