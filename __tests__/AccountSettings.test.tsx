@@ -18,25 +18,19 @@ import {
 import {
   callRouteHandler,
   convertFormDataToObject,
+  mockLocationObject,
+  restoreLocationObject,
   typeIntoFormFields
 } from './__utils__/testUtils';
 
-const originalLocationObject = window.location;
-
 describe('Account Settings page', () => {
   beforeEach(() => {
-    // @ts-ignore (see <https://stackoverflow.com/a/61649798/560642>)
-    delete window.location;
-    window.location = {
-      ...originalLocationObject,
-      reload: jest.fn(),
-      assign: jest.fn()
-    };
+    mockLocationObject();
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
-    window.location = originalLocationObject;
+    restoreLocationObject();
   });
 
   it('should render when signed in', async () => {

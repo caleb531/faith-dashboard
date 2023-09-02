@@ -71,6 +71,22 @@ export function getWidgetData({
   return widgetData;
 }
 
+const originalLocationObject = window.location;
+
+export function mockLocationObject() {
+  // @ts-ignore (see <https://stackoverflow.com/a/61649798/560642>)
+  delete window.location;
+  window.location = {
+    ...originalLocationObject,
+    reload: jest.fn(),
+    assign: jest.fn()
+  };
+}
+
+export function restoreLocationObject() {
+  window.location = originalLocationObject;
+}
+
 export function mockAlertOnce(mockImpl: (message?: any) => void) {
   return jest.spyOn(window, 'alert').mockImplementationOnce(mockImpl);
 }

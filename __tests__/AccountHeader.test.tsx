@@ -10,25 +10,22 @@ import {
   mockSupabaseSession,
   mockSupabaseUser
 } from '@tests/__utils__/supabaseMockUtils';
-import { callRouteHandler, mockConfirmOnce } from '@tests/__utils__/testUtils';
+import {
+  callRouteHandler,
+  mockConfirmOnce,
+  mockLocationObject,
+  restoreLocationObject
+} from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
-
-const originalLocationObject = window.location;
 
 describe('Account Header', () => {
   beforeEach(() => {
-    // @ts-ignore (see <https://stackoverflow.com/a/61649798/560642>)
-    delete window.location;
-    window.location = {
-      ...originalLocationObject,
-      reload: jest.fn(),
-      assign: jest.fn()
-    };
+    mockLocationObject();
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
-    window.location = originalLocationObject;
+    restoreLocationObject();
   });
 
   it('should provide links to Sign Up / Sign In when not signed in', async () => {

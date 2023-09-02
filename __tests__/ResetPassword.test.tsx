@@ -9,6 +9,8 @@ import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
   callRouteHandler,
   convertFormDataToObject,
+  mockLocationObject,
+  restoreLocationObject,
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
@@ -17,22 +19,14 @@ import {
   mockSupabaseUser
 } from './__utils__/supabaseMockUtils';
 
-const originalLocationObject = window.location;
-
 describe('Reset Password page', () => {
   beforeEach(() => {
-    // @ts-ignore (see <https://stackoverflow.com/a/61649798/560642>)
-    delete window.location;
-    window.location = {
-      ...originalLocationObject,
-      reload: jest.fn(),
-      assign: jest.fn()
-    };
+    mockLocationObject();
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
-    window.location = originalLocationObject;
+    restoreLocationObject();
   });
 
   it('should validate that passwords are matching', async () => {

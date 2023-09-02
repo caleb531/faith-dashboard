@@ -1,5 +1,5 @@
 'use client';
-import AuthForm from '@components/account/AuthForm';
+import AuthForm, { redirectToHome } from '@components/account/AuthForm';
 import AuthFormField from '@components/account/AuthFormField';
 import useAutoFocus from '@components/account/useAutoFocus';
 import InlineMessage from '@components/reusable/InlineMessage';
@@ -22,6 +22,8 @@ function SignUpForm() {
       setEmailConfirmMessage(
         'Almost done! Please check your email to activate your account'
       );
+    } else {
+      redirectToHome();
     }
   }
 

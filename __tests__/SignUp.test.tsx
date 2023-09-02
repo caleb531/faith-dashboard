@@ -10,14 +10,20 @@ import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
   callRouteHandler,
   convertFormDataToObject,
+  mockLocationObject,
+  restoreLocationObject,
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
 import { NextResponse } from 'next/server';
 
 describe('Sign Up page', () => {
+  beforeEach(() => {
+    mockLocationObject();
+  });
   afterEach(() => {
     jest.restoreAllMocks();
+    restoreLocationObject();
   });
 
   it('should validate that passwords are matching', async () => {
@@ -107,6 +113,7 @@ describe('Sign Up page', () => {
       last_name: 'Doe',
       verification_check: ''
     });
+    expect(window.location.assign).toHaveBeenCalled();
   });
 
   it('should indicate if email needs to be confirmed post-sign up', async () => {
