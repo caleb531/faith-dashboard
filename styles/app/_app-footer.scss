@@ -10,8 +10,8 @@
   color: var(--color-white-60);
   color: color-mix(
     in srgb,
-    var(--color-white-60) 60%,
-    var(--current-theme-color) 40%
+    var(--color-white-75) 60%,
+    var(--current-theme-color)
   );
   // The computed color-mix'ed color is rather ugly for the Shore theme, so we
   // adjust it manually to something more pleasant and readable
