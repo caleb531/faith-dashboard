@@ -15,9 +15,9 @@ export async function GET(request: NextRequest) {
   if (code) {
     const supabase = createRouteHandlerClient<Database>({ cookies });
     await supabase.auth.exchangeCodeForSession(code);
+  } else {
+    console.error('ERROR: Invalid auth code or no auth code found');
   }
-
-  console.error('ERROR: Invalid auth code or no auth code found');
 
   // URL to redirect to after sign in process completes
   return NextResponse.redirect(`${requestUrl.origin}${redirectTo}`);

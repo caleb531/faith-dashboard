@@ -1,8 +1,7 @@
 import Captcha from '@components/Captcha';
 import Button from '@components/reusable/Button';
-import InlineErrorMessage from '@components/reusable/InlineErrorMessage';
+import InlineMessage from '@components/reusable/InlineMessage';
 import useVerifyCaptcha from '@components/useVerifyCaptcha';
-import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import useAllSearchParams from '../useAllSearchParams';
@@ -24,11 +23,7 @@ const captchaMaxAttempts = 5;
 type Props = {
   action: string;
   method?: 'GET' | 'POST' | 'get' | 'post';
-  onSuccess?: ({
-    user
-  }: {
-    user?: User | null;
-  }) => boolean | void | Promise<void>;
+  onSuccess?: (response: any) => boolean | void | Promise<void>;
   submitLabel: string;
   submittingLabel: string;
   successLabel: string;
@@ -102,10 +97,9 @@ function AuthForm(props: Props) {
       props.action,
       new FormData(event.target as HTMLFormElement)
     );
-    const user = response?.data?.user;
     synchronizeFormErrorState(response);
     const successCallbackResult = props.onSuccess
-      ? await props.onSuccess({ user })
+      ? await props.onSuccess(response)
       : null;
     setFormStatePostSuccess(successCallbackResult);
   }
@@ -175,7 +169,7 @@ function AuthForm(props: Props) {
       />
 
       {formErrorMessage ? (
-        <InlineErrorMessage message={formErrorMessage} />
+        <InlineMessage type="error" message={formErrorMessage} />
       ) : null}
 
       <div className="account-auth-form-submit-container">

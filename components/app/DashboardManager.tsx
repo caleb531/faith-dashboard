@@ -1,5 +1,5 @@
 import Button from '@components/reusable/Button';
-import InlineErrorMessage from '@components/reusable/InlineErrorMessage';
+import InlineMessage from '@components/reusable/InlineMessage';
 import ItemCollection from '@components/reusable/ItemCollection';
 import LoadingIndicator from '@components/reusable/LoadingIndicator';
 import Modal from '@components/reusable/Modal';
@@ -164,7 +164,7 @@ const DashboardManager = ({ onClose }: Props) => {
           Add Dashboard
         </Button>
         {dashboardError ? (
-          <InlineErrorMessage message={dashboardError.message} />
+          <InlineMessage type="error" message={dashboardError.message} />
         ) : null}
         {isLoading ? (
           <LoadingIndicator className="dashboard-manager-loading-indicator" />

@@ -147,34 +147,6 @@ describe('Sign Up page', () => {
     });
   });
 
-  it('should include Sign Up functionality', async () => {
-    jest.spyOn(supabase.auth, 'signUp').mockImplementationOnce(async () => {
-      return { data: { user: {}, session: {} }, error: null } as any;
-    });
-    const fields = {
-      first_name: 'Caleb',
-      last_name: 'Evans',
-      email: 'caleb@example.com',
-      password: 'CorrectHorseBatteryStaple',
-      'cf-turnstile-response': 'abc123'
-    };
-    await callRouteHandler({
-      handler: SignUpPOST,
-      path: '/auth/sign-up',
-      fields
-    });
-    expect(supabase.auth.signUp).toHaveBeenCalledWith({
-      email: fields.email,
-      password: fields.password,
-      options: {
-        captchaToken: fields['cf-turnstile-response'],
-        data: {
-          first_name: fields.first_name,
-          last_name: fields.last_name
-        }
-      }
-    });
-  });
   it('should sign up on server side', async () => {
     jest.spyOn(supabase.auth, 'signUp').mockImplementationOnce(async () => {
       return { data: { user: {}, session: {} }, error: null } as any;
@@ -196,6 +168,7 @@ describe('Sign Up page', () => {
       password: fields.password,
       options: {
         captchaToken: fields['cf-turnstile-response'],
+        emailRedirectTo: 'http://localhost:3000/auth/callback',
         data: {
           first_name: fields.first_name,
           last_name: fields.last_name

@@ -1,0 +1,22 @@
+.inline-message-container {
+  text-align: inherit;
+}
+.inline-message {
+  display: inline-block;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xs);
+  color: var(--color-white-100);
+  text-align: left;
+  &[data-type='success'] {
+    background-color: var(--color-green);
+  }
+  &[data-type='warning'] {
+    background-color: var(--color-orange);
+  }
+  &[data-type='error'] {
+    background-color: var(--color-red);
+  }
+}
