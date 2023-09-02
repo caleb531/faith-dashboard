@@ -45,11 +45,13 @@ describe('Sign In page', () => {
     mockCaptchaSuccessOnce('mytoken');
     fetch.mockIf(/sign-in/, async () => {
       return JSON.stringify({
-        user: {
-          email: 'caleb@example.com',
-          user_metadata: { first_name: 'Caleb', last_name: 'Evans' }
+        data: {
+          user: {
+            email: 'caleb@example.com',
+            user_metadata: { first_name: 'Caleb', last_name: 'Evans' }
+          },
+          session: {}
         },
-        session: {},
         error: null
       });
     });
@@ -87,8 +89,10 @@ describe('Sign In page', () => {
     mockCaptchaSuccessOnce('mytoken');
     fetch.mockIf(/sign-in/, async () => {
       return JSON.stringify({
-        user: null,
-        session: null,
+        data: {
+          user: null,
+          session: null
+        },
         error: {
           message: 'Invalid login credentials'
         }
