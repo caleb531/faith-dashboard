@@ -74,9 +74,10 @@ function App({
   useIsomorphicLayoutEffect(() => {
     const newApp = restoreApp();
     // The below conditional is necessary to prevent a 'flash of default app
-    // state' due to React 18's Strict Mode mounting the component twice; in
-    // our case here, we require the user to have completed/skipped the
-    // tutorial before restoring any persisted state of the app (see:
+    // state' due to React 18's Strict Mode mounting the component twice; in our
+    // case here, we require the user to either be signed in OR have
+    // completed/skipped the tutorial before restoring any persisted state of
+    // the app (see:
     // https://dev.to/ag-grid/react-18-avoiding-use-effect-getting-called-twice-4i9e)
     if (!newApp.isDefaultApp || (session && user)) {
       dispatchToApp({ type: 'replaceApp', payload: newApp });
