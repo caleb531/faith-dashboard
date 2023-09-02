@@ -339,7 +339,7 @@ describe('Dashboard Manager', () => {
     });
   });
 
-  it('should successfully delete dashboard', async () => {
+  it('should handle errors when deleting dashboard', async () => {
     const error = new Error('Could not delete dashboard. Sorry!');
     const availableDashboards = [
       firstDashboardJson,
