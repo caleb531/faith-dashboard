@@ -18,7 +18,6 @@ export async function GET(request: NextRequest) {
     // URL to redirect to after sign in process completes
     return NextResponse.redirect(`${requestUrl.origin}${redirectTo}`);
   } else {
-    console.error('ERROR: Invalid auth code or no auth code found');
     // URL to redirect to after sign in process completes (with error message)
     return NextResponse.redirect(
       `${requestUrl.origin}${redirectTo}#message=${encodeURIComponent(
