@@ -75,11 +75,13 @@ describe('Sign Up page', () => {
     mockCaptchaSuccessOnce('mytoken');
     fetch.mockIf(/sign-up/, async () => {
       return JSON.stringify({
-        user: {
-          email: 'john@example.com',
-          user_metadata: { first_name: 'John', last_name: 'Doe' }
+        data: {
+          user: {
+            email: 'john@example.com',
+            user_metadata: { first_name: 'John', last_name: 'Doe' }
+          },
+          session: {}
         },
-        session: {},
         error: null
       });
     });
@@ -126,8 +128,10 @@ describe('Sign Up page', () => {
     mockCaptchaSuccessOnce('mytoken');
     fetch.mockIf(/sign-up/, async () => {
       return JSON.stringify({
-        user: null,
-        session: null,
+        data: {
+          user: null,
+          session: null
+        },
         error: {
           message: 'User already registered'
         }
