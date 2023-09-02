@@ -207,7 +207,7 @@ describe('Dashboard Manager', () => {
     const newDashboardName = 'Prayer Dashboard';
     mockPromptOnce(() => newDashboardName);
     await userEventFakeTimers.click(
-      screen.getByRole('button', { name: `Add Dashboard` })
+      screen.getByRole('button', { name: 'Add Dashboard' })
     );
     await waitFor(() => {
       expect(screen.getByText('Shore')).toBeInTheDocument();
