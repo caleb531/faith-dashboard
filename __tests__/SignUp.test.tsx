@@ -138,7 +138,7 @@ describe('Sign Up page', () => {
     expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
     expect(
       screen.getByText(
-        'Success! Please check your email to complete your registration'
+        'Almost done! Please check your email to activate your account'
       )
     ).toBeInTheDocument();
   });

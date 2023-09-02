@@ -20,7 +20,7 @@ function SignUpForm() {
     const user: AuthUser | {} = response?.data?.user ?? {};
     if ('confirmation_sent_at' in user && !('confirmed_at' in user)) {
       setEmailConfirmMessage(
-        'Success! Please check your email to complete your registration'
+        'Almost done! Please check your email to activate your account'
       );
     }
   }
