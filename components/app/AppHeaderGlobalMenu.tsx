@@ -1,13 +1,7 @@
 'use client';
-import Button from '@components/reusable/Button';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import React, { useContext, useState } from 'react';
-import AccountAuthFlow from '../account/AccountAuthFlow';
-import { isSessionActive, isTruthy } from '../authUtils.client';
 import { exportDashboard, readDashboardFileToJSON } from '../importExportUtils';
 import { getAppStorageKey } from '../storageUtils';
-import TutorialStepTooltip from '../tutorial/TutorialStepTooltip';
-import useTutorialStep from '../tutorial/useTutorialStep';
 import AppContext from './AppContext';
 import AppHeaderMenu from './AppHeaderMenu';
 import DashboardManager from './DashboardManager';
@@ -15,19 +9,11 @@ import SessionContext from './SessionContext';
 import { getDefaultAppState } from './appUtils';
 
 function AppHeaderGlobalMenu() {
-  const supabase = createClientComponentClient();
-  const { isCurrentStep, stepProps } = useTutorialStep('sign-up');
   const { dispatchToApp } = useContext(AppContext);
   const [isDashboardManagerVisible, setIsDashboardManagerVisible] =
     useState(false);
 
-  // The session will be loaded asynchronously and isomorphically, via a
-  // useEffect() call later in this function; this is done to avoid SSR
-  // mismatches (please see the hook below)
-  const { session, user } = useContext(SessionContext);
-  const [authModalIsOpen, setSignInModalIsOpen] = useState(false);
-  const isSignedIn =
-    isTruthy(session) && isTruthy(user) && isSessionActive(session);
+  const { user, isSignedIn } = useContext(SessionContext);
 
   async function handleFileInputChange(
     event: React.FormEvent<HTMLInputElement>
@@ -95,33 +81,14 @@ function AppHeaderGlobalMenu() {
     }
   }
 
-  function onCloseSignInModal() {
-    setSignInModalIsOpen(false);
-  }
-
   return (
     <>
-      {!isSignedIn && (
-        <div className="app-header-global-menu-section">
-          {isCurrentStep ? <TutorialStepTooltip /> : null}
-          <Button
-            className="app-header-menu-button app-header-control-button"
-            onClick={() => setSignInModalIsOpen(true)}
-            {...stepProps}
-          >
-            Sign Up/In
-          </Button>
-          {authModalIsOpen ? (
-            <AccountAuthFlow onClose={onCloseSignInModal} />
-          ) : null}
-        </div>
-      )}
-      <div className="app-header-global-menu-section">
-        <AppHeaderMenu
-          label={isSignedIn ? 'Your Account' : 'Tools'}
-          icon={isSignedIn ? 'account-light' : 'menu-light'}
-          items={[
-            isSignedIn && {
+      <AppHeaderMenu
+        label={isSignedIn ? 'Your Account' : 'Tools'}
+        icon={isSignedIn ? 'account-light' : 'menu-light'}
+        items={[
+          isSignedIn &&
+            user && {
               key: 'user-info',
               content: (
                 <a data-disabled data-key="user-info">
@@ -133,44 +100,43 @@ function AppHeaderGlobalMenu() {
                 </a>
               )
             },
-            isSignedIn && {
-              key: 'dashboards',
-              onClick: () => {
-                setIsDashboardManagerVisible(true);
-              },
-              content: 'My Dashboards'
+          isSignedIn && {
+            key: 'dashboards',
+            onClick: () => {
+              setIsDashboardManagerVisible(true);
             },
-            {
-              key: 'import-dashboard',
-              content: (
-                <label htmlFor="app-import-input">
-                  <a tabIndex={0}>Import Dashboard</a>
-                </label>
-              )
-            },
-            {
-              key: 'export-dashboard',
-              onClick: handleExportDashboard,
-              content: 'Export Dashboard'
-            },
-            isSignedIn && {
-              key: 'account',
-              href: '/account',
-              content: 'Account Settings'
-            },
-            {
-              key: 'help',
-              href: '/help',
-              content: 'Help & Support'
-            },
-            isSignedIn && {
-              key: 'sign-out',
-              onClick: signOut,
-              content: 'Sign Out'
-            }
-          ]}
-        />
-      </div>
+            content: 'My Dashboards'
+          },
+          {
+            key: 'import-dashboard',
+            content: (
+              <label htmlFor="app-import-input">
+                <a tabIndex={0}>Import Dashboard</a>
+              </label>
+            )
+          },
+          {
+            key: 'export-dashboard',
+            onClick: handleExportDashboard,
+            content: 'Export Dashboard'
+          },
+          isSignedIn && {
+            key: 'account',
+            href: '/account',
+            content: 'Account Settings'
+          },
+          {
+            key: 'help',
+            href: '/help',
+            content: 'Help & Support'
+          },
+          isSignedIn && {
+            key: 'sign-out',
+            onClick: signOut,
+            content: 'Sign Out'
+          }
+        ]}
+      />
       {isDashboardManagerVisible ? (
         <DashboardManager
           onClose={() => {

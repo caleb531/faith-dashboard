@@ -1,6 +1,7 @@
 import useMountListener from '@components/useMountListener';
 import Link from 'next/link';
 import AppHeaderAddWidgetButton from './AppHeaderAddWidgetButton';
+import AppHeaderAuthControls from './AppHeaderAuthControls';
 import AppHeaderGlobalMenu from './AppHeaderGlobalMenu';
 import AppHeaderThemeSwitcher from './AppHeaderThemeSwitcher';
 
@@ -24,6 +25,7 @@ function AppHeader({ canAddWidgets }: Props) {
             <AppHeaderThemeSwitcher />
           </>
         ) : null}
+        <AppHeaderAuthControls />
         <AppHeaderGlobalMenu />
       </div>
     </header>

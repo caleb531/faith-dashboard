@@ -1,4 +1,5 @@
 'use client';
+import { isSessionActive } from '@components/authUtils.client';
 import useMemoizedContextValue from '@components/useMemoizedContextValue';
 import { Session, User } from '@supabase/supabase-js';
 import React, { useEffect, useReducer, useState } from 'react';
@@ -105,9 +106,10 @@ function App({
   useTouchDeviceDetection();
 
   const isMounted = useMountListener();
+  const isSignedIn = Boolean(user) && isSessionActive(session);
 
   const appContext = useMemoizedContextValue({ app, dispatchToApp });
-  const sessionContext = useMemoizedContextValue({ session, user });
+  const sessionContext = useMemoizedContextValue({ session, user, isSignedIn });
   const syncContext = useMemoizedContextValue(appSyncUtils);
 
   return (

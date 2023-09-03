@@ -5,6 +5,7 @@ import { createContext } from 'react';
 export type SessionContextType = {
   session: Session | null;
   user: User | null;
+  isSignedIn?: boolean;
 };
 
 // @ts-ignore (the SessionContext will be initiailized with a non-null value in
