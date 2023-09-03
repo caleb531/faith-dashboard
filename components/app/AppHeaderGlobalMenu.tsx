@@ -158,6 +158,11 @@ function AppHeaderGlobalMenu() {
               href: '/account',
               content: 'Account Settings'
             },
+            {
+              key: 'help',
+              href: '/help',
+              content: 'Help & Support'
+            },
             isSignedIn && {
               key: 'sign-out',
               onClick: signOut,
