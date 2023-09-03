@@ -37,7 +37,7 @@ describe('Tutorial', () => {
   it('should complete all defined steps', async () => {
     await renderServerComponent(<Home />);
     const advanceButtonLabelPattern = /Get Started|Next|Done/;
-    for (const step of tutorialSteps) {
+    for (const _step of tutorialSteps) {
       await userEvent.click(
         screen.getByRole('button', { name: advanceButtonLabelPattern })
       );
