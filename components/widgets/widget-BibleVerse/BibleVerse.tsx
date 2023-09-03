@@ -86,18 +86,12 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({
         ) : verseQuery && isPlainObject(verseContent) ? (
           <>
             <div className="bible-verse-content">
-              {isPlainObject(verseContent) ? (
-                <>
-                  <h2>{verseContent.name}</h2>
-                  <p>
-                    {HtmlReactParser(
-                      verseContent.content?.replace(/\n/g, '<br />') || ''
-                    )}
-                  </p>
-                </>
-              ) : (
-                ''
-              )}
+              <h2>{verseContent.name}</h2>
+              <p>
+                {HtmlReactParser(
+                  verseContent.content?.replace(/\n/g, '<br />') || ''
+                )}
+              </p>
             </div>
             <p className="bible-verse-notice">
               {verseContent.version.name} via{' '}
