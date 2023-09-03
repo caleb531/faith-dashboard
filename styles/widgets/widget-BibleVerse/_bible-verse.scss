@@ -6,6 +6,7 @@
 .bible-verse-content {
   font-size: var(--font-size-s);
   line-height: var(--line-height-comfortable);
+  white-space: pre-wrap;
   h2 {
     font-size: var(--font-size-xl);
   }

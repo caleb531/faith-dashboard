@@ -1,5 +1,4 @@
 import Button from '@components/reusable/Button';
-import HtmlReactParser from 'html-react-parser';
 import { isPlainObject } from 'lodash-es';
 import React from 'react';
 import useUniqueFieldId from '../../useUniqueFieldId';
@@ -87,11 +86,7 @@ const BibleVerseWidget = React.memo(function BibleVerseWidget({
           <>
             <div className="bible-verse-content">
               <h2>{verseContent.name}</h2>
-              <p>
-                {HtmlReactParser(
-                  verseContent.content?.replace(/\n/g, '<br />') || ''
-                )}
-              </p>
+              <p>{verseContent.content}</p>
             </div>
             <p className="bible-verse-notice">
               {verseContent.version.name} via{' '}
