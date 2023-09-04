@@ -17,7 +17,7 @@ const screenshotQuality: number = 85;
 
 async function main(): Promise<void> {
   console.log('launching browser...');
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ headless: 'new' });
   const page = await browser.newPage();
 
   console.log('setting viewport...');

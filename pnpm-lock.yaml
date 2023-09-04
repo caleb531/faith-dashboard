@@ -157,8 +157,8 @@ devDependencies:
     specifier: ^3.0.2
     version: 3.0.2
   puppeteer:
-    specifier: ^21.1.0
-    version: 21.1.0(encoding@0.1.13)
+    specifier: ^21.1.1
+    version: 21.1.1(encoding@0.1.13)
   sass:
     specifier: ^1.66.1
     version: 1.66.1
@@ -2951,7 +2951,7 @@ packages:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 18.11.9
+      '@types/node': 20.5.7
     dev: true
     optional: true
 
@@ -3923,8 +3923,8 @@ packages:
     engines: {node: '>=6.0'}
     dev: false
 
-  /chromium-bidi@0.4.20(devtools-protocol@0.0.1159816):
-    resolution: {integrity: sha512-ruHgVZFEv00mAQMz1tQjfjdG63jiPWrQPF6HLlX2ucqLqVTJoWngeBEKHaJ6n1swV/HSvgnBNbtTRIlcVyW3Fw==}
+  /chromium-bidi@0.4.22(devtools-protocol@0.0.1159816):
+    resolution: {integrity: sha512-wR7Y9Ioez+cNXT4ZP7VNM1HRTljpNnMSLw4/RnwhhZUP4yCU7kIQND00YiktuHekch68jklGPK1q9Jkb29+fQg==}
     peerDependencies:
       devtools-protocol: '*'
     dependencies:
@@ -5337,7 +5337,7 @@ packages:
     resolution: {integrity: sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==}
     engines: {node: '>=6 <7 || >=8'}
     dependencies:
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       jsonfile: 4.0.0
       universalify: 0.1.2
     dev: true
@@ -7787,12 +7787,12 @@ packages:
       escape-goat: 2.1.1
     dev: true
 
-  /puppeteer-core@21.1.0(encoding@0.1.13):
-    resolution: {integrity: sha512-ggfTj09jo81Y6M4DyNj80GrY6Pip+AtDUgGljqoSzP6FG5nz5Aju6Cs/X147fLgkJ4UKTb736U6cDp0ssLzN5Q==}
+  /puppeteer-core@21.1.1(encoding@0.1.13):
+    resolution: {integrity: sha512-Tlcajcf44zwfa9Sbwv3T8BtaNMJ69wtpHIxwl2NOBTyTK3D1wppQovXTjfw0TDOm3a16eCfQ+5BMi3vRQ4kuAQ==}
     engines: {node: '>=16.3.0'}
     dependencies:
       '@puppeteer/browsers': 1.7.0
-      chromium-bidi: 0.4.20(devtools-protocol@0.0.1159816)
+      chromium-bidi: 0.4.22(devtools-protocol@0.0.1159816)
       cross-fetch: 4.0.0(encoding@0.1.13)
       debug: 4.3.4
       devtools-protocol: 0.0.1159816
@@ -7804,14 +7804,14 @@ packages:
       - utf-8-validate
     dev: true
 
-  /puppeteer@21.1.0(encoding@0.1.13):
-    resolution: {integrity: sha512-x0KfxVd7Hsefq8nzH1AAdSnYw5HEKI4QPeexBmx7nO29jDoEKNE+75G8zQ0E57ZOny/vAZZptCFdD3A7PkeESQ==}
+  /puppeteer@21.1.1(encoding@0.1.13):
+    resolution: {integrity: sha512-2TLntjGA4qLrI9/8N0UK/5OoZJ2Ue7QgphN2SD+RsaHiha12AEiVyMGsB+i6LY1IoPAtEgYIjblQ7lw3kWDNRw==}
     engines: {node: '>=16.3.0'}
     requiresBuild: true
     dependencies:
       '@puppeteer/browsers': 1.7.0
       cosmiconfig: 8.2.0
-      puppeteer-core: 21.1.0(encoding@0.1.13)
+      puppeteer-core: 21.1.1(encoding@0.1.13)
     transitivePeerDependencies:
       - bufferutil
       - encoding
