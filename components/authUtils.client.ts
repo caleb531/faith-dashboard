@@ -1,7 +1,8 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Session, User } from '@supabase/supabase-js';
+import { Database } from './database.types';
 
-const supabase = createClientComponentClient();
+const supabase = createClientComponentClient<Database>();
 
 // The number of milliseconds in one second, used for conversions between the
 // two units

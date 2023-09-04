@@ -15,7 +15,7 @@ export interface AppState {
   shouldShowTutorial?: boolean | undefined;
   widgets: WidgetHead[];
 }
-export interface SyncedAppState extends AppState {
+export interface SyncedAppState extends Omit<AppState, 'id' | 'name'> {
   id: NonNullable<AppState['id']>;
   name: NonNullable<AppState['name']>;
 }

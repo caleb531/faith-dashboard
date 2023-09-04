@@ -1,3 +1,4 @@
+import { Database } from '@components/database.types';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { throttle } from 'lodash-es';
 import { Dispatch, useCallback, useEffect, useMemo } from 'react';
@@ -8,9 +9,9 @@ import { WidgetHead, WidgetState } from '../widgets/widget.types';
 import widgetSyncService from '../widgets/widgetSyncService';
 import { AppAction } from './AppReducer';
 import { SyncContextType } from './SyncContext';
-import { AppState, SyncResponse } from './app.types';
+import { AppState, SyncResponse, SyncedAppState } from './app.types';
 
-const supabase = createClientComponentClient();
+const supabase = createClientComponentClient<Database>();
 
 // Take the new app/dashboard state from the server and apply it to the local
 // application
@@ -59,7 +60,7 @@ async function pushLocalAppToServer(app: AppState): Promise<SyncResponse> {
       id: app.id,
       user_id: user.id,
       client_id: getClientId(),
-      raw_data: app,
+      raw_data: app as SyncedAppState,
       updated_at: new Date().toISOString()
     }
   ]);

@@ -1,4 +1,5 @@
 'use client';
+import { Database } from '@components/database.types';
 import Button from '@components/reusable/Button';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useContext, useState } from 'react';
@@ -9,7 +10,7 @@ import AppContext from './AppContext';
 import SessionContext from './SessionContext';
 
 function AppHeaderAuthControls() {
-  const supabase = createClientComponentClient();
+  const supabase = createClientComponentClient<Database>();
   const { isCurrentStep, stepProps } = useTutorialStep('sign-up');
   const { dispatchToApp } = useContext(AppContext);
   const [isDashboardManagerVisible, setIsDashboardManagerVisible] =

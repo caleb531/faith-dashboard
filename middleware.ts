@@ -2,7 +2,7 @@ import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse } from 'next/server';
 
 import type { NextRequest } from 'next/server';
-import type { Database } from './components/databaseSchema.types';
+import type { Database } from './components/database.types';
 
 // In order to avoid the use of 'unsafe-inline' for script-src, we must generate
 // our Content-Security-Policy in the middleware and define a random nonce that

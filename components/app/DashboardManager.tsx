@@ -1,3 +1,4 @@
+import { Database } from '@components/database.types';
 import Button from '@components/reusable/Button';
 import InlineMessage from '@components/reusable/InlineMessage';
 import ItemCollection from '@components/reusable/ItemCollection';
@@ -37,7 +38,7 @@ const DashboardManager = ({ onClose }: Props) => {
   const { pullLatestAppFromServer, pushLocalAppToServer } =
     useContext(SyncContext);
   const setDashboardSwitchTimeout = useTimeout();
-  const supabase = createClientComponentClient();
+  const supabase = createClientComponentClient<Database>();
 
   function addDashboard() {
     const name = prompt('Please enter a name for your new dashboard:');
