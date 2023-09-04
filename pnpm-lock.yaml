@@ -14,8 +14,8 @@ dependencies:
     specifier: ^16.3.0
     version: 16.3.0(@types/react-dom@18.2.7)(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
   '@marsidev/react-turnstile':
-    specifier: ^0.2.3
-    version: 0.2.3(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^0.3.0
+    version: 0.3.0(react-dom@18.2.0)(react@18.2.0)
   '@supabase/auth-helpers-nextjs':
     specifier: ^0.7.4
     version: 0.7.4(@supabase/supabase-js@2.33.1)
@@ -1999,8 +1999,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
-  /@marsidev/react-turnstile@0.2.3(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-EHD/Cag8BoDSLY9yTqVhhgldWmf0yTq79qPmdbAjYADLqrVVRR47QoVHAtDTSQXpfIMDQ2N0avlfj4LjQ3W6+w==}
+  /@marsidev/react-turnstile@0.3.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-TSBOtQ4w+kDXVGQOpbTbkw7cuaRXxiQr6WNuPassvzEc1V+FNPYRCx2cRZ/0lSGtdClSUvsyG9prueeDQ6uhuw==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'

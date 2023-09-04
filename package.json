@@ -31,7 +31,7 @@
     "@fontsource/lato": "^5.0.9",
     "@fontsource/merriweather": "^5.0.8",
     "@hello-pangea/dnd": "^16.3.0",
-    "@marsidev/react-turnstile": "^0.2.3",
+    "@marsidev/react-turnstile": "^0.3.0",
     "@supabase/auth-helpers-nextjs": "^0.7.4",
     "@supabase/supabase-js": "^2.33.1",
     "clsx": "^2.0.0",
