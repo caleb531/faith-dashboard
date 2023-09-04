@@ -93,7 +93,6 @@ button.edit-item-name-button {
   --icon-size: 16px;
   width: var(--icon-size);
   height: var(--icon-size);
-  margin-left: 5px;
   vertical-align: middle;
   .icon {
     width: inherit;
@@ -104,6 +103,7 @@ button.edit-item-name-button {
 }
 .item-collection-item-name {
   display: inline;
+  margin: 0 5px;
   font-weight: var(--font-weight-bold);
   vertical-align: middle;
 }
