@@ -207,7 +207,7 @@ describe('Dashboard Manager', () => {
     const newDashboardName = 'Prayer Dashboard';
     mockPromptOnce(() => newDashboardName);
     await userEventFakeTimers.click(
-      screen.getByRole('button', { name: 'Add Dashboard' })
+      screen.getByRole('button', { name: 'Add New Dashboard' })
     );
     await waitFor(() => {
       expect(screen.getByText('Shore')).toBeInTheDocument();
@@ -234,7 +234,7 @@ describe('Dashboard Manager', () => {
     mockPromptOnce(() => null);
     await userEventFakeTimers.click(
       screen.getByRole('button', {
-        name: 'Add Dashboard'
+        name: 'Add New Dashboard'
       })
     );
     expect(
@@ -256,7 +256,7 @@ describe('Dashboard Manager', () => {
     const newDashboardName1 = 'Prayer Dashboard';
     mockPromptOnce(() => newDashboardName1);
     await userEventFakeTimers.click(
-      screen.getByRole('button', { name: `Add Dashboard` })
+      screen.getByRole('button', { name: `Add New Dashboard` })
     );
     await waitFor(() => {
       expect(screen.getByText('Shore')).toBeInTheDocument();
@@ -275,7 +275,7 @@ describe('Dashboard Manager', () => {
     const newDashboardName2 = 'Worship Dashboard';
     mockPromptOnce(() => newDashboardName2);
     await userEventFakeTimers.click(
-      screen.getByRole('button', { name: 'Add Dashboard' })
+      screen.getByRole('button', { name: 'Add New Dashboard' })
     );
     await waitFor(() => {
       expect(

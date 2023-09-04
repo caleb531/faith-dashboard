@@ -161,7 +161,7 @@ const DashboardManager = ({ onClose }: Props) => {
           disabled={isLoading}
           onClick={addDashboard}
         >
-          Add Dashboard
+          Add New Dashboard
         </Button>
         {dashboardError ? (
           <InlineMessage type="error" message={dashboardError.message} />
