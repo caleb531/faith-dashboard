@@ -21,7 +21,7 @@ function useAuthDetection() {
       return;
     }
     const abortController = new AbortController();
-    fetch(`/auth/session`, {
+    fetch('/auth/session', {
       method: 'POST',
       body: convertObjectToFormData({ access_token, refresh_token }),
       signal: abortController.signal
