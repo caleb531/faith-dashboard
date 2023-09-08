@@ -1,4 +1,4 @@
-import { getUser } from '@components/authUtils.client';
+import { getSession, getUser } from '@components/authUtils.client';
 import { Session, User, UserResponse } from '@supabase/supabase-js';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 
@@ -119,7 +119,7 @@ export function mockSupabaseFrom() {
 async function getMockSupabasesMutationResponse({ error = null }: ErrorConfig) {
   return {
     user: await getUser(),
-    session: supabase.auth.getSession(),
+    session: await getSession(),
     error
   };
 }
