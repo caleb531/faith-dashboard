@@ -58,7 +58,8 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
         pushStateToDatabase({ state, upsertState });
       }
     }, pushDebounceDelay);
-    // getStateChanges() is stable, so it will never cause this useMemo()
+    // getStateChanges() is stable, so it will never cause this useMemo() to
+    // re-run
   }, [getStateChanges]);
 
   // Evaluate if the state has changed on every push
