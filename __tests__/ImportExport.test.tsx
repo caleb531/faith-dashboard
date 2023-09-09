@@ -78,9 +78,9 @@ describe('Import/Export functionality', () => {
     );
     const fileContents = JSON.stringify(exportedDashboard);
     FileReaderMock._fileData = fileContents;
+    supabaseFromMocks.dashboards.upsert.mockClear();
+    supabaseFromMocks.widgets.upsert.mockClear();
     await act(async () => {
-      supabaseFromMocks.dashboards.upsert.mockClear();
-      supabaseFromMocks.widgets.upsert.mockClear();
       fireEvent.change(screen.getByLabelText('Import Dashboard'), {
         target: { files: [new File([fileContents], 'exportedDashboard.json')] }
       });
