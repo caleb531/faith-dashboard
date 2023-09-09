@@ -1,6 +1,7 @@
+import SessionContext from '@components/app/SessionContext';
 import { Database } from '@components/database.types';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Dispatch, useEffect, useRef } from 'react';
+import { Dispatch, useContext, useEffect, useRef } from 'react';
 import { getUser } from '../authUtils.client';
 import { getClientId, getSelectedAppId } from '../syncUtils';
 import useSyncPush from '../useSyncPush';
@@ -50,6 +51,8 @@ function useWidgetSync(
   widget: WidgetState,
   dispatchToWidget: Dispatch<WidgetAction>
 ): void {
+  const { isSignedIn } = useContext(SessionContext);
+
   // Push the local widget state to the server every time the widget state
   // changes locally; please note that this push operation is debounced
   useSyncPush<WidgetState>({
@@ -70,7 +73,7 @@ function useWidgetSync(
   // is typically only done if the widget state doesn't already exist on the
   // server, otherwise we only push based on changes to the widget state)
   useEffect(() => {
-    if (!supabase.auth.getSession()) {
+    if (!isSignedIn) {
       return;
     }
     widgetSyncService.onPush(widget.id).then(() => {
@@ -79,7 +82,7 @@ function useWidgetSync(
     return () => {
       widgetSyncService.offPush(widget.id);
     };
-  }, [widget.id]);
+  }, [widget.id, isSignedIn]);
 
   // When useAppSync() detects that there is widget data to pull in from the
   // server (for this particular widget), detect that change and replace the
