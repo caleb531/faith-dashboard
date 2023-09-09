@@ -26,19 +26,6 @@ export function isSessionActive(session: Session | null): boolean {
   );
 }
 
-// Return true if we are close enough to the expiry of the current session for
-// it to be refreshed
-export function shouldRefreshSession(session: Session | null) {
-  const currentEpoch = Date.now() / MS_IN_S;
-  return (
-    session &&
-    session.expires_at &&
-    session.expires_in &&
-    currentEpoch > session.expires_at - session.expires_in / 2 &&
-    currentEpoch < session.expires_at
-  );
-}
-
 // See
 // <https://stackoverflow.com/questions/47632622/typescript-and-filter-boolean>
 export function isTruthy<T>(value: T | null | undefined | false): value is T {
