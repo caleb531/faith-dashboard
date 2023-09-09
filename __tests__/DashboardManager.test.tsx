@@ -295,6 +295,34 @@ describe('Dashboard Manager', () => {
     });
   });
 
+  it('should update state of current dashboard if its own name is edited', async () => {
+    const localDashboard = secondDashboardJson;
+    const availableDashboards = [
+      firstDashboardJson,
+      secondDashboardJson,
+      thirdDashboardJson
+    ];
+    await openDashboardManager({
+      localDashboard,
+      availableDashboards
+    });
+    const newDashboardName = 'Spiritual Warfare Dashboard';
+    mockPromptOnce(() => newDashboardName);
+    mockSupabaseUpsert('dashboards');
+    mockSupabaseUpsert('widgets');
+    await userEvent.click(
+      screen.getByRole('button', {
+        name: `Edit Name for Dashboard "${localDashboard.name}"`
+      })
+    );
+    await waitFor(() => {
+      expect(screen.getByText(newDashboardName)).toBeInTheDocument();
+      expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
+      expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(0);
+      expect(getAppData().name).toEqual(newDashboardName);
+    });
+  });
+
   it('should handle errors while editing dashboard name', async () => {
     const error = new Error('Could not edit dashboard name');
     const availableDashboards = [

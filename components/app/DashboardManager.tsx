@@ -78,6 +78,13 @@ const DashboardManager = ({ onClose }: Props) => {
       return;
     }
     setDashboards(updateDashboardInList(dashboards, dashboard));
+    // Update persisted app state if the current dashboard's own name is edited
+    if (dashboard.id === app.id) {
+      dispatchToApp({
+        type: 'replaceApp',
+        payload: dashboard
+      });
+    }
   }
 
   async function deleteDashboard(dashboard: SyncedAppState) {
