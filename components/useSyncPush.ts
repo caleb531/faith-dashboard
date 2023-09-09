@@ -55,7 +55,7 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
       if (
         changes &&
         Object.keys(changes).length > 0 &&
-        (!('id' in changes) || changes.id !== undefined)
+        !('id' in changes && changes.id === undefined)
       ) {
         pushStateToDatabase({ state, upsertState });
       }
