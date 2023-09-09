@@ -111,21 +111,23 @@ describe('Dashboard Manager', () => {
   });
 
   it('should open and fetch all user dashboards', async () => {
+    const localDashboard = secondDashboardJson;
     const availableDashboards = [
       firstDashboardJson,
       secondDashboardJson,
       thirdDashboardJson
     ];
     await openDashboardManager({
-      localDashboard: secondDashboardJson,
+      localDashboard,
       availableDashboards
     });
   });
 
   it('should handle errors when fetching dashboards', async () => {
+    const localDashboard = secondDashboardJson;
     const error = new Error('Server error fetching dashboards');
     await openDashboardManager({
-      localDashboard: secondDashboardJson,
+      localDashboard,
       availableDashboards: [],
       error
     });
@@ -135,8 +137,9 @@ describe('Dashboard Manager', () => {
   });
 
   it('should indicate when user has no dashboards', async () => {
+    const localDashboard = secondDashboardJson;
     await openDashboardManager({
-      localDashboard: secondDashboardJson,
+      localDashboard,
       availableDashboards: []
     });
     await waitFor(() => {
@@ -147,19 +150,21 @@ describe('Dashboard Manager', () => {
   });
 
   it('should switch to another dashboard', async () => {
+    const localDashboard = secondDashboardJson;
     const availableDashboards = [
       firstDashboardJson,
       secondDashboardJson,
       thirdDashboardJson
     ];
     await openDashboardManager({
-      localDashboard: secondDashboardJson,
+      localDashboard,
       availableDashboards
     });
     await switchToDashboard(thirdDashboardJson);
   });
 
   it('should handle errors when switching dashboards', async () => {
+    const localDashboard = secondDashboardJson;
     const error = new Error('There was a problem switching to this dashboard.');
     const availableDashboards = [
       firstDashboardJson,
@@ -167,7 +172,7 @@ describe('Dashboard Manager', () => {
       thirdDashboardJson
     ];
     await openDashboardManager({
-      localDashboard: secondDashboardJson,
+      localDashboard,
       availableDashboards
     });
     await switchToDashboard(thirdDashboardJson, { error });
@@ -205,13 +210,14 @@ describe('Dashboard Manager', () => {
   });
 
   it('should cancel prompt to create dashboard', async () => {
+    const localDashboard = secondDashboardJson;
     const availableDashboards = [
       firstDashboardJson,
       secondDashboardJson,
       thirdDashboardJson
     ];
     await openDashboardManager({
-      localDashboard: secondDashboardJson,
+      localDashboard,
       availableDashboards
     });
     mockPromptOnce(() => null);
@@ -221,7 +227,7 @@ describe('Dashboard Manager', () => {
       })
     );
     expect(
-      screen.getByText(getThemeName(secondDashboardJson.theme))
+      screen.getByText(getThemeName(localDashboard.theme))
     ).toBeInTheDocument();
   });
 
@@ -270,22 +276,24 @@ describe('Dashboard Manager', () => {
   });
 
   it('should successfully edit dashboard name', async () => {
+    const localDashboard = secondDashboardJson;
     const availableDashboards = [
       firstDashboardJson,
       secondDashboardJson,
       thirdDashboardJson
     ];
     await openDashboardManager({
-      localDashboard: secondDashboardJson,
+      localDashboard,
       availableDashboards
     });
+    const dashboardToEdit = thirdDashboardJson;
     const newDashboardName = 'Spiritual Warfare Dashboard';
     mockPromptOnce(() => newDashboardName);
     mockSupabaseUpsert('dashboards');
     mockSupabaseUpsert('widgets');
     await userEvent.click(
       screen.getByRole('button', {
-        name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
+        name: `Edit Name for Dashboard "${dashboardToEdit.name}"`
       })
     );
     await waitFor(() => {
@@ -306,13 +314,14 @@ describe('Dashboard Manager', () => {
       localDashboard,
       availableDashboards
     });
+    const dashboardToEdit = localDashboard;
     const newDashboardName = 'Spiritual Warfare Dashboard';
     mockPromptOnce(() => newDashboardName);
     mockSupabaseUpsert('dashboards');
     mockSupabaseUpsert('widgets');
     await userEvent.click(
       screen.getByRole('button', {
-        name: `Edit Name for Dashboard "${localDashboard.name}"`
+        name: `Edit Name for Dashboard "${dashboardToEdit.name}"`
       })
     );
     await waitFor(() => {
@@ -324,6 +333,7 @@ describe('Dashboard Manager', () => {
   });
 
   it('should handle errors while editing dashboard name', async () => {
+    const localDashboard = secondDashboardJson;
     const error = new Error('Could not edit dashboard name');
     const availableDashboards = [
       firstDashboardJson,
@@ -331,73 +341,79 @@ describe('Dashboard Manager', () => {
       thirdDashboardJson
     ];
     await openDashboardManager({
-      localDashboard: secondDashboardJson,
+      localDashboard,
       availableDashboards
     });
+    const dashboardToEdit = thirdDashboardJson;
     const newDashboardName = 'Spiritual Warfare Dashboard';
     mockPromptOnce(() => newDashboardName);
     mockSupabaseUpsert('dashboards', { error });
     mockSupabaseUpsert('widgets');
     await userEvent.click(
       screen.getByRole('button', {
-        name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
+        name: `Edit Name for Dashboard "${dashboardToEdit.name}"`
       })
     );
     await waitFor(() => {
-      expect(screen.getByText(thirdDashboardJson.name)).toBeInTheDocument();
+      expect(screen.getByText(dashboardToEdit.name)).toBeInTheDocument();
       expect(screen.getByText(error.message)).toBeInTheDocument();
     });
   });
 
   it('should cancel prompt to edit dashboard name', async () => {
+    const localDashboard = secondDashboardJson;
     const availableDashboards = [
       firstDashboardJson,
       secondDashboardJson,
       thirdDashboardJson
     ];
     await openDashboardManager({
-      localDashboard: secondDashboardJson,
+      localDashboard,
       availableDashboards
     });
+    const dashboardToEdit = thirdDashboardJson;
     mockPromptOnce(() => null);
     await userEvent.click(
       screen.getByRole('button', {
-        name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
+        name: `Edit Name for Dashboard "${dashboardToEdit.name}"`
       })
     );
     await waitFor(() => {
-      expect(screen.getByText(thirdDashboardJson.name)).toBeInTheDocument();
+      expect(screen.getByText(dashboardToEdit.name)).toBeInTheDocument();
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(0);
     });
   });
 
   it('should successfully delete dashboard', async () => {
+    const localDashboard = secondDashboardJson;
     const availableDashboards = [
       firstDashboardJson,
       secondDashboardJson,
       thirdDashboardJson
     ];
     await openDashboardManager({
-      localDashboard: secondDashboardJson,
+      localDashboard,
       availableDashboards
     });
+    const dashboardToDelete = thirdDashboardJson;
     mockSupabaseDelete('dashboards');
     mockDashboardsFetch(availableDashboards.slice(0, 2));
     mockConfirmOnce(() => true);
     await userEvent.click(
       screen.getByRole('button', {
-        name: `Delete Dashboard "${thirdDashboardJson.name}"`
+        name: `Delete Dashboard "${dashboardToDelete.name}"`
       })
     );
     await waitFor(() => {
       expect(
-        screen.queryByText(thirdDashboardJson.name)
+        screen.queryByText(dashboardToDelete.name)
       ).not.toBeInTheDocument();
       expect(supabaseFromMocks.dashboards.delete).toHaveBeenCalledTimes(1);
     });
   });
 
   it('should handle errors when deleting dashboard', async () => {
+    const localDashboard = secondDashboardJson;
     const error = new Error('Could not delete dashboard. Sorry!');
     const availableDashboards = [
       firstDashboardJson,
@@ -405,41 +421,44 @@ describe('Dashboard Manager', () => {
       thirdDashboardJson
     ];
     await openDashboardManager({
-      localDashboard: secondDashboardJson,
+      localDashboard,
       availableDashboards
     });
+    const dashboardToDelete = thirdDashboardJson;
     mockSupabaseDelete('dashboards', { error });
     mockDashboardsFetch(availableDashboards.slice(0, 2));
     mockConfirmOnce(() => true);
     await userEvent.click(
       screen.getByRole('button', {
-        name: `Delete Dashboard "${thirdDashboardJson.name}"`
+        name: `Delete Dashboard "${dashboardToDelete.name}"`
       })
     );
     await waitFor(() => {
-      expect(screen.queryByText(thirdDashboardJson.name)).toBeInTheDocument();
+      expect(screen.queryByText(dashboardToDelete.name)).toBeInTheDocument();
       expect(supabaseFromMocks.dashboards.delete).toHaveBeenCalledTimes(1);
       expect(screen.getByText(error.message)).toBeInTheDocument();
     });
   });
 
   it('should switch to another dashboard when active dashboard is deleted', async () => {
+    const localDashboard = secondDashboardJson;
     const availableDashboards = [
       firstDashboardJson,
       secondDashboardJson,
       thirdDashboardJson
     ];
     const dashboardToDelete = secondDashboardJson;
+    const availableDashboardsAfterDelete = availableDashboards.filter(
+      (dashboard) => {
+        return dashboard !== dashboardToDelete;
+      }
+    );
     await openDashboardManager({
-      localDashboard: secondDashboardJson,
+      localDashboard,
       availableDashboards
     });
     mockSupabaseDelete('dashboards');
-    mockDashboardsFetch(
-      availableDashboards.filter((dashboard) => {
-        return dashboard !== dashboardToDelete;
-      })
-    );
+    mockDashboardsFetch(availableDashboardsAfterDelete);
     mockConfirmOnce(() => true);
     mockSupabaseSelectOnce('dashboards', {
       data: [{ raw_data: firstDashboardJson }]
@@ -455,29 +474,31 @@ describe('Dashboard Manager', () => {
       ).not.toBeInTheDocument();
       expect(supabaseFromMocks.dashboards.delete).toHaveBeenCalledTimes(1);
       expect(
-        screen.getByText(getThemeName(firstDashboardJson.theme))
+        screen.getByText(getThemeName(availableDashboardsAfterDelete[0].theme))
       ).toBeInTheDocument();
     });
   });
 
   it('should cancel confirmation to delete dashboard', async () => {
+    const localDashboard = secondDashboardJson;
     const availableDashboards = [
       firstDashboardJson,
       secondDashboardJson,
       thirdDashboardJson
     ];
     await openDashboardManager({
-      localDashboard: secondDashboardJson,
+      localDashboard,
       availableDashboards
     });
+    const dashboardToDelete = thirdDashboardJson;
     mockConfirmOnce(() => false);
     await userEvent.click(
       screen.getByRole('button', {
-        name: `Delete Dashboard "${thirdDashboardJson.name}"`
+        name: `Delete Dashboard "${dashboardToDelete.name}"`
       })
     );
     await waitFor(() => {
-      expect(screen.getByText(thirdDashboardJson.name)).toBeInTheDocument();
+      expect(screen.getByText(dashboardToDelete.name)).toBeInTheDocument();
       expect(supabaseFromMocks.dashboards.delete).toHaveBeenCalledTimes(0);
     });
   });
@@ -489,11 +510,12 @@ describe('Dashboard Manager', () => {
       localDashboard,
       availableDashboards
     });
+    const dashboardToDelete = firstDashboardJson;
     mockSupabaseDelete('dashboards');
     mockDashboardsFetch(availableDashboards.slice(0, 2));
     expect(
       screen.queryByRole('button', {
-        name: `Delete Dashboard "${firstDashboardJson.name}"`
+        name: `Delete Dashboard "${dashboardToDelete.name}"`
       })
     ).not.toBeInTheDocument();
   });
