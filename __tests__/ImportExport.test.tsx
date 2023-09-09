@@ -1,7 +1,6 @@
 import Home from '@app/page';
 import '@testing-library/jest-dom';
-import { act, fireEvent, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import dashboardToExport from '@tests/__json__/dashboardToExport.json';
 import exportedDashboard from '@tests/__json__/exportedDashboard.json';
 import FileReaderMock from '@tests/__mocks__/FileReaderMock';
@@ -11,7 +10,8 @@ import {
   mockSupabaseSelect,
   mockSupabaseSession,
   mockSupabaseUpsert,
-  mockSupabaseUser
+  mockSupabaseUser,
+  supabaseFromMocks
 } from '@tests/__utils__/supabaseMockUtils';
 import {
   assignIdToLocalApp,
@@ -22,10 +22,15 @@ import {
 } from '@tests/__utils__/testUtils';
 import { omit } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
+import userEventFakeTimers from './__utils__/userEventFakeTimers';
 
 describe('Import/Export functionality', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
   afterEach(() => {
     jest.resetAllMocks();
+    jest.useRealTimers();
   });
 
   it('should import dashboard', async () => {
@@ -34,7 +39,9 @@ describe('Import/Export functionality', () => {
     const originalApp = getAppData();
     await renderServerComponent(<Home />);
     expect(screen.getByText('Shore')).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    await userEventFakeTimers.click(
+      screen.getByRole('button', { name: 'Tools' })
+    );
     const fileContents = JSON.stringify(exportedDashboard);
     FileReaderMock._fileData = fileContents;
     await act(async () => {
@@ -56,25 +63,33 @@ describe('Import/Export functionality', () => {
     expect(originalApp.widgets).toHaveLength(4);
   });
 
-  it('should display confirmation if user is signed in', async () => {
-    localStorage.setItem('hey', 'true');
+  it('should display confirmation and push dashboard/widgets if user is signed in', async () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
     mockSupabaseFrom();
     mockSupabaseSelect('dashboards', { data: [] });
     mockSupabaseUpsert('dashboards');
+    mockSupabaseUpsert('widgets');
     mockConfirmOnce(() => true);
     await renderServerComponent(<Home />);
     expect(screen.getByText('Shore')).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
+    await userEventFakeTimers.click(
+      screen.getByRole('button', { name: 'Your Account' })
+    );
     const fileContents = JSON.stringify(exportedDashboard);
     FileReaderMock._fileData = fileContents;
     await act(async () => {
+      supabaseFromMocks.dashboards.upsert.mockClear();
+      supabaseFromMocks.widgets.upsert.mockClear();
       fireEvent.change(screen.getByLabelText('Import Dashboard'), {
         target: { files: [new File([fileContents], 'exportedDashboard.json')] }
       });
     });
     expect(screen.getByText('Evening')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
+      expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(1);
+    });
   });
 
   it('should not import dashboard is user denied confirmation', async () => {
@@ -83,7 +98,9 @@ describe('Import/Export functionality', () => {
     mockConfirmOnce(() => false);
     await renderServerComponent(<Home />);
     expect(screen.getByText('Shore')).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    await userEventFakeTimers.click(
+      screen.getByRole('button', { name: 'Tools' })
+    );
     const fileContents = JSON.stringify(exportedDashboard);
     FileReaderMock._fileData = fileContents;
     await act(async () => {
@@ -101,7 +118,9 @@ describe('Import/Export functionality', () => {
     mockAlertOnce((message) => {
       errorMessage = message;
     });
-    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    await userEventFakeTimers.click(
+      screen.getByRole('button', { name: 'Tools' })
+    );
     const fileContents = '';
     FileReaderMock._fileData = fileContents;
     await act(async () => {
@@ -122,7 +141,9 @@ describe('Import/Export functionality', () => {
     mockAlertOnce((message) => {
       errorMessage = message;
     });
-    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    await userEventFakeTimers.click(
+      screen.getByRole('button', { name: 'Tools' })
+    );
     const fileContents = 'not_valid_json';
     FileReaderMock._fileData = fileContents;
     await act(async () => {
@@ -137,7 +158,9 @@ describe('Import/Export functionality', () => {
   it('should not trigger import if files are missing', async () => {
     await renderServerComponent(<Home />);
     expect(screen.getByText('Shore')).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    await userEventFakeTimers.click(
+      screen.getByRole('button', { name: 'Tools' })
+    );
     const fileContents = '';
     FileReaderMock._fileData = fileContents;
     await act(async () => {
@@ -152,13 +175,15 @@ describe('Import/Export functionality', () => {
     let exportedBlob: Blob | undefined;
     setAppData(dashboardToExport);
     await renderServerComponent(<Home />);
-    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    await userEventFakeTimers.click(
+      screen.getByRole('button', { name: 'Tools' })
+    );
     jest.spyOn(URL, 'createObjectURL').mockImplementation((blob: Blob) => {
       exportedBlob = blob;
       // Doesn't matter what this value is
       return '';
     });
-    await userEvent.click(
+    await userEventFakeTimers.click(
       screen.getByRole('link', { name: 'Export Dashboard' })
     );
     const blobText = (await exportedBlob?.text()) ?? null;

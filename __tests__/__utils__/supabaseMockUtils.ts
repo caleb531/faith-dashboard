@@ -111,7 +111,7 @@ export function mockSupabaseFrom() {
     .mockName('supabase from')
     .mockImplementation((tableName: string) => {
       return supabaseFromMocks[tableName] as any;
-    }) as any;
+    });
 }
 
 // The default response of any Supabase call that writes to the database (i.e.

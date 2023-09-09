@@ -1,4 +1,5 @@
 import { Database } from '@components/database.types';
+import usePreviousValueMemoizer from '@components/usePreviousValueMemoizer';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { throttle } from 'lodash-es';
 import { Dispatch, useCallback, useEffect, useMemo } from 'react';
@@ -45,27 +46,6 @@ async function applyServerAppToLocalApp(
   return { error: null };
 }
 
-// Push the local application state to the server; this function runs when the
-// app changes, but also once when there is no app state on the server
-async function pushLocalAppToServer(app: AppState): Promise<SyncResponse> {
-  if (!app.id) {
-    return { error: null };
-  }
-  const user = await getUser();
-  if (!user) {
-    return { error: null };
-  }
-  return supabase.from('dashboards').upsert([
-    {
-      id: app.id,
-      user_id: user.id,
-      client_id: getClientId(),
-      raw_data: app as SyncedAppState,
-      updated_at: new Date().toISOString()
-    }
-  ]);
-}
-
 // Push all local widgets to the server (this is only necessary as a one-time
 // operation)
 async function pushLocalWidgetsToServer(app: AppState): Promise<void> {
@@ -74,24 +54,60 @@ async function pushLocalWidgetsToServer(app: AppState): Promise<void> {
   });
 }
 
-// Push the local app and all of its widgets to the server in succession
-async function pushLocalAppAndWidgetsToServer(
-  app: AppState
-): Promise<SyncResponse> {
-  const response = await pushLocalAppToServer(app);
-  if (response.error) {
-    return response;
-  }
-  await pushLocalWidgetsToServer(app);
-  return { error: null };
-}
-
 // The useAppSync() hook mangages the sychronization of the app state between
 // the client and server, pushing and pulling data as appropriate
 function useAppSync(
   app: AppState,
   dispatchToApp: Dispatch<AppAction>
 ): SyncContextType {
+  const [prevAppIdRef, currentAppIdRef] = usePreviousValueMemoizer(app.id);
+
+  // Push the local application state to the server (and optionally push the
+  // widgets as well); this function runs when the app changes, but also once
+  // when there is no app state on the server
+  const pushLocalAppToServer = useCallback(
+    async (
+      app: AppState,
+      { includeWidgets = false }: { includeWidgets?: boolean } = {}
+    ): Promise<SyncResponse> => {
+      if (!app.id) {
+        return { error: null };
+      }
+      const user = await getUser();
+      if (!user) {
+        return { error: null };
+      }
+      const response = await supabase.from('dashboards').upsert([
+        {
+          id: app.id,
+          user_id: user.id,
+          client_id: getClientId(),
+          raw_data: app as SyncedAppState,
+          updated_at: new Date().toISOString()
+        }
+      ]);
+      if (response.error) {
+        return response;
+      }
+      if (
+        includeWidgets ||
+        // The dashboard passed to this function may not be the active/current
+        // dashboard (e.g. in the case of renaming a dashboard), and we would
+        // only ever want to push widgets for a dashboard that is the current;
+        // therefore, we must verify that the ID of the provided app matches the
+        // recorded ID of the current app as part of the condition to
+        // automatically push widgets
+        (currentAppIdRef.current === app.id &&
+          prevAppIdRef.current &&
+          prevAppIdRef.current !== app.id)
+      ) {
+        await pushLocalWidgetsToServer(app);
+      }
+      return response;
+    },
+    [prevAppIdRef, currentAppIdRef]
+  );
+
   // Push the local app state to the server every time the app state changes
   // locally; please note that this push operation is debounced
   useSyncPush({
@@ -130,12 +146,12 @@ function useAppSync(
       // dashboards associated with their account; only at this point, will it
       // be safe to push the local dashboard and its widgets
       if (!(response.data && response.data.length > 0)) {
-        return pushLocalAppAndWidgetsToServer(app);
+        return pushLocalAppToServer(app, { includeWidgets: true });
       }
       const newApp: AppState = response.data[0].raw_data;
       return applyServerAppToLocalApp(newApp, dispatchToApp);
     },
-    [dispatchToApp]
+    [dispatchToApp, pushLocalAppToServer]
   );
 
   // A throttled version of the above pullLatestAppFromServer() function

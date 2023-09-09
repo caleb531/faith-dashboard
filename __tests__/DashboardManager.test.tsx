@@ -1,7 +1,7 @@
 import Home from '@app/page';
-import widgetSyncService from '@components/widgets/widgetSyncService';
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import firstDashboardJson from '@tests/__json__/dashboardManager/firstDashboard.json';
 import secondDashboardJson from '@tests/__json__/dashboardManager/secondDashboard.json';
 import thirdDashboardJson from '@tests/__json__/dashboardManager/thirdDashboard.json';
@@ -25,7 +25,6 @@ import {
   mockPromptOnce,
   setAppData
 } from '@tests/__utils__/testUtils';
-import userEventFakeTimers from './__utils__/userEventFakeTimers';
 
 function mockDashboardsFetch(
   dashboards: JsonAppState[],
@@ -63,20 +62,16 @@ async function openDashboardManager({
       screen.getByRole('button', { name: 'Your Account' })
     ).toBeInTheDocument();
   });
-  await waitFor(() => {
-    if (availableDashboards?.length > 0) {
+  if (availableDashboards?.length > 0) {
+    await waitFor(() => {
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
       expect(supabaseFromMocks.widgets.select).toHaveBeenCalled();
-    }
-  });
+    });
+  }
   // Reset the calls and call counts on the supabase mocks
   supabaseFromMocks.dashboards.select.mockClear();
-  await userEventFakeTimers.click(
-    screen.getByRole('button', { name: 'Your Account' })
-  );
-  await userEventFakeTimers.click(
-    screen.getByRole('link', { name: 'My Dashboards' })
-  );
+  await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
+  await userEvent.click(screen.getByRole('link', { name: 'My Dashboards' }));
   expect(
     screen.getByRole('heading', { name: 'My Dashboards' })
   ).toBeInTheDocument();
@@ -100,9 +95,7 @@ async function switchToDashboard(
     data: [{ raw_data: dashboard }],
     error
   });
-  await userEventFakeTimers.click(
-    screen.getByLabelText(String(dashboard.name))
-  );
+  await userEvent.click(screen.getByLabelText(String(dashboard.name)));
   if (!error) {
     await waitFor(() => {
       expect(
@@ -112,19 +105,9 @@ async function switchToDashboard(
   }
 }
 
-const originalOnPush = widgetSyncService.onPush;
-const originalBroadcastPush = widgetSyncService.broadcastPush;
-
 describe('Dashboard Manager', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   afterEach(() => {
     jest.resetAllMocks();
-    widgetSyncService.onPush = originalOnPush;
-    widgetSyncService.broadcastPush = originalBroadcastPush;
-    jest.useRealTimers();
   });
 
   it('should open and fetch all user dashboards', async () => {
@@ -206,7 +189,7 @@ describe('Dashboard Manager', () => {
     });
     const newDashboardName = 'Prayer Dashboard';
     mockPromptOnce(() => newDashboardName);
-    await userEventFakeTimers.click(
+    await userEvent.click(
       screen.getByRole('button', { name: 'Add New Dashboard' })
     );
     await waitFor(() => {
@@ -232,7 +215,7 @@ describe('Dashboard Manager', () => {
       availableDashboards
     });
     mockPromptOnce(() => null);
-    await userEventFakeTimers.click(
+    await userEvent.click(
       screen.getByRole('button', {
         name: 'Add New Dashboard'
       })
@@ -255,7 +238,7 @@ describe('Dashboard Manager', () => {
     });
     const newDashboardName1 = 'Prayer Dashboard';
     mockPromptOnce(() => newDashboardName1);
-    await userEventFakeTimers.click(
+    await userEvent.click(
       screen.getByRole('button', { name: `Add New Dashboard` })
     );
     await waitFor(() => {
@@ -263,18 +246,14 @@ describe('Dashboard Manager', () => {
     });
     const newDashboard1 = getAppData();
     mockDashboardsFetch([newDashboard1, ...availableDashboards]);
-    await userEventFakeTimers.click(
-      screen.getByRole('button', { name: 'Your Account' })
-    );
-    await userEventFakeTimers.click(
-      screen.getByRole('link', { name: 'My Dashboards' })
-    );
+    await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
+    await userEvent.click(screen.getByRole('link', { name: 'My Dashboards' }));
     await waitFor(() => {
       expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     });
     const newDashboardName2 = 'Worship Dashboard';
     mockPromptOnce(() => newDashboardName2);
-    await userEventFakeTimers.click(
+    await userEvent.click(
       screen.getByRole('button', { name: 'Add New Dashboard' })
     );
     await waitFor(() => {
@@ -303,7 +282,8 @@ describe('Dashboard Manager', () => {
     const newDashboardName = 'Spiritual Warfare Dashboard';
     mockPromptOnce(() => newDashboardName);
     mockSupabaseUpsert('dashboards');
-    await userEventFakeTimers.click(
+    mockSupabaseUpsert('widgets');
+    await userEvent.click(
       screen.getByRole('button', {
         name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
       })
@@ -311,6 +291,7 @@ describe('Dashboard Manager', () => {
     await waitFor(() => {
       expect(screen.getByText(newDashboardName)).toBeInTheDocument();
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
+      expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(0);
     });
   });
 
@@ -328,7 +309,8 @@ describe('Dashboard Manager', () => {
     const newDashboardName = 'Spiritual Warfare Dashboard';
     mockPromptOnce(() => newDashboardName);
     mockSupabaseUpsert('dashboards', { error });
-    await userEventFakeTimers.click(
+    mockSupabaseUpsert('widgets');
+    await userEvent.click(
       screen.getByRole('button', {
         name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
       })
@@ -350,7 +332,7 @@ describe('Dashboard Manager', () => {
       availableDashboards
     });
     mockPromptOnce(() => null);
-    await userEventFakeTimers.click(
+    await userEvent.click(
       screen.getByRole('button', {
         name: `Edit Name for Dashboard "${thirdDashboardJson.name}"`
       })
@@ -374,7 +356,7 @@ describe('Dashboard Manager', () => {
     mockSupabaseDelete('dashboards');
     mockDashboardsFetch(availableDashboards.slice(0, 2));
     mockConfirmOnce(() => true);
-    await userEventFakeTimers.click(
+    await userEvent.click(
       screen.getByRole('button', {
         name: `Delete Dashboard "${thirdDashboardJson.name}"`
       })
@@ -401,7 +383,7 @@ describe('Dashboard Manager', () => {
     mockSupabaseDelete('dashboards', { error });
     mockDashboardsFetch(availableDashboards.slice(0, 2));
     mockConfirmOnce(() => true);
-    await userEventFakeTimers.click(
+    await userEvent.click(
       screen.getByRole('button', {
         name: `Delete Dashboard "${thirdDashboardJson.name}"`
       })
@@ -434,7 +416,7 @@ describe('Dashboard Manager', () => {
     mockSupabaseSelectOnce('dashboards', {
       data: [{ raw_data: firstDashboardJson }]
     });
-    await userEventFakeTimers.click(
+    await userEvent.click(
       screen.getByRole('button', {
         name: `Delete Dashboard "${dashboardToDelete.name}"`
       })
@@ -461,7 +443,7 @@ describe('Dashboard Manager', () => {
       availableDashboards
     });
     mockConfirmOnce(() => false);
-    await userEventFakeTimers.click(
+    await userEvent.click(
       screen.getByRole('button', {
         name: `Delete Dashboard "${thirdDashboardJson.name}"`
       })
