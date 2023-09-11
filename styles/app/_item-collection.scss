@@ -20,7 +20,6 @@
   display: flex;
   width: inherit;
   position: relative;
-  margin-bottom: 3px;
   &:hover:active {
     filter: brightness(60%);
     color: var(--color-black-100);
@@ -50,6 +49,10 @@
   --icon-size: 100px;
   width: var(--icon-size);
   height: var(--icon-size);
+}
+button.item-collection-item-choose-button {
+  border-radius: 10px;
+  margin-bottom: 3px;
 }
 button.item-collection-item-delete-button {
   display: flex;

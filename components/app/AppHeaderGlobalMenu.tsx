@@ -1,11 +1,14 @@
 'use client';
-import React, { useContext, useState } from 'react';
-import { exportDashboard, readDashboardFileToJSON } from '../importExportUtils';
+import { useContext, useState } from 'react';
+import { exportDashboard } from '../importExportUtils';
 import { getAppStorageKey } from '../storageUtils';
 import AppContext from './AppContext';
 import AppHeaderMenu from './AppHeaderMenu';
+import AppImportInput from './AppImportInput';
+import AppImportTrigger from './AppImportTrigger';
 import DashboardManager from './DashboardManager';
 import SessionContext from './SessionContext';
+import { AppState } from './app.types';
 import { getDefaultAppState } from './appUtils';
 
 function AppHeaderGlobalMenu() {
@@ -15,36 +18,12 @@ function AppHeaderGlobalMenu() {
 
   const { user, isSignedIn } = useContext(SessionContext);
 
-  async function handleFileInputChange(
-    event: React.FormEvent<HTMLInputElement>
-  ) {
-    const fileInput = event.target as HTMLInputElement;
-    if (!fileInput?.files?.length) {
-      return;
-    }
-    try {
-      const newApp = await readDashboardFileToJSON(fileInput.files[0]);
-      if (
-        isSignedIn ||
-        confirm(
-          'This will overwrite your current dashboard. Are you sure you want to continue?'
-        )
-      ) {
-        dispatchToApp({ type: 'replaceApp', payload: newApp });
-      }
-    } catch (error) {
-      alert(
-        error instanceof Error && error.message
-          ? error.message
-          : 'An error occurred while uploading the file. Please try again.'
-      );
-    } finally {
-      // Always reset file input for any subsequent imports
-      fileInput.value = '';
-    }
-  }
   async function handleExportDashboard() {
     exportDashboard();
+  }
+
+  function onImportSuccess(importedApp: AppState) {
+    dispatchToApp({ type: 'replaceApp', payload: importedApp });
   }
 
   async function signOut() {
@@ -110,9 +89,9 @@ function AppHeaderGlobalMenu() {
           {
             key: 'import-dashboard',
             content: (
-              <label htmlFor="app-import-input">
+              <AppImportTrigger inputId="app-global-menu-import-input">
                 <a tabIndex={0}>Import Dashboard</a>
-              </label>
+              </AppImportTrigger>
             )
           },
           {
@@ -144,13 +123,9 @@ function AppHeaderGlobalMenu() {
           }}
         />
       ) : null}
-      <input
-        id="app-import-input"
-        name="app_import_input"
-        type="file"
-        accept=".json"
-        className="app-import-input accessibility-only"
-        onChange={handleFileInputChange}
+      <AppImportInput
+        id="app-global-menu-import-input"
+        onImportSuccess={onImportSuccess}
       />
     </>
   );

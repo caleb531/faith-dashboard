@@ -9,10 +9,12 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { PostgrestError } from '@supabase/supabase-js';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import AppContext from './AppContext';
+import AppImportInput from './AppImportInput';
+import AppImportTrigger from './AppImportTrigger';
 import DashboardPreview from './DashboardPreview';
 import SessionContext from './SessionContext';
 import SyncContext from './SyncContext';
-import { SyncedAppState } from './app.types';
+import { AppState, SyncedAppState } from './app.types';
 import { getDefaultAppState } from './appUtils';
 
 // The number of milliseconds that the Dashboard Manager modal will stay open
@@ -155,6 +157,11 @@ const DashboardManager = ({ onClose }: Props) => {
     return newDashboards;
   }, [supabase, user]);
 
+  async function onImportSuccess(importedApp: AppState) {
+    await pushLocalAppToServer(importedApp, { includeWidgets: true });
+    fetchDashboards();
+  }
+
   useEffect(() => {
     fetchDashboards();
   }, [fetchDashboards]);
@@ -165,12 +172,21 @@ const DashboardManager = ({ onClose }: Props) => {
         <h1>My Dashboards</h1>
         <p>Here, you can manage and switch between multiple dashboards.</p>
         <Button
-          className="add-dashboard"
+          className="dashboard-manager-action"
           disabled={isLoading}
           onClick={addDashboard}
         >
           Add New Dashboard
         </Button>
+        <Button className="dashboard-manager-action">
+          <AppImportTrigger inputId="dashboard-manager-import-input">
+            Import Dashboard
+          </AppImportTrigger>
+        </Button>
+        <AppImportInput
+          id="dashboard-manager-import-input"
+          onImportSuccess={onImportSuccess}
+        />
         {dashboardError ? (
           <InlineMessage type="error" message={dashboardError.message} />
         ) : null}
