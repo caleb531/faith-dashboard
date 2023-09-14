@@ -37,8 +37,7 @@ const DashboardManager = ({ onClose }: Props) => {
   >();
   const { user } = useContext(SessionContext);
   const { app, dispatchToApp } = useContext(AppContext);
-  const { pullLatestAppFromServer, pushLocalAppToServer } =
-    useContext(SyncContext);
+  const { pullLatestAppFromServer, pushAppToServer } = useContext(SyncContext);
   const setDashboardSwitchTimeout = useTimeout();
   const supabase = createClientComponentClient<Database>();
 
@@ -74,7 +73,7 @@ const DashboardManager = ({ onClose }: Props) => {
 
   async function saveEditedDashboardName(dashboard: SyncedAppState) {
     setDashboardError(null);
-    const response = await pushLocalAppToServer(dashboard);
+    const response = await pushAppToServer(dashboard);
     if (response.error) {
       setDashboardError(response.error);
       return;
@@ -158,7 +157,7 @@ const DashboardManager = ({ onClose }: Props) => {
   }, [supabase, user]);
 
   async function onImportSuccess(importedApp: AppState) {
-    await pushLocalAppToServer(importedApp, { includeWidgets: true });
+    await pushAppToServer(importedApp, { includeWidgets: true });
     fetchDashboards();
   }
 

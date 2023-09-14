@@ -4,7 +4,7 @@ import { AppState, SyncResponse } from './app.types';
 
 export type SyncContextType = {
   pullLatestAppFromServer: (app: AppState) => Promise<SyncResponse>;
-  pushLocalAppToServer: (
+  pushAppToServer: (
     app: AppState,
     options?: { includeWidgets?: boolean }
   ) => Promise<SyncResponse>;

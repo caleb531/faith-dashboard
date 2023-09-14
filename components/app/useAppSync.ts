@@ -65,7 +65,7 @@ function useAppSync(
   // Push the local application state to the server (and optionally push the
   // widgets as well); this function runs when the app changes, but also once
   // when there is no app state on the server
-  const pushLocalAppToServer = useCallback(
+  const pushAppToServer = useCallback(
     async (
       app: AppState,
       { includeWidgets = false }: { includeWidgets?: boolean } = {}
@@ -113,7 +113,7 @@ function useAppSync(
   useSyncPush({
     state: app,
     stateType: 'app',
-    upsertState: pushLocalAppToServer
+    upsertState: pushAppToServer
   });
 
   // Replace the local application state with the latest application state from
@@ -146,12 +146,12 @@ function useAppSync(
       // dashboards associated with their account; only at this point, will it
       // be safe to push the local dashboard and its widgets
       if (!(response.data && response.data.length > 0)) {
-        return pushLocalAppToServer(app, { includeWidgets: true });
+        return pushAppToServer(app, { includeWidgets: true });
       }
       const newApp: AppState = response.data[0].raw_data;
       return applyServerAppToLocalApp(newApp, dispatchToApp);
     },
-    [dispatchToApp, pushLocalAppToServer]
+    [dispatchToApp, pushAppToServer]
   );
 
   // A throttled version of the above pullLatestAppFromServer() function
@@ -181,7 +181,7 @@ function useAppSync(
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [isDefaultAppState]);
 
-  return { pullLatestAppFromServer, pushLocalAppToServer };
+  return { pullLatestAppFromServer, pushAppToServer };
 }
 
 export default useAppSync;
