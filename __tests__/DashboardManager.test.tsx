@@ -1,10 +1,11 @@
 import Home from '@app/page';
 import '@testing-library/jest-dom';
-import { screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import firstDashboardJson from '@tests/__json__/dashboardManager/firstDashboard.json';
 import secondDashboardJson from '@tests/__json__/dashboardManager/secondDashboard.json';
 import thirdDashboardJson from '@tests/__json__/dashboardManager/thirdDashboard.json';
+import exportedDashboard from '@tests/__json__/exportedDashboard.json';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
   ErrorConfig,
@@ -25,6 +26,7 @@ import {
   mockPromptOnce,
   setAppData
 } from '@tests/__utils__/testUtils';
+import FileReaderMock from './__mocks__/FileReaderMock';
 
 function mockDashboardsFetch(
   dashboards: JsonAppState[],
@@ -272,6 +274,40 @@ describe('Dashboard Manager', () => {
       newDashboard2.widgets.forEach((widget, w) => {
         expect(widget.id).not.toEqual(newDashboard1.widgets[w].id);
       });
+    });
+  });
+
+  it('should import dashboard from file', async () => {
+    const localDashboard = secondDashboardJson;
+    const availableDashboards = [
+      firstDashboardJson,
+      secondDashboardJson,
+      thirdDashboardJson
+    ];
+    await openDashboardManager({
+      localDashboard,
+      availableDashboards
+    });
+    const newDashboardName = 'Prayer Dashboard';
+    mockPromptOnce(() => newDashboardName);
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Import Dashboard' })
+    );
+    const fileContents = JSON.stringify(exportedDashboard);
+    FileReaderMock._fileData = fileContents;
+    await act(async () => {
+      fireEvent.change(screen.getByLabelText('Import Dashboard'), {
+        target: { files: [new File([fileContents], 'exportedDashboard.json')] }
+      });
+    });
+    await waitFor(() => {
+      expect(screen.getByText('Evening')).toBeInTheDocument();
+      expect(
+        screen.queryByRole('heading', { name: 'My Dashboards' })
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('button', { name: 'Skip Tutorial' })
+      ).not.toBeInTheDocument();
     });
   });
 
