@@ -157,8 +157,8 @@ const DashboardManager = ({ onClose }: Props) => {
   }, [supabase, user]);
 
   async function onImportSuccess(importedApp: AppState) {
-    await pushAppToServer(importedApp, { includeWidgets: true });
-    fetchDashboards();
+    dispatchToApp({ type: 'replaceApp', payload: importedApp });
+    onClose();
   }
 
   useEffect(() => {
