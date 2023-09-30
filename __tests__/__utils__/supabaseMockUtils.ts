@@ -1,6 +1,7 @@
 import { getSession, getUser } from '@components/authUtils.client';
 import { Session, User, UserResponse } from '@supabase/supabase-js';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
+import { Mock } from 'vitest';
 
 export type ErrorConfig = { error: Error | null };
 
@@ -12,7 +13,7 @@ export async function mockSupabaseUser(
     user_metadata: { first_name: 'Caleb', last_name: 'Evans' }
   }
 ) {
-  return jest.spyOn(supabase.auth, 'getUser').mockImplementation(async () => {
+  return vi.spyOn(supabase.auth, 'getUser').mockImplementation(async () => {
     if (user) {
       return {
         data: { user },
@@ -38,21 +39,19 @@ export async function mockSupabaseSession(
   if (session && user) {
     session.user = user;
   }
-  return jest
-    .spyOn(supabase.auth, 'getSession')
-    .mockImplementation(async () => {
-      if (session) {
-        return {
-          data: { session, __mock: true } as { session: Session },
-          error: null
-        };
-      } else {
-        return {
-          data: { session: null, __mock: true },
-          error: null
-        };
-      }
-    });
+  return vi.spyOn(supabase.auth, 'getSession').mockImplementation(async () => {
+    if (session) {
+      return {
+        data: { session, __mock: true } as { session: Session },
+        error: null
+      };
+    } else {
+      return {
+        data: { session: null, __mock: true },
+        error: null
+      };
+    }
+  });
 }
 
 export function mockSupabaseApiResponse(
@@ -68,7 +67,7 @@ export function mockSupabaseApiResponse(
     error: object | null;
   }
 ) {
-  return jest.spyOn(supabaseObject, methodName).mockImplementation(() => {
+  return vi.spyOn(supabaseObject, methodName).mockImplementation(() => {
     return {
       user,
       session: session
@@ -89,16 +88,16 @@ export function mockSupabaseApiResponse(
 // us to independently manage select() mocks
 function generateSupabaseFromMocks(tableName: string) {
   return {
-    select: jest.fn().mockName(`${tableName} select`),
-    insert: jest.fn().mockName(`${tableName} insert`),
-    update: jest.fn().mockName(`${tableName} update`),
-    upsert: jest.fn().mockName(`${tableName} upsert`),
-    delete: jest.fn().mockName(`${tableName} delete`)
+    select: vi.fn().mockName(`${tableName} select`),
+    insert: vi.fn().mockName(`${tableName} insert`),
+    update: vi.fn().mockName(`${tableName} update`),
+    upsert: vi.fn().mockName(`${tableName} upsert`),
+    delete: vi.fn().mockName(`${tableName} delete`)
   };
 }
 
 export const supabaseFromMocks: {
-  [key: string]: Record<string, jest.Mock>;
+  [key: string]: Record<string, Mock>;
 } = {
   dashboards: generateSupabaseFromMocks('dashboards'),
   widgets: generateSupabaseFromMocks('widgets')
@@ -106,7 +105,7 @@ export const supabaseFromMocks: {
 
 // Mocks supabase select(), insert(), update(), upsert(), and delete()
 export function mockSupabaseFrom() {
-  return jest
+  return vi
     .spyOn(supabase, 'from')
     .mockName('supabase from')
     .mockImplementation((tableName: string) => {
@@ -134,9 +133,9 @@ export class SupabaseSelectPromise<T> extends Promise<T> {
   constructor(callback: ConstructorParameters<typeof Promise<T>>[0]) {
     super(callback);
   }
-  order?: jest.Mock;
-  match?: jest.Mock;
-  limit?: jest.Mock;
+  order?: Mock;
+  match?: Mock;
+  limit?: Mock;
 }
 
 function getPostgresBuilderMock(
@@ -148,7 +147,7 @@ function getPostgresBuilderMock(
     resolve(response);
   });
   /* eslint-disable no-unexpected-multiline */
-  promise.order = jest
+  promise.order = vi
     // Because we are attaching additional members to the Promise object, it is
     // essential that the mockImplementation() callbacks NOT be async functions,
     // since an async function will return a native Promise wrapped around our
@@ -159,13 +158,13 @@ function getPostgresBuilderMock(
     [mockMethodName](() =>
       getPostgresBuilderMock(mockMethodName, tableName, response)
     );
-  promise.match = jest
+  promise.match = vi
     .fn()
     .mockName(`${tableName} match`)
     [mockMethodName](() =>
       getPostgresBuilderMock(mockMethodName, tableName, response)
     );
-  promise.limit = jest
+  promise.limit = vi
     .fn()
     .mockName(`${tableName} limit`)
     [mockMethodName](() =>
@@ -206,7 +205,7 @@ export function mockSupabaseDelete(
 ) {
   supabaseFromMocks[tableName].delete.mockImplementation(() => {
     return {
-      match: jest.fn().mockImplementation(async () => {
+      match: vi.fn().mockImplementation(async () => {
         return getMockSupabasesMutationResponse({ error });
       })
     };

@@ -14,7 +14,7 @@ const updateAvailableMessage = 'Update available! Click here to update.';
 
 describe('Update Notification', () => {
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     mockLocationObject();
     // Mock navigator.serviceWorker
     originalServiceWorker = navigator.serviceWorker;
@@ -26,7 +26,7 @@ describe('Update Notification', () => {
   });
 
   afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
     sessionStorage.removeItem('sw');
     Object.defineProperty(navigator, 'serviceWorker', {
       value: originalServiceWorker

@@ -22,7 +22,7 @@ describe('Sign Up page', () => {
     mockLocationObject();
   });
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     restoreLocationObject();
   });
 
@@ -195,7 +195,7 @@ describe('Sign Up page', () => {
   });
 
   it('should sign up on server side', async () => {
-    jest.spyOn(supabase.auth, 'signUp').mockImplementationOnce(async () => {
+    vi.spyOn(supabase.auth, 'signUp').mockImplementationOnce(async () => {
       return { data: { user: {}, session: {} }, error: null } as any;
     });
     const fields = {
@@ -230,7 +230,7 @@ describe('Sign Up page', () => {
       .mockImplementationOnce(async () => {
         return { data: { user: {}, session: {} }, error: null } as any;
       });
-    jest.spyOn(NextResponse, 'redirect');
+    vi.spyOn(NextResponse, 'redirect');
     const code = 'dfbc19a6-f750-4620-8390-56f3158a299d';
     await callRouteHandler({
       handler: CallbackGET,
@@ -241,7 +241,7 @@ describe('Sign Up page', () => {
     expect(NextResponse.redirect).toHaveBeenCalledWith('http://localhost:3000');
   });
   it('should redirect to error page when email confirmation code is missing', async () => {
-    jest.spyOn(NextResponse, 'redirect');
+    vi.spyOn(NextResponse, 'redirect');
     await callRouteHandler({
       handler: CallbackGET,
       path: `/auth/callback`,

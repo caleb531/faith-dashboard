@@ -25,7 +25,7 @@ describe('Reset Password page', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     restoreLocationObject();
   });
 
@@ -141,7 +141,7 @@ describe('Reset Password page', () => {
   });
 
   it('should reset password on server side', async () => {
-    jest.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(async () => {
+    vi.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(async () => {
       return { data: { user: {}, session: {} }, error: null } as any;
     });
     const fields = {
@@ -159,7 +159,7 @@ describe('Reset Password page', () => {
   });
 
   it('should set session on server side', async () => {
-    jest.spyOn(supabase.auth, 'setSession').mockImplementationOnce(async () => {
+    vi.spyOn(supabase.auth, 'setSession').mockImplementationOnce(async () => {
       return { data: { user: {}, session: {} }, error: null } as any;
     });
     const fields = {

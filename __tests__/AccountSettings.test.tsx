@@ -29,7 +29,7 @@ describe('Account Settings page', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     restoreLocationObject();
   });
 
@@ -224,7 +224,7 @@ describe('Account Settings page', () => {
   });
 
   it('should change user name on server side', async () => {
-    jest.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(async () => {
+    vi.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(async () => {
       return { data: {}, error: null } as any;
     });
     const fields = {
@@ -245,7 +245,7 @@ describe('Account Settings page', () => {
   });
 
   it('should change password on server side', async () => {
-    jest.spyOn(supabase, 'rpc').mockImplementationOnce(() => {
+    vi.spyOn(supabase, 'rpc').mockImplementationOnce(() => {
       return { data: {}, error: null } as any;
     });
     const fields = {
@@ -265,7 +265,7 @@ describe('Account Settings page', () => {
   });
 
   it('should request email change on server side', async () => {
-    jest.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(() => {
+    vi.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(() => {
       return { data: {}, error: null } as any;
     });
     const fields = {
@@ -283,7 +283,7 @@ describe('Account Settings page', () => {
   });
 
   it('should cancel email change on server side', async () => {
-    jest.spyOn(supabase, 'rpc').mockImplementationOnce(() => {
+    vi.spyOn(supabase, 'rpc').mockImplementationOnce(() => {
       return { data: {}, error: null } as any;
     });
     await callRouteHandler({

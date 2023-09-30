@@ -26,11 +26,11 @@ import userEventFakeTimers from './__utils__/userEventFakeTimers';
 
 describe('Import/Export functionality', () => {
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
   afterEach(() => {
-    jest.resetAllMocks();
-    jest.useRealTimers();
+    vi.resetAllMocks();
+    vi.useRealTimers();
   });
 
   it('should import dashboard', async () => {
@@ -178,7 +178,7 @@ describe('Import/Export functionality', () => {
     await userEventFakeTimers.click(
       screen.getByRole('button', { name: 'Tools' })
     );
-    jest.spyOn(URL, 'createObjectURL').mockImplementation((blob: Blob) => {
+    vi.spyOn(URL, 'createObjectURL').mockImplementation((blob: Blob) => {
       exportedBlob = blob;
       // Doesn't matter what this value is
       return '';

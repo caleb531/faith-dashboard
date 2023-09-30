@@ -25,7 +25,7 @@ async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
 
 describe('Podcast widget', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should handle no results', async () => {
@@ -54,7 +54,7 @@ describe('Podcast widget', () => {
 
     // Suppress the error that's logged when fetch() tries to parse invalid
     // JSON in the useWidgetDataFetcher() hook
-    const log = jest.spyOn(console, 'log').mockImplementation(() => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {
       /* noop */
     });
     await searchPodcasts('ask pastor john');

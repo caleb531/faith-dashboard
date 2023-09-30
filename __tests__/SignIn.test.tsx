@@ -15,7 +15,7 @@ import fetch from 'jest-fetch-mock';
 
 describe('Sign In page', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should require all form fields to be populated', async () => {

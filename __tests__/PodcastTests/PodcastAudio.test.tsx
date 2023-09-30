@@ -27,14 +27,14 @@ async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
 
 describe('Podcast widget', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should play/pause audio', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    const playStub = jest.spyOn(AudioMock.prototype, 'play');
-    const pauseStub = jest.spyOn(AudioMock.prototype, 'pause');
+    const playStub = vi.spyOn(AudioMock.prototype, 'play');
+    const pauseStub = vi.spyOn(AudioMock.prototype, 'pause');
     await renderServerComponent(<Home />);
     await navigateToNowPlaying();
 

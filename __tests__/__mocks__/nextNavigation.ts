@@ -1,1 +1,1 @@
-export const redirect = jest.fn();
+export const redirect = vi.fn();

@@ -78,8 +78,8 @@ export function mockLocationObject() {
   delete window.location;
   window.location = {
     ...originalLocationObject,
-    reload: jest.fn(),
-    assign: jest.fn()
+    reload: vi.fn(),
+    assign: vi.fn()
   };
 }
 
@@ -88,13 +88,13 @@ export function restoreLocationObject() {
 }
 
 export function mockAlertOnce(mockImpl: (message?: any) => void) {
-  return jest.spyOn(window, 'alert').mockImplementationOnce(mockImpl);
+  return vi.spyOn(window, 'alert').mockImplementationOnce(mockImpl);
 }
 export function mockConfirmOnce(mockImpl: (message?: string) => boolean) {
-  return jest.spyOn(window, 'confirm').mockImplementationOnce(mockImpl);
+  return vi.spyOn(window, 'confirm').mockImplementationOnce(mockImpl);
 }
 export function mockPromptOnce(mockImpl: (message?: string) => string | null) {
-  return jest.spyOn(window, 'prompt').mockImplementationOnce(mockImpl);
+  return vi.spyOn(window, 'prompt').mockImplementationOnce(mockImpl);
 }
 
 export async function removeWidget({

@@ -33,7 +33,7 @@ async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
 
 describe('Podcast widget', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
   it('should access Now Playing screen from episode list', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));

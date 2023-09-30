@@ -35,14 +35,14 @@ const originalBroadcastPush = widgetSyncService.broadcastPush;
 
 describe('Sync functionality', () => {
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     widgetSyncService.onPush = originalOnPush;
     widgetSyncService.broadcastPush = originalBroadcastPush;
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('should pull latest dashboard on page load (when signed in)', async () => {
@@ -230,7 +230,7 @@ describe('Sync functionality', () => {
       // Because we are using fake timers, we must advance the time manually
       // via the optional advanceTimers() callback to userEvent methods
       advanceTimers: (delay) => {
-        jest.advanceTimersByTime(delay);
+        vi.advanceTimersByTime(delay);
       }
     });
     await waitFor(() => {
@@ -256,7 +256,7 @@ describe('Sync functionality', () => {
         screen.getByRole('button', { name: 'Your Account' })
       ).toBeInTheDocument();
     });
-    jest.useRealTimers();
+    vi.useRealTimers();
     await waitForWidget({ type: 'Note', index: 1 });
     const widgetElem = await removeWidget({
       type: 'Note',
@@ -264,7 +264,7 @@ describe('Sync functionality', () => {
       confirmRemove: true
     });
     await waitForElementToBeRemoved(widgetElem);
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     await waitFor(() => {
       expect(supabaseFromMocks.widgets.delete).toHaveBeenCalled();
     });
@@ -291,7 +291,7 @@ describe('Sync functionality', () => {
     expect(textBox).toBeInTheDocument();
     await userEvent.type(textBox, 'God is good', {
       advanceTimers: (delay) => {
-        jest.advanceTimersByTime(delay);
+        vi.advanceTimersByTime(delay);
       }
     });
     await waitFor(() => {

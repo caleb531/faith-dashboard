@@ -17,7 +17,7 @@ import fetch from 'jest-fetch-mock';
 
 describe('Podcast widget', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
   it('should search for podcast and select episode', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));

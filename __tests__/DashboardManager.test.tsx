@@ -109,7 +109,7 @@ async function switchToDashboard(
 
 describe('Dashboard Manager', () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('should open and fetch all user dashboards', async () => {

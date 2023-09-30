@@ -46,7 +46,7 @@ describe('Bible Verse widget', () => {
     fetch.mockResponseOnce('notjson');
     await renderServerComponent(<Home />);
 
-    const log = jest.spyOn(console, 'log').mockImplementation(() => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {
       /* noop */
     });
     await searchBibleVerses('john3.16');

@@ -5,8 +5,8 @@ export function cookies() {
 }
 
 const headersObject = {
-  get: jest.fn(),
-  set: jest.fn()
+  get: vi.fn(),
+  set: vi.fn()
 };
 
 export function headers() {
