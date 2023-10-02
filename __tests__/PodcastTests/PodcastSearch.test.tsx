@@ -3,9 +3,9 @@ import '@testing-library/jest-dom';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import podcastNoResultsJson from '@tests/__json__/podcastNoResults.json';
 import podcastSearchJson from '@tests/__json__/podcastSearch.json';
+import fetch from '@tests/__mocks__/fetchMock';
 import { searchPodcasts } from '@tests/__utils__/podcastTestUtils';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
-import fetch from 'jest-fetch-mock';
 
 async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
   const audioProgressSlider = screen.getByRole('slider', {

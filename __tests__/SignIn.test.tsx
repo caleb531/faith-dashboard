@@ -4,6 +4,7 @@ import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockCaptchaSuccessOnce } from '@tests/__mocks__/captchaMockUtils';
+import fetch from '@tests/__mocks__/fetchMock';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
@@ -11,7 +12,6 @@ import {
   convertFormDataToObject,
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
-import fetch from 'jest-fetch-mock';
 
 describe('Sign In page', () => {
   afterEach(() => {

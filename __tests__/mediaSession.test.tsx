@@ -4,10 +4,10 @@ import { act, waitFor } from '@testing-library/react';
 import podcastFeedJson from '@tests/__json__/podcastFeed.json';
 import podcastSearchJson from '@tests/__json__/podcastSearch.json';
 import AudioMock from '@tests/__mocks__/AudioMock';
+import fetch from '@tests/__mocks__/fetchMock';
 import { mediaSessionMock } from '@tests/__mocks__/mediaSessionMock';
 import { navigateToNowPlaying } from '@tests/__utils__/podcastTestUtils';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
-import fetch from 'jest-fetch-mock';
 
 describe('media session', () => {
   afterEach(() => {

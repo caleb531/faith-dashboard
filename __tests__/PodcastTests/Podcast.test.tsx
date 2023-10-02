@@ -6,6 +6,7 @@ import podcastFeedJson from '@tests/__json__/podcastFeed.json';
 import podcastFeedRefreshedJson from '@tests/__json__/podcastFeedRefreshed.json';
 import podcastSearchJson from '@tests/__json__/podcastSearch.json';
 import AudioMock from '@tests/__mocks__/AudioMock';
+import fetch from '@tests/__mocks__/fetchMock';
 import {
   chooseEpisode,
   choosePodcast,
@@ -13,7 +14,6 @@ import {
 } from '@tests/__utils__/podcastTestUtils';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import { getWidgetData } from '@tests/__utils__/testUtils';
-import fetch from 'jest-fetch-mock';
 
 describe('Podcast widget', () => {
   afterEach(() => {

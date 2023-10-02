@@ -4,9 +4,9 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import bibleVerseRangeJson from '@tests/__json__/bibleVerseRange.json';
 import bibleVerseSingleJson from '@tests/__json__/bibleVerseSingle.json';
+import fetch from '@tests/__mocks__/fetchMock';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import { getWidgetData, waitForWidget } from '@tests/__utils__/testUtils';
-import fetch from 'jest-fetch-mock';
 
 async function searchBibleVerses(verseQuery: string) {
   await waitForWidget({ type: 'BibleVerse', index: 0 });

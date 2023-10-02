@@ -4,6 +4,7 @@ import ResetPassword from '@app/reset-password/page';
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import fetch from '@tests/__mocks__/fetchMock';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
@@ -13,7 +14,7 @@ import {
   restoreLocationObject,
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
-import fetch from 'jest-fetch-mock';
+
 import {
   mockSupabaseSession,
   mockSupabaseUser

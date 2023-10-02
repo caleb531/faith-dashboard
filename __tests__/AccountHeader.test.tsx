@@ -4,6 +4,7 @@ import { getSession, getUser } from '@components/authUtils.client';
 import '@testing-library/jest-dom';
 import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import fetch from '@tests/__mocks__/fetchMock';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
@@ -16,7 +17,6 @@ import {
   mockLocationObject,
   restoreLocationObject
 } from '@tests/__utils__/testUtils';
-import fetch from 'jest-fetch-mock';
 
 describe('Account Header', () => {
   beforeEach(() => {

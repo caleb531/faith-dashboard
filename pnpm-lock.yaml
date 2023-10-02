@@ -150,9 +150,6 @@ devDependencies:
   jest-environment-jsdom:
     specifier: ^29.6.4
     version: 29.6.4
-  jest-fetch-mock:
-    specifier: ^3.0.3
-    version: 3.0.3(encoding@0.1.13)
   jest-preview:
     specifier: ^0.3.1
     version: 0.3.1(postcss@8.4.29)(ts-node@10.9.1)
@@ -6743,15 +6740,6 @@ packages:
       jest-util: 29.6.3
     dev: true
 
-  /jest-fetch-mock@3.0.3(encoding@0.1.13):
-    resolution: {integrity: sha512-Ux1nWprtLrdrH4XwE7O7InRY6psIi3GOsqNESJgMJ+M5cv4A8Lh7SN9d2V2kKRZ8ebAfcd1LNyZguAOb6JiDqw==}
-    dependencies:
-      cross-fetch: 3.1.5(encoding@0.1.13)
-      promise-polyfill: 8.2.3
-    transitivePeerDependencies:
-      - encoding
-    dev: true
-
   /jest-get-type@29.2.0:
     resolution: {integrity: sha512-uXNJlg8hKFEnDgFsrCjznB+sTxdkuqiCL6zMgA75qEbAJjJYTs9XPrvDctrEig2GDow22T/LvHgO57iJhXB/UA==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -8172,10 +8160,6 @@ packages:
   /progress@2.0.3:
     resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
     engines: {node: '>=0.4.0'}
-    dev: true
-
-  /promise-polyfill@8.2.3:
-    resolution: {integrity: sha512-Og0+jCRQetV84U8wVjMNccfGCnMQ9mGs9Hv78QFe+pSDD3gWTpz0y+1QCuxy5d/vBFuZ3iwP2eycAkvqIMPmWg==}
     dev: true
 
   /prompts@2.4.2:

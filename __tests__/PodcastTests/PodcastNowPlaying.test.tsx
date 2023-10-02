@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import podcastFeedJson from '@tests/__json__/podcastFeed.json';
 import podcastSearchJson from '@tests/__json__/podcastSearch.json';
 import AudioMock from '@tests/__mocks__/AudioMock';
+import fetch from '@tests/__mocks__/fetchMock';
 import {
   chooseEpisode,
   choosePodcast,
@@ -12,7 +13,7 @@ import {
   searchPodcasts
 } from '@tests/__utils__/podcastTestUtils';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
-import fetch from 'jest-fetch-mock';
+
 import { omit } from 'lodash-es';
 
 async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
