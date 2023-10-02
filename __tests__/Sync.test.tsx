@@ -34,15 +34,10 @@ const originalOnPush = widgetSyncService.onPush;
 const originalBroadcastPush = widgetSyncService.broadcastPush;
 
 describe('Sync functionality', () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-
   afterEach(() => {
     vi.resetAllMocks();
     widgetSyncService.onPush = originalOnPush;
     widgetSyncService.broadcastPush = originalBroadcastPush;
-    vi.useRealTimers();
   });
 
   it('should pull latest dashboard on page load (when signed in)', async () => {
@@ -226,13 +221,7 @@ describe('Sync functionality', () => {
     await waitForWidget({ type: 'Note', index: 1 });
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
     expect(textBox).toBeInTheDocument();
-    await userEvent.type(textBox, 'God is good', {
-      // Because we are using fake timers, we must advance the time manually
-      // via the optional advanceTimers() callback to userEvent methods
-      advanceTimers: (delay) => {
-        vi.advanceTimersByTime(delay);
-      }
-    });
+    await userEvent.type(textBox, 'God is good');
     await waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('widgets');
       expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(1);
@@ -264,7 +253,6 @@ describe('Sync functionality', () => {
       confirmRemove: true
     });
     await waitForElementToBeRemoved(widgetElem);
-    vi.useFakeTimers();
     await waitFor(() => {
       expect(supabaseFromMocks.widgets.delete).toHaveBeenCalled();
     });
@@ -289,11 +277,7 @@ describe('Sync functionality', () => {
     await waitForWidget({ type: 'Note', index: 1 });
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
     expect(textBox).toBeInTheDocument();
-    await userEvent.type(textBox, 'God is good', {
-      advanceTimers: (delay) => {
-        vi.advanceTimersByTime(delay);
-      }
-    });
+    await userEvent.type(textBox, 'God is good');
     await waitFor(() => {
       expect(supabaseFromMocks.widgets.upsert).not.toHaveBeenCalled();
     });
