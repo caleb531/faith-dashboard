@@ -1,12 +1,12 @@
 import Home from '@app/page';
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
   mockLocationObject,
   restoreLocationObject
 } from './__utils__/testUtils';
-import userEventFakeTimers from './__utils__/userEventFakeTimers';
 
 class ServiceWorkerMock {}
 let originalServiceWorker: typeof navigator.serviceWorker;
@@ -14,7 +14,6 @@ const updateAvailableMessage = 'Update available! Click here to update.';
 
 describe('Update Notification', () => {
   beforeEach(() => {
-    vi.useFakeTimers();
     mockLocationObject();
     // Mock navigator.serviceWorker
     originalServiceWorker = navigator.serviceWorker;
@@ -26,7 +25,6 @@ describe('Update Notification', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
     sessionStorage.removeItem('sw');
     Object.defineProperty(navigator, 'serviceWorker', {
       value: originalServiceWorker
@@ -58,7 +56,7 @@ describe('Update Notification', () => {
       name: updateAvailableMessage
     });
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    await userEventFakeTimers.click(updateNotification);
+    await userEvent.click(updateNotification);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
   it('should reload page when service worker is updated', async () => {
@@ -70,7 +68,7 @@ describe('Update Notification', () => {
         })
       ).toBeInTheDocument();
     });
-    await userEventFakeTimers.click(
+    await userEvent.click(
       screen.getByRole('region', {
         name: updateAvailableMessage
       })
