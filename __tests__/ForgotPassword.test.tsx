@@ -40,11 +40,11 @@ describe('Forgot Password page', () => {
   });
 
   it('should request password reset on server side', async () => {
-    jest
-      .spyOn(supabase.auth, 'resetPasswordForEmail')
-      .mockImplementationOnce(async () => {
+    vi.spyOn(supabase.auth, 'resetPasswordForEmail').mockImplementationOnce(
+      async () => {
         return { data: { user: {}, session: {} }, error: null } as any;
-      });
+      }
+    );
     const fields = {
       email: 'caleb@example.com',
       'cf-turnstile-response': 'abc123'

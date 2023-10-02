@@ -28,16 +28,18 @@ const fetch = createFetchMock(vi);
 fetch.enableMocks();
 
 vi.mock('../../components/useVerifyCaptcha', () => {
-  return vi.fn().mockImplementation(() => {
-    return [
-      () => {
-        // noop
-      },
-      () => {
-        // noop
-      }
-    ];
-  });
+  return {
+    default: vi.fn().mockImplementation(() => {
+      return [
+        () => {
+          // noop
+        },
+        () => {
+          // noop
+        }
+      ];
+    })
+  };
 });
 
 let audioStub: SpyInstance;
