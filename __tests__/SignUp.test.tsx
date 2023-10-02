@@ -226,11 +226,11 @@ describe('Sign Up page', () => {
   });
 
   it('should exchange code for session upon email confirmation', async () => {
-    jest
-      .spyOn(supabase.auth, 'exchangeCodeForSession')
-      .mockImplementationOnce(async () => {
+    vi.spyOn(supabase.auth, 'exchangeCodeForSession').mockImplementationOnce(
+      async () => {
         return { data: { user: {}, session: {} }, error: null } as any;
-      });
+      }
+    );
     vi.spyOn(NextResponse, 'redirect');
     const code = 'dfbc19a6-f750-4620-8390-56f3158a299d';
     await callRouteHandler({

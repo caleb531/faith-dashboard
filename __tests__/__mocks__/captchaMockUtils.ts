@@ -1,8 +1,7 @@
-import useVerifyCaptcha from '@components/useVerifyCaptcha';
+const useVerifyCaptcha = vi.fn();
 
 export function mockCaptchaSuccessOnce(token: string) {
-  // TODO: eliminate use of `any`
-  (useVerifyCaptcha as any).mockImplementationOnce(() => {
+  useVerifyCaptcha.mockImplementationOnce(() => {
     return [
       () => token,
       () => {
@@ -13,7 +12,7 @@ export function mockCaptchaSuccessOnce(token: string) {
 }
 
 export function mockCaptchaFailOnce() {
-  (useVerifyCaptcha as any).mockImplementationOnce(() => {
+  useVerifyCaptcha.mockImplementationOnce(() => {
     return [
       () => '',
       () => {
@@ -22,3 +21,5 @@ export function mockCaptchaFailOnce() {
     ];
   });
 }
+
+export default useVerifyCaptcha;

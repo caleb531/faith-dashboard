@@ -27,21 +27,6 @@ configure({ asyncUtilTimeout: 10000 });
 const fetch = createFetchMock(vi);
 fetch.enableMocks();
 
-vi.mock('../../components/useVerifyCaptcha', () => {
-  return {
-    default: vi.fn().mockImplementation(() => {
-      return [
-        () => {
-          // noop
-        },
-        () => {
-          // noop
-        }
-      ];
-    })
-  };
-});
-
 let audioStub: SpyInstance;
 let onAuthStateChangeStub: SpyInstance;
 let originalMediaMetadata: typeof window.MediaMetadata;

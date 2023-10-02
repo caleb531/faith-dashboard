@@ -110,11 +110,11 @@ describe('Sign In page', () => {
   });
 
   it('should sign in on server side', async () => {
-    jest
-      .spyOn(supabase.auth, 'signInWithPassword')
-      .mockImplementationOnce(async () => {
+    vi.spyOn(supabase.auth, 'signInWithPassword').mockImplementationOnce(
+      async () => {
         return { data: { user: {}, session: {} }, error: null } as any;
-      });
+      }
+    );
     const fields = {
       email: 'caleb@example.com',
       password: 'CorrectHorseBatteryStaple',

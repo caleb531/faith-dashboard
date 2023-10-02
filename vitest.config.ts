@@ -27,6 +27,10 @@ export default defineConfig({
         replacement: '/__tests__/__mocks__/LinkMock.tsx'
       },
       {
+        find: /useVerifyCaptcha/,
+        replacement: '/__tests__/__mocks__/useVerifyCaptcha.tsx'
+      },
+      {
         find: 'next/headers',
         replacement: '/__tests__/__mocks__/nextHeaders.ts'
       },
