@@ -10,6 +10,7 @@ import fetch from '@tests/__mocks__/fetchMock';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { mockCaptchaSuccess } from './__mocks__/captchaMockUtils';
 import { supabase } from './__mocks__/supabaseAuthHelpersMock';
 import {
   mockSupabaseSession,
@@ -45,6 +46,7 @@ describe('Account Settings page', () => {
   });
 
   it('should redirect to Sign In page if signed out', async () => {
+    mockCaptchaSuccess('mytoken');
     // Mock the value of the x-url header so that the source code can correctly
     // determine the URL to redirect to (after sign-in)
     vi.spyOn(headers(), 'get').mockImplementation(
@@ -57,6 +59,7 @@ describe('Account Settings page', () => {
   });
 
   it('should update name of user successfully', async () => {
+    mockCaptchaSuccess('mytoken');
     await mockSupabaseUser();
     await mockSupabaseSession();
     fetch.mockIf(/\/auth\/update-user-name/, async () => {
@@ -85,6 +88,7 @@ describe('Account Settings page', () => {
   });
 
   it('should request email change successfully', async () => {
+    mockCaptchaSuccess('mytoken');
     await mockSupabaseUser();
     await mockSupabaseSession();
     fetch.mockIf(/\/auth\/request-email-change/, async () => {
@@ -113,6 +117,7 @@ describe('Account Settings page', () => {
   });
 
   it('should validate that emails are not matching', async () => {
+    mockCaptchaSuccess('mytoken');
     await mockSupabaseUser();
     await mockSupabaseSession();
     await renderServerComponent(<AccountSettings />);
@@ -141,6 +146,7 @@ describe('Account Settings page', () => {
   });
 
   it('should cancel email change successfully', async () => {
+    mockCaptchaSuccess('mytoken');
     await mockSupabaseUser({
       email: 'caleb@example.com',
       new_email: 'caleb2@example.com',
@@ -163,6 +169,7 @@ describe('Account Settings page', () => {
   });
 
   it('should change password successfully', async () => {
+    mockCaptchaSuccess('mytoken');
     await mockSupabaseUser();
     await mockSupabaseSession();
     fetch.mockIf(/\/auth\/change-password/, async () => {
@@ -189,6 +196,7 @@ describe('Account Settings page', () => {
   });
 
   it('should validate that passwords are not matching', async () => {
+    mockCaptchaSuccess('mytoken');
     await mockSupabaseUser();
     await mockSupabaseSession();
     await renderServerComponent(<AccountSettings />);
@@ -204,6 +212,7 @@ describe('Account Settings page', () => {
   });
 
   it('should require all Change Password fields to be populated', async () => {
+    mockCaptchaSuccess('mytoken');
     await mockSupabaseUser();
     await mockSupabaseSession();
     await renderServerComponent(<AccountSettings />);
@@ -224,6 +233,7 @@ describe('Account Settings page', () => {
   });
 
   it('should change user name on server side', async () => {
+    mockCaptchaSuccess('mytoken');
     vi.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(async () => {
       return { data: {}, error: null } as any;
     });
