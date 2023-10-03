@@ -1,25 +1,18 @@
-const useVerifyCaptcha = vi.fn();
+let captchToken = '';
 
 export function mockCaptchaSuccess(token: string) {
-  useVerifyCaptcha.mockImplementation(() => {
-    return [
-      () => token,
-      () => {
-        // noop
-      }
-    ];
-  });
+  captchToken = token;
 }
 
 export function mockCaptchaFail() {
-  useVerifyCaptcha.mockImplementation(() => {
-    return [
-      () => '',
-      () => {
-        // noop
-      }
-    ];
-  });
+  captchToken = '';
 }
 
-export default useVerifyCaptcha;
+export default function useVerifyCaptcha() {
+  return [
+    () => captchToken,
+    () => {
+      // noop
+    }
+  ];
+}
