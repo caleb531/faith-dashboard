@@ -28,6 +28,7 @@ describe('Sign Up page', () => {
   });
 
   it('should validate that passwords are matching', async () => {
+    mockCaptchaSuccessOnce('mytoken');
     await renderServerComponent(<SignUp />);
     await typeIntoFormFields({
       Password: 'CorrectHorseBatteryStaple',
@@ -40,6 +41,7 @@ describe('Sign Up page', () => {
   });
 
   it('should validate that passwords are not matching', async () => {
+    mockCaptchaSuccessOnce('mytoken');
     await renderServerComponent(<SignUp />);
     await typeIntoFormFields({
       Password: 'CorrectHorseBatteryStaple',
@@ -52,6 +54,7 @@ describe('Sign Up page', () => {
   });
 
   it('should require all form fields to be populated', async () => {
+    mockCaptchaSuccessOnce('mytoken');
     await renderServerComponent(<SignUp />);
     const requiredFields = [
       'First Name',
@@ -70,6 +73,7 @@ describe('Sign Up page', () => {
   });
 
   it('should require valid email addresses', async () => {
+    mockCaptchaSuccessOnce('mytoken');
     await renderServerComponent(<SignUp />);
     await typeIntoFormFields({
       Email: 'notanemail'
