@@ -9,10 +9,12 @@ import {
   callRouteHandler,
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
+import { mockCaptchaSuccess } from './__mocks__/captchaMockUtils';
 import { supabase } from './__mocks__/supabaseAuthHelpersMock';
 
 describe('Forgot Password page', () => {
   it('should be accessible from Sign In page', async () => {
+    mockCaptchaSuccess('mytoken');
     await renderServerComponent(<SignIn />);
     expect(
       screen.getByRole('link', { name: 'Forgot Password?' })
@@ -20,6 +22,7 @@ describe('Forgot Password page', () => {
   });
 
   it('should require all form fields to be populated', async () => {
+    mockCaptchaSuccess('mytoken');
     await renderServerComponent(<ForgotPassword />);
     await userEvent.click(screen.getByRole('button', { name: 'Send Email' }));
     expect(screen.getByLabelText('Email')).toHaveProperty(
@@ -29,6 +32,7 @@ describe('Forgot Password page', () => {
   });
 
   it('should require valid email address', async () => {
+    mockCaptchaSuccess('mytoken');
     await renderServerComponent(<ForgotPassword />);
     await typeIntoFormFields({
       Email: 'notanemail'
@@ -40,6 +44,7 @@ describe('Forgot Password page', () => {
   });
 
   it('should request password reset on server side', async () => {
+    mockCaptchaSuccess('mytoken');
     vi.spyOn(supabase.auth, 'resetPasswordForEmail').mockImplementationOnce(
       async () => {
         return { data: { user: {}, session: {} }, error: null } as any;
