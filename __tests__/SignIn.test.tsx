@@ -3,7 +3,7 @@ import SignIn from '@app/sign-in/page';
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mockCaptchaSuccessOnce } from '@tests/__mocks__/captchaMockUtils';
+import { mockCaptchaSuccess } from '@tests/__mocks__/captchaMockUtils';
 import fetch from '@tests/__mocks__/fetchMock';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
@@ -20,7 +20,7 @@ describe('Sign In page', () => {
   });
 
   it('should require all form fields to be populated', async () => {
-    mockCaptchaSuccessOnce('mytoken');
+    mockCaptchaSuccess('mytoken');
     await renderServerComponent(<SignIn />);
     const requiredFields = ['Email', 'Password'];
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
@@ -33,7 +33,7 @@ describe('Sign In page', () => {
   });
 
   it('should require valid email address', async () => {
-    mockCaptchaSuccessOnce('mytoken');
+    mockCaptchaSuccess('mytoken');
     await renderServerComponent(<SignIn />);
     await typeIntoFormFields({
       Email: 'notanemail'
@@ -45,7 +45,7 @@ describe('Sign In page', () => {
   });
 
   it('should sign in successfully', async () => {
-    mockCaptchaSuccessOnce('mytoken');
+    mockCaptchaSuccess('mytoken');
     fetch.mockIf(/sign-in/, async () => {
       return JSON.stringify({
         data: {
@@ -78,7 +78,7 @@ describe('Sign In page', () => {
   });
 
   it('should error if honey pot field is populated', async () => {
-    mockCaptchaSuccessOnce('mytoken');
+    mockCaptchaSuccess('mytoken');
     await renderServerComponent(<SignIn />);
     await typeIntoFormFields({
       Email: 'kaleb@example.com',
@@ -92,7 +92,7 @@ describe('Sign In page', () => {
   });
 
   it('should handle errors from server', async () => {
-    mockCaptchaSuccessOnce('mytoken');
+    mockCaptchaSuccess('mytoken');
     fetch.mockIf(/sign-in/, async () => {
       return JSON.stringify({
         data: {

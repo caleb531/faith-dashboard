@@ -4,7 +4,7 @@ import SignUp from '@app/sign-up/page';
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mockCaptchaSuccessOnce } from '@tests/__mocks__/captchaMockUtils';
+import { mockCaptchaSuccess } from '@tests/__mocks__/captchaMockUtils';
 import fetch from '@tests/__mocks__/fetchMock';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
@@ -28,7 +28,7 @@ describe('Sign Up page', () => {
   });
 
   it('should validate that passwords are matching', async () => {
-    mockCaptchaSuccessOnce('mytoken');
+    mockCaptchaSuccess('mytoken');
     await renderServerComponent(<SignUp />);
     await typeIntoFormFields({
       Password: 'CorrectHorseBatteryStaple',
@@ -41,7 +41,7 @@ describe('Sign Up page', () => {
   });
 
   it('should validate that passwords are not matching', async () => {
-    mockCaptchaSuccessOnce('mytoken');
+    mockCaptchaSuccess('mytoken');
     await renderServerComponent(<SignUp />);
     await typeIntoFormFields({
       Password: 'CorrectHorseBatteryStaple',
@@ -54,7 +54,7 @@ describe('Sign Up page', () => {
   });
 
   it('should require all form fields to be populated', async () => {
-    mockCaptchaSuccessOnce('mytoken');
+    mockCaptchaSuccess('mytoken');
     await renderServerComponent(<SignUp />);
     const requiredFields = [
       'First Name',
@@ -73,7 +73,7 @@ describe('Sign Up page', () => {
   });
 
   it('should require valid email addresses', async () => {
-    mockCaptchaSuccessOnce('mytoken');
+    mockCaptchaSuccess('mytoken');
     await renderServerComponent(<SignUp />);
     await typeIntoFormFields({
       Email: 'notanemail'
@@ -85,7 +85,7 @@ describe('Sign Up page', () => {
   });
 
   it('should create account successfully', async () => {
-    mockCaptchaSuccessOnce('mytoken');
+    mockCaptchaSuccess('mytoken');
     fetch.mockIf(/sign-up/, async () => {
       return JSON.stringify({
         data: {
@@ -122,7 +122,7 @@ describe('Sign Up page', () => {
   });
 
   it('should indicate if email needs to be confirmed post-sign up', async () => {
-    mockCaptchaSuccessOnce('mytoken');
+    mockCaptchaSuccess('mytoken');
     fetch.mockIf(/sign-up/, async () => {
       return JSON.stringify({
         data: {
@@ -156,7 +156,7 @@ describe('Sign Up page', () => {
   });
 
   it('should error if honey pot field is populated', async () => {
-    mockCaptchaSuccessOnce('mytoken');
+    mockCaptchaSuccess('mytoken');
     await renderServerComponent(<SignUp />);
     await typeIntoFormFields({
       'First Name': 'John',
@@ -173,7 +173,7 @@ describe('Sign Up page', () => {
   });
 
   it('should handle errors from server', async () => {
-    mockCaptchaSuccessOnce('mytoken');
+    mockCaptchaSuccess('mytoken');
     fetch.mockIf(/sign-up/, async () => {
       return JSON.stringify({
         data: {

@@ -1,6 +1,6 @@
 const useVerifyCaptcha = vi.fn();
 
-export function mockCaptchaSuccessOnce(token: string) {
+export function mockCaptchaSuccess(token: string) {
   useVerifyCaptcha.mockImplementation(() => {
     return [
       () => console.log('run with token', token) || token,
@@ -11,7 +11,7 @@ export function mockCaptchaSuccessOnce(token: string) {
   });
 }
 
-export function mockCaptchaFailOnce() {
+export function mockCaptchaFail() {
   useVerifyCaptcha.mockImplementation(() => {
     return [
       () => '',
