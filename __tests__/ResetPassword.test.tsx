@@ -15,6 +15,7 @@ import {
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
 
+import { mockCaptchaSuccess } from './__mocks__/captchaMockUtils';
 import {
   mockSupabaseSession,
   mockSupabaseUser
@@ -31,6 +32,7 @@ describe('Reset Password page', () => {
   });
 
   it('should validate that passwords are matching', async () => {
+    mockCaptchaSuccess('mytoken');
     await mockSupabaseUser();
     await mockSupabaseSession();
     await renderServerComponent(<ResetPassword />);
@@ -45,6 +47,7 @@ describe('Reset Password page', () => {
   });
 
   it('should validate that passwords are not matching', async () => {
+    mockCaptchaSuccess('mytoken');
     await mockSupabaseUser();
     await mockSupabaseSession();
     await renderServerComponent(<ResetPassword />);
@@ -59,6 +62,7 @@ describe('Reset Password page', () => {
   });
 
   it('should require all form fields to be populated', async () => {
+    mockCaptchaSuccess('mytoken');
     await mockSupabaseUser();
     await mockSupabaseSession();
     await renderServerComponent(<ResetPassword />);
@@ -75,6 +79,7 @@ describe('Reset Password page', () => {
   });
 
   it('should reset password successfully', async () => {
+    mockCaptchaSuccess('mytoken');
     await mockSupabaseUser();
     await mockSupabaseSession();
     fetch.mockIf(/reset-password/, async () => {
