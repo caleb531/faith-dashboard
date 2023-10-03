@@ -12,6 +12,7 @@ import {
   convertFormDataToObject,
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
+import preview from 'jest-preview';
 
 describe('Sign In page', () => {
   afterEach(() => {
@@ -19,6 +20,7 @@ describe('Sign In page', () => {
   });
 
   it('should require all form fields to be populated', async () => {
+    mockCaptchaSuccessOnce('mytoken');
     await renderServerComponent(<SignIn />);
     const requiredFields = ['Email', 'Password'];
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
@@ -31,6 +33,7 @@ describe('Sign In page', () => {
   });
 
   it('should require valid email address', async () => {
+    mockCaptchaSuccessOnce('mytoken');
     await renderServerComponent(<SignIn />);
     await typeIntoFormFields({
       Email: 'notanemail'
@@ -61,13 +64,16 @@ describe('Sign In page', () => {
       Password: 'CorrectHorseBatteryStaple'
     });
     await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
-    const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
-    expect(actualFetchUrl).toEqual('/auth/sign-in');
-    expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
-    expect(convertFormDataToObject(actualFetchOptions?.body)).toEqual({
-      email: 'caleb@example.com',
-      password: 'CorrectHorseBatteryStaple',
-      verification_check: ''
+    await waitFor(() => {
+      preview.debug();
+      const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
+      expect(actualFetchUrl).toEqual('/auth/sign-in');
+      expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
+      expect(convertFormDataToObject(actualFetchOptions?.body)).toEqual({
+        email: 'caleb@example.com',
+        password: 'CorrectHorseBatteryStaple',
+        verification_check: ''
+      });
     });
   });
 

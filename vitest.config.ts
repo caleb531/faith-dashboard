@@ -17,6 +17,10 @@ export default defineConfig({
   envPrefix: 'NEXT_PUBLIC',
   resolve: {
     alias: [
+      {
+        find: /^(.*?)useVerifyCaptcha(.*?)$/,
+        replacement: '/__tests__/__mocks__/captchaMockUtils.ts'
+      },
       { find: /^@app\/(.*)$/, replacement: '/app/$1' },
       { find: /^@components\/(.*)$/, replacement: '/components/$1' },
       { find: /^@public\/(.*)$/, replacement: '/public/$1' },
@@ -25,10 +29,6 @@ export default defineConfig({
       {
         find: /next\/link/,
         replacement: '/__tests__/__mocks__/LinkMock.tsx'
-      },
-      {
-        find: /useVerifyCaptcha/,
-        replacement: '/__tests__/__mocks__/useVerifyCaptcha.tsx'
       },
       {
         find: 'next/headers',
