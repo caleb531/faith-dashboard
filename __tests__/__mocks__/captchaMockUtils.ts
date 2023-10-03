@@ -3,7 +3,7 @@ const useVerifyCaptcha = vi.fn();
 export function mockCaptchaSuccess(token: string) {
   useVerifyCaptcha.mockImplementation(() => {
     return [
-      () => console.log('run with token', token) || token,
+      () => token,
       () => {
         // noop
       }
