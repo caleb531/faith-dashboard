@@ -21,11 +21,6 @@ export default defineConfig({
         find: /^(.*?)useVerifyCaptcha(.*?)$/,
         replacement: '/__tests__/__mocks__/captchaMockUtils.ts'
       },
-      { find: /^@app\/(.*)$/, replacement: '/app/$1' },
-      { find: /^@components\/(.*)$/, replacement: '/components/$1' },
-      { find: /^@public\/(.*)$/, replacement: '/public/$1' },
-      { find: /^@styles\/(.*)$/, replacement: '/styles/$1' },
-      { find: /^@tests\/(.*)$/, replacement: '/__tests__/$1' },
       {
         find: /next\/link/,
         replacement: '/__tests__/__mocks__/LinkMock.tsx'
@@ -53,7 +48,12 @@ export default defineConfig({
       {
         find: /(.*).(jpg|png|svg)$/,
         replacement: '/__tests__/__mocks__/imageMock.ts'
-      }
+      },
+      { find: /^@app\/(.*)$/, replacement: '/app/$1' },
+      { find: /^@components\/(.*)$/, replacement: '/components/$1' },
+      { find: /^@public\/(.*)$/, replacement: '/public/$1' },
+      { find: /^@styles\/(.*)$/, replacement: '/styles/$1' },
+      { find: /^@tests\/(.*)$/, replacement: '/__tests__/$1' }
     ]
   }
 });
