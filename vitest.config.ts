@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
-    // reporters: ['basic'],
+    reporters: ['basic'],
     environment: 'jsdom',
     testTimeout: 20000,
     setupFiles: [
