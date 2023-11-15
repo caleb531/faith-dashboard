@@ -7,7 +7,9 @@ describe('Copyright page', () => {
   it('should render', async () => {
     await renderServerComponent(<Copyright />);
     expect(
-      screen.getByRole('heading', { name: 'Copyright | Faith Dashboard' })
+      await screen.findByRole('heading', {
+        name: 'Copyright | Faith Dashboard'
+      })
     ).toBeInTheDocument();
   });
 });

@@ -1,6 +1,6 @@
 import Home from '@app/page';
 import '@testing-library/jest-dom';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import podcastNoResultsJson from '@tests/__json__/podcastNoResults.json';
 import podcastSearchJson from '@tests/__json__/podcastSearch.json';
 import fetch from '@tests/__mocks__/fetchMock';
@@ -8,9 +8,9 @@ import { searchPodcasts } from '@tests/__utils__/podcastTestUtils';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 
 async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
-  const audioProgressSlider = screen.getByRole('slider', {
+  const audioProgressSlider = (await screen.findByRole('slider', {
     name: 'Audio Progress'
-  }) as HTMLInputElement;
+  })) as HTMLInputElement;
   expect(audioProgressSlider).toBeInTheDocument();
 
   fireEvent.mouseDown(audioProgressSlider);
@@ -33,7 +33,7 @@ describe('Podcast widget', () => {
     await renderServerComponent(<Home />);
 
     await searchPodcasts('abc123xyz');
-    expect(screen.getByText('No Podcasts Found')).toBeInTheDocument();
+    expect(await screen.findByText('No Podcasts Found')).toBeInTheDocument();
   });
 
   it('should clear last search results after changing query', async () => {
@@ -41,7 +41,7 @@ describe('Podcast widget', () => {
 
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     await searchPodcasts('sermon of the day');
-    expect(screen.getByText('26 podcasts')).toBeInTheDocument();
+    expect(await screen.findByText('26 podcasts')).toBeInTheDocument();
 
     fetch.mockResponseOnce(JSON.stringify(podcastNoResultsJson));
     await searchPodcasts('abc123xyz');
@@ -59,10 +59,8 @@ describe('Podcast widget', () => {
     });
     await searchPodcasts('ask pastor john');
     log.mockReset();
-    await waitFor(() => {
-      expect(
-        screen.getByText('Error Searching for Podcasts')
-      ).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByText('Error Searching for Podcasts')
+    ).toBeInTheDocument();
   });
 });

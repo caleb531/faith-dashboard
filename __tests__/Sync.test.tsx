@@ -52,16 +52,14 @@ describe('Sync functionality', () => {
     });
     assignIdToLocalApp(uuidv4());
     await renderServerComponent(<Home />);
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Your Account' })
-      ).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByRole('button', { name: 'Your Account' })
+    ).toBeInTheDocument();
     await waitFor(() => {
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
       expect(supabaseFromMocks.widgets.select).toHaveBeenCalled();
     });
-    expect(screen.getByText('Evening')).toBeInTheDocument();
+    expect(await screen.findByText('Evening')).toBeInTheDocument();
     expect(screen.queryByText('Shore')).not.toBeInTheDocument();
     await waitFor(() => {
       expect(
@@ -82,11 +80,9 @@ describe('Sync functionality', () => {
     mockSupabaseUpsert('widgets');
     assignIdToLocalApp(uuidv4());
     await renderServerComponent(<Home />);
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Your Account' })
-      ).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByRole('button', { name: 'Your Account' })
+    ).toBeInTheDocument();
     await waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('dashboards');
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(2);
@@ -110,11 +106,9 @@ describe('Sync functionality', () => {
     mockSupabaseUpsert('widgets');
     assignIdToLocalApp(uuidv4());
     await renderServerComponent(<Home />);
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Your Account' })
-      ).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByRole('button', { name: 'Your Account' })
+    ).toBeInTheDocument();
     await waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('dashboards');
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
@@ -122,7 +116,7 @@ describe('Sync functionality', () => {
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(0);
       expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(0);
     });
-    expect(screen.getByText('Evening')).toBeInTheDocument();
+    expect(await screen.findByText('Evening')).toBeInTheDocument();
     expect(screen.queryByText('Shore')).not.toBeInTheDocument();
   });
 
@@ -143,11 +137,9 @@ describe('Sync functionality', () => {
     mockSupabaseUpsert('widgets');
     assignIdToLocalApp(uuidv4());
     await renderServerComponent(<Home />);
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Your Account' })
-      ).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByRole('button', { name: 'Your Account' })
+    ).toBeInTheDocument();
     await waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('dashboards');
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(2);
@@ -155,7 +147,7 @@ describe('Sync functionality', () => {
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(0);
       expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(0);
     });
-    expect(screen.getByText('Evening')).toBeInTheDocument();
+    expect(await screen.findByText('Evening')).toBeInTheDocument();
     expect(screen.queryByText('Shore')).not.toBeInTheDocument();
   });
 
@@ -188,11 +180,9 @@ describe('Sync functionality', () => {
     };
     assignIdToLocalApp(uuidv4());
     await renderServerComponent(<Home />);
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Your Account' })
-      ).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByRole('button', { name: 'Your Account' })
+    ).toBeInTheDocument();
     await waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('dashboards');
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
@@ -213,11 +203,9 @@ describe('Sync functionality', () => {
     mockSupabaseUpsert('widgets');
     assignIdToLocalApp(appId);
     await renderServerComponent(<Home />);
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Your Account' })
-      ).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByRole('button', { name: 'Your Account' })
+    ).toBeInTheDocument();
     await waitForWidget({ type: 'Note', index: 1 });
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
     expect(textBox).toBeInTheDocument();
@@ -240,11 +228,9 @@ describe('Sync functionality', () => {
     mockSupabaseDelete('widgets');
     assignIdToLocalApp(appId);
     await renderServerComponent(<Home />);
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Your Account' })
-      ).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByRole('button', { name: 'Your Account' })
+    ).toBeInTheDocument();
     vi.useRealTimers();
     await waitForWidget({ type: 'Note', index: 1 });
     const widgetElem = await removeWidget({
@@ -272,7 +258,7 @@ describe('Sync functionality', () => {
     assignIdToLocalApp(appId);
     await renderServerComponent(<Home />);
     expect(
-      screen.getByRole('button', { name: 'Sign Up/In' })
+      await screen.findByRole('button', { name: 'Sign Up/In' })
     ).toBeInTheDocument();
     await waitForWidget({ type: 'Note', index: 1 });
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
@@ -292,7 +278,7 @@ describe('Sync functionality', () => {
     assignIdToLocalApp(uuidv4());
     await renderServerComponent(<Home />);
     expect(
-      screen.getByRole('button', { name: 'Sign Up/In' })
+      await screen.findByRole('button', { name: 'Sign Up/In' })
     ).toBeInTheDocument();
     await waitFor(() => {
       expect(supabase.from).not.toHaveBeenCalled();

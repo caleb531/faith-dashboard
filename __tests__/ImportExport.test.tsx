@@ -34,16 +34,16 @@ describe('Import/Export functionality', () => {
     assignIdToLocalApp(uuidv4());
     const originalApp = getAppData();
     await renderServerComponent(<Home />);
-    expect(screen.getByText('Shore')).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    expect(await screen.findByText('Shore')).toBeInTheDocument();
+    await userEvent.click(await screen.findByRole('button', { name: 'Tools' }));
     const fileContents = JSON.stringify(exportedDashboard);
     FileReaderMock._fileData = fileContents;
     await act(async () => {
-      fireEvent.change(screen.getByLabelText('Import Dashboard'), {
+      fireEvent.change(await screen.findByLabelText('Import Dashboard'), {
         target: { files: [new File([fileContents], 'exportedDashboard.json')] }
       });
     });
-    expect(screen.getByText('Evening')).toBeInTheDocument();
+    expect(await screen.findByText('Evening')).toBeInTheDocument();
     // App IDs should not match
     const newApp = getAppData();
     expect(newApp.id).not.toEqual(originalApp.id);
@@ -66,18 +66,20 @@ describe('Import/Export functionality', () => {
     mockSupabaseUpsert('widgets');
     mockConfirmOnce(() => true);
     await renderServerComponent(<Home />);
-    expect(screen.getByText('Shore')).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
+    expect(await screen.findByText('Shore')).toBeInTheDocument();
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Your Account' })
+    );
     const fileContents = JSON.stringify(exportedDashboard);
     FileReaderMock._fileData = fileContents;
     supabaseFromMocks.dashboards.upsert.mockClear();
     supabaseFromMocks.widgets.upsert.mockClear();
     await act(async () => {
-      fireEvent.change(screen.getByLabelText('Import Dashboard'), {
+      fireEvent.change(await screen.findByLabelText('Import Dashboard'), {
         target: { files: [new File([fileContents], 'exportedDashboard.json')] }
       });
     });
-    expect(screen.getByText('Evening')).toBeInTheDocument();
+    expect(await screen.findByText('Evening')).toBeInTheDocument();
   });
 
   it('should not import dashboard is user denied confirmation', async () => {
@@ -85,34 +87,34 @@ describe('Import/Export functionality', () => {
     mockSupabaseSelect('dashboards', { data: [] });
     mockConfirmOnce(() => false);
     await renderServerComponent(<Home />);
-    expect(screen.getByText('Shore')).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    expect(await screen.findByText('Shore')).toBeInTheDocument();
+    await userEvent.click(await screen.findByRole('button', { name: 'Tools' }));
     const fileContents = JSON.stringify(exportedDashboard);
     FileReaderMock._fileData = fileContents;
     await act(async () => {
-      fireEvent.change(screen.getByLabelText('Import Dashboard'), {
+      fireEvent.change(await screen.findByLabelText('Import Dashboard'), {
         target: { files: [new File([fileContents], 'exportedDashboard.json')] }
       });
     });
-    expect(screen.getByText('Shore')).toBeInTheDocument();
+    expect(await screen.findByText('Shore')).toBeInTheDocument();
   });
 
   it('should not import dashboard from empty JSON file', async () => {
     let errorMessage;
     await renderServerComponent(<Home />);
-    expect(screen.getByText('Shore')).toBeInTheDocument();
+    expect(await screen.findByText('Shore')).toBeInTheDocument();
     mockAlertOnce((message) => {
       errorMessage = message;
     });
-    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    await userEvent.click(await screen.findByRole('button', { name: 'Tools' }));
     const fileContents = '';
     FileReaderMock._fileData = fileContents;
     await act(async () => {
-      fireEvent.change(screen.getByLabelText('Import Dashboard'), {
+      fireEvent.change(await screen.findByLabelText('Import Dashboard'), {
         target: { files: [new File([fileContents], 'blankFile.json')] }
       });
     });
-    expect(screen.getByText('Shore')).toBeInTheDocument();
+    expect(await screen.findByText('Shore')).toBeInTheDocument();
     expect(errorMessage).toEqual(
       'Dashboard file is not in the correct format. Please try another file.'
     );
@@ -121,48 +123,48 @@ describe('Import/Export functionality', () => {
   it('should not import dashboard from malformed JSON file', async () => {
     let errorMessage;
     await renderServerComponent(<Home />);
-    expect(screen.getByText('Shore')).toBeInTheDocument();
+    expect(await screen.findByText('Shore')).toBeInTheDocument();
     mockAlertOnce((message) => {
       errorMessage = message;
     });
-    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    await userEvent.click(await screen.findByRole('button', { name: 'Tools' }));
     const fileContents = 'not_valid_json';
     FileReaderMock._fileData = fileContents;
     await act(async () => {
-      fireEvent.change(screen.getByLabelText('Import Dashboard'), {
+      fireEvent.change(await screen.findByLabelText('Import Dashboard'), {
         target: { files: [new File([fileContents], 'blankFile.json')] }
       });
     });
-    expect(screen.getByText('Shore')).toBeInTheDocument();
+    expect(await screen.findByText('Shore')).toBeInTheDocument();
     expect(errorMessage).toEqual('Unexpected token o in JSON at position 1');
   });
 
   it('should not trigger import if files are missing', async () => {
     await renderServerComponent(<Home />);
-    expect(screen.getByText('Shore')).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    expect(await screen.findByText('Shore')).toBeInTheDocument();
+    await userEvent.click(await screen.findByRole('button', { name: 'Tools' }));
     const fileContents = '';
     FileReaderMock._fileData = fileContents;
     await act(async () => {
-      fireEvent.change(screen.getByLabelText('Import Dashboard'), {
+      fireEvent.change(await screen.findByLabelText('Import Dashboard'), {
         target: { files: [] }
       });
     });
-    expect(screen.getByText('Shore')).toBeInTheDocument();
+    expect(await screen.findByText('Shore')).toBeInTheDocument();
   });
 
   it('should export dashboard', async () => {
     let exportedBlob: Blob | undefined;
     setAppData(dashboardToExport);
     await renderServerComponent(<Home />);
-    await userEvent.click(screen.getByRole('button', { name: 'Tools' }));
+    await userEvent.click(await screen.findByRole('button', { name: 'Tools' }));
     vi.spyOn(URL, 'createObjectURL').mockImplementation((blob: Blob) => {
       exportedBlob = blob;
       // Doesn't matter what this value is
       return '';
     });
     await userEvent.click(
-      screen.getByRole('link', { name: 'Export Dashboard' })
+      await screen.findByRole('link', { name: 'Export Dashboard' })
     );
     const blobText = (await exportedBlob?.text()) ?? null;
     expect(JSON.parse(String(blobText))).toEqual({

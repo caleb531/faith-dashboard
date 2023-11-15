@@ -7,7 +7,7 @@ describe('Help page', () => {
   it('should render', async () => {
     await renderServerComponent(<Help />);
     expect(
-      screen.getByRole('heading', { name: 'Help | Faith Dashboard' })
+      await screen.findByRole('heading', { name: 'Help | Faith Dashboard' })
     ).toBeInTheDocument();
   });
 });

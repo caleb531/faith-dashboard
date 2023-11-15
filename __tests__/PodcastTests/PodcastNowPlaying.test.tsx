@@ -16,22 +16,6 @@ import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 
 import { omit } from 'lodash-es';
 
-async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
-  const audioProgressSlider = screen.getByRole('slider', {
-    name: 'Audio Progress'
-  }) as HTMLInputElement;
-  expect(audioProgressSlider).toBeInTheDocument();
-
-  fireEvent.mouseDown(audioProgressSlider);
-  fireEvent.input(audioProgressSlider, {
-    target: { value: String(newCurrentTime) }
-  });
-  fireEvent.change(audioProgressSlider, {
-    target: { value: String(newCurrentTime) }
-  });
-  fireEvent.mouseUp(audioProgressSlider);
-}
-
 describe('Podcast widget', () => {
   afterEach(() => {
     vi.restoreAllMocks();
@@ -42,17 +26,17 @@ describe('Podcast widget', () => {
     await renderServerComponent(<Home />);
 
     await searchPodcasts('sermon of the day');
-    expect(screen.getByText('26 podcasts')).toBeInTheDocument();
+    expect(await screen.findByText('26 podcasts')).toBeInTheDocument();
 
     await choosePodcast('Sermon of the Day');
-    expect(screen.getByText('50 episodes')).toBeInTheDocument();
+    expect(await screen.findByText('50 episodes')).toBeInTheDocument();
 
     await chooseEpisode('Perfect Love Casts Out Fear');
     await waitFor(() => {
       expect(AudioMock.instances[0]).toHaveProperty('duration', 60);
     });
     await userEvent.click(
-      screen.getByRole('button', { name: 'Return to List' })
+      await screen.findByRole('button', { name: 'Return to List' })
     );
     fireEvent.click(screen.getByRole('button', { name: 'Now Playing' }));
     expect(
@@ -70,7 +54,7 @@ describe('Podcast widget', () => {
     await renderServerComponent(<Home />);
     await navigateToNowPlaying();
 
-    expect(screen.getByTestId('podcast-image')).toHaveProperty(
+    expect(await screen.findByTestId('podcast-image')).toHaveProperty(
       'src',
       'https://is1-ssl.mzstatic.com/image/thumb/Podcasts113/v4/53/59/38/535938be-7e7b-554b-841b-53136de28029/mza_12935232606719538957.jpg/100x100bb.jpg'
     );
@@ -93,6 +77,6 @@ describe('Podcast widget', () => {
     await renderServerComponent(<Home />);
     await navigateToNowPlaying();
 
-    expect(screen.getByTestId('podcast-image')).toHaveTextContent('?');
+    expect(await screen.findByTestId('podcast-image')).toHaveTextContent('?');
   });
 });

@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import podcastFeedJson from '@tests/__json__/podcastFeed.json';
 import podcastSearchJson from '@tests/__json__/podcastSearch.json';
@@ -15,7 +15,7 @@ export async function searchPodcasts(podcastQuery: string) {
 }
 
 export async function choosePodcast(podcastTitle: string) {
-  const firstPodcastResult = screen.getByRole('heading', {
+  const firstPodcastResult = await screen.findByRole('heading', {
     name: podcastTitle
   });
   expect(firstPodcastResult).toBeInTheDocument();
@@ -24,14 +24,14 @@ export async function choosePodcast(podcastTitle: string) {
 
 export async function chooseEpisode(episodeTitle: string) {
   await userEvent.click(
-    screen.getByRole('heading', {
+    await screen.findByRole('heading', {
       name: episodeTitle
     })
   );
   // Wait for audio to load
-  await waitFor(() => {
-    expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
-  });
+  expect(
+    await screen.findByRole('button', { name: 'Play' })
+  ).toBeInTheDocument();
 }
 
 export async function navigateToNowPlaying() {

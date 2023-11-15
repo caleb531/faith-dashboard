@@ -10,9 +10,9 @@ import { navigateToNowPlaying } from '@tests/__utils__/podcastTestUtils';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 
 async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
-  const audioProgressSlider = screen.getByRole('slider', {
+  const audioProgressSlider = (await screen.findByRole('slider', {
     name: 'Audio Progress'
-  }) as HTMLInputElement;
+  })) as HTMLInputElement;
   expect(audioProgressSlider).toBeInTheDocument();
 
   fireEvent.mouseDown(audioProgressSlider);
@@ -41,11 +41,11 @@ describe('Podcast widget', () => {
     expect(playStub).not.toHaveBeenCalled();
     expect(AudioMock.instances[0]).not.toBeUndefined();
 
-    await userEvent.click(screen.getByRole('button', { name: 'Play' }));
+    await userEvent.click(await screen.findByRole('button', { name: 'Play' }));
     expect(playStub).toHaveBeenCalled();
     AudioMock.instances[0].paused = false;
 
-    await userEvent.click(screen.getByRole('button', { name: 'Pause' }));
+    await userEvent.click(await screen.findByRole('button', { name: 'Pause' }));
     expect(pauseStub).toHaveBeenCalled();
     AudioMock.instances[0].paused = true;
   });
@@ -58,7 +58,7 @@ describe('Podcast widget', () => {
 
     AudioMock.instances[0].currentTime = 123;
     await userEvent.click(
-      screen.getByRole('button', { name: 'Skip Back 10 Seconds' })
+      await screen.findByRole('button', { name: 'Skip Back 10 Seconds' })
     );
     AudioMock.instances[0].currentTime = 113;
   });
@@ -70,7 +70,7 @@ describe('Podcast widget', () => {
 
     AudioMock.instances[0].currentTime = 123;
     await userEvent.click(
-      screen.getByRole('button', { name: 'Skip Forward 30 Seconds' })
+      await screen.findByRole('button', { name: 'Skip Forward 30 Seconds' })
     );
     AudioMock.instances[0].currentTime = 153;
   });
@@ -96,8 +96,8 @@ describe('Podcast widget', () => {
 
     // 1:04:03
     await seekAudio({ newCurrentTime: 3843 });
-    expect(screen.getByText('1:04:03')).toBeInTheDocument();
-    expect(screen.getByText('-14:29')).toBeInTheDocument();
+    expect(await screen.findByText('1:04:03')).toBeInTheDocument();
+    expect(await screen.findByText('-14:29')).toBeInTheDocument();
   });
 
   it('should display audio timestamps correctly when current time is in seconds', async () => {
@@ -110,8 +110,8 @@ describe('Podcast widget', () => {
 
     // 0:03
     await seekAudio({ newCurrentTime: 3 });
-    expect(screen.getByText('0:03')).toBeInTheDocument();
-    expect(screen.getByText('-9:27')).toBeInTheDocument();
+    expect(await screen.findByText('0:03')).toBeInTheDocument();
+    expect(await screen.findByText('-9:27')).toBeInTheDocument();
   });
 
   it('should maintain separate audio stream per widget', async () => {
@@ -120,9 +120,11 @@ describe('Podcast widget', () => {
     await renderServerComponent(<Home />);
     await navigateToNowPlaying();
 
-    await userEvent.click(screen.getByRole('button', { name: 'Add Widget' }));
     await userEvent.click(
-      screen.getByRole('button', { name: `Add Podcast Widget` })
+      await screen.findByRole('button', { name: 'Add Widget' })
+    );
+    await userEvent.click(
+      await screen.findByRole('button', { name: `Add Podcast Widget` })
     );
     expect(AudioMock.instances).toHaveLength(2);
   });
@@ -133,14 +135,16 @@ describe('Podcast widget', () => {
     await renderServerComponent(<Home />);
 
     await navigateToNowPlaying();
-    await userEvent.click(screen.getByRole('button', { name: 'Play' }));
+    await userEvent.click(await screen.findByRole('button', { name: 'Play' }));
     await act(async () => {
       AudioMock.instances[0].trigger('waiting');
     });
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(await screen.findByText('Loading...')).toBeInTheDocument();
     await act(async () => {
       AudioMock.instances[0].trigger('playing');
     });
-    expect(screen.getByRole('button', { name: 'Pause' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('button', { name: 'Pause' })
+    ).toBeInTheDocument();
   });
 });

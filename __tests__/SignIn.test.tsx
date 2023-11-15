@@ -23,9 +23,11 @@ describe('Sign In page', () => {
     mockCaptchaSuccess('mytoken');
     await renderServerComponent(<SignIn />);
     const requiredFields = ['Email', 'Password'];
-    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
-    requiredFields.forEach((labelText) => {
-      expect(screen.getByLabelText(labelText)).toHaveProperty(
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Sign In' })
+    );
+    requiredFields.forEach(async (labelText) => {
+      expect(await screen.findByLabelText(labelText)).toHaveProperty(
         'validity.valueMissing',
         true
       );
@@ -38,7 +40,7 @@ describe('Sign In page', () => {
     await typeIntoFormFields({
       Email: 'notanemail'
     });
-    expect(screen.getByLabelText('Email')).toHaveProperty(
+    expect(await screen.findByLabelText('Email')).toHaveProperty(
       'validity.typeMismatch',
       true
     );
@@ -63,7 +65,9 @@ describe('Sign In page', () => {
       Email: 'caleb@example.com',
       Password: 'CorrectHorseBatteryStaple'
     });
-    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Sign In' })
+    );
     await waitFor(() => {
       preview.debug();
       const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
@@ -85,9 +89,11 @@ describe('Sign In page', () => {
       Password: 'CorrectHorseBatteryStaple',
       'Please leave this field blank': 'abc123'
     });
-    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Sign In' })
+    );
     expect(
-      screen.getByText('Cannot submit form; please try again')
+      await screen.findByText('Cannot submit form; please try again')
     ).toBeInTheDocument();
   });
 
@@ -109,10 +115,12 @@ describe('Sign In page', () => {
       Email: 'kaleb@example.com',
       Password: 'CorrectHorseBatteryStaple'
     });
-    await userEvent.click(screen.getByRole('button', { name: 'Sign In' }));
-    await waitFor(() => {
-      expect(screen.getByText('Invalid login credentials')).toBeInTheDocument();
-    });
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Sign In' })
+    );
+    expect(
+      await screen.findByText('Invalid login credentials')
+    ).toBeInTheDocument();
   });
 
   it('should sign in on server side', async () => {

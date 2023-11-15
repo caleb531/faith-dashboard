@@ -29,17 +29,16 @@ describe('Note widget', () => {
     fireEvent.input(input, { target: { value: '30' } });
     fireEvent.change(input, { target: { value: '30' } });
     expect(input).toHaveProperty('value', '30');
-    expect(screen.getByText('Example Text')).toHaveProperty(
+    expect(await screen.findByText('Example Text')).toHaveProperty(
       'style.fontSize',
       '30px'
     );
     await userEvent.click(
       screen.getAllByRole('button', { name: 'Toggle Settings' })[1]
     );
-    expect(screen.getByRole('textbox', { name: 'Note Text' })).toHaveProperty(
-      'style.fontSize',
-      '30px'
-    );
+    expect(
+      await screen.findByRole('textbox', { name: 'Note Text' })
+    ).toHaveProperty('style.fontSize', '30px');
     expect(getWidgetData({ type: 'Note', index: 1 })).toHaveProperty(
       'fontSize',
       30
@@ -63,7 +62,7 @@ describe('Note widget', () => {
     fireEvent.change(input, { target: { value: '12' } });
     expect(input).toHaveProperty('value', '12');
     expect(
-      screen.getByText(
+      await screen.findByText(
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tincidunt...'
       )
     ).toBeInTheDocument();
@@ -85,6 +84,6 @@ describe('Note widget', () => {
     fireEvent.input(input, { target: { value: '50' } });
     fireEvent.change(input, { target: { value: '50' } });
     expect(input).toHaveProperty('value', '50');
-    expect(screen.getByText('Lorem ipsum...')).toBeInTheDocument();
+    expect(await screen.findByText('Lorem ipsum...')).toBeInTheDocument();
   });
 });

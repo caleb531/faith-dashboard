@@ -9,12 +9,14 @@ import { getAppData } from '@tests/__utils__/testUtils';
 describe('Tutorial', () => {
   it('should render', async () => {
     await renderServerComponent(<Home />);
-    expect(screen.getByText(/Welcome/)).toBeInTheDocument();
+    expect(await screen.findByText(/Welcome/)).toBeInTheDocument();
   });
 
   it('should skip', async () => {
     await renderServerComponent(<Home />);
-    const skipButton = screen.getByRole('button', { name: 'Skip Tutorial' });
+    const skipButton = await screen.findByRole('button', {
+      name: 'Skip Tutorial'
+    });
     expect(skipButton).toBeInTheDocument();
     await userEvent.click(skipButton);
     expect(
@@ -28,18 +30,24 @@ describe('Tutorial', () => {
   it('should advance', async () => {
     await renderServerComponent(<Home />);
     expect(
-      screen.getByRole('button', { name: 'Get Started' })
+      await screen.findByRole('button', { name: 'Get Started' })
     ).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: 'Get Started' }));
-    expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
-    expect(screen.getByText(/This is your dashboard/)).toBeInTheDocument();
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Get Started' })
+    );
+    expect(
+      await screen.findByRole('button', { name: 'Next' })
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByText(/This is your dashboard/)
+    ).toBeInTheDocument();
   });
   it('should complete all defined steps', async () => {
     await renderServerComponent(<Home />);
     const advanceButtonLabelPattern = /Get Started|Next|Done/;
     for (const _step of tutorialSteps) {
       await userEvent.click(
-        screen.getByRole('button', { name: advanceButtonLabelPattern })
+        await screen.findByRole('button', { name: advanceButtonLabelPattern })
       );
     }
     expect(

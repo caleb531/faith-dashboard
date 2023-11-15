@@ -1,6 +1,6 @@
 import Home from '@app/page';
 import '@testing-library/jest-dom';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import bibleVerseRangeJson from '@tests/__json__/bibleVerseRange.json';
 import bibleVerseSingleJson from '@tests/__json__/bibleVerseSingle.json';
@@ -23,7 +23,7 @@ describe('Bible Verse widget', () => {
     await renderServerComponent(<Home />);
 
     await searchBibleVerses('rom8.28');
-    expect(screen.getByText(/And we know/)).toHaveTextContent(
+    expect(await screen.findByText(/And we know/)).toHaveTextContent(
       'And we know that for those who love God all things work together for good, for those who are called according to his purpose.'
     );
     expect(getWidgetData({ type: 'BibleVerse', index: 0 })).toHaveProperty(
@@ -37,7 +37,7 @@ describe('Bible Verse widget', () => {
     await renderServerComponent(<Home />);
 
     await searchBibleVerses('mat11.28');
-    expect(screen.getByText(/Come to me/)).toHaveTextContent(
+    expect(await screen.findByText(/Come to me/)).toHaveTextContent(
       'Come to me, all who labor and are heavy laden, and I will give you rest. Take my yoke upon you, and learn from me, for I am gentle and lowly in heart, and you will find rest for your souls. For my yoke is easy, and my burden is light.”'
     );
   });
@@ -51,8 +51,6 @@ describe('Bible Verse widget', () => {
     });
     await searchBibleVerses('john3.16');
     log.mockReset();
-    await waitFor(() => {
-      expect(screen.getByText('Error Fetching Verse')).toBeInTheDocument();
-    });
+    expect(await screen.findByText('Error Fetching Verse')).toBeInTheDocument();
   });
 });

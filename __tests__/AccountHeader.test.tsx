@@ -2,7 +2,7 @@ import { POST as SignOutPOST } from '@app/auth/sign-out/route';
 import Home from '@app/page';
 import { getSession, getUser } from '@components/authUtils.client';
 import '@testing-library/jest-dom';
-import { act, screen, waitFor } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetch from '@tests/__mocks__/fetchMock';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
@@ -30,18 +30,28 @@ describe('Account Header', () => {
 
   it('should provide links to Sign Up / Sign In when not signed in', async () => {
     await renderServerComponent(<Home />);
-    await userEvent.click(screen.getByRole('button', { name: 'Sign Up/In' }));
-    expect(screen.getByRole('link', { name: 'Sign Up' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Sign In' })).toBeInTheDocument();
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Sign Up/In' })
+    );
+    expect(
+      await screen.findByRole('link', { name: 'Sign Up' })
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByRole('link', { name: 'Sign In' })
+    ).toBeInTheDocument();
   });
 
   it('should close Sign Up / Sign In modal', async () => {
     await renderServerComponent(<Home />);
-    await userEvent.click(screen.getByRole('button', { name: 'Sign Up/In' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Sign Up/In' })
+    );
     expect(
-      screen.getByRole('heading', { name: 'Account' })
+      await screen.findByRole('heading', { name: 'Account' })
     ).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: 'Close Modal' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Close Modal' })
+    );
     expect(
       screen.queryByRole('heading', { name: 'Account' })
     ).not.toBeInTheDocument();
@@ -60,17 +70,17 @@ describe('Account Header', () => {
       } as any;
     });
     await renderServerComponent(<Home />);
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Your Account' })
-      ).toBeInTheDocument();
-    });
-    await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
+    expect(
+      await screen.findByRole('button', { name: 'Your Account' })
+    ).toBeInTheDocument();
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Your Account' })
+    );
     localStorage.setItem('faith-dashboard-whatever', 'true');
     const log = vi.spyOn(console, 'log').mockImplementation(() => {
       // noop
     });
-    await userEvent.click(screen.getByText('Sign Out'));
+    await userEvent.click(await screen.findByText('Sign Out'));
     log.mockReset();
     expect(localStorage.getItem('faith-dashboard-whatever')).toEqual(null);
     await act(async () => {
@@ -83,13 +93,13 @@ describe('Account Header', () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
     await renderServerComponent(<Home />);
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Your Account' })
-      ).toBeInTheDocument();
-    });
-    await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
-    const overlay = screen.getByRole('button', { name: 'Close Menu' });
+    expect(
+      await screen.findByRole('button', { name: 'Your Account' })
+    ).toBeInTheDocument();
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Your Account' })
+    );
+    const overlay = await screen.findByRole('button', { name: 'Close Menu' });
     expect(overlay).toBeInTheDocument();
     await userEvent.click(overlay);
     expect(overlay).not.toBeInTheDocument();
@@ -105,14 +115,14 @@ describe('Account Header', () => {
       } as any;
     });
     await renderServerComponent(<Home />);
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Your Account' })
-      ).toBeInTheDocument();
-    });
-    await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
+    expect(
+      await screen.findByRole('button', { name: 'Your Account' })
+    ).toBeInTheDocument();
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Your Account' })
+    );
     localStorage.setItem('faith-dashboard-whatever', 'true');
-    await userEvent.click(screen.getByText('Sign Out'));
+    await userEvent.click(await screen.findByText('Sign Out'));
     expect(localStorage.getItem('faith-dashboard-whatever')).toEqual('true');
     await act(async () => {
       await getUser();

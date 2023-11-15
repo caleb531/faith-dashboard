@@ -34,42 +34,36 @@ describe('Update Notification', () => {
 
   it('should show', async () => {
     await renderServerComponent(<Home />);
-    await waitFor(() => {
-      expect(
-        screen.getByRole('region', {
-          name: updateAvailableMessage
-        })
-      ).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByRole('region', {
+        name: updateAvailableMessage
+      })
+    ).toBeInTheDocument();
   });
 
   it('should show loading indicator when clicked', async () => {
     await renderServerComponent(<Home />);
-    await waitFor(() => {
-      expect(
-        screen.getByRole('region', {
-          name: updateAvailableMessage
-        })
-      ).toBeInTheDocument();
-    });
-    const updateNotification = screen.getByRole('region', {
+    expect(
+      await screen.findByRole('region', {
+        name: updateAvailableMessage
+      })
+    ).toBeInTheDocument();
+    const updateNotification = await screen.findByRole('region', {
       name: updateAvailableMessage
     });
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     await userEvent.click(updateNotification);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(await screen.findByText('Loading...')).toBeInTheDocument();
   });
   it('should reload page when service worker is updated', async () => {
     await renderServerComponent(<Home />);
-    await waitFor(() => {
-      expect(
-        screen.getByRole('region', {
-          name: updateAvailableMessage
-        })
-      ).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByRole('region', {
+        name: updateAvailableMessage
+      })
+    ).toBeInTheDocument();
     await userEvent.click(
-      screen.getByRole('region', {
+      await screen.findByRole('region', {
         name: updateAvailableMessage
       })
     );

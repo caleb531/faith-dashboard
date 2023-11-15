@@ -39,7 +39,7 @@ describe('Account Settings page', () => {
     await mockSupabaseSession();
     await renderServerComponent(<AccountSettings />);
     expect(
-      screen.getByRole('heading', {
+      await screen.findByRole('heading', {
         name: 'Account Settings | Faith Dashboard'
       })
     ).toBeInTheDocument();
@@ -73,7 +73,9 @@ describe('Account Settings page', () => {
       },
       { clearFieldsFirst: true }
     );
-    await userEvent.click(screen.getByRole('button', { name: 'Save Details' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Save Details' })
+    );
     const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
     expect(actualFetchUrl).toEqual('/auth/update-user-name');
     expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
@@ -102,7 +104,9 @@ describe('Account Settings page', () => {
       },
       { clearFieldsFirst: true }
     );
-    await userEvent.click(screen.getByRole('button', { name: 'Change Email' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Change Email' })
+    );
     const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
     expect(actualFetchUrl).toEqual('/auth/request-email-change');
     expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
@@ -125,7 +129,7 @@ describe('Account Settings page', () => {
       'New Email': 'caleb2@example.com',
       'Confirm New Email': 'caleb2@example.con'
     });
-    expect(screen.getByLabelText('Confirm New Email')).toHaveProperty(
+    expect(await screen.findByLabelText('Confirm New Email')).toHaveProperty(
       'validationMessage',
       'Emails must match'
     );
@@ -136,9 +140,11 @@ describe('Account Settings page', () => {
     await mockSupabaseSession();
     await renderServerComponent(<AccountSettings />);
     const requiredFields = ['New Email', 'Confirm New Email'];
-    await userEvent.click(screen.getByRole('button', { name: 'Change Email' }));
-    requiredFields.forEach((labelText) => {
-      expect(screen.getByLabelText(labelText)).toHaveProperty(
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Change Email' })
+    );
+    requiredFields.forEach(async (labelText) => {
+      expect(await screen.findByLabelText(labelText)).toHaveProperty(
         'validity.valueMissing',
         true
       );
@@ -158,7 +164,7 @@ describe('Account Settings page', () => {
     });
     await renderServerComponent(<AccountSettings />);
     await userEvent.click(
-      screen.getByRole('button', { name: 'Cancel Email Change' })
+      await screen.findByRole('button', { name: 'Cancel Email Change' })
     );
     const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
     expect(actualFetchUrl).toEqual('/auth/cancel-email-change');
@@ -182,7 +188,7 @@ describe('Account Settings page', () => {
       'Confirm New Password': 'CorrectHorseBatteryStaple'
     });
     await userEvent.click(
-      screen.getByRole('button', { name: 'Change Password' })
+      await screen.findByRole('button', { name: 'Change Password' })
     );
     const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
     expect(actualFetchUrl).toEqual('/auth/change-password');
@@ -205,7 +211,7 @@ describe('Account Settings page', () => {
       'New Password': 'CorrectHorseBatteryStaple',
       'Confirm New Password': 'CorrectHorseBatteryStale'
     });
-    expect(screen.getByLabelText('Confirm New Password')).toHaveProperty(
+    expect(await screen.findByLabelText('Confirm New Password')).toHaveProperty(
       'validationMessage',
       'Passwords must match'
     );
@@ -222,10 +228,10 @@ describe('Account Settings page', () => {
       'Confirm New Password'
     ];
     await userEvent.click(
-      screen.getByRole('button', { name: 'Change Password' })
+      await screen.findByRole('button', { name: 'Change Password' })
     );
-    requiredFields.forEach((labelText) => {
-      expect(screen.getByLabelText(labelText)).toHaveProperty(
+    requiredFields.forEach(async (labelText) => {
+      expect(await screen.findByLabelText(labelText)).toHaveProperty(
         'validity.valueMissing',
         true
       );

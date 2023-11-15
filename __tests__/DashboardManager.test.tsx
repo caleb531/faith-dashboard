@@ -59,11 +59,9 @@ async function openDashboardManager({
   mockDashboardsFetch(availableDashboards, { error });
   setAppData(localDashboard);
   await renderServerComponent(<Home />);
-  await waitFor(() => {
-    expect(
-      screen.getByRole('button', { name: 'Your Account' })
-    ).toBeInTheDocument();
-  });
+  expect(
+    await screen.findByRole('button', { name: 'Your Account' })
+  ).toBeInTheDocument();
   if (availableDashboards?.length > 0) {
     await waitFor(() => {
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
@@ -72,19 +70,21 @@ async function openDashboardManager({
   }
   // Reset the calls and call counts on the supabase mocks
   supabaseFromMocks.dashboards.select.mockClear();
-  await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
-  await userEvent.click(screen.getByRole('link', { name: 'My Dashboards' }));
+  await userEvent.click(
+    await screen.findByRole('button', { name: 'Your Account' })
+  );
+  await userEvent.click(
+    await screen.findByRole('link', { name: 'My Dashboards' })
+  );
   expect(
-    screen.getByRole('heading', { name: 'My Dashboards' })
+    await screen.findByRole('heading', { name: 'My Dashboards' })
   ).toBeInTheDocument();
-  await waitFor(() => {
-    availableDashboards.forEach((dashboard) => {
-      expect(screen.getByText(String(dashboard.name))).toBeInTheDocument();
-    });
+  availableDashboards.forEach(async (dashboard) => {
+    expect(await screen.findByText(String(dashboard.name))).toBeInTheDocument();
   });
   // Ensure that current dashboard hasn't changed (mostly as a sanity check)
   expect(
-    screen.getByText(getThemeName(localDashboard.theme))
+    await screen.findByText(getThemeName(localDashboard.theme))
   ).toBeInTheDocument();
   expect(screen.queryByText('Shore')).not.toBeInTheDocument();
 }
@@ -97,13 +97,11 @@ async function switchToDashboard(
     data: [{ raw_data: dashboard }],
     error
   });
-  await userEvent.click(screen.getByLabelText(String(dashboard.name)));
+  await userEvent.click(await screen.findByLabelText(String(dashboard.name)));
   if (!error) {
-    await waitFor(() => {
-      expect(
-        screen.getByText(getThemeName(dashboard.theme))
-      ).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByText(getThemeName(dashboard.theme))
+    ).toBeInTheDocument();
   }
 }
 
@@ -133,9 +131,7 @@ describe('Dashboard Manager', () => {
       availableDashboards: [],
       error
     });
-    await waitFor(() => {
-      expect(screen.getByText(error.message)).toBeInTheDocument();
-    });
+    expect(await screen.findByText(error.message)).toBeInTheDocument();
   });
 
   it('should indicate when user has no dashboards', async () => {
@@ -144,11 +140,9 @@ describe('Dashboard Manager', () => {
       localDashboard,
       availableDashboards: []
     });
-    await waitFor(() => {
-      expect(
-        screen.getByText('You have no dashboards. Create one!')
-      ).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByText('You have no dashboards. Create one!')
+    ).toBeInTheDocument();
   });
 
   it('should switch to another dashboard', async () => {
@@ -178,9 +172,7 @@ describe('Dashboard Manager', () => {
       availableDashboards
     });
     await switchToDashboard(thirdDashboardJson, { error });
-    await waitFor(() => {
-      expect(screen.getByText(error.message)).toBeInTheDocument();
-    });
+    expect(await screen.findByText(error.message)).toBeInTheDocument();
   });
 
   it('should successfully create new dashboard', async () => {
@@ -197,9 +189,9 @@ describe('Dashboard Manager', () => {
     const newDashboardName = 'Prayer Dashboard';
     mockPromptOnce(() => newDashboardName);
     await userEvent.click(
-      screen.getByRole('button', { name: 'Add New Dashboard' })
+      await screen.findByRole('button', { name: 'Add New Dashboard' })
     );
-    await waitFor(() => {
+    await waitFor(async () => {
       expect(screen.getByText('Shore')).toBeInTheDocument();
       expect(
         screen.queryByRole('heading', { name: 'My Dashboards' })
@@ -224,12 +216,12 @@ describe('Dashboard Manager', () => {
     });
     mockPromptOnce(() => null);
     await userEvent.click(
-      screen.getByRole('button', {
+      await screen.findByRole('button', {
         name: 'Add New Dashboard'
       })
     );
     expect(
-      screen.getByText(getThemeName(localDashboard.theme))
+      await screen.findByText(getThemeName(localDashboard.theme))
     ).toBeInTheDocument();
   });
 
@@ -247,22 +239,24 @@ describe('Dashboard Manager', () => {
     const newDashboardName1 = 'Prayer Dashboard';
     mockPromptOnce(() => newDashboardName1);
     await userEvent.click(
-      screen.getByRole('button', { name: `Add New Dashboard` })
+      await screen.findByRole('button', { name: `Add New Dashboard` })
     );
-    await waitFor(() => {
-      expect(screen.getByText('Shore')).toBeInTheDocument();
-    });
+    expect(await screen.findByText('Shore')).toBeInTheDocument();
     const newDashboard1 = getAppData();
     mockDashboardsFetch([newDashboard1, ...availableDashboards]);
-    await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
-    await userEvent.click(screen.getByRole('link', { name: 'My Dashboards' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Your Account' })
+    );
+    await userEvent.click(
+      await screen.findByRole('link', { name: 'My Dashboards' })
+    );
     await waitFor(() => {
       expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     });
     const newDashboardName2 = 'Worship Dashboard';
     mockPromptOnce(() => newDashboardName2);
     await userEvent.click(
-      screen.getByRole('button', { name: 'Add New Dashboard' })
+      await screen.findByRole('button', { name: 'Add New Dashboard' })
     );
     await waitFor(() => {
       expect(
@@ -291,24 +285,22 @@ describe('Dashboard Manager', () => {
     const newDashboardName = 'Prayer Dashboard';
     mockPromptOnce(() => newDashboardName);
     await userEvent.click(
-      screen.getByRole('button', { name: 'Import Dashboard' })
+      await screen.findByRole('button', { name: 'Import Dashboard' })
     );
     const fileContents = JSON.stringify(exportedDashboard);
     FileReaderMock._fileData = fileContents;
     await act(async () => {
-      fireEvent.change(screen.getByLabelText('Import Dashboard'), {
+      fireEvent.change(await screen.findByLabelText('Import Dashboard'), {
         target: { files: [new File([fileContents], 'exportedDashboard.json')] }
       });
     });
-    await waitFor(() => {
-      expect(screen.getByText('Evening')).toBeInTheDocument();
-      expect(
-        screen.queryByRole('heading', { name: 'My Dashboards' })
-      ).not.toBeInTheDocument();
-      expect(
-        screen.queryByRole('button', { name: 'Skip Tutorial' })
-      ).not.toBeInTheDocument();
-    });
+    expect(await screen.findByText('Evening')).toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', { name: 'My Dashboards' })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: 'Skip Tutorial' })
+    ).not.toBeInTheDocument();
   });
 
   it('should successfully edit dashboard name', async () => {
@@ -328,15 +320,13 @@ describe('Dashboard Manager', () => {
     mockSupabaseUpsert('dashboards');
     mockSupabaseUpsert('widgets');
     await userEvent.click(
-      screen.getByRole('button', {
+      await screen.findByRole('button', {
         name: `Edit Name for Dashboard "${dashboardToEdit.name}"`
       })
     );
-    await waitFor(() => {
-      expect(screen.getByText(newDashboardName)).toBeInTheDocument();
-      expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
-      expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(0);
-    });
+    expect(await screen.findByText(newDashboardName)).toBeInTheDocument();
+    expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
+    expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(0);
   });
 
   it('should update state of current dashboard if its own name is edited', async () => {
@@ -356,16 +346,14 @@ describe('Dashboard Manager', () => {
     mockSupabaseUpsert('dashboards');
     mockSupabaseUpsert('widgets');
     await userEvent.click(
-      screen.getByRole('button', {
+      await screen.findByRole('button', {
         name: `Edit Name for Dashboard "${dashboardToEdit.name}"`
       })
     );
-    await waitFor(() => {
-      expect(screen.getByText(newDashboardName)).toBeInTheDocument();
-      expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
-      expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(0);
-      expect(getAppData().name).toEqual(newDashboardName);
-    });
+    expect(await screen.findByText(newDashboardName)).toBeInTheDocument();
+    expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
+    expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(0);
+    expect(getAppData().name).toEqual(newDashboardName);
   });
 
   it('should handle errors while editing dashboard name', async () => {
@@ -386,14 +374,12 @@ describe('Dashboard Manager', () => {
     mockSupabaseUpsert('dashboards', { error });
     mockSupabaseUpsert('widgets');
     await userEvent.click(
-      screen.getByRole('button', {
+      await screen.findByRole('button', {
         name: `Edit Name for Dashboard "${dashboardToEdit.name}"`
       })
     );
-    await waitFor(() => {
-      expect(screen.getByText(dashboardToEdit.name)).toBeInTheDocument();
-      expect(screen.getByText(error.message)).toBeInTheDocument();
-    });
+    expect(await screen.findByText(dashboardToEdit.name)).toBeInTheDocument();
+    expect(await screen.findByText(error.message)).toBeInTheDocument();
   });
 
   it('should cancel prompt to edit dashboard name', async () => {
@@ -410,14 +396,12 @@ describe('Dashboard Manager', () => {
     const dashboardToEdit = thirdDashboardJson;
     mockPromptOnce(() => null);
     await userEvent.click(
-      screen.getByRole('button', {
+      await screen.findByRole('button', {
         name: `Edit Name for Dashboard "${dashboardToEdit.name}"`
       })
     );
-    await waitFor(() => {
-      expect(screen.getByText(dashboardToEdit.name)).toBeInTheDocument();
-      expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(0);
-    });
+    expect(await screen.findByText(dashboardToEdit.name)).toBeInTheDocument();
+    expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(0);
   });
 
   it('should successfully delete dashboard', async () => {
@@ -436,7 +420,7 @@ describe('Dashboard Manager', () => {
     mockDashboardsFetch(availableDashboards.slice(0, 2));
     mockConfirmOnce(() => true);
     await userEvent.click(
-      screen.getByRole('button', {
+      await screen.findByRole('button', {
         name: `Delete Dashboard "${dashboardToDelete.name}"`
       })
     );
@@ -465,15 +449,13 @@ describe('Dashboard Manager', () => {
     mockDashboardsFetch(availableDashboards.slice(0, 2));
     mockConfirmOnce(() => true);
     await userEvent.click(
-      screen.getByRole('button', {
+      await screen.findByRole('button', {
         name: `Delete Dashboard "${dashboardToDelete.name}"`
       })
     );
-    await waitFor(() => {
-      expect(screen.queryByText(dashboardToDelete.name)).toBeInTheDocument();
-      expect(supabaseFromMocks.dashboards.delete).toHaveBeenCalledTimes(1);
-      expect(screen.getByText(error.message)).toBeInTheDocument();
-    });
+    expect(await screen.findByText(dashboardToDelete.name)).toBeInTheDocument();
+    expect(supabaseFromMocks.dashboards.delete).toHaveBeenCalledTimes(1);
+    expect(await screen.findByText(error.message)).toBeInTheDocument();
   });
 
   it('should switch to another dashboard when active dashboard is deleted', async () => {
@@ -500,17 +482,19 @@ describe('Dashboard Manager', () => {
       data: [{ raw_data: firstDashboardJson }]
     });
     await userEvent.click(
-      screen.getByRole('button', {
+      await screen.findByRole('button', {
         name: `Delete Dashboard "${dashboardToDelete.name}"`
       })
     );
-    await waitFor(() => {
+    await waitFor(async () => {
       expect(
         screen.queryByText(dashboardToDelete.name)
       ).not.toBeInTheDocument();
       expect(supabaseFromMocks.dashboards.delete).toHaveBeenCalledTimes(1);
       expect(
-        screen.getByText(getThemeName(availableDashboardsAfterDelete[0].theme))
+        await screen.findByText(
+          getThemeName(availableDashboardsAfterDelete[0].theme)
+        )
       ).toBeInTheDocument();
     });
   });
@@ -529,12 +513,14 @@ describe('Dashboard Manager', () => {
     const dashboardToDelete = thirdDashboardJson;
     mockConfirmOnce(() => false);
     await userEvent.click(
-      screen.getByRole('button', {
+      await screen.findByRole('button', {
         name: `Delete Dashboard "${dashboardToDelete.name}"`
       })
     );
-    await waitFor(() => {
-      expect(screen.getByText(dashboardToDelete.name)).toBeInTheDocument();
+    await waitFor(async () => {
+      expect(
+        await screen.findByText(dashboardToDelete.name)
+      ).toBeInTheDocument();
       expect(supabaseFromMocks.dashboards.delete).toHaveBeenCalledTimes(0);
     });
   });

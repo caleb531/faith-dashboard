@@ -7,7 +7,9 @@ describe('Privacy Policy page', () => {
   it('should render', async () => {
     await renderServerComponent(<PrivacyPolicy />);
     expect(
-      screen.getByRole('heading', { name: 'Privacy Policy | Faith Dashboard' })
+      await screen.findByRole('heading', {
+        name: 'Privacy Policy | Faith Dashboard'
+      })
     ).toBeInTheDocument();
   });
 });

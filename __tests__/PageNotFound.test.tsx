@@ -7,7 +7,9 @@ describe('Not Found page', () => {
   it('should render', async () => {
     await renderServerComponent(<PageNotFound />);
     expect(
-      screen.getByRole('heading', { name: 'Page Not Found | Faith Dashboard' })
+      await screen.findByRole('heading', {
+        name: 'Page Not Found | Faith Dashboard'
+      })
     ).toBeInTheDocument();
   });
 });

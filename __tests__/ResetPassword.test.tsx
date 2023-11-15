@@ -40,7 +40,7 @@ describe('Reset Password page', () => {
       'New Password': 'CorrectHorseBatteryStaple',
       'Confirm New Password': 'CorrectHorseBatteryStaple'
     });
-    expect(screen.getByLabelText('Confirm New Password')).toHaveProperty(
+    expect(await screen.findByLabelText('Confirm New Password')).toHaveProperty(
       'validationMessage',
       ''
     );
@@ -55,7 +55,7 @@ describe('Reset Password page', () => {
       'New Password': 'CorrectHorseBatteryStaple',
       'Confirm New Password': 'CorrectHorseBatteryStale'
     });
-    expect(screen.getByLabelText('Confirm New Password')).toHaveProperty(
+    expect(await screen.findByLabelText('Confirm New Password')).toHaveProperty(
       'validationMessage',
       'Passwords must match'
     );
@@ -68,10 +68,10 @@ describe('Reset Password page', () => {
     await renderServerComponent(<ResetPassword />);
     const requiredFields = ['New Password', 'Confirm New Password'];
     await userEvent.click(
-      screen.getByRole('button', { name: 'Reset Password' })
+      await screen.findByRole('button', { name: 'Reset Password' })
     );
-    requiredFields.forEach((labelText) => {
-      expect(screen.getByLabelText(labelText)).toHaveProperty(
+    requiredFields.forEach(async (labelText) => {
+      expect(await screen.findByLabelText(labelText)).toHaveProperty(
         'validity.valueMissing',
         true
       );
@@ -98,7 +98,7 @@ describe('Reset Password page', () => {
       'Confirm New Password': 'CorrectHorseBatteryStaple'
     });
     await userEvent.click(
-      screen.getByRole('button', { name: 'Reset Password' })
+      await screen.findByRole('button', { name: 'Reset Password' })
     );
     const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
     expect(actualFetchUrl).toEqual('/auth/reset-password');
@@ -120,7 +120,7 @@ describe('Reset Password page', () => {
       };
     });
     await renderServerComponent(<ResetPassword />);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(await screen.findByText('Loading...')).toBeInTheDocument();
     const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
     expect(actualFetchUrl).toEqual('/auth/session');
     expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
@@ -141,8 +141,10 @@ describe('Reset Password page', () => {
       };
     });
     await renderServerComponent(<ResetPassword />);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('link', { name: /CLICK HeRe/i }));
+    expect(await screen.findByText('Loading...')).toBeInTheDocument();
+    await userEvent.click(
+      await screen.findByRole('link', { name: /CLICK HeRe/i })
+    );
     expect(window.location.reload).toHaveBeenCalled();
   });
 

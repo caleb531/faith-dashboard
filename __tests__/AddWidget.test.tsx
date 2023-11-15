@@ -17,9 +17,11 @@ async function addWidget(widgetTypeId: WidgetTypeId) {
   await waitFor(() => {
     expect(screen.getAllByRole('article')).toHaveLength(4);
   });
-  await userEvent.click(screen.getByRole('button', { name: 'Add Widget' }));
   await userEvent.click(
-    screen.getByRole('button', { name: `Add ${widgetType.name} Widget` })
+    await screen.findByRole('button', { name: 'Add Widget' })
+  );
+  await userEvent.click(
+    await screen.findByRole('button', { name: `Add ${widgetType.name} Widget` })
   );
 }
 

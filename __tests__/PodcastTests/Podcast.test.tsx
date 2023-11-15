@@ -25,16 +25,16 @@ describe('Podcast widget', () => {
     await renderServerComponent(<Home />);
 
     await searchPodcasts('sermon of the day');
-    expect(screen.getByText('26 podcasts')).toBeInTheDocument();
+    expect(await screen.findByText('26 podcasts')).toBeInTheDocument();
     expect(getWidgetData({ type: 'Podcast', index: 3 })).toHaveProperty(
       'podcastQuery',
       'sermon of the day'
     );
 
     await choosePodcast('Sermon of the Day');
-    expect(screen.getByText('50 episodes')).toBeInTheDocument();
+    expect(await screen.findByText('50 episodes')).toBeInTheDocument();
     expect(
-      screen.getByRole('heading', {
+      await screen.findByRole('heading', {
         name: 'The Beautiful Faith of Fearless Submission'
       })
     ).toBeInTheDocument();
@@ -47,12 +47,12 @@ describe('Podcast widget', () => {
 
     await chooseEpisode('Perfect Love Casts Out Fear');
     expect(
-      screen.getByRole('heading', {
+      await screen.findByRole('heading', {
         name: 'Perfect Love Casts Out Fear'
       })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: 'Return to List' })
+      await screen.findByRole('button', { name: 'Return to List' })
     ).toBeInTheDocument();
     expect(AudioMock.instances).toHaveLength(1);
   });
@@ -69,10 +69,12 @@ describe('Podcast widget', () => {
       screen.queryByRole('heading', { name: 'Let Marriage Be Held in Honor' })
     ).not.toBeInTheDocument();
     await userEvent.click(
-      screen.getByRole('button', { name: 'Check for New Episodes' })
+      await screen.findByRole('button', { name: 'Check for New Episodes' })
     );
     expect(
-      screen.getByRole('heading', { name: 'Let Marriage Be Held in Honor' })
+      await screen.findByRole('heading', {
+        name: 'Let Marriage Be Held in Honor'
+      })
     ).toBeInTheDocument();
   });
 
@@ -82,16 +84,16 @@ describe('Podcast widget', () => {
     await renderServerComponent(<Home />);
 
     await searchPodcasts('sermon of the day');
-    expect(screen.getByText('26 podcasts')).toBeInTheDocument();
+    expect(await screen.findByText('26 podcasts')).toBeInTheDocument();
 
     await choosePodcast('Sermon of the Day');
-    expect(screen.getByText('50 episodes')).toBeInTheDocument();
+    expect(await screen.findByText('50 episodes')).toBeInTheDocument();
 
     await chooseEpisode('Perfect Love Casts Out Fear');
     await userEvent.click(
-      screen.getByRole('button', { name: 'Return to List' })
+      await screen.findByRole('button', { name: 'Return to List' })
     );
-    expect(screen.getByText('50 episodes')).toBeInTheDocument();
+    expect(await screen.findByText('50 episodes')).toBeInTheDocument();
   });
 
   it('should choose result via Enter key for accessibility', async () => {
@@ -100,15 +102,13 @@ describe('Podcast widget', () => {
     await renderServerComponent(<Home />);
 
     await searchPodcasts('sermon of the day');
-    expect(screen.getByText('26 podcasts')).toBeInTheDocument();
+    expect(await screen.findByText('26 podcasts')).toBeInTheDocument();
 
-    const firstPodcastResult = screen.getByRole('heading', {
+    const firstPodcastResult = await screen.findByRole('heading', {
       name: 'Sermon of the Day'
     });
     fireEvent.keyDown(firstPodcastResult, { key: 'Enter' });
-    await waitFor(() => {
-      expect(screen.getByText('50 episodes')).toBeInTheDocument();
-    });
+    expect(await screen.findByText('50 episodes')).toBeInTheDocument();
   });
 
   it('should choose result via spacebar for accessibility', async () => {
@@ -117,14 +117,12 @@ describe('Podcast widget', () => {
     await renderServerComponent(<Home />);
 
     await searchPodcasts('sermon of the day');
-    expect(screen.getByText('26 podcasts')).toBeInTheDocument();
+    expect(await screen.findByText('26 podcasts')).toBeInTheDocument();
 
-    const firstPodcastResult = screen.getByRole('heading', {
+    const firstPodcastResult = await screen.findByRole('heading', {
       name: 'Sermon of the Day'
     });
     fireEvent.keyDown(firstPodcastResult, { key: ' ' });
-    await waitFor(() => {
-      expect(screen.getByText('50 episodes')).toBeInTheDocument();
-    });
+    expect(await screen.findByText('50 episodes')).toBeInTheDocument();
   });
 });

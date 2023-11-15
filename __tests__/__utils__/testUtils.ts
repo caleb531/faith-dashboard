@@ -124,7 +124,7 @@ export async function typeIntoFormFields(
   }
 ) {
   for (const [name, value] of Object.entries(fields)) {
-    const input: HTMLInputElement = screen.getByLabelText(name);
+    const input: HTMLInputElement = await screen.findByLabelText(name);
     if (clearFieldsFirst) {
       input.value = '';
     }

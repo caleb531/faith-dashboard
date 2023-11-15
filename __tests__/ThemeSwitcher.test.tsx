@@ -9,12 +9,14 @@ describe('Theme Switcher', () => {
   it('should close', async () => {
     await renderServerComponent(<Home />);
     await userEvent.click(
-      screen.getByRole('button', { name: 'Background Theme' })
+      await screen.findByRole('button', { name: 'Background Theme' })
     );
     expect(
-      screen.getByRole('heading', { name: 'Change Theme' })
+      await screen.findByRole('heading', { name: 'Change Theme' })
     ).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: 'Close Modal' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Close Modal' })
+    );
     expect(
       screen.queryByRole('heading', { name: 'Change Theme' })
     ).not.toBeInTheDocument();
@@ -24,9 +26,11 @@ describe('Theme Switcher', () => {
     // Assert default theme
     expect(document.body).toHaveClass('theme-shore');
     await userEvent.click(
-      screen.getByRole('button', { name: 'Background Theme' })
+      await screen.findByRole('button', { name: 'Background Theme' })
     );
-    await userEvent.click(screen.getByRole('button', { name: 'Worship' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Worship' })
+    );
     expect(document.body).toHaveClass('theme-worship');
     expect(getAppData()).toHaveProperty('theme', 'worship');
   });
@@ -35,9 +39,9 @@ describe('Theme Switcher', () => {
     // Assert default theme
     expect(document.body).toHaveClass('theme-shore');
     await userEvent.click(
-      screen.getByRole('button', { name: 'Background Theme' })
+      await screen.findByRole('button', { name: 'Background Theme' })
     );
-    await userEvent.click(screen.getByRole('button', { name: 'Teal' }));
+    await userEvent.click(await screen.findByRole('button', { name: 'Teal' }));
     expect(document.body).toHaveClass('theme-teal');
     expect(getAppData()).toHaveProperty('theme', 'teal');
   });

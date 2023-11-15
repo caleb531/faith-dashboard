@@ -2,7 +2,7 @@ import { GET as CallbackGET } from '@app/auth/callback/route';
 import { POST as SignUpPOST } from '@app/auth/sign-up/route';
 import SignUp from '@app/sign-up/page';
 import '@testing-library/jest-dom';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockCaptchaSuccess } from '@tests/__mocks__/captchaMockUtils';
 import fetch from '@tests/__mocks__/fetchMock';
@@ -34,7 +34,7 @@ describe('Sign Up page', () => {
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStaple'
     });
-    expect(screen.getByLabelText('Confirm Password')).toHaveProperty(
+    expect(await screen.findByLabelText('Confirm Password')).toHaveProperty(
       'validationMessage',
       ''
     );
@@ -47,7 +47,7 @@ describe('Sign Up page', () => {
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStale'
     });
-    expect(screen.getByLabelText('Confirm Password')).toHaveProperty(
+    expect(await screen.findByLabelText('Confirm Password')).toHaveProperty(
       'validationMessage',
       'Passwords must match'
     );
@@ -63,9 +63,11 @@ describe('Sign Up page', () => {
       'Password',
       'Confirm Password'
     ];
-    await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
-    requiredFields.forEach((labelText) => {
-      expect(screen.getByLabelText(labelText)).toHaveProperty(
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Sign Up' })
+    );
+    requiredFields.forEach(async (labelText) => {
+      expect(await screen.findByLabelText(labelText)).toHaveProperty(
         'validity.valueMissing',
         true
       );
@@ -78,7 +80,7 @@ describe('Sign Up page', () => {
     await typeIntoFormFields({
       Email: 'notanemail'
     });
-    expect(screen.getByLabelText('Email')).toHaveProperty(
+    expect(await screen.findByLabelText('Email')).toHaveProperty(
       'validity.typeMismatch',
       true
     );
@@ -106,7 +108,9 @@ describe('Sign Up page', () => {
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStaple'
     });
-    await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Sign Up' })
+    );
     const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
     expect(actualFetchUrl).toEqual('/auth/sign-up');
     expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
@@ -144,12 +148,14 @@ describe('Sign Up page', () => {
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStaple'
     });
-    await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Sign Up' })
+    );
     const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
     expect(actualFetchUrl).toEqual('/auth/sign-up');
     expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
     expect(
-      screen.getByText(
+      await screen.findByText(
         'Almost done! Please check your email to activate your account'
       )
     ).toBeInTheDocument();
@@ -166,9 +172,11 @@ describe('Sign Up page', () => {
       'Confirm Password': 'CorrectHorseBatteryStaple',
       'Please leave this field blank': 'abc123'
     });
-    await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Sign Up' })
+    );
     expect(
-      screen.getByText('Cannot submit form; please try again')
+      await screen.findByText('Cannot submit form; please try again')
     ).toBeInTheDocument();
   });
 
@@ -193,10 +201,12 @@ describe('Sign Up page', () => {
       Password: 'CorrectHorseBatteryStaple',
       'Confirm Password': 'CorrectHorseBatteryStaple'
     });
-    await userEvent.click(screen.getByRole('button', { name: 'Sign Up' }));
-    await waitFor(() => {
-      expect(screen.getByText('User already registered')).toBeInTheDocument();
-    });
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Sign Up' })
+    );
+    expect(
+      await screen.findByText('User already registered')
+    ).toBeInTheDocument();
   });
 
   it('should sign up on server side', async () => {

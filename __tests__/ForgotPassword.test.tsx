@@ -17,15 +17,17 @@ describe('Forgot Password page', () => {
     mockCaptchaSuccess('mytoken');
     await renderServerComponent(<SignIn />);
     expect(
-      screen.getByRole('link', { name: 'Forgot Password?' })
+      await screen.findByRole('link', { name: 'Forgot Password?' })
     ).toBeInTheDocument();
   });
 
   it('should require all form fields to be populated', async () => {
     mockCaptchaSuccess('mytoken');
     await renderServerComponent(<ForgotPassword />);
-    await userEvent.click(screen.getByRole('button', { name: 'Send Email' }));
-    expect(screen.getByLabelText('Email')).toHaveProperty(
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Send Email' })
+    );
+    expect(await screen.findByLabelText('Email')).toHaveProperty(
       'validity.valueMissing',
       true
     );
@@ -37,7 +39,7 @@ describe('Forgot Password page', () => {
     await typeIntoFormFields({
       Email: 'notanemail'
     });
-    expect(screen.getByLabelText('Email')).toHaveProperty(
+    expect(await screen.findByLabelText('Email')).toHaveProperty(
       'validity.typeMismatch',
       true
     );
