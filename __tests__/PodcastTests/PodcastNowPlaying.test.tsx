@@ -38,7 +38,7 @@ describe('Podcast widget', () => {
     await userEvent.click(
       await screen.findByRole('button', { name: 'Return to List' })
     );
-    fireEvent.click(screen.getByRole('button', { name: 'Now Playing' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Now Playing' }));
     expect(
       screen.getByRole('heading', {
         name: 'Perfect Love Casts Out Fear'
