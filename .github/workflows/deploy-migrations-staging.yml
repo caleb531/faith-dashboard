@@ -3,6 +3,7 @@ name: deploy-migrations-staging
 on:
   push:
     branches: ['develop']
+    paths: ['supabase/migrations/**']
   workflow_dispatch:
 
 jobs:
