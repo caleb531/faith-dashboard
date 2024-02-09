@@ -21,16 +21,9 @@ const withPWA = require('next-pwa')({
   // 'SKIP_WAITING'}." (source:
   // https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.GenerateSW#GenerateSW)
   skipWaiting: false,
-  runtimeCaching: [
-    // Fix bad-precaching-response errors from service worker due to use of
-    // middleware (source: https://github.com/shadowwalker/next-pwa/issues/291)
-    ...runtimeCaching,
-    // Fix no-response errors for Plausible analytics script
-    {
-      urlPattern: /^https:\/\/plausible\.io\//i,
-      handler: 'NetworkOnly'
-    }
-  ],
+  // Fix bad-precaching-response errors from service worker due to use of
+  // middleware (source: https://github.com/shadowwalker/next-pwa/issues/291)
+  runtimeCaching,
   buildExcludes: [
     // This is necessary to prevent service worker errors; see
     // <https://github.com/shadowwalker/next-pwa/issues/424#issuecomment-1399683017>

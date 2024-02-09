@@ -58,17 +58,8 @@ async function PrivacyPolicy() {
       <h2>Analytics</h2>
 
       <p>
-        Faith Dashboard uses{' '}
-        <a href="https://plausible.io/">Plausible Analytics</a>, a
-        privacy-focused analytics platform. We only use this information to
-        examine traffic trends and aggregated visitor statistics (i.e. the
-        percentage of Chrome users, or the total number of people who viewed a
-        particular project). However, you would need to read the{' '}
-        <a href="https://plausible.io/data-policy">
-          Plausible Analytics data policy
-        </a>
-        to understand how Plausible collects and uses this information. I do not
-        otherwise share this information.
+        As of Februrary 9th, 2024, Faith Dashboard no longer collects any
+        analytics.
       </p>
 
       <h2>Email Privacy</h2>
