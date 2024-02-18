@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 overrides:
   got@<11.8.5: '>=11.8.5'
 
@@ -59,8 +63,8 @@ dependencies:
     specifier: ^0.6.2
     version: 0.6.2
   youversion-suggest:
-    specifier: ^2.0.1
-    version: 2.0.1
+    specifier: ^2.1.0
+    version: 2.1.0
 
 devDependencies:
   '@jest/types':
@@ -9790,8 +9794,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /youversion-suggest@2.0.1:
-    resolution: {integrity: sha512-akkmK/B2P9Z4MaE+ii47MSQbNJ/Fi2GKUA+yr/d73//9BNFS5Oiurhre1r1wsGgCB6neLRcB4pEDV67H4BuwHg==}
+  /youversion-suggest@2.1.0:
+    resolution: {integrity: sha512-iZrO76jBtcm8KWw+A/ArSv8hDXpwy/Z/TBEe0u3s63i0tOWWK64pp9MAo4SQ1MgvEQbe+h3xLlesOWMjOBX6MQ==}
     engines: {node: '>=18.0.0'}
     dependencies:
       cheerio: 1.0.0-rc.12
