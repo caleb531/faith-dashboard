@@ -63,7 +63,7 @@ function AuthForm(props: Props) {
   // reset the current error message in the case of success
   function synchronizeFormErrorState(response: any): void {
     // If there is no error, the value is conveniently null
-    if (response.error) {
+    if (response?.error) {
       // This will be caught by the handlePreSubmit() function
       throw response.error;
     } else {

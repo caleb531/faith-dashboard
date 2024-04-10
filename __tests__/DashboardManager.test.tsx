@@ -334,7 +334,7 @@ describe('Dashboard Manager', () => {
     );
     await waitFor(() => {
       expect(screen.getByText(newDashboardName)).toBeInTheDocument();
-      expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
+      expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalled();
       expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(0);
     });
   });

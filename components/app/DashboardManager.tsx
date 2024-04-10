@@ -74,7 +74,7 @@ const DashboardManager = ({ onClose }: Props) => {
   async function saveEditedDashboardName(dashboard: SyncedAppState) {
     setDashboardError(null);
     const response = await pushAppToServer(dashboard);
-    if (response.error) {
+    if (response?.error) {
       setDashboardError(response.error);
       return;
     }
@@ -119,7 +119,7 @@ const DashboardManager = ({ onClose }: Props) => {
     setDashboardBeingChosen(dashboard);
     const response = await pullLatestAppFromServer(dashboard);
     setDashboardBeingChosen(null);
-    if (response.error) {
+    if (response?.error) {
       setDashboardError(response.error);
       return;
     }
@@ -141,7 +141,7 @@ const DashboardManager = ({ onClose }: Props) => {
       .select('raw_data')
       .match({ user_id: user?.id })
       .order('updated_at', { ascending: false });
-    if (response.error) {
+    if (response?.error) {
       setDashboardError(response.error);
       setIsLoading(false);
       return;

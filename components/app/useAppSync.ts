@@ -31,7 +31,7 @@ async function applyServerAppToLocalApp(
     .from('widgets')
     .select('raw_data')
     .match({ dashboard_id: newApp.id });
-  if (response.error) {
+  if (response?.error) {
     return response;
   }
   if (!(response.data && response.data.length > 0)) {
@@ -86,7 +86,7 @@ function useAppSync(
           updated_at: new Date().toISOString()
         }
       ]);
-      if (response.error) {
+      if (response?.error) {
         return response;
       }
       if (
@@ -130,7 +130,7 @@ function useAppSync(
         // Always ensure the dashboard matching the specified ID is fetched from
         // the server
         .match({ id: app.id });
-      if (response.error) {
+      if (response?.error) {
         return response;
       }
       // If the dashboard matching the specified ID can't be found, pull down
