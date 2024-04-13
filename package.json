@@ -32,7 +32,7 @@
     "@fontsource/merriweather": "^5.0.12",
     "@hello-pangea/dnd": "^16.6.0",
     "@marsidev/react-turnstile": "^0.5.4",
-    "@supabase/auth-helpers-nextjs": "^0.10.0",
+    "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.42.0",
     "clsx": "^2.1.0",
     "date-fns": "^3.6.0",

@@ -1,11 +1,10 @@
-import { Database } from '@components/database.types';
+import { supabase } from '@components/authUtils.client';
 import Button from '@components/reusable/Button';
 import InlineMessage from '@components/reusable/InlineMessage';
 import ItemCollection from '@components/reusable/ItemCollection';
 import LoadingIndicator from '@components/reusable/LoadingIndicator';
 import Modal from '@components/reusable/Modal';
 import useTimeout from '@components/useTimeout';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { PostgrestError } from '@supabase/supabase-js';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import AppContext from './AppContext';
@@ -39,7 +38,6 @@ const DashboardManager = ({ onClose }: Props) => {
   const { app, dispatchToApp } = useContext(AppContext);
   const { pullLatestAppFromServer, pushAppToServer } = useContext(SyncContext);
   const setDashboardSwitchTimeout = useTimeout();
-  const supabase = createClientComponentClient<Database>();
 
   function addDashboard() {
     const name = prompt('Please enter a name for your new dashboard:');
@@ -91,13 +89,10 @@ const DashboardManager = ({ onClose }: Props) => {
   async function deleteDashboard(dashboard: SyncedAppState) {
     setDashboardError(null);
     setDashboardBeingDeleted(dashboard);
-    const { error } = await supabase
-      .from('dashboards')
-      .delete()
-      .match({
-        id: dashboard.id,
-        user_id: user?.id
-      });
+    const { error } = await supabase.from('dashboards').delete().match({
+      id: dashboard.id,
+      user_id: user?.id
+    });
     if (error) {
       setDashboardError(error);
       return;
@@ -154,7 +149,7 @@ const DashboardManager = ({ onClose }: Props) => {
     setDashboards(newDashboards);
     setIsLoading(false);
     return newDashboards;
-  }, [supabase, user]);
+  }, [user]);
 
   async function onImportSuccess(importedApp: AppState) {
     dispatchToApp({ type: 'replaceApp', payload: importedApp });

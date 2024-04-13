@@ -1,8 +1,7 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
 
 import type { NextRequest } from 'next/server';
-import type { Database } from './components/database.types';
 
 // In order to avoid the use of 'unsafe-inline' for script-src, we must generate
 // our Content-Security-Policy in the middleware and define a random nonce that
@@ -37,19 +36,62 @@ function getResponseWithCSPApplied(req: NextRequest) {
   return res;
 }
 
-export async function middleware(req: NextRequest) {
+export async function middleware(request: NextRequest) {
   // Apply CSP to response, but only in Production
-  const res =
+  let response =
     process.env.NODE_ENV === 'production'
-      ? getResponseWithCSPApplied(req)
-      : NextResponse.next();
-  // Ensure that the user's session remains active by refreshing the user's
-  // session before loading a Server Component route (source:
-  // <https://supabase.com/docs/guides/auth/auth-helpers/nextjs#managing-session-with-middleware>)
-  const supabase = createMiddlewareClient<Database>({ req, res });
-  await supabase.auth.getSession();
+      ? getResponseWithCSPApplied(request)
+      : NextResponse.next({ headers: request.headers });
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return request.cookies.get(name)?.value;
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          request.cookies.set({
+            name,
+            value,
+            ...options
+          });
+          response = NextResponse.next({
+            request: {
+              headers: request.headers
+            }
+          });
+          response.cookies.set({
+            name,
+            value,
+            ...options
+          });
+        },
+        remove(name: string, options: CookieOptions) {
+          request.cookies.set({
+            name,
+            value: '',
+            ...options
+          });
+          response = NextResponse.next({
+            request: {
+              headers: request.headers
+            }
+          });
+          response.cookies.set({
+            name,
+            value: '',
+            ...options
+          });
+        }
+      }
+    }
+  );
+  // Ensure that the user's session stays active
+  await supabase.auth.getUser();
   // Set the request URL in the headers so it can be accessed from a Server
   // Component (source: <https://stackoverflow.com/a/75363135/560642>)
-  res.headers.set('x-url', req.url);
-  return res;
+  response.headers.set('x-url', request.url);
+  return response;
 }

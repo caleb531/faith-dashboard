@@ -38,7 +38,7 @@ const config: Config.InitialOptions = {
     'workbox-window': require.resolve(
       './__tests__/__mocks__/WorkboxWindowMock.ts'
     ),
-    '@supabase/auth-helpers-nextjs': require.resolve(
+    '@supabase/ssr': require.resolve(
       './__tests__/__mocks__/supabaseAuthHelpersMock.ts'
     ),
     '(.*).(jpg|png|svg)$': require.resolve('./__tests__/__mocks__/imageMock.ts')

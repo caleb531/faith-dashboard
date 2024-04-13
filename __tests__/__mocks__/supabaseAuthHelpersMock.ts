@@ -6,15 +6,9 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 
-export function createClientComponentClient() {
+export function createBrowserClient() {
   return supabase;
 }
-export function createServerComponentClient() {
-  return supabase;
-}
-export function createRouteHandlerClient() {
-  return supabase;
-}
-export function createMiddlewareClient<TDatabase>() {
+export function createServerClient() {
   return supabase;
 }

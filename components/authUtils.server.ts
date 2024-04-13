@@ -1,5 +1,26 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies, headers } from 'next/headers';
+
+export function getSupabaseServerClient<T>() {
+  const cookieStore = cookies();
+  return createServerClient<T>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          cookieStore.set({ name, value, ...options });
+        },
+        remove(name: string, options: CookieOptions) {
+          cookieStore.set({ name, value: '', ...options });
+        }
+      }
+    }
+  );
+}
 
 // The getSession() utility returns info related to the
 // authenticated session and user
@@ -7,7 +28,7 @@ export async function getSession() {
   // This fixes a "Dynamic server usage: cookies" error. See:
   // <https://github.com/vercel/next.js/issues/49373#issuecomment-1662263802>
   const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const supabase = getSupabaseServerClient();
   const sessionResponse = await supabase.auth.getSession();
   return sessionResponse.data.session;
 }
@@ -20,7 +41,7 @@ export async function getUser() {
   // See:
   // <https://github.com/vercel/next.js/issues/49373#issuecomment-1662263802>
   const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const supabase = getSupabaseServerClient();
   const sessionResponse = await supabase.auth.getUser();
   return sessionResponse.data.user;
 }
