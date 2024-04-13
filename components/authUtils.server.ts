@@ -29,6 +29,7 @@ export async function getSession() {
   // <https://github.com/vercel/next.js/issues/49373#issuecomment-1662263802>
   const cookieStore = cookies();
   const supabase = getSupabaseServerClient();
+  await supabase.auth.getUser();
   const sessionResponse = await supabase.auth.getSession();
   return sessionResponse.data.session;
 }
@@ -37,13 +38,9 @@ export async function getSession() {
 // with more fields than what getSession().user provides, like details of a
 // pending email change)
 export async function getUser() {
-  // This fixes a "Dynamic server usage: cookies" error.
-  // See:
-  // <https://github.com/vercel/next.js/issues/49373#issuecomment-1662263802>
-  const cookieStore = cookies();
   const supabase = getSupabaseServerClient();
-  const sessionResponse = await supabase.auth.getUser();
-  return sessionResponse.data.user;
+  const userResponse = await supabase.auth.getUser();
+  return userResponse.data.user;
 }
 
 // Retrieve a link to the Sign In page that will redirect to the current page on

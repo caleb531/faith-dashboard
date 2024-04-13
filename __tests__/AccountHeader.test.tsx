@@ -1,6 +1,6 @@
 import { POST as SignOutPOST } from '@app/auth/sign-out/route';
 import Home from '@app/page';
-import { getSession, getUser } from '@components/authUtils.client';
+import { getSession } from '@components/authUtils.client';
 import '@testing-library/jest-dom';
 import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -74,7 +74,6 @@ describe('Account Header', () => {
     log.mockReset();
     expect(localStorage.getItem('faith-dashboard-whatever')).toEqual(null);
     await act(async () => {
-      await getUser();
       await getSession();
     });
   });
@@ -115,7 +114,6 @@ describe('Account Header', () => {
     await userEvent.click(screen.getByText('Sign Out'));
     expect(localStorage.getItem('faith-dashboard-whatever')).toEqual('true');
     await act(async () => {
-      await getUser();
       await getSession();
     });
   });

@@ -13,6 +13,7 @@ const MS_IN_S = 1000;
 
 // Return the actual supabase Session object associated with this session
 export async function getSession(): Promise<Session | null> {
+  await supabase.auth.getUser();
   return (await supabase.auth.getSession())?.data?.session || null;
 }
 

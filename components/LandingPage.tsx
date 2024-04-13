@@ -36,8 +36,8 @@ async function LandingPage(
     children: <></>
   }
 ) {
-  const session = await getSession();
   const user = await getUser();
+  const session = await getSession();
   if (isProtected && !session) {
     // If route is protected, redirect to the Sign In page if the user has not
     // signed in

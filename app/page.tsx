@@ -9,8 +9,8 @@ import React, { Suspense } from 'react';
 const WidgetBoard = React.lazy(() => import('@components/widgets/WidgetBoard'));
 
 async function Home() {
-  const session = await getSession();
   const user = await getUser();
+  const session = await getSession();
   return (
     <App
       enableTutorial
