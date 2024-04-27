@@ -33,7 +33,7 @@
     "@hello-pangea/dnd": "^16.6.0",
     "@marsidev/react-turnstile": "^0.5.4",
     "@supabase/ssr": "^0.3.0",
-    "@supabase/supabase-js": "^2.42.0",
+    "@supabase/supabase-js": "^2.42.7",
     "clsx": "^2.1.0",
     "date-fns": "^3.6.0",
     "deep-object-diff": "^1.1.9",
@@ -94,7 +94,7 @@
     "puppeteer": "^22.6.3",
     "sass": "^1.74.1",
     "sharp": "^0.33.3",
-    "supabase": "^1.153.4",
+    "supabase": "^1.163.6",
     "ts-node": "^10.9.2",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5"
