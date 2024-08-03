@@ -24,6 +24,7 @@ import ThemeMetadata from './ThemeMetadata';
 import UpdateNotification from './UpdateNotification';
 import { getDefaultAppState } from './appUtils';
 import getAppNotificationMessage from './getAppNotificationMessage';
+import useAnalytics from './useAnalytics';
 import useAppSync from './useAppSync';
 import useThemeForEntirePage from './useThemeForEntirePage';
 
@@ -104,6 +105,7 @@ function App({
   }, [setIsTutorialStarted]);
 
   useTouchDeviceDetection();
+  useAnalytics();
 
   const isMounted = useMountListener();
   const isSignedIn = Boolean(user) && isSessionActive(session);

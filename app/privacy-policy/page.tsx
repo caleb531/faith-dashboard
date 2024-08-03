@@ -10,7 +10,7 @@ async function PrivacyPolicy() {
         Dashboard collects and handles your personal information.
       </p>
 
-      <p>This privacy policy was last updated on June 27th, 2022.</p>
+      <p>This privacy policy was last updated on August 3rd, 2024.</p>
 
       <h2>Secure Connection</h2>
 
@@ -58,8 +58,16 @@ async function PrivacyPolicy() {
       <h2>Analytics</h2>
 
       <p>
-        As of Februrary 9th, 2024, Faith Dashboard no longer collects any
-        analytics.
+        Faith Dashboard uses <a href="https://goatcounter.com/">GoatCounter</a>,
+        a privacy-focused analytics platform. We only use this information to
+        examine traffic trends and aggregated visitor statistics (i.e. the
+        percentage of Chrome users, or the total number of people who viewed a
+        particular page). However, you would need to read the{' '}
+        <a href="https://www.goatcounter.com/help/privacy">
+          GoatCounter privacy policy
+        </a>
+        to understand what information GoatCounter collects. We do not otherwise
+        share this information.
       </p>
 
       <h2>Email Privacy</h2>

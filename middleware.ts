@@ -11,7 +11,18 @@ import type { NextRequest } from 'next/server';
 // <https://stackoverflow.com/questions/76270173/can-a-nonce-be-used-for-multiple-scripts-or-not>)
 function generateCSP() {
   const nonce = crypto.randomUUID();
-  return `default-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://hcaptcha.com https://*.hcaptcha.com; font-src 'self' https://fonts.gstatic.com data:; img-src * data:; script-src 'self' 'nonce-${nonce}' https://storage.googleapis.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com; child-src 'self' https://challenges.cloudflare.com; connect-src *; manifest-src 'self'; media-src *;`;
+  return [
+    `default-src 'none';`,
+    ` style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://hcaptcha.com https://*.hcaptcha.com;`,
+    ` font-src 'self' https://fonts.gstatic.com data:;`,
+    ` img-src * data:;`,
+    ` script-src 'self' 'nonce-${nonce}' https://storage.googleapis.com ${process.env.NEXT_PUBLIC_ANALYTICS_SITE_ID ? 'https://gc.zgo.at' : ''} https://challenges.cloudflare.com;`,
+    ` frame-src 'self' https://challenges.cloudflare.com;`,
+    ` child-src 'self' https://challenges.cloudflare.com;`,
+    ` connect-src *;`,
+    ` manifest-src 'self';`,
+    ` media-src *;`
+  ].join(' ');
 }
 
 // Source:
