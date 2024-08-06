@@ -21,11 +21,12 @@ const withPWA = require('next-pwa')({
   // 'SKIP_WAITING'}." (source:
   // https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.GenerateSW#GenerateSW)
   skipWaiting: false,
-  runtimeCaching: [
-    // Fix bad-precaching-response errors from service worker due to use of
-    // middleware (source: https://github.com/shadowwalker/next-pwa/issues/291)
-    ...runtimeCaching
-  ],
+  // Fix bad-precaching-response errors from service worker due to use of
+  // middleware (source: https://github.com/shadowwalker/next-pwa/issues/291);
+  // PLEASE NOTE that when the service worker is active, you may still see a
+  // no-response error fetching GoatCounter, but this appears to only occur in
+  // Brave and not in other browsers like Chrome
+  runtimeCaching,
   buildExcludes: [
     // This is necessary to prevent service worker errors; see
     // <https://github.com/shadowwalker/next-pwa/issues/424#issuecomment-1399683017>
