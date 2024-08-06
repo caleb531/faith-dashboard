@@ -22,13 +22,6 @@ const withPWA = require('next-pwa')({
   // https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.GenerateSW#GenerateSW)
   skipWaiting: false,
   runtimeCaching: [
-    // Fix no-response errors for GoatCounter analytics scripts (supposedly, if
-    // two rules match the same URL, the first one takes precedence, so we must
-    // place our rule before all other rules)
-    {
-      urlPattern: /^https:\/\/gc\.zgo\.at\//i,
-      handler: 'NetworkOnly'
-    },
     // Fix bad-precaching-response errors from service worker due to use of
     // middleware (source: https://github.com/shadowwalker/next-pwa/issues/291)
     ...runtimeCaching
