@@ -35,6 +35,9 @@ dependencies:
   deep-object-diff:
     specifier: ^1.1.9
     version: 1.1.9
+  goatcounter-js:
+    specifier: 1.0.0-beta.8
+    version: 1.0.0-beta.8
   lodash-es:
     specifier: ^4.17.21
     version: 4.17.21
@@ -5727,6 +5730,11 @@ packages:
       object-assign: 4.1.1
       pify: 2.3.0
       pinkie-promise: 2.0.1
+    dev: false
+
+  /goatcounter-js@1.0.0-beta.8:
+    resolution: {integrity: sha512-MybyBFrGGO5YeuuDLgwi3gntgvKE5ijM0wBKBfWLqXWXE/HOqUmSTftAW7vnUW9kZaW1s8ZglqTqwY1+xi993Q==}
+    engines: {node: '>=18.0.0'}
     dev: false
 
   /gopd@1.0.1:
