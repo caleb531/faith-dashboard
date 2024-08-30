@@ -39,7 +39,7 @@
     "deep-object-diff": "^1.1.9",
     "goatcounter-js": "1.0.0",
     "lodash-es": "^4.17.21",
-    "next": "^14.2.4",
+    "next": "^14.2.7",
     "next-pwa": "^5.6.0",
     "node-fetch": "^3.3.2",
     "react": "^18.3.1",
@@ -47,7 +47,7 @@
     "uuid": "^10.0.0",
     "workbox-window": "^7.1.0",
     "xml2js": "^0.6.2",
-    "youversion-suggest": "^2.2.0"
+    "youversion-suggest": "^3.0.0-beta.4"
   },
   "browserslist": {
     "production": [

@@ -61,6 +61,15 @@ const nextConfig = withPWA({
       });
     }
     return [{ source: '/:path*', headers }];
+  },
+  webpack: (config, { isServer, dev }) => {
+    // Required for youversion-suggest v3, which uses WASM under the hood for
+    // HTML-parsing
+    config.experiments = {
+      ...config.experiments,
+      asyncWebAssembly: true
+    };
+    return config;
   }
 });
 
