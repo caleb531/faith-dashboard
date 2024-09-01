@@ -66,8 +66,8 @@ dependencies:
     specifier: ^0.6.2
     version: 0.6.2
   youversion-suggest:
-    specifier: ^3.0.0-beta.4
-    version: 3.0.0-beta.4
+    specifier: ^3.0.0-beta.7
+    version: 3.0.0-beta.7
 
 devDependencies:
   '@jest/types':
@@ -9686,13 +9686,12 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /youversion-suggest@3.0.0-beta.4:
-    resolution: {integrity: sha512-rrcCVz/A84XZzrximykHqn2XRFC4qzdvT9a3m2KKW15pzWYW6j3gO9ZTJX2IP7z661SweuehYAbXv9Fnls/sDw==}
+  /youversion-suggest@3.0.0-beta.7:
+    resolution: {integrity: sha512-I/cw9GrTnzPU43VW+FGPs0L3GyVTh0XV648uwAXzxaip7dvG9O5W3WbSSxkD3fubqz38b3svgWVRLYSQ7a6KvQ==}
     engines: {node: '>=18.0.0'}
     dependencies:
       '@worker-tools/html-rewriter': 0.1.0-pre.19
       html-entities: 2.5.2
-      node-fetch: 3.3.2
     dev: false
 
   /zod@3.23.8:

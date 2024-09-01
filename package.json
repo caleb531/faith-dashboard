@@ -47,7 +47,7 @@
     "uuid": "^10.0.0",
     "workbox-window": "^7.1.0",
     "xml2js": "^0.6.2",
-    "youversion-suggest": "^3.0.0-beta.4"
+    "youversion-suggest": "^3.0.0-beta.7"
   },
   "browserslist": {
     "production": [
