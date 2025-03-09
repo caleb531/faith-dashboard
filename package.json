@@ -70,6 +70,7 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.12",
     "@types/lodash-es": "^4.17.12",
+    "@types/node": "22.13.10",
     "@types/node-fetch": "^2.6.11",
     "@types/puppeteer": "^5.4.7",
     "@types/react": "^18.3.3",
@@ -103,6 +104,13 @@
   "pnpm": {
     "overrides": {
       "got@<11.8.5": ">=11.8.5"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "jest-preview",
+      "puppeteer",
+      "sharp",
+      "supabase"
+    ]
   }
 }
