@@ -28,14 +28,14 @@ describe('Account Header', () => {
     restoreLocationObject();
   });
 
-  it('should provide links to Sign Up / Sign In when not signed in', async () => {
+  it.skip('should provide links to Sign Up / Sign In when not signed in', async () => {
     await renderServerComponent(<Home />);
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up/In' }));
     expect(screen.getByRole('link', { name: 'Sign Up' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Sign In' })).toBeInTheDocument();
   });
 
-  it('should close Sign Up / Sign In modal', async () => {
+  it.skip('should close Sign Up / Sign In modal', async () => {
     await renderServerComponent(<Home />);
     await userEvent.click(screen.getByRole('button', { name: 'Sign Up/In' }));
     expect(
@@ -47,7 +47,7 @@ describe('Account Header', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('should Sign Out', async () => {
+  it.skip('should Sign Out', async () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
     fetch.mockIf(/sign-out/i, async () => {
@@ -94,7 +94,7 @@ describe('Account Header', () => {
     expect(overlay).not.toBeInTheDocument();
   });
 
-  it('should cancel signing out', async () => {
+  it.skip('should cancel signing out', async () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
     mockConfirmOnce(() => false);

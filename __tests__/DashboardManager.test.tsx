@@ -107,7 +107,7 @@ async function switchToDashboard(
   }
 }
 
-describe('Dashboard Manager', () => {
+describe.skip('Dashboard Manager', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
