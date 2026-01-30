@@ -55,13 +55,13 @@ const tutorialSteps: TutorialStep[] = [
     position: 'bottom',
     alignment: 'right'
   },
-  // {
-  //   id: 'sign-up',
-  //   message: 'Create an account to sync your board across your devices!',
-  //   position: 'bottom',
-  //   alignment: 'right',
-  //   width: 240
-  // },
+  {
+    id: 'sign-up',
+    message: 'Create an account to sync your board across your devices!',
+    position: 'bottom',
+    alignment: 'right',
+    width: 240
+  },
   {
     id: 'remove-widget-bible-verse-2',
     message: "Remove any widget you don't want with the minus (-) icon.",

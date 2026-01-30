@@ -63,7 +63,7 @@ describe('Import/Export functionality', () => {
     expect(originalApp.widgets).toHaveLength(4);
   });
 
-  it.skip('should display confirmation and push dashboard/widgets if user is signed in', async () => {
+  it('should display confirmation and push dashboard/widgets if user is signed in', async () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
     mockSupabaseFrom();
@@ -152,7 +152,7 @@ describe('Import/Export functionality', () => {
       });
     });
     expect(screen.getByText('Shore')).toBeInTheDocument();
-    expect(errorMessage).toContain('Unexpected token');
+    expect(errorMessage).toEqual('Unexpected token o in JSON at position 1');
   });
 
   it('should not trigger import if files are missing', async () => {

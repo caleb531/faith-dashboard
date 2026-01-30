@@ -33,7 +33,7 @@ import { v4 as uuidv4 } from 'uuid';
 const originalOnPush = widgetSyncService.onPush;
 const originalBroadcastPush = widgetSyncService.broadcastPush;
 
-describe.skip('Sync functionality', () => {
+describe('Sync functionality', () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
