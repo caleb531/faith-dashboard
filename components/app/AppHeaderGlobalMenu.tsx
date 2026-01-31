@@ -1,6 +1,7 @@
 'use client';
 import { useContext, useState } from 'react';
 import { exportDashboard } from '../importExportUtils';
+import { reloadPage, setLocationHref } from '../navigationUtils';
 import { getAppStorageKey } from '../storageUtils';
 import AppContext from './AppContext';
 import AppHeaderMenu from './AppHeaderMenu';
@@ -42,7 +43,7 @@ function AppHeaderGlobalMenu() {
         message: 'Sorry, there was an error signing you out.'
       }).toString();
       window.location.hash = `#${queryStr}`;
-      window.location.reload();
+      reloadPage();
     } else {
       // Revert to the default dashboard state when signing out
       localStorage.clear();
@@ -55,8 +56,8 @@ function AppHeaderGlobalMenu() {
         message:
           'You have been signed out. Your dashboard will be waiting for you when you sign in again.'
       }).toString();
-      window.location.href = `/#${queryStr}`;
-      window.location.reload();
+      setLocationHref(`/#${queryStr}`);
+      reloadPage();
     }
   }
 

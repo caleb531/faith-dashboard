@@ -1,3 +1,5 @@
+@use '../base/responsive' as *;
+
 .widget {
   // The below transition duration MUST match the setTimeout() value in the
   // WidgetShell component

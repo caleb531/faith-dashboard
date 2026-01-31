@@ -102,7 +102,7 @@ export default function useWidgetDataFetcher({
   // A reference to an HTML <input> element to which the request query should
   // be bound; this ref should be attached to whatever <input> you are
   // rendering into your widget's settings UI that represents the request query
-  requestQueryInputRef: RefObject<HTMLInputElement>;
+  requestQueryInputRef: RefObject<HTMLInputElement | null>;
   // The submit handler; you should attach this to the <form> element in your
   // widget settings so that the request query can be set on the widget state
   // when the form is submitted

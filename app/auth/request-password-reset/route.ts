@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
   const requestUrl = new URL(request.url);
-  const supabase = getSupabaseServerClient();
+  const supabase = await getSupabaseServerClient();
   const formData = await request.formData();
 
   const response = await supabase.auth.resetPasswordForEmail(

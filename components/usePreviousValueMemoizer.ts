@@ -7,7 +7,7 @@ import { MutableRefObject, useEffect, useRef } from 'react';
 function usePreviousValueMemoizer<TValue>(
   value: TValue
 ): [MutableRefObject<TValue | undefined>, MutableRefObject<TValue>] {
-  const prevValueRef = useRef<TValue | undefined>();
+  const prevValueRef = useRef<TValue | undefined>(undefined);
   const currentValueRef = useRef<TValue>(value);
 
   // Watch for changes to the value and update the refs accordingly

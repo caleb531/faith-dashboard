@@ -41,7 +41,7 @@ async function LandingPage(
   if (isProtected && !session) {
     // If route is protected, redirect to the Sign In page if the user has not
     // signed in
-    redirect(getSignInUrlForCurrentPage());
+    redirect(await getSignInUrlForCurrentPage());
   } else if (redirectSignedInUsersTo && session) {
     // If the user is signed in but on a page which should only be accessible to
     // signed-out users, redirect them to the designated page

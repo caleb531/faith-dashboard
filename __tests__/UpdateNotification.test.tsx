@@ -1,4 +1,5 @@
 import Home from '@app/page';
+import { reloadPage } from '@components/navigationUtils';
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
@@ -7,6 +8,8 @@ import {
   restoreLocationObject
 } from './__utils__/testUtils';
 import userEventFakeTimers from './__utils__/userEventFakeTimers';
+
+jest.mock('@components/navigationUtils');
 
 class ServiceWorkerMock {}
 let originalServiceWorker: typeof navigator.serviceWorker;
@@ -76,7 +79,7 @@ describe('Update Notification', () => {
       })
     );
     await waitFor(() => {
-      expect(window.location.reload).toHaveBeenCalled();
+      expect(reloadPage).toHaveBeenCalled();
     });
   });
 });

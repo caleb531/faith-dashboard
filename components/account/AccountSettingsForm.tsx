@@ -2,6 +2,7 @@
 import AuthForm from '@components/account/AuthForm';
 import AuthFormField from '@components/account/AuthFormField';
 import SessionContext from '@components/app/SessionContext';
+import { reloadPage as reloadWindow } from '@components/navigationUtils';
 import useFormFieldMatcher from '@components/useFormFieldMatcher';
 import useTimeout from '@components/useTimeout';
 import { useContext } from 'react';
@@ -21,7 +22,7 @@ function AccountSettingsForm() {
 
   function reloadPage() {
     setPageReloadTimeout(() => {
-      window.location.reload();
+      reloadWindow();
     }, reloadDelay);
   }
 

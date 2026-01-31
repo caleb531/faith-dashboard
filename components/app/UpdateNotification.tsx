@@ -5,6 +5,7 @@ import {
   Workbox,
   messageSW
 } from 'workbox-window';
+import { reloadPage } from '../navigationUtils';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 
 // Update mechanism code borrowed from
@@ -34,7 +35,7 @@ export function update(wb: Workbox, availableUpdate: WaitingEvent): void {
   // that will reload the page as soon as the previously waiting
   // service worker has taken control.
   wb.addEventListener('controlling', () => {
-    window.location.reload();
+    reloadPage();
   });
   // Send a message to the waiting service worker instructing
   // it to skip waiting, which will trigger the `controlling`

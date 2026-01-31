@@ -1,4 +1,5 @@
 import Captcha from '@components/Captcha';
+import { assignLocation } from '@components/navigationUtils';
 import Button from '@components/reusable/Button';
 import InlineMessage from '@components/reusable/InlineMessage';
 import useVerifyCaptcha from '@components/useVerifyCaptcha';
@@ -181,8 +182,8 @@ function AuthForm(props: Props) {
           {isFormSubmitting && props.submittingLabel
             ? props.submittingLabel
             : isFormSuccess && props.successLabel
-            ? props.successLabel
-            : props.submitLabel}
+              ? props.successLabel
+              : props.submitLabel}
         </Button>
         {props.altLink ? (
           <Link
@@ -204,7 +205,7 @@ function AuthForm(props: Props) {
 // session; the "Submitting..." button label will continue showing while the
 // browser is in the process of redirecting
 export function redirectToHome() {
-  window.location.assign('/');
+  assignLocation('/');
   // By returning false, we can disable the resetting of the Submit button label
   return false;
 }

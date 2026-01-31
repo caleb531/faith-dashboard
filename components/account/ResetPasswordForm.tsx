@@ -2,6 +2,10 @@
 import AuthForm from '@components/account/AuthForm';
 import AuthFormField from '@components/account/AuthFormField';
 import SessionContext from '@components/app/SessionContext';
+import {
+  assignLocation,
+  reloadPage as reloadWindow
+} from '@components/navigationUtils';
 import LoadingIndicator from '@components/reusable/LoadingIndicator';
 import useFormFieldMatcher from '@components/useFormFieldMatcher';
 import React, { useContext } from 'react';
@@ -14,14 +18,14 @@ function ResetPasswordForm() {
 
   function reloadPage(event: React.MouseEvent) {
     event.preventDefault();
-    window.location.reload();
+    reloadWindow();
   }
 
   function redirectToHome() {
     // Redirect to the main app if the user has been properly authenticated
     // with a session; the "Submitting..." button label will continue showing
     // while the browser is in the process of redirecting
-    window.location.assign('/');
+    assignLocation('/');
     // By returning false, we can disable the resetting of the Submit button
     // label
     return false;

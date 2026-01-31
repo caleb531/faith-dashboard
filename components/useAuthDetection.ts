@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { convertObjectToFormData } from './authUtils.client';
+import { assignLocation } from './navigationUtils';
 
 // The useAuthDetection() hook detects if an access token and refresh token are
 // present in the URL, and if so, sends the values to the server so that the
@@ -29,9 +30,7 @@ function useAuthDetection() {
       // Reload the entire page so that the newly-authenticated session is
       // reflected in the UI
       if (response.ok) {
-        window.location.assign(
-          window.location.pathname + window.location.search
-        );
+        assignLocation(window.location.pathname + window.location.search);
       }
     });
     return () => {

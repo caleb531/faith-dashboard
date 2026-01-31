@@ -18,6 +18,8 @@ import {
 } from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
 
+jest.mock('@components/navigationUtils');
+
 describe('Account Header', () => {
   beforeEach(() => {
     mockLocationObject();

@@ -1,4 +1,6 @@
 @use 'sass:math';
+@use '../base/responsive' as *;
+@use '../base/slider' as *;
 
 .audio-player-main-controls {
   display: flex;

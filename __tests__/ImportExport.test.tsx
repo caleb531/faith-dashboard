@@ -152,7 +152,9 @@ describe('Import/Export functionality', () => {
       });
     });
     expect(screen.getByText('Shore')).toBeInTheDocument();
-    expect(errorMessage).toEqual('Unexpected token o in JSON at position 1');
+    expect(errorMessage).toEqual(
+      expect.stringMatching(/Unexpected token|JSON/i)
+    );
   });
 
   it('should not trigger import if files are missing', async () => {

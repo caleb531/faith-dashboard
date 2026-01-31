@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 export async function POST(request: Request) {
   const formData = await request.formData();
   const requestUrl = new URL(request.url);
-  const supabase = getSupabaseServerClient();
+  const supabase = await getSupabaseServerClient();
 
   const response = await supabase.auth.signUp({
     email: String(formData.get('email')),

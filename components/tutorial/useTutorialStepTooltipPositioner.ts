@@ -37,7 +37,7 @@ function isSpaceAvailableForPosition(
 }
 
 function recalculatePosition(
-  ref: RefObject<HTMLElement>,
+  ref: RefObject<HTMLElement | null>,
   currentStep: TutorialStep,
   setPosition: (position: Position) => void
 ) {
@@ -68,7 +68,7 @@ function recalculatePosition(
   setPosition(calculatedPosition);
 }
 
-type Params = { currentStep: TutorialStep; ref: RefObject<HTMLElement> };
+type Params = { currentStep: TutorialStep; ref: RefObject<HTMLElement | null> };
 
 function useTutorialStepTooltipPositioner({
   currentStep,

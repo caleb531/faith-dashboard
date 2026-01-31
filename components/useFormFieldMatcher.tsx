@@ -9,11 +9,11 @@ type MatcherChangeCallback = (event: React.FormEvent<HTMLInputElement>) => void;
 // The useFormFieldMatcher() hook is
 function useFormFieldMatcher({ mismatchMessage }: Params): [
   {
-    ref: RefObject<HTMLInputElement>;
+    ref: RefObject<HTMLInputElement | null>;
     onChange: MatcherChangeCallback;
   },
   {
-    ref: RefObject<HTMLInputElement>;
+    ref: RefObject<HTMLInputElement | null>;
     onChange: MatcherChangeCallback;
   }
 ] {

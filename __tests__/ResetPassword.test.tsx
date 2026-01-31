@@ -1,6 +1,7 @@
 import { POST as ResetPasswordPOST } from '@app/auth/reset-password/route';
 import { POST as SessionPOST } from '@app/auth/session/route';
 import ResetPassword from '@app/reset-password/page';
+import { assignLocation, reloadPage } from '@components/navigationUtils';
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -18,6 +19,8 @@ import {
   mockSupabaseSession,
   mockSupabaseUser
 } from './__utils__/supabaseMockUtils';
+
+jest.mock('@components/navigationUtils');
 
 describe('Reset Password page', () => {
   beforeEach(() => {
@@ -91,6 +94,7 @@ describe('Reset Password page', () => {
       'New Password': 'CorrectHorseBatteryStaple',
       'Confirm New Password': 'CorrectHorseBatteryStaple'
     });
+    fetch.mockClear();
     await userEvent.click(
       screen.getByRole('button', { name: 'Reset Password' })
     );
@@ -122,7 +126,7 @@ describe('Reset Password page', () => {
       access_token: 'abc123',
       refresh_token: 'def234'
     });
-    expect(window.location.assign).toHaveBeenCalled();
+    expect(assignLocation).toHaveBeenCalled();
   });
 
   it('should click "Click here" link to force refresh', async () => {
@@ -137,7 +141,7 @@ describe('Reset Password page', () => {
     await renderServerComponent(<ResetPassword />);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('link', { name: /CLICK HeRe/i }));
-    expect(window.location.reload).toHaveBeenCalled();
+    expect(reloadPage).toHaveBeenCalled();
   });
 
   it('should reset password on server side', async () => {

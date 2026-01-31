@@ -1,9 +1,9 @@
-@import 'base/colors';
-@import 'base/fonts';
-@import 'base/responsive';
-@import 'base/theme';
-@import 'reusable/sheet';
-@import 'app/app-header';
+@use 'base/colors';
+@use 'base/fonts';
+@use 'base/responsive';
+@use 'base/theme';
+@use 'reusable/sheet';
+@use 'app/app-header';
 
 .landing-page {
   display: flex;

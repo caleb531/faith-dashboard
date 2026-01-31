@@ -10,7 +10,9 @@ const config: Config.InitialOptions = {
   testPathIgnorePatterns: ['/__utils__/', '/__mocks__/'],
   coveragePathIgnorePatterns: ['/__utils__/', '/__mocks__/'],
   // Do not attempt to transform lodash-es, since it uses native ES6 modules
-  transformIgnorePatterns: ['<rootDir>/node_modules/(?!.*/lodash-es)'],
+  transformIgnorePatterns: [
+    '<rootDir>/node_modules/(?!.*/lodash-es|.*/uuid|.*/@marsidev/react-turnstile)'
+  ],
   // Enable Jest to compile TypeScript/JSX using Next's built-in Babel preset
   // (rather than creating a .babelrc config, which will cause NextJS to use
   // Babel instead of the much-faster SVC for building the project)
@@ -32,15 +34,12 @@ const config: Config.InitialOptions = {
     'next/link': require.resolve('./__tests__/__mocks__/LinkMock.tsx'),
     'next/headers': require.resolve('./__tests__/__mocks__/nextHeaders.ts'),
     'next/server': require.resolve('./__tests__/__mocks__/nextServer.ts'),
-    'next/navigation': require.resolve(
-      './__tests__/__mocks__/nextNavigation.ts'
-    ),
-    'workbox-window': require.resolve(
-      './__tests__/__mocks__/WorkboxWindowMock.ts'
-    ),
-    '@supabase/ssr': require.resolve(
-      './__tests__/__mocks__/supabaseAuthHelpersMock.ts'
-    ),
+    'next/navigation':
+      require.resolve('./__tests__/__mocks__/nextNavigation.ts'),
+    'workbox-window':
+      require.resolve('./__tests__/__mocks__/WorkboxWindowMock.ts'),
+    '@supabase/ssr':
+      require.resolve('./__tests__/__mocks__/supabaseAuthHelpersMock.ts'),
     '(.*).(jpg|png|svg)$': require.resolve('./__tests__/__mocks__/imageMock.ts')
   },
   // Display coverage summary below file-by-file coverage breakdown

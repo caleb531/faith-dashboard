@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   const redirectTo = requestUrl.searchParams.get('redirect_to') ?? '';
 
   if (code) {
-    const supabase = getSupabaseServerClient();
+    const supabase = await getSupabaseServerClient();
     await supabase.auth.exchangeCodeForSession(code);
     // URL to redirect to after sign in process completes
     return NextResponse.redirect(`${requestUrl.origin}${redirectTo}`);

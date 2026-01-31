@@ -1,5 +1,6 @@
 // Map of each color theme's string ID to its respective color variable name
 // (as a string)
+@use 'sass:list';
 $theme-colors: (
   'brown': 'brown',
   'green': 'green',
@@ -35,7 +36,7 @@ body {
 
 // Dynamically define CSS variables / custom properties using Sass variable
 // interpolation
-@each $theme-name, $theme-color in join($theme-colors, $theme-photos) {
+@each $theme-name, $theme-color in list.join($theme-colors, $theme-photos) {
   .theme-#{$theme-name} {
     --current-theme-color: var(--color-#{$theme-color});
     --current-theme-color-dark: var(--color-#{$theme-color}-dark);

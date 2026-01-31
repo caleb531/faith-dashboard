@@ -3,6 +3,7 @@ import { POST as CancelEmailChangePOST } from '@app/auth/cancel-email-change/rou
 import { POST as ChangePasswordPOST } from '@app/auth/change-password/route';
 import { POST as RequestEmailChangePOST } from '@app/auth/request-email-change/route';
 import { POST as UpdateUserNamePOST } from '@app/auth/update-user-name/route';
+import { reloadPage } from '@components/navigationUtils';
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -22,6 +23,9 @@ import {
   restoreLocationObject,
   typeIntoFormFields
 } from './__utils__/testUtils';
+
+jest.mock('@components/navigationUtils');
+jest.mock('next/headers');
 
 describe('Account Settings page', () => {
   beforeEach(() => {
@@ -47,9 +51,9 @@ describe('Account Settings page', () => {
   it('should redirect to Sign In page if signed out', async () => {
     // Mock the value of the x-url header so that the source code can correctly
     // determine the URL to redirect to (after sign-in)
-    jest
-      .spyOn(headers(), 'get')
-      .mockImplementation(() => 'https://localhost:3000/account');
+    (headers as jest.Mock).mockResolvedValue({
+      get: jest.fn().mockReturnValue('https://localhost:3000/account')
+    });
     await renderServerComponent(<AccountSettings />);
     expect(redirect).toHaveBeenCalledWith(
       `/sign-in?redirect_to=${encodeURIComponent('/account')}`
@@ -70,6 +74,7 @@ describe('Account Settings page', () => {
       },
       { clearFieldsFirst: true }
     );
+    fetch.mockClear();
     await userEvent.click(screen.getByRole('button', { name: 'Save Details' }));
     const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
     expect(actualFetchUrl).toEqual('/auth/update-user-name');
@@ -80,7 +85,7 @@ describe('Account Settings page', () => {
       verification_check: ''
     });
     await waitFor(() => {
-      expect(window.location.reload).toHaveBeenCalled();
+      expect(reloadPage).toHaveBeenCalled();
     });
   });
 
@@ -98,6 +103,7 @@ describe('Account Settings page', () => {
       },
       { clearFieldsFirst: true }
     );
+    fetch.mockClear();
     await userEvent.click(screen.getByRole('button', { name: 'Change Email' }));
     const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
     expect(actualFetchUrl).toEqual('/auth/request-email-change');
@@ -108,7 +114,7 @@ describe('Account Settings page', () => {
       verification_check: ''
     });
     await waitFor(() => {
-      expect(window.location.reload).toHaveBeenCalled();
+      expect(reloadPage).toHaveBeenCalled();
     });
   });
 
@@ -151,6 +157,7 @@ describe('Account Settings page', () => {
       return JSON.stringify({});
     });
     await renderServerComponent(<AccountSettings />);
+    fetch.mockClear();
     await userEvent.click(
       screen.getByRole('button', { name: 'Cancel Email Change' })
     );
@@ -158,7 +165,7 @@ describe('Account Settings page', () => {
     expect(actualFetchUrl).toEqual('/auth/cancel-email-change');
     expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
     await waitFor(() => {
-      expect(window.location.reload).toHaveBeenCalled();
+      expect(reloadPage).toHaveBeenCalled();
     });
   });
 
@@ -174,6 +181,7 @@ describe('Account Settings page', () => {
       'New Password': 'CorrectHorseBatteryStaple',
       'Confirm New Password': 'CorrectHorseBatteryStaple'
     });
+    fetch.mockClear();
     await userEvent.click(
       screen.getByRole('button', { name: 'Change Password' })
     );

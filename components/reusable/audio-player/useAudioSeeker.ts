@@ -11,7 +11,7 @@ function useAudioSeeker(
   setCurrentTime: (newCurrentTime: number) => void
 ): {
   seekerProvided: {
-    ref: RefObject<HTMLInputElement>;
+    ref: RefObject<HTMLInputElement | null>;
     onInput: (event: React.FormEvent<HTMLInputElement>) => void;
     onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
     onKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void;

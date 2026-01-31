@@ -1,6 +1,7 @@
 import { GET as CallbackGET } from '@app/auth/callback/route';
 import { POST as SignUpPOST } from '@app/auth/sign-up/route';
 import SignUp from '@app/sign-up/page';
+import { assignLocation } from '@components/navigationUtils';
 import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -16,6 +17,8 @@ import {
 } from '@tests/__utils__/testUtils';
 import fetch from 'jest-fetch-mock';
 import { NextResponse } from 'next/server';
+
+jest.mock('@components/navigationUtils');
 
 describe('Sign Up page', () => {
   beforeEach(() => {
@@ -113,7 +116,7 @@ describe('Sign Up page', () => {
       last_name: 'Doe',
       verification_check: ''
     });
-    expect(window.location.assign).toHaveBeenCalled();
+    expect(assignLocation).toHaveBeenCalled();
   });
 
   it('should indicate if email needs to be confirmed post-sign up', async () => {

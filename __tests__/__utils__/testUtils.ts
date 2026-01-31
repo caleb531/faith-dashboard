@@ -74,17 +74,11 @@ export function getWidgetData({
 const originalLocationObject = window.location;
 
 export function mockLocationObject() {
-  // @ts-ignore (see <https://stackoverflow.com/a/61649798/560642>)
-  delete window.location;
-  window.location = {
-    ...originalLocationObject,
-    reload: jest.fn(),
-    assign: jest.fn()
-  };
+  // no-op, use jest.mock('@components/navigationUtils') instead
 }
 
 export function restoreLocationObject() {
-  window.location = originalLocationObject;
+  // no-op
 }
 
 export function mockAlertOnce(mockImpl: (message?: any) => void) {

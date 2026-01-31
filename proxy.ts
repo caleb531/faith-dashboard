@@ -1,4 +1,4 @@
-import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
 
 import type { NextRequest } from 'next/server';
@@ -27,82 +27,60 @@ function generateCSP() {
 
 // Source:
 // <https://stackoverflow.com/a/76567353/560642>
-function getResponseWithCSPApplied(req: NextRequest) {
+// function getResponseWithCSPApplied(req: NextRequest) {
+//   ... This function is now inlined/adapted in middleware
+// }
+
+export default async function proxy(request: NextRequest) {
   const csp = generateCSP();
-  // Clone the request headers
-  const requestHeaders = new Headers(req.headers);
-  // Set the CSP header so that Next.js can read it and generate tags with the
-  // nonce
-  requestHeaders.set('content-security-policy', csp);
-  // Create new response
-  const res = NextResponse.next({
+  const requestHeaders = new Headers(request.headers);
+
+  // Apply CSP to request headers, but only in Production
+  if (process.env.NODE_ENV === 'production') {
+    requestHeaders.set('content-security-policy', csp);
+  }
+
+  let response = NextResponse.next({
     request: {
-      // New request headers
       headers: requestHeaders
     }
   });
-  // Also set the CSP header in the response so that it is outputted to the
-  // browser
-  res.headers.set('content-security-policy', csp);
-  return res;
-}
-
-export async function middleware(request: NextRequest) {
-  // Apply CSP to response, but only in Production
-  let response =
-    process.env.NODE_ENV === 'production'
-      ? getResponseWithCSPApplied(request)
-      : NextResponse.next({ headers: request.headers });
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name: string) {
-          return request.cookies.get(name)?.value;
+        getAll() {
+          return request.cookies.getAll();
         },
-        set(name: string, value: string, options: CookieOptions) {
-          request.cookies.set({
-            name,
-            value,
-            ...options
-          });
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            request.cookies.set(name, value)
+          );
           response = NextResponse.next({
             request: {
-              headers: request.headers
+              headers: requestHeaders
             }
           });
-          response.cookies.set({
-            name,
-            value,
-            ...options
-          });
-        },
-        remove(name: string, options: CookieOptions) {
-          request.cookies.set({
-            name,
-            value: '',
-            ...options
-          });
-          response = NextResponse.next({
-            request: {
-              headers: request.headers
-            }
-          });
-          response.cookies.set({
-            name,
-            value: '',
-            ...options
-          });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options)
+          );
         }
       }
     }
   );
+
   // Ensure that the user's session stays active
   await supabase.auth.getUser();
+
   // Set the request URL in the headers so it can be accessed from a Server
   // Component (source: <https://stackoverflow.com/a/75363135/560642>)
   response.headers.set('x-url', request.url);
+
+  if (process.env.NODE_ENV === 'production') {
+    response.headers.set('content-security-policy', csp);
+  }
+
   return response;
 }
