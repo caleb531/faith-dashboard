@@ -40,6 +40,7 @@ const withPWA = require('next-pwa')({
 /** @type {import('next').NextConfig} */
 const nextConfig = withPWA({
   reactStrictMode: true,
+  allowedDevOrigins: ['calebevans-mba.local'],
   async headers() {
     const headers = [
       {
