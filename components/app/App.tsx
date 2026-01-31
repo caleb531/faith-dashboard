@@ -37,7 +37,10 @@ function shouldLoadServiceWorker() {
   return (
     typeof navigator !== 'undefined' &&
     navigator.serviceWorker &&
-    (!window.location.hostname.includes('localhost') ||
+    (!(
+      window.location.hostname.includes('localhost') &&
+      window.location.hostname.includes('.local')
+    ) ||
       sessionStorage.getItem('sw'))
   );
 }
