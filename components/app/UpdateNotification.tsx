@@ -22,6 +22,12 @@ export function initialize(
     // You may want to customize the UI prompt accordingly.
     setAvailableUpdate(waitingEvent);
   }
+  if (
+    window.location.hostname === 'localhost' &&
+    !sessionStorage.getItem('sw')
+  ) {
+    return;
+  }
   // Add an event listener to detect when the registered
   // service worker has installed but is waiting to activate.
   wb.addEventListener('waiting', showSkipWaitingPrompt);
