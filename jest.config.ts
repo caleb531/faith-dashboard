@@ -14,10 +14,15 @@ const config: Config.InitialOptions = {
     '<rootDir>/node_modules/(?!.*/lodash-es|.*/uuid|.*/@marsidev/react-turnstile)'
   ],
   // Enable Jest to compile TypeScript/JSX using Next's built-in Babel preset
-  // (rather than creating a .babelrc config, which will cause NextJS to use
-  // Babel instead of the much-faster SVC for building the project)
+  // and React's automatic JSX runtime. Keeping this here (rather than adding
+  // a .babelrc) lets Next continue to use its faster compiler for app builds.
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }]
+    '^.+\\.(js|jsx|ts|tsx)$': [
+      'babel-jest',
+      {
+        presets: [['next/babel', { 'preset-react': { runtime: 'automatic' } }]]
+      }
+    ]
   },
   // Mock the NextJS <Link> component (next/link) to prevent act() errors when
   // running some asynchronous tests; this is because next/link will

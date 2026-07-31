@@ -19,7 +19,6 @@
     "incremental": true,
     "strict": true,
     "strictFunctionTypes": false,
-    "baseUrl": ".",
     "paths": {
       "@app/*": [
         "./app/*"
