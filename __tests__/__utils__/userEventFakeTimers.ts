@@ -4,6 +4,8 @@ import userEvent from '@testing-library/user-event';
 // fake timers are currently enabled, otherwise you will receive a warning
 // (source:
 // <https://stackoverflow.com/questions/71901237/fake-timers-doesnt-work-with-latest-version-of-user-event>)
-export default userEvent.setup({
-  advanceTimers: () => jest.runOnlyPendingTimers()
-});
+export function createUserEventWithFakeTimers() {
+  return userEvent.setup({
+    advanceTimers: (delay) => jest.advanceTimersByTime(delay)
+  });
+}

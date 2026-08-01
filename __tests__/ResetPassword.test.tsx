@@ -89,6 +89,9 @@ describe('Reset Password page', () => {
         error: null
       });
     });
+    fetch.mockIf(/\/auth\/session/i, async () => {
+      return { status: 200, body: JSON.stringify({}) };
+    });
     await renderServerComponent(<ResetPassword />);
     await typeIntoFormFields({
       'New Password': 'CorrectHorseBatteryStaple',
@@ -98,6 +101,7 @@ describe('Reset Password page', () => {
     await userEvent.click(
       screen.getByRole('button', { name: 'Reset Password' })
     );
+    expect(fetch.mock.calls).toHaveLength(1);
     const [actualFetchUrl, actualFetchOptions] = fetch.mock.calls[0];
     expect(actualFetchUrl).toEqual('/auth/reset-password');
     expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');

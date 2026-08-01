@@ -1,13 +1,8 @@
 import Home from '@app/page';
 import { getDefaultAppState } from '@components/app/appUtils';
-import { Deferred } from '@components/deferred';
 import widgetSyncService from '@components/widgets/widgetSyncService';
 import '@testing-library/jest-dom';
-import {
-  screen,
-  waitFor,
-  waitForElementToBeRemoved
-} from '@testing-library/react';
+import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import dashboardToPullJson from '@tests/__json__/dashboardToPull.json';
 import widgetToPullJson from '@tests/__json__/widgetToPull.json';
@@ -25,23 +20,22 @@ import {
 } from '@tests/__utils__/supabaseMockUtils';
 import {
   assignIdToLocalApp,
-  removeWidget,
+  mockConfirmOnce,
   waitForWidget
 } from '@tests/__utils__/testUtils';
 import { v4 as uuidv4 } from 'uuid';
 
-const originalOnPush = widgetSyncService.onPush;
-const originalBroadcastPush = widgetSyncService.broadcastPush;
-
 describe('Sync functionality', () => {
+  let user: ReturnType<typeof userEvent.setup>;
+
   beforeEach(() => {
     jest.useFakeTimers();
+    user = userEvent.setup({
+      advanceTimers: (delay) => jest.advanceTimersByTime(delay)
+    });
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
-    widgetSyncService.onPush = originalOnPush;
-    widgetSyncService.broadcastPush = originalBroadcastPush;
     jest.useRealTimers();
   });
 
@@ -174,23 +168,6 @@ describe('Sync functionality', () => {
     mockSupabaseSelect('widgets', { data: [] });
     mockSupabaseUpsert('dashboards');
     mockSupabaseUpsert('widgets');
-    // Force the widgetSyncService.onPush listener to be bound
-    // *after* the push event has already been broadcast, as this is the
-    // scenario we are testing for; that is, we want to ensure the widgets are
-    // still pushed even if the push event listeners are bound too late
-    const promiseCache: Record<string, Deferred<void>> = {};
-    widgetSyncService.onPush = (widgetId) => {
-      if (!promiseCache[widgetId]) {
-        promiseCache[widgetId] = new Deferred();
-      }
-      return promiseCache[widgetId].promise.then(() => {
-        return originalOnPush(widgetId);
-      });
-    };
-    widgetSyncService.broadcastPush = (widgetId) => {
-      originalBroadcastPush(widgetId);
-      promiseCache[widgetId]?.resolve();
-    };
     assignIdToLocalApp(uuidv4());
     await renderServerComponent(<Home />);
     await waitFor(() => {
@@ -226,12 +203,9 @@ describe('Sync functionality', () => {
     await waitForWidget({ type: 'Note', index: 1 });
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
     expect(textBox).toBeInTheDocument();
-    await userEvent.type(textBox, 'God is good', {
-      // Because we are using fake timers, we must advance the time manually
-      // via the optional advanceTimers() callback to userEvent methods
-      advanceTimers: (delay) => {
-        jest.advanceTimersByTime(delay);
-      }
+    await user.type(textBox, 'God is good');
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
     });
     await waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('widgets');
@@ -256,15 +230,17 @@ describe('Sync functionality', () => {
         screen.getByRole('button', { name: 'Your Account' })
       ).toBeInTheDocument();
     });
-    jest.useRealTimers();
     await waitForWidget({ type: 'Note', index: 1 });
-    const widgetElem = await removeWidget({
-      type: 'Note',
-      index: 1,
-      confirmRemove: true
+    const widgetElem = screen.getAllByRole('article')[1];
+    const confirm = mockConfirmOnce(() => true);
+    await user.click(
+      screen.getAllByRole('button', { name: 'Remove Widget' })[1]
+    );
+    expect(confirm).toHaveBeenCalled();
+    await act(async () => {
+      jest.advanceTimersByTime(250);
     });
-    await waitForElementToBeRemoved(widgetElem);
-    jest.useFakeTimers();
+    expect(widgetElem).not.toBeInTheDocument();
     await waitFor(() => {
       expect(supabaseFromMocks.widgets.delete).toHaveBeenCalled();
     });
@@ -289,14 +265,11 @@ describe('Sync functionality', () => {
     await waitForWidget({ type: 'Note', index: 1 });
     const textBox = screen.getAllByRole('textbox', { name: 'Note Text' })[0];
     expect(textBox).toBeInTheDocument();
-    await userEvent.type(textBox, 'God is good', {
-      advanceTimers: (delay) => {
-        jest.advanceTimersByTime(delay);
-      }
+    await user.type(textBox, 'God is good');
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
     });
-    await waitFor(() => {
-      expect(supabaseFromMocks.widgets.upsert).not.toHaveBeenCalled();
-    });
+    expect(supabaseFromMocks.widgets.upsert).not.toHaveBeenCalled();
   });
 
   it('should not pull latest dashboard if not signed in', async () => {
@@ -310,10 +283,8 @@ describe('Sync functionality', () => {
     expect(
       screen.getByRole('button', { name: 'Sign Up/In' })
     ).toBeInTheDocument();
-    await waitFor(() => {
-      expect(supabase.from).not.toHaveBeenCalled();
-      expect(supabaseFromMocks.dashboards.select).not.toHaveBeenCalled();
-      expect(supabaseFromMocks.widgets.select).not.toHaveBeenCalled();
-    });
+    expect(supabase.from).not.toHaveBeenCalled();
+    expect(supabaseFromMocks.dashboards.select).not.toHaveBeenCalled();
+    expect(supabaseFromMocks.widgets.select).not.toHaveBeenCalled();
   });
 });

@@ -11,6 +11,7 @@
     "start": "next start",
     "preview": "next start",
     "test": "jest",
+    "test:reliability": "jest --runInBand --randomize --seed=184729 && jest --runInBand --randomize --seed=104729 && jest --runInBand --randomize --seed=281991 && jest --runInBand --randomize --seed=450101 && jest --runInBand --randomize --seed=773401",
     "coverage": "jest --coverage",
     "lint": "tsc --noEmit; eslint 'components/**/*.ts' 'app/**/*.tsx' 'app/**/*.ts' '__tests__/**/*.ts' 'utilities/**/*.ts'",
     "prettier": "prettier -w components/**/*.ts styles __tests__/**/*.ts utilities --ignore-path components/databaseSchema.types.ts",

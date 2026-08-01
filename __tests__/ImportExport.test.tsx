@@ -22,11 +22,14 @@ import {
 } from '@tests/__utils__/testUtils';
 import { omit } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
-import userEventFakeTimers from './__utils__/userEventFakeTimers';
+import { createUserEventWithFakeTimers } from './__utils__/userEventFakeTimers';
 
 describe('Import/Export functionality', () => {
+  let user: ReturnType<typeof createUserEventWithFakeTimers>;
+
   beforeEach(() => {
     jest.useFakeTimers();
+    user = createUserEventWithFakeTimers();
   });
   afterEach(() => {
     jest.resetAllMocks();
@@ -39,7 +42,7 @@ describe('Import/Export functionality', () => {
     const originalApp = getAppData();
     await renderServerComponent(<Home />);
     expect(screen.getByText('Shore')).toBeInTheDocument();
-    await userEventFakeTimers.click(
+    await user.click(
       screen.getByRole('button', { name: 'Tools' })
     );
     const fileContents = JSON.stringify(exportedDashboard);
@@ -73,7 +76,7 @@ describe('Import/Export functionality', () => {
     mockConfirmOnce(() => true);
     await renderServerComponent(<Home />);
     expect(screen.getByText('Shore')).toBeInTheDocument();
-    await userEventFakeTimers.click(
+    await user.click(
       screen.getByRole('button', { name: 'Your Account' })
     );
     const fileContents = JSON.stringify(exportedDashboard);
@@ -98,7 +101,7 @@ describe('Import/Export functionality', () => {
     mockConfirmOnce(() => false);
     await renderServerComponent(<Home />);
     expect(screen.getByText('Shore')).toBeInTheDocument();
-    await userEventFakeTimers.click(
+    await user.click(
       screen.getByRole('button', { name: 'Tools' })
     );
     const fileContents = JSON.stringify(exportedDashboard);
@@ -118,7 +121,7 @@ describe('Import/Export functionality', () => {
     mockAlertOnce((message) => {
       errorMessage = message;
     });
-    await userEventFakeTimers.click(
+    await user.click(
       screen.getByRole('button', { name: 'Tools' })
     );
     const fileContents = '';
@@ -141,7 +144,7 @@ describe('Import/Export functionality', () => {
     mockAlertOnce((message) => {
       errorMessage = message;
     });
-    await userEventFakeTimers.click(
+    await user.click(
       screen.getByRole('button', { name: 'Tools' })
     );
     const fileContents = 'not_valid_json';
@@ -160,7 +163,7 @@ describe('Import/Export functionality', () => {
   it('should not trigger import if files are missing', async () => {
     await renderServerComponent(<Home />);
     expect(screen.getByText('Shore')).toBeInTheDocument();
-    await userEventFakeTimers.click(
+    await user.click(
       screen.getByRole('button', { name: 'Tools' })
     );
     const fileContents = '';
@@ -177,7 +180,7 @@ describe('Import/Export functionality', () => {
     let exportedBlob: Blob | undefined;
     setAppData(dashboardToExport);
     await renderServerComponent(<Home />);
-    await userEventFakeTimers.click(
+    await user.click(
       screen.getByRole('button', { name: 'Tools' })
     );
     jest.spyOn(URL, 'createObjectURL').mockImplementation((blob: Blob) => {
@@ -185,7 +188,7 @@ describe('Import/Export functionality', () => {
       // Doesn't matter what this value is
       return '';
     });
-    await userEventFakeTimers.click(
+    await user.click(
       screen.getByRole('link', { name: 'Export Dashboard' })
     );
     const blobText = (await exportedBlob?.text()) ?? null;

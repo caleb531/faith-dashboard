@@ -1,4 +1,3 @@
-import { configure } from '@testing-library/dom';
 import AudioMock from '@tests/__mocks__/AudioMock';
 import BlobMock from '@tests/__mocks__/BlobMock';
 import FileReaderMock from '@tests/__mocks__/FileReaderMock';
@@ -8,7 +7,13 @@ import {
 } from '@tests/__mocks__/mediaSessionMock';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 import fetch, { enableFetchMocks } from 'jest-fetch-mock';
-import { mockSupabaseSession, mockSupabaseUser } from './supabaseMockUtils';
+import {
+  mockSupabaseSession,
+  mockSupabaseUser,
+  supabaseFromMocks
+} from './supabaseMockUtils';
+import { Workbox } from '../__mocks__/WorkboxWindowMock';
+import { resetWidgetSyncService } from '@components/widgets/widgetSyncService';
 
 declare global {
   interface Window {
@@ -17,12 +22,6 @@ declare global {
     NextResponse: any;
   }
 }
-
-// Increase timeout of React Testing Library's waitFor() function, as well as
-// Jest's global max timeout; this is an attempt to resolve the 'Unable to find
-// role' error when running tests on CI (even though all tests pass locally)
-configure({ asyncUtilTimeout: 10000 });
-jest.setTimeout(20000);
 
 enableFetchMocks();
 
@@ -45,9 +44,29 @@ let originalMediaMetadata: typeof window.MediaMetadata;
 let originalMediaSession: typeof navigator.mediaSession;
 let getUserStub: jest.SpyInstance;
 let getSessionStub: jest.SpyInstance;
+const originalUrl = window.location.href;
+const originalCreateObjectURL = URL.createObjectURL;
+const originalFileReader = window.FileReader;
+const originalBlob = window.Blob;
+const originalServiceWorker = Object.getOwnPropertyDescriptor(
+  navigator,
+  'serviceWorker'
+);
 
 beforeEach(async () => {
   localStorage.clear();
+  sessionStorage.clear();
+  window.history.replaceState({}, '', originalUrl);
+  document.documentElement.className = '';
+  document.body.className = '';
+  resetWidgetSyncService();
+  Workbox.instances.length = 0;
+  Object.values(supabaseFromMocks).forEach((tableMocks) => {
+    Object.values(tableMocks).forEach((mock) => mock.mockReset());
+  });
+  fetch.mockImplementation(async (request) => {
+    throw new Error(`Unexpected fetch request: ${String(request)}`);
+  });
   Object.defineProperty(window, 'Blob', {
     configurable: true,
     value: BlobMock
@@ -88,4 +107,29 @@ afterEach(async () => {
   window.MediaMetadata = originalMediaMetadata;
   getUserStub.mockRestore();
   getSessionStub.mockRestore();
+  if (jest.isMockFunction(supabase.from)) {
+    (supabase.from as jest.Mock).mockRestore();
+  }
+  resetWidgetSyncService();
+  Workbox.instances.length = 0;
+  window.history.replaceState({}, '', originalUrl);
+  document.documentElement.className = '';
+  document.body.className = '';
+  Object.defineProperty(URL, 'createObjectURL', {
+    configurable: true,
+    value: originalCreateObjectURL
+  });
+  Object.defineProperty(window, 'FileReader', {
+    configurable: true,
+    value: originalFileReader
+  });
+  Object.defineProperty(window, 'Blob', {
+    configurable: true,
+    value: originalBlob
+  });
+  if (originalServiceWorker) {
+    Object.defineProperty(navigator, 'serviceWorker', originalServiceWorker);
+  } else {
+    delete (navigator as any).serviceWorker;
+  }
 });

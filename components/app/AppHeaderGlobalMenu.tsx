@@ -9,6 +9,7 @@ import AppImportInput from './AppImportInput';
 import AppImportTrigger from './AppImportTrigger';
 import DashboardManager from './DashboardManager';
 import SessionContext from './SessionContext';
+import SyncContext from './SyncContext';
 import { AppState } from './app.types';
 import { getDefaultAppState } from './appUtils';
 
@@ -18,6 +19,7 @@ function AppHeaderGlobalMenu() {
     useState(false);
 
   const { user, isSignedIn } = useContext(SessionContext);
+  const { pushAppToServer } = useContext(SyncContext);
 
   async function handleExportDashboard() {
     exportDashboard();
@@ -25,6 +27,9 @@ function AppHeaderGlobalMenu() {
 
   function onImportSuccess(importedApp: AppState) {
     dispatchToApp({ type: 'replaceApp', payload: importedApp });
+    if (isSignedIn) {
+      void pushAppToServer(importedApp, { includeWidgets: true });
+    }
   }
 
   async function signOut() {

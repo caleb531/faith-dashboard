@@ -86,7 +86,7 @@ describe('Account Settings page', () => {
     });
     await waitFor(() => {
       expect(reloadPage).toHaveBeenCalled();
-    });
+    }, { timeout: 1500 });
   });
 
   it('should request email change successfully', async () => {
@@ -115,7 +115,7 @@ describe('Account Settings page', () => {
     });
     await waitFor(() => {
       expect(reloadPage).toHaveBeenCalled();
-    });
+    }, { timeout: 1500 });
   });
 
   it('should validate that emails are not matching', async () => {
@@ -166,7 +166,7 @@ describe('Account Settings page', () => {
     expect(actualFetchOptions?.method?.toUpperCase()).toEqual('POST');
     await waitFor(() => {
       expect(reloadPage).toHaveBeenCalled();
-    });
+    }, { timeout: 1500 });
   });
 
   it('should change password successfully', async () => {

@@ -68,6 +68,12 @@ function useSyncPush<T extends AcceptableSyncStateTypes>({
   useEffect(() => {
     evaluatePushDebounced({ state, upsertState });
   }, [state, evaluatePushDebounced, upsertState]);
+
+  useEffect(() => {
+    return () => {
+      evaluatePushDebounced.cancel();
+    };
+  }, [evaluatePushDebounced]);
 }
 
 export default useSyncPush;

@@ -57,11 +57,24 @@ export function offPull(widgetId: string): void {
   delete widgetPullQueue[widgetId];
 }
 
+// Test-only lifecycle boundary for the module-level queues. Keeping this
+// explicit makes queue ownership visible and prevents broadcasts from one
+// mounted app leaking into the next test.
+export function resetWidgetSyncService(): void {
+  Object.keys(widgetPushQueue).forEach((widgetId) => {
+    delete widgetPushQueue[widgetId];
+  });
+  Object.keys(widgetPullQueue).forEach((widgetId) => {
+    delete widgetPullQueue[widgetId];
+  });
+}
+
 export default {
   broadcastPush,
   broadcastPull,
   onPush,
   onPull,
   offPush,
-  offPull
+  offPull,
+  resetWidgetSyncService
 };

@@ -7,7 +7,7 @@ import {
   mockLocationObject,
   restoreLocationObject
 } from './__utils__/testUtils';
-import userEventFakeTimers from './__utils__/userEventFakeTimers';
+import { createUserEventWithFakeTimers } from './__utils__/userEventFakeTimers';
 
 jest.mock('@components/navigationUtils');
 
@@ -16,8 +16,11 @@ let originalServiceWorker: typeof navigator.serviceWorker;
 const updateAvailableMessage = 'Update available! Click here to update.';
 
 describe('Update Notification', () => {
+  let user: ReturnType<typeof createUserEventWithFakeTimers>;
+
   beforeEach(() => {
     jest.useFakeTimers();
+    user = createUserEventWithFakeTimers();
     mockLocationObject();
     // Mock navigator.serviceWorker
     originalServiceWorker = navigator.serviceWorker;
@@ -61,7 +64,7 @@ describe('Update Notification', () => {
       name: updateAvailableMessage
     });
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    await userEventFakeTimers.click(updateNotification);
+    await user.click(updateNotification);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
   it('should reload page when service worker is updated', async () => {
@@ -73,7 +76,7 @@ describe('Update Notification', () => {
         })
       ).toBeInTheDocument();
     });
-    await userEventFakeTimers.click(
+    await user.click(
       screen.getByRole('region', {
         name: updateAvailableMessage
       })

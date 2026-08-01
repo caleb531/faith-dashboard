@@ -166,6 +166,12 @@ function useAppSync(
     return throttle(pullLatestAppFromServer, 1000);
   }, [pullLatestAppFromServer]);
 
+  useEffect(() => {
+    return () => {
+      pullLatestAppFromServerThrottled.cancel();
+    };
+  }, [pullLatestAppFromServerThrottled]);
+
   // Pull latest data from server on initial app load
   const isDefaultAppState = app.id === undefined && app.isDefaultApp;
   useEffect(() => {

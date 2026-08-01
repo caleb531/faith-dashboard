@@ -8,6 +8,9 @@ on:
     branches: ['main', 'develop']
   pull_request:
     branches: ['*']
+  schedule:
+    - cron: '17 4 * * 1'
+  workflow_dispatch:
 
 jobs:
   test:
@@ -41,3 +44,43 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  reliability:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        seed: [184729, 104729, 281991, 450101, 773401]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 24.x
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - name: Run randomized suite (seed ${{ matrix.seed }})
+        run: pnpm exec jest --runInBand --randomize --seed=${{ matrix.seed }}
+
+  reliability-sweep:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        seed: [184729, 104729, 281991, 450101, 773401, 918273, 120487, 337711, 502198, 668004, 714205, 845091, 990231, 135790, 246802, 357913, 468024, 579135, 680246, 791357, 802468, 913579, 102938, 564738, 675849]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 24.x
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - name: Run randomized suite (seed ${{ matrix.seed }})
+        run: pnpm exec jest --runInBand --randomize --seed=${{ matrix.seed }}
