@@ -5,7 +5,7 @@ const widgetTypes: WidgetType[] = [
     type: 'BibleVerse',
     name: 'Bible Verse',
     description:
-      'Display a single verse or selection of verses on your dashboard. Bible content is in the ESV translation.',
+      'Display a single verse or selection of verses on your dashboard, in your translation of choice',
     icon: 'book-dark',
     requiresConfiguration: true
   },
