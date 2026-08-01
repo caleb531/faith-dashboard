@@ -1,6 +1,6 @@
 When asked to write Supabase migrations, use the `supabase migration` commands to create and manage your database schema changes. Do not push/apply the migration until the user has given explicit confirmation to do so.
 
-After making source code changes, run:
+After making source JS/TS or CSS changes, run:
 
 - `pnpm format`
 - `pnpm lint`
