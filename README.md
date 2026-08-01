@@ -1,6 +1,6 @@
 # Faith Dashboard
 
-_Copyright 2021-2023, Caleb Evans_  
+_Copyright 2021-2026, Caleb Evans_  
 _Released under the MIT License_
 
 [![tests](https://github.com/caleb531/faith-dashboard/actions/workflows/tests.yml/badge.svg)](https://github.com/caleb531/faith-dashboard/actions/workflows/tests.yml)
