@@ -1,8 +1,9 @@
-const path = require('path');
-const runtimeCaching = require('next-pwa/cache');
+import type { NextConfig } from 'next';
+import nextPWA from 'next-pwa';
+import runtimeCaching from 'next-pwa/cache';
 
-/** @type {import('next-pwa').PWAConfig} */
-const withPWA = require('next-pwa')({
+/** Configures PWA service-worker generation around the base Next.js settings */
+const withPWA = nextPWA({
   // The destination directory of the generated service worker
   dest: 'public',
   // The name of the generated service worker
@@ -37,8 +38,8 @@ const withPWA = require('next-pwa')({
   ]
 });
 
-/** @type {import('next').NextConfig} */
-const nextConfig = withPWA({
+/** Defines application behavior before it is augmented with PWA settings */
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   allowedDevOrigins: ['calebevans-mba.local'],
   async headers() {
@@ -64,6 +65,7 @@ const nextConfig = withPWA({
     return [{ source: '/:path*', headers }];
   },
   turbopack: {}
-});
+};
 
-module.exports = nextConfig;
+/** Exports the application configuration after PWA augmentation */
+export default withPWA(nextConfig);
