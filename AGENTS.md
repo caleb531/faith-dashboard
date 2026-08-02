@@ -2,7 +2,7 @@ When asked to write Supabase migrations, use the `supabase migration` commands t
 
 After making source JS/TS or CSS changes, run:
 
-- `pnpm format`
+- `pnpm prettier`
 - `pnpm lint`
 
 All variables, functions, and other definitions should be accompanied by thoughtful code comments. Do not end comments with periods; if you need multiple clauses, use semicolons.
