@@ -9,10 +9,13 @@ function useCachedState<T>(
   cacheKey: string,
   init: () => T
 ): [T, (newState: T) => void, () => void] {
+  // Retrieve the cached value even when its value is falsy
   function getState() {
-    if (stateCache[cacheKey]) {
+    if (Object.prototype.hasOwnProperty.call(stateCache, cacheKey)) {
       return stateCache[cacheKey];
     } else {
+      // This module cache intentionally persists values across component unmounts
+      // eslint-disable-next-line react-hooks/immutability -- cache initialization is the hook's documented purpose
       stateCache[cacheKey] = init();
       return stateCache[cacheKey];
     }

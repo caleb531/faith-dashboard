@@ -69,7 +69,8 @@ export function resetWidgetSyncService(): void {
   });
 }
 
-export default {
+// Public interface for broadcasting and subscribing to widget synchronization events
+const widgetSyncService = {
   broadcastPush,
   broadcastPull,
   onPush,
@@ -78,3 +79,5 @@ export default {
   offPull,
   resetWidgetSyncService
 };
+
+export default widgetSyncService;

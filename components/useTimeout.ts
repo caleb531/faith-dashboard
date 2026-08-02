@@ -30,7 +30,6 @@ function useTimeout() {
         }
       });
     };
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
 
   return setTimeoutWrapper;

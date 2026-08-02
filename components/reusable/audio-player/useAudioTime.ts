@@ -51,6 +51,8 @@ function useAudioTime(
     if (audioElement.src === audioUrl) {
       return;
     }
+    // HTMLAudioElement source changes are intentional imperative media operations
+    // eslint-disable-next-line react-hooks/immutability -- browser media APIs are imperative mutable objects
     audioElement.src = audioUrl;
   }, [audioUrl, audioElement, currentTime]);
 
@@ -58,6 +60,8 @@ function useAudioTime(
   // value from state
   useEventListener(audioElement, 'loadedmetadata', () => {
     if (audioElement.duration) {
+      // HTMLAudioElement currentTime restoration is an intentional media operation
+      // eslint-disable-next-line react-hooks/immutability -- browser media APIs are imperative mutable objects
       audioElement.currentTime = currentTime;
       setCurrentTime(audioElement.currentTime);
     }

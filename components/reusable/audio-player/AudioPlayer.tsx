@@ -1,4 +1,4 @@
-import useMemoizedContextValue from '../../useMemoizedContextValue';
+import { useMemo } from 'react';
 import AudioPlayerContext from './AudioPlayerContext';
 import AudioPlayerMainControls from './AudioPlayerMainControls';
 import AudioPlayerSeeker from './AudioPlayerSeeker';
@@ -33,14 +33,25 @@ function AudioPlayer({
 
   useAudioLoader(audioElement);
 
-  const contextValue = useMemoizedContextValue({
-    audioElement,
-    audioUrl,
-    currentTime,
-    setCurrentTime,
-    isPlaying,
-    setIsPlaying
-  });
+  // Keep the player context stable until an exposed player value changes
+  const contextValue = useMemo(
+    () => ({
+      audioElement,
+      audioUrl,
+      currentTime,
+      setCurrentTime,
+      isPlaying,
+      setIsPlaying
+    }),
+    [
+      audioElement,
+      audioUrl,
+      currentTime,
+      setCurrentTime,
+      isPlaying,
+      setIsPlaying
+    ]
+  );
 
   return (
     <div className="audio-player">

@@ -163,6 +163,8 @@ function useAppSync(
     // tests) before this throttled function is created; otherwise, some tests
     // will intermittently fail because the throttle() call bound itself to the
     // native setTimeout() before Jest was able to set up the fake timers
+    // The callback is invoked later by an effect, never while this hook renders
+    // eslint-disable-next-line react-hooks/refs -- throttle stores the callback for deferred execution
     return throttle(pullLatestAppFromServer, 1000);
   }, [pullLatestAppFromServer]);
 

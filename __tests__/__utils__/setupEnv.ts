@@ -1,6 +1,9 @@
 import { loadEnvConfig } from '@next/env';
 
-export default async () => {
+// Load the application's environment variables before Jest executes tests
+const setupEnvironment = async () => {
   const projectDir = process.cwd();
   loadEnvConfig(projectDir);
 };
+
+export default setupEnvironment;

@@ -1,8 +1,7 @@
 'use client';
 import { isSessionActive } from '@components/authUtils.client';
-import useMemoizedContextValue from '@components/useMemoizedContextValue';
 import { Session, User } from '@supabase/supabase-js';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useMemo, useReducer, useState } from 'react';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 import { getAppStorageKey } from '../storageUtils';
 import TutorialFlow from '../tutorial/TutorialFlow';
@@ -113,9 +112,18 @@ function App({
   const isMounted = useMountListener();
   const isSignedIn = Boolean(user) && isSessionActive(session);
 
-  const appContext = useMemoizedContextValue({ app, dispatchToApp });
-  const sessionContext = useMemoizedContextValue({ session, user, isSignedIn });
-  const syncContext = useMemoizedContextValue(appSyncUtils);
+  // Memoize each context value to avoid unnecessary renders in its consumers
+  const appContext = useMemo(() => ({ app, dispatchToApp }), [app]);
+  // Memoize the session context until one of its exposed session values changes
+  const sessionContext = useMemo(
+    () => ({ session, user, isSignedIn }),
+    [session, user, isSignedIn]
+  );
+  // Preserve the stable sync utility object supplied by useAppSync()
+  const syncContext = useMemo(
+    () => appSyncUtils,
+    [appSyncUtils.pullLatestAppFromServer, appSyncUtils.pushAppToServer]
+  );
 
   return (
     <SessionContext.Provider value={sessionContext}>

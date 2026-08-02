@@ -75,6 +75,8 @@ function useAudioSeeker(
   function sliderUp(
     event: React.UIEvent<HTMLInputElement> | React.FormEvent<HTMLInputElement>
   ) {
+    // HTMLAudioElement currentTime is intentionally updated from this release handler
+    // eslint-disable-next-line react-hooks/immutability -- browser media APIs are imperative mutable objects
     audioElement.currentTime = Number(event.currentTarget.value);
     setCurrentTime(audioElement.currentTime);
     setIsCurrentlySeeking(false);
@@ -105,10 +107,10 @@ function useAudioSeeker(
     }
   }, [seekerInputRef]);
 
-  const currentTimeForTimestamp =
-    isCurrentlySeeking && seekerInputRef.current
-      ? Number(seekerInputRef.current.value)
-      : audioElement.currentTime;
+  // Use state while dragging so rendering never reads the input ref directly
+  const currentTimeForTimestamp = isCurrentlySeeking
+    ? pendingCurrentTime
+    : audioElement.currentTime;
 
   return {
     // The following object is to be spread (...) into the element used for the
