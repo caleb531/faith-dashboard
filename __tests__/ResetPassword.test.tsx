@@ -2,7 +2,6 @@ import { POST as ResetPasswordPOST } from '@app/auth/reset-password/route';
 import { POST as SessionPOST } from '@app/auth/session/route';
 import ResetPassword from '@app/reset-password/page';
 import { assignLocation, reloadPage } from '@components/navigationUtils';
-import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
@@ -14,13 +13,13 @@ import {
   restoreLocationObject,
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
-import fetch from 'jest-fetch-mock';
+import fetch from '@tests/__utils__/fetchMock';
 import {
   mockSupabaseSession,
   mockSupabaseUser
 } from './__utils__/supabaseMockUtils';
 
-jest.mock('@components/navigationUtils');
+vi.mock('@components/navigationUtils');
 
 describe('Reset Password page', () => {
   beforeEach(() => {
@@ -28,7 +27,7 @@ describe('Reset Password page', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     restoreLocationObject();
   });
 
@@ -149,7 +148,7 @@ describe('Reset Password page', () => {
   });
 
   it('should reset password on server side', async () => {
-    jest.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(async () => {
+    vi.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(async () => {
       return { data: { user: {}, session: {} }, error: null } as any;
     });
     const fields = {
@@ -167,7 +166,7 @@ describe('Reset Password page', () => {
   });
 
   it('should set session on server side', async () => {
-    jest.spyOn(supabase.auth, 'setSession').mockImplementationOnce(async () => {
+    vi.spyOn(supabase.auth, 'setSession').mockImplementationOnce(async () => {
       return { data: { user: {}, session: {} }, error: null } as any;
     });
     const fields = {

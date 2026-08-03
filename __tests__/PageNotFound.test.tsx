@@ -1,5 +1,4 @@
 import PageNotFound from '@app/not-found';
-import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 

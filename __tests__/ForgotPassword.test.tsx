@@ -1,7 +1,6 @@
 import { POST as RequestPasswordResetPOST } from '@app/auth/request-password-reset/route';
 import ForgotPassword from '@app/forgot-password/page';
 import SignIn from '@app/sign-in/page';
-import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
@@ -40,7 +39,7 @@ describe('Forgot Password page', () => {
   });
 
   it('should request password reset on server side', async () => {
-    jest
+    vi
       .spyOn(supabase.auth, 'resetPasswordForEmail')
       .mockImplementationOnce(async () => {
         return { data: { user: {}, session: {} }, error: null } as any;

@@ -1,26 +1,24 @@
 import Home from '@app/page';
 import { reloadPage } from '@components/navigationUtils';
-import '@testing-library/jest-dom';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import {
   mockLocationObject,
   restoreLocationObject
 } from './__utils__/testUtils';
-import { createUserEventWithFakeTimers } from './__utils__/userEventFakeTimers';
 
-jest.mock('@components/navigationUtils');
+vi.mock('@components/navigationUtils');
 
 class ServiceWorkerMock {}
 let originalServiceWorker: typeof navigator.serviceWorker;
 const updateAvailableMessage = 'Update available! Click here to update.';
 
 describe('Update Notification', () => {
-  let user: ReturnType<typeof createUserEventWithFakeTimers>;
+  let user: ReturnType<typeof userEvent.setup>;
 
   beforeEach(() => {
-    jest.useFakeTimers();
-    user = createUserEventWithFakeTimers();
+    user = userEvent.setup();
     mockLocationObject();
     // Mock navigator.serviceWorker
     originalServiceWorker = navigator.serviceWorker;
@@ -32,7 +30,6 @@ describe('Update Notification', () => {
   });
 
   afterEach(() => {
-    jest.useRealTimers();
     sessionStorage.removeItem('sw');
     Object.defineProperty(navigator, 'serviceWorker', {
       value: originalServiceWorker
@@ -42,7 +39,7 @@ describe('Update Notification', () => {
 
   it('should show', async () => {
     await renderServerComponent(<Home />);
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(
         screen.getByRole('region', {
           name: updateAvailableMessage
@@ -53,7 +50,7 @@ describe('Update Notification', () => {
 
   it('should show loading indicator when clicked', async () => {
     await renderServerComponent(<Home />);
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(
         screen.getByRole('region', {
           name: updateAvailableMessage
@@ -69,7 +66,7 @@ describe('Update Notification', () => {
   });
   it('should reload page when service worker is updated', async () => {
     await renderServerComponent(<Home />);
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(
         screen.getByRole('region', {
           name: updateAvailableMessage
@@ -77,11 +74,9 @@ describe('Update Notification', () => {
       ).toBeInTheDocument();
     });
     await user.click(
-      screen.getByRole('region', {
-        name: updateAvailableMessage
-      })
+      screen.getByRole('region', { name: updateAvailableMessage })
     );
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(reloadPage).toHaveBeenCalled();
     });
   });

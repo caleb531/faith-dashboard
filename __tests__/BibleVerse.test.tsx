@@ -1,12 +1,11 @@
 import Home from '@app/page';
-import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import bibleVerseRangeJson from '@tests/__json__/bibleVerseRange.json';
 import bibleVerseSingleJson from '@tests/__json__/bibleVerseSingle.json';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 import { getWidgetData, waitForWidget } from '@tests/__utils__/testUtils';
-import fetch from 'jest-fetch-mock';
+import fetch from '@tests/__utils__/fetchMock';
 
 async function searchBibleVerses(verseQuery: string) {
   await waitForWidget({ type: 'BibleVerse', index: 0 });
@@ -46,7 +45,7 @@ describe('Bible Verse widget', () => {
     fetch.mockResponseOnce('notjson');
     await renderServerComponent(<Home />);
 
-    const log = jest.spyOn(console, 'log').mockImplementation(() => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {
       /* noop */
     });
     await searchBibleVerses('john3.16');

@@ -1,6 +1,5 @@
 import reducer from '@components/app/AppReducer';
 import { AppState } from '@components/app/app.types';
-import '@testing-library/jest-dom';
 import { createWidget } from '@tests/__utils__/testUtils';
 
 describe('app reducer', () => {

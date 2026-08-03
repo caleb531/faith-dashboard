@@ -4,7 +4,7 @@ import path from 'path';
 describe('SEO metadata', () => {
   it('should be included in every page', async () => {
     const pagePaths = await glob('./app/**/page.tsx');
-    pagePaths.forEach(async (pagePath: string) => {
+    for (const pagePath of pagePaths) {
       const pagePathRel = path.join('..', pagePath);
       const page = await import(pagePathRel);
       if (typeof page.generateMetadata !== 'function') {
@@ -27,7 +27,7 @@ describe('SEO metadata', () => {
         'twitter.description',
         metadata.description
       );
-    });
+    }
   });
   it('should include a basic title on 404 page', async () => {
     const pagePath = '../app/not-found.tsx';

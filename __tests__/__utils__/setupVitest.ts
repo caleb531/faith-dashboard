@@ -6,7 +6,9 @@ import {
   mediaSessionMock
 } from '@tests/__mocks__/mediaSessionMock';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
-import fetch, { enableFetchMocks } from 'jest-fetch-mock';
+import '@testing-library/jest-dom/vitest';
+import fetch from './fetchMock';
+import { vi, type Mock, type MockInstance } from 'vitest';
 import {
   mockSupabaseSession,
   mockSupabaseUser,
@@ -23,27 +25,27 @@ declare global {
   }
 }
 
-enableFetchMocks();
-
-jest.mock('../../components/useVerifyCaptcha', () => {
-  return jest.fn().mockImplementation(() => {
-    return [
-      () => {
-        // noop
-      },
-      () => {
-        // noop
-      }
-    ];
-  });
+vi.mock('../../components/useVerifyCaptcha', () => {
+  return {
+    default: vi.fn().mockImplementation(() => {
+      return [
+        () => {
+          // noop
+        },
+        () => {
+          // noop
+        }
+      ];
+    })
+  };
 });
 
-let audioStub: jest.SpyInstance;
-let onAuthStateChangeStub: jest.SpyInstance;
+let audioStub: Pick<MockInstance, 'mockRestore'>;
+let onAuthStateChangeStub: Pick<MockInstance, 'mockRestore'>;
 let originalMediaMetadata: typeof window.MediaMetadata;
 let originalMediaSession: typeof navigator.mediaSession;
-let getUserStub: jest.SpyInstance;
-let getSessionStub: jest.SpyInstance;
+let getUserStub: Pick<MockInstance, 'mockRestore'>;
+let getSessionStub: Pick<MockInstance, 'mockRestore'>;
 const originalUrl = window.location.href;
 const originalCreateObjectURL = URL.createObjectURL;
 const originalFileReader = window.FileReader;
@@ -71,17 +73,17 @@ beforeEach(async () => {
     configurable: true,
     value: BlobMock
   });
-  URL.createObjectURL = jest.fn();
-  jest.spyOn(window, 'FileReader').mockImplementation(() => {
+  URL.createObjectURL = vi.fn();
+  vi.spyOn(window, 'FileReader').mockImplementation(function () {
     return new FileReaderMock() as FileReader;
   });
-  audioStub = jest.spyOn(window, 'Audio').mockImplementation(() => {
+  audioStub = vi.spyOn(window, 'Audio').mockImplementation(function () {
     return new AudioMock() as any;
   });
-  onAuthStateChangeStub = jest
+  onAuthStateChangeStub = vi
     .spyOn(supabase.auth, 'onAuthStateChange')
     .mockImplementation(() => {
-      return { data: { subscription: { unsubscribe: jest.fn() } as any } };
+      return { data: { subscription: { unsubscribe: vi.fn() } as any } };
     });
   if (typeof navigator !== 'undefined') {
     originalMediaSession = navigator.mediaSession;
@@ -107,8 +109,8 @@ afterEach(async () => {
   window.MediaMetadata = originalMediaMetadata;
   getUserStub.mockRestore();
   getSessionStub.mockRestore();
-  if (jest.isMockFunction(supabase.from)) {
-    (supabase.from as jest.Mock).mockRestore();
+  if (vi.isMockFunction(supabase.from)) {
+    (supabase.from as Mock).mockRestore();
   }
   resetWidgetSyncService();
   Workbox.instances.length = 0;

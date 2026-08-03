@@ -1,11 +1,10 @@
 import Home from '@app/page';
-import '@testing-library/jest-dom';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import podcastNoResultsJson from '@tests/__json__/podcastNoResults.json';
 import podcastSearchJson from '@tests/__json__/podcastSearch.json';
 import { searchPodcasts } from '@tests/__utils__/podcastTestUtils';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
-import fetch from 'jest-fetch-mock';
+import fetch from '@tests/__utils__/fetchMock';
 
 async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
   const audioProgressSlider = screen.getByRole('slider', {
@@ -25,7 +24,7 @@ async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
 
 describe('Podcast widget', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should handle no results', async () => {
@@ -54,7 +53,7 @@ describe('Podcast widget', () => {
 
     // Suppress the error that's logged when fetch() tries to parse invalid
     // JSON in the useWidgetDataFetcher() hook
-    const log = jest.spyOn(console, 'log').mockImplementation(() => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {
       /* noop */
     });
     await searchPodcasts('ask pastor john');

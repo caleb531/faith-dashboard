@@ -1,5 +1,4 @@
 import Home from '@app/page';
-import '@testing-library/jest-dom';
 import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import firstDashboardJson from '@tests/__json__/dashboardManager/firstDashboard.json';
@@ -109,7 +108,7 @@ async function switchToDashboard(
 
 describe('Dashboard Manager', () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('should open and fetch all user dashboards', async () => {

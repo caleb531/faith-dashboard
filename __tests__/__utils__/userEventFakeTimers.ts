@@ -6,6 +6,6 @@ import userEvent from '@testing-library/user-event';
 // <https://stackoverflow.com/questions/71901237/fake-timers-doesnt-work-with-latest-version-of-user-event>)
 export function createUserEventWithFakeTimers() {
   return userEvent.setup({
-    advanceTimers: (delay) => jest.advanceTimersByTime(delay)
+    advanceTimers: (delay) => vi.advanceTimersByTime(delay)
   });
 }

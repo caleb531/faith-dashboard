@@ -2,7 +2,6 @@ import { GET as CallbackGET } from '@app/auth/callback/route';
 import { POST as SignUpPOST } from '@app/auth/sign-up/route';
 import SignUp from '@app/sign-up/page';
 import { assignLocation } from '@components/navigationUtils';
-import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockCaptchaSuccessOnce } from '@tests/__mocks__/captchaMockUtils';
@@ -15,17 +14,17 @@ import {
   restoreLocationObject,
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
-import fetch from 'jest-fetch-mock';
+import fetch from '@tests/__utils__/fetchMock';
 import { NextResponse } from 'next/server';
 
-jest.mock('@components/navigationUtils');
+vi.mock('@components/navigationUtils');
 
 describe('Sign Up page', () => {
   beforeEach(() => {
     mockLocationObject();
   });
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     restoreLocationObject();
   });
 
@@ -198,7 +197,7 @@ describe('Sign Up page', () => {
   });
 
   it('should sign up on server side', async () => {
-    jest.spyOn(supabase.auth, 'signUp').mockImplementationOnce(async () => {
+    vi.spyOn(supabase.auth, 'signUp').mockImplementationOnce(async () => {
       return { data: { user: {}, session: {} }, error: null } as any;
     });
     const fields = {
@@ -228,12 +227,12 @@ describe('Sign Up page', () => {
   });
 
   it('should exchange code for session upon email confirmation', async () => {
-    jest
+    vi
       .spyOn(supabase.auth, 'exchangeCodeForSession')
       .mockImplementationOnce(async () => {
         return { data: { user: {}, session: {} }, error: null } as any;
       });
-    jest.spyOn(NextResponse, 'redirect');
+    vi.spyOn(NextResponse, 'redirect');
     const code = 'dfbc19a6-f750-4620-8390-56f3158a299d';
     await callRouteHandler({
       handler: CallbackGET,
@@ -244,7 +243,7 @@ describe('Sign Up page', () => {
     expect(NextResponse.redirect).toHaveBeenCalledWith('http://localhost:3000');
   });
   it('should redirect to error page when email confirmation code is missing', async () => {
-    jest.spyOn(NextResponse, 'redirect');
+    vi.spyOn(NextResponse, 'redirect');
     await callRouteHandler({
       handler: CallbackGET,
       path: `/auth/callback`,

@@ -1,10 +1,5 @@
 export type TutorialStepPosition =
-  | 'top'
-  | 'bottom'
-  | 'left'
-  | 'right'
-  | 'center'
-  | 'auto';
+  'top' | 'bottom' | 'left' | 'right' | 'center' | 'auto';
 export type TutorialStepAlignment = 'left' | 'center' | 'right' | 'center';
 
 // An object representing a particular step in the Tutorial flow; each

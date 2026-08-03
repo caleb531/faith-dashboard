@@ -1,7 +1,8 @@
 import useVerifyCaptcha from '@components/useVerifyCaptcha';
+import type { Mock } from 'vitest';
 
 export function mockCaptchaSuccessOnce(token: string) {
-  (useVerifyCaptcha as jest.Mock).mockImplementationOnce(() => {
+  (useVerifyCaptcha as Mock).mockImplementationOnce(() => {
     return [
       () => token,
       () => {
@@ -12,7 +13,7 @@ export function mockCaptchaSuccessOnce(token: string) {
 }
 
 export function mockCaptchaFailOnce() {
-  (useVerifyCaptcha as jest.Mock).mockImplementationOnce(() => {
+  (useVerifyCaptcha as Mock).mockImplementationOnce(() => {
     return [
       () => '',
       () => {

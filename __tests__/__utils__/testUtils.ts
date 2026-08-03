@@ -74,7 +74,7 @@ export function getWidgetData({
 const originalLocationObject = window.location;
 
 export function mockLocationObject() {
-  // no-op, use jest.mock('@components/navigationUtils') instead
+  // no-op, use vi.mock('@components/navigationUtils') instead
 }
 
 export function restoreLocationObject() {
@@ -82,13 +82,13 @@ export function restoreLocationObject() {
 }
 
 export function mockAlertOnce(mockImpl: (message?: any) => void) {
-  return jest.spyOn(window, 'alert').mockImplementationOnce(mockImpl);
+  return vi.spyOn(window, 'alert').mockImplementationOnce(mockImpl);
 }
 export function mockConfirmOnce(mockImpl: (message?: string) => boolean) {
-  return jest.spyOn(window, 'confirm').mockImplementationOnce(mockImpl);
+  return vi.spyOn(window, 'confirm').mockImplementationOnce(mockImpl);
 }
 export function mockPromptOnce(mockImpl: (message?: string) => string | null) {
-  return jest.spyOn(window, 'prompt').mockImplementationOnce(mockImpl);
+  return vi.spyOn(window, 'prompt').mockImplementationOnce(mockImpl);
 }
 
 export async function removeWidget({

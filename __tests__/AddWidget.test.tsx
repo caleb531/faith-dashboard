@@ -1,7 +1,6 @@
 import Home from '@app/page';
 import { WidgetTypeId } from '@components/widgets/widget.types';
 import widgetTypes from '@components/widgets/widgetTypes';
-import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';

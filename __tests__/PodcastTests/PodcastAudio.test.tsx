@@ -1,5 +1,4 @@
 import Home from '@app/page';
-import '@testing-library/jest-dom';
 import { act, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import podcastFeedJson from '@tests/__json__/podcastFeed.json';
@@ -7,7 +6,7 @@ import podcastSearchJson from '@tests/__json__/podcastSearch.json';
 import AudioMock from '@tests/__mocks__/AudioMock';
 import { navigateToNowPlaying } from '@tests/__utils__/podcastTestUtils';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
-import fetch from 'jest-fetch-mock';
+import fetch from '@tests/__utils__/fetchMock';
 
 async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
   const audioProgressSlider = screen.getByRole('slider', {
@@ -27,14 +26,14 @@ async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
 
 describe('Podcast widget', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should play/pause audio', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
-    const playStub = jest.spyOn(AudioMock.prototype, 'play');
-    const pauseStub = jest.spyOn(AudioMock.prototype, 'pause');
+    const playStub = vi.spyOn(AudioMock.prototype, 'play');
+    const pauseStub = vi.spyOn(AudioMock.prototype, 'pause');
     await renderServerComponent(<Home />);
     await navigateToNowPlaying();
 

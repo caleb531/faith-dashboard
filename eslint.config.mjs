@@ -1,6 +1,6 @@
 import { defineConfig } from 'eslint/config';
 import nextConfig from 'eslint-config-next';
-import jest from 'eslint-plugin-jest';
+import vitest from '@vitest/eslint-plugin';
 
 export default defineConfig(
   nextConfig,
@@ -109,7 +109,7 @@ export default defineConfig(
   {
     files: ['__tests__/**/*.{ts,tsx}', 'components/__mocks__/**/*.{ts,tsx}'],
     languageOptions: {
-      globals: jest.environments.globals.globals
+      globals: vitest.environments.env.globals
     },
     rules: {
       '@typescript-eslint/no-floating-promises': 'error'

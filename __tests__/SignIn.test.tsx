@@ -1,6 +1,5 @@
 import { POST as SignInPOST } from '@app/auth/sign-in/route';
 import SignIn from '@app/sign-in/page';
-import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockCaptchaSuccessOnce } from '@tests/__mocks__/captchaMockUtils';
@@ -11,11 +10,11 @@ import {
   convertFormDataToObject,
   typeIntoFormFields
 } from '@tests/__utils__/testUtils';
-import fetch from 'jest-fetch-mock';
+import fetch from '@tests/__utils__/fetchMock';
 
 describe('Sign In page', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should require all form fields to be populated', async () => {
@@ -110,7 +109,7 @@ describe('Sign In page', () => {
   });
 
   it('should sign in on server side', async () => {
-    jest
+    vi
       .spyOn(supabase.auth, 'signInWithPassword')
       .mockImplementationOnce(async () => {
         return { data: { user: {}, session: {} }, error: null } as any;

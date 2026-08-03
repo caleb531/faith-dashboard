@@ -1,7 +1,6 @@
 import { POST as SignOutPOST } from '@app/auth/sign-out/route';
 import Home from '@app/page';
 import { getSession } from '@components/authUtils.client';
-import '@testing-library/jest-dom';
 import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
@@ -16,9 +15,9 @@ import {
   mockLocationObject,
   restoreLocationObject
 } from '@tests/__utils__/testUtils';
-import fetch from 'jest-fetch-mock';
+import fetch from '@tests/__utils__/fetchMock';
 
-jest.mock('@components/navigationUtils');
+vi.mock('@components/navigationUtils');
 
 describe('Account Header', () => {
   beforeEach(() => {
@@ -26,7 +25,7 @@ describe('Account Header', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     restoreLocationObject();
   });
 
@@ -56,7 +55,7 @@ describe('Account Header', () => {
       return JSON.stringify({ success: true });
     });
     mockConfirmOnce(() => true);
-    jest.spyOn(supabase.auth, 'signOut').mockImplementation(() => {
+    vi.spyOn(supabase.auth, 'signOut').mockImplementation(() => {
       return {
         error: null
       } as any;
@@ -69,7 +68,7 @@ describe('Account Header', () => {
     });
     await userEvent.click(screen.getByRole('button', { name: 'Your Account' }));
     localStorage.setItem('faith-dashboard-whatever', 'true');
-    const log = jest.spyOn(console, 'log').mockImplementation(() => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {
       // noop
     });
     await userEvent.click(screen.getByText('Sign Out'));
@@ -100,7 +99,7 @@ describe('Account Header', () => {
     await mockSupabaseUser();
     await mockSupabaseSession();
     mockConfirmOnce(() => false);
-    jest.spyOn(supabase.auth, 'signOut').mockImplementation(() => {
+    vi.spyOn(supabase.auth, 'signOut').mockImplementation(() => {
       return {
         error: null
       } as any;
@@ -121,7 +120,7 @@ describe('Account Header', () => {
   });
 
   it('should sign out on server side', async () => {
-    jest.spyOn(supabase.auth, 'signOut').mockImplementationOnce(async () => {
+    vi.spyOn(supabase.auth, 'signOut').mockImplementationOnce(async () => {
       return { data: { user: {}, session: {} }, error: null } as any;
     });
     await callRouteHandler({

@@ -28,5 +28,4 @@ export interface AppTheme extends Item {
 
 // The response of any Supabase request
 export type SyncResponse =
-  | PostgrestResponse<{ raw_data: any }>
-  | { error: null };
+  PostgrestResponse<{ raw_data: any }> | { error: null };

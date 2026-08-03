@@ -63,7 +63,7 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
       - name: Run randomized suite (seed ${{ matrix.seed }})
-        run: pnpm exec jest --runInBand --randomize --seed=${{ matrix.seed }}
+        run: pnpm exec vitest run --sequence.shuffle --sequence.seed=${{ matrix.seed }} --maxWorkers=1 --fileParallelism=false
 
   reliability-sweep:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
@@ -83,4 +83,4 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
       - name: Run randomized suite (seed ${{ matrix.seed }})
-        run: pnpm exec jest --runInBand --randomize --seed=${{ matrix.seed }}
+        run: pnpm exec vitest run --sequence.shuffle --sequence.seed=${{ matrix.seed }} --maxWorkers=1 --fileParallelism=false

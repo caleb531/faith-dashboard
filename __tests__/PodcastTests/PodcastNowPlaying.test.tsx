@@ -1,5 +1,4 @@
 import Home from '@app/page';
-import '@testing-library/jest-dom';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import podcastFeedJson from '@tests/__json__/podcastFeed.json';
@@ -12,7 +11,7 @@ import {
   searchPodcasts
 } from '@tests/__utils__/podcastTestUtils';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
-import fetch from 'jest-fetch-mock';
+import fetch from '@tests/__utils__/fetchMock';
 import { omit } from 'lodash-es';
 
 async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
@@ -33,7 +32,7 @@ async function seekAudio({ newCurrentTime }: { newCurrentTime: number }) {
 
 describe('Podcast widget', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
   it('should access Now Playing screen from episode list', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));

@@ -1,6 +1,5 @@
 import Home from '@app/page';
 import tutorialSteps from '@components/tutorial/tutorialSteps';
-import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';

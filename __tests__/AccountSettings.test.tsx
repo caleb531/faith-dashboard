@@ -4,13 +4,13 @@ import { POST as ChangePasswordPOST } from '@app/auth/change-password/route';
 import { POST as RequestEmailChangePOST } from '@app/auth/request-email-change/route';
 import { POST as UpdateUserNamePOST } from '@app/auth/update-user-name/route';
 import { reloadPage } from '@components/navigationUtils';
-import '@testing-library/jest-dom';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
-import fetch from 'jest-fetch-mock';
+import fetch from '@tests/__utils__/fetchMock';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import type { Mock } from 'vitest';
 import { supabase } from './__mocks__/supabaseAuthHelpersMock';
 import {
   mockSupabaseSession,
@@ -24,8 +24,8 @@ import {
   typeIntoFormFields
 } from './__utils__/testUtils';
 
-jest.mock('@components/navigationUtils');
-jest.mock('next/headers');
+vi.mock('@components/navigationUtils');
+vi.mock('next/headers');
 
 describe('Account Settings page', () => {
   beforeEach(() => {
@@ -33,7 +33,7 @@ describe('Account Settings page', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     restoreLocationObject();
   });
 
@@ -51,8 +51,8 @@ describe('Account Settings page', () => {
   it('should redirect to Sign In page if signed out', async () => {
     // Mock the value of the x-url header so that the source code can correctly
     // determine the URL to redirect to (after sign-in)
-    (headers as jest.Mock).mockResolvedValue({
-      get: jest.fn().mockReturnValue('https://localhost:3000/account')
+    (headers as Mock).mockResolvedValue({
+      get: vi.fn().mockReturnValue('https://localhost:3000/account')
     });
     await renderServerComponent(<AccountSettings />);
     expect(redirect).toHaveBeenCalledWith(
@@ -232,7 +232,7 @@ describe('Account Settings page', () => {
   });
 
   it('should change user name on server side', async () => {
-    jest.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(async () => {
+    vi.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(async () => {
       return { data: {}, error: null } as any;
     });
     const fields = {
@@ -253,7 +253,7 @@ describe('Account Settings page', () => {
   });
 
   it('should change password on server side', async () => {
-    jest.spyOn(supabase, 'rpc').mockImplementationOnce(() => {
+    vi.spyOn(supabase, 'rpc').mockImplementationOnce(() => {
       return { data: {}, error: null } as any;
     });
     const fields = {
@@ -273,7 +273,7 @@ describe('Account Settings page', () => {
   });
 
   it('should request email change on server side', async () => {
-    jest.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(() => {
+    vi.spyOn(supabase.auth, 'updateUser').mockImplementationOnce(() => {
       return { data: {}, error: null } as any;
     });
     const fields = {
@@ -291,7 +291,7 @@ describe('Account Settings page', () => {
   });
 
   it('should cancel email change on server side', async () => {
-    jest.spyOn(supabase, 'rpc').mockImplementationOnce(() => {
+    vi.spyOn(supabase, 'rpc').mockImplementationOnce(() => {
       return { data: {}, error: null } as any;
     });
     await callRouteHandler({

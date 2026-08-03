@@ -1,6 +1,6 @@
 import Home from '@app/page';
-import '@testing-library/jest-dom';
-import { act, fireEvent, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import dashboardToExport from '@tests/__json__/dashboardToExport.json';
 import exportedDashboard from '@tests/__json__/exportedDashboard.json';
 import FileReaderMock from '@tests/__mocks__/FileReaderMock';
@@ -22,18 +22,15 @@ import {
 } from '@tests/__utils__/testUtils';
 import { omit } from 'lodash-es';
 import { v4 as uuidv4 } from 'uuid';
-import { createUserEventWithFakeTimers } from './__utils__/userEventFakeTimers';
 
 describe('Import/Export functionality', () => {
-  let user: ReturnType<typeof createUserEventWithFakeTimers>;
+  let user: ReturnType<typeof userEvent.setup>;
 
   beforeEach(() => {
-    jest.useFakeTimers();
-    user = createUserEventWithFakeTimers();
+    user = userEvent.setup();
   });
   afterEach(() => {
-    jest.resetAllMocks();
-    jest.useRealTimers();
+    vi.resetAllMocks();
   });
 
   it('should import dashboard', async () => {
@@ -89,7 +86,7 @@ describe('Import/Export functionality', () => {
       });
     });
     expect(screen.getByText('Evening')).toBeInTheDocument();
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
       expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(1);
     });
@@ -183,7 +180,7 @@ describe('Import/Export functionality', () => {
     await user.click(
       screen.getByRole('button', { name: 'Tools' })
     );
-    jest.spyOn(URL, 'createObjectURL').mockImplementation((blob: Blob) => {
+    vi.spyOn(URL, 'createObjectURL').mockImplementation((blob: Blob) => {
       exportedBlob = blob;
       // Doesn't matter what this value is
       return '';

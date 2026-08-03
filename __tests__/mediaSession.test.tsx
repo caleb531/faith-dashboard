@@ -1,5 +1,4 @@
 import Home from '@app/page';
-import '@testing-library/jest-dom';
 import { act, waitFor } from '@testing-library/react';
 import podcastFeedJson from '@tests/__json__/podcastFeed.json';
 import podcastSearchJson from '@tests/__json__/podcastSearch.json';
@@ -7,11 +6,11 @@ import AudioMock from '@tests/__mocks__/AudioMock';
 import { mediaSessionMock } from '@tests/__mocks__/mediaSessionMock';
 import { navigateToNowPlaying } from '@tests/__utils__/podcastTestUtils';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
-import fetch from 'jest-fetch-mock';
+import fetch from '@tests/__utils__/fetchMock';
 
 describe('media session', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('should populate', async () => {
     fetch.mockResponseOnce(JSON.stringify(podcastSearchJson));
@@ -54,7 +53,7 @@ describe('media session', () => {
     fetch.mockResponseOnce(JSON.stringify(podcastFeedJson));
     await renderServerComponent(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
-    jest.spyOn(AudioMock.instances[0], 'pause');
+    vi.spyOn(AudioMock.instances[0], 'pause');
     await navigateToNowPlaying();
     expect(AudioMock.instances[0]).toHaveProperty('paused', true);
     await act(async () => {
@@ -82,7 +81,7 @@ describe('media session', () => {
     await renderServerComponent(<Home />);
     expect(navigator.mediaSession.metadata).toEqual(null);
     await navigateToNowPlaying();
-    jest.spyOn(AudioMock.instances[0], 'fastSeek');
+    vi.spyOn(AudioMock.instances[0], 'fastSeek');
     await act(async () => {
       mediaSessionMock._triggerAction('seekto', {
         seekTime: 123,

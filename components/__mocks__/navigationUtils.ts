@@ -1,3 +1,3 @@
-export const reloadPage = jest.fn();
-export const assignLocation = jest.fn();
-export const setLocationHref = jest.fn();
+export const reloadPage = vi.fn();
+export const assignLocation = vi.fn();
+export const setLocationHref = vi.fn();

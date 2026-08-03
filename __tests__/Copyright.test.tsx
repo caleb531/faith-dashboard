@@ -1,5 +1,4 @@
 import Copyright from '@app/copyright/page';
-import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import { renderServerComponent } from '@tests/__utils__/renderServerComponent';
 

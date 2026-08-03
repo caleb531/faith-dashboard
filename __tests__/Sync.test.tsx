@@ -1,8 +1,7 @@
 import Home from '@app/page';
 import { getDefaultAppState } from '@components/app/appUtils';
 import widgetSyncService from '@components/widgets/widgetSyncService';
-import '@testing-library/jest-dom';
-import { act, screen, waitFor } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import dashboardToPullJson from '@tests/__json__/dashboardToPull.json';
 import widgetToPullJson from '@tests/__json__/widgetToPull.json';
@@ -29,14 +28,12 @@ describe('Sync functionality', () => {
   let user: ReturnType<typeof userEvent.setup>;
 
   beforeEach(() => {
-    jest.useFakeTimers();
-    user = userEvent.setup({
-      advanceTimers: (delay) => jest.advanceTimersByTime(delay)
-    });
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
   });
 
   afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('should pull latest dashboard on page load (when signed in)', async () => {
@@ -51,18 +48,18 @@ describe('Sync functionality', () => {
     });
     assignIdToLocalApp(uuidv4());
     await renderServerComponent(<Home />);
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })
       ).toBeInTheDocument();
     });
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
       expect(supabaseFromMocks.widgets.select).toHaveBeenCalled();
     });
     expect(screen.getByText('Evening')).toBeInTheDocument();
     expect(screen.queryByText('Shore')).not.toBeInTheDocument();
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(
         screen.getAllByRole('textbox', { name: 'Note Text' })[0]
       ).toHaveProperty('value', 'God is always with you');
@@ -81,12 +78,12 @@ describe('Sync functionality', () => {
     mockSupabaseUpsert('widgets');
     assignIdToLocalApp(uuidv4());
     await renderServerComponent(<Home />);
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })
       ).toBeInTheDocument();
     });
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('dashboards');
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(2);
       expect(supabaseFromMocks.widgets.select).not.toHaveBeenCalled();
@@ -109,12 +106,12 @@ describe('Sync functionality', () => {
     mockSupabaseUpsert('widgets');
     assignIdToLocalApp(uuidv4());
     await renderServerComponent(<Home />);
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })
       ).toBeInTheDocument();
     });
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('dashboards');
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(1);
       expect(supabaseFromMocks.widgets.select).toHaveBeenCalled();
@@ -142,12 +139,12 @@ describe('Sync functionality', () => {
     mockSupabaseUpsert('widgets');
     assignIdToLocalApp(uuidv4());
     await renderServerComponent(<Home />);
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })
       ).toBeInTheDocument();
     });
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('dashboards');
       expect(supabaseFromMocks.dashboards.select).toHaveBeenCalledTimes(2);
       expect(supabaseFromMocks.widgets.select).toHaveBeenCalled();
@@ -170,12 +167,12 @@ describe('Sync functionality', () => {
     mockSupabaseUpsert('widgets');
     assignIdToLocalApp(uuidv4());
     await renderServerComponent(<Home />);
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })
       ).toBeInTheDocument();
     });
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('dashboards');
       expect(supabaseFromMocks.dashboards.upsert).toHaveBeenCalledTimes(1);
       expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(4);
@@ -195,7 +192,7 @@ describe('Sync functionality', () => {
     mockSupabaseUpsert('widgets');
     assignIdToLocalApp(appId);
     await renderServerComponent(<Home />);
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })
       ).toBeInTheDocument();
@@ -205,9 +202,9 @@ describe('Sync functionality', () => {
     expect(textBox).toBeInTheDocument();
     await user.type(textBox, 'God is good');
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('widgets');
       expect(supabaseFromMocks.widgets.upsert).toHaveBeenCalledTimes(1);
     });
@@ -225,7 +222,7 @@ describe('Sync functionality', () => {
     mockSupabaseDelete('widgets');
     assignIdToLocalApp(appId);
     await renderServerComponent(<Home />);
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(
         screen.getByRole('button', { name: 'Your Account' })
       ).toBeInTheDocument();
@@ -238,10 +235,10 @@ describe('Sync functionality', () => {
     );
     expect(confirm).toHaveBeenCalled();
     await act(async () => {
-      jest.advanceTimersByTime(250);
+      vi.advanceTimersByTime(250);
     });
     expect(widgetElem).not.toBeInTheDocument();
-    await waitFor(() => {
+    await vi.waitFor(() => {
       expect(supabaseFromMocks.widgets.delete).toHaveBeenCalled();
     });
   });
@@ -267,7 +264,7 @@ describe('Sync functionality', () => {
     expect(textBox).toBeInTheDocument();
     await user.type(textBox, 'God is good');
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
     expect(supabaseFromMocks.widgets.upsert).not.toHaveBeenCalled();
   });
