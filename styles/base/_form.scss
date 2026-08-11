@@ -115,7 +115,7 @@ button[data-unstyled='true'],
 button,
 a {
   &:focus-visible {
-    outline-width: 0;
+    outline: none;
     box-shadow:
       0 0 0 2px var(--color-white-100),
       0 0 0 4px var(--color-blue);
@@ -123,7 +123,7 @@ a {
 }
 
 input:focus-visible {
-  outline-width: 0;
+  outline: none;
   box-shadow:
     0 0 0 1px var(--color-blue),
     0 0 0 2px var(--color-white-100);
