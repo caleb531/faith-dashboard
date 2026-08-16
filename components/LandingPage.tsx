@@ -58,7 +58,11 @@ async function LandingPage(
               className="sheet-control sheet-control-left landing-page-control landing-page-home-control"
               unstyled
             >
-              <Icon name="home-dark" alt="Go to Dashboard" />
+              <Icon
+                name="home-dark"
+                alt="Go to Dashboard"
+                fetchPriority="low"
+              />
             </LinkButton>
             {altLink ? (
               <LinkButton

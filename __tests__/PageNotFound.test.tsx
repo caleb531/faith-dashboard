@@ -10,4 +10,13 @@ describe('Not Found page', () => {
       screen.getByRole('heading', { name: 'Page Not Found | Faith Dashboard' })
     ).toBeInTheDocument();
   });
+
+  it('should assign low fetch priority to the fallback home icon', async () => {
+    await renderServerComponent(<PageNotFound />);
+
+    expect(screen.getByRole('img', { name: 'Go to Dashboard' })).toHaveAttribute(
+      'fetchpriority',
+      'low'
+    );
+  });
 });
