@@ -1,0 +1,15 @@
+overrides:
+  webpack: 5.104.1
+  serialize-javascript@<=7.0.2: '>=7.0.3'
+  postcss@<8.5.10: '>=8.5.10'
+  sharp@<0.35.0: '>=0.35.0'
+  postcss@<=8.5.11: '>=8.5.12'
+  postcss@<=8.5.17: '>=8.5.18'
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  jest-preview: true
+  puppeteer: true
+  sharp: true
+  supabase: true
+  unrs-resolver: true

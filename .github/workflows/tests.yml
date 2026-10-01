@@ -25,9 +25,9 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Install PNPM
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
-          version: 10
+          version: 12
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -54,9 +54,9 @@ jobs:
         seed: [184729, 104729, 281991, 450101, 773401]
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
-          version: 10
+          version: 12
       - uses: actions/setup-node@v3
         with:
           node-version: 24.x
@@ -74,9 +74,9 @@ jobs:
         seed: [184729, 104729, 281991, 450101, 773401, 918273, 120487, 337711, 502198, 668004, 714205, 845091, 990231, 135790, 246802, 357913, 468024, 579135, 680246, 791357, 802468, 913579, 102938, 564738, 675849]
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
-          version: 10
+          version: 12
       - uses: actions/setup-node@v3
         with:
           node-version: 24.x

@@ -1,0 +1,3 @@
+{
+  "buildCommand": "corepack pnpm@^12 run build"
+}
