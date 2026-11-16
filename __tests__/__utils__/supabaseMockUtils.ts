@@ -1,5 +1,10 @@
 import { getSession, getUser } from '@components/authUtils.client';
-import { Session, User, UserResponse } from '@supabase/supabase-js';
+import {
+  AuthSessionMissingError,
+  Session,
+  User,
+  UserResponse
+} from '@supabase/supabase-js';
 import { supabase } from '@tests/__mocks__/supabaseAuthHelpersMock';
 
 export type ErrorConfig = { error: Error | null };
@@ -21,7 +26,7 @@ export async function mockSupabaseUser(
     } else {
       return {
         data: { user: null },
-        error: new Error('User signed out')
+        error: new AuthSessionMissingError()
       } as UserResponse;
     }
   });

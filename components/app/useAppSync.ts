@@ -59,7 +59,9 @@ async function pushLocalWidgetsToServer(app: AppState): Promise<void> {
 // the client and server, pushing and pulling data as appropriate
 function useAppSync(
   app: AppState,
-  dispatchToApp: Dispatch<AppAction>
+  dispatchToApp: Dispatch<AppAction>,
+  // Recovery permits a new initial pull without changing dashboard IDs
+  authRecovered = false
 ): SyncContextType {
   const [prevAppIdRef, currentAppIdRef] = usePreviousValueMemoizer(app.id);
 
@@ -188,7 +190,7 @@ function useAppSync(
     // would cause this hook to pull the previous dashboard from the server and
     // overwrite the imported dashboard state entirely
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, [isDefaultAppState]);
+  }, [isDefaultAppState, authRecovered]);
 
   return { pullLatestAppFromServer, pushAppToServer };
 }

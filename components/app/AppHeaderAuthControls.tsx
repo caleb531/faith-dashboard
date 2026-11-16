@@ -7,16 +7,17 @@ import useTutorialStep from '../tutorial/useTutorialStep';
 import AppContext from './AppContext';
 import SessionContext from './SessionContext';
 
+// Show account access or a quiet connection status in the same header control
 function AppHeaderAuthControls() {
   const { isCurrentStep, stepProps } = useTutorialStep('sign-up');
   const { dispatchToApp } = useContext(AppContext);
   const [isDashboardManagerVisible, setIsDashboardManagerVisible] =
     useState(false);
 
-  // The session will be loaded asynchronously and isomorphically, via a
-  // useEffect() call later in this function; this is done to avoid SSR
-  // mismatches (please see the hook below)
-  const { isSignedIn } = useContext(SessionContext);
+  // Read verified account state, including background connection attempts
+  const { isSignedIn, authStatus, isConnecting } = useContext(SessionContext);
+  // Unknown authentication can't open sign-in, even after retries are exhausted
+  const isUnavailable = authStatus === 'unavailable';
   const [authModalIsOpen, setAuthModalIsOpen] = useState(false);
 
   function onCloseAuthModal() {
@@ -26,13 +27,26 @@ function AppHeaderAuthControls() {
   return (
     !isSignedIn && (
       <div className="app-header-global-menu-section">
-        {isCurrentStep ? <TutorialStepTooltip /> : null}
+        {isCurrentStep && !isUnavailable ? <TutorialStepTooltip /> : null}
         <Button
           className="app-header-menu-button app-header-control-button"
-          onClick={() => setAuthModalIsOpen(true)}
+          aria-disabled={isUnavailable || undefined}
+          aria-live="polite"
+          title={
+            isUnavailable
+              ? isConnecting
+                ? 'Connecting...'
+                : 'Unable to connect to your account. Your local dashboard is still available.'
+              : undefined
+          }
+          onClick={isUnavailable ? undefined : () => setAuthModalIsOpen(true)}
           {...stepProps}
         >
-          Sign Up/In
+          {isUnavailable
+            ? isConnecting
+              ? 'Connecting...'
+              : 'Offline'
+            : 'Sign Up/In'}
         </Button>
         {authModalIsOpen ? (
           <AccountAuthFlow onClose={onCloseAuthModal} />

@@ -1,6 +1,7 @@
 'use client';
 import { isSessionActive } from '@components/authUtils.client';
-import { Session, User } from '@supabase/supabase-js';
+import type { AuthResult } from '../authUtils.shared';
+import useAuthRecovery from '../useAuthRecovery';
 import React, { useEffect, useMemo, useReducer, useState } from 'react';
 import LoadingIndicator from '../reusable/LoadingIndicator';
 import { getAppStorageKey } from '../storageUtils';
@@ -48,8 +49,8 @@ type Props = {
   enableTutorial?: boolean;
   canAddWidgets?: boolean;
   isClientOnly?: boolean;
-  session: Session | null;
-  user: User | null;
+  // The server's verified authentication result, including temporary outages
+  auth: AuthResult;
   children: React.ReactNode;
 };
 
@@ -59,10 +60,13 @@ function App({
   enableTutorial = false,
   canAddWidgets = false,
   isClientOnly = false,
-  session,
-  user,
+  auth: initialAuth,
   children
 }: Props) {
+  // Recover slow authentication in the background without blocking the board
+  const { auth, isConnecting } = useAuthRecovery(initialAuth);
+  // Both values come from the same successful verification
+  const { session, user } = auth;
   const [restoreApp, saveApp] = useLocalStorage(
     getAppStorageKey(),
     defaultAppState
@@ -86,7 +90,7 @@ function App({
     if (!newApp.isDefaultApp || (session && user)) {
       dispatchToApp({ type: 'replaceApp', payload: newApp });
     }
-  }, [restoreApp]);
+  }, [restoreApp, session, user]);
 
   // Serialize the app to localStorage whenever the app's state changes
   useEffect(() => {
@@ -95,7 +99,10 @@ function App({
     }
   }, [app, saveApp]);
 
-  const appSyncUtils = useAppSync(app, dispatchToApp);
+  // Pull again after recovery if the initial attempt could not authenticate
+  const authRecovered =
+    initialAuth.status === 'unavailable' && auth.status === 'authenticated';
+  const appSyncUtils = useAppSync(app, dispatchToApp, authRecovered);
   useThemeForEntirePage(app.theme);
   useAuthenticationDetection();
 
@@ -110,14 +117,22 @@ function App({
   useAnalytics();
 
   const isMounted = useMountListener();
-  const isSignedIn = Boolean(user) && isSessionActive(session);
+  // Match the verified server snapshot until hydration has completed
+  const isSignedIn =
+    auth.status === 'authenticated' && (!isMounted || isSessionActive(session));
 
   // Memoize each context value to avoid unnecessary renders in its consumers
   const appContext = useMemo(() => ({ app, dispatchToApp }), [app]);
   // Memoize the session context until one of its exposed session values changes
   const sessionContext = useMemo(
-    () => ({ session, user, isSignedIn }),
-    [session, user, isSignedIn]
+    () => ({
+      session,
+      user,
+      isSignedIn,
+      authStatus: auth.status,
+      isConnecting
+    }),
+    [session, user, isSignedIn, auth.status, isConnecting]
   );
   // Preserve the stable sync utility object supplied by useAppSync()
   const syncContext = useMemo(

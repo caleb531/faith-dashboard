@@ -1,7 +1,7 @@
 import App from '@components/app/App';
 import AppCompletedTutorial from '@components/app/AppCompletedTutorial';
 import AppWelcome from '@components/app/AppWelcome';
-import { getSession, getUser } from '@components/authUtils.server';
+import { getAuth } from '@components/authUtils.server';
 import LoadingIndicator from '@components/reusable/LoadingIndicator';
 import { getPageMetadata } from '@components/seoUtils';
 import React, { Suspense } from 'react';
@@ -9,16 +9,10 @@ import React, { Suspense } from 'react';
 const WidgetBoard = React.lazy(() => import('@components/widgets/WidgetBoard'));
 
 async function Home() {
-  const user = await getUser();
-  const session = await getSession();
+  // A slow auth service must not prevent the local dashboard from loading
+  const auth = await getAuth();
   return (
-    <App
-      enableTutorial
-      canAddWidgets
-      isClientOnly
-      session={session}
-      user={user}
-    >
+    <App enableTutorial canAddWidgets isClientOnly auth={auth}>
       <AppWelcome />
       <AppCompletedTutorial />
       <Suspense fallback={<LoadingIndicator />}>

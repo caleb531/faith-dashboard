@@ -1,54 +1,78 @@
-import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { isAuthSessionMissingError } from '@supabase/supabase-js';
 import { cookies, headers } from 'next/headers';
+import { createSupabaseServerClient } from './authUtils.serverClient';
+import {
+  AUTH_TIMEOUT_MS,
+  type AuthResult,
+  withAuthTimeout
+} from './authUtils.shared';
 
-export async function getSupabaseServerClient<T>() {
+// Read and write the current request's cookies through the shared server client
+export async function getSupabaseServerClient<T>(signal?: AbortSignal) {
+  // The cookie store is writable in Route Handlers, but not Server Components
   const cookieStore = await cookies();
-  return createServerClient<T>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  return createSupabaseServerClient<T>(
     {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value;
-        },
-        set(name: string, value: string, options: CookieOptions) {
-          try {
-            cookieStore.set({ name, value, ...options });
-          } catch {
-            // The logic cannot set cookies in this context.
-          }
-        },
-        remove(name: string, options: CookieOptions) {
-          try {
-            cookieStore.set({ name, value: '', ...options });
-          } catch {
-            // The logic cannot set cookies in this context.
-          }
+      // Read all chunks of the session cookie
+      getAll() {
+        return cookieStore.getAll();
+      },
+      // Middleware persists refreshed cookies when a Server Component can't
+      setAll(cookiesToSet) {
+        try {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            cookieStore.set(name, value, options);
+          });
+        } catch {
+          // Next.js doesn't allow cookie writes inside Server Components
         }
       }
-    }
+    },
+    signal
   );
 }
 
-// The getSession() utility returns info related to the
-// authenticated session and user
-export async function getSession() {
-  // This fixes a "Dynamic server usage: cookies" error. See:
-  // <https://github.com/vercel/next.js/issues/49373#issuecomment-1662263802>
-  await cookies();
-  const supabase = await getSupabaseServerClient();
-  await supabase.auth.getUser();
-  const sessionResponse = await supabase.auth.getSession();
-  return sessionResponse.data.session;
-}
-
-// The getUser() utility returns info related to the authenticated user (but
-// with more fields than what getSession().user provides, like details of a
-// pending email change)
-export async function getUser() {
-  const supabase = await getSupabaseServerClient();
-  const userResponse = await supabase.auth.getUser();
-  return userResponse.data.user;
+// Verify identity before reading the session; keep outages distinct from logout
+export async function getAuth(
+  timeoutMs = AUTH_TIMEOUT_MS
+): Promise<AuthResult> {
+  // A failed verification must never expose an unverified cookie's user data
+  const result = await withAuthTimeout(async (signal): Promise<AuthResult> => {
+    // Share the client so the session reflects the completed verification
+    const supabase = await getSupabaseServerClient(signal);
+    // The user record is fetched from Auth rather than trusted from cookies
+    const { data, error } = await supabase.auth.getUser();
+    if (error) {
+      // Rejected credentials require login; service failures can retry
+      const isAnonymous =
+        isAuthSessionMissingError(error) ||
+        error.status === 400 ||
+        error.status === 401 ||
+        error.status === 403;
+      return {
+        status: isAnonymous ? 'anonymous' : 'unavailable',
+        user: null,
+        session: null
+      };
+    }
+    if (!data.user) {
+      return { status: 'anonymous', user: null, session: null };
+    }
+    // Retrieve tokens only after successful user verification on this client
+    const sessionResponse = await supabase.auth.getSession();
+    if (sessionResponse.error) {
+      return { status: 'unavailable', user: null, session: null };
+    }
+    if (!sessionResponse.data.session) {
+      return { status: 'anonymous', user: null, session: null };
+    }
+    return {
+      status: 'authenticated',
+      user: data.user,
+      session: sessionResponse.data.session
+    };
+  }, timeoutMs);
+  return result ?? { status: 'unavailable', user: null, session: null };
 }
 
 // Retrieve a link to the Sign In page that will redirect to the current page on

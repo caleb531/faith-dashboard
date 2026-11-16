@@ -1,4 +1,5 @@
-import { createServerClient } from '@supabase/ssr';
+import { createSupabaseServerClient } from './components/authUtils.serverClient';
+import { withAuthTimeout } from './components/authUtils.shared';
 import { NextResponse } from 'next/server';
 
 import type { NextRequest } from 'next/server';
@@ -31,8 +32,11 @@ function generateCSP() {
 //   ... This function is now inlined/adapted in middleware
 // }
 
+// Refresh cookies within the page-loading budget and preserve security headers
 export default async function proxy(request: NextRequest) {
+  // The policy and forwarded headers must survive cookie refreshes
   const csp = generateCSP();
+  // A separate header collection lets Next.js read the generated CSP
   const requestHeaders = new Headers(request.headers);
 
   // Apply CSP to request headers, but only in Production
@@ -40,24 +44,27 @@ export default async function proxy(request: NextRequest) {
     requestHeaders.set('content-security-policy', csp);
   }
 
+  // The response is replaced when Supabase refreshes the session cookies
   let response = NextResponse.next({
     request: {
       headers: requestHeaders
     }
   });
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
+  await withAuthTimeout(async (signal) => {
+    // Middleware only refreshes tokens; page authentication verifies identity
+    const supabase = createSupabaseServerClient(
+      {
+        // Read the incoming session cookie, including any split chunks
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            request.cookies.set(name, value)
-          );
+        // Forward refreshed cookies and prevent caching responses containing them
+        setAll(cookiesToSet, headersToSet) {
+          cookiesToSet.forEach(({ name, value }) => {
+            request.cookies.set(name, value);
+          });
+          requestHeaders.set('cookie', request.headers.get('cookie') ?? '');
           response = NextResponse.next({
             request: {
               headers: requestHeaders
@@ -66,13 +73,15 @@ export default async function proxy(request: NextRequest) {
           cookiesToSet.forEach(({ name, value, options }) =>
             response.cookies.set(name, value, options)
           );
+          Object.entries(headersToSet).forEach(([name, value]) => {
+            response.headers.set(name, value);
+          });
         }
-      }
-    }
-  );
-
-  // Ensure that the user's session stays active
-  await supabase.auth.getUser();
+      },
+      signal
+    );
+    await supabase.auth.getSession();
+  });
 
   // Set the request URL in the headers so it can be accessed from a Server
   // Component (source: <https://stackoverflow.com/a/75363135/560642>)

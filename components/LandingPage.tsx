@@ -1,11 +1,8 @@
 import App from '@components/app/App';
 import { redirect } from 'next/navigation';
 import React from 'react';
-import {
-  getSession,
-  getSignInUrlForCurrentPage,
-  getUser
-} from './authUtils.server';
+import { getAuth, getSignInUrlForCurrentPage } from './authUtils.server';
+import AuthGate from './account/AuthGate';
 import Icon from './reusable/Icon';
 import LinkButton from './reusable/LinkButton';
 
@@ -36,19 +33,24 @@ async function LandingPage(
     children: <></>
   }
 ) {
-  const user = await getUser();
-  const session = await getSession();
-  if (isProtected && !session) {
+  // An unavailable service is different from a confirmed missing session
+  const auth = await getAuth();
+  // Preserve the destination when recovery confirms that login is needed
+  const signInUrl =
+    isProtected && auth.status !== 'authenticated'
+      ? await getSignInUrlForCurrentPage()
+      : '/sign-in';
+  if (isProtected && auth.status === 'anonymous') {
     // If route is protected, redirect to the Sign In page if the user has not
     // signed in
-    redirect(await getSignInUrlForCurrentPage());
-  } else if (redirectSignedInUsersTo && session) {
+    redirect(signInUrl);
+  } else if (redirectSignedInUsersTo && auth.status === 'authenticated') {
     // If the user is signed in but on a page which should only be accessible to
     // signed-out users, redirect them to the designated page
     redirect(redirectSignedInUsersTo);
   }
   return (
-    <App session={session} user={user}>
+    <App auth={auth}>
       <article className="landing-page">
         <section className="landing-page-section sheet">
           <header>
@@ -74,7 +76,13 @@ async function LandingPage(
               </LinkButton>
             ) : null}
           </header>
-          {children}
+          <AuthGate
+            isProtected={isProtected}
+            signInUrl={signInUrl}
+            redirectSignedInUsersTo={redirectSignedInUsersTo}
+          >
+            {children}
+          </AuthGate>
         </section>
       </article>
     </App>
