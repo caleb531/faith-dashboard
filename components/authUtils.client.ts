@@ -1,3 +1,5 @@
+// Provide the browser's shared Supabase client and browser auth helpers
+// Server request helpers and the proxy use authUtils.serverClient instead
 import { createBrowserClient } from '@supabase/ssr';
 import { Session, User } from '@supabase/supabase-js';
 import { Database } from './database.types';

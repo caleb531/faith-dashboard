@@ -1,3 +1,6 @@
+// Provide authentication helpers for Server Components and Route Handlers
+// Adapt next/headers cookies here and use authUtils.serverClient for shared
+// Supabase client construction, cancellation, and late cookie-write handling
 import { isAuthSessionMissingError } from '@supabase/supabase-js';
 import { cookies, headers } from 'next/headers';
 import { createSupabaseServerClient } from './authUtils.serverClient';

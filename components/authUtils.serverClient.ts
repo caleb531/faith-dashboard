@@ -1,3 +1,7 @@
+// Share Supabase client configuration between the proxy and server helpers
+// Each caller supplies its cookie adapter because the proxy uses NextRequest,
+// while authUtils.server uses next/headers; keep request-specific APIs there
+// "Client" here means a Supabase API client running on the server
 import { createServerClient, type CookieMethodsServer } from '@supabase/ssr';
 
 // Build a server client with shared cancellation and cookie-write handling
