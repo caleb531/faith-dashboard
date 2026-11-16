@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
 import nextPWA from 'next-pwa';
 import runtimeCaching from 'next-pwa/cache';
+import { shouldBypassRuntimeCache } from './components/serviceWorkerCache';
 
 /** Configures PWA service-worker generation around the base Next.js settings */
 const withPWA = nextPWA({
@@ -11,6 +12,11 @@ const withPWA = nextPWA({
   // Do not automatically register the service worker; we take care of that
   // manually in UpdateNotification.tsx
   register: false,
+  // The default start-URL rule bypasses our policy and can cache session props
+  cacheStartUrl: false,
+  dynamicStartUrl: false,
+  // Clear sensitive responses left by previous service-worker versions
+  importScripts: ['/service-worker-auth-cache-cleanup.js'],
   // Disable service worker generation in development mode
   // (source: https://stackoverflow.com/a/67124165/560642)
   disable: process.env.NODE_ENV === 'development',
@@ -27,7 +33,14 @@ const withPWA = nextPWA({
   // PLEASE NOTE that when the service worker is active, you may still see a
   // no-response error fetching GoatCounter, but this appears to only occur in
   // Brave and not in other browsers like Chrome
-  runtimeCaching,
+  runtimeCaching: [
+    {
+      // Match before asset and catch-all rules, including cross-origin auth
+      urlPattern: shouldBypassRuntimeCache,
+      handler: 'NetworkOnly'
+    },
+    ...runtimeCaching
+  ],
   buildExcludes: [
     // This is necessary to prevent service worker errors; see
     // <https://github.com/shadowwalker/next-pwa/issues/424#issuecomment-1399683017>

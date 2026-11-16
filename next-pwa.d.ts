@@ -9,6 +9,11 @@ declare module 'next-pwa' {
     sw?: string;
     /** Controls service-worker registration and development behavior */
     register?: boolean;
+    /** Controls whether the start URL can store personalized page responses */
+    cacheStartUrl?: boolean;
+    dynamicStartUrl?: boolean;
+    /** Loads activation cleanup alongside the generated Workbox worker */
+    importScripts?: string[];
     disable?: boolean;
     skipWaiting?: boolean;
     /** Configures runtime cache behavior and generated-file exclusions */
